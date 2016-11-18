@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-11-18 15:56:37
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.RoleMenuMapper">
+	<resultMap id="RoleMenuResultMapper" type="RoleMenu">
+		<result column="ROLE_MENU_ID" property="roleMenuId"/>
+		<result column="ROLE_ID" property="roleId"/>
+		<result column="MENU_ID" property="menuId"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ROLE_MENU_ID
+		, ROLE_ID
+		, MENU_ID
+		, REMARK
+		, CREATED_BY
+		, CREATE_TIME
+		, UPDATED_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 ROLE_ID
+		, MENU_ID
+		, REMARK
+		, CREATED_BY
+		, CREATE_TIME
+		, UPDATED_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ROLE_MENU_ID
+		, ROLE_ID
+		, MENU_ID
+		, REMARK
+		, CREATED_BY
+		, date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+		, UPDATED_BY
+		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="roleMenuId!= null and roleMenuId!= ''"> 
+			AND ROLE_MENU_ID=#{roleMenuId}
+		</if>
+		<if test="roleId!= null and roleId!= ''"> 
+			AND ROLE_ID=#{roleId}
+		</if>
+		<if test="menuId!= null and menuId!= ''"> 
+			AND MENU_ID=#{menuId}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createdBy!= null and createdBy!= ''"> 
+			AND CREATED_BY=#{createdBy}
+		</if>
+		<if test="createTime!= null and createTime!= ''"> 
+			AND CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updatedBy!= null and updatedBy!= ''"> 
+			AND UPDATED_BY=#{updatedBy}
+		</if>
+		<if test="updateTime!= null and updateTime!= ''"> 
+			AND UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="roleMenu != null">
+            <if test="roleMenu.roleMenuId!= null and roleMenu.roleMenuId!= ''">
+				AND ROLE_MENU_ID=#{roleMenu.roleMenuId}
+            </if>
+            <if test="roleMenu.roleId!= null and roleMenu.roleId!= ''">
+				AND ROLE_ID=#{roleMenu.roleId}
+            </if>
+            <if test="roleMenu.menuId!= null and roleMenu.menuId!= ''">
+				AND MENU_ID=#{roleMenu.menuId}
+            </if>
+            <if test="roleMenu.remark!= null and roleMenu.remark!= ''">
+				AND REMARK=#{roleMenu.remark}
+            </if>
+            <if test="roleMenu.createdBy!= null and roleMenu.createdBy!= ''">
+				AND CREATED_BY=#{roleMenu.createdBy}
+            </if>
+            <if test="roleMenu.createTime!= null and roleMenu.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{roleMenu.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="roleMenu.updatedBy!= null and roleMenu.updatedBy!= ''">
+				AND UPDATED_BY=#{roleMenu.updatedBy}
+            </if>
+            <if test="roleMenu.updateTime!= null and roleMenu.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{roleMenu.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="roleMenu.version!= null and roleMenu.version!= ''">
+				AND VERSION=#{roleMenu.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'roleMenuId'">
+				ROLE_MENU_ID ${value}
+            </when>
+        	<when test="key == 'roleId'">
+				ROLE_ID ${value}
+            </when>
+        	<when test="key == 'menuId'">
+				MENU_ID ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createdBy'">
+				CREATED_BY ${value}
+            </when>
+        	<when test="key == 'createTime'">
+				CREATE_TIME ${value}
+            </when>
+        	<when test="key == 'updatedBy'">
+				UPDATED_BY ${value}
+            </when>
+        	<when test="key == 'updateTime'">
+				UPDATE_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="roleMenuId" parameterType="RoleMenu">
+		<![CDATA[ INSERT INTO T_ROLE_MENU ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{roleId}
+			, #{menuId}
+			, #{remark}
+			, #{createdBy}
+			, str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="RoleMenu">
+		<![CDATA[ UPDATE T_ROLE_MENU SET 
+			 ROLE_MENU_ID=#{roleMenuId} 
+			, ROLE_ID=#{roleId} 
+			, MENU_ID=#{menuId} 
+			, REMARK=#{remark} 
+			, CREATED_BY=#{createdBy} 
+			, CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATED_BY=#{updatedBy} 
+			, UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ROLE_MENU_ID = #{roleMenuId}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_ROLE_MENU WHERE ROLE_MENU_ID = #{roleMenuId}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_ROLE_MENU WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ROLE_MENU_ID IN(" separator="," close=") ">
+			${id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="RoleMenu">
+		DELETE FROM T_ROLE_MENU WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="RoleMenuResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_ROLE_MENU WHERE ROLE_MENU_ID = #{roleMenuId}  
+	</select>
+	<select id="list" resultMap="RoleMenuResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_ROLE_MENU
+	</select>
+	<select id="listByProperty" parameterType="RoleMenu" resultMap="RoleMenuResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_ROLE_MENU WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="RoleMenu" resultMap="RoleMenuResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_ROLE_MENU WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="RoleMenu" resultType="int">
+		SELECT count(1) AS totalcount FROM T_ROLE_MENU WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

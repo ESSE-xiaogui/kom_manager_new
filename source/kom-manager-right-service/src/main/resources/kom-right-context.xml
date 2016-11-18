@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:beans="http://www.springframework.org/schema/beans" xmlns:p="http://www.springframework.org/schema/p"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+<!--     <context:property-placeholder location="classpath:**/redis.properties"/> -->
+
+    <beans:bean id="jedisConnFactory"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+          p:usePool="true"
+          p:hostName="${redis.host}"
+          p:port="${redis.port}"
+          p:password="${redis.password}"/>
+
+    <beans:bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <beans:property name="maxTotal" value="${redis.maxTotal}" />
+        <beans:property name="minIdle" value="${redis.minIdle}" />
+        <beans:property name="maxWaitMillis" value="${redis.maxWaitTime}" />
+        <beans:property name="maxIdle" value="${redis.maxIdle}" />
+        <beans:property name="testOnBorrow" value="${redis.testOnBorrow}" />
+        <beans:property name="testOnReturn" value="${redis.testOnReturn}" />
+        <beans:property name="testWhileIdle" value="${redis.testWhileIdle}" />
+    </beans:bean>
+
+    <beans:bean id="sentinelConfiguration"
+          class="org.springframework.data.redis.connection.RedisSentinelConfiguration">
+        <beans:property name="master">
+            <beans:bean class="org.springframework.data.redis.connection.RedisNode">
+                <beans:property name="name" value="${redis.masterName}"/>
+            </beans:bean>
+        </beans:property>
+        <beans:property name="sentinels">
+            <beans:set>
+                <beans:bean class="org.springframework.data.redis.connection.RedisNode">
+                    <beans:constructor-arg 
+                                     value="${redis.sentinel1.host}"/>
+                    <beans:constructor-arg 
+                                     value="${redis.sentinel1.port}"/>
+                </beans:bean>
+                <beans:bean class="org.springframework.data.redis.connection.RedisNode">
+                    <beans:constructor-arg 
+                                     value="${redis.sentinel2.host}"/>
+                    <beans:constructor-arg 
+                                     value="${redis.sentinel2.port}"/>
+                </beans:bean>
+            </beans:set>
+        </beans:property>
+    </beans:bean>
+
+    <beans:bean id="redisConnectionFactory"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <beans:property name="password" value="${redis.password}"/>
+        <beans:property name="poolConfig" ref="poolConfig"/>
+        <beans:constructor-arg  ref="sentinelConfiguration"/>
+    </beans:bean>
+
+    <!-- redis template definition -->
+    <beans:bean id="redisTemplate"
+          class="org.springframework.data.redis.core.RedisTemplate"
+          p:connectionFactory-ref="redisConnectionFactory">
+
+        <beans:property name="keySerializer">
+            <beans:bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </beans:property>
+        <beans:property name="hashKeySerializer">
+            <beans:bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </beans:property>
+    </beans:bean>
+
+    <beans:bean id="authKeyGenerator" class="com.rest.service.security.simple.DefaultAuthKeyGenerator" />
+
+    <beans:bean id="anonResourceService" class="com.transsion.kom.service.AnonResourceService">
+        <beans:property name="anonList">
+            <beans:list>
+                <beans:value>/**/login</beans:value>
+                <beans:value>/**/encrypt</beans:value>
+                <beans:value>/**/getVersionInfo</beans:value>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+
+    <beans:bean id="resourceService" class="com.transsion.kom.service.ResourceService">
+        <beans:property name="resources">
+            <beans:list>
+                <beans:value>/**/logOut</beans:value>
+                <beans:value>/**/listPg</beans:value>
+                <beans:value>/**/add</beans:value>
+                <beans:value>/**/delete</beans:value>
+                <beans:value>/**/update</beans:value>
+                <beans:value>/**/getByPK</beans:value>
+                <beans:value>/**/deleteByProperty</beans:value>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+</beans:beans>

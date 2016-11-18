@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-11-18 15:56:34
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.BrandMapper">
+	<resultMap id="BrandResultMapper" type="Brand">
+		<result column="ID" property="id"/>
+		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="BRAND_NAME" property="brandName"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="IS_SELF" property="isSelf"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, BRAND_CODE
+		, BRAND_NAME
+		, COMPANY_ID
+		, IS_SELF
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 BRAND_CODE
+		, BRAND_NAME
+		, COMPANY_ID
+		, IS_SELF
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, BRAND_CODE
+		, BRAND_NAME
+		, COMPANY_ID
+		, IS_SELF
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, date_format(CREATED_TIME, '%Y-%m-%d %H:%i:%s') CREATED_TIME
+		, UPDATED_BY
+		, date_format(UPDATED_TIME, '%Y-%m-%d %H:%i:%s') UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="brandCode!= null and brandCode!= ''"> 
+			AND BRAND_CODE=#{brandCode}
+		</if>
+		<if test="brandName!= null and brandName!= ''"> 
+			AND BRAND_NAME=#{brandName}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="isSelf!= null and isSelf!= ''"> 
+			AND IS_SELF=#{isSelf}
+		</if>
+		<if test="isInactive!= null and isInactive!= ''"> 
+			AND IS_INACTIVE=#{isInactive}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createdBy!= null and createdBy!= ''"> 
+			AND CREATED_BY=#{createdBy}
+		</if>
+		<if test="createdTime!= null and createdTime!= ''"> 
+			AND CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updatedBy!= null and updatedBy!= ''"> 
+			AND UPDATED_BY=#{updatedBy}
+		</if>
+		<if test="updatedTime!= null and updatedTime!= ''"> 
+			AND UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="brand != null">
+            <if test="brand.id!= null and brand.id!= ''">
+				AND ID=#{brand.id}
+            </if>
+            <if test="brand.brandCode!= null and brand.brandCode!= ''">
+				AND BRAND_CODE=#{brand.brandCode}
+            </if>
+            <if test="brand.brandName!= null and brand.brandName!= ''">
+				AND BRAND_NAME=#{brand.brandName}
+            </if>
+            <if test="brand.companyId!= null and brand.companyId!= ''">
+				AND COMPANY_ID=#{brand.companyId}
+            </if>
+            <if test="brand.isSelf!= null and brand.isSelf!= ''">
+				AND IS_SELF=#{brand.isSelf}
+            </if>
+            <if test="brand.isInactive!= null and brand.isInactive!= ''">
+				AND IS_INACTIVE=#{brand.isInactive}
+            </if>
+            <if test="brand.remark!= null and brand.remark!= ''">
+				AND REMARK=#{brand.remark}
+            </if>
+            <if test="brand.createdBy!= null and brand.createdBy!= ''">
+				AND CREATED_BY=#{brand.createdBy}
+            </if>
+            <if test="brand.createdTime!= null and brand.createdTime!= ''">
+				AND CREATED_TIME=str_to_date(#{brand.createdTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="brand.updatedBy!= null and brand.updatedBy!= ''">
+				AND UPDATED_BY=#{brand.updatedBy}
+            </if>
+            <if test="brand.updatedTime!= null and brand.updatedTime!= ''">
+				AND UPDATED_TIME=str_to_date(#{brand.updatedTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="brand.version!= null and brand.version!= ''">
+				AND VERSION=#{brand.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'brandCode'">
+				BRAND_CODE ${value}
+            </when>
+        	<when test="key == 'brandName'">
+				BRAND_NAME ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'isSelf'">
+				IS_SELF ${value}
+            </when>
+        	<when test="key == 'isInactive'">
+				IS_INACTIVE ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createdBy'">
+				CREATED_BY ${value}
+            </when>
+        	<when test="key == 'createdTime'">
+				CREATED_TIME ${value}
+            </when>
+        	<when test="key == 'updatedBy'">
+				UPDATED_BY ${value}
+            </when>
+        	<when test="key == 'updatedTime'">
+				UPDATED_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Brand">
+		<![CDATA[ INSERT INTO T_BRAND ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{brandCode}
+			, #{brandName}
+			, #{companyId}
+			, #{isSelf}
+			, #{isInactive}
+			, #{remark}
+			, #{createdBy}
+			, str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="Brand">
+		<![CDATA[ UPDATE T_BRAND SET 
+			 ID=#{id} 
+			, BRAND_CODE=#{brandCode} 
+			, BRAND_NAME=#{brandName} 
+			, COMPANY_ID=#{companyId} 
+			, IS_SELF=#{isSelf} 
+			, IS_INACTIVE=#{isInactive} 
+			, REMARK=#{remark} 
+			, CREATED_BY=#{createdBy} 
+			, CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATED_BY=#{updatedBy} 
+			, UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_BRAND WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_BRAND WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			${id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="Brand">
+		DELETE FROM T_BRAND WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="BrandResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_BRAND WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="BrandResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_BRAND
+	</select>
+	<select id="listByProperty" parameterType="Brand" resultMap="BrandResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_BRAND WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="Brand" resultMap="BrandResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_BRAND WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="Brand" resultType="int">
+		SELECT count(1) AS totalcount FROM T_BRAND WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

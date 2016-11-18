@@ -1,0 +1,781 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-11-18 15:56:38
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.ShopMapper">
+	<resultMap id="ShopResultMapper" type="Shop">
+		<result column="ID" property="id"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="SHOP_CODE" property="shopCode"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="PARENT_ID" property="parentId"/>
+		<result column="REGION_ID" property="regionId"/>
+		<result column="COUNTRY" property="country"/>
+		<result column="CITY" property="city"/>
+		<result column="SHOP_ICON" property="shopIcon"/>
+		<result column="ADDRESS" property="address"/>
+		<result column="OWNER_NAME" property="ownerName"/>
+		<result column="OWNER_PHONE" property="ownerPhone"/>
+		<result column="PROMOTER" property="promoter"/>
+		<result column="ASSISTANT" property="assistant"/>
+		<result column="MATERIEL_ID" property="materielId"/>
+		<result column="GRADE_ID" property="gradeId"/>
+		<result column="BIZ_ID" property="bizId"/>
+		<result column="TOTAL_NUM" property="totalNum"/>
+		<result column="CURRENT_NUM" property="currentNum"/>
+		<result column="CLERK_NUM" property="clerkNum"/>
+		<result column="BRANDS_FIRST" property="brandsFirst"/>
+		<result column="BRANDS_TWO" property="brandsTwo"/>
+		<result column="BRANDS_THREE" property="brandsThree"/>
+		<result column="COUNTER_NUM" property="counterNum"/>
+		<result column="DARK_PRO" property="darkPro"/>
+		<result column="PURCHAS_CHANNEL" property="purchasChannel"/>
+		<result column="IS_KOM" property="isKom"/>
+		<result column="RELATIONSHIP" property="relationship"/>
+		<result column="INCORPORATOR" property="incorporator"/>
+		<result column="INCORPORATOR_TEL" property="incorporatorTel"/>
+		<result column="FWIDTH" property="fwidth"/>
+		<result column="FDEPTH" property="fdepth"/>
+		<result column="SHOP_AREA" property="shopArea"/>
+		<result column="SHOW_NUM" property="showNum"/>
+		<result column="STAFF_NUM" property="staffNum"/>
+		<result column="SALES_NUM" property="salesNum"/>
+		<result column="OPEN_DATE" property="openDate"/>
+		<result column="STATUS" property="status"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_DATE" property="updateDate"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, SHOP_ID
+		, SHOP_CODE
+		, SHOP_NAME
+		, COMPANY_ID
+		, PARENT_ID
+		, REGION_ID
+		, COUNTRY
+		, CITY
+		, SHOP_ICON
+		, ADDRESS
+		, OWNER_NAME
+		, OWNER_PHONE
+		, PROMOTER
+		, ASSISTANT
+		, MATERIEL_ID
+		, GRADE_ID
+		, BIZ_ID
+		, TOTAL_NUM
+		, CURRENT_NUM
+		, CLERK_NUM
+		, BRANDS_FIRST
+		, BRANDS_TWO
+		, BRANDS_THREE
+		, COUNTER_NUM
+		, DARK_PRO
+		, PURCHAS_CHANNEL
+		, IS_KOM
+		, RELATIONSHIP
+		, INCORPORATOR
+		, INCORPORATOR_TEL
+		, FWIDTH
+		, FDEPTH
+		, SHOP_AREA
+		, SHOW_NUM
+		, STAFF_NUM
+		, SALES_NUM
+		, OPEN_DATE
+		, STATUS
+		, REMARK
+		, CREATE_BY
+		, CREATE_DATE
+		, UPDATE_BY
+		, UPDATE_DATE
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 SHOP_ID
+		, SHOP_CODE
+		, SHOP_NAME
+		, COMPANY_ID
+		, PARENT_ID
+		, REGION_ID
+		, COUNTRY
+		, CITY
+		, SHOP_ICON
+		, ADDRESS
+		, OWNER_NAME
+		, OWNER_PHONE
+		, PROMOTER
+		, ASSISTANT
+		, MATERIEL_ID
+		, GRADE_ID
+		, BIZ_ID
+		, TOTAL_NUM
+		, CURRENT_NUM
+		, CLERK_NUM
+		, BRANDS_FIRST
+		, BRANDS_TWO
+		, BRANDS_THREE
+		, COUNTER_NUM
+		, DARK_PRO
+		, PURCHAS_CHANNEL
+		, IS_KOM
+		, RELATIONSHIP
+		, INCORPORATOR
+		, INCORPORATOR_TEL
+		, FWIDTH
+		, FDEPTH
+		, SHOP_AREA
+		, SHOW_NUM
+		, STAFF_NUM
+		, SALES_NUM
+		, OPEN_DATE
+		, STATUS
+		, REMARK
+		, CREATE_BY
+		, CREATE_DATE
+		, UPDATE_BY
+		, UPDATE_DATE
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, SHOP_ID
+		, SHOP_CODE
+		, SHOP_NAME
+		, COMPANY_ID
+		, PARENT_ID
+		, REGION_ID
+		, COUNTRY
+		, CITY
+		, SHOP_ICON
+		, ADDRESS
+		, OWNER_NAME
+		, OWNER_PHONE
+		, PROMOTER
+		, ASSISTANT
+		, MATERIEL_ID
+		, GRADE_ID
+		, BIZ_ID
+		, TOTAL_NUM
+		, CURRENT_NUM
+		, CLERK_NUM
+		, BRANDS_FIRST
+		, BRANDS_TWO
+		, BRANDS_THREE
+		, COUNTER_NUM
+		, DARK_PRO
+		, PURCHAS_CHANNEL
+		, IS_KOM
+		, RELATIONSHIP
+		, INCORPORATOR
+		, INCORPORATOR_TEL
+		, FWIDTH
+		, FDEPTH
+		, SHOP_AREA
+		, SHOW_NUM
+		, STAFF_NUM
+		, SALES_NUM
+		, date_format(OPEN_DATE, '%Y-%m-%d %H:%i:%s') OPEN_DATE
+		, STATUS
+		, REMARK
+		, CREATE_BY
+		, date_format(CREATE_DATE, '%Y-%m-%d %H:%i:%s') CREATE_DATE
+		, UPDATE_BY
+		, date_format(UPDATE_DATE, '%Y-%m-%d %H:%i:%s') UPDATE_DATE
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="shopId!= null and shopId!= ''"> 
+			AND SHOP_ID=#{shopId}
+		</if>
+		<if test="shopCode!= null and shopCode!= ''"> 
+			AND SHOP_CODE=#{shopCode}
+		</if>
+		<if test="shopName!= null and shopName!= ''"> 
+			AND SHOP_NAME=#{shopName}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="parentId!= null and parentId!= ''"> 
+			AND PARENT_ID=#{parentId}
+		</if>
+		<if test="regionId!= null and regionId!= ''"> 
+			AND REGION_ID=#{regionId}
+		</if>
+		<if test="country!= null and country!= ''"> 
+			AND COUNTRY=#{country}
+		</if>
+		<if test="city!= null and city!= ''"> 
+			AND CITY=#{city}
+		</if>
+		<if test="shopIcon!= null and shopIcon!= ''"> 
+			AND SHOP_ICON=#{shopIcon}
+		</if>
+		<if test="address!= null and address!= ''"> 
+			AND ADDRESS=#{address}
+		</if>
+		<if test="ownerName!= null and ownerName!= ''"> 
+			AND OWNER_NAME=#{ownerName}
+		</if>
+		<if test="ownerPhone!= null and ownerPhone!= ''"> 
+			AND OWNER_PHONE=#{ownerPhone}
+		</if>
+		<if test="promoter!= null and promoter!= ''"> 
+			AND PROMOTER=#{promoter}
+		</if>
+		<if test="assistant!= null and assistant!= ''"> 
+			AND ASSISTANT=#{assistant}
+		</if>
+		<if test="materielId!= null and materielId!= ''"> 
+			AND MATERIEL_ID=#{materielId}
+		</if>
+		<if test="gradeId!= null and gradeId!= ''"> 
+			AND GRADE_ID=#{gradeId}
+		</if>
+		<if test="bizId!= null and bizId!= ''"> 
+			AND BIZ_ID=#{bizId}
+		</if>
+		<if test="totalNum!= null and totalNum!= ''"> 
+			AND TOTAL_NUM=#{totalNum}
+		</if>
+		<if test="currentNum!= null and currentNum!= ''"> 
+			AND CURRENT_NUM=#{currentNum}
+		</if>
+		<if test="clerkNum!= null and clerkNum!= ''"> 
+			AND CLERK_NUM=#{clerkNum}
+		</if>
+		<if test="brandsFirst!= null and brandsFirst!= ''"> 
+			AND BRANDS_FIRST=#{brandsFirst}
+		</if>
+		<if test="brandsTwo!= null and brandsTwo!= ''"> 
+			AND BRANDS_TWO=#{brandsTwo}
+		</if>
+		<if test="brandsThree!= null and brandsThree!= ''"> 
+			AND BRANDS_THREE=#{brandsThree}
+		</if>
+		<if test="counterNum!= null and counterNum!= ''"> 
+			AND COUNTER_NUM=#{counterNum}
+		</if>
+		<if test="darkPro!= null and darkPro!= ''"> 
+			AND DARK_PRO=#{darkPro}
+		</if>
+		<if test="purchasChannel!= null and purchasChannel!= ''"> 
+			AND PURCHAS_CHANNEL=#{purchasChannel}
+		</if>
+		<if test="isKom!= null and isKom!= ''"> 
+			AND IS_KOM=#{isKom}
+		</if>
+		<if test="relationship!= null and relationship!= ''"> 
+			AND RELATIONSHIP=#{relationship}
+		</if>
+		<if test="incorporator!= null and incorporator!= ''"> 
+			AND INCORPORATOR=#{incorporator}
+		</if>
+		<if test="incorporatorTel!= null and incorporatorTel!= ''"> 
+			AND INCORPORATOR_TEL=#{incorporatorTel}
+		</if>
+		<if test="fwidth!= null and fwidth!= ''"> 
+			AND FWIDTH=#{fwidth}
+		</if>
+		<if test="fdepth!= null and fdepth!= ''"> 
+			AND FDEPTH=#{fdepth}
+		</if>
+		<if test="shopArea!= null and shopArea!= ''"> 
+			AND SHOP_AREA=#{shopArea}
+		</if>
+		<if test="showNum!= null and showNum!= ''"> 
+			AND SHOW_NUM=#{showNum}
+		</if>
+		<if test="staffNum!= null and staffNum!= ''"> 
+			AND STAFF_NUM=#{staffNum}
+		</if>
+		<if test="salesNum!= null and salesNum!= ''"> 
+			AND SALES_NUM=#{salesNum}
+		</if>
+		<if test="openDate!= null and openDate!= ''"> 
+			AND OPEN_DATE=str_to_date(#{openDate},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="status!= null and status!= ''"> 
+			AND STATUS=#{status}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createBy!= null and createBy!= ''"> 
+			AND CREATE_BY=#{createBy}
+		</if>
+		<if test="createDate!= null and createDate!= ''"> 
+			AND CREATE_DATE=str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updateBy!= null and updateBy!= ''"> 
+			AND UPDATE_BY=#{updateBy}
+		</if>
+		<if test="updateDate!= null and updateDate!= ''"> 
+			AND UPDATE_DATE=str_to_date(#{updateDate},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="shop != null">
+            <if test="shop.id!= null and shop.id!= ''">
+				AND ID=#{shop.id}
+            </if>
+            <if test="shop.shopId!= null and shop.shopId!= ''">
+				AND SHOP_ID=#{shop.shopId}
+            </if>
+            <if test="shop.shopCode!= null and shop.shopCode!= ''">
+				AND SHOP_CODE=#{shop.shopCode}
+            </if>
+            <if test="shop.shopName!= null and shop.shopName!= ''">
+				AND SHOP_NAME=#{shop.shopName}
+            </if>
+            <if test="shop.companyId!= null and shop.companyId!= ''">
+				AND COMPANY_ID=#{shop.companyId}
+            </if>
+            <if test="shop.parentId!= null and shop.parentId!= ''">
+				AND PARENT_ID=#{shop.parentId}
+            </if>
+            <if test="shop.regionId!= null and shop.regionId!= ''">
+				AND REGION_ID=#{shop.regionId}
+            </if>
+            <if test="shop.country!= null and shop.country!= ''">
+				AND COUNTRY=#{shop.country}
+            </if>
+            <if test="shop.city!= null and shop.city!= ''">
+				AND CITY=#{shop.city}
+            </if>
+            <if test="shop.shopIcon!= null and shop.shopIcon!= ''">
+				AND SHOP_ICON=#{shop.shopIcon}
+            </if>
+            <if test="shop.address!= null and shop.address!= ''">
+				AND ADDRESS=#{shop.address}
+            </if>
+            <if test="shop.ownerName!= null and shop.ownerName!= ''">
+				AND OWNER_NAME=#{shop.ownerName}
+            </if>
+            <if test="shop.ownerPhone!= null and shop.ownerPhone!= ''">
+				AND OWNER_PHONE=#{shop.ownerPhone}
+            </if>
+            <if test="shop.promoter!= null and shop.promoter!= ''">
+				AND PROMOTER=#{shop.promoter}
+            </if>
+            <if test="shop.assistant!= null and shop.assistant!= ''">
+				AND ASSISTANT=#{shop.assistant}
+            </if>
+            <if test="shop.materielId!= null and shop.materielId!= ''">
+				AND MATERIEL_ID=#{shop.materielId}
+            </if>
+            <if test="shop.gradeId!= null and shop.gradeId!= ''">
+				AND GRADE_ID=#{shop.gradeId}
+            </if>
+            <if test="shop.bizId!= null and shop.bizId!= ''">
+				AND BIZ_ID=#{shop.bizId}
+            </if>
+            <if test="shop.totalNum!= null and shop.totalNum!= ''">
+				AND TOTAL_NUM=#{shop.totalNum}
+            </if>
+            <if test="shop.currentNum!= null and shop.currentNum!= ''">
+				AND CURRENT_NUM=#{shop.currentNum}
+            </if>
+            <if test="shop.clerkNum!= null and shop.clerkNum!= ''">
+				AND CLERK_NUM=#{shop.clerkNum}
+            </if>
+            <if test="shop.brandsFirst!= null and shop.brandsFirst!= ''">
+				AND BRANDS_FIRST=#{shop.brandsFirst}
+            </if>
+            <if test="shop.brandsTwo!= null and shop.brandsTwo!= ''">
+				AND BRANDS_TWO=#{shop.brandsTwo}
+            </if>
+            <if test="shop.brandsThree!= null and shop.brandsThree!= ''">
+				AND BRANDS_THREE=#{shop.brandsThree}
+            </if>
+            <if test="shop.counterNum!= null and shop.counterNum!= ''">
+				AND COUNTER_NUM=#{shop.counterNum}
+            </if>
+            <if test="shop.darkPro!= null and shop.darkPro!= ''">
+				AND DARK_PRO=#{shop.darkPro}
+            </if>
+            <if test="shop.purchasChannel!= null and shop.purchasChannel!= ''">
+				AND PURCHAS_CHANNEL=#{shop.purchasChannel}
+            </if>
+            <if test="shop.isKom!= null and shop.isKom!= ''">
+				AND IS_KOM=#{shop.isKom}
+            </if>
+            <if test="shop.relationship!= null and shop.relationship!= ''">
+				AND RELATIONSHIP=#{shop.relationship}
+            </if>
+            <if test="shop.incorporator!= null and shop.incorporator!= ''">
+				AND INCORPORATOR=#{shop.incorporator}
+            </if>
+            <if test="shop.incorporatorTel!= null and shop.incorporatorTel!= ''">
+				AND INCORPORATOR_TEL=#{shop.incorporatorTel}
+            </if>
+            <if test="shop.fwidth!= null and shop.fwidth!= ''">
+				AND FWIDTH=#{shop.fwidth}
+            </if>
+            <if test="shop.fdepth!= null and shop.fdepth!= ''">
+				AND FDEPTH=#{shop.fdepth}
+            </if>
+            <if test="shop.shopArea!= null and shop.shopArea!= ''">
+				AND SHOP_AREA=#{shop.shopArea}
+            </if>
+            <if test="shop.showNum!= null and shop.showNum!= ''">
+				AND SHOW_NUM=#{shop.showNum}
+            </if>
+            <if test="shop.staffNum!= null and shop.staffNum!= ''">
+				AND STAFF_NUM=#{shop.staffNum}
+            </if>
+            <if test="shop.salesNum!= null and shop.salesNum!= ''">
+				AND SALES_NUM=#{shop.salesNum}
+            </if>
+            <if test="shop.openDate!= null and shop.openDate!= ''">
+				AND OPEN_DATE=str_to_date(#{shop.openDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="shop.status!= null and shop.status!= ''">
+				AND STATUS=#{shop.status}
+            </if>
+            <if test="shop.remark!= null and shop.remark!= ''">
+				AND REMARK=#{shop.remark}
+            </if>
+            <if test="shop.createBy!= null and shop.createBy!= ''">
+				AND CREATE_BY=#{shop.createBy}
+            </if>
+            <if test="shop.createDate!= null and shop.createDate!= ''">
+				AND CREATE_DATE=str_to_date(#{shop.createDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="shop.updateBy!= null and shop.updateBy!= ''">
+				AND UPDATE_BY=#{shop.updateBy}
+            </if>
+            <if test="shop.updateDate!= null and shop.updateDate!= ''">
+				AND UPDATE_DATE=str_to_date(#{shop.updateDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="shop.version!= null and shop.version!= ''">
+				AND VERSION=#{shop.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'shopId'">
+				SHOP_ID ${value}
+            </when>
+        	<when test="key == 'shopCode'">
+				SHOP_CODE ${value}
+            </when>
+        	<when test="key == 'shopName'">
+				SHOP_NAME ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'parentId'">
+				PARENT_ID ${value}
+            </when>
+        	<when test="key == 'regionId'">
+				REGION_ID ${value}
+            </when>
+        	<when test="key == 'country'">
+				COUNTRY ${value}
+            </when>
+        	<when test="key == 'city'">
+				CITY ${value}
+            </when>
+        	<when test="key == 'shopIcon'">
+				SHOP_ICON ${value}
+            </when>
+        	<when test="key == 'address'">
+				ADDRESS ${value}
+            </when>
+        	<when test="key == 'ownerName'">
+				OWNER_NAME ${value}
+            </when>
+        	<when test="key == 'ownerPhone'">
+				OWNER_PHONE ${value}
+            </when>
+        	<when test="key == 'promoter'">
+				PROMOTER ${value}
+            </when>
+        	<when test="key == 'assistant'">
+				ASSISTANT ${value}
+            </when>
+        	<when test="key == 'materielId'">
+				MATERIEL_ID ${value}
+            </when>
+        	<when test="key == 'gradeId'">
+				GRADE_ID ${value}
+            </when>
+        	<when test="key == 'bizId'">
+				BIZ_ID ${value}
+            </when>
+        	<when test="key == 'totalNum'">
+				TOTAL_NUM ${value}
+            </when>
+        	<when test="key == 'currentNum'">
+				CURRENT_NUM ${value}
+            </when>
+        	<when test="key == 'clerkNum'">
+				CLERK_NUM ${value}
+            </when>
+        	<when test="key == 'brandsFirst'">
+				BRANDS_FIRST ${value}
+            </when>
+        	<when test="key == 'brandsTwo'">
+				BRANDS_TWO ${value}
+            </when>
+        	<when test="key == 'brandsThree'">
+				BRANDS_THREE ${value}
+            </when>
+        	<when test="key == 'counterNum'">
+				COUNTER_NUM ${value}
+            </when>
+        	<when test="key == 'darkPro'">
+				DARK_PRO ${value}
+            </when>
+        	<when test="key == 'purchasChannel'">
+				PURCHAS_CHANNEL ${value}
+            </when>
+        	<when test="key == 'isKom'">
+				IS_KOM ${value}
+            </when>
+        	<when test="key == 'relationship'">
+				RELATIONSHIP ${value}
+            </when>
+        	<when test="key == 'incorporator'">
+				INCORPORATOR ${value}
+            </when>
+        	<when test="key == 'incorporatorTel'">
+				INCORPORATOR_TEL ${value}
+            </when>
+        	<when test="key == 'fwidth'">
+				FWIDTH ${value}
+            </when>
+        	<when test="key == 'fdepth'">
+				FDEPTH ${value}
+            </when>
+        	<when test="key == 'shopArea'">
+				SHOP_AREA ${value}
+            </when>
+        	<when test="key == 'showNum'">
+				SHOW_NUM ${value}
+            </when>
+        	<when test="key == 'staffNum'">
+				STAFF_NUM ${value}
+            </when>
+        	<when test="key == 'salesNum'">
+				SALES_NUM ${value}
+            </when>
+        	<when test="key == 'openDate'">
+				OPEN_DATE ${value}
+            </when>
+        	<when test="key == 'status'">
+				STATUS ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createBy'">
+				CREATE_BY ${value}
+            </when>
+        	<when test="key == 'createDate'">
+				CREATE_DATE ${value}
+            </when>
+        	<when test="key == 'updateBy'">
+				UPDATE_BY ${value}
+            </when>
+        	<when test="key == 'updateDate'">
+				UPDATE_DATE ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Shop">
+		<![CDATA[ INSERT INTO T_SHOP ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{shopId}
+			, #{shopCode}
+			, #{shopName}
+			, #{companyId}
+			, #{parentId}
+			, #{regionId}
+			, #{country}
+			, #{city}
+			, #{shopIcon}
+			, #{address}
+			, #{ownerName}
+			, #{ownerPhone}
+			, #{promoter}
+			, #{assistant}
+			, #{materielId}
+			, #{gradeId}
+			, #{bizId}
+			, #{totalNum}
+			, #{currentNum}
+			, #{clerkNum}
+			, #{brandsFirst}
+			, #{brandsTwo}
+			, #{brandsThree}
+			, #{counterNum}
+			, #{darkPro}
+			, #{purchasChannel}
+			, #{isKom}
+			, #{relationship}
+			, #{incorporator}
+			, #{incorporatorTel}
+			, #{fwidth}
+			, #{fdepth}
+			, #{shopArea}
+			, #{showNum}
+			, #{staffNum}
+			, #{salesNum}
+			, str_to_date(#{openDate},'%Y-%m-%d %H:%i:%s')
+			, #{status}
+			, #{remark}
+			, #{createBy}
+			, str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
+			, #{updateBy}
+			, str_to_date(#{updateDate},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="Shop">
+		<![CDATA[ UPDATE T_SHOP SET 
+			 ID=#{id} 
+			, SHOP_ID=#{shopId} 
+			, SHOP_CODE=#{shopCode} 
+			, SHOP_NAME=#{shopName} 
+			, COMPANY_ID=#{companyId} 
+			, PARENT_ID=#{parentId} 
+			, REGION_ID=#{regionId} 
+			, COUNTRY=#{country} 
+			, CITY=#{city} 
+			, SHOP_ICON=#{shopIcon} 
+			, ADDRESS=#{address} 
+			, OWNER_NAME=#{ownerName} 
+			, OWNER_PHONE=#{ownerPhone} 
+			, PROMOTER=#{promoter} 
+			, ASSISTANT=#{assistant} 
+			, MATERIEL_ID=#{materielId} 
+			, GRADE_ID=#{gradeId} 
+			, BIZ_ID=#{bizId} 
+			, TOTAL_NUM=#{totalNum} 
+			, CURRENT_NUM=#{currentNum} 
+			, CLERK_NUM=#{clerkNum} 
+			, BRANDS_FIRST=#{brandsFirst} 
+			, BRANDS_TWO=#{brandsTwo} 
+			, BRANDS_THREE=#{brandsThree} 
+			, COUNTER_NUM=#{counterNum} 
+			, DARK_PRO=#{darkPro} 
+			, PURCHAS_CHANNEL=#{purchasChannel} 
+			, IS_KOM=#{isKom} 
+			, RELATIONSHIP=#{relationship} 
+			, INCORPORATOR=#{incorporator} 
+			, INCORPORATOR_TEL=#{incorporatorTel} 
+			, FWIDTH=#{fwidth} 
+			, FDEPTH=#{fdepth} 
+			, SHOP_AREA=#{shopArea} 
+			, SHOW_NUM=#{showNum} 
+			, STAFF_NUM=#{staffNum} 
+			, SALES_NUM=#{salesNum} 
+			, OPEN_DATE=str_to_date(#{openDate},'%Y-%m-%d %H:%i:%s')
+			, STATUS=#{status} 
+			, REMARK=#{remark} 
+			, CREATE_BY=#{createBy} 
+			, CREATE_DATE=str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
+			, UPDATE_BY=#{updateBy} 
+			, UPDATE_DATE=str_to_date(#{updateDate},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_SHOP WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_SHOP WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			${id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="Shop">
+		DELETE FROM T_SHOP WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="ShopResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_SHOP WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="ShopResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_SHOP
+	</select>
+	<select id="listByProperty" parameterType="Shop" resultMap="ShopResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_SHOP WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="Shop" resultMap="ShopResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_SHOP WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="Shop" resultType="int">
+		SELECT count(1) AS totalcount FROM T_SHOP WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

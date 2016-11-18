@@ -9,11 +9,11 @@
     <packaging>pom</packaging>
     <version>1.0</version>
     <modules>
-        <module>kom-api</module>
-        <module>kom-service</module>
-        <module>kom-rest</module>
-        <module>kom-right-service</module>
-        <module>kom-common</module>
+        <module>kom-manager-common</module>
+        <module>kom-manager-api</module>
+        <module>kom-manager-service</module>
+        <module>kom-manager-rest</module>
+        <module>kom-manager-right-service</module>
     </modules>
 
     <properties>

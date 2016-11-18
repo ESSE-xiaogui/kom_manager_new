@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-11-18 15:56:35
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.CompanyMapper">
+	<resultMap id="CompanyResultMapper" type="Company">
+		<result column="ID" property="id"/>
+		<result column="COMPANY_CODE" property="companyCode"/>
+		<result column="COMPANY_NAME" property="companyName"/>
+		<result column="PARENT_ID" property="parentId"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, COMPANY_CODE
+		, COMPANY_NAME
+		, PARENT_ID
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 COMPANY_CODE
+		, COMPANY_NAME
+		, PARENT_ID
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, COMPANY_CODE
+		, COMPANY_NAME
+		, PARENT_ID
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, date_format(CREATED_TIME, '%Y-%m-%d %H:%i:%s') CREATED_TIME
+		, UPDATED_BY
+		, date_format(UPDATED_TIME, '%Y-%m-%d %H:%i:%s') UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="companyCode!= null and companyCode!= ''"> 
+			AND COMPANY_CODE=#{companyCode}
+		</if>
+		<if test="companyName!= null and companyName!= ''"> 
+			AND COMPANY_NAME=#{companyName}
+		</if>
+		<if test="parentId!= null and parentId!= ''"> 
+			AND PARENT_ID=#{parentId}
+		</if>
+		<if test="isInactive!= null and isInactive!= ''"> 
+			AND IS_INACTIVE=#{isInactive}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createdBy!= null and createdBy!= ''"> 
+			AND CREATED_BY=#{createdBy}
+		</if>
+		<if test="createdTime!= null and createdTime!= ''"> 
+			AND CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updatedBy!= null and updatedBy!= ''"> 
+			AND UPDATED_BY=#{updatedBy}
+		</if>
+		<if test="updatedTime!= null and updatedTime!= ''"> 
+			AND UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="company != null">
+            <if test="company.id!= null and company.id!= ''">
+				AND ID=#{company.id}
+            </if>
+            <if test="company.companyCode!= null and company.companyCode!= ''">
+				AND COMPANY_CODE=#{company.companyCode}
+            </if>
+            <if test="company.companyName!= null and company.companyName!= ''">
+				AND COMPANY_NAME=#{company.companyName}
+            </if>
+            <if test="company.parentId!= null and company.parentId!= ''">
+				AND PARENT_ID=#{company.parentId}
+            </if>
+            <if test="company.isInactive!= null and company.isInactive!= ''">
+				AND IS_INACTIVE=#{company.isInactive}
+            </if>
+            <if test="company.remark!= null and company.remark!= ''">
+				AND REMARK=#{company.remark}
+            </if>
+            <if test="company.createdBy!= null and company.createdBy!= ''">
+				AND CREATED_BY=#{company.createdBy}
+            </if>
+            <if test="company.createdTime!= null and company.createdTime!= ''">
+				AND CREATED_TIME=str_to_date(#{company.createdTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="company.updatedBy!= null and company.updatedBy!= ''">
+				AND UPDATED_BY=#{company.updatedBy}
+            </if>
+            <if test="company.updatedTime!= null and company.updatedTime!= ''">
+				AND UPDATED_TIME=str_to_date(#{company.updatedTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="company.version!= null and company.version!= ''">
+				AND VERSION=#{company.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'companyCode'">
+				COMPANY_CODE ${value}
+            </when>
+        	<when test="key == 'companyName'">
+				COMPANY_NAME ${value}
+            </when>
+        	<when test="key == 'parentId'">
+				PARENT_ID ${value}
+            </when>
+        	<when test="key == 'isInactive'">
+				IS_INACTIVE ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createdBy'">
+				CREATED_BY ${value}
+            </when>
+        	<when test="key == 'createdTime'">
+				CREATED_TIME ${value}
+            </when>
+        	<when test="key == 'updatedBy'">
+				UPDATED_BY ${value}
+            </when>
+        	<when test="key == 'updatedTime'">
+				UPDATED_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Company">
+		<![CDATA[ INSERT INTO T_COMPANY ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{companyCode}
+			, #{companyName}
+			, #{parentId}
+			, #{isInactive}
+			, #{remark}
+			, #{createdBy}
+			, str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="Company">
+		<![CDATA[ UPDATE T_COMPANY SET 
+			 ID=#{id} 
+			, COMPANY_CODE=#{companyCode} 
+			, COMPANY_NAME=#{companyName} 
+			, PARENT_ID=#{parentId} 
+			, IS_INACTIVE=#{isInactive} 
+			, REMARK=#{remark} 
+			, CREATED_BY=#{createdBy} 
+			, CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATED_BY=#{updatedBy} 
+			, UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_COMPANY WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_COMPANY WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			${id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="Company">
+		DELETE FROM T_COMPANY WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="CompanyResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_COMPANY WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="CompanyResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_COMPANY
+	</select>
+	<select id="listByProperty" parameterType="Company" resultMap="CompanyResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_COMPANY WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="Company" resultMap="CompanyResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_COMPANY WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="Company" resultType="int">
+		SELECT count(1) AS totalcount FROM T_COMPANY WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

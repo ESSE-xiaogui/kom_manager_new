@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-11-18 15:56:37
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.RoleResourceMapper">
+	<resultMap id="RoleResourceResultMapper" type="RoleResource">
+		<result column="ROLE_RES_ID" property="roleResId"/>
+		<result column="ROLE_ID" property="roleId"/>
+		<result column="RES_ID" property="resId"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ROLE_RES_ID
+		, ROLE_ID
+		, RES_ID
+		, REMARK
+		, CREATED_BY
+		, CREATE_TIME
+		, UPDATED_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 ROLE_ID
+		, RES_ID
+		, REMARK
+		, CREATED_BY
+		, CREATE_TIME
+		, UPDATED_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ROLE_RES_ID
+		, ROLE_ID
+		, RES_ID
+		, REMARK
+		, CREATED_BY
+		, date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+		, UPDATED_BY
+		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="roleResId!= null and roleResId!= ''"> 
+			AND ROLE_RES_ID=#{roleResId}
+		</if>
+		<if test="roleId!= null and roleId!= ''"> 
+			AND ROLE_ID=#{roleId}
+		</if>
+		<if test="resId!= null and resId!= ''"> 
+			AND RES_ID=#{resId}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createdBy!= null and createdBy!= ''"> 
+			AND CREATED_BY=#{createdBy}
+		</if>
+		<if test="createTime!= null and createTime!= ''"> 
+			AND CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updatedBy!= null and updatedBy!= ''"> 
+			AND UPDATED_BY=#{updatedBy}
+		</if>
+		<if test="updateTime!= null and updateTime!= ''"> 
+			AND UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="roleResource != null">
+            <if test="roleResource.roleResId!= null and roleResource.roleResId!= ''">
+				AND ROLE_RES_ID=#{roleResource.roleResId}
+            </if>
+            <if test="roleResource.roleId!= null and roleResource.roleId!= ''">
+				AND ROLE_ID=#{roleResource.roleId}
+            </if>
+            <if test="roleResource.resId!= null and roleResource.resId!= ''">
+				AND RES_ID=#{roleResource.resId}
+            </if>
+            <if test="roleResource.remark!= null and roleResource.remark!= ''">
+				AND REMARK=#{roleResource.remark}
+            </if>
+            <if test="roleResource.createdBy!= null and roleResource.createdBy!= ''">
+				AND CREATED_BY=#{roleResource.createdBy}
+            </if>
+            <if test="roleResource.createTime!= null and roleResource.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{roleResource.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="roleResource.updatedBy!= null and roleResource.updatedBy!= ''">
+				AND UPDATED_BY=#{roleResource.updatedBy}
+            </if>
+            <if test="roleResource.updateTime!= null and roleResource.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{roleResource.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="roleResource.version!= null and roleResource.version!= ''">
+				AND VERSION=#{roleResource.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'roleResId'">
+				ROLE_RES_ID ${value}
+            </when>
+        	<when test="key == 'roleId'">
+				ROLE_ID ${value}
+            </when>
+        	<when test="key == 'resId'">
+				RES_ID ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createdBy'">
+				CREATED_BY ${value}
+            </when>
+        	<when test="key == 'createTime'">
+				CREATE_TIME ${value}
+            </when>
+        	<when test="key == 'updatedBy'">
+				UPDATED_BY ${value}
+            </when>
+        	<when test="key == 'updateTime'">
+				UPDATE_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="roleResId" parameterType="RoleResource">
+		<![CDATA[ INSERT INTO T_ROLE_RESOURCE ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{roleId}
+			, #{resId}
+			, #{remark}
+			, #{createdBy}
+			, str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="RoleResource">
+		<![CDATA[ UPDATE T_ROLE_RESOURCE SET 
+			 ROLE_RES_ID=#{roleResId} 
+			, ROLE_ID=#{roleId} 
+			, RES_ID=#{resId} 
+			, REMARK=#{remark} 
+			, CREATED_BY=#{createdBy} 
+			, CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATED_BY=#{updatedBy} 
+			, UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ROLE_RES_ID = #{roleResId}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_ROLE_RESOURCE WHERE ROLE_RES_ID = #{roleResId}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_ROLE_RESOURCE WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ROLE_RES_ID IN(" separator="," close=") ">
+			${id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="RoleResource">
+		DELETE FROM T_ROLE_RESOURCE WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="RoleResourceResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_ROLE_RESOURCE WHERE ROLE_RES_ID = #{roleResId}  
+	</select>
+	<select id="list" resultMap="RoleResourceResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_ROLE_RESOURCE
+	</select>
+	<select id="listByProperty" parameterType="RoleResource" resultMap="RoleResourceResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_ROLE_RESOURCE WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="RoleResource" resultMap="RoleResourceResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_ROLE_RESOURCE WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="RoleResource" resultType="int">
+		SELECT count(1) AS totalcount FROM T_ROLE_RESOURCE WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

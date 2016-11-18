@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-11-18 15:56:40
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.SystemMenuMapper">
+	<resultMap id="SystemMenuResultMapper" type="SystemMenu">
+		<result column="MENU_ID" property="menuId"/>
+		<result column="MENU_CODE" property="menuCode"/>
+		<result column="MENU_NAME" property="menuName"/>
+		<result column="MENU_ORDER" property="menuOrder"/>
+		<result column="PARENT_MENU_ID" property="parentMenuId"/>
+		<result column="MENU_ICON" property="menuIcon"/>
+		<result column="PAGE_URL" property="pageUrl"/>
+		<result column="USABLE" property="usable"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 MENU_ID
+		, MENU_CODE
+		, MENU_NAME
+		, MENU_ORDER
+		, PARENT_MENU_ID
+		, MENU_ICON
+		, PAGE_URL
+		, USABLE
+		, REMARK
+		, CREATED_BY
+		, CREATE_TIME
+		, UPDATED_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 MENU_CODE
+		, MENU_NAME
+		, MENU_ORDER
+		, PARENT_MENU_ID
+		, MENU_ICON
+		, PAGE_URL
+		, USABLE
+		, REMARK
+		, CREATED_BY
+		, CREATE_TIME
+		, UPDATED_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 MENU_ID
+		, MENU_CODE
+		, MENU_NAME
+		, MENU_ORDER
+		, PARENT_MENU_ID
+		, MENU_ICON
+		, PAGE_URL
+		, USABLE
+		, REMARK
+		, CREATED_BY
+		, date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+		, UPDATED_BY
+		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="menuId!= null and menuId!= ''"> 
+			AND MENU_ID=#{menuId}
+		</if>
+		<if test="menuCode!= null and menuCode!= ''"> 
+			AND MENU_CODE=#{menuCode}
+		</if>
+		<if test="menuName!= null and menuName!= ''"> 
+			AND MENU_NAME=#{menuName}
+		</if>
+		<if test="menuOrder!= null and menuOrder!= ''"> 
+			AND MENU_ORDER=#{menuOrder}
+		</if>
+		<if test="parentMenuId!= null and parentMenuId!= ''"> 
+			AND PARENT_MENU_ID=#{parentMenuId}
+		</if>
+		<if test="menuIcon!= null and menuIcon!= ''"> 
+			AND MENU_ICON=#{menuIcon}
+		</if>
+		<if test="pageUrl!= null and pageUrl!= ''"> 
+			AND PAGE_URL=#{pageUrl}
+		</if>
+		<if test="usable!= null and usable!= ''"> 
+			AND USABLE=#{usable}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createdBy!= null and createdBy!= ''"> 
+			AND CREATED_BY=#{createdBy}
+		</if>
+		<if test="createTime!= null and createTime!= ''"> 
+			AND CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updatedBy!= null and updatedBy!= ''"> 
+			AND UPDATED_BY=#{updatedBy}
+		</if>
+		<if test="updateTime!= null and updateTime!= ''"> 
+			AND UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="systemMenu != null">
+            <if test="systemMenu.menuId!= null and systemMenu.menuId!= ''">
+				AND MENU_ID=#{systemMenu.menuId}
+            </if>
+            <if test="systemMenu.menuCode!= null and systemMenu.menuCode!= ''">
+				AND MENU_CODE=#{systemMenu.menuCode}
+            </if>
+            <if test="systemMenu.menuName!= null and systemMenu.menuName!= ''">
+				AND MENU_NAME=#{systemMenu.menuName}
+            </if>
+            <if test="systemMenu.menuOrder!= null and systemMenu.menuOrder!= ''">
+				AND MENU_ORDER=#{systemMenu.menuOrder}
+            </if>
+            <if test="systemMenu.parentMenuId!= null and systemMenu.parentMenuId!= ''">
+				AND PARENT_MENU_ID=#{systemMenu.parentMenuId}
+            </if>
+            <if test="systemMenu.menuIcon!= null and systemMenu.menuIcon!= ''">
+				AND MENU_ICON=#{systemMenu.menuIcon}
+            </if>
+            <if test="systemMenu.pageUrl!= null and systemMenu.pageUrl!= ''">
+				AND PAGE_URL=#{systemMenu.pageUrl}
+            </if>
+            <if test="systemMenu.usable!= null and systemMenu.usable!= ''">
+				AND USABLE=#{systemMenu.usable}
+            </if>
+            <if test="systemMenu.remark!= null and systemMenu.remark!= ''">
+				AND REMARK=#{systemMenu.remark}
+            </if>
+            <if test="systemMenu.createdBy!= null and systemMenu.createdBy!= ''">
+				AND CREATED_BY=#{systemMenu.createdBy}
+            </if>
+            <if test="systemMenu.createTime!= null and systemMenu.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{systemMenu.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="systemMenu.updatedBy!= null and systemMenu.updatedBy!= ''">
+				AND UPDATED_BY=#{systemMenu.updatedBy}
+            </if>
+            <if test="systemMenu.updateTime!= null and systemMenu.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{systemMenu.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="systemMenu.version!= null and systemMenu.version!= ''">
+				AND VERSION=#{systemMenu.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'menuId'">
+				MENU_ID ${value}
+            </when>
+        	<when test="key == 'menuCode'">
+				MENU_CODE ${value}
+            </when>
+        	<when test="key == 'menuName'">
+				MENU_NAME ${value}
+            </when>
+        	<when test="key == 'menuOrder'">
+				MENU_ORDER ${value}
+            </when>
+        	<when test="key == 'parentMenuId'">
+				PARENT_MENU_ID ${value}
+            </when>
+        	<when test="key == 'menuIcon'">
+				MENU_ICON ${value}
+            </when>
+        	<when test="key == 'pageUrl'">
+				PAGE_URL ${value}
+            </when>
+        	<when test="key == 'usable'">
+				USABLE ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createdBy'">
+				CREATED_BY ${value}
+            </when>
+        	<when test="key == 'createTime'">
+				CREATE_TIME ${value}
+            </when>
+        	<when test="key == 'updatedBy'">
+				UPDATED_BY ${value}
+            </when>
+        	<when test="key == 'updateTime'">
+				UPDATE_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="menuId" parameterType="SystemMenu">
+		<![CDATA[ INSERT INTO T_SYSTEM_MENU ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{menuCode}
+			, #{menuName}
+			, #{menuOrder}
+			, #{parentMenuId}
+			, #{menuIcon}
+			, #{pageUrl}
+			, #{usable}
+			, #{remark}
+			, #{createdBy}
+			, str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="SystemMenu">
+		<![CDATA[ UPDATE T_SYSTEM_MENU SET 
+			 MENU_ID=#{menuId} 
+			, MENU_CODE=#{menuCode} 
+			, MENU_NAME=#{menuName} 
+			, MENU_ORDER=#{menuOrder} 
+			, PARENT_MENU_ID=#{parentMenuId} 
+			, MENU_ICON=#{menuIcon} 
+			, PAGE_URL=#{pageUrl} 
+			, USABLE=#{usable} 
+			, REMARK=#{remark} 
+			, CREATED_BY=#{createdBy} 
+			, CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATED_BY=#{updatedBy} 
+			, UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE MENU_ID = #{menuId}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_SYSTEM_MENU WHERE MENU_ID = #{menuId}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_SYSTEM_MENU WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" MENU_ID IN(" separator="," close=") ">
+			${id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="SystemMenu">
+		DELETE FROM T_SYSTEM_MENU WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="SystemMenuResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_SYSTEM_MENU WHERE MENU_ID = #{menuId}  
+	</select>
+	<select id="list" resultMap="SystemMenuResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_SYSTEM_MENU
+	</select>
+	<select id="listByProperty" parameterType="SystemMenu" resultMap="SystemMenuResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_SYSTEM_MENU WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="SystemMenu" resultMap="SystemMenuResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_SYSTEM_MENU WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="SystemMenu" resultType="int">
+		SELECT count(1) AS totalcount FROM T_SYSTEM_MENU WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

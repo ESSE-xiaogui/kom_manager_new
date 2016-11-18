@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-11-18 15:56:35
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.EmployeeMapper">
+	<resultMap id="EmployeeResultMapper" type="Employee">
+		<result column="ID" property="id"/>
+		<result column="EMP_ID" property="empId"/>
+		<result column="EMP_CODE" property="empCode"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="ID_NO" property="idNo"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="ORG_ID" property="orgId"/>
+		<result column="DUTY_ID" property="dutyId"/>
+		<result column="UPPER_ID" property="upperId"/>
+		<result column="UPPER_NAME" property="upperName"/>
+		<result column="GENDER" property="gender"/>
+		<result column="BIRTHDAY" property="birthday"/>
+		<result column="NATION" property="nation"/>
+		<result column="MARRIED" property="married"/>
+		<result column="PHONE_NO" property="phoneNo"/>
+		<result column="MOBILE_NO" property="mobileNo"/>
+		<result column="EMAIL" property="email"/>
+		<result column="NATIVE_PLACE" property="nativePlace"/>
+		<result column="ZIP_CODE" property="zipCode"/>
+		<result column="IN_SERVICE" property="inService"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, EMP_ID
+		, EMP_CODE
+		, EMP_NAME
+		, ID_NO
+		, COMPANY_ID
+		, ORG_ID
+		, DUTY_ID
+		, UPPER_ID
+		, UPPER_NAME
+		, GENDER
+		, BIRTHDAY
+		, NATION
+		, MARRIED
+		, PHONE_NO
+		, MOBILE_NO
+		, EMAIL
+		, NATIVE_PLACE
+		, ZIP_CODE
+		, IN_SERVICE
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 EMP_ID
+		, EMP_CODE
+		, EMP_NAME
+		, ID_NO
+		, COMPANY_ID
+		, ORG_ID
+		, DUTY_ID
+		, UPPER_ID
+		, UPPER_NAME
+		, GENDER
+		, BIRTHDAY
+		, NATION
+		, MARRIED
+		, PHONE_NO
+		, MOBILE_NO
+		, EMAIL
+		, NATIVE_PLACE
+		, ZIP_CODE
+		, IN_SERVICE
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, EMP_ID
+		, EMP_CODE
+		, EMP_NAME
+		, ID_NO
+		, COMPANY_ID
+		, ORG_ID
+		, DUTY_ID
+		, UPPER_ID
+		, UPPER_NAME
+		, GENDER
+		, date_format(BIRTHDAY, '%Y-%m-%d %H:%i:%s') BIRTHDAY
+		, NATION
+		, MARRIED
+		, PHONE_NO
+		, MOBILE_NO
+		, EMAIL
+		, NATIVE_PLACE
+		, ZIP_CODE
+		, IN_SERVICE
+		, REMARK
+		, CREATED_BY
+		, date_format(CREATED_TIME, '%Y-%m-%d %H:%i:%s') CREATED_TIME
+		, UPDATED_BY
+		, date_format(UPDATED_TIME, '%Y-%m-%d %H:%i:%s') UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="empId!= null and empId!= ''"> 
+			AND EMP_ID=#{empId}
+		</if>
+		<if test="empCode!= null and empCode!= ''"> 
+			AND EMP_CODE=#{empCode}
+		</if>
+		<if test="empName!= null and empName!= ''"> 
+			AND EMP_NAME=#{empName}
+		</if>
+		<if test="idNo!= null and idNo!= ''"> 
+			AND ID_NO=#{idNo}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="orgId!= null and orgId!= ''"> 
+			AND ORG_ID=#{orgId}
+		</if>
+		<if test="dutyId!= null and dutyId!= ''"> 
+			AND DUTY_ID=#{dutyId}
+		</if>
+		<if test="upperId!= null and upperId!= ''"> 
+			AND UPPER_ID=#{upperId}
+		</if>
+		<if test="upperName!= null and upperName!= ''"> 
+			AND UPPER_NAME=#{upperName}
+		</if>
+		<if test="gender!= null and gender!= ''"> 
+			AND GENDER=#{gender}
+		</if>
+		<if test="birthday!= null and birthday!= ''"> 
+			AND BIRTHDAY=str_to_date(#{birthday},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="nation!= null and nation!= ''"> 
+			AND NATION=#{nation}
+		</if>
+		<if test="married!= null and married!= ''"> 
+			AND MARRIED=#{married}
+		</if>
+		<if test="phoneNo!= null and phoneNo!= ''"> 
+			AND PHONE_NO=#{phoneNo}
+		</if>
+		<if test="mobileNo!= null and mobileNo!= ''"> 
+			AND MOBILE_NO=#{mobileNo}
+		</if>
+		<if test="email!= null and email!= ''"> 
+			AND EMAIL=#{email}
+		</if>
+		<if test="nativePlace!= null and nativePlace!= ''"> 
+			AND NATIVE_PLACE=#{nativePlace}
+		</if>
+		<if test="zipCode!= null and zipCode!= ''"> 
+			AND ZIP_CODE=#{zipCode}
+		</if>
+		<if test="inService!= null and inService!= ''"> 
+			AND IN_SERVICE=#{inService}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createdBy!= null and createdBy!= ''"> 
+			AND CREATED_BY=#{createdBy}
+		</if>
+		<if test="createdTime!= null and createdTime!= ''"> 
+			AND CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updatedBy!= null and updatedBy!= ''"> 
+			AND UPDATED_BY=#{updatedBy}
+		</if>
+		<if test="updatedTime!= null and updatedTime!= ''"> 
+			AND UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="employee != null">
+            <if test="employee.id!= null and employee.id!= ''">
+				AND ID=#{employee.id}
+            </if>
+            <if test="employee.empId!= null and employee.empId!= ''">
+				AND EMP_ID=#{employee.empId}
+            </if>
+            <if test="employee.empCode!= null and employee.empCode!= ''">
+				AND EMP_CODE=#{employee.empCode}
+            </if>
+            <if test="employee.empName!= null and employee.empName!= ''">
+				AND EMP_NAME=#{employee.empName}
+            </if>
+            <if test="employee.idNo!= null and employee.idNo!= ''">
+				AND ID_NO=#{employee.idNo}
+            </if>
+            <if test="employee.companyId!= null and employee.companyId!= ''">
+				AND COMPANY_ID=#{employee.companyId}
+            </if>
+            <if test="employee.orgId!= null and employee.orgId!= ''">
+				AND ORG_ID=#{employee.orgId}
+            </if>
+            <if test="employee.dutyId!= null and employee.dutyId!= ''">
+				AND DUTY_ID=#{employee.dutyId}
+            </if>
+            <if test="employee.upperId!= null and employee.upperId!= ''">
+				AND UPPER_ID=#{employee.upperId}
+            </if>
+            <if test="employee.upperName!= null and employee.upperName!= ''">
+				AND UPPER_NAME=#{employee.upperName}
+            </if>
+            <if test="employee.gender!= null and employee.gender!= ''">
+				AND GENDER=#{employee.gender}
+            </if>
+            <if test="employee.birthday!= null and employee.birthday!= ''">
+				AND BIRTHDAY=str_to_date(#{employee.birthday},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="employee.nation!= null and employee.nation!= ''">
+				AND NATION=#{employee.nation}
+            </if>
+            <if test="employee.married!= null and employee.married!= ''">
+				AND MARRIED=#{employee.married}
+            </if>
+            <if test="employee.phoneNo!= null and employee.phoneNo!= ''">
+				AND PHONE_NO=#{employee.phoneNo}
+            </if>
+            <if test="employee.mobileNo!= null and employee.mobileNo!= ''">
+				AND MOBILE_NO=#{employee.mobileNo}
+            </if>
+            <if test="employee.email!= null and employee.email!= ''">
+				AND EMAIL=#{employee.email}
+            </if>
+            <if test="employee.nativePlace!= null and employee.nativePlace!= ''">
+				AND NATIVE_PLACE=#{employee.nativePlace}
+            </if>
+            <if test="employee.zipCode!= null and employee.zipCode!= ''">
+				AND ZIP_CODE=#{employee.zipCode}
+            </if>
+            <if test="employee.inService!= null and employee.inService!= ''">
+				AND IN_SERVICE=#{employee.inService}
+            </if>
+            <if test="employee.remark!= null and employee.remark!= ''">
+				AND REMARK=#{employee.remark}
+            </if>
+            <if test="employee.createdBy!= null and employee.createdBy!= ''">
+				AND CREATED_BY=#{employee.createdBy}
+            </if>
+            <if test="employee.createdTime!= null and employee.createdTime!= ''">
+				AND CREATED_TIME=str_to_date(#{employee.createdTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="employee.updatedBy!= null and employee.updatedBy!= ''">
+				AND UPDATED_BY=#{employee.updatedBy}
+            </if>
+            <if test="employee.updatedTime!= null and employee.updatedTime!= ''">
+				AND UPDATED_TIME=str_to_date(#{employee.updatedTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="employee.version!= null and employee.version!= ''">
+				AND VERSION=#{employee.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'empId'">
+				EMP_ID ${value}
+            </when>
+        	<when test="key == 'empCode'">
+				EMP_CODE ${value}
+            </when>
+        	<when test="key == 'empName'">
+				EMP_NAME ${value}
+            </when>
+        	<when test="key == 'idNo'">
+				ID_NO ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'orgId'">
+				ORG_ID ${value}
+            </when>
+        	<when test="key == 'dutyId'">
+				DUTY_ID ${value}
+            </when>
+        	<when test="key == 'upperId'">
+				UPPER_ID ${value}
+            </when>
+        	<when test="key == 'upperName'">
+				UPPER_NAME ${value}
+            </when>
+        	<when test="key == 'gender'">
+				GENDER ${value}
+            </when>
+        	<when test="key == 'birthday'">
+				BIRTHDAY ${value}
+            </when>
+        	<when test="key == 'nation'">
+				NATION ${value}
+            </when>
+        	<when test="key == 'married'">
+				MARRIED ${value}
+            </when>
+        	<when test="key == 'phoneNo'">
+				PHONE_NO ${value}
+            </when>
+        	<when test="key == 'mobileNo'">
+				MOBILE_NO ${value}
+            </when>
+        	<when test="key == 'email'">
+				EMAIL ${value}
+            </when>
+        	<when test="key == 'nativePlace'">
+				NATIVE_PLACE ${value}
+            </when>
+        	<when test="key == 'zipCode'">
+				ZIP_CODE ${value}
+            </when>
+        	<when test="key == 'inService'">
+				IN_SERVICE ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createdBy'">
+				CREATED_BY ${value}
+            </when>
+        	<when test="key == 'createdTime'">
+				CREATED_TIME ${value}
+            </when>
+        	<when test="key == 'updatedBy'">
+				UPDATED_BY ${value}
+            </when>
+        	<when test="key == 'updatedTime'">
+				UPDATED_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Employee">
+		<![CDATA[ INSERT INTO T_EMPLOYEE ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{empId}
+			, #{empCode}
+			, #{empName}
+			, #{idNo}
+			, #{companyId}
+			, #{orgId}
+			, #{dutyId}
+			, #{upperId}
+			, #{upperName}
+			, #{gender}
+			, str_to_date(#{birthday},'%Y-%m-%d %H:%i:%s')
+			, #{nation}
+			, #{married}
+			, #{phoneNo}
+			, #{mobileNo}
+			, #{email}
+			, #{nativePlace}
+			, #{zipCode}
+			, #{inService}
+			, #{remark}
+			, #{createdBy}
+			, str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="Employee">
+		<![CDATA[ UPDATE T_EMPLOYEE SET 
+			 ID=#{id} 
+			, EMP_ID=#{empId} 
+			, EMP_CODE=#{empCode} 
+			, EMP_NAME=#{empName} 
+			, ID_NO=#{idNo} 
+			, COMPANY_ID=#{companyId} 
+			, ORG_ID=#{orgId} 
+			, DUTY_ID=#{dutyId} 
+			, UPPER_ID=#{upperId} 
+			, UPPER_NAME=#{upperName} 
+			, GENDER=#{gender} 
+			, BIRTHDAY=str_to_date(#{birthday},'%Y-%m-%d %H:%i:%s')
+			, NATION=#{nation} 
+			, MARRIED=#{married} 
+			, PHONE_NO=#{phoneNo} 
+			, MOBILE_NO=#{mobileNo} 
+			, EMAIL=#{email} 
+			, NATIVE_PLACE=#{nativePlace} 
+			, ZIP_CODE=#{zipCode} 
+			, IN_SERVICE=#{inService} 
+			, REMARK=#{remark} 
+			, CREATED_BY=#{createdBy} 
+			, CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATED_BY=#{updatedBy} 
+			, UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_EMPLOYEE WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_EMPLOYEE WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			${id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="Employee">
+		DELETE FROM T_EMPLOYEE WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="EmployeeResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_EMPLOYEE WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="EmployeeResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_EMPLOYEE
+	</select>
+	<select id="listByProperty" parameterType="Employee" resultMap="EmployeeResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_EMPLOYEE WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="Employee" resultMap="EmployeeResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_EMPLOYEE WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="Employee" resultType="int">
+		SELECT count(1) AS totalcount FROM T_EMPLOYEE WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-11-18 15:56:36
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.OptionMapper">
+	<resultMap id="OptionResultMapper" type="Option">
+		<result column="ID" property="id"/>
+		<result column="OPTION_CODE" property="optionCode"/>
+		<result column="OPTION_NAME" property="optionName"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="PARENT_ID" property="parentId"/>
+		<result column="OPTION_TYPE" property="optionType"/>
+		<result column="OBJECT_ID" property="objectId"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_DATE" property="updateDate"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, OPTION_CODE
+		, OPTION_NAME
+		, COMPANY_ID
+		, PARENT_ID
+		, OPTION_TYPE
+		, OBJECT_ID
+		, IS_INACTIVE
+		, REMARK
+		, CREATE_BY
+		, CREATE_DATE
+		, UPDATE_BY
+		, UPDATE_DATE
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 OPTION_CODE
+		, OPTION_NAME
+		, COMPANY_ID
+		, PARENT_ID
+		, OPTION_TYPE
+		, OBJECT_ID
+		, IS_INACTIVE
+		, REMARK
+		, CREATE_BY
+		, CREATE_DATE
+		, UPDATE_BY
+		, UPDATE_DATE
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, OPTION_CODE
+		, OPTION_NAME
+		, COMPANY_ID
+		, PARENT_ID
+		, OPTION_TYPE
+		, OBJECT_ID
+		, IS_INACTIVE
+		, REMARK
+		, CREATE_BY
+		, date_format(CREATE_DATE, '%Y-%m-%d %H:%i:%s') CREATE_DATE
+		, UPDATE_BY
+		, date_format(UPDATE_DATE, '%Y-%m-%d %H:%i:%s') UPDATE_DATE
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="optionCode!= null and optionCode!= ''"> 
+			AND OPTION_CODE=#{optionCode}
+		</if>
+		<if test="optionName!= null and optionName!= ''"> 
+			AND OPTION_NAME=#{optionName}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="parentId!= null and parentId!= ''"> 
+			AND PARENT_ID=#{parentId}
+		</if>
+		<if test="optionType!= null and optionType!= ''"> 
+			AND OPTION_TYPE=#{optionType}
+		</if>
+		<if test="objectId!= null and objectId!= ''"> 
+			AND OBJECT_ID=#{objectId}
+		</if>
+		<if test="isInactive!= null and isInactive!= ''"> 
+			AND IS_INACTIVE=#{isInactive}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createBy!= null and createBy!= ''"> 
+			AND CREATE_BY=#{createBy}
+		</if>
+		<if test="createDate!= null and createDate!= ''"> 
+			AND CREATE_DATE=str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updateBy!= null and updateBy!= ''"> 
+			AND UPDATE_BY=#{updateBy}
+		</if>
+		<if test="updateDate!= null and updateDate!= ''"> 
+			AND UPDATE_DATE=str_to_date(#{updateDate},'%Y-%m-%d %H:%i:%s')
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="option != null">
+            <if test="option.id!= null and option.id!= ''">
+				AND ID=#{option.id}
+            </if>
+            <if test="option.optionCode!= null and option.optionCode!= ''">
+				AND OPTION_CODE=#{option.optionCode}
+            </if>
+            <if test="option.optionName!= null and option.optionName!= ''">
+				AND OPTION_NAME=#{option.optionName}
+            </if>
+            <if test="option.companyId!= null and option.companyId!= ''">
+				AND COMPANY_ID=#{option.companyId}
+            </if>
+            <if test="option.parentId!= null and option.parentId!= ''">
+				AND PARENT_ID=#{option.parentId}
+            </if>
+            <if test="option.optionType!= null and option.optionType!= ''">
+				AND OPTION_TYPE=#{option.optionType}
+            </if>
+            <if test="option.objectId!= null and option.objectId!= ''">
+				AND OBJECT_ID=#{option.objectId}
+            </if>
+            <if test="option.isInactive!= null and option.isInactive!= ''">
+				AND IS_INACTIVE=#{option.isInactive}
+            </if>
+            <if test="option.remark!= null and option.remark!= ''">
+				AND REMARK=#{option.remark}
+            </if>
+            <if test="option.createBy!= null and option.createBy!= ''">
+				AND CREATE_BY=#{option.createBy}
+            </if>
+            <if test="option.createDate!= null and option.createDate!= ''">
+				AND CREATE_DATE=str_to_date(#{option.createDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="option.updateBy!= null and option.updateBy!= ''">
+				AND UPDATE_BY=#{option.updateBy}
+            </if>
+            <if test="option.updateDate!= null and option.updateDate!= ''">
+				AND UPDATE_DATE=str_to_date(#{option.updateDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'optionCode'">
+				OPTION_CODE ${value}
+            </when>
+        	<when test="key == 'optionName'">
+				OPTION_NAME ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'parentId'">
+				PARENT_ID ${value}
+            </when>
+        	<when test="key == 'optionType'">
+				OPTION_TYPE ${value}
+            </when>
+        	<when test="key == 'objectId'">
+				OBJECT_ID ${value}
+            </when>
+        	<when test="key == 'isInactive'">
+				IS_INACTIVE ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createBy'">
+				CREATE_BY ${value}
+            </when>
+        	<when test="key == 'createDate'">
+				CREATE_DATE ${value}
+            </when>
+        	<when test="key == 'updateBy'">
+				UPDATE_BY ${value}
+            </when>
+        	<when test="key == 'updateDate'">
+				UPDATE_DATE ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Option">
+		<![CDATA[ INSERT INTO T_OPTION ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{optionCode}
+			, #{optionName}
+			, #{companyId}
+			, #{parentId}
+			, #{optionType}
+			, #{objectId}
+			, #{isInactive}
+			, #{remark}
+			, #{createBy}
+			, str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
+			, #{updateBy}
+			, str_to_date(#{updateDate},'%Y-%m-%d %H:%i:%s')
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="Option">
+		<![CDATA[ UPDATE T_OPTION SET 
+			 ID=#{id} 
+			, OPTION_CODE=#{optionCode} 
+			, OPTION_NAME=#{optionName} 
+			, COMPANY_ID=#{companyId} 
+			, PARENT_ID=#{parentId} 
+			, OPTION_TYPE=#{optionType} 
+			, OBJECT_ID=#{objectId} 
+			, IS_INACTIVE=#{isInactive} 
+			, REMARK=#{remark} 
+			, CREATE_BY=#{createBy} 
+			, CREATE_DATE=str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
+			, UPDATE_BY=#{updateBy} 
+			, UPDATE_DATE=str_to_date(#{updateDate},'%Y-%m-%d %H:%i:%s')
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_OPTION WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_OPTION WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			${id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="Option">
+		DELETE FROM T_OPTION WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="OptionResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_OPTION WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="OptionResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_OPTION
+	</select>
+	<select id="listByProperty" parameterType="Option" resultMap="OptionResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_OPTION WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="Option" resultMap="OptionResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_OPTION WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="Option" resultType="int">
+		SELECT count(1) AS totalcount FROM T_OPTION WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

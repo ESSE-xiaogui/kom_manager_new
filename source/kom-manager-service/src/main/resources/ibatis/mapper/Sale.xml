@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-11-18 15:56:37
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.SaleMapper">
+	<resultMap id="SaleResultMapper" type="Sale">
+		<result column="ID" property="id"/>
+		<result column="BILLNO" property="billno"/>
+		<result column="USER_CODE" property="userCode"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="TRANTYPE" property="trantype"/>
+		<result column="WERKS" property="werks"/>
+		<result column="CURRENCY_RATIO" property="currencyRatio"/>
+		<result column="SALE_QTY" property="saleQty"/>
+		<result column="SALE_AMOUNT" property="saleAmount"/>
+		<result column="SALE_DATE" property="saleDate"/>
+		<result column="STATUS" property="status"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, BILLNO
+		, USER_CODE
+		, USER_ID
+		, SHOP_ID
+		, COMPANY_ID
+		, TRANTYPE
+		, WERKS
+		, CURRENCY_RATIO
+		, SALE_QTY
+		, SALE_AMOUNT
+		, SALE_DATE
+		, STATUS
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 BILLNO
+		, USER_CODE
+		, USER_ID
+		, SHOP_ID
+		, COMPANY_ID
+		, TRANTYPE
+		, WERKS
+		, CURRENCY_RATIO
+		, SALE_QTY
+		, SALE_AMOUNT
+		, SALE_DATE
+		, STATUS
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, BILLNO
+		, USER_CODE
+		, USER_ID
+		, SHOP_ID
+		, COMPANY_ID
+		, TRANTYPE
+		, WERKS
+		, CURRENCY_RATIO
+		, SALE_QTY
+		, SALE_AMOUNT
+		, date_format(SALE_DATE, '%Y-%m-%d %H:%i:%s') SALE_DATE
+		, STATUS
+		, REMARK
+		, CREATED_BY
+		, date_format(CREATED_TIME, '%Y-%m-%d %H:%i:%s') CREATED_TIME
+		, UPDATED_BY
+		, date_format(UPDATED_TIME, '%Y-%m-%d %H:%i:%s') UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="billno!= null and billno!= ''"> 
+			AND BILLNO=#{billno}
+		</if>
+		<if test="userCode!= null and userCode!= ''"> 
+			AND USER_CODE=#{userCode}
+		</if>
+		<if test="userId!= null and userId!= ''"> 
+			AND USER_ID=#{userId}
+		</if>
+		<if test="shopId!= null and shopId!= ''"> 
+			AND SHOP_ID=#{shopId}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="trantype!= null and trantype!= ''"> 
+			AND TRANTYPE=#{trantype}
+		</if>
+		<if test="werks!= null and werks!= ''"> 
+			AND WERKS=#{werks}
+		</if>
+		<if test="currencyRatio!= null and currencyRatio!= ''"> 
+			AND CURRENCY_RATIO=#{currencyRatio}
+		</if>
+		<if test="saleQty!= null and saleQty!= ''"> 
+			AND SALE_QTY=#{saleQty}
+		</if>
+		<if test="saleAmount!= null and saleAmount!= ''"> 
+			AND SALE_AMOUNT=#{saleAmount}
+		</if>
+		<if test="saleDate!= null and saleDate!= ''"> 
+			AND SALE_DATE=str_to_date(#{saleDate},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="status!= null and status!= ''"> 
+			AND STATUS=#{status}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createdBy!= null and createdBy!= ''"> 
+			AND CREATED_BY=#{createdBy}
+		</if>
+		<if test="createdTime!= null and createdTime!= ''"> 
+			AND CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updatedBy!= null and updatedBy!= ''"> 
+			AND UPDATED_BY=#{updatedBy}
+		</if>
+		<if test="updatedTime!= null and updatedTime!= ''"> 
+			AND UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="sale != null">
+            <if test="sale.id!= null and sale.id!= ''">
+				AND ID=#{sale.id}
+            </if>
+            <if test="sale.billno!= null and sale.billno!= ''">
+				AND BILLNO=#{sale.billno}
+            </if>
+            <if test="sale.userCode!= null and sale.userCode!= ''">
+				AND USER_CODE=#{sale.userCode}
+            </if>
+            <if test="sale.userId!= null and sale.userId!= ''">
+				AND USER_ID=#{sale.userId}
+            </if>
+            <if test="sale.shopId!= null and sale.shopId!= ''">
+				AND SHOP_ID=#{sale.shopId}
+            </if>
+            <if test="sale.companyId!= null and sale.companyId!= ''">
+				AND COMPANY_ID=#{sale.companyId}
+            </if>
+            <if test="sale.trantype!= null and sale.trantype!= ''">
+				AND TRANTYPE=#{sale.trantype}
+            </if>
+            <if test="sale.werks!= null and sale.werks!= ''">
+				AND WERKS=#{sale.werks}
+            </if>
+            <if test="sale.currencyRatio!= null and sale.currencyRatio!= ''">
+				AND CURRENCY_RATIO=#{sale.currencyRatio}
+            </if>
+            <if test="sale.saleQty!= null and sale.saleQty!= ''">
+				AND SALE_QTY=#{sale.saleQty}
+            </if>
+            <if test="sale.saleAmount!= null and sale.saleAmount!= ''">
+				AND SALE_AMOUNT=#{sale.saleAmount}
+            </if>
+            <if test="sale.saleDate!= null and sale.saleDate!= ''">
+				AND SALE_DATE=str_to_date(#{sale.saleDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="sale.status!= null and sale.status!= ''">
+				AND STATUS=#{sale.status}
+            </if>
+            <if test="sale.remark!= null and sale.remark!= ''">
+				AND REMARK=#{sale.remark}
+            </if>
+            <if test="sale.createdBy!= null and sale.createdBy!= ''">
+				AND CREATED_BY=#{sale.createdBy}
+            </if>
+            <if test="sale.createdTime!= null and sale.createdTime!= ''">
+				AND CREATED_TIME=str_to_date(#{sale.createdTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="sale.updatedBy!= null and sale.updatedBy!= ''">
+				AND UPDATED_BY=#{sale.updatedBy}
+            </if>
+            <if test="sale.updatedTime!= null and sale.updatedTime!= ''">
+				AND UPDATED_TIME=str_to_date(#{sale.updatedTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="sale.version!= null and sale.version!= ''">
+				AND VERSION=#{sale.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'billno'">
+				BILLNO ${value}
+            </when>
+        	<when test="key == 'userCode'">
+				USER_CODE ${value}
+            </when>
+        	<when test="key == 'userId'">
+				USER_ID ${value}
+            </when>
+        	<when test="key == 'shopId'">
+				SHOP_ID ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'trantype'">
+				TRANTYPE ${value}
+            </when>
+        	<when test="key == 'werks'">
+				WERKS ${value}
+            </when>
+        	<when test="key == 'currencyRatio'">
+				CURRENCY_RATIO ${value}
+            </when>
+        	<when test="key == 'saleQty'">
+				SALE_QTY ${value}
+            </when>
+        	<when test="key == 'saleAmount'">
+				SALE_AMOUNT ${value}
+            </when>
+        	<when test="key == 'saleDate'">
+				SALE_DATE ${value}
+            </when>
+        	<when test="key == 'status'">
+				STATUS ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createdBy'">
+				CREATED_BY ${value}
+            </when>
+        	<when test="key == 'createdTime'">
+				CREATED_TIME ${value}
+            </when>
+        	<when test="key == 'updatedBy'">
+				UPDATED_BY ${value}
+            </when>
+        	<when test="key == 'updatedTime'">
+				UPDATED_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Sale">
+		<![CDATA[ INSERT INTO T_SALE ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{billno}
+			, #{userCode}
+			, #{userId}
+			, #{shopId}
+			, #{companyId}
+			, #{trantype}
+			, #{werks}
+			, #{currencyRatio}
+			, #{saleQty}
+			, #{saleAmount}
+			, str_to_date(#{saleDate},'%Y-%m-%d %H:%i:%s')
+			, #{status}
+			, #{remark}
+			, #{createdBy}
+			, str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="Sale">
+		<![CDATA[ UPDATE T_SALE SET 
+			 ID=#{id} 
+			, BILLNO=#{billno} 
+			, USER_CODE=#{userCode} 
+			, USER_ID=#{userId} 
+			, SHOP_ID=#{shopId} 
+			, COMPANY_ID=#{companyId} 
+			, TRANTYPE=#{trantype} 
+			, WERKS=#{werks} 
+			, CURRENCY_RATIO=#{currencyRatio} 
+			, SALE_QTY=#{saleQty} 
+			, SALE_AMOUNT=#{saleAmount} 
+			, SALE_DATE=str_to_date(#{saleDate},'%Y-%m-%d %H:%i:%s')
+			, STATUS=#{status} 
+			, REMARK=#{remark} 
+			, CREATED_BY=#{createdBy} 
+			, CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATED_BY=#{updatedBy} 
+			, UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_SALE WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_SALE WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			${id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="Sale">
+		DELETE FROM T_SALE WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="SaleResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_SALE WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="SaleResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_SALE
+	</select>
+	<select id="listByProperty" parameterType="Sale" resultMap="SaleResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_SALE WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="Sale" resultMap="SaleResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_SALE WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="Sale" resultType="int">
+		SELECT count(1) AS totalcount FROM T_SALE WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

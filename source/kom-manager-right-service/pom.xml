@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>kom-manager</artifactId>
+        <groupId>com.transsion</groupId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>kom-manager-right-service</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.rest</groupId>
+            <artifactId>rest-security-simple</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.base.core</groupId>
+            <artifactId>base-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.transsion</groupId>
+            <artifactId>kom-manager-common</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+    </dependencies>
+    <!-- 配置两套环境 -->
+     <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <package.environment>dev</package.environment>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>product</id>
+            <properties>
+                <package.environment>product</package.environment>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <package.environment>test</package.environment>
+            </properties>
+        </profile>
+    </profiles>
+	<build>  
+	<!-- 开启资源文件过滤  -->
+        <resources>  
+            <resource>  
+                <directory>src/main/resources</directory>  
+                <filtering>true</filtering>  
+                <excludes>
+                <exclude>dev/*</exclude>
+                <exclude>product/*</exclude>
+                <exclude>test/*</exclude>
+                </excludes>
+            </resource>  
+        </resources>  
+        <!-- 动态指定变量环境  -->
+        <filters>  
+            <filter>src/main/resources/${package.environment}/redis.properties</filter>  
+        </filters>  
+    </build>  
+</project>

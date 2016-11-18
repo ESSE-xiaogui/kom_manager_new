@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-11-18 15:56:41
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.UserMapper">
+	<resultMap id="UserResultMapper" type="User">
+		<result column="ID" property="id"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="USER_CODE" property="userCode"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="EMP_ID" property="empId"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="DUTY_ID" property="dutyId"/>
+		<result column="PASSWORD" property="password"/>
+		<result column="USER_CATEGORY" property="userCategory"/>
+		<result column="FORBIDDEN_TIME" property="forbiddenTime"/>
+		<result column="PWD_UPDATED" property="pwdUpdated"/>
+		<result column="LOGIN_TIMES" property="loginTimes"/>
+		<result column="LAST_LOGIN" property="lastLogin"/>
+		<result column="IS_ONLINE" property="isOnline"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, USER_ID
+		, USER_CODE
+		, USER_NAME
+		, EMP_ID
+		, COMPANY_ID
+		, DUTY_ID
+		, PASSWORD
+		, USER_CATEGORY
+		, FORBIDDEN_TIME
+		, PWD_UPDATED
+		, LOGIN_TIMES
+		, LAST_LOGIN
+		, IS_ONLINE
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 USER_ID
+		, USER_CODE
+		, USER_NAME
+		, EMP_ID
+		, COMPANY_ID
+		, DUTY_ID
+		, PASSWORD
+		, USER_CATEGORY
+		, FORBIDDEN_TIME
+		, PWD_UPDATED
+		, LOGIN_TIMES
+		, LAST_LOGIN
+		, IS_ONLINE
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, USER_ID
+		, USER_CODE
+		, USER_NAME
+		, EMP_ID
+		, COMPANY_ID
+		, DUTY_ID
+		, PASSWORD
+		, USER_CATEGORY
+		, date_format(FORBIDDEN_TIME, '%Y-%m-%d %H:%i:%s') FORBIDDEN_TIME
+		, date_format(PWD_UPDATED, '%Y-%m-%d %H:%i:%s') PWD_UPDATED
+		, LOGIN_TIMES
+		, date_format(LAST_LOGIN, '%Y-%m-%d %H:%i:%s') LAST_LOGIN
+		, IS_ONLINE
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, date_format(CREATED_TIME, '%Y-%m-%d %H:%i:%s') CREATED_TIME
+		, UPDATED_BY
+		, date_format(UPDATED_TIME, '%Y-%m-%d %H:%i:%s') UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="userId!= null and userId!= ''"> 
+			AND USER_ID=#{userId}
+		</if>
+		<if test="userCode!= null and userCode!= ''"> 
+			AND USER_CODE=#{userCode}
+		</if>
+		<if test="userName!= null and userName!= ''"> 
+			AND USER_NAME=#{userName}
+		</if>
+		<if test="empId!= null and empId!= ''"> 
+			AND EMP_ID=#{empId}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="dutyId!= null and dutyId!= ''"> 
+			AND DUTY_ID=#{dutyId}
+		</if>
+		<if test="password!= null and password!= ''"> 
+			AND PASSWORD=#{password}
+		</if>
+		<if test="userCategory!= null and userCategory!= ''"> 
+			AND USER_CATEGORY=#{userCategory}
+		</if>
+		<if test="forbiddenTime!= null and forbiddenTime!= ''"> 
+			AND FORBIDDEN_TIME=str_to_date(#{forbiddenTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="pwdUpdated!= null and pwdUpdated!= ''"> 
+			AND PWD_UPDATED=str_to_date(#{pwdUpdated},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="loginTimes!= null and loginTimes!= ''"> 
+			AND LOGIN_TIMES=#{loginTimes}
+		</if>
+		<if test="lastLogin!= null and lastLogin!= ''"> 
+			AND LAST_LOGIN=str_to_date(#{lastLogin},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="isOnline!= null and isOnline!= ''"> 
+			AND IS_ONLINE=#{isOnline}
+		</if>
+		<if test="isInactive!= null and isInactive!= ''"> 
+			AND IS_INACTIVE=#{isInactive}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createdBy!= null and createdBy!= ''"> 
+			AND CREATED_BY=#{createdBy}
+		</if>
+		<if test="createdTime!= null and createdTime!= ''"> 
+			AND CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updatedBy!= null and updatedBy!= ''"> 
+			AND UPDATED_BY=#{updatedBy}
+		</if>
+		<if test="updatedTime!= null and updatedTime!= ''"> 
+			AND UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="user != null">
+            <if test="user.id!= null and user.id!= ''">
+				AND ID=#{user.id}
+            </if>
+            <if test="user.userId!= null and user.userId!= ''">
+				AND USER_ID=#{user.userId}
+            </if>
+            <if test="user.userCode!= null and user.userCode!= ''">
+				AND USER_CODE=#{user.userCode}
+            </if>
+            <if test="user.userName!= null and user.userName!= ''">
+				AND USER_NAME=#{user.userName}
+            </if>
+            <if test="user.empId!= null and user.empId!= ''">
+				AND EMP_ID=#{user.empId}
+            </if>
+            <if test="user.companyId!= null and user.companyId!= ''">
+				AND COMPANY_ID=#{user.companyId}
+            </if>
+            <if test="user.dutyId!= null and user.dutyId!= ''">
+				AND DUTY_ID=#{user.dutyId}
+            </if>
+            <if test="user.password!= null and user.password!= ''">
+				AND PASSWORD=#{user.password}
+            </if>
+            <if test="user.userCategory!= null and user.userCategory!= ''">
+				AND USER_CATEGORY=#{user.userCategory}
+            </if>
+            <if test="user.forbiddenTime!= null and user.forbiddenTime!= ''">
+				AND FORBIDDEN_TIME=str_to_date(#{user.forbiddenTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="user.pwdUpdated!= null and user.pwdUpdated!= ''">
+				AND PWD_UPDATED=str_to_date(#{user.pwdUpdated},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="user.loginTimes!= null and user.loginTimes!= ''">
+				AND LOGIN_TIMES=#{user.loginTimes}
+            </if>
+            <if test="user.lastLogin!= null and user.lastLogin!= ''">
+				AND LAST_LOGIN=str_to_date(#{user.lastLogin},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="user.isOnline!= null and user.isOnline!= ''">
+				AND IS_ONLINE=#{user.isOnline}
+            </if>
+            <if test="user.isInactive!= null and user.isInactive!= ''">
+				AND IS_INACTIVE=#{user.isInactive}
+            </if>
+            <if test="user.remark!= null and user.remark!= ''">
+				AND REMARK=#{user.remark}
+            </if>
+            <if test="user.createdBy!= null and user.createdBy!= ''">
+				AND CREATED_BY=#{user.createdBy}
+            </if>
+            <if test="user.createdTime!= null and user.createdTime!= ''">
+				AND CREATED_TIME=str_to_date(#{user.createdTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="user.updatedBy!= null and user.updatedBy!= ''">
+				AND UPDATED_BY=#{user.updatedBy}
+            </if>
+            <if test="user.updatedTime!= null and user.updatedTime!= ''">
+				AND UPDATED_TIME=str_to_date(#{user.updatedTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="user.version!= null and user.version!= ''">
+				AND VERSION=#{user.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'userId'">
+				USER_ID ${value}
+            </when>
+        	<when test="key == 'userCode'">
+				USER_CODE ${value}
+            </when>
+        	<when test="key == 'userName'">
+				USER_NAME ${value}
+            </when>
+        	<when test="key == 'empId'">
+				EMP_ID ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'dutyId'">
+				DUTY_ID ${value}
+            </when>
+        	<when test="key == 'password'">
+				PASSWORD ${value}
+            </when>
+        	<when test="key == 'userCategory'">
+				USER_CATEGORY ${value}
+            </when>
+        	<when test="key == 'forbiddenTime'">
+				FORBIDDEN_TIME ${value}
+            </when>
+        	<when test="key == 'pwdUpdated'">
+				PWD_UPDATED ${value}
+            </when>
+        	<when test="key == 'loginTimes'">
+				LOGIN_TIMES ${value}
+            </when>
+        	<when test="key == 'lastLogin'">
+				LAST_LOGIN ${value}
+            </when>
+        	<when test="key == 'isOnline'">
+				IS_ONLINE ${value}
+            </when>
+        	<when test="key == 'isInactive'">
+				IS_INACTIVE ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createdBy'">
+				CREATED_BY ${value}
+            </when>
+        	<when test="key == 'createdTime'">
+				CREATED_TIME ${value}
+            </when>
+        	<when test="key == 'updatedBy'">
+				UPDATED_BY ${value}
+            </when>
+        	<when test="key == 'updatedTime'">
+				UPDATED_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="User">
+		<![CDATA[ INSERT INTO T_USER ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{userId}
+			, #{userCode}
+			, #{userName}
+			, #{empId}
+			, #{companyId}
+			, #{dutyId}
+			, #{password}
+			, #{userCategory}
+			, str_to_date(#{forbiddenTime},'%Y-%m-%d %H:%i:%s')
+			, str_to_date(#{pwdUpdated},'%Y-%m-%d %H:%i:%s')
+			, #{loginTimes}
+			, str_to_date(#{lastLogin},'%Y-%m-%d %H:%i:%s')
+			, #{isOnline}
+			, #{isInactive}
+			, #{remark}
+			, #{createdBy}
+			, str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="User">
+		<![CDATA[ UPDATE T_USER SET 
+			 ID=#{id} 
+			, USER_ID=#{userId} 
+			, USER_CODE=#{userCode} 
+			, USER_NAME=#{userName} 
+			, EMP_ID=#{empId} 
+			, COMPANY_ID=#{companyId} 
+			, DUTY_ID=#{dutyId} 
+			, PASSWORD=#{password} 
+			, USER_CATEGORY=#{userCategory} 
+			, FORBIDDEN_TIME=str_to_date(#{forbiddenTime},'%Y-%m-%d %H:%i:%s')
+			, PWD_UPDATED=str_to_date(#{pwdUpdated},'%Y-%m-%d %H:%i:%s')
+			, LOGIN_TIMES=#{loginTimes} 
+			, LAST_LOGIN=str_to_date(#{lastLogin},'%Y-%m-%d %H:%i:%s')
+			, IS_ONLINE=#{isOnline} 
+			, IS_INACTIVE=#{isInactive} 
+			, REMARK=#{remark} 
+			, CREATED_BY=#{createdBy} 
+			, CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATED_BY=#{updatedBy} 
+			, UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_USER WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_USER WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			${id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="User">
+		DELETE FROM T_USER WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="UserResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_USER WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="UserResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_USER
+	</select>
+	<select id="listByProperty" parameterType="User" resultMap="UserResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_USER WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="User" resultMap="UserResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_USER WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="User" resultType="int">
+		SELECT count(1) AS totalcount FROM T_USER WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

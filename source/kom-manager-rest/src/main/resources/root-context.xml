@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config/>
+    <context:component-scan base-package="com.rest"/>
+
+    <beans:bean id="springBeanHelper" class="com.shangkang.core.util.SpringBeanHelper"/>
+
+    <beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <beans:property name="basenames">
+            <beans:list>
+                <beans:value>com.shangkang.core.resources.error_message_resource</beans:value>
+                <beans:value>com.transsion.kom.resources.error_message_kom_resource</beans:value>
+            </beans:list>
+        </beans:property>
+        <beans:property name="useCodeAsDefaultMessage" value="true"/>
+    </beans:bean>
+
+    <beans:bean id="authSecurity" class="com.rest.service.security.simple.AuthSecurity" />
+    <beans:bean id="anonAuthSecurity" class="com.rest.service.security.simple.AnonAuthSecurity" />
+
+    <beans:import resource="kom-right-context.xml"/>
+    <beans:import resource="kom-service-context.xml"/>
+    <beans:import resource="kom-message-context.xml" />
+
+</beans:beans>

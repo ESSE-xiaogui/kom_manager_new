@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-11-18 15:56:41
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.UserOptionMapper">
+	<resultMap id="UserOptionResultMapper" type="UserOption">
+		<result column="ID" property="id"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="USER_CODE" property="userCode"/>
+		<result column="OPTION_ID" property="optionId"/>
+		<result column="OPTION_CODE" property="optionCode"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, USER_ID
+		, USER_CODE
+		, OPTION_ID
+		, OPTION_CODE
+		, COMPANY_ID
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 USER_ID
+		, USER_CODE
+		, OPTION_ID
+		, OPTION_CODE
+		, COMPANY_ID
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, USER_ID
+		, USER_CODE
+		, OPTION_ID
+		, OPTION_CODE
+		, COMPANY_ID
+		, REMARK
+		, CREATED_BY
+		, date_format(CREATED_TIME, '%Y-%m-%d %H:%i:%s') CREATED_TIME
+		, UPDATE_BY
+		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="userId!= null and userId!= ''"> 
+			AND USER_ID=#{userId}
+		</if>
+		<if test="userCode!= null and userCode!= ''"> 
+			AND USER_CODE=#{userCode}
+		</if>
+		<if test="optionId!= null and optionId!= ''"> 
+			AND OPTION_ID=#{optionId}
+		</if>
+		<if test="optionCode!= null and optionCode!= ''"> 
+			AND OPTION_CODE=#{optionCode}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createdBy!= null and createdBy!= ''"> 
+			AND CREATED_BY=#{createdBy}
+		</if>
+		<if test="createdTime!= null and createdTime!= ''"> 
+			AND CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updateBy!= null and updateBy!= ''"> 
+			AND UPDATE_BY=#{updateBy}
+		</if>
+		<if test="updateTime!= null and updateTime!= ''"> 
+			AND UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="userOption != null">
+            <if test="userOption.id!= null and userOption.id!= ''">
+				AND ID=#{userOption.id}
+            </if>
+            <if test="userOption.userId!= null and userOption.userId!= ''">
+				AND USER_ID=#{userOption.userId}
+            </if>
+            <if test="userOption.userCode!= null and userOption.userCode!= ''">
+				AND USER_CODE=#{userOption.userCode}
+            </if>
+            <if test="userOption.optionId!= null and userOption.optionId!= ''">
+				AND OPTION_ID=#{userOption.optionId}
+            </if>
+            <if test="userOption.optionCode!= null and userOption.optionCode!= ''">
+				AND OPTION_CODE=#{userOption.optionCode}
+            </if>
+            <if test="userOption.companyId!= null and userOption.companyId!= ''">
+				AND COMPANY_ID=#{userOption.companyId}
+            </if>
+            <if test="userOption.remark!= null and userOption.remark!= ''">
+				AND REMARK=#{userOption.remark}
+            </if>
+            <if test="userOption.createdBy!= null and userOption.createdBy!= ''">
+				AND CREATED_BY=#{userOption.createdBy}
+            </if>
+            <if test="userOption.createdTime!= null and userOption.createdTime!= ''">
+				AND CREATED_TIME=str_to_date(#{userOption.createdTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="userOption.updateBy!= null and userOption.updateBy!= ''">
+				AND UPDATE_BY=#{userOption.updateBy}
+            </if>
+            <if test="userOption.updateTime!= null and userOption.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{userOption.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'userId'">
+				USER_ID ${value}
+            </when>
+        	<when test="key == 'userCode'">
+				USER_CODE ${value}
+            </when>
+        	<when test="key == 'optionId'">
+				OPTION_ID ${value}
+            </when>
+        	<when test="key == 'optionCode'">
+				OPTION_CODE ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createdBy'">
+				CREATED_BY ${value}
+            </when>
+        	<when test="key == 'createdTime'">
+				CREATED_TIME ${value}
+            </when>
+        	<when test="key == 'updateBy'">
+				UPDATE_BY ${value}
+            </when>
+        	<when test="key == 'updateTime'">
+				UPDATE_TIME ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="UserOption">
+		<![CDATA[ INSERT INTO T_USER_OPTION ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{userId}
+			, #{userCode}
+			, #{optionId}
+			, #{optionCode}
+			, #{companyId}
+			, #{remark}
+			, #{createdBy}
+			, str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{updateBy}
+			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="UserOption">
+		<![CDATA[ UPDATE T_USER_OPTION SET 
+			 ID=#{id} 
+			, USER_ID=#{userId} 
+			, USER_CODE=#{userCode} 
+			, OPTION_ID=#{optionId} 
+			, OPTION_CODE=#{optionCode} 
+			, COMPANY_ID=#{companyId} 
+			, REMARK=#{remark} 
+			, CREATED_BY=#{createdBy} 
+			, CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATE_BY=#{updateBy} 
+			, UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_USER_OPTION WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_USER_OPTION WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			${id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="UserOption">
+		DELETE FROM T_USER_OPTION WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="UserOptionResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_USER_OPTION WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="UserOptionResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_USER_OPTION
+	</select>
+	<select id="listByProperty" parameterType="UserOption" resultMap="UserOptionResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_USER_OPTION WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="UserOption" resultMap="UserOptionResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_USER_OPTION WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="UserOption" resultType="int">
+		SELECT count(1) AS totalcount FROM T_USER_OPTION WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

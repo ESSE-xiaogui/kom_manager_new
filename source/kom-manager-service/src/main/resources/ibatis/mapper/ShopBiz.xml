@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-11-18 15:56:39
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.ShopBizMapper">
+	<resultMap id="ShopBizResultMapper" type="ShopBiz">
+		<result column="ID" property="id"/>
+		<result column="BIZ_NAME" property="bizName"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_DATE" property="updateDate"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, BIZ_NAME
+		, COMPANY_ID
+		, REMARK
+		, CREATE_BY
+		, CREATE_DATE
+		, UPDATE_BY
+		, UPDATE_DATE
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 BIZ_NAME
+		, COMPANY_ID
+		, REMARK
+		, CREATE_BY
+		, CREATE_DATE
+		, UPDATE_BY
+		, UPDATE_DATE
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, BIZ_NAME
+		, COMPANY_ID
+		, REMARK
+		, CREATE_BY
+		, date_format(CREATE_DATE, '%Y-%m-%d %H:%i:%s') CREATE_DATE
+		, UPDATE_BY
+		, date_format(UPDATE_DATE, '%Y-%m-%d %H:%i:%s') UPDATE_DATE
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="bizName!= null and bizName!= ''"> 
+			AND BIZ_NAME=#{bizName}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createBy!= null and createBy!= ''"> 
+			AND CREATE_BY=#{createBy}
+		</if>
+		<if test="createDate!= null and createDate!= ''"> 
+			AND CREATE_DATE=str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updateBy!= null and updateBy!= ''"> 
+			AND UPDATE_BY=#{updateBy}
+		</if>
+		<if test="updateDate!= null and updateDate!= ''"> 
+			AND UPDATE_DATE=str_to_date(#{updateDate},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="shopBiz != null">
+            <if test="shopBiz.id!= null and shopBiz.id!= ''">
+				AND ID=#{shopBiz.id}
+            </if>
+            <if test="shopBiz.bizName!= null and shopBiz.bizName!= ''">
+				AND BIZ_NAME=#{shopBiz.bizName}
+            </if>
+            <if test="shopBiz.companyId!= null and shopBiz.companyId!= ''">
+				AND COMPANY_ID=#{shopBiz.companyId}
+            </if>
+            <if test="shopBiz.remark!= null and shopBiz.remark!= ''">
+				AND REMARK=#{shopBiz.remark}
+            </if>
+            <if test="shopBiz.createBy!= null and shopBiz.createBy!= ''">
+				AND CREATE_BY=#{shopBiz.createBy}
+            </if>
+            <if test="shopBiz.createDate!= null and shopBiz.createDate!= ''">
+				AND CREATE_DATE=str_to_date(#{shopBiz.createDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="shopBiz.updateBy!= null and shopBiz.updateBy!= ''">
+				AND UPDATE_BY=#{shopBiz.updateBy}
+            </if>
+            <if test="shopBiz.updateDate!= null and shopBiz.updateDate!= ''">
+				AND UPDATE_DATE=str_to_date(#{shopBiz.updateDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="shopBiz.version!= null and shopBiz.version!= ''">
+				AND VERSION=#{shopBiz.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'bizName'">
+				BIZ_NAME ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createBy'">
+				CREATE_BY ${value}
+            </when>
+        	<when test="key == 'createDate'">
+				CREATE_DATE ${value}
+            </when>
+        	<when test="key == 'updateBy'">
+				UPDATE_BY ${value}
+            </when>
+        	<when test="key == 'updateDate'">
+				UPDATE_DATE ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="ShopBiz">
+		<![CDATA[ INSERT INTO T_SHOP_BIZ ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{bizName}
+			, #{companyId}
+			, #{remark}
+			, #{createBy}
+			, str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
+			, #{updateBy}
+			, str_to_date(#{updateDate},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="ShopBiz">
+		<![CDATA[ UPDATE T_SHOP_BIZ SET 
+			 ID=#{id} 
+			, BIZ_NAME=#{bizName} 
+			, COMPANY_ID=#{companyId} 
+			, REMARK=#{remark} 
+			, CREATE_BY=#{createBy} 
+			, CREATE_DATE=str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
+			, UPDATE_BY=#{updateBy} 
+			, UPDATE_DATE=str_to_date(#{updateDate},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_SHOP_BIZ WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_SHOP_BIZ WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			${id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="ShopBiz">
+		DELETE FROM T_SHOP_BIZ WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="ShopBizResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_SHOP_BIZ WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="ShopBizResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_SHOP_BIZ
+	</select>
+	<select id="listByProperty" parameterType="ShopBiz" resultMap="ShopBizResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_SHOP_BIZ WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="ShopBiz" resultMap="ShopBizResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_SHOP_BIZ WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="ShopBiz" resultType="int">
+		SELECT count(1) AS totalcount FROM T_SHOP_BIZ WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

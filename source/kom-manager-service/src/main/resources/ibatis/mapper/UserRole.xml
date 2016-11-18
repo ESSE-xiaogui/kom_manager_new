@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-11-18 15:56:41
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.UserRoleMapper">
+	<resultMap id="UserRoleResultMapper" type="UserRole">
+		<result column="USER_ROLE_ID" property="userRoleId"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="ROLE_ID" property="roleId"/>
+		<result column="ROLE_NAME" property="roleName"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REQ_DATE" property="reqDate"/>
+		<result column="CHECK_DATE" property="checkDate"/>
+		<result column="CHECK_STAFF" property="checkStaff"/>
+		<result column="START_DATE" property="startDate"/>
+		<result column="END_DATE" property="endDate"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 USER_ROLE_ID
+		, USER_ID
+		, ROLE_ID
+		, ROLE_NAME
+		, IS_INACTIVE
+		, REQ_DATE
+		, CHECK_DATE
+		, CHECK_STAFF
+		, START_DATE
+		, END_DATE
+		, REMARK
+		, CREATE_BY
+		, CREATE_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 USER_ID
+		, ROLE_ID
+		, ROLE_NAME
+		, IS_INACTIVE
+		, REQ_DATE
+		, CHECK_DATE
+		, CHECK_STAFF
+		, START_DATE
+		, END_DATE
+		, REMARK
+		, CREATE_BY
+		, CREATE_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 USER_ROLE_ID
+		, USER_ID
+		, ROLE_ID
+		, ROLE_NAME
+		, IS_INACTIVE
+		, date_format(REQ_DATE, '%Y-%m-%d %H:%i:%s') REQ_DATE
+		, date_format(CHECK_DATE, '%Y-%m-%d %H:%i:%s') CHECK_DATE
+		, CHECK_STAFF
+		, date_format(START_DATE, '%Y-%m-%d %H:%i:%s') START_DATE
+		, date_format(END_DATE, '%Y-%m-%d %H:%i:%s') END_DATE
+		, REMARK
+		, CREATE_BY
+		, date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+		, UPDATE_BY
+		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="userRoleId!= null and userRoleId!= ''"> 
+			AND USER_ROLE_ID=#{userRoleId}
+		</if>
+		<if test="userId!= null and userId!= ''"> 
+			AND USER_ID=#{userId}
+		</if>
+		<if test="roleId!= null and roleId!= ''"> 
+			AND ROLE_ID=#{roleId}
+		</if>
+		<if test="roleName!= null and roleName!= ''"> 
+			AND ROLE_NAME=#{roleName}
+		</if>
+		<if test="isInactive!= null and isInactive!= ''"> 
+			AND IS_INACTIVE=#{isInactive}
+		</if>
+		<if test="reqDate!= null and reqDate!= ''"> 
+			AND REQ_DATE=str_to_date(#{reqDate},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="checkDate!= null and checkDate!= ''"> 
+			AND CHECK_DATE=str_to_date(#{checkDate},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="checkStaff!= null and checkStaff!= ''"> 
+			AND CHECK_STAFF=#{checkStaff}
+		</if>
+		<if test="startDate!= null and startDate!= ''"> 
+			AND START_DATE=str_to_date(#{startDate},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="endDate!= null and endDate!= ''"> 
+			AND END_DATE=str_to_date(#{endDate},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createBy!= null and createBy!= ''"> 
+			AND CREATE_BY=#{createBy}
+		</if>
+		<if test="createTime!= null and createTime!= ''"> 
+			AND CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updateBy!= null and updateBy!= ''"> 
+			AND UPDATE_BY=#{updateBy}
+		</if>
+		<if test="updateTime!= null and updateTime!= ''"> 
+			AND UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="userRole != null">
+            <if test="userRole.userRoleId!= null and userRole.userRoleId!= ''">
+				AND USER_ROLE_ID=#{userRole.userRoleId}
+            </if>
+            <if test="userRole.userId!= null and userRole.userId!= ''">
+				AND USER_ID=#{userRole.userId}
+            </if>
+            <if test="userRole.roleId!= null and userRole.roleId!= ''">
+				AND ROLE_ID=#{userRole.roleId}
+            </if>
+            <if test="userRole.roleName!= null and userRole.roleName!= ''">
+				AND ROLE_NAME=#{userRole.roleName}
+            </if>
+            <if test="userRole.isInactive!= null and userRole.isInactive!= ''">
+				AND IS_INACTIVE=#{userRole.isInactive}
+            </if>
+            <if test="userRole.reqDate!= null and userRole.reqDate!= ''">
+				AND REQ_DATE=str_to_date(#{userRole.reqDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="userRole.checkDate!= null and userRole.checkDate!= ''">
+				AND CHECK_DATE=str_to_date(#{userRole.checkDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="userRole.checkStaff!= null and userRole.checkStaff!= ''">
+				AND CHECK_STAFF=#{userRole.checkStaff}
+            </if>
+            <if test="userRole.startDate!= null and userRole.startDate!= ''">
+				AND START_DATE=str_to_date(#{userRole.startDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="userRole.endDate!= null and userRole.endDate!= ''">
+				AND END_DATE=str_to_date(#{userRole.endDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="userRole.remark!= null and userRole.remark!= ''">
+				AND REMARK=#{userRole.remark}
+            </if>
+            <if test="userRole.createBy!= null and userRole.createBy!= ''">
+				AND CREATE_BY=#{userRole.createBy}
+            </if>
+            <if test="userRole.createTime!= null and userRole.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{userRole.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="userRole.updateBy!= null and userRole.updateBy!= ''">
+				AND UPDATE_BY=#{userRole.updateBy}
+            </if>
+            <if test="userRole.updateTime!= null and userRole.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{userRole.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'userRoleId'">
+				USER_ROLE_ID ${value}
+            </when>
+        	<when test="key == 'userId'">
+				USER_ID ${value}
+            </when>
+        	<when test="key == 'roleId'">
+				ROLE_ID ${value}
+            </when>
+        	<when test="key == 'roleName'">
+				ROLE_NAME ${value}
+            </when>
+        	<when test="key == 'isInactive'">
+				IS_INACTIVE ${value}
+            </when>
+        	<when test="key == 'reqDate'">
+				REQ_DATE ${value}
+            </when>
+        	<when test="key == 'checkDate'">
+				CHECK_DATE ${value}
+            </when>
+        	<when test="key == 'checkStaff'">
+				CHECK_STAFF ${value}
+            </when>
+        	<when test="key == 'startDate'">
+				START_DATE ${value}
+            </when>
+        	<when test="key == 'endDate'">
+				END_DATE ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createBy'">
+				CREATE_BY ${value}
+            </when>
+        	<when test="key == 'createTime'">
+				CREATE_TIME ${value}
+            </when>
+        	<when test="key == 'updateBy'">
+				UPDATE_BY ${value}
+            </when>
+        	<when test="key == 'updateTime'">
+				UPDATE_TIME ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="userRoleId" parameterType="UserRole">
+		<![CDATA[ INSERT INTO T_USER_ROLE ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{userId}
+			, #{roleId}
+			, #{roleName}
+			, #{isInactive}
+			, str_to_date(#{reqDate},'%Y-%m-%d %H:%i:%s')
+			, str_to_date(#{checkDate},'%Y-%m-%d %H:%i:%s')
+			, #{checkStaff}
+			, str_to_date(#{startDate},'%Y-%m-%d %H:%i:%s')
+			, str_to_date(#{endDate},'%Y-%m-%d %H:%i:%s')
+			, #{remark}
+			, #{createBy}
+			, str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, #{updateBy}
+			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="UserRole">
+		<![CDATA[ UPDATE T_USER_ROLE SET 
+			 USER_ROLE_ID=#{userRoleId} 
+			, USER_ID=#{userId} 
+			, ROLE_ID=#{roleId} 
+			, ROLE_NAME=#{roleName} 
+			, IS_INACTIVE=#{isInactive} 
+			, REQ_DATE=str_to_date(#{reqDate},'%Y-%m-%d %H:%i:%s')
+			, CHECK_DATE=str_to_date(#{checkDate},'%Y-%m-%d %H:%i:%s')
+			, CHECK_STAFF=#{checkStaff} 
+			, START_DATE=str_to_date(#{startDate},'%Y-%m-%d %H:%i:%s')
+			, END_DATE=str_to_date(#{endDate},'%Y-%m-%d %H:%i:%s')
+			, REMARK=#{remark} 
+			, CREATE_BY=#{createBy} 
+			, CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATE_BY=#{updateBy} 
+			, UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		WHERE USER_ROLE_ID = #{userRoleId}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_USER_ROLE WHERE USER_ROLE_ID = #{userRoleId}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_USER_ROLE WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" USER_ROLE_ID IN(" separator="," close=") ">
+			${id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="UserRole">
+		DELETE FROM T_USER_ROLE WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="UserRoleResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_USER_ROLE WHERE USER_ROLE_ID = #{userRoleId}  
+	</select>
+	<select id="list" resultMap="UserRoleResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_USER_ROLE
+	</select>
+	<select id="listByProperty" parameterType="UserRole" resultMap="UserRoleResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_USER_ROLE WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="UserRole" resultMap="UserRoleResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_USER_ROLE WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="UserRole" resultType="int">
+		SELECT count(1) AS totalcount FROM T_USER_ROLE WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-11-18 15:56:40
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.StockItemMapper">
+	<resultMap id="StockItemResultMapper" type="StockItem">
+		<result column="ID" property="id"/>
+		<result column="STOCK_ID" property="stockId"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="BILLNO" property="billno"/>
+		<result column="LINE_ID" property="lineId"/>
+		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="MODEL_CODE" property="modelCode"/>
+		<result column="QTY" property="qty"/>
+		<result column="PRICE" property="price"/>
+		<result column="AMOUNT" property="amount"/>
+		<result column="ISHISTORY" property="ishistory"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, STOCK_ID
+		, COMPANY_ID
+		, BILLNO
+		, LINE_ID
+		, BRAND_CODE
+		, MODEL_CODE
+		, QTY
+		, PRICE
+		, AMOUNT
+		, ISHISTORY
+		, REMARK
+		, CREATE_BY
+		, CREATE_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 STOCK_ID
+		, COMPANY_ID
+		, BILLNO
+		, LINE_ID
+		, BRAND_CODE
+		, MODEL_CODE
+		, QTY
+		, PRICE
+		, AMOUNT
+		, ISHISTORY
+		, REMARK
+		, CREATE_BY
+		, CREATE_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, STOCK_ID
+		, COMPANY_ID
+		, BILLNO
+		, LINE_ID
+		, BRAND_CODE
+		, MODEL_CODE
+		, QTY
+		, PRICE
+		, AMOUNT
+		, ISHISTORY
+		, REMARK
+		, CREATE_BY
+		, date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+		, UPDATE_BY
+		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="stockId!= null and stockId!= ''"> 
+			AND STOCK_ID=#{stockId}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="billno!= null and billno!= ''"> 
+			AND BILLNO=#{billno}
+		</if>
+		<if test="lineId!= null and lineId!= ''"> 
+			AND LINE_ID=#{lineId}
+		</if>
+		<if test="brandCode!= null and brandCode!= ''"> 
+			AND BRAND_CODE=#{brandCode}
+		</if>
+		<if test="modelCode!= null and modelCode!= ''"> 
+			AND MODEL_CODE=#{modelCode}
+		</if>
+		<if test="qty!= null and qty!= ''"> 
+			AND QTY=#{qty}
+		</if>
+		<if test="price!= null and price!= ''"> 
+			AND PRICE=#{price}
+		</if>
+		<if test="amount!= null and amount!= ''"> 
+			AND AMOUNT=#{amount}
+		</if>
+		<if test="ishistory!= null and ishistory!= ''"> 
+			AND ISHISTORY=#{ishistory}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createBy!= null and createBy!= ''"> 
+			AND CREATE_BY=#{createBy}
+		</if>
+		<if test="createTime!= null and createTime!= ''"> 
+			AND CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updateBy!= null and updateBy!= ''"> 
+			AND UPDATE_BY=#{updateBy}
+		</if>
+		<if test="updateTime!= null and updateTime!= ''"> 
+			AND UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="stockItem != null">
+            <if test="stockItem.id!= null and stockItem.id!= ''">
+				AND ID=#{stockItem.id}
+            </if>
+            <if test="stockItem.stockId!= null and stockItem.stockId!= ''">
+				AND STOCK_ID=#{stockItem.stockId}
+            </if>
+            <if test="stockItem.companyId!= null and stockItem.companyId!= ''">
+				AND COMPANY_ID=#{stockItem.companyId}
+            </if>
+            <if test="stockItem.billno!= null and stockItem.billno!= ''">
+				AND BILLNO=#{stockItem.billno}
+            </if>
+            <if test="stockItem.lineId!= null and stockItem.lineId!= ''">
+				AND LINE_ID=#{stockItem.lineId}
+            </if>
+            <if test="stockItem.brandCode!= null and stockItem.brandCode!= ''">
+				AND BRAND_CODE=#{stockItem.brandCode}
+            </if>
+            <if test="stockItem.modelCode!= null and stockItem.modelCode!= ''">
+				AND MODEL_CODE=#{stockItem.modelCode}
+            </if>
+            <if test="stockItem.qty!= null and stockItem.qty!= ''">
+				AND QTY=#{stockItem.qty}
+            </if>
+            <if test="stockItem.price!= null and stockItem.price!= ''">
+				AND PRICE=#{stockItem.price}
+            </if>
+            <if test="stockItem.amount!= null and stockItem.amount!= ''">
+				AND AMOUNT=#{stockItem.amount}
+            </if>
+            <if test="stockItem.ishistory!= null and stockItem.ishistory!= ''">
+				AND ISHISTORY=#{stockItem.ishistory}
+            </if>
+            <if test="stockItem.remark!= null and stockItem.remark!= ''">
+				AND REMARK=#{stockItem.remark}
+            </if>
+            <if test="stockItem.createBy!= null and stockItem.createBy!= ''">
+				AND CREATE_BY=#{stockItem.createBy}
+            </if>
+            <if test="stockItem.createTime!= null and stockItem.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{stockItem.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="stockItem.updateBy!= null and stockItem.updateBy!= ''">
+				AND UPDATE_BY=#{stockItem.updateBy}
+            </if>
+            <if test="stockItem.updateTime!= null and stockItem.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{stockItem.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'stockId'">
+				STOCK_ID ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'billno'">
+				BILLNO ${value}
+            </when>
+        	<when test="key == 'lineId'">
+				LINE_ID ${value}
+            </when>
+        	<when test="key == 'brandCode'">
+				BRAND_CODE ${value}
+            </when>
+        	<when test="key == 'modelCode'">
+				MODEL_CODE ${value}
+            </when>
+        	<when test="key == 'qty'">
+				QTY ${value}
+            </when>
+        	<when test="key == 'price'">
+				PRICE ${value}
+            </when>
+        	<when test="key == 'amount'">
+				AMOUNT ${value}
+            </when>
+        	<when test="key == 'ishistory'">
+				ISHISTORY ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createBy'">
+				CREATE_BY ${value}
+            </when>
+        	<when test="key == 'createTime'">
+				CREATE_TIME ${value}
+            </when>
+        	<when test="key == 'updateBy'">
+				UPDATE_BY ${value}
+            </when>
+        	<when test="key == 'updateTime'">
+				UPDATE_TIME ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="StockItem">
+		<![CDATA[ INSERT INTO T_STOCK_ITEM ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{stockId}
+			, #{companyId}
+			, #{billno}
+			, #{lineId}
+			, #{brandCode}
+			, #{modelCode}
+			, #{qty}
+			, #{price}
+			, #{amount}
+			, #{ishistory}
+			, #{remark}
+			, #{createBy}
+			, str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, #{updateBy}
+			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="StockItem">
+		<![CDATA[ UPDATE T_STOCK_ITEM SET 
+			 ID=#{id} 
+			, STOCK_ID=#{stockId} 
+			, COMPANY_ID=#{companyId} 
+			, BILLNO=#{billno} 
+			, LINE_ID=#{lineId} 
+			, BRAND_CODE=#{brandCode} 
+			, MODEL_CODE=#{modelCode} 
+			, QTY=#{qty} 
+			, PRICE=#{price} 
+			, AMOUNT=#{amount} 
+			, ISHISTORY=#{ishistory} 
+			, REMARK=#{remark} 
+			, CREATE_BY=#{createBy} 
+			, CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATE_BY=#{updateBy} 
+			, UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_STOCK_ITEM WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_STOCK_ITEM WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			${id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="StockItem">
+		DELETE FROM T_STOCK_ITEM WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="StockItemResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_STOCK_ITEM WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="StockItemResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_STOCK_ITEM
+	</select>
+	<select id="listByProperty" parameterType="StockItem" resultMap="StockItemResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_STOCK_ITEM WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="StockItem" resultMap="StockItemResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_STOCK_ITEM WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="StockItem" resultType="int">
+		SELECT count(1) AS totalcount FROM T_STOCK_ITEM WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

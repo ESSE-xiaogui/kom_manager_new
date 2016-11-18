@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-11-18 15:56:35
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.DutyMapper">
+	<resultMap id="DutyResultMapper" type="Duty">
+		<result column="ID" property="id"/>
+		<result column="DUTY_CODE" property="dutyCode"/>
+		<result column="DUTY_NAME" property="dutyName"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, DUTY_CODE
+		, DUTY_NAME
+		, COMPANY_ID
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 DUTY_CODE
+		, DUTY_NAME
+		, COMPANY_ID
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, DUTY_CODE
+		, DUTY_NAME
+		, COMPANY_ID
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, date_format(CREATED_TIME, '%Y-%m-%d %H:%i:%s') CREATED_TIME
+		, UPDATED_BY
+		, date_format(UPDATED_TIME, '%Y-%m-%d %H:%i:%s') UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="dutyCode!= null and dutyCode!= ''"> 
+			AND DUTY_CODE=#{dutyCode}
+		</if>
+		<if test="dutyName!= null and dutyName!= ''"> 
+			AND DUTY_NAME=#{dutyName}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="isInactive!= null and isInactive!= ''"> 
+			AND IS_INACTIVE=#{isInactive}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createdBy!= null and createdBy!= ''"> 
+			AND CREATED_BY=#{createdBy}
+		</if>
+		<if test="createdTime!= null and createdTime!= ''"> 
+			AND CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updatedBy!= null and updatedBy!= ''"> 
+			AND UPDATED_BY=#{updatedBy}
+		</if>
+		<if test="updatedTime!= null and updatedTime!= ''"> 
+			AND UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="duty != null">
+            <if test="duty.id!= null and duty.id!= ''">
+				AND ID=#{duty.id}
+            </if>
+            <if test="duty.dutyCode!= null and duty.dutyCode!= ''">
+				AND DUTY_CODE=#{duty.dutyCode}
+            </if>
+            <if test="duty.dutyName!= null and duty.dutyName!= ''">
+				AND DUTY_NAME=#{duty.dutyName}
+            </if>
+            <if test="duty.companyId!= null and duty.companyId!= ''">
+				AND COMPANY_ID=#{duty.companyId}
+            </if>
+            <if test="duty.isInactive!= null and duty.isInactive!= ''">
+				AND IS_INACTIVE=#{duty.isInactive}
+            </if>
+            <if test="duty.remark!= null and duty.remark!= ''">
+				AND REMARK=#{duty.remark}
+            </if>
+            <if test="duty.createdBy!= null and duty.createdBy!= ''">
+				AND CREATED_BY=#{duty.createdBy}
+            </if>
+            <if test="duty.createdTime!= null and duty.createdTime!= ''">
+				AND CREATED_TIME=str_to_date(#{duty.createdTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="duty.updatedBy!= null and duty.updatedBy!= ''">
+				AND UPDATED_BY=#{duty.updatedBy}
+            </if>
+            <if test="duty.updatedTime!= null and duty.updatedTime!= ''">
+				AND UPDATED_TIME=str_to_date(#{duty.updatedTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="duty.version!= null and duty.version!= ''">
+				AND VERSION=#{duty.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'dutyCode'">
+				DUTY_CODE ${value}
+            </when>
+        	<when test="key == 'dutyName'">
+				DUTY_NAME ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'isInactive'">
+				IS_INACTIVE ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createdBy'">
+				CREATED_BY ${value}
+            </when>
+        	<when test="key == 'createdTime'">
+				CREATED_TIME ${value}
+            </when>
+        	<when test="key == 'updatedBy'">
+				UPDATED_BY ${value}
+            </when>
+        	<when test="key == 'updatedTime'">
+				UPDATED_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Duty">
+		<![CDATA[ INSERT INTO T_DUTY ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{dutyCode}
+			, #{dutyName}
+			, #{companyId}
+			, #{isInactive}
+			, #{remark}
+			, #{createdBy}
+			, str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="Duty">
+		<![CDATA[ UPDATE T_DUTY SET 
+			 ID=#{id} 
+			, DUTY_CODE=#{dutyCode} 
+			, DUTY_NAME=#{dutyName} 
+			, COMPANY_ID=#{companyId} 
+			, IS_INACTIVE=#{isInactive} 
+			, REMARK=#{remark} 
+			, CREATED_BY=#{createdBy} 
+			, CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATED_BY=#{updatedBy} 
+			, UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_DUTY WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_DUTY WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			${id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="Duty">
+		DELETE FROM T_DUTY WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="DutyResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_DUTY WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="DutyResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_DUTY
+	</select>
+	<select id="listByProperty" parameterType="Duty" resultMap="DutyResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_DUTY WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="Duty" resultMap="DutyResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_DUTY WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="Duty" resultType="int">
+		SELECT count(1) AS totalcount FROM T_DUTY WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

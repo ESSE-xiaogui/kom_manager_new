@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-11-18 15:56:40
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.SystemResourceMapper">
+	<resultMap id="SystemResourceResultMapper" type="SystemResource">
+		<result column="RES_ID" property="resId"/>
+		<result column="RES_CODE" property="resCode"/>
+		<result column="RES_NAME" property="resName"/>
+		<result column="RES_URL" property="resUrl"/>
+		<result column="SHOW_INDEX" property="showIndex"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 RES_ID
+		, RES_CODE
+		, RES_NAME
+		, RES_URL
+		, SHOW_INDEX
+		, REMARK
+		, CREATED_BY
+		, CREATE_TIME
+		, UPDATED_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 RES_CODE
+		, RES_NAME
+		, RES_URL
+		, SHOW_INDEX
+		, REMARK
+		, CREATED_BY
+		, CREATE_TIME
+		, UPDATED_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 RES_ID
+		, RES_CODE
+		, RES_NAME
+		, RES_URL
+		, SHOW_INDEX
+		, REMARK
+		, CREATED_BY
+		, date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+		, UPDATED_BY
+		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="resId!= null and resId!= ''"> 
+			AND RES_ID=#{resId}
+		</if>
+		<if test="resCode!= null and resCode!= ''"> 
+			AND RES_CODE=#{resCode}
+		</if>
+		<if test="resName!= null and resName!= ''"> 
+			AND RES_NAME=#{resName}
+		</if>
+		<if test="resUrl!= null and resUrl!= ''"> 
+			AND RES_URL=#{resUrl}
+		</if>
+		<if test="showIndex!= null and showIndex!= ''"> 
+			AND SHOW_INDEX=#{showIndex}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createdBy!= null and createdBy!= ''"> 
+			AND CREATED_BY=#{createdBy}
+		</if>
+		<if test="createTime!= null and createTime!= ''"> 
+			AND CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updatedBy!= null and updatedBy!= ''"> 
+			AND UPDATED_BY=#{updatedBy}
+		</if>
+		<if test="updateTime!= null and updateTime!= ''"> 
+			AND UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="systemResource != null">
+            <if test="systemResource.resId!= null and systemResource.resId!= ''">
+				AND RES_ID=#{systemResource.resId}
+            </if>
+            <if test="systemResource.resCode!= null and systemResource.resCode!= ''">
+				AND RES_CODE=#{systemResource.resCode}
+            </if>
+            <if test="systemResource.resName!= null and systemResource.resName!= ''">
+				AND RES_NAME=#{systemResource.resName}
+            </if>
+            <if test="systemResource.resUrl!= null and systemResource.resUrl!= ''">
+				AND RES_URL=#{systemResource.resUrl}
+            </if>
+            <if test="systemResource.showIndex!= null and systemResource.showIndex!= ''">
+				AND SHOW_INDEX=#{systemResource.showIndex}
+            </if>
+            <if test="systemResource.remark!= null and systemResource.remark!= ''">
+				AND REMARK=#{systemResource.remark}
+            </if>
+            <if test="systemResource.createdBy!= null and systemResource.createdBy!= ''">
+				AND CREATED_BY=#{systemResource.createdBy}
+            </if>
+            <if test="systemResource.createTime!= null and systemResource.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{systemResource.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="systemResource.updatedBy!= null and systemResource.updatedBy!= ''">
+				AND UPDATED_BY=#{systemResource.updatedBy}
+            </if>
+            <if test="systemResource.updateTime!= null and systemResource.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{systemResource.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="systemResource.version!= null and systemResource.version!= ''">
+				AND VERSION=#{systemResource.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'resId'">
+				RES_ID ${value}
+            </when>
+        	<when test="key == 'resCode'">
+				RES_CODE ${value}
+            </when>
+        	<when test="key == 'resName'">
+				RES_NAME ${value}
+            </when>
+        	<when test="key == 'resUrl'">
+				RES_URL ${value}
+            </when>
+        	<when test="key == 'showIndex'">
+				SHOW_INDEX ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createdBy'">
+				CREATED_BY ${value}
+            </when>
+        	<when test="key == 'createTime'">
+				CREATE_TIME ${value}
+            </when>
+        	<when test="key == 'updatedBy'">
+				UPDATED_BY ${value}
+            </when>
+        	<when test="key == 'updateTime'">
+				UPDATE_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="resId" parameterType="SystemResource">
+		<![CDATA[ INSERT INTO T_SYSTEM_RESOURCE ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{resCode}
+			, #{resName}
+			, #{resUrl}
+			, #{showIndex}
+			, #{remark}
+			, #{createdBy}
+			, str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="SystemResource">
+		<![CDATA[ UPDATE T_SYSTEM_RESOURCE SET 
+			 RES_ID=#{resId} 
+			, RES_CODE=#{resCode} 
+			, RES_NAME=#{resName} 
+			, RES_URL=#{resUrl} 
+			, SHOW_INDEX=#{showIndex} 
+			, REMARK=#{remark} 
+			, CREATED_BY=#{createdBy} 
+			, CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATED_BY=#{updatedBy} 
+			, UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE RES_ID = #{resId}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_SYSTEM_RESOURCE WHERE RES_ID = #{resId}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_SYSTEM_RESOURCE WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" RES_ID IN(" separator="," close=") ">
+			${id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="SystemResource">
+		DELETE FROM T_SYSTEM_RESOURCE WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="SystemResourceResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_SYSTEM_RESOURCE WHERE RES_ID = #{resId}  
+	</select>
+	<select id="list" resultMap="SystemResourceResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_SYSTEM_RESOURCE
+	</select>
+	<select id="listByProperty" parameterType="SystemResource" resultMap="SystemResourceResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_SYSTEM_RESOURCE WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="SystemResource" resultMap="SystemResourceResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_SYSTEM_RESOURCE WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="SystemResource" resultType="int">
+		SELECT count(1) AS totalcount FROM T_SYSTEM_RESOURCE WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-11-18 15:56:39
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.StockMapper">
+	<resultMap id="StockResultMapper" type="Stock">
+		<result column="ID" property="id"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="BILLNO" property="billno"/>
+		<result column="TRANTYPE" property="trantype"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="STOCK_DATE" property="stockDate"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="USER_CODE" property="userCode"/>
+		<result column="WERKS" property="werks"/>
+		<result column="CURRENCY_RATIO" property="currencyRatio"/>
+		<result column="STATUS" property="status"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, COMPANY_ID
+		, BILLNO
+		, TRANTYPE
+		, SHOP_ID
+		, STOCK_DATE
+		, USER_ID
+		, USER_CODE
+		, WERKS
+		, CURRENCY_RATIO
+		, STATUS
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 COMPANY_ID
+		, BILLNO
+		, TRANTYPE
+		, SHOP_ID
+		, STOCK_DATE
+		, USER_ID
+		, USER_CODE
+		, WERKS
+		, CURRENCY_RATIO
+		, STATUS
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, COMPANY_ID
+		, BILLNO
+		, TRANTYPE
+		, SHOP_ID
+		, date_format(STOCK_DATE, '%Y-%m-%d %H:%i:%s') STOCK_DATE
+		, USER_ID
+		, USER_CODE
+		, WERKS
+		, CURRENCY_RATIO
+		, STATUS
+		, REMARK
+		, CREATED_BY
+		, date_format(CREATED_TIME, '%Y-%m-%d %H:%i:%s') CREATED_TIME
+		, UPDATED_BY
+		, date_format(UPDATED_TIME, '%Y-%m-%d %H:%i:%s') UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="billno!= null and billno!= ''"> 
+			AND BILLNO=#{billno}
+		</if>
+		<if test="trantype!= null and trantype!= ''"> 
+			AND TRANTYPE=#{trantype}
+		</if>
+		<if test="shopId!= null and shopId!= ''"> 
+			AND SHOP_ID=#{shopId}
+		</if>
+		<if test="stockDate!= null and stockDate!= ''"> 
+			AND STOCK_DATE=str_to_date(#{stockDate},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="userId!= null and userId!= ''"> 
+			AND USER_ID=#{userId}
+		</if>
+		<if test="userCode!= null and userCode!= ''"> 
+			AND USER_CODE=#{userCode}
+		</if>
+		<if test="werks!= null and werks!= ''"> 
+			AND WERKS=#{werks}
+		</if>
+		<if test="currencyRatio!= null and currencyRatio!= ''"> 
+			AND CURRENCY_RATIO=#{currencyRatio}
+		</if>
+		<if test="status!= null and status!= ''"> 
+			AND STATUS=#{status}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createdBy!= null and createdBy!= ''"> 
+			AND CREATED_BY=#{createdBy}
+		</if>
+		<if test="createdTime!= null and createdTime!= ''"> 
+			AND CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updatedBy!= null and updatedBy!= ''"> 
+			AND UPDATED_BY=#{updatedBy}
+		</if>
+		<if test="updatedTime!= null and updatedTime!= ''"> 
+			AND UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="stock != null">
+            <if test="stock.id!= null and stock.id!= ''">
+				AND ID=#{stock.id}
+            </if>
+            <if test="stock.companyId!= null and stock.companyId!= ''">
+				AND COMPANY_ID=#{stock.companyId}
+            </if>
+            <if test="stock.billno!= null and stock.billno!= ''">
+				AND BILLNO=#{stock.billno}
+            </if>
+            <if test="stock.trantype!= null and stock.trantype!= ''">
+				AND TRANTYPE=#{stock.trantype}
+            </if>
+            <if test="stock.shopId!= null and stock.shopId!= ''">
+				AND SHOP_ID=#{stock.shopId}
+            </if>
+            <if test="stock.stockDate!= null and stock.stockDate!= ''">
+				AND STOCK_DATE=str_to_date(#{stock.stockDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="stock.userId!= null and stock.userId!= ''">
+				AND USER_ID=#{stock.userId}
+            </if>
+            <if test="stock.userCode!= null and stock.userCode!= ''">
+				AND USER_CODE=#{stock.userCode}
+            </if>
+            <if test="stock.werks!= null and stock.werks!= ''">
+				AND WERKS=#{stock.werks}
+            </if>
+            <if test="stock.currencyRatio!= null and stock.currencyRatio!= ''">
+				AND CURRENCY_RATIO=#{stock.currencyRatio}
+            </if>
+            <if test="stock.status!= null and stock.status!= ''">
+				AND STATUS=#{stock.status}
+            </if>
+            <if test="stock.remark!= null and stock.remark!= ''">
+				AND REMARK=#{stock.remark}
+            </if>
+            <if test="stock.createdBy!= null and stock.createdBy!= ''">
+				AND CREATED_BY=#{stock.createdBy}
+            </if>
+            <if test="stock.createdTime!= null and stock.createdTime!= ''">
+				AND CREATED_TIME=str_to_date(#{stock.createdTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="stock.updatedBy!= null and stock.updatedBy!= ''">
+				AND UPDATED_BY=#{stock.updatedBy}
+            </if>
+            <if test="stock.updatedTime!= null and stock.updatedTime!= ''">
+				AND UPDATED_TIME=str_to_date(#{stock.updatedTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="stock.version!= null and stock.version!= ''">
+				AND VERSION=#{stock.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'billno'">
+				BILLNO ${value}
+            </when>
+        	<when test="key == 'trantype'">
+				TRANTYPE ${value}
+            </when>
+        	<when test="key == 'shopId'">
+				SHOP_ID ${value}
+            </when>
+        	<when test="key == 'stockDate'">
+				STOCK_DATE ${value}
+            </when>
+        	<when test="key == 'userId'">
+				USER_ID ${value}
+            </when>
+        	<when test="key == 'userCode'">
+				USER_CODE ${value}
+            </when>
+        	<when test="key == 'werks'">
+				WERKS ${value}
+            </when>
+        	<when test="key == 'currencyRatio'">
+				CURRENCY_RATIO ${value}
+            </when>
+        	<when test="key == 'status'">
+				STATUS ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createdBy'">
+				CREATED_BY ${value}
+            </when>
+        	<when test="key == 'createdTime'">
+				CREATED_TIME ${value}
+            </when>
+        	<when test="key == 'updatedBy'">
+				UPDATED_BY ${value}
+            </when>
+        	<when test="key == 'updatedTime'">
+				UPDATED_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Stock">
+		<![CDATA[ INSERT INTO T_STOCK ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{companyId}
+			, #{billno}
+			, #{trantype}
+			, #{shopId}
+			, str_to_date(#{stockDate},'%Y-%m-%d %H:%i:%s')
+			, #{userId}
+			, #{userCode}
+			, #{werks}
+			, #{currencyRatio}
+			, #{status}
+			, #{remark}
+			, #{createdBy}
+			, str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="Stock">
+		<![CDATA[ UPDATE T_STOCK SET 
+			 ID=#{id} 
+			, COMPANY_ID=#{companyId} 
+			, BILLNO=#{billno} 
+			, TRANTYPE=#{trantype} 
+			, SHOP_ID=#{shopId} 
+			, STOCK_DATE=str_to_date(#{stockDate},'%Y-%m-%d %H:%i:%s')
+			, USER_ID=#{userId} 
+			, USER_CODE=#{userCode} 
+			, WERKS=#{werks} 
+			, CURRENCY_RATIO=#{currencyRatio} 
+			, STATUS=#{status} 
+			, REMARK=#{remark} 
+			, CREATED_BY=#{createdBy} 
+			, CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATED_BY=#{updatedBy} 
+			, UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_STOCK WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_STOCK WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			${id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="Stock">
+		DELETE FROM T_STOCK WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="StockResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_STOCK WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="StockResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_STOCK
+	</select>
+	<select id="listByProperty" parameterType="Stock" resultMap="StockResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_STOCK WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="Stock" resultMap="StockResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_STOCK WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="Stock" resultType="int">
+		SELECT count(1) AS totalcount FROM T_STOCK WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

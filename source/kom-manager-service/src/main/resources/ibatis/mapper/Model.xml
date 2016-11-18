@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-11-18 15:56:35
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.ModelMapper">
+	<resultMap id="ModelResultMapper" type="Model">
+		<result column="ID" property="id"/>
+		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="SERIES_CODE" property="seriesCode"/>
+		<result column="MODEL_CODE" property="modelCode"/>
+		<result column="MODEL_NAME" property="modelName"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="ELEMENT_TYPE" property="elementType"/>
+		<result column="ELEMENT_CODE" property="elementCode"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, BRAND_CODE
+		, SERIES_CODE
+		, MODEL_CODE
+		, MODEL_NAME
+		, COMPANY_ID
+		, ELEMENT_TYPE
+		, ELEMENT_CODE
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 BRAND_CODE
+		, SERIES_CODE
+		, MODEL_CODE
+		, MODEL_NAME
+		, COMPANY_ID
+		, ELEMENT_TYPE
+		, ELEMENT_CODE
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, BRAND_CODE
+		, SERIES_CODE
+		, MODEL_CODE
+		, MODEL_NAME
+		, COMPANY_ID
+		, ELEMENT_TYPE
+		, ELEMENT_CODE
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, date_format(CREATED_TIME, '%Y-%m-%d %H:%i:%s') CREATED_TIME
+		, UPDATED_BY
+		, date_format(UPDATED_TIME, '%Y-%m-%d %H:%i:%s') UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="brandCode!= null and brandCode!= ''"> 
+			AND BRAND_CODE=#{brandCode}
+		</if>
+		<if test="seriesCode!= null and seriesCode!= ''"> 
+			AND SERIES_CODE=#{seriesCode}
+		</if>
+		<if test="modelCode!= null and modelCode!= ''"> 
+			AND MODEL_CODE=#{modelCode}
+		</if>
+		<if test="modelName!= null and modelName!= ''"> 
+			AND MODEL_NAME=#{modelName}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="elementType!= null and elementType!= ''"> 
+			AND ELEMENT_TYPE=#{elementType}
+		</if>
+		<if test="elementCode!= null and elementCode!= ''"> 
+			AND ELEMENT_CODE=#{elementCode}
+		</if>
+		<if test="isInactive!= null and isInactive!= ''"> 
+			AND IS_INACTIVE=#{isInactive}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createdBy!= null and createdBy!= ''"> 
+			AND CREATED_BY=#{createdBy}
+		</if>
+		<if test="createdTime!= null and createdTime!= ''"> 
+			AND CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updatedBy!= null and updatedBy!= ''"> 
+			AND UPDATED_BY=#{updatedBy}
+		</if>
+		<if test="updatedTime!= null and updatedTime!= ''"> 
+			AND UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="model != null">
+            <if test="model.id!= null and model.id!= ''">
+				AND ID=#{model.id}
+            </if>
+            <if test="model.brandCode!= null and model.brandCode!= ''">
+				AND BRAND_CODE=#{model.brandCode}
+            </if>
+            <if test="model.seriesCode!= null and model.seriesCode!= ''">
+				AND SERIES_CODE=#{model.seriesCode}
+            </if>
+            <if test="model.modelCode!= null and model.modelCode!= ''">
+				AND MODEL_CODE=#{model.modelCode}
+            </if>
+            <if test="model.modelName!= null and model.modelName!= ''">
+				AND MODEL_NAME=#{model.modelName}
+            </if>
+            <if test="model.companyId!= null and model.companyId!= ''">
+				AND COMPANY_ID=#{model.companyId}
+            </if>
+            <if test="model.elementType!= null and model.elementType!= ''">
+				AND ELEMENT_TYPE=#{model.elementType}
+            </if>
+            <if test="model.elementCode!= null and model.elementCode!= ''">
+				AND ELEMENT_CODE=#{model.elementCode}
+            </if>
+            <if test="model.isInactive!= null and model.isInactive!= ''">
+				AND IS_INACTIVE=#{model.isInactive}
+            </if>
+            <if test="model.remark!= null and model.remark!= ''">
+				AND REMARK=#{model.remark}
+            </if>
+            <if test="model.createdBy!= null and model.createdBy!= ''">
+				AND CREATED_BY=#{model.createdBy}
+            </if>
+            <if test="model.createdTime!= null and model.createdTime!= ''">
+				AND CREATED_TIME=str_to_date(#{model.createdTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="model.updatedBy!= null and model.updatedBy!= ''">
+				AND UPDATED_BY=#{model.updatedBy}
+            </if>
+            <if test="model.updatedTime!= null and model.updatedTime!= ''">
+				AND UPDATED_TIME=str_to_date(#{model.updatedTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="model.version!= null and model.version!= ''">
+				AND VERSION=#{model.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'brandCode'">
+				BRAND_CODE ${value}
+            </when>
+        	<when test="key == 'seriesCode'">
+				SERIES_CODE ${value}
+            </when>
+        	<when test="key == 'modelCode'">
+				MODEL_CODE ${value}
+            </when>
+        	<when test="key == 'modelName'">
+				MODEL_NAME ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'elementType'">
+				ELEMENT_TYPE ${value}
+            </when>
+        	<when test="key == 'elementCode'">
+				ELEMENT_CODE ${value}
+            </when>
+        	<when test="key == 'isInactive'">
+				IS_INACTIVE ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createdBy'">
+				CREATED_BY ${value}
+            </when>
+        	<when test="key == 'createdTime'">
+				CREATED_TIME ${value}
+            </when>
+        	<when test="key == 'updatedBy'">
+				UPDATED_BY ${value}
+            </when>
+        	<when test="key == 'updatedTime'">
+				UPDATED_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Model">
+		<![CDATA[ INSERT INTO T_MODEL ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{brandCode}
+			, #{seriesCode}
+			, #{modelCode}
+			, #{modelName}
+			, #{companyId}
+			, #{elementType}
+			, #{elementCode}
+			, #{isInactive}
+			, #{remark}
+			, #{createdBy}
+			, str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="Model">
+		<![CDATA[ UPDATE T_MODEL SET 
+			 ID=#{id} 
+			, BRAND_CODE=#{brandCode} 
+			, SERIES_CODE=#{seriesCode} 
+			, MODEL_CODE=#{modelCode} 
+			, MODEL_NAME=#{modelName} 
+			, COMPANY_ID=#{companyId} 
+			, ELEMENT_TYPE=#{elementType} 
+			, ELEMENT_CODE=#{elementCode} 
+			, IS_INACTIVE=#{isInactive} 
+			, REMARK=#{remark} 
+			, CREATED_BY=#{createdBy} 
+			, CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATED_BY=#{updatedBy} 
+			, UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_MODEL WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_MODEL WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			${id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="Model">
+		DELETE FROM T_MODEL WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="ModelResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_MODEL WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="ModelResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_MODEL
+	</select>
+	<select id="listByProperty" parameterType="Model" resultMap="ModelResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_MODEL WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="Model" resultMap="ModelResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_MODEL WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="Model" resultType="int">
+		SELECT count(1) AS totalcount FROM T_MODEL WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-11-18 15:56:38
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.SaleItemMapper">
+	<resultMap id="SaleItemResultMapper" type="SaleItem">
+		<result column="ID" property="id"/>
+		<result column="SALE_ID" property="saleId"/>
+		<result column="BILLNO" property="billno"/>
+		<result column="LINE_ID" property="lineId"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="MODEL_CODE" property="modelCode"/>
+		<result column="IMEI_NO" property="imeiNo"/>
+		<result column="IMEI_LIST" property="imeiList"/>
+		<result column="SALE_QTY" property="saleQty"/>
+		<result column="SALE_PRICE" property="salePrice"/>
+		<result column="SALE_AMOUNT" property="saleAmount"/>
+		<result column="SELLER_ID" property="sellerId"/>
+		<result column="INVOICE_NO" property="invoiceNo"/>
+		<result column="QR_CODE" property="qrCode"/>
+		<result column="PRODUCT_DATE" property="productDate"/>
+		<result column="FACTORY_CODE" property="factoryCode"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="GENDER" property="gender"/>
+		<result column="PHONE_NO" property="phoneNo"/>
+		<result column="EMAIL" property="email"/>
+		<result column="HOME_ADDRESS" property="homeAddress"/>
+		<result column="ZIP_CODE" property="zipCode"/>
+		<result column="REMARK" property="remark"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, SALE_ID
+		, BILLNO
+		, LINE_ID
+		, SHOP_ID
+		, COMPANY_ID
+		, BRAND_CODE
+		, MODEL_CODE
+		, IMEI_NO
+		, IMEI_LIST
+		, SALE_QTY
+		, SALE_PRICE
+		, SALE_AMOUNT
+		, SELLER_ID
+		, INVOICE_NO
+		, QR_CODE
+		, PRODUCT_DATE
+		, FACTORY_CODE
+		, USER_NAME
+		, GENDER
+		, PHONE_NO
+		, EMAIL
+		, HOME_ADDRESS
+		, ZIP_CODE
+		, REMARK
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 SALE_ID
+		, BILLNO
+		, LINE_ID
+		, SHOP_ID
+		, COMPANY_ID
+		, BRAND_CODE
+		, MODEL_CODE
+		, IMEI_NO
+		, IMEI_LIST
+		, SALE_QTY
+		, SALE_PRICE
+		, SALE_AMOUNT
+		, SELLER_ID
+		, INVOICE_NO
+		, QR_CODE
+		, PRODUCT_DATE
+		, FACTORY_CODE
+		, USER_NAME
+		, GENDER
+		, PHONE_NO
+		, EMAIL
+		, HOME_ADDRESS
+		, ZIP_CODE
+		, REMARK
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, SALE_ID
+		, BILLNO
+		, LINE_ID
+		, SHOP_ID
+		, COMPANY_ID
+		, BRAND_CODE
+		, MODEL_CODE
+		, IMEI_NO
+		, IMEI_LIST
+		, SALE_QTY
+		, SALE_PRICE
+		, SALE_AMOUNT
+		, SELLER_ID
+		, INVOICE_NO
+		, QR_CODE
+		, date_format(PRODUCT_DATE, '%Y-%m-%d %H:%i:%s') PRODUCT_DATE
+		, FACTORY_CODE
+		, USER_NAME
+		, GENDER
+		, PHONE_NO
+		, EMAIL
+		, HOME_ADDRESS
+		, ZIP_CODE
+		, REMARK
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="saleId!= null and saleId!= ''"> 
+			AND SALE_ID=#{saleId}
+		</if>
+		<if test="billno!= null and billno!= ''"> 
+			AND BILLNO=#{billno}
+		</if>
+		<if test="lineId!= null and lineId!= ''"> 
+			AND LINE_ID=#{lineId}
+		</if>
+		<if test="shopId!= null and shopId!= ''"> 
+			AND SHOP_ID=#{shopId}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="brandCode!= null and brandCode!= ''"> 
+			AND BRAND_CODE=#{brandCode}
+		</if>
+		<if test="modelCode!= null and modelCode!= ''"> 
+			AND MODEL_CODE=#{modelCode}
+		</if>
+		<if test="imeiNo!= null and imeiNo!= ''"> 
+			AND IMEI_NO=#{imeiNo}
+		</if>
+		<if test="imeiList!= null and imeiList!= ''"> 
+			AND IMEI_LIST=#{imeiList}
+		</if>
+		<if test="saleQty!= null and saleQty!= ''"> 
+			AND SALE_QTY=#{saleQty}
+		</if>
+		<if test="salePrice!= null and salePrice!= ''"> 
+			AND SALE_PRICE=#{salePrice}
+		</if>
+		<if test="saleAmount!= null and saleAmount!= ''"> 
+			AND SALE_AMOUNT=#{saleAmount}
+		</if>
+		<if test="sellerId!= null and sellerId!= ''"> 
+			AND SELLER_ID=#{sellerId}
+		</if>
+		<if test="invoiceNo!= null and invoiceNo!= ''"> 
+			AND INVOICE_NO=#{invoiceNo}
+		</if>
+		<if test="qrCode!= null and qrCode!= ''"> 
+			AND QR_CODE=#{qrCode}
+		</if>
+		<if test="productDate!= null and productDate!= ''"> 
+			AND PRODUCT_DATE=str_to_date(#{productDate},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="factoryCode!= null and factoryCode!= ''"> 
+			AND FACTORY_CODE=#{factoryCode}
+		</if>
+		<if test="userName!= null and userName!= ''"> 
+			AND USER_NAME=#{userName}
+		</if>
+		<if test="gender!= null and gender!= ''"> 
+			AND GENDER=#{gender}
+		</if>
+		<if test="phoneNo!= null and phoneNo!= ''"> 
+			AND PHONE_NO=#{phoneNo}
+		</if>
+		<if test="email!= null and email!= ''"> 
+			AND EMAIL=#{email}
+		</if>
+		<if test="homeAddress!= null and homeAddress!= ''"> 
+			AND HOME_ADDRESS=#{homeAddress}
+		</if>
+		<if test="zipCode!= null and zipCode!= ''"> 
+			AND ZIP_CODE=#{zipCode}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="saleItem != null">
+            <if test="saleItem.id!= null and saleItem.id!= ''">
+				AND ID=#{saleItem.id}
+            </if>
+            <if test="saleItem.saleId!= null and saleItem.saleId!= ''">
+				AND SALE_ID=#{saleItem.saleId}
+            </if>
+            <if test="saleItem.billno!= null and saleItem.billno!= ''">
+				AND BILLNO=#{saleItem.billno}
+            </if>
+            <if test="saleItem.lineId!= null and saleItem.lineId!= ''">
+				AND LINE_ID=#{saleItem.lineId}
+            </if>
+            <if test="saleItem.shopId!= null and saleItem.shopId!= ''">
+				AND SHOP_ID=#{saleItem.shopId}
+            </if>
+            <if test="saleItem.companyId!= null and saleItem.companyId!= ''">
+				AND COMPANY_ID=#{saleItem.companyId}
+            </if>
+            <if test="saleItem.brandCode!= null and saleItem.brandCode!= ''">
+				AND BRAND_CODE=#{saleItem.brandCode}
+            </if>
+            <if test="saleItem.modelCode!= null and saleItem.modelCode!= ''">
+				AND MODEL_CODE=#{saleItem.modelCode}
+            </if>
+            <if test="saleItem.imeiNo!= null and saleItem.imeiNo!= ''">
+				AND IMEI_NO=#{saleItem.imeiNo}
+            </if>
+            <if test="saleItem.imeiList!= null and saleItem.imeiList!= ''">
+				AND IMEI_LIST=#{saleItem.imeiList}
+            </if>
+            <if test="saleItem.saleQty!= null and saleItem.saleQty!= ''">
+				AND SALE_QTY=#{saleItem.saleQty}
+            </if>
+            <if test="saleItem.salePrice!= null and saleItem.salePrice!= ''">
+				AND SALE_PRICE=#{saleItem.salePrice}
+            </if>
+            <if test="saleItem.saleAmount!= null and saleItem.saleAmount!= ''">
+				AND SALE_AMOUNT=#{saleItem.saleAmount}
+            </if>
+            <if test="saleItem.sellerId!= null and saleItem.sellerId!= ''">
+				AND SELLER_ID=#{saleItem.sellerId}
+            </if>
+            <if test="saleItem.invoiceNo!= null and saleItem.invoiceNo!= ''">
+				AND INVOICE_NO=#{saleItem.invoiceNo}
+            </if>
+            <if test="saleItem.qrCode!= null and saleItem.qrCode!= ''">
+				AND QR_CODE=#{saleItem.qrCode}
+            </if>
+            <if test="saleItem.productDate!= null and saleItem.productDate!= ''">
+				AND PRODUCT_DATE=str_to_date(#{saleItem.productDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="saleItem.factoryCode!= null and saleItem.factoryCode!= ''">
+				AND FACTORY_CODE=#{saleItem.factoryCode}
+            </if>
+            <if test="saleItem.userName!= null and saleItem.userName!= ''">
+				AND USER_NAME=#{saleItem.userName}
+            </if>
+            <if test="saleItem.gender!= null and saleItem.gender!= ''">
+				AND GENDER=#{saleItem.gender}
+            </if>
+            <if test="saleItem.phoneNo!= null and saleItem.phoneNo!= ''">
+				AND PHONE_NO=#{saleItem.phoneNo}
+            </if>
+            <if test="saleItem.email!= null and saleItem.email!= ''">
+				AND EMAIL=#{saleItem.email}
+            </if>
+            <if test="saleItem.homeAddress!= null and saleItem.homeAddress!= ''">
+				AND HOME_ADDRESS=#{saleItem.homeAddress}
+            </if>
+            <if test="saleItem.zipCode!= null and saleItem.zipCode!= ''">
+				AND ZIP_CODE=#{saleItem.zipCode}
+            </if>
+            <if test="saleItem.remark!= null and saleItem.remark!= ''">
+				AND REMARK=#{saleItem.remark}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'saleId'">
+				SALE_ID ${value}
+            </when>
+        	<when test="key == 'billno'">
+				BILLNO ${value}
+            </when>
+        	<when test="key == 'lineId'">
+				LINE_ID ${value}
+            </when>
+        	<when test="key == 'shopId'">
+				SHOP_ID ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'brandCode'">
+				BRAND_CODE ${value}
+            </when>
+        	<when test="key == 'modelCode'">
+				MODEL_CODE ${value}
+            </when>
+        	<when test="key == 'imeiNo'">
+				IMEI_NO ${value}
+            </when>
+        	<when test="key == 'imeiList'">
+				IMEI_LIST ${value}
+            </when>
+        	<when test="key == 'saleQty'">
+				SALE_QTY ${value}
+            </when>
+        	<when test="key == 'salePrice'">
+				SALE_PRICE ${value}
+            </when>
+        	<when test="key == 'saleAmount'">
+				SALE_AMOUNT ${value}
+            </when>
+        	<when test="key == 'sellerId'">
+				SELLER_ID ${value}
+            </when>
+        	<when test="key == 'invoiceNo'">
+				INVOICE_NO ${value}
+            </when>
+        	<when test="key == 'qrCode'">
+				QR_CODE ${value}
+            </when>
+        	<when test="key == 'productDate'">
+				PRODUCT_DATE ${value}
+            </when>
+        	<when test="key == 'factoryCode'">
+				FACTORY_CODE ${value}
+            </when>
+        	<when test="key == 'userName'">
+				USER_NAME ${value}
+            </when>
+        	<when test="key == 'gender'">
+				GENDER ${value}
+            </when>
+        	<when test="key == 'phoneNo'">
+				PHONE_NO ${value}
+            </when>
+        	<when test="key == 'email'">
+				EMAIL ${value}
+            </when>
+        	<when test="key == 'homeAddress'">
+				HOME_ADDRESS ${value}
+            </when>
+        	<when test="key == 'zipCode'">
+				ZIP_CODE ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="SaleItem">
+		<![CDATA[ INSERT INTO T_SALE_ITEM ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{saleId}
+			, #{billno}
+			, #{lineId}
+			, #{shopId}
+			, #{companyId}
+			, #{brandCode}
+			, #{modelCode}
+			, #{imeiNo}
+			, #{imeiList}
+			, #{saleQty}
+			, #{salePrice}
+			, #{saleAmount}
+			, #{sellerId}
+			, #{invoiceNo}
+			, #{qrCode}
+			, str_to_date(#{productDate},'%Y-%m-%d %H:%i:%s')
+			, #{factoryCode}
+			, #{userName}
+			, #{gender}
+			, #{phoneNo}
+			, #{email}
+			, #{homeAddress}
+			, #{zipCode}
+			, #{remark}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="SaleItem">
+		<![CDATA[ UPDATE T_SALE_ITEM SET 
+			 ID=#{id} 
+			, SALE_ID=#{saleId} 
+			, BILLNO=#{billno} 
+			, LINE_ID=#{lineId} 
+			, SHOP_ID=#{shopId} 
+			, COMPANY_ID=#{companyId} 
+			, BRAND_CODE=#{brandCode} 
+			, MODEL_CODE=#{modelCode} 
+			, IMEI_NO=#{imeiNo} 
+			, IMEI_LIST=#{imeiList} 
+			, SALE_QTY=#{saleQty} 
+			, SALE_PRICE=#{salePrice} 
+			, SALE_AMOUNT=#{saleAmount} 
+			, SELLER_ID=#{sellerId} 
+			, INVOICE_NO=#{invoiceNo} 
+			, QR_CODE=#{qrCode} 
+			, PRODUCT_DATE=str_to_date(#{productDate},'%Y-%m-%d %H:%i:%s')
+			, FACTORY_CODE=#{factoryCode} 
+			, USER_NAME=#{userName} 
+			, GENDER=#{gender} 
+			, PHONE_NO=#{phoneNo} 
+			, EMAIL=#{email} 
+			, HOME_ADDRESS=#{homeAddress} 
+			, ZIP_CODE=#{zipCode} 
+			, REMARK=#{remark} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_SALE_ITEM WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_SALE_ITEM WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			${id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="SaleItem">
+		DELETE FROM T_SALE_ITEM WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="SaleItemResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_SALE_ITEM WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="SaleItemResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_SALE_ITEM
+	</select>
+	<select id="listByProperty" parameterType="SaleItem" resultMap="SaleItemResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_SALE_ITEM WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="SaleItem" resultMap="SaleItemResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_SALE_ITEM WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="SaleItem" resultType="int">
+		SELECT count(1) AS totalcount FROM T_SALE_ITEM WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>
