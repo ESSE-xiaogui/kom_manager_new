@@ -29,6 +29,8 @@ public class Region extends Model{
 	  *	
 	  */
 	private java.lang.Long id;
+	
+	private java.lang.Integer companyId;
 
 	/**
 	  *	地域定义表中包括了国家、省份、城市、区县等
@@ -101,6 +103,16 @@ public class Region extends Model{
 		this.id = id;
 	}
 	
+	
+	
+	public java.lang.Integer getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(java.lang.Integer companyId) {
+		this.companyId = companyId;
+	}
+
 	/**
 	  *	地域定义表中包括了国家、省份、城市、区县等
 	  */
@@ -276,23 +288,13 @@ public class Region extends Model{
 	{
 		this.version = version;
 	}
-	
-	public String toString()
-	{
-		return "Region [" + 
-					"id=" + id + 
-					", regionCode=" + regionCode + 
-					", regionName=" + regionName + 
-					", parentId=" + parentId + 
-					", regionType=" + regionType + 
-					", isInactive=" + isInactive + 
-					", remark=" + remark + 
-					", createdBy=" + createdBy + 
-					", createdTime=" + createdTime + 
-					", updatedBy=" + updatedBy + 
-					", updatedTime=" + updatedTime + 
-					", version=" + version + 
-				"]";
+
+	@Override
+	public String toString() {
+		return "Region [id=" + id + ", companyId=" + companyId + ", regionCode=" + regionCode + ", regionName="
+				+ regionName + ", parentId=" + parentId + ", regionType=" + regionType + ", isInactive=" + isInactive
+				+ ", remark=" + remark + ", createdBy=" + createdBy + ", createdTime=" + createdTime + ", updatedBy="
+				+ updatedBy + ", updatedTime=" + updatedTime + ", version=" + version + "]";
 	}
 }
 

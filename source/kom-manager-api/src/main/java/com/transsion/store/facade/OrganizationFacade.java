@@ -19,6 +19,8 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.Organization;
+import com.transsion.store.dto.OrganizationDto;
+import com.transsion.store.dto.OrganizationResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -101,5 +103,7 @@ public interface OrganizationFacade {
 	 */
 	public Pagination<Organization> listPaginationByProperty(Pagination<Organization> pagination, Organization organization)
 			throws ServiceException;
+	
+	public OrganizationResponseDto saveOrg(String token,OrganizationDto organizationDto) throws ServiceException;
 
 }

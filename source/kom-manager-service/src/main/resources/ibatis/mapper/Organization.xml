@@ -25,6 +25,7 @@
 		<result column="ORG_NAME" property="orgName"/>
 		<result column="COMPANY_ID" property="companyId"/>
 		<result column="PARENT_ID" property="parentId"/>
+		<result column="DUTY_NAME" property="dutyName"/>
 		<result column="TREE_CODE" property="treeCode"/>
 		<result column="IS_INACTIVE" property="isInactive"/>
 		<result column="REMARK" property="remark"/>
@@ -41,6 +42,7 @@
 		, ORG_NAME
 		, COMPANY_ID
 		, PARENT_ID
+		, DUTY_NAME
 		, TREE_CODE
 		, IS_INACTIVE
 		, REMARK
@@ -56,6 +58,7 @@
 		, ORG_NAME
 		, COMPANY_ID
 		, PARENT_ID
+		, DUTY_NAME
 		, TREE_CODE
 		, IS_INACTIVE
 		, REMARK
@@ -72,6 +75,7 @@
 		, ORG_NAME
 		, COMPANY_ID
 		, PARENT_ID
+		, DUTY_NAME
 		, TREE_CODE
 		, IS_INACTIVE
 		, REMARK
@@ -97,6 +101,9 @@
 		</if>
 		<if test="parentId!= null and parentId!= ''"> 
 			AND PARENT_ID=#{parentId}
+		</if>
+		<if test="dutyName!= null and dutyName!= ''"> 
+			AND DUTY_NAME=#{dutyName}
 		</if>
 		<if test="treeCode!= null and treeCode!= ''"> 
 			AND TREE_CODE=#{treeCode}
@@ -140,6 +147,9 @@
             </if>
             <if test="organization.parentId!= null and organization.parentId!= ''">
 				AND PARENT_ID=#{organization.parentId}
+            </if>
+             <if test="organization.dutyName!= null and organization.dutyName!= ''">
+				AND DUTY_NAME=#{organization.dutyName}
             </if>
             <if test="organization.treeCode!= null and organization.treeCode!= ''">
 				AND TREE_CODE=#{organization.treeCode}
@@ -194,6 +204,9 @@
         	<when test="key == 'parentId'">
 				PARENT_ID ${value}
             </when>
+            <when test="key == 'dutyName'">
+				DUTY_NAME ${value}
+            </when>
         	<when test="key == 'treeCode'">
 				TREE_CODE ${value}
             </when>
@@ -230,6 +243,7 @@
 			, #{orgName}
 			, #{companyId}
 			, #{parentId}
+			, #{dutyName}
 			, #{treeCode}
 			, #{isInactive}
 			, #{remark}
@@ -247,6 +261,7 @@
 			, ORG_NAME=#{orgName} 
 			, COMPANY_ID=#{companyId} 
 			, PARENT_ID=#{parentId} 
+			, DUTY_NAME=#{dutyName} 
 			, TREE_CODE=#{treeCode} 
 			, IS_INACTIVE=#{isInactive} 
 			, REMARK=#{remark} 

@@ -18,6 +18,8 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Organization;
+import com.transsion.store.dto.OrganizationDto;
+import com.transsion.store.dto.OrganizationResponseDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.OrganizationFacade;
 import com.shangkang.core.bo.Pagination;
@@ -109,5 +111,17 @@ public class OrganizationController extends AbstractController{
 	public void update(Organization organization) throws ServiceException
 	{
 		organizationFacade.update(organization);
+	}
+	/**
+	 * 新增组织机构
+	 * @return
+	 * @throws ServiceException
+	 * */
+	@POST
+	@Path("/saveOrg")
+	@Consumes({MediaType.APPLICATION_JSON})
+	public OrganizationResponseDto saveOrg(OrganizationDto organizationDto) throws ServiceException{
+		String token = this.getAuthorization();
+		return organizationFacade.saveOrg(token, organizationDto);
 	}
 }

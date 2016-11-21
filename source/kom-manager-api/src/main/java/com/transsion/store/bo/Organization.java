@@ -50,6 +50,7 @@ public class Organization extends Model{
 	  */
 	private java.lang.Long parentId;
 
+	private java.lang.String dutyName;
 	/**
 	  *	
 	  */
@@ -170,6 +171,14 @@ public class Organization extends Model{
 		this.parentId = parentId;
 	}
 	
+	public java.lang.String getDutyName() {
+		return dutyName;
+	}
+
+	public void setDutyName(java.lang.String dutyName) {
+		this.dutyName = dutyName;
+	}
+
 	/**
 	  *	
 	  */
@@ -297,24 +306,13 @@ public class Organization extends Model{
 	{
 		this.version = version;
 	}
-	
-	public String toString()
-	{
-		return "Organization [" + 
-					"id=" + id + 
-					", orgCode=" + orgCode + 
-					", orgName=" + orgName + 
-					", companyId=" + companyId + 
-					", parentId=" + parentId + 
-					", treeCode=" + treeCode + 
-					", isInactive=" + isInactive + 
-					", remark=" + remark + 
-					", createdBy=" + createdBy + 
-					", createdTime=" + createdTime + 
-					", updatedBy=" + updatedBy + 
-					", updatedTime=" + updatedTime + 
-					", version=" + version + 
-				"]";
+
+	@Override
+	public String toString() {
+		return "Organization [id=" + id + ", orgCode=" + orgCode + ", orgName=" + orgName + ", companyId=" + companyId
+				+ ", parentId=" + parentId + ", dutyName=" + dutyName + ", treeCode=" + treeCode + ", isInactive="
+				+ isInactive + ", remark=" + remark + ", createdBy=" + createdBy + ", createdTime=" + createdTime
+				+ ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime + ", version=" + version + "]";
 	}
 }
 

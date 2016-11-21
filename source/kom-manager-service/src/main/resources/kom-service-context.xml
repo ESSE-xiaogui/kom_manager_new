@@ -51,8 +51,7 @@
         <beans:property name="mapperLocations" value="classpath*:ibatis/mapper/**/*.xml"/>
         <beans:property name="dataSource" ref="dataSource"/>
         <beans:property name="typeAliasesPackage"
-                        value="com.transsion.store.bo"/>
-                     <!--    ;com.transsion.kom.dto -->
+                        value="com.transsion.store.bo;com.transsion.store.dto"/>
         <beans:property name="plugins">
             <beans:list>
                 <beans:ref bean="paginationPlugin"/>

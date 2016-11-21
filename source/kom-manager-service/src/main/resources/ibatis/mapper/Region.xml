@@ -21,6 +21,7 @@
 <mapper namespace="com.transsion.store.mapper.RegionMapper">
 	<resultMap id="RegionResultMapper" type="Region">
 		<result column="ID" property="id"/>
+		<result column="COMPANY_ID" property="companyId"/>
 		<result column="REGION_CODE" property="regionCode"/>
 		<result column="REGION_NAME" property="regionName"/>
 		<result column="PARENT_ID" property="parentId"/>
@@ -36,6 +37,7 @@
 	
 	<sql id="commonColumns">
 		 ID
+		, COMPANY_ID
 		, REGION_CODE
 		, REGION_NAME
 		, PARENT_ID
@@ -50,7 +52,8 @@
 	</sql>
 
 	<sql id="commonColumnsNotPK">
-		 REGION_CODE
+		COMPANY_ID
+		, REGION_CODE
 		, REGION_NAME
 		, PARENT_ID
 		, REGION_TYPE
@@ -65,6 +68,7 @@
 	
 	<sql id="commonProcessDateColumns">
 		 ID
+		, COMPANY_ID
 		, REGION_CODE
 		, REGION_NAME
 		, PARENT_ID
@@ -81,6 +85,9 @@
 	<sql id="commonCondition">
 		<if test="id!= null and id!= ''"> 
 			AND ID=#{id}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
 		</if>
 		<if test="regionCode!= null and regionCode!= ''"> 
 			AND REGION_CODE=#{regionCode}
@@ -121,6 +128,9 @@
 		<if test="region != null">
             <if test="region.id!= null and region.id!= ''">
 				AND ID=#{region.id}
+            </if>
+            <if test="region.companyId!= null and region.companyId!= ''">
+				AND COMPANY_ID=#{region.companyId}
             </if>
             <if test="region.regionCode!= null and region.regionCode!= ''">
 				AND REGION_CODE=#{region.regionCode}
@@ -172,6 +182,9 @@
         	<when test="key == 'id'">
 				ID ${value}
             </when>
+            <when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
         	<when test="key == 'regionCode'">
 				REGION_CODE ${value}
             </when>
@@ -212,8 +225,9 @@
 		<![CDATA[ INSERT INTO T_REGION ( ]]>
 		<include refid="commonColumnsNotPK"/>
 		<![CDATA[
-			) VALUES ( 
-			 #{regionCode}
+			) VALUES (
+			#{companyId} 
+			, #{regionCode}
 			, #{regionName}
 			, #{parentId}
 			, #{regionType}
@@ -229,6 +243,7 @@
 	<update id="update" parameterType="Region">
 		<![CDATA[ UPDATE T_REGION SET 
 			 ID=#{id} 
+			, COMPANY_ID=#{companyId}
 			, REGION_CODE=#{regionCode} 
 			, REGION_NAME=#{regionName} 
 			, PARENT_ID=#{parentId} 

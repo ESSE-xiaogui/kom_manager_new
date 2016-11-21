@@ -22,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.Organization;
+import com.transsion.store.dto.OrganizationDto;
+import com.transsion.store.dto.OrganizationResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.OrganizationFacade;
@@ -144,5 +146,8 @@ public class OrganizationFacadeImpl implements OrganizationFacade {
 	public int findByCount(Organization organization) throws ServiceException
 	{
 		return organizationService.findByCount(organization);
+	}
+	public OrganizationResponseDto saveOrg(String token,OrganizationDto organizationDto) throws ServiceException{
+		return null;
 	}
 }
