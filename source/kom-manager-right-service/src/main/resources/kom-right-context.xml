@@ -70,7 +70,7 @@
 
     <beans:bean id="authKeyGenerator" class="com.rest.service.security.simple.DefaultAuthKeyGenerator" />
 
-    <beans:bean id="anonResourceService" class="com.transsion.kom.service.AnonResourceService">
+    <beans:bean id="anonResourceService" class="com.transsion.store.service.AnonResourceService">
         <beans:property name="anonList">
             <beans:list>
                 <beans:value>/**/login</beans:value>
@@ -80,7 +80,7 @@
         </beans:property>
     </beans:bean>
 
-    <beans:bean id="resourceService" class="com.transsion.kom.service.ResourceService">
+    <beans:bean id="resourceService" class="com.transsion.store.service.ResourceService">
         <beans:property name="resources">
             <beans:list>
                 <beans:value>/**/logOut</beans:value>

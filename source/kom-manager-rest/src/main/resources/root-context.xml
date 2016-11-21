@@ -14,7 +14,7 @@
         <beans:property name="basenames">
             <beans:list>
                 <beans:value>com.shangkang.core.resources.error_message_resource</beans:value>
-                <beans:value>com.transsion.kom.resources.error_message_kom_resource</beans:value>
+                <beans:value>com.transsion.store.resources.error_message_store_resource</beans:value>
             </beans:list>
         </beans:property>
         <beans:property name="useCodeAsDefaultMessage" value="true"/>
