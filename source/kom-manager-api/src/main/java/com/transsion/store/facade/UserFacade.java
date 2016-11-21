@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.User;
+import com.transsion.store.context.UserContext;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -101,5 +102,20 @@ public interface UserFacade {
 	 */
 	public Pagination<User> listPaginationByProperty(Pagination<User> pagination, User user)
 			throws ServiceException;
+
+	/**
+	 * 登录
+	 * @return
+	 * @throws ServiceException
+	 */
+	public UserContext validateLogin(String userCode, String password) throws ServiceException;
+	
+	/**
+	 * @see 登出
+	 * @author guihua.zhang
+	 * @return
+	 * @throws ServiceException
+	 */
+	public Boolean logOut(String token) throws ServiceException;
 
 }

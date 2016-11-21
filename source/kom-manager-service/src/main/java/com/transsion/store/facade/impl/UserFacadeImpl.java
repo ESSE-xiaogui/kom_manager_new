@@ -18,19 +18,25 @@ package com.transsion.store.facade.impl;
 
 import java.util.List;
 
+import javax.ws.rs.QueryParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.User;
+import com.transsion.store.context.UserContext;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.UserFacade;
+import com.transsion.store.manager.UserManager;
 import com.transsion.store.service.UserService;
 
 @Component("userFacade")
 public class UserFacadeImpl implements UserFacade {
 
 	private UserService userService;
+	@Autowired
+	private UserManager userManager;
 	
 	@Autowired
 	public void setUserService(UserService userService)
@@ -145,4 +151,26 @@ public class UserFacadeImpl implements UserFacade {
 	{
 		return userService.findByCount(user);
 	}
+	
+	/**
+	 * 登录
+	 * @param userCode password
+	 * @return
+	 * @throws ServiceException 
+	 */
+	public UserContext validateLogin(String userCode,String password) throws ServiceException {
+		UserContext userContext = userManager.validateLogin(userCode, password);
+		return userContext;
+	}
+	
+	/**
+	 * @see 登出
+	 * @author guihua.zhang
+	 * @return
+	 * @throws ServiceException
+	 */
+	public Boolean logOut(String token) throws ServiceException{
+		return userManager.logOut(token);
+	}
+
 }
