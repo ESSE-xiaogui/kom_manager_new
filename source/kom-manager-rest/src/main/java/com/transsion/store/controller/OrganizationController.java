@@ -120,8 +120,18 @@ public class OrganizationController extends AbstractController{
 	@POST
 	@Path("/saveOrg")
 	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
 	public OrganizationResponseDto saveOrg(OrganizationDto organizationDto) throws ServiceException{
 		String token = this.getAuthorization();
 		return organizationFacade.saveOrg(token, organizationDto);
+	}
+	
+	/**
+	 * 查询组织机构名称
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public OrganizationResponseDto findOrgName(Organization organization) throws ServiceException{
+		return null;
 	}
 }

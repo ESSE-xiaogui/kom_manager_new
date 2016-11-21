@@ -33,7 +33,7 @@ public class Organization extends Model{
 	/**
 	  *	
 	  */
-	private java.lang.Integer orgCode;
+	private java.lang.Integer orgId;
 
 	/**
 	  *	
@@ -51,10 +51,6 @@ public class Organization extends Model{
 	private java.lang.Long parentId;
 
 	private java.lang.String dutyName;
-	/**
-	  *	
-	  */
-	private java.lang.String treeCode;
 
 	/**
 	  *	0表示激活状态，被激活有效的数据可以用于新增业务，1表示停用，被停用无效的数据只能用于历史数据查询中
@@ -110,17 +106,17 @@ public class Organization extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.Integer getOrgCode() 
+	public java.lang.Integer getOrgId() 
 	{
-		return orgCode;
+		return orgId;
 	}
 	
 	/**
 	  *	
 	  */
-	public void setOrgCode(java.lang.Integer orgCode) 
+	public void setOrgId(java.lang.Integer orgId) 
 	{
-		this.orgCode = orgCode;
+		this.orgId = orgId;
 	}
 	
 	/**
@@ -177,22 +173,6 @@ public class Organization extends Model{
 
 	public void setDutyName(java.lang.String dutyName) {
 		this.dutyName = dutyName;
-	}
-
-	/**
-	  *	
-	  */
-	public java.lang.String getTreeCode() 
-	{
-		return treeCode;
-	}
-	
-	/**
-	  *	
-	  */
-	public void setTreeCode(java.lang.String treeCode) 
-	{
-		this.treeCode = treeCode;
 	}
 	
 	/**
@@ -309,8 +289,8 @@ public class Organization extends Model{
 
 	@Override
 	public String toString() {
-		return "Organization [id=" + id + ", orgCode=" + orgCode + ", orgName=" + orgName + ", companyId=" + companyId
-				+ ", parentId=" + parentId + ", dutyName=" + dutyName + ", treeCode=" + treeCode + ", isInactive="
+		return "Organization [id=" + id + ", orgId=" + orgId + ", orgName=" + orgName + ", companyId=" + companyId
+				+ ", parentId=" + parentId + ", dutyName=" + dutyName + ", isInactive="
 				+ isInactive + ", remark=" + remark + ", createdBy=" + createdBy + ", createdTime=" + createdTime
 				+ ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime + ", version=" + version + "]";
 	}

@@ -27,12 +27,16 @@ import com.transsion.store.dto.OrganizationResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.OrganizationFacade;
+import com.transsion.store.manager.OrganizationManager;
 import com.transsion.store.service.OrganizationService;
 
 @Component("organizationFacade")
 public class OrganizationFacadeImpl implements OrganizationFacade {
 
 	private OrganizationService organizationService;
+	
+	@Autowired
+	private OrganizationManager organizationManager;
 	
 	@Autowired
 	public void setOrganizationService(OrganizationService organizationService)
@@ -148,6 +152,6 @@ public class OrganizationFacadeImpl implements OrganizationFacade {
 		return organizationService.findByCount(organization);
 	}
 	public OrganizationResponseDto saveOrg(String token,OrganizationDto organizationDto) throws ServiceException{
-		return null;
+		return organizationManager.saveOrg(token, organizationDto);
 	}
 }

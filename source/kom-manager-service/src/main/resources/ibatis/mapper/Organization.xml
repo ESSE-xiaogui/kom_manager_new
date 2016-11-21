@@ -21,12 +21,11 @@
 <mapper namespace="com.transsion.store.mapper.OrganizationMapper">
 	<resultMap id="OrganizationResultMapper" type="Organization">
 		<result column="ID" property="id"/>
-		<result column="ORG_CODE" property="orgCode"/>
-		<result column="ORG_NAME" property="orgName"/>
 		<result column="COMPANY_ID" property="companyId"/>
 		<result column="PARENT_ID" property="parentId"/>
+		<result column="ORG_ID" property="orgId"/>
+		<result column="ORG_NAME" property="orgName"/>
 		<result column="DUTY_NAME" property="dutyName"/>
-		<result column="TREE_CODE" property="treeCode"/>
 		<result column="IS_INACTIVE" property="isInactive"/>
 		<result column="REMARK" property="remark"/>
 		<result column="CREATED_BY" property="createdBy"/>
@@ -38,12 +37,11 @@
 	
 	<sql id="commonColumns">
 		 ID
-		, ORG_CODE
+		, ORG_ID
 		, ORG_NAME
 		, COMPANY_ID
 		, PARENT_ID
 		, DUTY_NAME
-		, TREE_CODE
 		, IS_INACTIVE
 		, REMARK
 		, CREATED_BY
@@ -54,12 +52,11 @@
 	</sql>
 
 	<sql id="commonColumnsNotPK">
-		 ORG_CODE
+		 ORG_ID
 		, ORG_NAME
 		, COMPANY_ID
 		, PARENT_ID
 		, DUTY_NAME
-		, TREE_CODE
 		, IS_INACTIVE
 		, REMARK
 		, CREATED_BY
@@ -71,12 +68,11 @@
 	
 	<sql id="commonProcessDateColumns">
 		 ID
-		, ORG_CODE
+		, ORG_ID
 		, ORG_NAME
 		, COMPANY_ID
 		, PARENT_ID
 		, DUTY_NAME
-		, TREE_CODE
 		, IS_INACTIVE
 		, REMARK
 		, CREATED_BY
@@ -90,8 +86,8 @@
 		<if test="id!= null and id!= ''"> 
 			AND ID=#{id}
 		</if>
-		<if test="orgCode!= null and orgCode!= ''"> 
-			AND ORG_CODE=#{orgCode}
+		<if test="orgId!= null and orgId!= ''"> 
+			AND ORG_ID=#{orgId}
 		</if>
 		<if test="orgName!= null and orgName!= ''"> 
 			AND ORG_NAME=#{orgName}
@@ -104,9 +100,6 @@
 		</if>
 		<if test="dutyName!= null and dutyName!= ''"> 
 			AND DUTY_NAME=#{dutyName}
-		</if>
-		<if test="treeCode!= null and treeCode!= ''"> 
-			AND TREE_CODE=#{treeCode}
 		</if>
 		<if test="isInactive!= null and isInactive!= ''"> 
 			AND IS_INACTIVE=#{isInactive}
@@ -136,8 +129,8 @@
             <if test="organization.id!= null and organization.id!= ''">
 				AND ID=#{organization.id}
             </if>
-            <if test="organization.orgCode!= null and organization.orgCode!= ''">
-				AND ORG_CODE=#{organization.orgCode}
+            <if test="organization.orgId!= null and organization.orgId!= ''">
+				AND ORG_ID=#{organization.orgId}
             </if>
             <if test="organization.orgName!= null and organization.orgName!= ''">
 				AND ORG_NAME=#{organization.orgName}
@@ -150,9 +143,6 @@
             </if>
              <if test="organization.dutyName!= null and organization.dutyName!= ''">
 				AND DUTY_NAME=#{organization.dutyName}
-            </if>
-            <if test="organization.treeCode!= null and organization.treeCode!= ''">
-				AND TREE_CODE=#{organization.treeCode}
             </if>
             <if test="organization.isInactive!= null and organization.isInactive!= ''">
 				AND IS_INACTIVE=#{organization.isInactive}
@@ -192,8 +182,8 @@
         	<when test="key == 'id'">
 				ID ${value}
             </when>
-        	<when test="key == 'orgCode'">
-				ORG_CODE ${value}
+        	<when test="key == 'orgId'">
+				ORG_ID ${value}
             </when>
         	<when test="key == 'orgName'">
 				ORG_NAME ${value}
@@ -206,9 +196,6 @@
             </when>
             <when test="key == 'dutyName'">
 				DUTY_NAME ${value}
-            </when>
-        	<when test="key == 'treeCode'">
-				TREE_CODE ${value}
             </when>
         	<when test="key == 'isInactive'">
 				IS_INACTIVE ${value}
@@ -239,7 +226,7 @@
 		<include refid="commonColumnsNotPK"/>
 		<![CDATA[
 			) VALUES ( 
-			 #{orgCode}
+			 #{orgId}
 			, #{orgName}
 			, #{companyId}
 			, #{parentId}
@@ -257,12 +244,11 @@
 	<update id="update" parameterType="Organization">
 		<![CDATA[ UPDATE T_ORGANIZATION SET 
 			 ID=#{id} 
-			, ORG_CODE=#{orgCode} 
+			, ORG_ID=#{orgId} 
 			, ORG_NAME=#{orgName} 
 			, COMPANY_ID=#{companyId} 
 			, PARENT_ID=#{parentId} 
 			, DUTY_NAME=#{dutyName} 
-			, TREE_CODE=#{treeCode} 
 			, IS_INACTIVE=#{isInactive} 
 			, REMARK=#{remark} 
 			, CREATED_BY=#{createdBy} 

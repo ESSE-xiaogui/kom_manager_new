@@ -3,10 +3,18 @@ package com.transsion.store.dto;
 public class OrganizationDto {
 	
 	/**
+	 * 公司Id
+	 * */
+	private Integer companyId;
+	/**
 	 * 父级组织ID
 	 * */
 	private Integer parentId;
 	
+	/**
+	 * 组织ID
+	 * */
+	private Integer orgId;
 	/**
 	 * 组织名称
 	 * */
@@ -27,49 +35,5 @@ public class OrganizationDto {
 	 * */
 	private String remark;
 
-	public Integer getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(Integer parentId) {
-		this.parentId = parentId;
-	}
-
-	public String getOrgName() {
-		return orgName;
-	}
-
-	public void setOrgName(String orgName) {
-		this.orgName = orgName;
-	}
-
-	public String getDutyName() {
-		return dutyName;
-	}
-
-	public void setDutyName(String dutyName) {
-		this.dutyName = dutyName;
-	}
-
-	public Integer getIsInactive() {
-		return isInactive;
-	}
-
-	public void setIsInactive(Integer isInactive) {
-		this.isInactive = isInactive;
-	}
-
-	public String getRemark() {
-		return remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-
-	@Override
-	public String toString() {
-		return "OrganizationDto [parentId=" + parentId + ", orgName=" + orgName + ", dutyName=" + dutyName
-				+ ", isInactive=" + isInactive + ", remark=" + remark + "]";
-	}
+	
 }
