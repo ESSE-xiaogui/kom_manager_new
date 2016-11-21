@@ -71,7 +71,7 @@
         </dependency>
         <dependency>
             <groupId>com.transsion</groupId>
-            <artifactId>kom-common</artifactId>
+            <artifactId>kom-manager-common</artifactId>
             <version>${parent.version}</version>
         </dependency>
         <dependency>
