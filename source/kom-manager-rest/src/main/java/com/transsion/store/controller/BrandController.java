@@ -18,6 +18,8 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Brand;
+import com.transsion.store.dto.BrandDto;
+import com.transsion.store.dto.BrandResponseDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.BrandFacade;
 import com.shangkang.core.bo.Pagination;
@@ -109,5 +111,30 @@ public class BrandController extends AbstractController{
 	public void update(Brand brand) throws ServiceException
 	{
 		brandFacade.update(brand);
+	}
+	/**
+	 * 新增品牌
+	 * @return
+	 * @throws ServiceException
+	 * */
+	@POST
+	@Path("/saveBrand")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public BrandResponseDto saveBrand(BrandDto brandDto) throws ServiceException{
+		String token = this.getAuthorization();
+		return brandFacade.saveBrand(token,brandDto);
+	}
+	/**
+	 * 查询品牌
+	 * @return
+	 * @throws ServiceException
+	 * */
+	@GET
+	@Path("/findBrand")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<BrandDto> findBrand() throws ServiceException{
+		String token = this.getAuthorization();
+		return brandFacade.findBrand(token);
 	}
 }

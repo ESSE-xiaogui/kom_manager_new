@@ -18,6 +18,11 @@ public class MessageStoreResource {
     public static final String ERROR_MESSAGE_USER_IS_NULL = "error_message_userIsNull";
     
     /**
+     * 根据入参查询店铺表为空
+     * */
+    public static final String ERROR_MESSAGE_SHOP_IS_NULL = "error_message_shopIsNull";
+    
+    /**
      *  用户UserId为空
      * */
     public static final String ERROR_MESSAGE_USERID_IS_NULL = "error_message_userIdIsNull";

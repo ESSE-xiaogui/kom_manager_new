@@ -26,6 +26,8 @@
 		<result column="MODEL_CODE" property="modelCode"/>
 		<result column="MODEL_NAME" property="modelName"/>
 		<result column="COMPANY_ID" property="companyId"/>
+		<result column="SALE_TIME" property="saleTime"/>
+		<result column="PRICE_SCALE" property="priceScale"/>
 		<result column="ELEMENT_TYPE" property="elementType"/>
 		<result column="ELEMENT_CODE" property="elementCode"/>
 		<result column="IS_INACTIVE" property="isInactive"/>
@@ -37,6 +39,18 @@
 		<result column="VERSION" property="version"/>
 	</resultMap>
 	
+	<resultMap id="ModelDtoResultMapper" type="ModelDto">
+		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="SERIES_CODE" property="seriesCode"/>
+		<result column="MODEL_CODE" property="modelCode"/>
+		<result column="MODEL_NAME" property="modelName"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="SALE_TIME" property="saleTime"/>
+		<result column="PRICE_SCALE" property="priceScale"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, BRAND_CODE
@@ -44,6 +58,8 @@
 		, MODEL_CODE
 		, MODEL_NAME
 		, COMPANY_ID
+		, SALE_TIME
+		, PRICE_SCALE
 		, ELEMENT_TYPE
 		, ELEMENT_CODE
 		, IS_INACTIVE
@@ -61,6 +77,8 @@
 		, MODEL_CODE
 		, MODEL_NAME
 		, COMPANY_ID
+		, SALE_TIME
+		, PRICE_SCALE
 		, ELEMENT_TYPE
 		, ELEMENT_CODE
 		, IS_INACTIVE
@@ -79,6 +97,8 @@
 		, MODEL_CODE
 		, MODEL_NAME
 		, COMPANY_ID
+		, SALE_TIME
+		, PRICE_SCALE
 		, ELEMENT_TYPE
 		, ELEMENT_CODE
 		, IS_INACTIVE
@@ -108,6 +128,12 @@
 		</if>
 		<if test="companyId!= null and companyId!= ''"> 
 			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="saleTime!= null and saleTime!= ''"> 
+			AND SALE_TIME=#{saleTime}
+		</if>
+		<if test="priceScale!= null and priceScale!= ''"> 
+			AND PRICE_SCALE=#{priceScale}
 		</if>
 		<if test="elementType!= null and elementType!= ''"> 
 			AND ELEMENT_TYPE=#{elementType}
@@ -157,6 +183,12 @@
             </if>
             <if test="model.companyId!= null and model.companyId!= ''">
 				AND COMPANY_ID=#{model.companyId}
+            </if>
+            <if test="model.saleTime!= null and model.saleTime!= ''">
+				AND SALE_TIME=#{model.saleTime}
+            </if>
+            <if test="model.priceScale!= null and model.priceScale!= ''">
+				AND PRICE_SCALE=#{model.priceScale}
             </if>
             <if test="model.elementType!= null and model.elementType!= ''">
 				AND ELEMENT_TYPE=#{model.elementType}
@@ -217,6 +249,12 @@
         	<when test="key == 'companyId'">
 				COMPANY_ID ${value}
             </when>
+            <when test="key == 'saleTime'">
+				SALE_TIME ${value}
+            </when>
+        	<when test="key == 'priceScale'">
+				PRICE_SCALE ${value}
+            </when>
         	<when test="key == 'elementType'">
 				ELEMENT_TYPE ${value}
             </when>
@@ -257,6 +295,8 @@
 			, #{modelCode}
 			, #{modelName}
 			, #{companyId}
+			, #{saleTime}
+			, #{priceScale}
 			, #{elementType}
 			, #{elementCode}
 			, #{isInactive}
@@ -276,6 +316,8 @@
 			, MODEL_CODE=#{modelCode} 
 			, MODEL_NAME=#{modelName} 
 			, COMPANY_ID=#{companyId} 
+			, SALE_TIME=#{saleTime}
+			, PRICE_SCALE=#{priceScale}
 			, ELEMENT_TYPE=#{elementType} 
 			, ELEMENT_CODE=#{elementCode} 
 			, IS_INACTIVE=#{isInactive} 
@@ -327,5 +369,18 @@
 	<select id="findByCount" parameterType="Model" resultType="int">
 		SELECT count(1) AS totalcount FROM T_MODEL WHERE 1=1 
 		<include refid="commonCondition"/>
+	</select>
+	<select id="findModel" parameterType="Model" resultMap="ModelDtoResultMapper">
+	SELECT BRAND_NAME,SERIES_CODE,MODEL_CODE,MODEL_NAME,SALE_TIME,PRICE_SCALE,IS_SELF,IS_INACTIVE FROM T_MODEL
+	WHERE COMPANY_ID=#{companyId}
+	<if test="brandCode!= null and brandCode!= ''"> 
+			AND BRAND_CODE=#{brandCode}
+	</if>
+	<if test="seriesCode!= null and seriesCode!= ''"> 
+			AND SERIES_CODE=#{seriesCode}
+	</if>
+	<if test="modelCode!= null and modelCode!= ''"> 
+			AND MODEL_CODE=#{modelCode}
+	</if> 
 	</select>
 </mapper>

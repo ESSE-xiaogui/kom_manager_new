@@ -19,6 +19,8 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.Brand;
+import com.transsion.store.dto.BrandDto;
+import com.transsion.store.dto.BrandResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -101,5 +103,19 @@ public interface BrandFacade {
 	 */
 	public Pagination<Brand> listPaginationByProperty(Pagination<Brand> pagination, Brand brand)
 			throws ServiceException;
+	
+	/**
+	 * 新增品牌
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public BrandResponseDto saveBrand(String token,BrandDto brandDto) throws ServiceException;
+	
+	/**
+	 * 查询品牌
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public List<BrandDto> findBrand(String token) throws ServiceException;
 
 }

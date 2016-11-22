@@ -53,6 +53,16 @@ public class Model extends com.shangkang.core.bo.Model{
 	  *	指使用系统的公司，即事业部或经销商对应的公司
 	  */
 	private java.lang.Integer companyId;
+	
+	/**
+	 * 上市时间
+	 * */
+	private java.lang.String saleTime;
+	
+	/**
+	 * 价格档位 注：枚举
+	 * */
+	private java.lang.Integer priceScale;
 
 	/**
 	  *	字典编号：1403 (颜色、软件版本、T卡容量等)
@@ -195,6 +205,22 @@ public class Model extends com.shangkang.core.bo.Model{
 		this.companyId = companyId;
 	}
 	
+	public java.lang.String getSaleTime() {
+		return saleTime;
+	}
+
+	public void setSaleTime(java.lang.String saleTime) {
+		this.saleTime = saleTime;
+	}
+
+	public java.lang.Integer getPriceScale() {
+		return priceScale;
+	}
+
+	public void setPriceScale(java.lang.Integer priceScale) {
+		this.priceScale = priceScale;
+	}
+
 	/**
 	  *	字典编号：1403 (颜色、软件版本、T卡容量等)
 	  */
@@ -338,26 +364,16 @@ public class Model extends com.shangkang.core.bo.Model{
 	{
 		this.version = version;
 	}
-	
-	public String toString()
-	{
-		return "Model [" + 
-					"id=" + id + 
-					", brandCode=" + brandCode + 
-					", seriesCode=" + seriesCode + 
-					", modelCode=" + modelCode + 
-					", modelName=" + modelName + 
-					", companyId=" + companyId + 
-					", elementType=" + elementType + 
-					", elementCode=" + elementCode + 
-					", isInactive=" + isInactive + 
-					", remark=" + remark + 
-					", createdBy=" + createdBy + 
-					", createdTime=" + createdTime + 
-					", updatedBy=" + updatedBy + 
-					", updatedTime=" + updatedTime + 
-					", version=" + version + 
-				"]";
+
+	@Override
+	public String toString() {
+		return "Model [id=" + id + ", brandCode=" + brandCode + ", seriesCode=" + seriesCode + ", modelCode="
+				+ modelCode + ", modelName=" + modelName + ", companyId=" + companyId + ", saleTime=" + saleTime
+				+ ", priceScale=" + priceScale + ", elementType=" + elementType + ", elementCode=" + elementCode
+				+ ", isInactive=" + isInactive + ", remark=" + remark + ", createdBy=" + createdBy + ", createdTime="
+				+ createdTime + ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime + ", version=" + version
+				+ "]";
 	}
+
 }
 
