@@ -17,13 +17,12 @@
 package com.transsion.store.facade.impl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.transsion.store.bo.Organization;
 import com.transsion.store.dto.OrganizationDto;
 import com.transsion.store.dto.OrganizationResponseDto;
+import com.transsion.store.dto.OrganizationTreeDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.OrganizationFacade;
@@ -151,7 +150,31 @@ public class OrganizationFacadeImpl implements OrganizationFacade {
 	{
 		return organizationService.findByCount(organization);
 	}
+	
+	/**
+	 * 新增组织机构
+	 * @return
+	 * @throws ServiceException
+	 * */
 	public OrganizationResponseDto saveOrg(String token,OrganizationDto organizationDto) throws ServiceException{
 		return organizationManager.saveOrg(token, organizationDto);
+	}
+	
+	/**
+	 * 查询组织机构名称
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public OrganizationResponseDto findOrgName(Integer orgId) throws ServiceException{
+		return organizationManager.findOrgName(orgId);
+	}
+	
+	/**
+	 * 查询树形组织机构
+	 * @return
+	 * @throws serviceException
+	 * */
+	public List<OrganizationTreeDto> findOrg(String token) throws ServiceException{
+		return organizationManager.findOrg(token);
 	}
 }

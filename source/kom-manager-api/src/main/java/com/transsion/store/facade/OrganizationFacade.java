@@ -21,6 +21,7 @@ import java.util.List;
 import com.transsion.store.bo.Organization;
 import com.transsion.store.dto.OrganizationDto;
 import com.transsion.store.dto.OrganizationResponseDto;
+import com.transsion.store.dto.OrganizationTreeDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -104,6 +105,25 @@ public interface OrganizationFacade {
 	public Pagination<Organization> listPaginationByProperty(Pagination<Organization> pagination, Organization organization)
 			throws ServiceException;
 	
+	/**
+	 * 新增组织机构
+	 * @return
+	 * @throws ServiceException
+	 * */
 	public OrganizationResponseDto saveOrg(String token,OrganizationDto organizationDto) throws ServiceException;
+	
+	/**
+	 * 查询组织机构名称
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public OrganizationResponseDto findOrgName(Integer orgId) throws ServiceException;
+	
+	/**
+	 * 查询树形组织机构
+	 * @return
+	 * @throws serviceException
+	 * */
+	public List<OrganizationTreeDto> findOrg(String token) throws ServiceException;
 
 }

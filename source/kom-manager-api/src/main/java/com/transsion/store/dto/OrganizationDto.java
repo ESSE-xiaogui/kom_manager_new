@@ -1,7 +1,13 @@
 package com.transsion.store.dto;
 
-public class OrganizationDto {
+import java.io.Serializable;
+
+public class OrganizationDto implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * 公司Id
 	 * */
@@ -35,5 +41,66 @@ public class OrganizationDto {
 	 * */
 	private String remark;
 
+	public Integer getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Integer companyId) {
+		this.companyId = companyId;
+	}
+
+	public Integer getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
+
+	public Integer getOrgId() {
+		return orgId;
+	}
+
+	public void setOrgId(Integer orgId) {
+		this.orgId = orgId;
+	}
+
+	public String getOrgName() {
+		return orgName;
+	}
+
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
+	}
+
+	public String getDutyName() {
+		return dutyName;
+	}
+
+	public void setDutyName(String dutyName) {
+		this.dutyName = dutyName;
+	}
+
+	public Integer getIsInactive() {
+		return isInactive;
+	}
+
+	public void setIsInactive(Integer isInactive) {
+		this.isInactive = isInactive;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	@Override
+	public String toString() {
+		return "OrganizationDto [companyId=" + companyId + ", parentId=" + parentId + ", orgId=" + orgId + ", orgName="
+				+ orgName + ", dutyName=" + dutyName + ", isInactive=" + isInactive + ", remark=" + remark + "]";
+	}
 	
 }

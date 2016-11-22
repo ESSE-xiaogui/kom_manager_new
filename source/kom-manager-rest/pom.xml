@@ -61,6 +61,11 @@
             <artifactId>kom-manager-api</artifactId>
             <version>${parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.transsion</groupId>
+            <artifactId>kom-manager-common</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
         <!-- spring jars config start-->
         <dependency>
             <groupId>org.springframework</groupId>

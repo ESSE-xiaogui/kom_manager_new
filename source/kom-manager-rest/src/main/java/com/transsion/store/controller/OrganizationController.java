@@ -20,6 +20,7 @@ import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Organization;
 import com.transsion.store.dto.OrganizationDto;
 import com.transsion.store.dto.OrganizationResponseDto;
+import com.transsion.store.dto.OrganizationTreeDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.OrganizationFacade;
 import com.shangkang.core.bo.Pagination;
@@ -94,7 +95,7 @@ public class OrganizationController extends AbstractController{
 	*/
 	@POST
 	@Path("/delete")
-	@Consumes({MediaType.APPLICATION_JSON})
+	//@Consumes({MediaType.APPLICATION_JSON})
 	public void delete(List<java.lang.Long> primaryKeys) throws ServiceException
 	{
 		organizationFacade.deleteByPKeys(primaryKeys);
@@ -131,7 +132,25 @@ public class OrganizationController extends AbstractController{
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public OrganizationResponseDto findOrgName(Organization organization) throws ServiceException{
-		return null;
+	@GET
+	@Path("/findOrgName")
+	@Produces({MediaType.APPLICATION_JSON})
+	public OrganizationResponseDto findOrgName(@QueryParam("orgId") java.lang.Integer orgId) throws ServiceException{
+		return organizationFacade.findOrgName(orgId);
 	}
+	
+	/**
+	 * 查询树形组织机构
+	 * @return
+	 * @throws serviceException
+	 * */
+	@GET
+	@Path("/findOrg")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<OrganizationTreeDto> findOrg() throws ServiceException{
+		String token = this.getAuthorization();
+		return organizationFacade.findOrg(token);
+	}
+	
+	
 }

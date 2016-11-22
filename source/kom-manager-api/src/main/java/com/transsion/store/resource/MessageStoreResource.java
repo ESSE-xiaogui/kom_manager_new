@@ -22,5 +22,10 @@ public class MessageStoreResource {
      * */
     public static final String ERROR_MESSAGE_USERID_IS_NULL = "error_message_userIdIsNull";
     
+    /**
+     * 用户失效
+     * */
+    public static final String ERROR_MESSAGE_USER_INVALID = "error_message_userInvalid";
+    
   
 }

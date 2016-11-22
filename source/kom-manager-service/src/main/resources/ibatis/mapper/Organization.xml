@@ -35,6 +35,12 @@
 		<result column="VERSION" property="version"/>
 	</resultMap>
 	
+	<resultMap id="OrganizationDtoResultMapper" type="OrganizationTreeDto">
+		<result column="PARENT_ID" property="parentId"/>
+		<result column="ORG_ID" property="orgId"/>
+		<result column="ORG_NAME" property="orgName"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, ORG_ID
@@ -52,10 +58,10 @@
 	</sql>
 
 	<sql id="commonColumnsNotPK">
-		 ORG_ID
-		, ORG_NAME
-		, COMPANY_ID
+		COMPANY_ID
 		, PARENT_ID
+		, ORG_ID
+		, ORG_NAME
 		, DUTY_NAME
 		, IS_INACTIVE
 		, REMARK
@@ -226,12 +232,11 @@
 		<include refid="commonColumnsNotPK"/>
 		<![CDATA[
 			) VALUES ( 
-			 #{orgId}
-			, #{orgName}
-			, #{companyId}
+			#{companyId}
 			, #{parentId}
+			, #{orgId}
+			, #{orgName}
 			, #{dutyName}
-			, #{treeCode}
 			, #{isInactive}
 			, #{remark}
 			, #{createdBy}
@@ -265,7 +270,7 @@
 		DELETE FROM T_ORGANIZATION WHERE
 		<foreach collection="primaryKeys" index="index" item="id"
 			open=" ID IN(" separator="," close=") ">
-			${id}
+			#{id}
 		</foreach>
 	</delete>
 	<delete id="deleteByProperty" parameterType="Organization">
@@ -298,5 +303,11 @@
 	<select id="findByCount" parameterType="Organization" resultType="int">
 		SELECT count(1) AS totalcount FROM T_ORGANIZATION WHERE 1=1 
 		<include refid="commonCondition"/>
+	</select>
+	<select id="getOrgName"  parameterType="java.lang.Integer" resultType = "String">
+		SELECT ORG_NAME FROM T_ORGANIZATION WHERE ORG_ID = #{orgId} 
+	</select>
+	<select id="findOrg"  parameterType="java.lang.Integer" resultMap = "OrganizationDtoResultMapper">
+		SELECT PARENT_ID, ORG_ID, ORG_NAME FROM T_ORGANIZATION WHERE COMPANY_ID = #{companyId}
 	</select>
 </mapper>

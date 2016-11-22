@@ -5,6 +5,11 @@ public class OrganizationResponseDto {
 	 * 状态 注：1： 成功 2：失败
 	 * */
 	private Integer status;
+	
+	/**
+	 * 组织机构名称
+	 * */
+	private String orgName;
 
 	/**
 	 * 状态 注：1： 成功 2：失败
@@ -20,9 +25,23 @@ public class OrganizationResponseDto {
 		this.status = status;
 	}
 
+	/**
+	 * 组织机构名称
+	 * */
+	public String getOrgName() {
+		return orgName;
+	}
+	
+	/**
+	 * 组织机构名称
+	 * */
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
+	}
+
 	@Override
 	public String toString() {
-		return "OrganizationResponseDto [status=" + status + "]";
+		return "OrganizationResponseDto [status=" + status + ", orgName=" + orgName + "]";
 	}
 
 }
