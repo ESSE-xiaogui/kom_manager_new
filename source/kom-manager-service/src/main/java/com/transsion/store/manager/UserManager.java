@@ -53,6 +53,7 @@ public class UserManager {
 			userContext.setToken(token);
 			user.setUserId(list.get(0).getUserId());
 			user.setDutyId(list.get(0).getDutyId());
+			user.setCompanyId(list.get(0).getCompanyId());
 			userContext.setUser(user);
 			CacheUtils.getSupporter().set(token, userContext, exp);
 	    } else {
