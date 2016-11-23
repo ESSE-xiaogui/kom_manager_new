@@ -22,9 +22,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.Brand;
+import com.transsion.store.dto.BrandDto;
+import com.transsion.store.dto.BrandResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.BrandFacade;
+import com.transsion.store.manager.BrandManager;
 import com.transsion.store.service.BrandService;
 
 @Component("brandFacade")
@@ -37,6 +40,9 @@ public class BrandFacadeImpl implements BrandFacade {
 	{
 		this.brandService = brandService;
 	}
+	
+	@Autowired
+	private BrandManager brandManager;
 	
 	/**
 	 * 通过主键查询实体对象
@@ -145,4 +151,22 @@ public class BrandFacadeImpl implements BrandFacade {
 	{
 		return brandService.findByCount(brand);
 	}
+	
+	/**
+	 * 新增品牌
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public BrandResponseDto saveBrand(String token,BrandDto brandDto) throws ServiceException{
+		return brandManager.saveBrand(token, brandDto);
+	}
+	/**
+	 * 查询品牌
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public List<BrandDto> findBrand(String token) throws ServiceException{
+		return brandManager.findBrand(token);
+	}
+
 }

@@ -19,6 +19,8 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.Model;
+import com.transsion.store.dto.ModelDto;
+import com.transsion.store.dto.ModelResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -101,5 +103,19 @@ public interface ModelFacade {
 	 */
 	public Pagination<Model> listPaginationByProperty(Pagination<Model> pagination, Model model)
 			throws ServiceException;
+	
+	/**
+	 * 新增机型
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public ModelResponseDto saveModel(String token,ModelDto modelDto) throws ServiceException;
+	
+	/**
+	 * 查询品牌产品系列机型
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public List<ModelDto> findModel(String token,ModelDto modelDto) throws ServiceException;
 
 }

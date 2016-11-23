@@ -28,4 +28,5 @@ import org.apache.ibatis.annotations.Param;
 public interface BrandMapper extends GenericIBatisMapper<Brand, java.lang.Long> {
 
     public List<Brand> listPaginationByProperty(Pagination<Brand> pagination, @Param("brand")Brand brand, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+
 }

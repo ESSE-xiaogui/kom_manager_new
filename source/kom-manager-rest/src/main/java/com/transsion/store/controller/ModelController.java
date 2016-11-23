@@ -18,6 +18,8 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Model;
+import com.transsion.store.dto.ModelDto;
+import com.transsion.store.dto.ModelResponseDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.ModelFacade;
 import com.shangkang.core.bo.Pagination;
@@ -109,5 +111,33 @@ public class ModelController extends AbstractController{
 	public void update(Model model) throws ServiceException
 	{
 		modelFacade.update(model);
+	}
+	
+	/**
+	 * 新增机型
+	 * @return
+	 * @throws ServiceException
+	 * */
+	@POST
+	@Path("/saveModel")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public ModelResponseDto saveModel(ModelDto modelDto) throws ServiceException{
+		String token = this.getAuthorization();
+		return modelFacade.saveModel(token, modelDto);
+	}
+	
+	/**
+	 * 查询品牌产品系列机型
+	 * @return
+	 * @throws ServiceException
+	 * */
+	@POST
+	@Path("/findModel")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<ModelDto> findModel(ModelDto modelDto) throws ServiceException{
+		String token = this.getAuthorization();
+		return modelFacade.findModel(token, modelDto);
 	}
 }

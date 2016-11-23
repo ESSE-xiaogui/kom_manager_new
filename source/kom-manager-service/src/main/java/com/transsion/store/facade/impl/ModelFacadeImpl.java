@@ -22,9 +22,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.Model;
+import com.transsion.store.dto.ModelDto;
+import com.transsion.store.dto.ModelResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.ModelFacade;
+import com.transsion.store.manager.ModelManager;
 import com.transsion.store.service.ModelService;
 
 @Component("modelFacade")
@@ -37,6 +40,9 @@ public class ModelFacadeImpl implements ModelFacade {
 	{
 		this.modelService = modelService;
 	}
+	
+	@Autowired
+	private ModelManager modelManager;
 	
 	/**
 	 * 通过主键查询实体对象
@@ -144,5 +150,21 @@ public class ModelFacadeImpl implements ModelFacade {
 	public int findByCount(Model model) throws ServiceException
 	{
 		return modelService.findByCount(model);
+	}
+	/**
+	 * 新增机型
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public ModelResponseDto saveModel(String token,ModelDto modelDto) throws ServiceException{
+		return modelManager.saveModel(token, modelDto);
+	}
+	/**
+	 * 查询品牌产品系列机型
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public List<ModelDto> findModel(String token,ModelDto modelDto) throws ServiceException{
+		return modelManager.findModel(token, modelDto);
 	}
 }

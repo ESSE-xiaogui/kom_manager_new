@@ -97,7 +97,7 @@ public class OrganizationManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
 		}
 		if(UtilHelper.isEmpty(usercontext.getUser().getCompanyId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERID_IS_NULL);
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		Integer companyId = usercontext.getUser().getCompanyId();
 		List<OrganizationTreeDto> orgList = organizationMapper.findOrg(companyId);
