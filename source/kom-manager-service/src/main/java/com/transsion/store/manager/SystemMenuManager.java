@@ -2,6 +2,8 @@ package com.transsion.store.manager;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.shangkang.core.exception.ServiceException;
@@ -28,7 +30,7 @@ public class SystemMenuManager {
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		Integer userId = userContext.getUser().getUserId();
 		List<MenuDto> list = systemMenuService.querySystemMenuList(userId); 
-		return treeMenuList(list,Long.valueOf(0));
+		return treeMenuList(list,0l);
 	}
 	
 	/**
@@ -63,11 +65,13 @@ public class SystemMenuManager {
 	* @throws ServiceException
 	*/
 	public void deleteByMenuId(List<java.lang.Long> menuIdList) throws ServiceException {
-		Long menuId = menuIdList.get(0);
-		List<java.lang.Long> result = new ArrayList<java.lang.Long>();
-		List<java.lang.Long> listMenuId = treeList(menuId,result);
-		listMenuId.add(menuId);
-		systemMenuService.deleteByPKeys(listMenuId);
+		for(int i=0;i<menuIdList.size();i++){
+			Long menuId = menuIdList.get(i);
+			List<java.lang.Long> result = new ArrayList<java.lang.Long>();
+			List<java.lang.Long> listMenuId = treeList(menuId,result);
+			listMenuId.add(menuId);
+			systemMenuService.deleteByPKeys(listMenuId);
+		}
 	}  
 	
 	public List<java.lang.Long> treeList(Long menuId,List<java.lang.Long> result)throws ServiceException{
@@ -89,9 +93,9 @@ public class SystemMenuManager {
 	public MenuDto getOneMenu(java.lang.Long menuId) throws ServiceException{
 		 MenuDto menuDto = systemMenuService.findMenuByMenuId(menuId);
 		 Long pid = menuDto.getParentMenuId();
-		 if(pid!=0){
+		 if(0!=pid){
 			 StringBuffer sb = new StringBuffer();
-			 while(pid!=0){
+			 while(0!=pid){
 				 MenuDto md = systemMenuService.findMenuByMenuId(pid);
 				 sb.insert(0,"/"+md.getMenuName());
 				 pid=md.getParentMenuId();
@@ -129,6 +133,9 @@ public class SystemMenuManager {
 				throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_MENUCODE_IS_DUPLICATE);			
 			}
 		}
-		return systemMenuService.update(systemMenu);
+		SystemMenu formerMenu = systemMenuService.getByPK(systemMenu.getMenuId());
+		BeanUtils.copyProperties(systemMenu, formerMenu);
+		System.out.println(systemMenu);
+		return systemMenuService.update(formerMenu);
 	}
 }
