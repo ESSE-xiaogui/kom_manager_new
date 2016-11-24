@@ -80,6 +80,7 @@
                 <beans:value>/**/findAllMenu</beans:value>
                 <beans:value>/**/deleteByMenuId</beans:value>
                 <beans:value>/**/getOneMenu</beans:value>
+                <beans:value>/**/deleteOrg</beans:value>
             </beans:list>
         </beans:property>
     </beans:bean>

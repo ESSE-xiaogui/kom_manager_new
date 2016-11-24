@@ -17,8 +17,8 @@
 package com.transsion.store.facade;
 
 import java.util.List;
-
 import com.transsion.store.bo.SystemRole;
+import com.transsion.store.dto.SystemRoleResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -100,6 +100,22 @@ public interface SystemRoleFacade {
 	 * @throws ServiceException
 	 */
 	public Pagination<SystemRole> listPaginationByProperty(Pagination<SystemRole> pagination, SystemRole systemRole)
+			throws ServiceException;
+	
+	/**
+	 * 查询用户角色
+	 * */
+	public List<SystemRoleResponseDto> findSystemRoleByUser(String token) throws ServiceException;
+	
+	/**
+	 * 查询所有角色
+	 * */
+	public List<SystemRoleResponseDto> findSystemRole() throws ServiceException;
+	
+	/**
+	 * 角色权限停用
+	 * */
+	public SystemRoleResponseDto updateRoleStatus(String token,Long roleId,Integer isInactive) 
 			throws ServiceException;
 
 }

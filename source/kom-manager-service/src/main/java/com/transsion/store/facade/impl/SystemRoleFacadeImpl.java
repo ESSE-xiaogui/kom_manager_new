@@ -22,9 +22,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.SystemRole;
+import com.transsion.store.dto.SystemRoleResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.SystemRoleFacade;
+import com.transsion.store.manager.SystemRoleManager;
 import com.transsion.store.service.SystemRoleService;
 
 @Component("systemRoleFacade")
@@ -38,6 +40,8 @@ public class SystemRoleFacadeImpl implements SystemRoleFacade {
 		this.systemRoleService = systemRoleService;
 	}
 	
+	@Autowired
+	private SystemRoleManager systemRoleManager;
 	/**
 	 * 通过主键查询实体对象
 	 * @param primaryKey
@@ -144,5 +148,24 @@ public class SystemRoleFacadeImpl implements SystemRoleFacade {
 	public int findByCount(SystemRole systemRole) throws ServiceException
 	{
 		return systemRoleService.findByCount(systemRole);
+	}
+	/**
+	 * 查询用户角色
+	 * */
+	public List<SystemRoleResponseDto> findSystemRoleByUser(String token) throws ServiceException{
+		return systemRoleManager.findSystemRoleByUser(token);
+	}
+	/**
+	 * 查询所有角色
+	 * */
+	public List<SystemRoleResponseDto> findSystemRole() throws ServiceException{
+		return systemRoleManager.findSystemRole();
+	}
+	/**
+	 * 角色权限停用
+	 * */
+	public SystemRoleResponseDto updateRoleStatus(String token,Long roleId,Integer isInactive) 
+			throws ServiceException{
+		return systemRoleManager.updateRoleStatus(token, roleId, isInactive);
 	}
 }

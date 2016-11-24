@@ -17,7 +17,6 @@
 package com.transsion.store.facade;
 
 import java.util.List;
-
 import com.transsion.store.bo.Organization;
 import com.transsion.store.dto.OrganizationDto;
 import com.transsion.store.dto.OrganizationResponseDto;
@@ -125,5 +124,10 @@ public interface OrganizationFacade {
 	 * @throws serviceException
 	 * */
 	public List<OrganizationTreeDto> findOrg(String token) throws ServiceException;
+	
+	/**
+	 * 删除组织机构
+	 * */
+	public OrganizationResponseDto deleteOrg(Integer orgId) throws ServiceException;
 
 }
