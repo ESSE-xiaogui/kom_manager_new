@@ -134,8 +134,12 @@ public class SystemMenuManager {
 			}
 		}
 		SystemMenu formerMenu = systemMenuService.getByPK(systemMenu.getMenuId());
-		BeanUtils.copyProperties(systemMenu, formerMenu);
-		System.out.println(systemMenu);
+		formerMenu.setMenuCode(systemMenu.getMenuCode());
+		formerMenu.setMenuName(systemMenu.getMenuName());
+		formerMenu.setMenuIcon(systemMenu.getMenuIcon());
+		formerMenu.setPageUrl(systemMenu.getPageUrl());
+		formerMenu.setRemark(systemMenu.getRemark());
+		formerMenu.setMenuOrder(systemMenu.getMenuOrder());
 		return systemMenuService.update(formerMenu);
 	}
 }
