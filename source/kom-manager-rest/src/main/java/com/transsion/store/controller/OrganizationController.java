@@ -152,5 +152,14 @@ public class OrganizationController extends AbstractController{
 		return organizationFacade.findOrg(token);
 	}
 	
+	/**
+	 * 删除组织机构
+	 * */
+	@POST
+	@Path("/deleteOrg")
+	@Consumes({MediaType.APPLICATION_JSON})
+	public OrganizationResponseDto deleteOrg(@QueryParam("orgId") java.lang.Integer orgId) throws ServiceException{
+		return organizationFacade.deleteOrg(orgId);
+	}
 	
 }

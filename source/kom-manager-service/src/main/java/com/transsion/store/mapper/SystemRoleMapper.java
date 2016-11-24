@@ -19,7 +19,10 @@ package com.transsion.store.mapper;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.QueryParam;
+
 import com.transsion.store.bo.SystemRole;
+import com.transsion.store.dto.SystemRoleResponseDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
@@ -28,4 +31,7 @@ import org.apache.ibatis.annotations.Param;
 public interface SystemRoleMapper extends GenericIBatisMapper<SystemRole, java.lang.Long> {
 
     public List<SystemRole> listPaginationByProperty(Pagination<SystemRole> pagination, @Param("systemRole")SystemRole systemRole, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<SystemRoleResponseDto> findSystemRoleByUser(@Param("userId")Integer userId) throws DataAccessFailureException;
+    public List<SystemRoleResponseDto> findSystemRole() throws DataAccessFailureException;
+    public SystemRoleResponseDto updateRoleStatus(@Param("userId")Integer userId,@Param("roleId")Long roleId,@QueryParam("isInactive") java.lang.Integer isInactive)throws DataAccessFailureException;
 }

@@ -177,4 +177,10 @@ public class OrganizationFacadeImpl implements OrganizationFacade {
 	public List<OrganizationTreeDto> findOrg(String token) throws ServiceException{
 		return organizationManager.findOrg(token);
 	}
+	/**
+	 * 删除组织机构
+	 * */
+	public OrganizationResponseDto deleteOrg(Integer orgId) throws ServiceException{
+		return organizationManager.deleteOrg(orgId);
+	}
 }

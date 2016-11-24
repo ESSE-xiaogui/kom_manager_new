@@ -30,6 +30,10 @@
 		<result column="UPDATED_BY" property="updatedBy"/>
 		<result column="UPDATE_TIME" property="updateTime"/>
 	</resultMap>
+	<resultMap id="SystemRoleDtoResultMapper" type="SystemRoleResponseDto">
+		<result column="ROLE_ID" property="roleId"/>
+		<result column="ROLE_NAME" property="roleName"/>
+	</resultMap>
 	
 	<sql id="commonColumns">
 		 ROLE_ID
@@ -238,4 +242,17 @@
 		SELECT count(1) AS totalcount FROM T_SYSTEM_ROLE WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
+	<select id="findSystemRoleByUser" parameterType="java.lang.Integer" resultMap="SystemRoleDtoResultMapper">
+		SELECT r.ROLE_ID,r.ROLE_NAME FROM T_SYSTEM_ROLE r
+		LEFT JOIN T_USER_ROLE ur ON ur.ROLE_ID = r.ROLE_ID
+		LEFT JOIN T_USER u ON u.USER_ID = ur.USER_ID
+		WHERE u.USER_ID = #{userId} AND r.IS_INACTIVE = 0
+	</select>
+	<select id="findSystemRoleByUser" parameterType="java.lang.Integer" resultMap="SystemRoleDtoResultMapper">
+		SELECT ROLE_ID,ROLE_NAME FROM T_SYSTEM_ROLE 
+	</select>
+	<update id="updateRoleStatus" parameterType="java.lang.Integer">
+		UPDATE T_SYSTEM_ROLE r,T_USER u SET r.IS_INACTIVE=#{isInactive}
+		WHERE r.ROLE_ID =#{roleId}  AND u.USER_ID=#{userId}
+	</update>
 </mapper>

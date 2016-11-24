@@ -123,4 +123,30 @@ public class OrganizationManager {
 		}
 		return orgTreeDto;
 	}
+	
+	/**
+	 * 删除组织机构
+	 * */
+	public OrganizationResponseDto deleteOrg(Integer orgId) throws ServiceException{
+		if(UtilHelper.isEmpty(orgId)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		OrganizationResponseDto orDto = new OrganizationResponseDto();
+		Organization org = new Organization();
+		org.setParentId(new Long(orgId));
+		int count = organizationMapper.findByCount(org);
+		if(count>0){
+			orDto.setStatus(3);
+		}else{
+			org.setId(new Long(orgId));
+			int counts = organizationMapper.deleteByProperty(org);
+			if(counts>0){
+				orDto.setStatus(1);
+			}else{
+				orDto.setStatus(2);
+			}
+			
+		}
+		return orDto;
+	}
 }

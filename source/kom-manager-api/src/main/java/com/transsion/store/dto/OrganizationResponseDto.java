@@ -2,7 +2,7 @@ package com.transsion.store.dto;
 
 public class OrganizationResponseDto {
 	/**
-	 * 状态 注：1： 成功 2：失败
+	 * 状态 注：1： 成功 2：失败 3:有子集不允许删除
 	 * */
 	private Integer status;
 	

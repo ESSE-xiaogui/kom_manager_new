@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.SystemRole;
+import com.transsion.store.dto.SystemRoleResponseDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.SystemRoleFacade;
 import com.shangkang.core.bo.Pagination;
@@ -110,4 +111,37 @@ public class SystemRoleController extends AbstractController{
 	{
 		systemRoleFacade.update(systemRole);
 	}
+	
+	/**
+	 * 查询用户角色
+	 * */
+	@GET
+	@Path("/findSystemRoleByUser")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<SystemRoleResponseDto> findSystemRoleByUser() throws ServiceException{
+		String token = this.getAuthorization();
+		return systemRoleFacade.findSystemRoleByUser(token);
+	}
+	
+	/**
+	 * 查询所有角色
+	 * */
+	@GET
+	@Path("/findSystemRole")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<SystemRoleResponseDto> findSystemRole() throws ServiceException{
+		return systemRoleFacade.findSystemRole();
+	}
+	/**
+	 * 用户角色权限停用/启用
+	 * */
+	@GET
+	@Path("/findSystemRole")
+	@Produces({MediaType.APPLICATION_JSON})
+	public SystemRoleResponseDto updateRoleStatus(@QueryParam("roleId") java.lang.Long roleId,
+			@QueryParam("isInactive") java.lang.Integer isInactive) throws ServiceException{
+		String token = this.getAuthorization();
+		return systemRoleFacade.updateRoleStatus(token, roleId, isInactive);
+	}
+	
 }
