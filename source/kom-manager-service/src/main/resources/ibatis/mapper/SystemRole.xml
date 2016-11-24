@@ -248,7 +248,7 @@
 		LEFT JOIN T_USER u ON u.USER_ID = ur.USER_ID
 		WHERE u.USER_ID = #{userId} AND r.IS_INACTIVE = 0
 	</select>
-	<select id="findSystemRoleByUser" parameterType="java.lang.Integer" resultMap="SystemRoleDtoResultMapper">
+	<select id="findSystemRole" parameterType="java.lang.Integer" resultMap="SystemRoleDtoResultMapper">
 		SELECT ROLE_ID,ROLE_NAME FROM T_SYSTEM_ROLE 
 	</select>
 	<update id="updateRoleStatus" parameterType="java.lang.Integer">
