@@ -58,7 +58,7 @@ public class Shop extends Model{
 	/**
 	  *	
 	  */
-	private java.lang.Integer regionId;
+	private java.lang.Long regionId;
 
 	/**
 	  *	
@@ -349,27 +349,28 @@ public class Shop extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.Integer getRegionId() 
+
+	public java.lang.Integer getCountry() 
 	{
+		return country;
+	}
+	
+	/**
+	  *	
+	  */
+	
+	public java.lang.Long getRegionId() {
 		return regionId;
 	}
 	
 	/**
 	  *	
 	  */
-	public void setRegionId(java.lang.Integer regionId) 
-	{
+	
+	public void setRegionId(java.lang.Long regionId) {
 		this.regionId = regionId;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.Integer getCountry() 
-	{
-		return country;
-	}
-	
+
 	/**
 	  *	
 	  */

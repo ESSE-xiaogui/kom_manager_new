@@ -34,6 +34,12 @@
 		<result column="UPDATED_TIME" property="updatedTime"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
+	<resultMap id="RegionDtoResultMapper" type="RegionDto">
+		<result column="ID" property="id"/>
+		<result column="PARENT_ID" property="parentId"/>
+		<result column="REGION_CODE" property="regionCode"/>
+		<result column="REGION_NAME" property="regionName"/>
+	</resultMap>
 	
 	<sql id="commonColumns">
 		 ID
@@ -264,7 +270,7 @@
 		DELETE FROM T_REGION WHERE
 		<foreach collection="primaryKeys" index="index" item="id"
 			open=" ID IN(" separator="," close=") ">
-			${id}
+			#{id}
 		</foreach>
 	</delete>
 	<delete id="deleteByProperty" parameterType="Region">
@@ -297,5 +303,11 @@
 	<select id="findByCount" parameterType="Region" resultType="int">
 		SELECT count(1) AS totalcount FROM T_REGION WHERE 1=1 
 		<include refid="commonCondition"/>
+	</select>
+	<select id="findRegionsList"  parameterType="java.lang.Integer" resultMap = "RegionDtoResultMapper">
+		SELECT ID, PARENT_ID, REGION_CODE, REGION_NAME FROM T_REGION WHERE COMPANY_ID = #{companyId}
+	</select>
+	<select id="getRegionName"  parameterType="java.lang.Long" resultType = "String">
+		SELECT REGION_NAME FROM T_REGION WHERE ID = #{id} 
 	</select>
 </mapper>

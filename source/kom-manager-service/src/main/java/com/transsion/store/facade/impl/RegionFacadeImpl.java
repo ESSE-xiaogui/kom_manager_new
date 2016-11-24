@@ -17,20 +17,28 @@
 package com.transsion.store.facade.impl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.Region;
+import com.transsion.store.dto.OrganizationResponseDto;
+import com.transsion.store.dto.RegionDto;
+import com.transsion.store.dto.RegionResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
 import com.transsion.store.facade.RegionFacade;
+import com.transsion.store.manager.RegionManager;
+import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.RegionService;
 
 @Component("regionFacade")
 public class RegionFacadeImpl implements RegionFacade {
 
 	private RegionService regionService;
+	
+	@Autowired
+	private RegionManager regionManager;
 	
 	@Autowired
 	public void setRegionService(RegionService regionService)
@@ -99,7 +107,7 @@ public class RegionFacadeImpl implements RegionFacade {
 	 */
 	public void deleteByPKeys(List<java.lang.Long> primaryKeys) throws ServiceException
 	{
-		regionService.deleteByPKeys(primaryKeys);
+		regionManager.deleteByPKeys(primaryKeys);
 	}
 	
 	/**
@@ -144,5 +152,33 @@ public class RegionFacadeImpl implements RegionFacade {
 	public int findByCount(Region region) throws ServiceException
 	{
 		return regionService.findByCount(region);
+	}
+	
+	/**
+	 * 查询销售区域
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<RegionDto> findRegionsList(String token) throws ServiceException
+	{
+		return regionManager.findRegionsList(token);
+	}
+	
+	/**
+	 * 查询销售区域名称
+	 * @return
+	 * @throws ServiceException
+	 */
+	public Region findRegionName(java.lang.Long id) throws ServiceException{
+		return regionManager.findRegionName(id);
+	}
+
+	/**
+	 * 新增销售区域
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public RegionResponseDto saveRegion(String token,RegionDto regionDto) throws ServiceException{
+		return regionManager.saveRegion(token,regionDto);
 	}
 }

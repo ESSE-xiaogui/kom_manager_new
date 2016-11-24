@@ -8,7 +8,7 @@
  * recording, or otherwise, without the prior written permission of Liuzh.
  *
  * Created By: Liuzh
- * Created On: 2016-11-18 15:56:40
+ * Created On: 2016-10-31 14:25:26
  *
  * Amendment History:
  * 
@@ -35,6 +35,22 @@
 		<result column="UPDATE_TIME" property="updateTime"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
+	<resultMap id="MenuDtoResultMapper" type="MenuDto">
+		<result column="MENU_ID" property="menuId"/>
+		<result column="MENU_CODE" property="menuCode"/>
+		<result column="MENU_NAME" property="menuName"/>
+		<result column="MENU_ORDER" property="menuOrder"/>
+		<result column="PARENT_MENU_ID" property="parentMenuId"/>
+		<result column="MENU_ICON" property="menuIcon"/>
+		<result column="PAGE_URL" property="pageUrl"/>
+	</resultMap>
+	<resultMap id="MenuIDResultMapper" type="java.lang.Long">
+		<result column="MENU_ID" property="menuId"/>
+	</resultMap>
+	<resultMap id="MenuCodeResultMapper" type="String">
+		<result column="MENU_CODE" property="menuCode"/>
+	</resultMap>
+	
 	
 	<sql id="commonColumns">
 		 MENU_ID
@@ -130,7 +146,7 @@
 			AND VERSION=#{version}
 		</if>
 	</sql>
-
+	
 	<sql id="commonConditionByPrefix">
 		<if test="systemMenu != null">
             <if test="systemMenu.menuId!= null and systemMenu.menuId!= ''">
@@ -312,5 +328,34 @@
 	<select id="findByCount" parameterType="SystemMenu" resultType="int">
 		SELECT count(1) AS totalcount FROM T_SYSTEM_MENU WHERE 1=1 
 		<include refid="commonCondition"/>
+	</select>
+	<select id="findByMenuCode" parameterType="java.lang.String" resultMap="SystemMenuResultMapper">
+		SELECT MENU_ID FROM T_SYSTEM_MENU WHERE MENU_CODE =#{menuCode}
+	</select>	
+	<select id="querySystemMenuList" parameterType="java.lang.Integer" resultMap="MenuDtoResultMapper">
+		SELECT s.MENU_ID,MENU_CODE,MENU_NAME,MENU_ORDER,PARENT_MENU_ID,MENU_ICON,PAGE_URL FROM T_SYSTEM_MENU s
+		LEFT JOIN T_ROLE_MENU r ON s.MENU_ID = r.MENU_ID
+		LEFT JOIN T_SYSTEM_ROLE e ON r.ROLE_ID = e.ROLE_ID
+		LEFT JOIN T_USER_ROLE o ON o.ROLE_ID = e.ROLE_ID
+		WHERE USER_ID = #{userId}
+		ORDER BY MENU_ORDER ASC
+	</select>
+	<select id="listByParentId" parameterType="java.lang.Long" resultMap="SystemMenuResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_SYSTEM_MENU 
+		WHERE PARENT_MENU_ID = #{parentMenuId}
+		ORDER BY MENU_ORDER ASC
+	</select>
+	<select id="queryAllMenuList"  resultMap="MenuDtoResultMapper">
+		SELECT MENU_ID,MENU_CODE,MENU_NAME,MENU_ORDER,PARENT_MENU_ID,MENU_ICON,PAGE_URL FROM T_SYSTEM_MENU 
+		ORDER BY MENU_ORDER ASC
+	</select>
+	<select id="queryMenuIdList"  parameterType="java.lang.Long" resultMap="MenuIDResultMapper">
+		SELECT MENU_ID FROM T_SYSTEM_MENU WHERE PARENT_MENU_ID = #{menuId}
+	</select>
+	<select id="findMenuByMenuId"  parameterType="java.lang.Long" resultMap="MenuDtoResultMapper">
+		SELECT MENU_ID,MENU_CODE,MENU_NAME,MENU_ORDER,PARENT_MENU_ID,MENU_ICON,PAGE_URL FROM T_SYSTEM_MENU
+	    WHERE MENU_ID = #{menuId}
 	</select>
 </mapper>

@@ -6,7 +6,7 @@
 * recording, or otherwise, without the prior written permission of Liuzh.
 *
 * Created By: Liuzh
-* Created On: 2016-11-18 15:56:40
+* Created On: 2016-10-31 14:25:26
 *
 * Amendment History:
 *
@@ -18,21 +18,28 @@ package com.transsion.store.facade.impl;
 
 import java.util.List;
 
+import javax.ws.rs.QueryParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.SystemMenu;
+import com.transsion.store.dto.MenuDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.SystemMenuFacade;
+import com.transsion.store.manager.SystemMenuManager;
 import com.transsion.store.service.SystemMenuService;
 
 @Component("systemMenuFacade")
 public class SystemMenuFacadeImpl implements SystemMenuFacade {
-
+	
+	@Autowired
 	private SystemMenuService systemMenuService;
 	
 	@Autowired
+	private SystemMenuManager systemMenuManager;
+	
 	public void setSystemMenuService(SystemMenuService systemMenuService)
 	{
 		this.systemMenuService = systemMenuService;
@@ -121,7 +128,7 @@ public class SystemMenuFacadeImpl implements SystemMenuFacade {
 	 */
 	public void save(SystemMenu systemMenu) throws ServiceException
 	{
-		systemMenuService.save(systemMenu);
+		systemMenuManager.save(systemMenu);
 	}
 
 	/**
@@ -132,7 +139,7 @@ public class SystemMenuFacadeImpl implements SystemMenuFacade {
 	 */
 	public int update(SystemMenu systemMenu) throws ServiceException
 	{
-		return systemMenuService.update(systemMenu);
+		return systemMenuManager.update(systemMenu);
 	}
 
 	/**
@@ -144,5 +151,47 @@ public class SystemMenuFacadeImpl implements SystemMenuFacade {
 	public int findByCount(SystemMenu systemMenu) throws ServiceException
 	{
 		return systemMenuService.findByCount(systemMenu);
+	}
+
+	
+	public List<MenuDto> findMenuList(String token) throws ServiceException {
+		return systemMenuManager.findMenuList(token);
+	}
+	
+	/**
+	* 根据条件查询菜单
+	* @return
+	* @throws ServiceException
+	*/
+	public List<SystemMenu> listByParentId(java.lang.Long parentMenuId) throws ServiceException{
+		return systemMenuService.listByParentId(parentMenuId);
+	}
+	
+	/**
+	* 获取所有不带权限菜单
+	* @return
+	* @throws ServiceException
+	*/
+	public List<MenuDto> findAllMenu() throws ServiceException {
+		return systemMenuManager.findAllMenu();
+	}
+	
+	/**
+	* 级联删除菜单
+	* @return
+	* @throws ServiceException
+	*/
+	public void deleteByMenuId(List<java.lang.Long> menuIdList) throws ServiceException
+	{
+		systemMenuManager.deleteByMenuId(menuIdList);
+	}
+	
+	/**
+	* 查询菜单及其父菜单名称
+	* @return
+	* @throws ServiceException
+	*/
+	public MenuDto getOneMenu(java.lang.Long menuId) throws ServiceException{
+		return systemMenuManager.getOneMenu(menuId);
 	}
 }

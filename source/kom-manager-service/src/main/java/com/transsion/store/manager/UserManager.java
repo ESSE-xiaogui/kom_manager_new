@@ -41,7 +41,7 @@ public class UserManager {
 		user.setPassword(password);
 		List<User> list = userService.listByProperty(user);
 		if (UtilHelper.isEmpty(list)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_LOGIN_FAIL);
 		}
 		UserContext userContext = new UserContext();
 		long exp = 3600 * 24;

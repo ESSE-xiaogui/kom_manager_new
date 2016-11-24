@@ -18,8 +18,6 @@ package com.transsion.store.facade.impl;
 
 import java.util.List;
 
-import javax.ws.rs.QueryParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

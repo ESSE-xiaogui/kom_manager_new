@@ -17,8 +17,10 @@
 package com.transsion.store.facade;
 
 import java.util.List;
-
 import com.transsion.store.bo.Region;
+import com.transsion.store.dto.OrganizationResponseDto;
+import com.transsion.store.dto.RegionDto;
+import com.transsion.store.dto.RegionResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -101,5 +103,26 @@ public interface RegionFacade {
 	 */
 	public Pagination<Region> listPaginationByProperty(Pagination<Region> pagination, Region region)
 			throws ServiceException;
+
+	/**
+	 * 查询销售区域
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<RegionDto> findRegionsList(String token) throws ServiceException;
+
+	/**
+	 * 查询销售区域名称
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public Region findRegionName(java.lang.Long id) throws ServiceException;
+
+	/**
+	 * 新增销售区域
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public RegionResponseDto saveRegion(String token, RegionDto regionDto) throws ServiceException;
 
 }

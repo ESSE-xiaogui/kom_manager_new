@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.transsion.store.bo.Region;
+import com.transsion.store.dto.OrganizationTreeDto;
+import com.transsion.store.dto.RegionDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
@@ -28,4 +30,8 @@ import org.apache.ibatis.annotations.Param;
 public interface RegionMapper extends GenericIBatisMapper<Region, java.lang.Long> {
 
     public List<Region> listPaginationByProperty(Pagination<Region> pagination, @Param("region")Region region, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+
+	public List<RegionDto> findRegionsList(Integer companyId) throws DataAccessFailureException;
+
+	public String getRegionName(Long id) throws DataAccessFailureException;
 }

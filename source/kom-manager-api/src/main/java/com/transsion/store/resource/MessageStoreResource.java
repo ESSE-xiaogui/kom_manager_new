@@ -32,5 +32,18 @@ public class MessageStoreResource {
      * */
     public static final String ERROR_MESSAGE_USER_INVALID = "error_message_userInvalid";
     
-  
+    /**
+     * 登录失败
+     * */
+    public static final String ERROR_MESSAGE_USER_LOGIN_FAIL = "error_message_userLoginFail";
+    
+    /**
+     * menuCode重复
+     * */
+    public static final String ERROR_MESSAGE_MENUCODE_IS_DUPLICATE = "error_message_menuCode_is_duplicate";
+    
+    /**
+     * 删除销售区域失败
+     */
+    public static final String ERROR_MESSAGE_REGION_DELETE_FAIL = "error_message_regionDeleteFail";
 }

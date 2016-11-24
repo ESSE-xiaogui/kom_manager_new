@@ -95,248 +95,127 @@ public class SystemMenu extends Model{
 	  */
 	private java.lang.Integer version;
 
-	/**
-	  *	
-	  */
-	public java.lang.Long getMenuId() 
-	{
+	public java.lang.Long getMenuId() {
 		return menuId;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setMenuId(java.lang.Long menuId) 
-	{
+
+	public void setMenuId(java.lang.Long menuId) {
 		this.menuId = menuId;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getMenuCode() 
-	{
+
+	public java.lang.String getMenuCode() {
 		return menuCode;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setMenuCode(java.lang.String menuCode) 
-	{
+
+	public void setMenuCode(java.lang.String menuCode) {
 		this.menuCode = menuCode;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getMenuName() 
-	{
+
+	public java.lang.String getMenuName() {
 		return menuName;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setMenuName(java.lang.String menuName) 
-	{
+
+	public void setMenuName(java.lang.String menuName) {
 		this.menuName = menuName;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.Long getMenuOrder() 
-	{
+
+	public java.lang.Long getMenuOrder() {
 		return menuOrder;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setMenuOrder(java.lang.Long menuOrder) 
-	{
+
+	public void setMenuOrder(java.lang.Long menuOrder) {
 		this.menuOrder = menuOrder;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.Long getParentMenuId() 
-	{
+
+	public java.lang.Long getParentMenuId() {
 		return parentMenuId;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setParentMenuId(java.lang.Long parentMenuId) 
-	{
+
+	public void setParentMenuId(java.lang.Long parentMenuId) {
 		this.parentMenuId = parentMenuId;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getMenuIcon() 
-	{
+
+	public java.lang.String getMenuIcon() {
 		return menuIcon;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setMenuIcon(java.lang.String menuIcon) 
-	{
+
+	public void setMenuIcon(java.lang.String menuIcon) {
 		this.menuIcon = menuIcon;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getPageUrl() 
-	{
+
+	public java.lang.String getPageUrl() {
 		return pageUrl;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setPageUrl(java.lang.String pageUrl) 
-	{
+
+	public void setPageUrl(java.lang.String pageUrl) {
 		this.pageUrl = pageUrl;
 	}
-	
-	/**
-	  *	是否可用：0表示不可以用，1表示可用
-	  */
-	public java.lang.Long getUsable() 
-	{
+
+	public java.lang.Long getUsable() {
 		return usable;
 	}
-	
-	/**
-	  *	是否可用：0表示不可以用，1表示可用
-	  */
-	public void setUsable(java.lang.Long usable) 
-	{
+
+	public void setUsable(java.lang.Long usable) {
 		this.usable = usable;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getRemark() 
-	{
+
+	public java.lang.String getRemark() {
 		return remark;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setRemark(java.lang.String remark) 
-	{
+
+	public void setRemark(java.lang.String remark) {
 		this.remark = remark;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getCreatedBy() 
-	{
+
+	public java.lang.String getCreatedBy() {
 		return createdBy;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setCreatedBy(java.lang.String createdBy) 
-	{
+
+	public void setCreatedBy(java.lang.String createdBy) {
 		this.createdBy = createdBy;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getCreateTime() 
-	{
+
+	public java.lang.String getCreateTime() {
 		return createTime;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setCreateTime(java.lang.String createTime) 
-	{
+
+	public void setCreateTime(java.lang.String createTime) {
 		this.createTime = createTime;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getUpdatedBy() 
-	{
+
+	public java.lang.String getUpdatedBy() {
 		return updatedBy;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setUpdatedBy(java.lang.String updatedBy) 
-	{
+
+	public void setUpdatedBy(java.lang.String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getUpdateTime() 
-	{
+
+	public java.lang.String getUpdateTime() {
 		return updateTime;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setUpdateTime(java.lang.String updateTime) 
-	{
+
+	public void setUpdateTime(java.lang.String updateTime) {
 		this.updateTime = updateTime;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.Integer getVersion() 
-	{
+
+	public java.lang.Integer getVersion() {
 		return version;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setVersion(java.lang.Integer version) 
-	{
+
+	public void setVersion(java.lang.Integer version) {
 		this.version = version;
 	}
-	
-	public String toString()
-	{
-		return "SystemMenu [" + 
-					"menuId=" + menuId + 
-					", menuCode=" + menuCode + 
-					", menuName=" + menuName + 
-					", menuOrder=" + menuOrder + 
-					", parentMenuId=" + parentMenuId + 
-					", menuIcon=" + menuIcon + 
-					", pageUrl=" + pageUrl + 
-					", usable=" + usable + 
-					", remark=" + remark + 
-					", createdBy=" + createdBy + 
-					", createTime=" + createTime + 
-					", updatedBy=" + updatedBy + 
-					", updateTime=" + updateTime + 
-					", version=" + version + 
-				"]";
+
+	@Override
+	public String toString() {
+		return "SystemMenu [menuId=" + menuId + ", menuCode=" + menuCode + ", menuName=" + menuName + ", menuOrder="
+				+ menuOrder + ", parentMenuId=" + parentMenuId + ", menuIcon=" + menuIcon + ", pageUrl=" + pageUrl
+				+ ", usable=" + usable + ", remark=" + remark + ", createdBy=" + createdBy + ", createTime="
+				+ createTime + ", updatedBy=" + updatedBy + ", updateTime=" + updateTime + ", version=" + version + "]";
 	}
+
+
+
 }
 

@@ -6,7 +6,7 @@
 * recording, or otherwise, without the prior written permission of Liuzh.
 *
 * Created By: Liuzh
-* Created On: 2016-11-18 15:56:40
+* Created On: 2016-10-31 14:25:26
 *
 * Amendment History:
 *
@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.SystemMenu;
+import com.transsion.store.dto.MenuDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.SystemMenuMapper;
@@ -29,7 +30,7 @@ import com.transsion.store.mapper.SystemMenuMapper;
 @Service("systemMenuService")
 public class SystemMenuService {
 
-	private SystemMenuMapper	systemMenuMapper;
+	private SystemMenuMapper systemMenuMapper;
 
 	@Autowired
 	public void setSystemMenuMapper(SystemMenuMapper systemMenuMapper)
@@ -147,5 +148,55 @@ public class SystemMenuService {
 	public int findByCount(SystemMenu systemMenu) throws ServiceException
 	{
 		return systemMenuMapper.findByCount(systemMenu);
+	}
+	
+	public List<MenuDto> querySystemMenuList(Integer userId)  throws ServiceException{
+		return systemMenuMapper.querySystemMenuList(userId);
+	}
+	
+	/**
+	* 根据条件查询菜单
+	* @return
+	* @throws ServiceException
+	*/
+	public List<SystemMenu> listByParentId(java.lang.Long parentMenuId) throws ServiceException{
+		return systemMenuMapper.listByParentId(parentMenuId);
+	}
+	
+	/**
+	* 获取所有不带权限菜单
+	* @return
+	* @throws ServiceException
+	*/
+	public List<MenuDto> queryAllMenuList()  throws ServiceException{
+		return systemMenuMapper.queryAllMenuList();
+	}
+	
+	/**
+	* 根据父级菜单查询子级菜单
+	* @return
+	* @throws ServiceException
+	*/
+	public List<java.lang.Long> queryMenuIdList(Long menuId) throws ServiceException {
+		return systemMenuMapper.queryMenuIdList(menuId);
+	}
+	
+	/**
+	* 根据menuId查询当前菜单
+	* @return
+	* @throws ServiceException
+	*/
+	public MenuDto findMenuByMenuId(Long menuId) throws ServiceException{
+		return systemMenuMapper.findMenuByMenuId(menuId);
+	}
+	
+	/**
+	* 根据menuCode查询记录
+	* @return
+	* @throws ServiceException
+	*/
+	
+	public List<SystemMenu> findByMenuCode(String menuCode) throws ServiceException{
+		return systemMenuMapper.findByMenuCode(menuCode);
 	}
 }

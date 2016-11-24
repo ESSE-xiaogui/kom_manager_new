@@ -6,7 +6,7 @@
 * recording, or otherwise, without the prior written permission of Liuzh.
 *
 * Created By: Liuzh
-* Created On: 2016-11-18 15:56:40
+* Created On: 2016-10-31 14:25:26
 *
 * Amendment History:
 *
@@ -17,8 +17,8 @@
 package com.transsion.store.facade;
 
 import java.util.List;
-
 import com.transsion.store.bo.SystemMenu;
+import com.transsion.store.dto.MenuDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -101,5 +101,40 @@ public interface SystemMenuFacade {
 	 */
 	public Pagination<SystemMenu> listPaginationByProperty(Pagination<SystemMenu> pagination, SystemMenu systemMenu)
 			throws ServiceException;
+	
+	/**
+	 * 获取菜单
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<MenuDto> findMenuList(String token) throws ServiceException;
+	
+	/**
+	* 根据条件查询菜单
+	* @return
+	* @throws ServiceException
+	*/
+	public List<SystemMenu> listByParentId(java.lang.Long parentMenuId) throws ServiceException;
 
+	/**
+	* 获取所有不带权限菜单
+	* @return
+	* @throws ServiceException
+	*/
+	public List<MenuDto> findAllMenu() throws ServiceException;
+
+	/**
+	* 级联删除菜单
+	* @return
+	* @throws ServiceException
+	*/
+	public void deleteByMenuId(List<java.lang.Long> menuIdList) throws ServiceException;
+
+	/**
+	* 查询菜单及其父菜单名称
+	* @return
+	* @throws ServiceException
+	*/
+	public MenuDto getOneMenu(Long menuId) throws ServiceException;
+	
 }

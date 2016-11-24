@@ -18,6 +18,10 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Region;
+import com.transsion.store.dto.OrganizationDto;
+import com.transsion.store.dto.OrganizationResponseDto;
+import com.transsion.store.dto.RegionDto;
+import com.transsion.store.dto.RegionResponseDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.RegionFacade;
 import com.shangkang.core.bo.Pagination;
@@ -110,4 +114,45 @@ public class RegionController extends AbstractController{
 	{
 		regionFacade.update(region);
 	}
+	
+	/**
+	 * 新增销售区域
+	 * @return
+	 * @throws ServiceException
+	 * */
+	@POST
+	@Path("/saveRegion")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public RegionResponseDto saveRegion(RegionDto regionDto) throws ServiceException{
+		String token = this.getAuthorization();
+		return regionFacade.saveRegion(token,regionDto);
+	}
+	
+	/**
+	 * 查询销售区域名称
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/findRegionName")
+	@Produces({MediaType.APPLICATION_JSON})
+	public Region findRegionName(@QueryParam("id") java.lang.Long id) throws ServiceException{
+		return regionFacade.findRegionName(id);
+	}
+	
+	/**
+	 * 查询销售区域
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/findRegionsList")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<RegionDto> findRegionsList() throws ServiceException
+	{
+		String token = this.getAuthorization();
+		return regionFacade.findRegionsList(token);
+	}
+	
 }
