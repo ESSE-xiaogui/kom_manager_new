@@ -126,9 +126,9 @@ public class SystemMenuFacadeImpl implements SystemMenuFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(SystemMenu systemMenu) throws ServiceException
+	public void save(String token,SystemMenu systemMenu) throws ServiceException
 	{
-		systemMenuManager.save(systemMenu);
+		systemMenuManager.save(token,systemMenu);
 	}
 
 	/**
@@ -137,9 +137,9 @@ public class SystemMenuFacadeImpl implements SystemMenuFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(SystemMenu systemMenu) throws ServiceException
+	public int update(String token,SystemMenu systemMenu) throws ServiceException
 	{
-		return systemMenuManager.update(systemMenu);
+		return systemMenuManager.update(token,systemMenu);
 	}
 
 	/**

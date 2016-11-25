@@ -190,13 +190,4 @@ public class SystemMenuService {
 		return systemMenuMapper.findMenuByMenuId(menuId);
 	}
 	
-	/**
-	* 根据menuCode查询记录
-	* @return
-	* @throws ServiceException
-	*/
-	
-	public List<SystemMenu> findByMenuCode(String menuCode) throws ServiceException{
-		return systemMenuMapper.findByMenuCode(menuCode);
-	}
 }

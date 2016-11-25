@@ -12,6 +12,7 @@ import com.transsion.store.bo.SystemMenu;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.MenuDto;
 import com.transsion.store.resource.MessageStoreResource;
+import com.transsion.store.service.SystemDateService;
 import com.transsion.store.service.SystemMenuService;
 import com.transsion.store.utils.CacheUtils;
 
@@ -20,6 +21,9 @@ import com.transsion.store.utils.CacheUtils;
 public class SystemMenuManager {
 	@Autowired
 	private SystemMenuService systemMenuService;
+	
+	@Autowired
+	private SystemDateService systemDateService;
 	
 	/**
 	* 树形显示所有带权限菜单
@@ -112,11 +116,16 @@ public class SystemMenuManager {
 	* @return
 	* @throws ServiceException
 	*/
-	public void save(SystemMenu systemMenu) throws ServiceException {
-		List<SystemMenu> list = systemMenuService.findByMenuCode(systemMenu.getMenuCode());
-		if(!UtilHelper.isEmpty(list)){
+	public void save(String token,SystemMenu systemMenu) throws ServiceException {
+		SystemMenu tempMenu = new SystemMenu();
+		tempMenu.setMenuCode(systemMenu.getMenuCode());
+		int count = systemMenuService.findByCount(tempMenu);
+		if(count>0){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_MENUCODE_IS_DUPLICATE);
 		}else{
+			UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+			systemMenu.setCreatedBy(userContext.getUser().getUserId().toString());
+			systemMenu.setCreateTime(systemDateService.getCurrentDate());
 			systemMenuService.save(systemMenu);
 		}
 	}
@@ -126,12 +135,14 @@ public class SystemMenuManager {
 	* @return
 	* @throws ServiceException
 	*/
-	public int update(SystemMenu systemMenu) throws ServiceException {
-		List<SystemMenu> list = systemMenuService.findByMenuCode(systemMenu.getMenuCode());
-		if(!UtilHelper.isEmpty(list)){
-			if(!systemMenu.getMenuId().equals(list.get(0).getMenuId())){
-				throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_MENUCODE_IS_DUPLICATE);			
-			}
+	public int update(String token,SystemMenu systemMenu) throws ServiceException {
+		SystemMenu tempMenu = new SystemMenu();
+		tempMenu.setMenuCode(systemMenu.getMenuCode());
+		int count1 = systemMenuService.findByCount(tempMenu);
+		tempMenu.setMenuId(systemMenu.getMenuId());
+		int count2 = systemMenuService.findByCount(tempMenu);
+		if(count1>0 && count2<1){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_MENUCODE_IS_DUPLICATE);			
 		}
 		SystemMenu formerMenu = systemMenuService.getByPK(systemMenu.getMenuId());
 		formerMenu.setMenuCode(systemMenu.getMenuCode());
@@ -140,6 +151,9 @@ public class SystemMenuManager {
 		formerMenu.setPageUrl(systemMenu.getPageUrl());
 		formerMenu.setRemark(systemMenu.getRemark());
 		formerMenu.setMenuOrder(systemMenu.getMenuOrder());
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		formerMenu.setUpdatedBy(userContext.getUser().getUserId().toString());
+		formerMenu.setUpdateTime(systemDateService.getCurrentDate());
 		return systemMenuService.update(formerMenu);
 	}
 }

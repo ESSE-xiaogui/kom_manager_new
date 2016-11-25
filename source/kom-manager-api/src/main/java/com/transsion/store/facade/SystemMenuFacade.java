@@ -76,7 +76,7 @@ public interface SystemMenuFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(SystemMenu systemMenu) throws ServiceException;
+	public void save(String token,SystemMenu systemMenu) throws ServiceException;
 
 	/**
 	 * 更新记录
@@ -84,7 +84,7 @@ public interface SystemMenuFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(SystemMenu systemMenu) throws ServiceException;
+	public int update(String token,SystemMenu systemMenu) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数

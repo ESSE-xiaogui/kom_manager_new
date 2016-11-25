@@ -90,7 +90,8 @@ public class SystemMenuController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void add(SystemMenu systemMenu) throws ServiceException
 	{
-		systemMenuFacade.save(systemMenu);
+		String token = this.getAuthorization();
+		systemMenuFacade.save(token,systemMenu);
 	}
 
 	/**
@@ -116,7 +117,8 @@ public class SystemMenuController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void update(SystemMenu systemMenu) throws ServiceException
 	{
-		systemMenuFacade.update(systemMenu);
+		String token = this.getAuthorization();
+		systemMenuFacade.update(token,systemMenu);
 	}
 	
 	/**

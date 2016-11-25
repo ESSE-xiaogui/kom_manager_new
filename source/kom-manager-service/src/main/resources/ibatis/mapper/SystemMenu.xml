@@ -328,9 +328,6 @@
 	<select id="findByCount" parameterType="SystemMenu" resultType="int">
 		SELECT count(1) AS totalcount FROM T_SYSTEM_MENU WHERE 1=1 
 		<include refid="commonCondition"/>
-	</select>
-	<select id="findByMenuCode" parameterType="java.lang.String" resultMap="SystemMenuResultMapper">
-		SELECT MENU_ID FROM T_SYSTEM_MENU WHERE MENU_CODE =#{menuCode}
 	</select>	
 	<select id="querySystemMenuList" parameterType="java.lang.Integer" resultMap="MenuDtoResultMapper">
 		SELECT s.MENU_ID,MENU_CODE,MENU_NAME,MENU_ORDER,PARENT_MENU_ID,MENU_ICON,PAGE_URL FROM T_SYSTEM_MENU s
