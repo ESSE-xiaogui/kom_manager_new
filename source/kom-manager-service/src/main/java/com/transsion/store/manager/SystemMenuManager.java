@@ -124,7 +124,7 @@ public class SystemMenuManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_MENUCODE_IS_DUPLICATE);
 		}else{
 			UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-			systemMenu.setCreatedBy(userContext.getUser().getUserId().toString());
+			systemMenu.setCreatedBy(userContext.getUser().getUserCode());
 			systemMenu.setCreateTime(systemDateService.getCurrentDate());
 			systemMenuService.save(systemMenu);
 		}
@@ -152,7 +152,7 @@ public class SystemMenuManager {
 		formerMenu.setRemark(systemMenu.getRemark());
 		formerMenu.setMenuOrder(systemMenu.getMenuOrder());
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		formerMenu.setUpdatedBy(userContext.getUser().getUserId().toString());
+		formerMenu.setUpdatedBy(userContext.getUser().getUserCode());
 		formerMenu.setUpdateTime(systemDateService.getCurrentDate());
 		return systemMenuService.update(formerMenu);
 	}
