@@ -41,6 +41,13 @@
 		<result column="REGION_NAME" property="regionName"/>
 	</resultMap>
 	
+	<resultMap id="RegionShopDtoResultMapper" type="RegionShopDto">
+		<result column="ID" property="id"/>
+		<result column="REGION_NAME" property="regionName"/>
+		<result column="CITY" property="city"/>
+		<result column="SHOP_NAME" property="shopName"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, COMPANY_ID
@@ -309,5 +316,11 @@
 	</select>
 	<select id="getRegionName"  parameterType="java.lang.Long" resultType = "String">
 		SELECT REGION_NAME FROM T_REGION WHERE ID = #{id} 
+	</select>
+	<select id="findRegionShop" parameterType="java.lang.Integer" resultMap = "RegionShopDtoResultMapper">
+		SELECT MAX(r.ID) AS ID, r.REGION_NAME FROM T_REGION r
+		LEFT JOIN T_SHOP p ON p.CITY = r.ID
+		WHERE r.COMPANY_ID = #{companyId} AND p.SHOP_NAME IS NOT NULL
+		GROUP BY r.REGION_NAME
 	</select>
 </mapper>

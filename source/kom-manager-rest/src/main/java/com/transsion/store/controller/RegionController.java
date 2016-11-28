@@ -18,10 +18,9 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Region;
-import com.transsion.store.dto.OrganizationDto;
-import com.transsion.store.dto.OrganizationResponseDto;
 import com.transsion.store.dto.RegionDto;
 import com.transsion.store.dto.RegionResponseDto;
+import com.transsion.store.dto.RegionShopDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.RegionFacade;
 import com.shangkang.core.bo.Pagination;
@@ -154,5 +153,19 @@ public class RegionController extends AbstractController{
 		String token = this.getAuthorization();
 		return regionFacade.findRegionsList(token);
 	}
+	
+	/**
+	 * 查询销售区域已绑定店铺
+	 * @return
+	 * @throws ServiceException
+	 * */
+	@GET
+	@Path("/findRegionShop")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<RegionShopDto> findRegionShop() throws ServiceException{
+		String token = this.getAuthorization();
+		return regionFacade.findRegionShop(token);
+	}
+	
 	
 }

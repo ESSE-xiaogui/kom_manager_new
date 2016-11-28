@@ -21,15 +21,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.Region;
-import com.transsion.store.dto.OrganizationResponseDto;
 import com.transsion.store.dto.RegionDto;
 import com.transsion.store.dto.RegionResponseDto;
+import com.transsion.store.dto.RegionShopDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
-import com.shangkang.tools.UtilHelper;
 import com.transsion.store.facade.RegionFacade;
 import com.transsion.store.manager.RegionManager;
-import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.RegionService;
 
 @Component("regionFacade")
@@ -180,5 +178,14 @@ public class RegionFacadeImpl implements RegionFacade {
 	 * */
 	public RegionResponseDto saveRegion(String token,RegionDto regionDto) throws ServiceException{
 		return regionManager.saveRegion(token,regionDto);
+	}
+	
+	/**
+	 * 查询销售区域已绑定店铺
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public List<RegionShopDto> findRegionShop(String token) throws ServiceException{
+		return regionManager.findRegionShop(token);
 	}
 }

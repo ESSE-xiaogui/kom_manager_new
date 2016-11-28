@@ -18,9 +18,9 @@ package com.transsion.store.facade;
 
 import java.util.List;
 import com.transsion.store.bo.Region;
-import com.transsion.store.dto.OrganizationResponseDto;
 import com.transsion.store.dto.RegionDto;
 import com.transsion.store.dto.RegionResponseDto;
+import com.transsion.store.dto.RegionShopDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -124,5 +124,12 @@ public interface RegionFacade {
 	 * @throws ServiceException
 	 * */
 	public RegionResponseDto saveRegion(String token, RegionDto regionDto) throws ServiceException;
+	
+	/**
+	 * 查询销售区域已绑定店铺
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public List<RegionShopDto> findRegionShop(String token) throws ServiceException;
 
 }

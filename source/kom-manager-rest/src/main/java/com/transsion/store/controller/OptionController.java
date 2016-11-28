@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Option;
+import com.transsion.store.dto.OptionDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.OptionFacade;
 import com.shangkang.core.bo.Pagination;
@@ -109,5 +110,18 @@ public class OptionController extends AbstractController{
 	public void update(Option option) throws ServiceException
 	{
 		optionFacade.update(option);
+	}
+	/**
+	 * 修改用户店铺权限
+	 * @return
+	 * @throws ServiceException
+	 * */
+	@PUT
+	@Path("/updateShopOption")
+	@Consumes({MediaType.APPLICATION_JSON})
+	public OptionDto updateShopOption(@QueryParam("isInactive") java.lang.Integer isInactive,
+			@QueryParam("shopId") java.lang.Integer shopId) throws ServiceException{
+		String token = this.getAuthorization();
+		return optionFacade.updateShopOption(token, isInactive,shopId);
 	}
 }

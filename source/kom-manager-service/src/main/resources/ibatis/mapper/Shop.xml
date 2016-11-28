@@ -66,6 +66,11 @@
 		<result column="UPDATE_DATE" property="updateDate"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
+		<resultMap id="ShopDtoResultMapper" type="ShopUserDto">
+		<result column="ID" property="id"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="SHOP_NAME" property="shopName"/>
+	</resultMap>
 	
 	<sql id="commonColumns">
 		 ID
@@ -777,5 +782,16 @@
 	<select id="findByCount" parameterType="Shop" resultType="int">
 		SELECT count(1) AS totalcount FROM T_SHOP WHERE 1=1 
 		<include refid="commonCondition"/>
+	</select>
+	<select id="findShopUser" parameterType="java.lang.Integer" resultMap="ShopDtoResultMapper">
+		SELECT p.ID,p.SHOP_ID,p.SHOP_NAME FROM T_SHOP p
+		LEFT JOIN T_OPTION o ON p.SHOP_ID = o.OBJECT_ID
+		LEFT JOIN T_USER_OPTION uo ON o.ID = uo.OPTION_ID
+		LEFT JOIN T_USER u ON uo.USER_ID = u.USER_ID
+		WHERE u.USER_ID = #{userId}
+	</select>
+	<select id="findShop" parameterType="java.lang.Integer" resultMap="ShopDtoResultMapper">
+		SELECT ID,SHOP_ID,SHOP_NAME FROM T_SHOP	
+		WHERE COMPANY_ID = #{companyId}
 	</select>
 </mapper>

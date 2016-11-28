@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Shop;
+import com.transsion.store.dto.ShopUserDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.ShopFacade;
 import com.shangkang.core.bo.Pagination;
@@ -110,4 +111,27 @@ public class ShopController extends AbstractController{
 	{
 		shopFacade.update(shop);
 	}
+	
+	/**
+	 * 用户已绑定的店铺
+	 * */
+	@GET
+	@Path("/findShopUser")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<ShopUserDto> findShopUser() throws ServiceException{
+		String token =this.getAuthorization();
+		return shopFacade.findShopUser(token);
+	}
+	
+	/**
+	 * 用户已绑定的店铺
+	 * */
+	@GET
+	@Path("/findShop")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<ShopUserDto> findShop() throws ServiceException{
+		String token =this.getAuthorization();
+		return shopFacade.findShop(token);
+	}
+	
 }

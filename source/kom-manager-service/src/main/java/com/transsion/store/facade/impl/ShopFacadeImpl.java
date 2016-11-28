@@ -22,9 +22,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.Shop;
+import com.transsion.store.dto.ShopUserDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.ShopFacade;
+import com.transsion.store.manager.ShopManager;
 import com.transsion.store.service.ShopService;
 
 @Component("shopFacade")
@@ -37,6 +39,8 @@ public class ShopFacadeImpl implements ShopFacade {
 	{
 		this.shopService = shopService;
 	}
+	
+	private ShopManager shopManager;
 	
 	/**
 	 * 通过主键查询实体对象
@@ -144,5 +148,17 @@ public class ShopFacadeImpl implements ShopFacade {
 	public int findByCount(Shop shop) throws ServiceException
 	{
 		return shopService.findByCount(shop);
+	}
+	/**
+	 * 用户已绑定的店铺
+	 * */
+	public List<ShopUserDto> findShopUser(String token) throws ServiceException{
+		return shopManager.findShopUser(token);
+	}
+	/**
+	 * 查询店铺
+	 * */
+	public List<ShopUserDto> findShop(String token) throws ServiceException{
+		return shopManager.findShop(token);
 	}
 }
