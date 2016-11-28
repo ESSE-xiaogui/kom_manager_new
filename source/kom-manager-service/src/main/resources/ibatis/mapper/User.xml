@@ -43,6 +43,15 @@
 		<result column="VERSION" property="version"/>
 	</resultMap>
 	
+	<resultMap id="UserDtoResultMapper" type="User">
+		<result column="USER_CODE" property="userCode"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="ORG_NAME" property="orgName"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="IN_SERVICE" property="inService"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, USER_ID
@@ -417,5 +426,13 @@
 	<select id="findByCount" parameterType="User" resultType="int">
 		SELECT count(1) AS totalcount FROM T_USER WHERE 1=1 
 		<include refid="commonCondition"/>
+	</select>
+	
+	<select id="findByName" parameterType="java.lang.Integer" resultMap="UserDtoResultMapper">
+		SELECT u.USER_CODE,u.USER_NAME,e.EMP_NAME,o.ORG_NAME,u.IS_INACTIVE,e.IN_SERVICE FROM T_USER u
+		LEFT JOIN T_COMPANY c ON c.ID = u.COMPANY_ID
+		LEFT JOIN T_ORGANIZATION o ON o.COMPANY_ID = c.ID
+		LEFT JOIN T_EMPLOYEE e ON e.COMPANY_ID = u.COMPANY_ID AND e.ORG_ID = o.ORG_ID
+		WHERE u.USER_CODE=#{userCode} AND u.USER_ID=#{userId};
 	</select>
 </mapper>

@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.UserDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.UserFacade;
@@ -169,6 +170,13 @@ public class UserFacadeImpl implements UserFacade {
 	 */
 	public Boolean logOut(String token) throws ServiceException{
 		return userManager.logOut(token);
+	}
+	
+	/**
+	 * 根据用户名查询用户信息
+	 * */
+	public UserDto findByName(String token,String userCode) throws ServiceException{
+		return userManager.findByName(token, userCode);
 	}
 
 }

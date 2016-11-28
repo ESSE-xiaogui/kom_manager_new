@@ -6,6 +6,8 @@ import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.UserDto;
+import com.transsion.store.mapper.UserMapper;
 import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.UserService;
 import com.transsion.store.utils.CacheUtils;
@@ -24,6 +26,9 @@ public class UserManager {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserMapper userMapper;
 
 	
 	/**
@@ -75,5 +80,29 @@ public class UserManager {
 		}
 		CacheUtils.getSupporter().remove(token);
 		return Boolean.TRUE;
+	}
+	
+	/**
+	 * 根据用户名查询用户信息
+	 * */
+	public UserDto findByName(String token,String userCode) throws ServiceException{
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+		}
+		if(UtilHelper.isEmpty(userCode)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		if(UtilHelper.isEmpty(userContext.getUser())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+		}
+		if(UtilHelper.isEmpty(userContext.getUser().getUserId())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERID_IS_NULL);
+		}
+		Integer userId = userContext.getUser().getUserId();
+		return userMapper.findByName(userCode, userId);
 	}
 }
