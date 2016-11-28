@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.Option;
+import com.transsion.store.dto.OptionDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -101,5 +102,12 @@ public interface OptionFacade {
 	 */
 	public Pagination<Option> listPaginationByProperty(Pagination<Option> pagination, Option option)
 			throws ServiceException;
+	
+	/**
+	 * 修改用户店铺权限
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public OptionDto updateShopOption(String token, Integer isInactive,Integer shopId) throws ServiceException;
 
 }

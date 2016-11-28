@@ -9,13 +9,14 @@ import org.springframework.stereotype.Service;
 
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
-import com.transsion.store.bo.Organization;
 import com.transsion.store.bo.Region;
 import com.transsion.store.bo.Shop;
 import com.transsion.store.context.UserContext;
-import com.transsion.store.dto.OrganizationResponseDto;
 import com.transsion.store.dto.RegionDto;
 import com.transsion.store.dto.RegionResponseDto;
+import com.transsion.store.dto.RegionShopDto;
+import com.transsion.store.dto.ShopDto;
+import com.transsion.store.mapper.RegionMapper;
 import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.RegionService;
 import com.transsion.store.service.ShopService;
@@ -32,6 +33,9 @@ public class RegionManager {
 	
 	@Autowired
 	private ShopService shopService;
+	
+	@Autowired
+	private RegionMapper regionMapper;
 	
 	/**
 	 * 查询树形销售区域
@@ -152,4 +156,47 @@ public class RegionManager {
 		}
 		regionService.deleteByPKeys(primaryKeys);
 	}
+	
+	/**
+	 * 查询销售区域已绑定店铺
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public List<RegionShopDto> findRegionShop(String token) throws ServiceException{
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		if(UtilHelper.isEmpty(userContext.getUser())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+		}
+		if(UtilHelper.isEmpty(userContext.getUser().getCompanyId())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		List<RegionShopDto> rsdList = new ArrayList<RegionShopDto>();
+		Integer companyId = userContext.getUser().getCompanyId();
+		List<RegionShopDto> rsDto = regionMapper.findRegionShop(companyId);
+		for(RegionShopDto rs:rsDto){
+			List<ShopDto> regDtoList = new ArrayList<ShopDto>();
+			Shop shop = new Shop();
+			shop.setCity(rs.getId().intValue());
+			List<Shop> shopList = shopService.listByProperty(shop);
+			if(shopList.size()>0){
+				for(Shop s:shopList){
+					ShopDto sd = new ShopDto();
+					sd.setId(s.getId());
+					sd.setCity(s.getCity());
+					sd.setShopName(s.getShopName());
+					regDtoList.add(sd);
+				}
+				rs.setChildren(regDtoList);
+			}
+			rsdList.add(rs);
+		}
+		return rsdList;
+	}
+	
 }

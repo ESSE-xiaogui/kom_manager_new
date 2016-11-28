@@ -111,7 +111,7 @@ public class OrganizationManager {
 	 * 获取树形子菜单
 	 * */
 	public List<OrganizationTreeDto> getChridenOrg(List<OrganizationTreeDto> orgList,Integer parentId) throws ServiceException{
-		List<OrganizationTreeDto> orgTreeDto = new ArrayList<>();
+		List<OrganizationTreeDto> orgTreeDto = new ArrayList<OrganizationTreeDto>();
 		for(OrganizationTreeDto org:orgList){
 			Integer orgId = org.getOrgId();  
 	    	 Integer pid = org.getParentId();

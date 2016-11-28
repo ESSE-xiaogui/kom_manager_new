@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.transsion.store.bo.Region;
-import com.transsion.store.dto.OrganizationTreeDto;
 import com.transsion.store.dto.RegionDto;
+import com.transsion.store.dto.RegionShopDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
@@ -34,4 +34,6 @@ public interface RegionMapper extends GenericIBatisMapper<Region, java.lang.Long
 	public List<RegionDto> findRegionsList(Integer companyId) throws DataAccessFailureException;
 
 	public String getRegionName(Long id) throws DataAccessFailureException;
+	
+	public List<RegionShopDto> findRegionShop(@Param("companyId")Integer companyId) throws DataAccessFailureException;
 }
