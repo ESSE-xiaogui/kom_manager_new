@@ -22,15 +22,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.Employee;
+import com.transsion.store.dto.EmpResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.EmployeeFacade;
+import com.transsion.store.manager.EmployeeManager;
 import com.transsion.store.service.EmployeeService;
 
 @Component("employeeFacade")
 public class EmployeeFacadeImpl implements EmployeeFacade {
 
 	private EmployeeService employeeService;
+	
+	@Autowired
+	private EmployeeManager employeeManager;
 	
 	@Autowired
 	public void setEmployeeService(EmployeeService employeeService)
@@ -144,5 +149,25 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
 	public int findByCount(Employee employee) throws ServiceException
 	{
 		return employeeService.findByCount(employee);
+	}
+	
+	/**
+	 * 新增员工
+	 * @return
+	 * @throws ServiceException
+	 */
+	public EmpResponseDto saveEmp(String token,Employee employee) throws ServiceException
+	{
+		return employeeManager.saveEmp(token,employee);
+	}
+	
+	/**
+	 * 修改员工信息
+	 * @return
+	 * @throws ServiceException
+	 */
+	public EmpResponseDto updateEmp(String token,Employee employee) throws ServiceException
+	{
+		return employeeManager.updateEmp(token,employee);
 	}
 }

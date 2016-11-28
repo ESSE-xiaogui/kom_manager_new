@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Employee;
+import com.transsion.store.dto.EmpResponseDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.EmployeeFacade;
 import com.shangkang.core.bo.Pagination;
@@ -110,4 +111,49 @@ public class EmployeeController extends AbstractController{
 	{
 		employeeFacade.update(employee);
 	}
+	
+	/**
+	 * 根据查询条件查询员工
+	 * @return
+	 * @throws ServiceException
+	 */
+	@POST
+	@Path("/listByProperty")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<Employee> listByProperty(Employee employee) throws ServiceException
+	{
+		return employeeFacade.listByProperty(employee);	
+	}
+	
+	/**
+	 * 新增员工
+	 * @return
+	 * @throws ServiceException
+	 */
+	@POST
+	@Path("/saveEmp")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public EmpResponseDto saveEmp(Employee employee) throws ServiceException
+	{
+		String token = this.getAuthorization();
+		return employeeFacade.saveEmp(token,employee);
+	}
+	
+	/**
+	 * 修改员工信息
+	 * @return
+	 * @throws ServiceException
+	 */
+	@PUT
+	@Path("/updateEmp")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public EmpResponseDto updateEmp(Employee employee) throws ServiceException
+	{
+		String token = this.getAuthorization();
+		return employeeFacade.updateEmp(token,employee);
+	}
+	
 }

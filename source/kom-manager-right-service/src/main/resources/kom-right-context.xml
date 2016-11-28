@@ -76,10 +76,6 @@
                 <beans:value>/**/login</beans:value>
                 <beans:value>/**/encrypt</beans:value>
                 <beans:value>/**/getVersionInfo</beans:value>
-                <beans:value>/**/listByParentId</beans:value>
-                <beans:value>/**/findAllMenu</beans:value>
-                <beans:value>/**/deleteByMenuId</beans:value>
-                <beans:value>/**/getOneMenu</beans:value>
                 <beans:value>/**/deleteOrg</beans:value>
             </beans:list>
         </beans:property>
@@ -95,11 +91,12 @@
                 <beans:value>/**/update</beans:value>
                 <beans:value>/**/getByPK</beans:value>
                 <beans:value>/**/deleteByProperty</beans:value>
-                <beans:value>/**/findMenuList</beans:value>
 				<beans:value>/organization/**</beans:value>
 				<beans:value>/brand/**</beans:value>
 				<beans:value>/model/**</beans:value>
 				<beans:value>/region/**</beans:value>
+				<beans:value>/systemMenu/**</beans:value>
+				<beans:value>/employee/**</beans:value>
             </beans:list>
         </beans:property>
     </beans:bean>

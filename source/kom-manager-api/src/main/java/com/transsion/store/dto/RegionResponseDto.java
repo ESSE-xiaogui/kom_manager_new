@@ -7,7 +7,7 @@ public class RegionResponseDto {
 	private Integer status;
 	
 	/**
-	 * 组织机构名称
+	 * 销售区域名称
 	 * */
 	private String regionName;
 
