@@ -19,6 +19,7 @@ package com.transsion.store.controller;
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.UserDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.UserFacade;
 import com.transsion.store.utils.MD5Utils;
@@ -132,5 +133,17 @@ public class UserController extends AbstractController{
 	@Produces({ MediaType.APPLICATION_JSON })
 	public String getEncrypt(@QueryParam("key") String str) throws ServiceException{
 		return MD5Utils.encrypt(str);
+	}
+	
+	/**
+	 * 根据用户名查询用户信息
+	 * */
+	@GET
+	@Path("/findByName")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON })
+	public UserDto findByName(@QueryParam("userCode")String userCode) throws ServiceException{
+		String token = this.getAuthorization();
+		return userFacade.findByName(token,userCode);
 	}
 }

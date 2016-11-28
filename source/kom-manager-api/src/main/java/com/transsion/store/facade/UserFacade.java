@@ -20,6 +20,7 @@ import java.util.List;
 
 import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.UserDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -112,10 +113,17 @@ public interface UserFacade {
 	
 	/**
 	 * @see 登出
-	 * @author guihua.zhang
+	 * @author 
 	 * @return
 	 * @throws ServiceException
 	 */
 	public Boolean logOut(String token) throws ServiceException;
+	
+	
+	/**
+	 * 根据用户名查询用户信息
+	 * */
+	public UserDto findByName(String token,String userCode) throws ServiceException;
+	
 
 }

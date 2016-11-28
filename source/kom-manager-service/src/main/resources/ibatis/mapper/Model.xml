@@ -382,5 +382,8 @@
 	<if test="modelCode!= null and modelCode!= ''"> 
 			AND MODEL_CODE=#{modelCode}
 	</if> 
+	<if test="isInactive!= null and isInactive!= ''"> 
+			AND IS_INACTIVE=#{isInactive}
+		</if>
 	</select>
 </mapper>
