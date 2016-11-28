@@ -48,7 +48,7 @@ public class EmployeeManager {
 	}
 	
 	/**
-	 * 修改员工信息
+	 * 更新员工信息
 	 * @return
 	 * @throws ServiceException
 	 */
