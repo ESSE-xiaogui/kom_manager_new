@@ -189,5 +189,14 @@ public class SystemMenuService {
 	public MenuDto findMenuByMenuId(Long menuId) throws ServiceException{
 		return systemMenuMapper.findMenuByMenuId(menuId);
 	}
+
+	/**
+	* 根据roleId查询菜单
+	* @return
+	* @throws ServiceException
+	*/
+	public List<MenuDto> findMenuByRoleId(Long roleId) throws ServiceException{
+		return systemMenuMapper.findMenuByRoleId(roleId);
+	}
 	
 }

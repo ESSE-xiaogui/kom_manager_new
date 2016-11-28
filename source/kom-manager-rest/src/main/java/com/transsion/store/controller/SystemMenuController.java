@@ -182,4 +182,16 @@ public class SystemMenuController extends AbstractController{
 	public MenuDto getOneMenu(@QueryParam("menuId") java.lang.Long menuId) throws ServiceException{
 		return systemMenuFacade.getOneMenu(menuId);
 	}
+	
+	/**
+	* 根据roleId查询树形菜单
+	* @return
+	* @throws ServiceException
+	*/
+	@GET
+	@Path("/findMenuByRoleId")
+	@Produces({MediaType.APPLICATION_JSON}) 
+	public List<MenuDto> findMenuByRoleId(@QueryParam("roleId") java.lang.Long roleId) throws ServiceException {
+		return systemMenuFacade.findMenuByRoleId(roleId);
+	}
 }

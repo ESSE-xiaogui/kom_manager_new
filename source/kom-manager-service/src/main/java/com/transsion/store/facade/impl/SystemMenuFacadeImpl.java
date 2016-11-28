@@ -194,4 +194,13 @@ public class SystemMenuFacadeImpl implements SystemMenuFacade {
 	public MenuDto getOneMenu(java.lang.Long menuId) throws ServiceException{
 		return systemMenuManager.getOneMenu(menuId);
 	}
+	
+	/**
+	* 根据roleId查询树形菜单
+	* @return
+	* @throws ServiceException
+	*/
+	public List<MenuDto> findMenuByRoleId(java.lang.Long roleId) throws ServiceException {
+		return systemMenuManager.findMenuByRoleId(roleId);
+	}
 }

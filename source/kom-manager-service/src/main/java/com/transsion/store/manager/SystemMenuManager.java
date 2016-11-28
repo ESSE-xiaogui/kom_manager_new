@@ -156,4 +156,15 @@ public class SystemMenuManager {
 		formerMenu.setUpdateTime(systemDateService.getCurrentDate());
 		return systemMenuService.update(formerMenu);
 	}
+
+	
+	/**
+	* 根据roleId查询树形菜单
+	* @return
+	* @throws ServiceException
+	*/
+	public List<MenuDto> findMenuByRoleId(Long roleId) throws ServiceException{
+		List<MenuDto> list = systemMenuService.findMenuByRoleId(roleId);
+		return treeMenuList(list,Long.valueOf(0));
+	}
 }

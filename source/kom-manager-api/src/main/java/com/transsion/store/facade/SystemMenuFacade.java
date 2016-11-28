@@ -136,5 +136,12 @@ public interface SystemMenuFacade {
 	* @throws ServiceException
 	*/
 	public MenuDto getOneMenu(Long menuId) throws ServiceException;
+
+	/**
+	* 根据roleId查询树形菜单
+	* @return
+	* @throws ServiceException
+	*/
+	public List<MenuDto> findMenuByRoleId(Long roleId) throws ServiceException;
 	
 }
