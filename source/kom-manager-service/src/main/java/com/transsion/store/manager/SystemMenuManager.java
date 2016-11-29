@@ -159,7 +159,7 @@ public class SystemMenuManager {
 
 	
 	/**
-	* 根据roleId查询树形菜单
+	* 根据roleId查询菜单
 	* @return
 	* @throws ServiceException
 	*/

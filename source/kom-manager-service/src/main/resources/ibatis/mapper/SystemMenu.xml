@@ -358,6 +358,6 @@
 	<select id="findMenuByRoleId"  parameterType="java.lang.Long" resultMap="MenuDtoResultMapper">
 		SELECT s.MENU_ID,MENU_CODE,MENU_NAME,MENU_ORDER,PARENT_MENU_ID,MENU_ICON,PAGE_URL FROM T_SYSTEM_MENU s
 	    LEFT JOIN T_ROLE_MENU r ON s.MENU_ID = r.MENU_ID
-	    WHERE ROLE_ID = #{roleId}
+	    WHERE ROLE_ID = #{roleId} 
 	</select>
 </mapper>

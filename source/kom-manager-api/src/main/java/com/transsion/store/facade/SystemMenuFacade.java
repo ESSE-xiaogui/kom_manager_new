@@ -140,7 +140,7 @@ public interface SystemMenuFacade {
 	/**
 	* 根据roleId查询树形菜单
 	* @return
-	* @throws ServiceException
+	* @throws ServiceException 
 	*/
 	public List<MenuDto> findMenuByRoleId(Long roleId) throws ServiceException;
 	

@@ -40,6 +40,6 @@ public interface SystemMenuMapper extends GenericIBatisMapper<SystemMenu, java.l
 
 	public MenuDto findMenuByMenuId(Long menuId) throws DataAccessFailureException;
 
-	public List<MenuDto> findMenuByRoleId(Long roleId) throws DataAccessFailureException;
+	public List<MenuDto> findMenuByRoleId(Long roleId)throws DataAccessFailureException;
 
 }
