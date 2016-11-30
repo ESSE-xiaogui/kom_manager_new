@@ -18,19 +18,30 @@ package com.transsion.store.facade.impl;
 
 import java.util.List;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.Duty;
+import com.transsion.store.dto.DutyResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.DutyFacade;
+import com.transsion.store.manager.DutyManager;
 import com.transsion.store.service.DutyService;
 
 @Component("dutyFacade")
 public class DutyFacadeImpl implements DutyFacade {
 
 	private DutyService dutyService;
+	
+	@Autowired
+	private DutyManager dutyManager;
 	
 	@Autowired
 	public void setDutyService(DutyService dutyService)
@@ -144,5 +155,14 @@ public class DutyFacadeImpl implements DutyFacade {
 	public int findByCount(Duty duty) throws ServiceException
 	{
 		return dutyService.findByCount(duty);
+	}
+	
+	/**
+	* 根据id查询职位名称
+	* @return
+	* @throws ServiceException
+	*/
+	public DutyResponseDto findDutyName(java.lang.Long id) throws ServiceException{
+		return dutyManager.findDutyName(id);
 	}
 }

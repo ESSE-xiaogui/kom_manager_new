@@ -53,9 +53,7 @@ public class RegionManager {
 		if(UtilHelper.isEmpty(usercontext.getUser())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(usercontext.getUser().getUserId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERID_IS_NULL);
-		}
+		
 		Integer companyId = usercontext.getUser().getCompanyId();
 		List<RegionDto> regionList = regionService.findRegionsList(companyId);
 		if(UtilHelper.isEmpty(regionList)){
@@ -118,14 +116,12 @@ public class RegionManager {
 		if(UtilHelper.isEmpty(userContext.getUser())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(userContext.getUser().getUserId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERID_IS_NULL);
-		}
+
 		Region region = new Region();
 		BeanUtils.copyProperties(regionDto, region);
-		region.setCreatedBy(userContext.getUser().getUserId().toString());
+		region.setCreatedBy(userContext.getUser().getUserCode());
 		region.setCreatedTime(systemDateService.getCurrentDate());
-		region.setUpdatedBy(userContext.getUser().getUserId().toString());
+		region.setUpdatedBy(userContext.getUser().getUserCode());
 		region.setUpdatedTime(systemDateService.getCurrentDate());
 		region.setCompanyId(userContext.getUser().getCompanyId());
 		region.setVersion(0);

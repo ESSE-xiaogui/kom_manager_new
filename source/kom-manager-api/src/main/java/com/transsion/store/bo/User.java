@@ -108,7 +108,7 @@ public class User extends Model{
 	/**
 	  *	系统保留字段，记录数据创建用户，用于审计，无业务含义
 	  */
-	private java.lang.Integer createdBy;
+	private java.lang.String createdBy;
 
 	/**
 	  *	系统保留字段，记录数据创建时间，用于系统审计，无实际业务含义
@@ -118,7 +118,7 @@ public class User extends Model{
 	/**
 	  *	系统保留字段，记录数据最后更新用户，用于审计，无业务含义
 	  */
-	private java.lang.Integer updatedBy;
+	private java.lang.String updatedBy;
 
 	/**
 	  *	系统保留字段，记录数据最后时间，用于审计，无业务含义
@@ -386,22 +386,24 @@ public class User extends Model{
 		this.remark = remark;
 	}
 	
-	/**
-	  *	系统保留字段，记录数据创建用户，用于审计，无业务含义
-	  */
-	public java.lang.Integer getCreatedBy() 
-	{
+
+	
+	public java.lang.String getCreatedBy() {
 		return createdBy;
 	}
-	
-	/**
-	  *	系统保留字段，记录数据创建用户，用于审计，无业务含义
-	  */
-	public void setCreatedBy(java.lang.Integer createdBy) 
-	{
+
+	public void setCreatedBy(java.lang.String createdBy) {
 		this.createdBy = createdBy;
 	}
-	
+
+	public java.lang.String getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(java.lang.String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
 	/**
 	  *	系统保留字段，记录数据创建时间，用于系统审计，无实际业务含义
 	  */
@@ -416,22 +418,6 @@ public class User extends Model{
 	public void setCreatedTime(java.lang.String createdTime) 
 	{
 		this.createdTime = createdTime;
-	}
-	
-	/**
-	  *	系统保留字段，记录数据最后更新用户，用于审计，无业务含义
-	  */
-	public java.lang.Integer getUpdatedBy() 
-	{
-		return updatedBy;
-	}
-	
-	/**
-	  *	系统保留字段，记录数据最后更新用户，用于审计，无业务含义
-	  */
-	public void setUpdatedBy(java.lang.Integer updatedBy) 
-	{
-		this.updatedBy = updatedBy;
 	}
 	
 	/**

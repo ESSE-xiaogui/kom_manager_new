@@ -132,6 +132,7 @@ public class SystemRoleController extends AbstractController{
 	public List<SystemRoleResponseDto> findSystemRole() throws ServiceException{
 		return systemRoleFacade.findSystemRole();
 	}
+	
 	/**
 	 * 用户角色权限停用/启用
 	 * */

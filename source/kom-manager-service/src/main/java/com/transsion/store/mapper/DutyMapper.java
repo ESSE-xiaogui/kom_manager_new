@@ -28,4 +28,6 @@ import org.apache.ibatis.annotations.Param;
 public interface DutyMapper extends GenericIBatisMapper<Duty, java.lang.Long> {
 
     public List<Duty> listPaginationByProperty(Pagination<Duty> pagination, @Param("duty")Duty duty, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+
+	public String getDutyName(Long id) throws DataAccessFailureException;
 }

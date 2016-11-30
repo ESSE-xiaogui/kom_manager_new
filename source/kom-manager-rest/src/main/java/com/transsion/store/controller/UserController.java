@@ -20,6 +20,8 @@ import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.UserDto;
+import com.transsion.store.dto.UserInfoDto;
+import com.transsion.store.dto.UserResponseDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.UserFacade;
 import com.transsion.store.utils.MD5Utils;
@@ -145,5 +147,75 @@ public class UserController extends AbstractController{
 	public UserDto findByName(@QueryParam("userCode")String userCode) throws ServiceException{
 		String token = this.getAuthorization();
 		return userFacade.findByName(token,userCode);
+	}
+	
+	/**
+	 * 用户冻结/解冻 
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/updateUserStatus")
+	@Produces({MediaType.APPLICATION_JSON})
+	public UserResponseDto updateUserStatus(@QueryParam("id") java.lang.Long id,
+			@QueryParam("isInactive") java.lang.Integer isInactive) throws ServiceException{
+		String token = this.getAuthorization();
+		return userFacade.updateUserStatus(token, id, isInactive);
+	}
+	
+	/**
+	 * 重置密码
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/resetPassword")
+	@Produces({MediaType.APPLICATION_JSON})
+	public UserResponseDto resetPassword(@QueryParam("id") java.lang.Long id,
+			@QueryParam("password") java.lang.String password) throws ServiceException{
+		String token = this.getAuthorization();
+		return userFacade.resetPassword(token, id, password);
+	}
+	
+	/**
+	 * 根据条件查询用户信息
+	 * @return
+	 * @throws ServiceException
+	 * */
+	@POST
+	@Path("/getUserInfo")
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	public UserInfoDto getUserInfo(UserInfoDto userInfoDto) throws ServiceException{
+		String token = this.getAuthorization();
+		return userFacade.getUserInfo(token,userInfoDto);
+	}	
+	
+	/**
+	 * 为员工分配账号
+	 * @return
+	 * @throws ServiceException
+	 * */
+	@POST
+	@Path("/addUser")
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	public UserResponseDto addUser(User user) throws ServiceException{
+		String token = this.getAuthorization();
+		return userFacade.addUser(token,user);
+	}
+	
+	/**
+	 * 更改账号信息
+	 * @return
+	 * @throws ServiceException
+	 * */
+	@PUT
+	@Path("/updateUser")
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	public UserResponseDto updateUser(User user) throws ServiceException{
+		String token = this.getAuthorization();
+		return userFacade.updateUser(token,user);
 	}
 }

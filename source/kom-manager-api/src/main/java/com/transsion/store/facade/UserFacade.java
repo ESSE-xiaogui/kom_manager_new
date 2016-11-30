@@ -21,6 +21,8 @@ import java.util.List;
 import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.UserDto;
+import com.transsion.store.dto.UserInfoDto;
+import com.transsion.store.dto.UserResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -125,5 +127,39 @@ public interface UserFacade {
 	 * */
 	public UserDto findByName(String token,String userCode) throws ServiceException;
 	
+	/**
+	 * 用户冻结/解冻 
+	 * @return
+	 * @throws ServiceException
+	 */
+	public UserResponseDto updateUserStatus(String token, Long id, Integer isInactive) throws ServiceException;
+	
+	/**
+	 * 重置密码
+	 * @return
+	 * @throws ServiceException
+	 */
+	public UserResponseDto resetPassword(String token, Long id, String password) throws ServiceException;
+
+	/**
+	 * 根据条件查询用户信息
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public UserInfoDto getUserInfo(String token, UserInfoDto userInfoDto) throws ServiceException;
+
+	/**
+	 * 为员工分配账号
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public UserResponseDto addUser(String token, User user)throws ServiceException;
+
+	/**
+	 * 更改账号信息
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public UserResponseDto updateUser(String token, User user)throws ServiceException;
 
 }

@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.User;
+import com.transsion.store.dto.UserInfoDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.UserMapper;
@@ -147,5 +148,14 @@ public class UserService {
 	public int findByCount(User user) throws ServiceException
 	{
 		return userMapper.findByCount(user);
+	}
+
+	/**
+	 * 根据条件查询用户信息
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public UserInfoDto getUserInfo(UserInfoDto userInfoDto) throws ServiceException{
+		return userMapper.getUserInfo(userInfoDto);
 	}
 }

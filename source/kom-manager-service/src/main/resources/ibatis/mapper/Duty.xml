@@ -234,7 +234,7 @@
 		DELETE FROM T_DUTY WHERE
 		<foreach collection="primaryKeys" index="index" item="id"
 			open=" ID IN(" separator="," close=") ">
-			${id}
+			#{id}
 		</foreach>
 	</delete>
 	<delete id="deleteByProperty" parameterType="Duty">
@@ -267,5 +267,8 @@
 	<select id="findByCount" parameterType="Duty" resultType="int">
 		SELECT count(1) AS totalcount FROM T_DUTY WHERE 1=1 
 		<include refid="commonCondition"/>
+	</select>
+	<select id="getDutyName"  parameterType="java.lang.Long" resultType = "String">
+		SELECT DUTY_NAME FROM T_DUTY WHERE ID = #{id} 
 	</select>
 </mapper>

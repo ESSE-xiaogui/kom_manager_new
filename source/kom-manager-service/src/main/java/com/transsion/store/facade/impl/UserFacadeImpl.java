@@ -18,12 +18,22 @@ package com.transsion.store.facade.impl;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.UserDto;
+import com.transsion.store.dto.UserInfoDto;
+import com.transsion.store.dto.UserResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.UserFacade;
@@ -179,4 +189,48 @@ public class UserFacadeImpl implements UserFacade {
 		return userManager.findByName(token, userCode);
 	}
 
+	/**
+	 * 用户冻结/解冻 
+	 * @return
+	 * @throws ServiceException
+	 */
+	public UserResponseDto updateUserStatus(String token,java.lang.Long id, java.lang.Integer isInactive) throws ServiceException{
+		return userManager.updateUserStatus(token, id, isInactive);
+	}
+	
+	/**
+	 * 重置密码
+	 * @return
+	 * @throws ServiceException
+	 */
+	public UserResponseDto resetPassword(String token,java.lang.Long id, java.lang.String password) throws ServiceException{
+		return userManager.resetPassword(token, id, password);
+	}
+	
+	/**
+	 * 根据条件查询用户信息
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public UserInfoDto getUserInfo(String token,UserInfoDto userInfoDto) throws ServiceException{
+		return userManager.getUserInfo(token,userInfoDto);
+	}
+	
+	/**
+	 * 为员工分配账号
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public UserResponseDto addUser(String token,User user) throws ServiceException{
+		return userManager.addUser(token,user);
+	}
+	
+	/**
+	 * 更改账号信息
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public UserResponseDto updateUser(String token,User user) throws ServiceException{
+		return userManager.updateUser(token,user);
+	}
 }

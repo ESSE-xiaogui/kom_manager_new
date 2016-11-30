@@ -148,4 +148,13 @@ public class DutyService {
 	{
 		return dutyMapper.findByCount(duty);
 	}
+
+	/**
+	 * 查询销售区域名称
+	 * @return
+	 * @throws ServiceException
+	 */
+	public String getDutyName(Long id) throws ServiceException{
+		return dutyMapper.getDutyName(id);
+	}
 }

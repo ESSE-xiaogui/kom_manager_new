@@ -52,6 +52,29 @@
 		<result column="IN_SERVICE" property="inService"/>
 	</resultMap>
 	
+	<resultMap id="UserInfoDtoResultMapper" type="UserInfoDto">
+		<result column="ID" property="id"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="PASSWORD" property="password"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="ROLE_NAME" property="roleName"/>
+		<result column="DUTY_NAME" property="dutyName"/>
+		<result column="ORG_NAME" property="orgName"/>
+		<result column="EMP_CODE" property="empCode"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="ID_NO" property="idNo"/>
+		<result column="PHONE_NO" property="phoneNo"/>
+		<result column="UPPER_ID" property="upperId"/>
+		<result column="UPPER_NAME" property="upperName"/>
+		<result column="IN_SERVICE" property="inService"/>
+		<result column="LAST_LOGIN" property="lastLogin"/>
+		<result column="IS_ONLINE" property="isOnline"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, USER_ID
@@ -186,6 +209,39 @@
 		</if>
 		<if test="version!= null and version!= ''"> 
 			AND VERSION=#{version}
+		</if>
+	</sql>
+	
+	<sql id="commonCondition2">
+		<if test="userName!= null and userName!= ''"> 
+			AND USER_NAME=#{userName}
+		</if>
+		<if test="orgId!= null and orgId!= ''"> 
+			AND o.ORG_ID=#{orgId}
+		</if>
+		<if test="empCode!= null and empCode!= ''"> 
+			AND e.EMP_CODE=#{empCode}
+		</if>
+		<if test="empName!= null and empName!= ''"> 
+			AND e.EMP_NAME=#{empName}
+		</if>
+		<if test="idNo!= null and idNo!= ''"> 
+			AND ID_NO=#{idNo}
+		</if>
+		<if test="phoneNo!= null and phoneNo!= ''"> 
+			AND PHONE_NO=#{phoneNo}
+		</if>
+		<if test="upperId!= null and upperId!= ''"> 
+			AND UPPER_ID=#{upperId}
+		</if>
+		<if test="upperName!= null and upperName!= ''"> 
+			AND UPPER_NAME=#{upperName}
+		</if>
+		<if test="inService!= null and inService!= ''"> 
+			AND IN_SERVICE=#{inService}
+		</if>
+		<if test="isInactive!= null and isInactive!= ''"> 
+			AND IS_INACTIVE=#{isInactive}
 		</if>
 	</sql>
 
@@ -434,5 +490,16 @@
 		LEFT JOIN T_ORGANIZATION o ON o.COMPANY_ID = c.ID
 		LEFT JOIN T_EMPLOYEE e ON e.COMPANY_ID = u.COMPANY_ID AND e.ORG_ID = o.ORG_ID
 		WHERE u.USER_CODE=#{userCode} AND u.USER_ID=#{userId};
+	</select>
+	<select id="getUserInfo" parameterType="UserInfoDto" resultMap="UserInfoDtoResultMapper">
+		SELECT u.ID,u.USER_NAME,u.PASSWORD,r.ROLE_NAME,e.EMP_CODE,e.EMP_NAME,d.DUTY_NAME,o.ORG_NAME,
+		e.PHONE_NO,e.UPPER_ID,e.UPPER_NAME,e.IN_SERVICE,u.IS_INACTIVE,u.UPDATED_TIME,u.LAST_LOGIN,
+		u.UPDATED_BY,u.REMARK FROM T_USER u
+		LEFT JOIN T_USER_ROLE r ON u.USER_ID = r.USER_ID
+		LEFT JOIN T_EMPLOYEE e ON u.EMP_ID = e.EMP_ID
+		LEFT JOIN T_DUTY d ON u.DUTY_ID = d.ID
+		LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ORG_ID
+		WHERE u.COMPANY_ID = #{companyId}
+		<include refid="commonCondition2"/>
 	</select>
 </mapper>

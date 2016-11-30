@@ -101,6 +101,8 @@
 				<beans:value>/shop/**</beans:value>
 				<beans:value>/**/findByName</beans:value>
 				<beans:value>/option/updateShopOption</beans:value>
+				<beans:value>/duty/**</beans:value>
+				<beans:value>/user/**</beans:value>
             </beans:list>
         </beans:property>
     </beans:bean>

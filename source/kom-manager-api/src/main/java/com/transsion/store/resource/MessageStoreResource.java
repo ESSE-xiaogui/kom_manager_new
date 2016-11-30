@@ -46,4 +46,9 @@ public class MessageStoreResource {
      * 删除销售区域失败
      */
     public static final String ERROR_MESSAGE_REGION_DELETE_FAIL = "error_message_regionDeleteFail";
+    
+    /**
+     * 用户已存在
+     */
+    public static final String ERROR_MESSAGE_USER_ALREADY_EXISTS = "error_message_userAlreadyExists";
 }

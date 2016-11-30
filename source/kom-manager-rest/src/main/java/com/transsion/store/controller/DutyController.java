@@ -18,6 +18,8 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Duty;
+import com.transsion.store.dto.DutyResponseDto;
+import com.transsion.store.dto.OrganizationResponseDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.DutyFacade;
 import com.shangkang.core.bo.Pagination;
@@ -109,5 +111,17 @@ public class DutyController extends AbstractController{
 	public void update(Duty duty) throws ServiceException
 	{
 		dutyFacade.update(duty);
+	}
+	
+	/**
+	* 根据id查询职位名称
+	* @return
+	* @throws ServiceException
+	*/
+	@GET
+	@Path("/findDutyName")
+	@Produces({MediaType.APPLICATION_JSON})
+	public DutyResponseDto findDutyName(@QueryParam("id") java.lang.Long id) throws ServiceException{
+		return dutyFacade.findDutyName(id);
 	}
 }
