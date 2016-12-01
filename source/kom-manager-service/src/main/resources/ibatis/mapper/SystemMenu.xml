@@ -334,7 +334,8 @@
 		LEFT JOIN T_ROLE_MENU r ON s.MENU_ID = r.MENU_ID
 		LEFT JOIN T_SYSTEM_ROLE e ON r.ROLE_ID = e.ROLE_ID
 		LEFT JOIN T_USER_ROLE o ON o.ROLE_ID = e.ROLE_ID
-		WHERE USER_ID = #{userId}
+		LEFT JOIN T_USER u ON u.ID = o.USER_ID
+		WHERE u.ID = #{userId}
 		ORDER BY MENU_ORDER ASC
 	</select>
 	<select id="listByParentId" parameterType="java.lang.Long" resultMap="SystemMenuResultMapper">
