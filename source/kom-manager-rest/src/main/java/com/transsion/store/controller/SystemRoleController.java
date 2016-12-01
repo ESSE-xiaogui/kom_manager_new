@@ -137,7 +137,7 @@ public class SystemRoleController extends AbstractController{
 	 * 用户角色权限停用/启用
 	 * */
 	@GET
-	@Path("/findSystemRole")
+	@Path("/updateRoleStatus")
 	@Produces({MediaType.APPLICATION_JSON})
 	public SystemRoleResponseDto updateRoleStatus(@QueryParam("roleId") java.lang.Long roleId,
 			@QueryParam("isInactive") java.lang.Integer isInactive) throws ServiceException{
