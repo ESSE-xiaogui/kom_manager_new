@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.RoleMenu;
+import com.transsion.store.dto.RoleMenuDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.RoleMenuFacade;
 import com.shangkang.core.bo.Pagination;
@@ -109,5 +110,17 @@ public class RoleMenuController extends AbstractController{
 	public void update(RoleMenu roleMenu) throws ServiceException
 	{
 		roleMenuFacade.update(roleMenu);
+	}
+	
+	/**
+	* 新增菜单角色
+	* @return
+	* @throws ServiceException
+	*/
+	@POST
+	@Path("/addMenuRole")
+	@Consumes({MediaType.APPLICATION_JSON}) 
+	public void addMenuRole(RoleMenuDto roleMenuDto) throws ServiceException {
+		 roleMenuFacade.addMenuRole(this.getAuthorization(), roleMenuDto);
 	}
 }

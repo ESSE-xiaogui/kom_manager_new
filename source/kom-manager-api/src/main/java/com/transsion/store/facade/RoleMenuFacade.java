@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.RoleMenu;
+import com.transsion.store.dto.RoleMenuDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -101,5 +102,12 @@ public interface RoleMenuFacade {
 	 */
 	public Pagination<RoleMenu> listPaginationByProperty(Pagination<RoleMenu> pagination, RoleMenu roleMenu)
 			throws ServiceException;
+
+	/**
+	* 新增菜单角色
+	* @return
+	* @throws ServiceException
+	*/
+	public void addMenuRole(String token,RoleMenuDto roleMenuDto) throws ServiceException;
 
 }

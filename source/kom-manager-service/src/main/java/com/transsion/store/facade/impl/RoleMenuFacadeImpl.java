@@ -18,19 +18,30 @@ package com.transsion.store.facade.impl;
 
 import java.util.List;
 
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.RoleMenu;
+import com.transsion.store.dto.RoleMenuDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.RoleMenuFacade;
+import com.transsion.store.manager.RoleMenuManager;
 import com.transsion.store.service.RoleMenuService;
 
 @Component("roleMenuFacade")
 public class RoleMenuFacadeImpl implements RoleMenuFacade {
 
 	private RoleMenuService roleMenuService;
+	
+	@Autowired
+	private RoleMenuManager roleMenuManager;
 	
 	@Autowired
 	public void setRoleMenuService(RoleMenuService roleMenuService)
@@ -144,5 +155,14 @@ public class RoleMenuFacadeImpl implements RoleMenuFacade {
 	public int findByCount(RoleMenu roleMenu) throws ServiceException
 	{
 		return roleMenuService.findByCount(roleMenu);
+	}
+	
+	/**
+	* 新增菜单角色
+	* @return
+	* @throws ServiceException
+	*/ 
+	public void addMenuRole(String token,RoleMenuDto roleMenuDto) throws ServiceException {
+		roleMenuManager.addMenuRole(token,roleMenuDto);
 	}
 }
