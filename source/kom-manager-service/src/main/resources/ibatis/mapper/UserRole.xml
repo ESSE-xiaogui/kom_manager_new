@@ -56,7 +56,8 @@
 	</sql>
 
 	<sql id="commonColumnsNotPK">
-		 USER_ID
+	USER_ROLE_ID
+		, USER_ID
 		, ROLE_ID
 		, ROLE_NAME
 		, IS_INACTIVE
@@ -252,7 +253,8 @@
 		<include refid="commonColumnsNotPK"/>
 		<![CDATA[
 			) VALUES ( 
-			 #{userId}
+			#{userRoleId}
+			, #{userId}
 			, #{roleId}
 			, #{roleName}
 			, #{isInactive}

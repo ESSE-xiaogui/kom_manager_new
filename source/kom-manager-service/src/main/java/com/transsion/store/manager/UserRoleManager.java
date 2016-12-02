@@ -28,13 +28,13 @@ public class UserRoleManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		UserRole userR = new UserRole();
-		userR.setRoleId(userRoleDto.getUserId());
+		userR.setUserId(userRoleDto.getUserId());
 		userRoleMapper.deleteByProperty(userR);
 		for(Long roleId:userRoleDto.getRoleIds()){
 			UserRole userRole = new UserRole();
 			userRole.setUserId(userRoleDto.getUserId());
 			userRole.setRoleId(roleId);
-			userRole.setIsInactive(0);
+			userRole.setIsInactive(1);
 			userRole.setCreateBy(userRoleDto.getUserId().toString());
 			userRole.setCreateTime(systemDateService.getCurrentDate());
 			userRole.setUpdateBy(userRoleDto.getUserId().toString());
