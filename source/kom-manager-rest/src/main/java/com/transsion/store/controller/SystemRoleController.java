@@ -122,9 +122,8 @@ public class SystemRoleController extends AbstractController{
 	@GET
 	@Path("/findSystemRoleByUser")
 	@Produces({MediaType.APPLICATION_JSON})
-	public List<SystemRoleResponseDto> findSystemRoleByUser() throws ServiceException{
-		String token = this.getAuthorization();
-		return systemRoleFacade.findSystemRoleByUser(token);
+	public List<SystemRoleResponseDto> findSystemRoleByUser(@QueryParam("userId") java.lang.Integer userId) throws ServiceException{
+		return systemRoleFacade.findSystemRoleByUser(userId);
 	}
 	
 	/**

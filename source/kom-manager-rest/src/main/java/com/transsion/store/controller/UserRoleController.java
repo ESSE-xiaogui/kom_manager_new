@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.UserRole;
+import com.transsion.store.dto.UserRoleDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.UserRoleFacade;
 import com.shangkang.core.bo.Pagination;
@@ -109,5 +110,16 @@ public class UserRoleController extends AbstractController{
 	public void update(UserRole userRole) throws ServiceException
 	{
 		userRoleFacade.update(userRole);
+	}
+	
+	/**
+	 * 用户角色权限绑定
+	 * @throws ServiceException
+	 * */
+	@POST
+	@Path("addUserRole")
+	@Consumes({MediaType.APPLICATION_JSON})
+	public void addUserRole(UserRoleDto userRoleDto) throws ServiceException{
+		userRoleFacade.addUserRole(userRoleDto);
 	}
 }

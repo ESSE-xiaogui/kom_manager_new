@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.UserRole;
+import com.transsion.store.dto.UserRoleDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -101,5 +102,10 @@ public interface UserRoleFacade {
 	 */
 	public Pagination<UserRole> listPaginationByProperty(Pagination<UserRole> pagination, UserRole userRole)
 			throws ServiceException;
+	/**
+	 * 用户角色权限绑定
+	 * @throws ServiceException
+	 * */
+	public void addUserRole(UserRoleDto userRoleDto) throws ServiceException;
 
 }

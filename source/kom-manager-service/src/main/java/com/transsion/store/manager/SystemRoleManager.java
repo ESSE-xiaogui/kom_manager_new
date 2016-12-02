@@ -8,11 +8,8 @@ import org.springframework.stereotype.Service;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.SystemRole;
-import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.SystemRoleResponseDto;
-import com.transsion.store.dto.UserResponseDto;
-import com.transsion.store.mapper.SystemResourceMapper;
 import com.transsion.store.mapper.SystemRoleMapper;
 import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
@@ -28,21 +25,11 @@ public class SystemRoleManager {
 	/**
 	 * 查询用户角色
 	 * */
-	public List<SystemRoleResponseDto> findSystemRoleByUser(String token) throws ServiceException{
-		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
-		}
-		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext)){
+	public List<SystemRoleResponseDto> findSystemRoleByUser(Integer userId) throws ServiceException{
+		if(UtilHelper.isEmpty(userId)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
-		}
-		if(UtilHelper.isEmpty(userContext.getUser().getUserId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERID_IS_NULL);
-		}
-		return systemRoleMapper.findSystemRoleByUser(userContext.getUser().getUserId());
+		return systemRoleMapper.findSystemRoleByUser(userId);
 	}
 	/**
 	 * 查询所有角色

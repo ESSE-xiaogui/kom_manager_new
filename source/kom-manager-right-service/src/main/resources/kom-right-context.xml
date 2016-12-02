@@ -104,6 +104,7 @@
 				<beans:value>/user/**</beans:value>
 				<beans:value>/**/findSystemRoleByUser</beans:value>
 				<beans:value>/**/findSystemRole</beans:value>
+				<beans:value>/**/addUserRole</beans:value>
 				<beans:value>/**/updateRoleStatus</beans:value>
             </beans:list>
         </beans:property>

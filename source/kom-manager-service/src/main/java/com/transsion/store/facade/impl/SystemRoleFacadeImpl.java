@@ -151,8 +151,8 @@ public class SystemRoleFacadeImpl implements SystemRoleFacade {
 	/**
 	 * 查询用户角色
 	 * */
-	public List<SystemRoleResponseDto> findSystemRoleByUser(String token) throws ServiceException{
-		return systemRoleManager.findSystemRoleByUser(token);
+	public List<SystemRoleResponseDto> findSystemRoleByUser(Integer userId) throws ServiceException{
+		return systemRoleManager.findSystemRoleByUser(userId);
 	}
 	/**
 	 * 查询所有角色

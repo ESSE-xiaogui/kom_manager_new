@@ -22,9 +22,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.UserRole;
+import com.transsion.store.dto.UserRoleDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.UserRoleFacade;
+import com.transsion.store.manager.UserRoleManager;
 import com.transsion.store.service.UserRoleService;
 
 @Component("userRoleFacade")
@@ -37,7 +39,8 @@ public class UserRoleFacadeImpl implements UserRoleFacade {
 	{
 		this.userRoleService = userRoleService;
 	}
-	
+	@Autowired
+	private UserRoleManager userRoleManager;
 	/**
 	 * 通过主键查询实体对象
 	 * @param primaryKey
@@ -144,5 +147,12 @@ public class UserRoleFacadeImpl implements UserRoleFacade {
 	public int findByCount(UserRole userRole) throws ServiceException
 	{
 		return userRoleService.findByCount(userRole);
+	}
+	/**
+	 * 用户角色权限绑定
+	 * @throws ServiceException
+	 * */
+	public void addUserRole(UserRoleDto userRoleDto) throws ServiceException{
+		userRoleManager.addUserRole(userRoleDto);
 	}
 }

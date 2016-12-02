@@ -105,7 +105,7 @@ public interface SystemRoleFacade {
 	/**
 	 * 查询用户角色
 	 * */
-	public List<SystemRoleResponseDto> findSystemRoleByUser(String token) throws ServiceException;
+	public List<SystemRoleResponseDto> findSystemRoleByUser(Integer userId) throws ServiceException;
 	
 	/**
 	 * 查询所有角色
