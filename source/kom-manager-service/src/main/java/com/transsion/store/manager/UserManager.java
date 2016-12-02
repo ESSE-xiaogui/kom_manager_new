@@ -50,6 +50,7 @@ public class UserManager {
 		User user = new User();
 		user.setUserCode(userCode);
 		user.setPassword(password);
+		user.setIsInactive(1);
 		List<User> list = userService.listByProperty(user);
 		if (UtilHelper.isEmpty(list)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_LOGIN_FAIL);

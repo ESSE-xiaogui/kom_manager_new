@@ -115,7 +115,7 @@ public class EmployeeManager {
 		}
 		user.setCompanyId(userContext.getUser().getCompanyId());
 		user.setPassword(MD5Utils.encrypt("123456"));
-		user.setIsInactive(0);
+		user.setIsInactive(1);
 		user.setCreatedBy(userContext.getUser().getUserCode());
 		user.setCreatedTime(systemDateService.getCurrentDate());
 		userService.save(user);

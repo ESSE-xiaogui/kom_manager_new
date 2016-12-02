@@ -248,7 +248,7 @@
 		SELECT r.ROLE_ID,r.ROLE_NAME FROM T_SYSTEM_ROLE r
 		LEFT JOIN T_USER_ROLE ur ON ur.ROLE_ID = r.ROLE_ID
 		LEFT JOIN T_USER u ON u.USER_ID = ur.USER_ID
-		WHERE u.USER_ID = #{userId} AND r.IS_INACTIVE = 0
+		WHERE u.USER_ID = #{userId} AND r.IS_INACTIVE = 1
 	</select>
 	<select id="findSystemRole" parameterType="java.lang.Integer" resultMap="SystemRoleDtoResultMapper">
 		SELECT ROLE_ID,ROLE_NAME FROM T_SYSTEM_ROLE 
@@ -258,7 +258,7 @@
 		WHERE r.ROLE_ID =#{roleId}  AND u.USER_ID=#{userId}
 	</update>
 	<select id="findRole" parameterType="SystemRole" resultMap="SystemRoleDtoResultMapper">
-		SELECT ROLE_CODE,ROLE_NAME,IS_INACTIVE FROM T_SYSTEM_ROLE WHERE 1=1 
+		SELECT ROLE_CODE,ROLE_NAME,IS_INACTIVE FROM T_SYSTEM_ROLE WHERE IS_INACTIVE = 1 
 		<include refid="commonCondition"/>
 	</select>
 </mapper>
