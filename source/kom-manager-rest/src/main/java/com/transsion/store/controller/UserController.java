@@ -155,12 +155,12 @@ public class UserController extends AbstractController{
 	 * @throws ServiceException
 	 */
 	@GET
-	@Path("/resetPassword")
+	@Path("/modifyPassword")
 	@Produces({MediaType.APPLICATION_JSON})
-	public UserResponseDto resetPassword(@QueryParam("id") java.lang.Long id,
+	public UserResponseDto modifyPassword(@QueryParam("id") java.lang.Long id,
 			@QueryParam("password") java.lang.String password) throws ServiceException{
 		String token = this.getAuthorization();
-		return userFacade.resetPassword(token, id, password);
+		return userFacade.modifyPassword(token, id, password);
 	}
 	
 	/**

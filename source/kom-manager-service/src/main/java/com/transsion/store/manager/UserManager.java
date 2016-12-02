@@ -124,7 +124,7 @@ public class UserManager {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public UserResponseDto resetPassword(String token, Long id, String password) throws ServiceException {
+	public UserResponseDto modifyPassword(String token, Long id, String password) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
 		}

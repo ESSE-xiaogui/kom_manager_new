@@ -183,8 +183,8 @@ public class UserFacadeImpl implements UserFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public UserResponseDto resetPassword(String token,java.lang.Long id, java.lang.String password) throws ServiceException{
-		return userManager.resetPassword(token, id, password);
+	public UserResponseDto modifyPassword(String token,java.lang.Long id, java.lang.String password) throws ServiceException{
+		return userManager.modifyPassword(token, id, password);
 	}
 	
 	/**

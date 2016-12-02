@@ -139,7 +139,7 @@ public interface UserFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public UserResponseDto resetPassword(String token, Long id, String password) throws ServiceException;
+	public UserResponseDto modifyPassword(String token, Long id, String password) throws ServiceException;
 
 	/**
 	 * 根据条件查询用户信息
