@@ -49,6 +49,8 @@ public class SystemResource extends Model{
 	  *	显示顺序
 	  */
 	private java.lang.Long showIndex;
+	
+	private java.lang.String isAnonAccess;
 
 	/**
 	  *	
@@ -160,6 +162,14 @@ public class SystemResource extends Model{
 		this.showIndex = showIndex;
 	}
 	
+	public java.lang.String getIsAnonAccess() {
+		return isAnonAccess;
+	}
+
+	public void setIsAnonAccess(java.lang.String isAnonAccess) {
+		this.isAnonAccess = isAnonAccess;
+	}
+
 	/**
 	  *	
 	  */
@@ -255,22 +265,14 @@ public class SystemResource extends Model{
 	{
 		this.version = version;
 	}
-	
-	public String toString()
-	{
-		return "SystemResource [" + 
-					"resId=" + resId + 
-					", resCode=" + resCode + 
-					", resName=" + resName + 
-					", resUrl=" + resUrl + 
-					", showIndex=" + showIndex + 
-					", remark=" + remark + 
-					", createdBy=" + createdBy + 
-					", createTime=" + createTime + 
-					", updatedBy=" + updatedBy + 
-					", updateTime=" + updateTime + 
-					", version=" + version + 
-				"]";
+
+	@Override
+	public String toString() {
+		return "SystemResource [resId=" + resId + ", resCode=" + resCode + ", resName=" + resName + ", resUrl=" + resUrl
+				+ ", showIndex=" + showIndex + ", isAnonAccess=" + isAnonAccess + ", remark=" + remark + ", createdBy="
+				+ createdBy + ", createTime=" + createTime + ", updatedBy=" + updatedBy + ", updateTime=" + updateTime
+				+ ", version=" + version + "]";
 	}
+
 }
 

@@ -25,6 +25,7 @@
 		<result column="RES_NAME" property="resName"/>
 		<result column="RES_URL" property="resUrl"/>
 		<result column="SHOW_INDEX" property="showIndex"/>
+		<result column="IS_ANON_ACCESS" property="isAnonAccess"/>
 		<result column="REMARK" property="remark"/>
 		<result column="CREATED_BY" property="createdBy"/>
 		<result column="CREATE_TIME" property="createTime"/>
@@ -39,6 +40,7 @@
 		, RES_NAME
 		, RES_URL
 		, SHOW_INDEX
+		, IS_ANON_ACCESS
 		, REMARK
 		, CREATED_BY
 		, CREATE_TIME
@@ -52,6 +54,7 @@
 		, RES_NAME
 		, RES_URL
 		, SHOW_INDEX
+		, IS_ANON_ACCESS
 		, REMARK
 		, CREATED_BY
 		, CREATE_TIME
@@ -66,6 +69,7 @@
 		, RES_NAME
 		, RES_URL
 		, SHOW_INDEX
+		, IS_ANON_ACCESS
 		, REMARK
 		, CREATED_BY
 		, date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
@@ -89,6 +93,9 @@
 		</if>
 		<if test="showIndex!= null and showIndex!= ''"> 
 			AND SHOW_INDEX=#{showIndex}
+		</if>
+		<if test="isAnonAccess!= null and isAnonAccess!= ''"> 
+			AND IS_ANON_ACCESS=#{isAnonAccess}
 		</if>
 		<if test="remark!= null and remark!= ''"> 
 			AND REMARK=#{remark}
@@ -127,6 +134,9 @@
             <if test="systemResource.showIndex!= null and systemResource.showIndex!= ''">
 				AND SHOW_INDEX=#{systemResource.showIndex}
             </if>
+            <if test="systemResource.isAnonAccess!= null and systemResource.isAnonAccess!= ''"> 
+			AND IS_ANON_ACCESS=#{systemResource.isAnonAccess}
+			</if>
             <if test="systemResource.remark!= null and systemResource.remark!= ''">
 				AND REMARK=#{systemResource.remark}
             </if>
@@ -174,6 +184,9 @@
         	<when test="key == 'showIndex'">
 				SHOW_INDEX ${value}
             </when>
+            <when test="key == 'isAnonAccess'">
+				IS_ANON_ACCESS ${value}
+            </when>
         	<when test="key == 'remark'">
 				REMARK ${value}
             </when>
@@ -194,7 +207,6 @@
             </when>
 		</choose>
 	</sql>
-
 	<insert id="save" useGeneratedKeys="true" keyProperty="resId" parameterType="SystemResource">
 		<![CDATA[ INSERT INTO T_SYSTEM_RESOURCE ( ]]>
 		<include refid="commonColumnsNotPK"/>
@@ -204,6 +216,7 @@
 			, #{resName}
 			, #{resUrl}
 			, #{showIndex}
+			, #{isAnonAccess}
 			, #{remark}
 			, #{createdBy}
 			, str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
@@ -219,6 +232,7 @@
 			, RES_NAME=#{resName} 
 			, RES_URL=#{resUrl} 
 			, SHOW_INDEX=#{showIndex} 
+			, IS_ANON_ACCESS=#{isAnonAccess}
 			, REMARK=#{remark} 
 			, CREATED_BY=#{createdBy} 
 			, CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
