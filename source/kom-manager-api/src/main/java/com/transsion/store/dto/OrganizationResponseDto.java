@@ -1,6 +1,10 @@
 package com.transsion.store.dto;
 
-public class OrganizationResponseDto {
+import java.io.Serializable;
+
+public class OrganizationResponseDto implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	/**
 	 * 状态 注：1： 成功 2：失败 3:有子集不允许删除
 	 * */

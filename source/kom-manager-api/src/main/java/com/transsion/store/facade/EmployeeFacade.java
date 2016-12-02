@@ -20,6 +20,7 @@ import java.util.List;
 
 import com.transsion.store.bo.Employee;
 import com.transsion.store.dto.EmpResponseDto;
+import com.transsion.store.dto.EmpUserDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -116,5 +117,19 @@ public interface EmployeeFacade {
 	 * @throws ServiceException
 	 */
 	public EmpResponseDto updateEmp(String token, Employee employee) throws ServiceException;
+
+	/**
+	 * 为员工分配账号
+	 * @return
+	 * @throws ServiceException
+	 */
+	public EmpResponseDto createUser(String token, EmpUserDto empUserDto) throws ServiceException;
+
+	/**
+	 * 更换账号绑定员工
+	 * @return
+	 * @throws ServiceException
+	 */
+	public EmpResponseDto editUser(String token, EmpUserDto empUserDto) throws ServiceException;
 
 }

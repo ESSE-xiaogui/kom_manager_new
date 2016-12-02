@@ -51,4 +51,14 @@ public class MessageStoreResource {
      * 用户已存在
      */
     public static final String ERROR_MESSAGE_USER_ALREADY_EXISTS = "error_message_userAlreadyExists";
+    
+    /**
+     * roleCode重复
+     */
+    public static final String ERROR_MESSAGE_ROLECODE_IS_DUPLICATE = "error_message_roleCodeIsDuplicate";
+    
+    /**
+     * 该员工已分配账号
+     */
+    public static final String ERROR_MESSAGE_EMP_ALREADY_DISTRIBUTED = "error_message_empAlreadyDistributed";
 }

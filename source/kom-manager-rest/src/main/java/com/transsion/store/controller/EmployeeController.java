@@ -19,6 +19,7 @@ package com.transsion.store.controller;
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Employee;
 import com.transsion.store.dto.EmpResponseDto;
+import com.transsion.store.dto.EmpUserDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.EmployeeFacade;
 import com.shangkang.core.bo.Pagination;
@@ -156,4 +157,31 @@ public class EmployeeController extends AbstractController{
 		return employeeFacade.updateEmp(token,employee);
 	}
 	
+	/**
+	 * 为员工分配账号
+	 * @return
+	 * @throws ServiceException
+	 */
+	@POST
+	@Path("/createUser")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public EmpResponseDto createUser(EmpUserDto empUserDto) throws ServiceException{
+		String token = this.getAuthorization();
+		return employeeFacade.createUser(token,empUserDto);
+	}
+	
+	/**
+	 * 更换账号绑定员工
+	 * @return
+	 * @throws ServiceException
+	 */
+	@POST
+	@Path("/editUser")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public EmpResponseDto editUser(EmpUserDto empUserDto) throws ServiceException{
+		String token = this.getAuthorization();
+		return employeeFacade.editUser(token,empUserDto);
+	}
 }

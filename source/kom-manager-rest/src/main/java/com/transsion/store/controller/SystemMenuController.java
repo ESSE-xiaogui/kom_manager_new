@@ -194,4 +194,5 @@ public class SystemMenuController extends AbstractController{
 	public List<MenuDto> findMenuByRoleId(@QueryParam("roleId") java.lang.Long roleId) throws ServiceException {
 		return systemMenuFacade.findMenuByRoleId(roleId);
 	}
+	
 }

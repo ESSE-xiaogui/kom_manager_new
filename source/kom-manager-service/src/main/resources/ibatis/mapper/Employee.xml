@@ -24,6 +24,7 @@
 		<result column="EMP_ID" property="empId"/>
 		<result column="EMP_CODE" property="empCode"/>
 		<result column="EMP_NAME" property="empName"/>
+		<result column="U_ID" property="uId"/>
 		<result column="ID_NO" property="idNo"/>
 		<result column="COMPANY_ID" property="companyId"/>
 		<result column="ORG_ID" property="orgId"/>
@@ -53,6 +54,7 @@
 		, EMP_ID
 		, EMP_CODE
 		, EMP_NAME
+		, U_ID
 		, ID_NO
 		, COMPANY_ID
 		, ORG_ID
@@ -81,6 +83,7 @@
 		 EMP_ID
 		, EMP_CODE
 		, EMP_NAME
+		, U_ID
 		, ID_NO
 		, COMPANY_ID
 		, ORG_ID
@@ -110,6 +113,7 @@
 		, EMP_ID
 		, EMP_CODE
 		, EMP_NAME
+		, U_ID
 		, ID_NO
 		, COMPANY_ID
 		, ORG_ID
@@ -146,6 +150,9 @@
 		</if>
 		<if test="empName!= null and empName!= ''"> 
 			AND EMP_NAME=#{empName}
+		</if>
+		<if test="uId!= null and uId!= ''"> 
+			AND U_ID=#{uId}
 		</if>
 		<if test="idNo!= null and idNo!= ''"> 
 			AND ID_NO=#{idNo}
@@ -228,6 +235,9 @@
             </if>
             <if test="employee.empName!= null and employee.empName!= ''">
 				AND EMP_NAME=#{employee.empName}
+            </if>
+            <if test="employee.uId!= null and employee.uId!= ''">
+				AND U_ID=#{employee.uId}
             </if>
             <if test="employee.idNo!= null and employee.idNo!= ''">
 				AND ID_NO=#{employee.idNo}
@@ -321,6 +331,9 @@
         	<when test="key == 'empName'">
 				EMP_NAME ${value}
             </when>
+            <when test="key == 'uId'">
+				U_ID ${value}
+            </when>
         	<when test="key == 'idNo'">
 				ID_NO ${value}
             </when>
@@ -398,6 +411,7 @@
 			 #{empId}
 			, #{empCode}
 			, #{empName}
+			, #{uId}
 			, #{idNo}
 			, #{companyId}
 			, #{orgId}
@@ -428,6 +442,7 @@
 			, EMP_ID=#{empId} 
 			, EMP_CODE=#{empCode} 
 			, EMP_NAME=#{empName} 
+			, U_ID=#{uId}
 			, ID_NO=#{idNo} 
 			, COMPANY_ID=#{companyId} 
 			, ORG_ID=#{orgId} 

@@ -74,16 +74,18 @@ public class SystemRoleController extends AbstractController{
 	}
 
 	/**
-	* 新增记录
+	* 新增角色
 	* @return
 	* @throws ServiceException
 	*/
 	@POST
 	@Path("/add")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void add(SystemRole systemRole) throws ServiceException
+	@Produces({MediaType.APPLICATION_JSON})
+	public SystemRoleResponseDto add(SystemRole systemRole) throws ServiceException
 	{
-		systemRoleFacade.save(systemRole);
+		String token = this.getAuthorization();
+		return systemRoleFacade.save(token,systemRole);
 	}
 
 	/**
@@ -100,16 +102,18 @@ public class SystemRoleController extends AbstractController{
 	}
 
 	/**
-	* 修改记录
+	* 修改角色
 	* @return
 	* @throws ServiceException
 	*/
 	@PUT
 	@Path("/update")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void update(SystemRole systemRole) throws ServiceException
+	@Produces({MediaType.APPLICATION_JSON})
+	public SystemRoleResponseDto update(SystemRole systemRole) throws ServiceException
 	{
-		systemRoleFacade.update(systemRole);
+		String token = this.getAuthorization();
+		return systemRoleFacade.update(token,systemRole);
 	}
 	
 	/**
@@ -131,6 +135,17 @@ public class SystemRoleController extends AbstractController{
 	@Produces({MediaType.APPLICATION_JSON})
 	public List<SystemRoleResponseDto> findSystemRole() throws ServiceException{
 		return systemRoleFacade.findSystemRole();
+	}
+	
+	/**
+	 * 根据条件查询所有角色
+	 * */
+	@POST
+	@Path("/findRole")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<SystemRoleResponseDto> findRole(SystemRole systemRole) throws ServiceException{
+		return systemRoleFacade.findRole(systemRole);
 	}
 	
 	/**

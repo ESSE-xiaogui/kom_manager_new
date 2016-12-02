@@ -29,6 +29,11 @@ public class Employee extends Model{
 	  *	
 	  */
 	private java.lang.Long id;
+	
+	/**
+	  *	
+	  */
+	private java.lang.Long uId;
 
 	/**
 	  *	keep for align with kom pc 
@@ -171,6 +176,15 @@ public class Employee extends Model{
 		this.id = id;
 	}
 	
+	
+	public java.lang.Long getuId() {
+		return uId;
+	}
+
+	public void setuId(java.lang.Long uId) {
+		this.uId = uId;
+	}
+
 	/**
 	  *	keep for align with kom pc 
 	  */
@@ -570,37 +584,17 @@ public class Employee extends Model{
 	{
 		this.version = version;
 	}
-	
-	public String toString()
-	{
-		return "Employee [" + 
-					"id=" + id + 
-					", empId=" + empId + 
-					", empCode=" + empCode + 
-					", empName=" + empName + 
-					", idNo=" + idNo + 
-					", companyId=" + companyId + 
-					", orgId=" + orgId + 
-					", dutyId=" + dutyId + 
-					", upperId=" + upperId + 
-					", upperName=" + upperName + 
-					", gender=" + gender + 
-					", birthday=" + birthday + 
-					", nation=" + nation + 
-					", married=" + married + 
-					", phoneNo=" + phoneNo + 
-					", mobileNo=" + mobileNo + 
-					", email=" + email + 
-					", nativePlace=" + nativePlace + 
-					", zipCode=" + zipCode + 
-					", inService=" + inService + 
-					", remark=" + remark + 
-					", createdBy=" + createdBy + 
-					", createdTime=" + createdTime + 
-					", updatedBy=" + updatedBy + 
-					", updatedTime=" + updatedTime + 
-					", version=" + version + 
-				"]";
+
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", uId=" + uId + ", empId=" + empId + ", empCode=" + empCode + ", empName="
+				+ empName + ", idNo=" + idNo + ", companyId=" + companyId + ", orgId=" + orgId + ", dutyId=" + dutyId
+				+ ", upperId=" + upperId + ", upperName=" + upperName + ", gender=" + gender + ", birthday=" + birthday
+				+ ", nation=" + nation + ", married=" + married + ", phoneNo=" + phoneNo + ", mobileNo=" + mobileNo
+				+ ", email=" + email + ", nativePlace=" + nativePlace + ", zipCode=" + zipCode + ", inService="
+				+ inService + ", remark=" + remark + ", createdBy=" + createdBy + ", createdTime=" + createdTime
+				+ ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime + ", version=" + version + "]";
 	}
+	
 }
 

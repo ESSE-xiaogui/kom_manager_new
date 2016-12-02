@@ -1,9 +1,12 @@
 package com.transsion.store.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class RoleMenuDto {
+public class RoleMenuDto implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	private Long roleId;
 	
 	private List<Long> menus;

@@ -76,7 +76,7 @@ public interface SystemRoleFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(SystemRole systemRole) throws ServiceException;
+	public SystemRoleResponseDto save(String token,SystemRole systemRole) throws ServiceException;
 
 	/**
 	 * 更新记录
@@ -84,7 +84,7 @@ public interface SystemRoleFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(SystemRole systemRole) throws ServiceException;
+	public SystemRoleResponseDto update(String token,SystemRole systemRole) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数
@@ -117,5 +117,10 @@ public interface SystemRoleFacade {
 	 * */
 	public SystemRoleResponseDto updateRoleStatus(String token,Long roleId,Integer isInactive) 
 			throws ServiceException;
+
+	/**
+	 * 根据条件查询所有角色
+	 * */
+	public List<SystemRoleResponseDto> findRole(SystemRole systemRole) throws ServiceException;
 
 }

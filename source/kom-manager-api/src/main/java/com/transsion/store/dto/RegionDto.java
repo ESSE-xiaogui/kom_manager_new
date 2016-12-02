@@ -1,8 +1,11 @@
 package com.transsion.store.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class RegionDto {	
+public class RegionDto implements Serializable{	
+	
+	private static final long serialVersionUID = 1L;
 	/**
 	  *	
 	  */

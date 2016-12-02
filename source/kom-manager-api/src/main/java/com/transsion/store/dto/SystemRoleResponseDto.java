@@ -19,6 +19,10 @@ public class SystemRoleResponseDto implements Serializable {
 	  */
 	private String roleName;
 	
+	private String roleCode;
+	
+	private Integer isInactive;
+	
 	private Integer status;
 
 	public java.lang.Long getRoleId() {
@@ -44,10 +48,27 @@ public class SystemRoleResponseDto implements Serializable {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	
+	public String getRoleCode() {
+		return roleCode;
+	}
+
+	public void setRoleCode(String roleCode) {
+		this.roleCode = roleCode;
+	}
+
+	public Integer getIsInactive() {
+		return isInactive;
+	}
+
+	public void setIsInactive(Integer isInactive) {
+		this.isInactive = isInactive;
+	}
 
 	@Override
 	public String toString() {
-		return "SystemRoleResponseDto [roleId=" + roleId + ", roleName=" + roleName + ", status=" + status + "]";
+		return "SystemRoleResponseDto [roleId=" + roleId + ", roleName=" + roleName + ", roleCode=" + roleCode
+				+ ", isInactive=" + isInactive + ", status=" + status + "]";
 	}
 
 }

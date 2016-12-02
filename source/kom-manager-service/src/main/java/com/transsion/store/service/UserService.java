@@ -22,8 +22,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.User;
+import com.transsion.store.dto.UserDto;
 import com.transsion.store.dto.UserInfoDto;
 import com.shangkang.core.bo.Pagination;
+import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.UserMapper;
 
@@ -157,5 +159,13 @@ public class UserService {
 	 * */
 	public UserInfoDto getUserInfo(UserInfoDto userInfoDto) throws ServiceException{
 		return userMapper.getUserInfo(userInfoDto);
+	}
+
+	/**
+	 * 根据用户名查询用户信息
+	 * @throws ServiceException 
+	 * */
+	public UserDto findByName(String userCode) throws ServiceException {
+		return userMapper.findByName(userCode);
 	}
 }

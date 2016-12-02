@@ -17,12 +17,12 @@
 package com.transsion.store.facade.impl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.Employee;
 import com.transsion.store.dto.EmpResponseDto;
+import com.transsion.store.dto.EmpUserDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.EmployeeFacade;
@@ -169,5 +169,23 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
 	public EmpResponseDto updateEmp(String token,Employee employee) throws ServiceException
 	{
 		return employeeManager.updateEmp(token,employee);
+	}
+	
+	/**
+	 * 为员工分配账号
+	 * @return
+	 * @throws ServiceException
+	 */
+	public EmpResponseDto createUser(String token,EmpUserDto empUserDto) throws ServiceException{
+		return employeeManager.createUser(token,empUserDto);
+	}
+	
+	/**
+	 * 更换账号绑定员工
+	 * @return
+	 * @throws ServiceException
+	 */
+	public EmpResponseDto editUser(String token,EmpUserDto empUserDto) throws ServiceException{
+		return employeeManager.editUser(token,empUserDto);
 	}
 }

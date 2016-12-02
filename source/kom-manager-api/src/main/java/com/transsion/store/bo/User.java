@@ -56,11 +56,6 @@ public class User extends Model{
 	private java.lang.Integer companyId;
 
 	/**
-	  *	1:销售代表 2:促销员
-	  */
-	private java.lang.Integer dutyId;
-
-	/**
 	  *	加密保存
 	  */
 	private java.lang.String password;
@@ -225,23 +220,7 @@ public class User extends Model{
 	{
 		this.companyId = companyId;
 	}
-	
-	/**
-	  *	1:销售代表 2:促销员
-	  */
-	public java.lang.Integer getDutyId() 
-	{
-		return dutyId;
-	}
-	
-	/**
-	  *	1:销售代表 2:促销员
-	  */
-	public void setDutyId(java.lang.Integer dutyId) 
-	{
-		this.dutyId = dutyId;
-	}
-	
+		
 	/**
 	  *	加密保存
 	  */
@@ -451,32 +430,17 @@ public class User extends Model{
 	{
 		this.version = version;
 	}
-	
-	public String toString()
-	{
-		return "User [" + 
-					"id=" + id + 
-					", userId=" + userId + 
-					", userCode=" + userCode + 
-					", userName=" + userName + 
-					", empId=" + empId + 
-					", companyId=" + companyId + 
-					", dutyId=" + dutyId + 
-					", password=" + password + 
-					", userCategory=" + userCategory + 
-					", forbiddenTime=" + forbiddenTime + 
-					", pwdUpdated=" + pwdUpdated + 
-					", loginTimes=" + loginTimes + 
-					", lastLogin=" + lastLogin + 
-					", isOnline=" + isOnline + 
-					", isInactive=" + isInactive + 
-					", remark=" + remark + 
-					", createdBy=" + createdBy + 
-					", createdTime=" + createdTime + 
-					", updatedBy=" + updatedBy + 
-					", updatedTime=" + updatedTime + 
-					", version=" + version + 
-				"]";
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", userId=" + userId + ", userCode=" + userCode + ", userName=" + userName
+				+ ", empId=" + empId + ", companyId=" + companyId + ", password=" + password + ", userCategory="
+				+ userCategory + ", forbiddenTime=" + forbiddenTime + ", pwdUpdated=" + pwdUpdated + ", loginTimes="
+				+ loginTimes + ", lastLogin=" + lastLogin + ", isOnline=" + isOnline + ", isInactive=" + isInactive
+				+ ", remark=" + remark + ", createdBy=" + createdBy + ", createdTime=" + createdTime + ", updatedBy="
+				+ updatedBy + ", updatedTime=" + updatedTime + ", version=" + version + "]";
 	}
+	
+
 }
 

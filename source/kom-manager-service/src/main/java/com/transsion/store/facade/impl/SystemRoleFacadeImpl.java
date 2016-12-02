@@ -17,7 +17,6 @@
 package com.transsion.store.facade.impl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -123,9 +122,9 @@ public class SystemRoleFacadeImpl implements SystemRoleFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(SystemRole systemRole) throws ServiceException
+	public SystemRoleResponseDto save(String token,SystemRole systemRole) throws ServiceException
 	{
-		systemRoleService.save(systemRole);
+		return systemRoleManager.save(token,systemRole);
 	}
 
 	/**
@@ -134,9 +133,9 @@ public class SystemRoleFacadeImpl implements SystemRoleFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(SystemRole systemRole) throws ServiceException
+	public SystemRoleResponseDto update(String token,SystemRole systemRole) throws ServiceException
 	{
-		return systemRoleService.update(systemRole);
+		return systemRoleManager.update(token,systemRole);
 	}
 
 	/**
@@ -168,4 +167,12 @@ public class SystemRoleFacadeImpl implements SystemRoleFacade {
 			throws ServiceException{
 		return systemRoleManager.updateRoleStatus(token, roleId, isInactive);
 	}
+	
+	/**
+	 * 根据条件查询所有角色
+	 * */
+	public List<SystemRoleResponseDto> findRole(SystemRole systemRole) throws ServiceException{
+		return systemRoleManager.findRole(systemRole);
+	}
+	
 }

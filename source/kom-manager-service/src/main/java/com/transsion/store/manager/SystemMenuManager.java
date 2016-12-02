@@ -32,7 +32,7 @@ public class SystemMenuManager {
 	*/
 	public List<MenuDto> findMenuList(String token) throws ServiceException {
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
-		Integer userId = userContext.getUser().getUserId();
+		Integer userId = userContext.getUser().getId().intValue();
 		List<MenuDto> list = systemMenuService.querySystemMenuList(userId); 
 		return treeMenuList(list,0l);
 	}
@@ -44,7 +44,7 @@ public class SystemMenuManager {
 	*/
 	public List<MenuDto> findAllMenu() throws ServiceException{
 		List<MenuDto> list = systemMenuService.queryAllMenuList();
-		return treeMenuList(list,Long.valueOf(0));
+		return treeMenuList(list,0l);
 	}
 	
 	public List<MenuDto> treeMenuList(List<MenuDto> list, Long parentId) {  
@@ -165,6 +165,6 @@ public class SystemMenuManager {
 	*/
 	public List<MenuDto> findMenuByRoleId(Long roleId) throws ServiceException{
 		List<MenuDto> list = systemMenuService.findMenuByRoleId(roleId);
-		return treeMenuList(list,Long.valueOf(0));
+		return treeMenuList(list,0l);
 	}
 }

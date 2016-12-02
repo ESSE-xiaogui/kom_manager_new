@@ -88,7 +88,7 @@ public interface UserFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(User user) throws ServiceException;
+	//public int update(User user) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数
@@ -125,7 +125,7 @@ public interface UserFacade {
 	/**
 	 * 根据用户名查询用户信息
 	 * */
-	public UserDto findByName(String token,String userCode) throws ServiceException;
+	public UserDto findByName(String userCode) throws ServiceException;
 	
 	/**
 	 * 用户冻结/解冻 
@@ -149,17 +149,10 @@ public interface UserFacade {
 	public UserInfoDto getUserInfo(String token, UserInfoDto userInfoDto) throws ServiceException;
 
 	/**
-	 * 为员工分配账号
-	 * @return
-	 * @throws ServiceException
-	 * */
-	public UserResponseDto addUser(String token, User user)throws ServiceException;
-
-	/**
 	 * 更改账号信息
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public UserResponseDto updateUser(String token, User user)throws ServiceException;
+	public UserResponseDto update(String token, User user)throws ServiceException;
 
 }

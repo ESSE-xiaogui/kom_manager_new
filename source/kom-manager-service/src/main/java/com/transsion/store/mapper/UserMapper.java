@@ -31,7 +31,7 @@ public interface UserMapper extends GenericIBatisMapper<User, java.lang.Long> {
 
     public List<User> listPaginationByProperty(Pagination<User> pagination, @Param("user")User user, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
    
-    public UserDto findByName(@Param("userCode")String userCode,@Param("userId")Integer userId) throws DataAccessFailureException;
+    public UserDto findByName(@Param("userCode")String userCode) throws DataAccessFailureException;
 	
     public UserInfoDto getUserInfo(UserInfoDto userInfoDto) throws DataAccessFailureException;
 

@@ -17,16 +17,8 @@
 package com.transsion.store.facade.impl;
 
 import java.util.List;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.transsion.store.bo.Duty;
 import com.transsion.store.dto.DutyResponseDto;
 import com.shangkang.core.bo.Pagination;

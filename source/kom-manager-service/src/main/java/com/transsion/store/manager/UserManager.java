@@ -62,8 +62,8 @@ public class UserManager {
 	    	userContext.setUserCode(userCode);
 			userContext.setPassword(password);
 			userContext.setToken(token);
+			user.setId(list.get(0).getId());
 			user.setUserId(list.get(0).getUserId());
-			user.setDutyId(list.get(0).getDutyId());
 			user.setCompanyId(list.get(0).getCompanyId());
 			user.setUserName(list.get(0).getUserName());
 			userContext.setUser(user);
@@ -88,30 +88,7 @@ public class UserManager {
 		return Boolean.TRUE;
 	}
 	
-	/**
-	 * 根据用户名查询用户信息
-	 * */
-	public UserDto findByName(String token,String userCode) throws ServiceException{
-		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
-		}
-		if(UtilHelper.isEmpty(userCode)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
-		}
-		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
-		}
-		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
-		}
-		if(UtilHelper.isEmpty(userContext.getUser().getUserId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERID_IS_NULL);
-		}
-		Integer userId = userContext.getUser().getUserId();
-		return userMapper.findByName(userCode, userId);
-	}
-	
+
 	/**
 	 * 用户冻结/解冻 
 	 * @return
@@ -169,6 +146,7 @@ public class UserManager {
 		formerUser.setPassword(password);
 		formerUser.setUpdatedBy(userContext.getUser().getUserCode());
 		formerUser.setUpdatedTime(systemDateService.getCurrentDate());
+		formerUser.setPwdUpdated(systemDateService.getCurrentDate());
 		userService.update(formerUser);
 		UserResponseDto urd = new UserResponseDto();
 		urd.setStatus(1);
@@ -197,43 +175,11 @@ public class UserManager {
 	}
 
 	/**
-	 * 为员工分配账号
-	 * @return
-	 * @throws ServiceException
-	 * */
-	public UserResponseDto addUser(String token, User user) throws ServiceException{
-		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
-		}
-		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
-		}
-		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
-		}
-		User tempUser = new User();
-		tempUser.setUserCode(user.getUserCode());
-		int count = userService.findByCount(tempUser);
-		if(count>0){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_ALREADY_EXISTS);
-		}else{
-			user.setCompanyId(userContext.getUser().getCompanyId());
-			user.setCreatedBy(userContext.getUser().getUserCode());
-			user.setCreatedTime(systemDateService.getCurrentDate());
-			userService.save(user);
-			UserResponseDto urd = new UserResponseDto();
-			urd.setStatus(1);
-			return urd;
-		}
-	}
-
-	/**
 	 * 更改账号信息
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public UserResponseDto updateUser(String token, User user) throws ServiceException{
+	public UserResponseDto update(String token, User user) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
 		}
@@ -255,7 +201,6 @@ public class UserManager {
 			User formerUser = userService.getByPK(user.getId());
 			formerUser.setUserCode(user.getUserCode());
 			formerUser.setPassword(user.getPassword());
-			formerUser.setEmpId(user.getEmpId());
 			formerUser.setIsInactive(user.getIsInactive());
 			formerUser.setUpdatedBy(userContext.getUser().getUserCode());
 			formerUser.setUpdatedTime(systemDateService.getCurrentDate());

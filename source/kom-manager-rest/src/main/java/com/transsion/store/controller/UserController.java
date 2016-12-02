@@ -116,19 +116,6 @@ public class UserController extends AbstractController{
 	{
 		userFacade.deleteByPKeys(primaryKeys);
 	}
-
-	/**
-	* 修改记录
-	* @return
-	* @throws ServiceException
-	*/
-	@PUT
-	@Path("/update")
-	@Consumes({MediaType.APPLICATION_JSON})
-	public void update(User user) throws ServiceException
-	{
-		userFacade.update(user);
-	}
 	
 	@GET
 	@Path("/encrypt")
@@ -145,8 +132,7 @@ public class UserController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({ MediaType.APPLICATION_JSON })
 	public UserDto findByName(@QueryParam("userCode")String userCode) throws ServiceException{
-		String token = this.getAuthorization();
-		return userFacade.findByName(token,userCode);
+		return userFacade.findByName(userCode);
 	}
 	
 	/**
@@ -192,30 +178,17 @@ public class UserController extends AbstractController{
 	}	
 	
 	/**
-	 * 为员工分配账号
-	 * @return
-	 * @throws ServiceException
-	 * */
-	@POST
-	@Path("/addUser")
-	@Produces({MediaType.APPLICATION_JSON})
-	@Consumes({MediaType.APPLICATION_JSON})
-	public UserResponseDto addUser(User user) throws ServiceException{
-		String token = this.getAuthorization();
-		return userFacade.addUser(token,user);
-	}
-	
-	/**
 	 * 更改账号信息
 	 * @return
 	 * @throws ServiceException
 	 * */
 	@PUT
-	@Path("/updateUser")
+	@Path("/update")
 	@Produces({MediaType.APPLICATION_JSON})
 	@Consumes({MediaType.APPLICATION_JSON})
-	public UserResponseDto updateUser(User user) throws ServiceException{
+	public UserResponseDto update(User user) throws ServiceException{
 		String token = this.getAuthorization();
-		return userFacade.updateUser(token,user);
+		return userFacade.update(token,user);
 	}
+	
 }

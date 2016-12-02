@@ -1,14 +1,16 @@
 package com.transsion.store.dto;
 
-public class UserInfoDto {
+import java.io.Serializable;
+
+public class UserInfoDto implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private java.lang.Long id;
 	
-	private java.lang.String userName;
+	private java.lang.String userCode;
 	
-	private java.lang.Long orgId;
-	
-	private java.lang.String password;
+	//private java.lang.String password;
 	
 	private java.lang.Integer companyId; 
 	
@@ -42,30 +44,12 @@ public class UserInfoDto {
 	
 	private java.lang.String remark;
 	
-	
-
 	public java.lang.Long getId() {
 		return id;
 	}
 
 	public void setId(java.lang.Long id) {
 		this.id = id;
-	}
-
-	public java.lang.String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(java.lang.String userName) {
-		this.userName = userName;
-	}
-
-	public java.lang.String getPassword() {
-		return password;
-	}
-
-	public void setPassword(java.lang.String password) {
-		this.password = password;
 	}
 
 	public java.lang.String getRoleName() {
@@ -180,8 +164,6 @@ public class UserInfoDto {
 		this.remark = remark;
 	}
 	
-	
-
 	public java.lang.Integer getCompanyId() {
 		return companyId;
 	}
@@ -190,16 +172,6 @@ public class UserInfoDto {
 		this.companyId = companyId;
 	}
 	
-	
-
-	public java.lang.Long getOrgId() {
-		return orgId;
-	}
-
-	public void setOrgId(java.lang.Long orgId) {
-		this.orgId = orgId;
-	}
-
 	public java.lang.Integer getIsInactive() {
 		return isInactive;
 	}
@@ -210,12 +182,11 @@ public class UserInfoDto {
 
 	@Override
 	public String toString() {
-		return "UserInfoDto [id=" + id + ", userName=" + userName + ", orgId=" + orgId + ", password=" + password
-				+ ", companyId=" + companyId + ", roleName=" + roleName + ", dutyName=" + dutyName + ", orgName="
-				+ orgName + ", empCode=" + empCode + ", empName=" + empName + ", idNo=" + idNo + ", phoneNo=" + phoneNo
-				+ ", upperId=" + upperId + ", upperName=" + upperName + ", inService=" + inService + ", isInactive="
-				+ isInactive + ", lastLogin=" + lastLogin + ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime
-				+ ", remark=" + remark + "]";
+		return "UserInfoDto [id=" + id + ", userCode=" + userCode + ", companyId=" + companyId + ", roleName="
+				+ roleName + ", dutyName=" + dutyName + ", orgName=" + orgName + ", empCode=" + empCode + ", empName="
+				+ empName + ", idNo=" + idNo + ", phoneNo=" + phoneNo + ", upperId=" + upperId + ", upperName="
+				+ upperName + ", inService=" + inService + ", isInactive=" + isInactive + ", lastLogin=" + lastLogin
+				+ ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime + ", remark=" + remark + "]";
 	}
 
 }

@@ -1,6 +1,10 @@
 package com.transsion.store.dto;
 
-public class EmpResponseDto {
+import java.io.Serializable;
+
+public class EmpResponseDto implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	/**
 	 * 状态 注：1： 成功 2：失败 
 	 * */

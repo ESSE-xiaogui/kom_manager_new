@@ -8,17 +8,25 @@ public class UserDto implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private Integer userCode;
+	private Long id;
+	private String userCode;
 	private String userName;
 	private String empName;
 	private String orgName;
 	private Integer isInactive;
 	private Integer inService;
-	public Integer getUserCode() {
+	
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getUserCode() {
 		return userCode;
 	}
-	public void setUserCode(Integer userCode) {
+	public void setUserCode(String userCode) {
 		this.userCode = userCode;
 	}
 	public String getUserName() {
@@ -53,8 +61,9 @@ public class UserDto implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "UserDto [userCode=" + userCode + ", userName=" + userName + ", empName=" + empName + ", orgName="
-				+ orgName + ", isInactive=" + isInactive + ", inService=" + inService + "]";
+		return "UserDto [id=" + id + ", userCode=" + userCode + ", userName=" + userName + ", empName=" + empName
+				+ ", orgName=" + orgName + ", isInactive=" + isInactive + ", inService=" + inService + "]";
 	}
+	
 
 }

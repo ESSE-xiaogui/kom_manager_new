@@ -17,15 +17,6 @@
 package com.transsion.store.facade.impl;
 
 import java.util.List;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -140,17 +131,6 @@ public class UserFacadeImpl implements UserFacade {
 	}
 
 	/**
-	 * 更新记录
-	 * @param user
-	 * @return
-	 * @throws ServiceException
-	 */
-	public int update(User user) throws ServiceException
-	{
-		return userService.update(user);
-	}
-
-	/**
 	 * 根据条件查询记录条数
 	 * @param user
 	 * @return
@@ -185,8 +165,8 @@ public class UserFacadeImpl implements UserFacade {
 	/**
 	 * 根据用户名查询用户信息
 	 * */
-	public UserDto findByName(String token,String userCode) throws ServiceException{
-		return userManager.findByName(token, userCode);
+	public UserDto findByName(String userCode) throws ServiceException{
+		return userService.findByName(userCode);
 	}
 
 	/**
@@ -217,20 +197,11 @@ public class UserFacadeImpl implements UserFacade {
 	}
 	
 	/**
-	 * 为员工分配账号
-	 * @return
-	 * @throws ServiceException
-	 * */
-	public UserResponseDto addUser(String token,User user) throws ServiceException{
-		return userManager.addUser(token,user);
-	}
-	
-	/**
 	 * 更改账号信息
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public UserResponseDto updateUser(String token,User user) throws ServiceException{
-		return userManager.updateUser(token,user);
+	public UserResponseDto update(String token,User user) throws ServiceException{
+		return userManager.update(token,user);
 	}
 }
