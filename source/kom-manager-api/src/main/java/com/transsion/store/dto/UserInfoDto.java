@@ -34,6 +34,9 @@ public class UserInfoDto implements Serializable{
 	
 	private java.lang.Integer inService;
 	
+	/**
+	 * 1表示激活状态，被激活有效的数据可以用于新增业务，2表示停用，被停用无效的数据只能用于历史数据查询中
+	 */	
 	private java.lang.Integer isInactive;
 	
 	private java.lang.String lastLogin;

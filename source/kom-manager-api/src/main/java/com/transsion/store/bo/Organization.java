@@ -53,7 +53,7 @@ public class Organization extends Model{
 	private java.lang.String dutyName;
 
 	/**
-	  *	0表示激活状态，被激活有效的数据可以用于新增业务，1表示停用，被停用无效的数据只能用于历史数据查询中
+	  *	1表示激活状态，被激活有效的数据可以用于新增业务，2表示停用，被停用无效的数据只能用于历史数据查询中
 	  */
 	private java.lang.Integer isInactive;
 

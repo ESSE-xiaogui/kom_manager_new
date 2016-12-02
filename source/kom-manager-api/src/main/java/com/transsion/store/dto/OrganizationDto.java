@@ -32,7 +32,7 @@ public class OrganizationDto implements Serializable {
 	private String dutyName;
 	
 	/**
-	 * 是否停用 注：0：激活1：停用
+	 * 1表示激活状态，被激活有效的数据可以用于新增业务，2表示停用，被停用无效的数据只能用于历史数据查询中
 	 * */
 	private Integer isInactive;
 	
