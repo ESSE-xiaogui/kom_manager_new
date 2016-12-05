@@ -14,6 +14,8 @@
         <module>kom-manager-service</module>
         <module>kom-manager-rest</module>
         <module>kom-manager-right-service</module>
+        <module>kom-manager-task</module>
+        <module>kom-manager-job</module>
     </modules>
 
     <properties>
