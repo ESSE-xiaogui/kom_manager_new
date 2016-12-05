@@ -17,7 +17,7 @@
  	<context:property-placeholder location="classpath:**/quartz.properties" ignore-unresolvable="true"/>
 <!--	<context:property-placeholder location="classpath:**/mq.properties"/> -->
 	<context:annotation-config />
-	<context:component-scan base-package="com.transsion.kom.job" />
+	<context:component-scan base-package="com.transsion.store.job" />
 	<aop:aspectj-autoproxy />
 
   <bean id="springBeanHelper" class="com.shangkang.core.util.SpringBeanHelper"/>
@@ -127,13 +127,13 @@
 
   <bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">
     <constructor-arg>
-      <value>queue.kom.app</value>
+      <value>queue.kom.job</value>
     </constructor-arg>
   </bean>
 
   <bean id="scheduleQueueDestination" class="org.apache.activemq.command.ActiveMQQueue">
     <constructor-arg>
-      <value>queue.kom.app.schedule</value>
+      <value>queue.kom.job.schedule</value>
     </constructor-arg>
   </bean>
 
