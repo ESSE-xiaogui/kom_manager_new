@@ -1,0 +1,203 @@
+<configuration scan="true" scanPeriod=" 5 seconds">
+	<jmxConfigurator />
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{56} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>./logs/info.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <fileNamePattern>./logs/info.log.%d%i.zip</fileNamePattern>
+          <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+            or whenever the file size reaches 16MB
+            <maxFileSize>16MB</maxFileSize>
+          </timeBasedFileNamingAndTriggeringPolicy>
+        <maxHistory>5</maxHistory>
+    </rollingPolicy>
+    <encoder>
+        <pattern>[%date] [%level] %msg [%file:%line] [%logger{100}] [%thread] [AspLink-${project.version}]%n</pattern>
+    </encoder>
+</appender>
+
+  <appender name="DB" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>./logs/db.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <fileNamePattern>./logs/info.db.%d%i.zip</fileNamePattern>
+          <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+            or whenever the file size reaches 16MB
+            <maxFileSize>16MB</maxFileSize>
+          </timeBasedFileNamingAndTriggeringPolicy>
+        <maxHistory>5</maxHistory>
+    </rollingPolicy>
+    <encoder>
+        <pattern>[%date] [%level] %msg [%file:%line] [%logger{100}] [%thread] [AspLink-${project.version}]%n</pattern>
+    </encoder>
+</appender>
+
+	<appender name="YUGONG-ROOT" class="ch.qos.logback.classic.sift.SiftingAppender">
+		<discriminator>
+			<Key>table</Key>
+			<DefaultValue>yugong</DefaultValue>
+		</discriminator>
+		<sift>
+			<appender name="FILE-${table}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<File>./logs/${table}/table.log</File>
+				<rollingPolicy
+					class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+					rollover daily
+					<fileNamePattern>./logs/${table}/%d{yyyy-MM-dd}/table-%d{yyyy-MM-dd}-%i.log.gz</fileNamePattern>
+					<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+						or whenever the file size reaches 16MB
+						<maxFileSize>16MB</maxFileSize>
+					</timeBasedFileNamingAndTriggeringPolicy>
+					<maxHistory>5</maxHistory>
+				</rollingPolicy>
+				<encoder>
+					<pattern>
+						%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{56} - %msg%n
+					</pattern>
+				</encoder>
+			</appender>
+		</sift>
+	</appender>
+	
+	<appender name="EXTRACTOR_LOG" class="ch.qos.logback.classic.sift.SiftingAppender">
+		<discriminator>
+			<Key>table</Key>
+			<DefaultValue>yugong</DefaultValue>
+		</discriminator>
+		<sift>
+			<appender name="EXTRACTOR_LOG_${table}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<File>./logs/${table}/extractor.log</File>
+				<rollingPolicy
+					class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+					rollover daily
+					<fileNamePattern>./logs/${table}/%d{yyyy-MM-dd}/extractor-%d{yyyy-MM-dd}-%i.log.gz</fileNamePattern>
+					<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+						<maxFileSize>16MB</maxFileSize>
+					</timeBasedFileNamingAndTriggeringPolicy>
+					<maxHistory>5</maxHistory>
+				</rollingPolicy>
+				<encoder>
+					<pattern>%msg</pattern>
+				</encoder>
+			</appender>
+		</sift>
+	</appender>
+	
+	<appender name="APPLIER_LOG" class="ch.qos.logback.classic.sift.SiftingAppender">
+		<discriminator>
+			<Key>table</Key>
+			<DefaultValue>yugong</DefaultValue>
+		</discriminator>
+		<sift>
+			<appender name="APPLIER_LOG_${table}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<File>./logs/${table}/applier.log</File>
+				<rollingPolicy
+					class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+					rollover daily
+					<fileNamePattern>./logs/${table}/%d{yyyy-MM-dd}/applier-%d{yyyy-MM-dd}-%i.log.gz</fileNamePattern>
+					<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+						<maxFileSize>16MB</maxFileSize>
+					</timeBasedFileNamingAndTriggeringPolicy>
+					<maxHistory>5</maxHistory>
+				</rollingPolicy>
+				<encoder>
+					<pattern>%msg</pattern>
+				</encoder>
+			</appender>
+		</sift>
+	</appender>
+	
+	<appender name="CHECK_LOG" class="ch.qos.logback.classic.sift.SiftingAppender">
+		<discriminator>
+			<Key>table</Key>
+			<DefaultValue>yugong</DefaultValue>
+		</discriminator>
+		<sift>
+			<appender name="CHECK_LOG_${table}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<File>./logs/${table}/check.log</File>
+				<rollingPolicy
+					class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+					rollover daily
+					<fileNamePattern>./logs/${table}/%d{yyyy-MM-dd}/check-%d{yyyy-MM-dd}-%i.log.gz</fileNamePattern>
+					<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+						<maxFileSize>16MB</maxFileSize>
+					</timeBasedFileNamingAndTriggeringPolicy>
+					<maxHistory>5</maxHistory>
+				</rollingPolicy>
+				<encoder>
+					<pattern>%msg</pattern>
+				</encoder>
+			</appender>
+		</sift>
+	</appender>
+	
+<!-- 	<logger name="extractor" additivity="false">  
+        <level value="INFO" />  
+        <appender-ref ref="EXTRACTOR_LOG" />
+    </logger>
+    
+    <logger name="applier" additivity="false">  
+        <level value="INFO" />  
+        <appender-ref ref="APPLIER_LOG" />
+    </logger>
+    
+    <logger name="check" additivity="false">  
+        <level value="INFO" />  
+        <appender-ref ref="CHECK_LOG" />
+    </logger> -->
+	
+  
+	<logger name="jdbc.sqltiming" level="DEBUG" additivity="false">
+		<appender-ref ref="DB" />
+	</logger>
+
+	<logger name="com.ibatis" level="DEBUG" additivity="false">
+		<appender-ref ref="DB" />
+	</logger>
+
+	<logger name="com.ibatis.common.jdbc.SimpleDataSource" level="DEBUG" additivity="false">
+		<appender-ref ref="DB" />
+	</logger>
+
+	<logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG" additivity="false">
+		<appender-ref ref="DB" />
+	</logger>
+
+	<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" additivity="false">
+		<appender-ref ref="DB" />
+	</logger>
+
+	<logger name="java.sql.Connection" level="DEBUG" additivity="false">
+		<appender-ref ref="DB" />
+	</logger>
+
+	<logger name="java.sql.Statement" level="DEBUG" additivity="false">
+		<appender-ref ref="DB" />
+	</logger>
+
+	<logger name="java.sql.PreparedStatement" level="DEBUG" additivity="false">
+		<appender-ref ref="DB" />
+	</logger>
+
+	<logger name="java.sql.ResultSet" level="DEBUG" additivity="false">
+		<appender-ref ref="DB" />
+	</logger>
+
+  <logger name="com.taobao.yugong" level="INFO" additivity="false">
+    <appender-ref ref="YUGONG-ROOT" />
+  </logger>
+
+  <logger name="com.taobao.yugong.translator" level="INFO" additivity="false">
+    <appender-ref ref="FILE" />
+  </logger>
+  
+    <root level="INFO">
+    <appender-ref ref="FILE" />
+  </root>
+  
+</configuration>

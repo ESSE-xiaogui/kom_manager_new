@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.transsion.kom.job.mapper.TShopSaleMainMapper">
+
+
+  <insert id="saveSaleMain" parameterType="com.tecno.scm.sale.vo.TShopSales">
+     insert into T_SHOP_SALES(
+      COMPANY_ID,
+      BILLNO,     
+      TRANTYPE,
+      DEALER_ID,
+      SALE_DATE,
+      EMP_ID,
+      MODEL_MAT_CODE,
+      WERKS,
+      CURRENCY_RATIO,
+      SALE_QTY,
+      SALE_AMOUNT,
+      REMARK,
+      FSTATUS,
+      CREATED_BY,
+      CREATED_TIME,
+      VERSION,
+      PHONEVERSION
+    )VALUES(
+      #{COMPANY_ID,jdbcType=DECIMAL},
+      #{BILLNO,jdbcType=CHAR},
+      #{TRANTYPE,jdbcType=DECIMAL},
+      #{DEALER_ID,jdbcType=DECIMAL},
+      #{SALE_DATE,jdbcType=DATE},
+      #{EMP_ID,jdbcType=DECIMAL},
+      #{MODEL_MAT_CODE,jdbcType=CHAR},
+      #{WERKS,jdbcType=CHAR},
+      #{CURRENCY_RATIO,jdbcType=DECIMAL},
+      #{SALE_QTY,jdbcType=DECIMAL},
+      #{SALE_AMOUNT,jdbcType=DECIMAL},
+      #{REMARK,jdbcType=CHAR},
+      #{FSTATUS,jdbcType=DECIMAL},
+      #{CREATED_BY,jdbcType=DECIMAL},
+      sysdate,
+      0,
+      #{PHONEVERSION}
+    )
+  </insert>
+  
+  <insert id="saveStaleDetail" parameterType="com.tecno.scm.sale.vo.TShopSaleItem" >
+     insert into T_SHOP_SALEITEM(
+      COMPANY_ID,
+      BILLNO,     
+      LINE_ID,
+      BRAND_CODE,
+      MODEL_MAT_CODE,
+      ELEMENT_TYPE,
+      ELEMENT_CODE,     
+      SALE_QTY,
+      SALE_PRICE,
+      SALE_AMOUNT,
+      SALESMAN_ID,
+      INVOICE_NO,
+      IMEI_NO,
+      IMEI_LIST,
+      PRODUCT_DATE,
+      FACTORY_CODE,
+      QR_CODE,
+      USER_NAME,
+      GENDER,
+      PHONE_NO,
+      EMAIL,
+      HOME_ADDRESS,
+      ZIP_CODE,
+      REMARK
+    )VALUES(
+      #{COMPANY_ID,jdbcType=DECIMAL},
+      #{BILLNO,jdbcType=CHAR},
+      #{LINE_ID,jdbcType=DECIMAL},
+      #{BRAND_CODE,jdbcType=CHAR},
+      #{MODEL_MAT_CODE,jdbcType=CHAR},
+      #{ELEMENT_TYPE,jdbcType=DECIMAL},
+      #{ELEMENT_CODE,jdbcType=CHAR},
+      #{SALE_QTY,jdbcType=DECIMAL},
+      #{SALE_PRICE,jdbcType=DECIMAL},
+      #{SALE_AMOUNT,jdbcType=DECIMAL},
+      #{SALESMAN_ID,jdbcType=DECIMAL},
+      #{INVOICE_NO,jdbcType=CHAR},
+      #{IMEI_NO,jdbcType=CHAR},
+      #{IMEI_LIST,jdbcType=CHAR},
+      #{PRODUCT_DATE,jdbcType=DATE},
+      #{FACTORY_CODE,jdbcType=CHAR},
+      #{QR_CODE,jdbcType=CHAR},
+      #{USER_NAME,jdbcType=CHAR},
+      #{GENDER,jdbcType=DECIMAL},
+      #{PHONE_NO,jdbcType=CHAR},
+      #{EMAIL,jdbcType=CHAR},
+      #{HOME_ADDRESS,jdbcType=CHAR},
+      #{ZIP_CODE,jdbcType=CHAR},
+      #{REMARK,jdbcType=CHAR}
+    ) 
+  </insert>
+	<select id="getSysDocSeqBySales" parameterType="java.lang.Integer" resultType="String">
+		SELECT		
+		MAX(BILLNO) as BILLNO
+		FROM T_SHOP_SALES
+		WHERE COMPANY_ID = #{companyId}
+		AND BILLNO LIKE '%A%'
+	</select>
+	
+	<select id="queryAllSaleData" parameterType="java.util.Map"  resultType="com.tecno.scm.sale.vo.TShopSales" statementType="STATEMENT">
+		SELECT ${columns} FROM ${tableName}
+	</select>
+	
+	<select id="queryAllSaleItemData" parameterType="java.util.Map"  resultType="com.tecno.scm.sale.vo.TShopSaleItem" statementType="STATEMENT">
+		SELECT ${columns} FROM ${tableName}
+	</select>
+</mapper>

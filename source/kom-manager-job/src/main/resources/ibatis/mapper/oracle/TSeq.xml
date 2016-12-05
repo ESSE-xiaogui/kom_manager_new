@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.transsion.kom.job.mapper.TSeqMapper">
+
+	<select id="getSysDocSeq" parameterType="java.util.Map"
+		resultType="hashmap">
+		select
+		COMPANY_ID as COMPANY_ID,
+		DOC_CODE as DOC_CODE,
+		DOC_NAME as DOC_NAME,
+		DOC_BITTS as DOC_BITTS,
+		SEQ_MODE as SEQ_MODE,
+		SEQ_DATE as SEQ_DATE,
+		SEQ_NO as SEQ_NO
+		from DT_SYS_DOCUMENTS
+		WHERE COMPANY_ID = #{COMPANY_ID}
+		AND DOC_CODE = #{DOC_CODE} for update
+	</select>
+
+	<update id="updateSysDocSeq" parameterType="java.util.Map">
+		update
+		DT_SYS_DOCUMENTS set
+		SEQ_DATE = #{SEQ_DATE},
+		SEQ_NO =  #{SEQ_NO}
+		WHERE COMPANY_ID = #{COMPANY_ID}
+		AND DOC_CODE = #{DOC_CODE}
+	</update>
+
+
+</mapper>

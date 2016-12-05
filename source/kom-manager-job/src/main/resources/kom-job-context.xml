@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:jms="http://www.springframework.org/schema/jms"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context.xsd
+      http://www.springframework.org/schema/tx 
+      http://www.springframework.org/schema/tx/spring-tx.xsd
+      http://www.springframework.org/schema/aop
+      http://www.springframework.org/schema/aop/spring-aop.xsd
+	    http://www.springframework.org/schema/jms
+	    http://www.springframework.org/schema/jms/spring-jms.xsd">
+ 	<context:property-placeholder location="classpath:**/yugong.properties" ignore-unresolvable="true"/>
+ 	<context:property-placeholder location="classpath:**/quartz.properties" ignore-unresolvable="true"/>
+<!--	<context:property-placeholder location="classpath:**/mq.properties"/> -->
+	<context:annotation-config />
+	<context:component-scan base-package="com.transsion.kom.job" />
+	<aop:aspectj-autoproxy />
+
+  <bean id="springBeanHelper" class="com.shangkang.core.util.SpringBeanHelper"/>
+  <bean id="authKeyGenerator" class="com.rest.service.security.simple.DefaultAuthKeyGenerator" />
+    
+	<!-- DAO Configuration -->
+	<bean id="destDataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		destroy-method="close">
+		<property name="driverClassName">
+			<value>${yugong.database.source.driverClassName}</value>
+		</property>
+		<property name="url">
+			<value>${yugong.database.source.url}</value>
+		</property>
+		<property name="username">
+			<value>${yugong.database.source.username}</value>
+		</property>
+		<property name="password">
+			<value>${yugong.database.source.password}</value>
+		</property>
+		<property name="validationQuery">
+			<value>${yugong.database.source.validationQuery}</value>
+		</property>
+		<property name="maxActive">
+			<value>${yugong.database.source.maxActive}</value>
+		</property>
+		<property name="maxWait">
+			<value>${yugong.database.source.maxWait}</value>
+		</property>
+	</bean>
+
+	<!-- SqlSessionFactoryBean spring整合ibatis的入口 -->
+	<bean id="destSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="mapperLocations"
+			value="classpath*:ibatis/mapper/oracle/**/*.xml" />
+		<property name="dataSource" ref="destDataSource" />
+		<property name="typeAliasesPackage" value="com.tecno.scm.af.vo" />
+	</bean>
+
+	<!-- Transaction manager for a single JDBC DataSource -->
+	<bean id="destSpringJdbcTransactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="destDataSource" />
+	</bean>
+
+	<!-- 定义事务传播属性 -->
+	<tx:advice id="destTxAdvice" transaction-manager="destSpringJdbcTransactionManager">
+		<tx:attributes>
+			<tx:method name="query*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="list*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="find*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="validate*" propagation="REQUIRED"
+				read-only="true" />
+			<tx:method name="delete*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="update*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="modify*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="build*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="cancel*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="insert*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="edit*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="save*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="create*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="execute*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="ext*" propagation="REQUIRES_NEW"
+				rollback-for="Exception" />
+			<tx:method name="processBatch*" propagation="REQUIRES_NEW"
+				rollback-for="Exception" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut id="destTransactionPointCut"
+			expression="execution(* com.transsion.kom.job.service.*.*.*(..))" />
+		<aop:advisor pointcut-ref="destTransactionPointCut"
+			advice-ref="destTxAdvice" />
+	</aop:config>
+
+	<!-- ScanMapperFiles -->
+	<bean name="destMapperScanConfig" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.transsion.kom.job.mapper" />
+		<property name="sqlSessionFactory" ref="destSqlSessionFactory" />
+	</bean>
+
+
+	<!-- AWS side ActiveMQ config -->
+	
+	 <!-- message consumer -->
+	<bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="${inner.mq.url}" />
+	</bean>
+
+	<bean id="connectionFactory"
+		class="org.springframework.jms.connection.SingleConnectionFactory">
+		<property name="targetConnectionFactory" ref="targetConnectionFactory" />
+	</bean>
+
+  <bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">
+    <constructor-arg>
+      <value>queue.kom.app</value>
+    </constructor-arg>
+  </bean>
+
+  <bean id="scheduleQueueDestination" class="org.apache.activemq.command.ActiveMQQueue">
+    <constructor-arg>
+      <value>queue.kom.app.schedule</value>
+    </constructor-arg>
+  </bean>
+
+  <bean id="messageHandler" class="com.transsion.kom.job.msg.MessageHandler" />
+
+  <bean id="scheduleMessageHandler" class="com.transsion.kom.job.msg.ScheduleMessageHandler" />
+
+	<bean id="queueListenerContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="queueDestination" />
+		<property name="messageListener" ref="messageHandler" />
+	</bean>
+	
+	 <bean id="scheduleQueueListenerContainer"
+    class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <property name="connectionFactory" ref="connectionFactory" />
+    <property name="destination" ref="scheduleQueueDestination" />
+    <property name="messageListener" ref="scheduleMessageHandler" />
+  </bean>
+
+   <bean id="scheduleJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <property name="connectionFactory" ref="connectionFactory"/>
+    <property name="defaultDestination" ref="scheduleQueueDestination" />
+  </bean>
+
+   <!-- message producer -->
+  <bean id="producerTargetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+    <property name="brokerURL" value="${external.mq.url}" />
+  </bean>
+
+  <bean id="producerConnectionFactory"
+    class="org.springframework.jms.connection.SingleConnectionFactory">
+    <property name="targetConnectionFactory" ref="producerTargetConnectionFactory" />
+  </bean>
+
+  <bean id="producerQueueDestination" class="org.apache.activemq.command.ActiveMQQueue">
+    <constructor-arg>
+      <value>${external.mq.name}</value>
+    </constructor-arg>
+  </bean>
+
+	 <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <property name="connectionFactory" ref="producerConnectionFactory"/>
+    <property name="defaultDestination" ref="producerQueueDestination" />
+  </bean>
+
+  <import resource="classpath*:kom-right-context.xml"/>
+  <import resource="classpath*:kom-service-context.xml" />
+  	 
+  	 <!-- 使用JobDetailFactoryBean -->  
+    <bean name="quartzTacJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">  
+        <property name="jobClass" value="${task.tac.sync}" /> 
+    </bean>  
+    
+    <bean id="tacCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <property name="jobDetail" ref="quartzTacJob"/>  
+        <property name="cronExpression" value="${task.tac.time}"/>  
+    </bean> 
+  	
+    <!-- 配置SchedulerFactoryBean -->  
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
+        <property name="triggers">  
+            <list>
+               <ref bean="tacCronTrigger"/>
+            </list>  
+        </property>  
+    </bean> 
+</beans>
