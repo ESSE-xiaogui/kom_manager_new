@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.RoleResource;
+import com.transsion.store.dto.RoleResourceDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -101,5 +102,12 @@ public interface RoleResourceFacade {
 	 */
 	public Pagination<RoleResource> listPaginationByProperty(Pagination<RoleResource> pagination, RoleResource roleResource)
 			throws ServiceException;
+
+	/**
+	* 新增资源角色
+	* @return
+	* @throws ServiceException
+	*/
+	public void addResRole(String token, RoleResourceDto roleResourceDto)throws ServiceException;
 
 }

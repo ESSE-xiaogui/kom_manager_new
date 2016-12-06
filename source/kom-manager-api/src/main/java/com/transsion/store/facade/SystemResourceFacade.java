@@ -72,11 +72,12 @@ public interface SystemResourceFacade {
 
 	/**
 	 * 保存记录
+	 * @param token 
 	 * @param systemResource
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(SystemResource systemResource) throws ServiceException;
+	public void save(String token, SystemResource systemResource) throws ServiceException;
 
 	/**
 	 * 更新记录
@@ -101,5 +102,19 @@ public interface SystemResourceFacade {
 	 */
 	public Pagination<SystemResource> listPaginationByProperty(Pagination<SystemResource> pagination, SystemResource systemResource)
 			throws ServiceException;
+
+	/**
+	 * 获取所有资源
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<SystemResource> getAllResource()throws ServiceException;
+
+	/**
+	* 根据roleId查询资源
+	* @return
+	* @throws ServiceException
+	*/
+	public List<SystemResource> findResByRoleId(Long roleId)throws ServiceException;
 
 }

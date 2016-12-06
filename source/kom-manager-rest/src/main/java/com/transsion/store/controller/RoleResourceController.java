@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.RoleResource;
+import com.transsion.store.dto.RoleResourceDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.RoleResourceFacade;
 import com.shangkang.core.bo.Pagination;
@@ -109,5 +110,17 @@ public class RoleResourceController extends AbstractController{
 	public void update(RoleResource roleResource) throws ServiceException
 	{
 		roleResourceFacade.update(roleResource);
+	}
+	
+	/**
+	* 新增资源角色
+	* @return
+	* @throws ServiceException
+	*/
+	@POST
+	@Path("/addResRole")
+	@Consumes({MediaType.APPLICATION_JSON}) 
+	public void addResRole(RoleResourceDto roleResourceDto) throws ServiceException {
+		roleResourceFacade.addResRole(this.getAuthorization(), roleResourceDto);
 	}
 }

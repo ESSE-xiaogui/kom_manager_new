@@ -28,4 +28,8 @@ import org.apache.ibatis.annotations.Param;
 public interface SystemResourceMapper extends GenericIBatisMapper<SystemResource, java.lang.Long> {
 
     public List<SystemResource> listPaginationByProperty(Pagination<SystemResource> pagination, @Param("systemResource")SystemResource systemResource, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+
+	public List<SystemResource> getAllResource()throws DataAccessFailureException;
+
+	public List<SystemResource> findResByRoleId(Long roleId)throws DataAccessFailureException;
 }
