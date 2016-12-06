@@ -133,9 +133,9 @@ public class SystemResourceFacadeImpl implements SystemResourceFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(SystemResource systemResource) throws ServiceException
+	public int update(String token,SystemResource systemResource) throws ServiceException
 	{
-		return systemResourceService.update(systemResource);
+		return systemResourceManager.update(token,systemResource);
 	}
 
 	/**

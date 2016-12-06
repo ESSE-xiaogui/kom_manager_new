@@ -85,7 +85,7 @@ public interface SystemResourceFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(SystemResource systemResource) throws ServiceException;
+	public int update(String token,SystemResource systemResource) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数

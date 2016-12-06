@@ -108,7 +108,7 @@ public class SystemResourceController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void update(SystemResource systemResource) throws ServiceException
 	{
-		systemResourceFacade.update(systemResource);
+		systemResourceFacade.update(this.getAuthorization(),systemResource);
 	}
 	
 	/**
