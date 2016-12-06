@@ -82,7 +82,7 @@ public class SystemResourceController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void add(SystemResource systemResource) throws ServiceException
 	{
-		systemResourceFacade.save(systemResource);
+		systemResourceFacade.save(this.getAuthorization(),systemResource);
 	}
 
 	/**
@@ -109,5 +109,29 @@ public class SystemResourceController extends AbstractController{
 	public void update(SystemResource systemResource) throws ServiceException
 	{
 		systemResourceFacade.update(systemResource);
+	}
+	
+	/**
+	 * 获取所有资源
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/getAllResource")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<SystemResource> getAllResource() throws ServiceException{
+		return systemResourceFacade.getAllResource();
+	}	
+	
+	/**
+	* 根据roleId查询资源
+	* @return
+	* @throws ServiceException
+	*/
+	@GET
+	@Path("/findResByRoleId")
+	@Produces({MediaType.APPLICATION_JSON}) 
+	public List<SystemResource> findResByRoleId(@QueryParam("roleId") java.lang.Long roleId) throws ServiceException {
+		return systemResourceFacade.findResByRoleId(roleId);
 	}
 }

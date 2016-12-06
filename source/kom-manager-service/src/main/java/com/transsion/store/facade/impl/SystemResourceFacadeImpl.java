@@ -17,7 +17,6 @@
 package com.transsion.store.facade.impl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,12 +24,16 @@ import com.transsion.store.bo.SystemResource;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.SystemResourceFacade;
+import com.transsion.store.manager.SystemResourceManager;
 import com.transsion.store.service.SystemResourceService;
 
 @Component("systemResourceFacade")
 public class SystemResourceFacadeImpl implements SystemResourceFacade {
 
 	private SystemResourceService systemResourceService;
+	
+	@Autowired
+	private SystemResourceManager systemResourceManager;
 	
 	@Autowired
 	public void setSystemResourceService(SystemResourceService systemResourceService)
@@ -119,9 +122,9 @@ public class SystemResourceFacadeImpl implements SystemResourceFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(SystemResource systemResource) throws ServiceException
+	public void save(String token,SystemResource systemResource) throws ServiceException
 	{
-		systemResourceService.save(systemResource);
+		systemResourceManager.save(token,systemResource);
 	}
 
 	/**
@@ -144,5 +147,23 @@ public class SystemResourceFacadeImpl implements SystemResourceFacade {
 	public int findByCount(SystemResource systemResource) throws ServiceException
 	{
 		return systemResourceService.findByCount(systemResource);
+	}
+	
+	/**
+	 * 获取所有资源
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<SystemResource> getAllResource() throws ServiceException{
+		return systemResourceManager.getAllResource();
+	}	
+	
+	/**
+	* 根据roleId查询资源
+	* @return
+	* @throws ServiceException
+	*/
+	public List<SystemResource> findResByRoleId(Long roleId) throws ServiceException {
+		return systemResourceManager.findResByRoleId(roleId);
 	}
 }

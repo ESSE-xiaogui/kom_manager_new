@@ -106,6 +106,10 @@
 				<beans:value>/**/findSystemRole</beans:value>
 				<beans:value>/**/addUserRole</beans:value>
 				<beans:value>/**/updateRoleStatus</beans:value>
+				<beans:value>/roleMenu/**</beans:value>
+				<beans:value>/systemRole/**</beans:value>
+				<beans:value>/roleResource/**</beans:value>
+				<beans:value>/systemResource/**</beans:value>
             </beans:list>
         </beans:property>
     </beans:bean>

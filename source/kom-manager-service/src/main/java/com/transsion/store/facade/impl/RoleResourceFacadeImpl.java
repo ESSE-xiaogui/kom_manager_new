@@ -22,15 +22,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.RoleResource;
+import com.transsion.store.dto.RoleResourceDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.RoleResourceFacade;
+import com.transsion.store.manager.RoleResourceManager;
 import com.transsion.store.service.RoleResourceService;
 
 @Component("roleResourceFacade")
 public class RoleResourceFacadeImpl implements RoleResourceFacade {
 
 	private RoleResourceService roleResourceService;
+	
+	@Autowired
+	private RoleResourceManager roleResourceManager;
 	
 	@Autowired
 	public void setRoleResourceService(RoleResourceService roleResourceService)
@@ -144,5 +149,14 @@ public class RoleResourceFacadeImpl implements RoleResourceFacade {
 	public int findByCount(RoleResource roleResource) throws ServiceException
 	{
 		return roleResourceService.findByCount(roleResource);
+	}
+	
+	/**
+	* 新增资源角色
+	* @return
+	* @throws ServiceException
+	*/
+	public void addResRole(String token,RoleResourceDto roleResourceDto) throws ServiceException {
+		roleResourceManager.addResRole(token,roleResourceDto);
 	}
 }

@@ -282,4 +282,12 @@
 		SELECT count(1) AS totalcount FROM T_SYSTEM_RESOURCE WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
+	<select id="getAllResource"  resultMap="SystemResourceResultMapper">
+		SELECT RES_ID, RES_CODE, RES_NAME, RES_URL, SHOW_INDEX, IS_ANON_ACCESS, REMARK FROM T_SYSTEM_RESOURCE 
+	</select>
+	<select id="findResByRoleId"  parameterType="java.lang.Long" resultMap="SystemResourceResultMapper">
+		SELECT s.RES_ID, RES_CODE, RES_NAME, RES_URL, SHOW_INDEX, IS_ANON_ACCESS FROM T_SYSTEM_RESOURCE s
+	    LEFT JOIN T_ROLE_RESOURCE r ON s.RES_ID = r.RES_ID
+	    WHERE ROLE_ID = #{roleId} 
+	</select>
 </mapper>

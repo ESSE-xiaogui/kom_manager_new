@@ -61,4 +61,9 @@ public class MessageStoreResource {
      * 该员工已分配账号
      */
     public static final String ERROR_MESSAGE_EMP_ALREADY_DISTRIBUTED = "error_message_empAlreadyDistributed";
+    
+    /**
+     * resCode重复
+     */
+    public static final String ERROR_MESSAGE_RESCODE_IS_DUPLICATE = "error_message_resCodeIsDuplicate";
 }
