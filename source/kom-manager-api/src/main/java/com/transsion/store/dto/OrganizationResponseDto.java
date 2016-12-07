@@ -11,9 +11,14 @@ public class OrganizationResponseDto implements Serializable{
 	private Integer status;
 	
 	/**
-	 * 组织机构名称
+	 * 父组织机构名称
 	 * */
-	private String orgName;
+	private String parentName;
+	
+	/**
+	 * 子组织机构名称
+	 * */
+	private String childrenName;
 
 	/**
 	 * 状态 注：1： 成功 2：失败
@@ -29,23 +34,27 @@ public class OrganizationResponseDto implements Serializable{
 		this.status = status;
 	}
 
-	/**
-	 * 组织机构名称
-	 * */
-	public String getOrgName() {
-		return orgName;
+	public String getParentName() {
+		return parentName;
 	}
-	
-	/**
-	 * 组织机构名称
-	 * */
-	public void setOrgName(String orgName) {
-		this.orgName = orgName;
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
+	}
+
+	public String getChildrenName() {
+		return childrenName;
+	}
+
+	public void setChildrenName(String childrenName) {
+		this.childrenName = childrenName;
 	}
 
 	@Override
 	public String toString() {
-		return "OrganizationResponseDto [status=" + status + ", orgName=" + orgName + "]";
+		return "OrganizationResponseDto [status=" + status + ", parentName=" + parentName + ", childrenName="
+				+ childrenName + "]";
 	}
+	
 
 }

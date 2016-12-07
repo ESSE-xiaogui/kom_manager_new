@@ -148,8 +148,7 @@ public class OrganizationController extends AbstractController{
 	@Path("/findOrg")
 	@Produces({MediaType.APPLICATION_JSON})
 	public List<OrganizationTreeDto> findOrg() throws ServiceException{
-		String token = this.getAuthorization();
-		return organizationFacade.findOrg(token);
+		return organizationFacade.findOrg();
 	}
 	
 	/**

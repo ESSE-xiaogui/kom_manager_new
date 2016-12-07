@@ -28,7 +28,7 @@ public class OrganizationTreeDto implements Serializable {
 	/**
 	 * 子集菜单
 	 * */
-	private List<OrganizationTreeDto> childen;
+	private List<OrganizationTreeDto> children;
 
 	/**
 	 * 父级Id
@@ -72,24 +72,18 @@ public class OrganizationTreeDto implements Serializable {
 		this.orgName = orgName;
 	}
 
-	/**
-	 * 子集菜单
-	 * */
-	public List<OrganizationTreeDto> getChilden() {
-		return childen;
+	public List<OrganizationTreeDto> getChildren() {
+		return children;
 	}
 
-	/**
-	 * 子集菜单
-	 * */
-	public void setChilden(List<OrganizationTreeDto> childen) {
-		this.childen = childen;
+	public void setChildren(List<OrganizationTreeDto> children) {
+		this.children = children;
 	}
 
 	@Override
 	public String toString() {
-		return "OrganizationTreeDto [parentId=" + parentId + ", orgId=" + orgId + ", orgName=" + orgName + ", childen="
-				+ childen + "]";
+		return "OrganizationTreeDto [parentId=" + parentId + ", orgId=" + orgId + ", orgName=" + orgName + ", children="
+				+ children + "]";
 	}
 		
 }

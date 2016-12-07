@@ -123,7 +123,7 @@ public interface OrganizationFacade {
 	 * @return
 	 * @throws serviceException
 	 * */
-	public List<OrganizationTreeDto> findOrg(String token) throws ServiceException;
+	public List<OrganizationTreeDto> findOrg() throws ServiceException;
 	
 	/**
 	 * 删除组织机构

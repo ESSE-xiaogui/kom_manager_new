@@ -36,9 +36,14 @@
 	</resultMap>
 	
 	<resultMap id="OrganizationDtoResultMapper" type="OrganizationTreeDto">
+		<result column="ID" property="orgId"/>
 		<result column="PARENT_ID" property="parentId"/>
-		<result column="ORG_ID" property="orgId"/>
 		<result column="ORG_NAME" property="orgName"/>
+	</resultMap>
+	
+	<resultMap id="OrgNameDtoResultMapper" type="OrganizationResponseDto">
+		<result column="CHILDREN" property="parentName"/>
+		<result column="PARENT" property="childrenName"/>
 	</resultMap>
 	
 	<sql id="commonColumns">
@@ -304,10 +309,12 @@
 		SELECT count(1) AS totalcount FROM T_ORGANIZATION WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="getOrgName"  parameterType="java.lang.Integer" resultType = "String">
-		SELECT ORG_NAME FROM T_ORGANIZATION WHERE ORG_ID = #{orgId} 
+	<select id="getOrgName"  parameterType="java.lang.Integer" resultMap="OrgNameDtoResultMapper">
+		SELECT o1.ORG_NAME as CHILDREN,o2.ORG_NAME as PARENT FROM T_ORGANIZATION o1
+			LEFT JOIN T_ORGANIZATION o2 ON o2.ID = o1.PARENT_ID
+				WHERE o1.ID = #{orgId}
 	</select>
-	<select id="findOrg"  parameterType="java.lang.Integer" resultMap = "OrganizationDtoResultMapper">
-		SELECT PARENT_ID, ORG_ID, ORG_NAME FROM T_ORGANIZATION WHERE COMPANY_ID = #{companyId}
+	<select id="findOrg"  resultMap = "OrganizationDtoResultMapper">
+		SELECT ID,PARENT_ID,ORG_NAME FROM T_ORGANIZATION
 	</select>
 </mapper>

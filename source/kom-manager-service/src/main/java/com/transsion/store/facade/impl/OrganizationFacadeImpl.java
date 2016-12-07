@@ -174,8 +174,8 @@ public class OrganizationFacadeImpl implements OrganizationFacade {
 	 * @return
 	 * @throws serviceException
 	 * */
-	public List<OrganizationTreeDto> findOrg(String token) throws ServiceException{
-		return organizationManager.findOrg(token);
+	public List<OrganizationTreeDto> findOrg() throws ServiceException{
+		return organizationManager.findOrg();
 	}
 	/**
 	 * 删除组织机构

@@ -92,6 +92,7 @@
                 <beans:value>/**/getByPK</beans:value>
                 <beans:value>/**/deleteByProperty</beans:value>
 				<beans:value>/organization/**</beans:value>
+				<beans:value>/**/findOrg</beans:value>
 				<beans:value>/brand/**</beans:value>
 				<beans:value>/model/**</beans:value>
 				<beans:value>/region/**</beans:value>

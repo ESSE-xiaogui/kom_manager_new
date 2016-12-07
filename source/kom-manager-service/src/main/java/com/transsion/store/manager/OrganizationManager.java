@@ -71,12 +71,13 @@ public class OrganizationManager {
 		if(UtilHelper.isEmpty(orgId)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		String orgName = organizationMapper.getOrgName(orgId);
+		OrganizationResponseDto orgName = organizationMapper.getOrgName(orgId);
 		if(UtilHelper.isEmpty(orgName)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		OrganizationResponseDto ord = new OrganizationResponseDto();
-		ord.setOrgName(orgName);
+		ord.setParentName(orgName.getParentName());
+		ord.setChildrenName(orgName.getChildrenName());
 		return ord;
 	}
 	
@@ -85,22 +86,8 @@ public class OrganizationManager {
 	 * @return
 	 * @throws serviceException
 	 * */
-	public List<OrganizationTreeDto> findOrg(String token) throws ServiceException{
-		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
-		}
-		UserContext usercontext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(usercontext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
-		}
-		if(UtilHelper.isEmpty(usercontext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
-		}
-		if(UtilHelper.isEmpty(usercontext.getUser().getCompanyId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
-		}
-		Integer companyId = usercontext.getUser().getCompanyId();
-		List<OrganizationTreeDto> orgList = organizationMapper.findOrg(companyId);
+	public List<OrganizationTreeDto> findOrg() throws ServiceException{
+		List<OrganizationTreeDto> orgList = organizationMapper.findOrg();
 		if(UtilHelper.isEmpty(orgList)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
@@ -117,7 +104,7 @@ public class OrganizationManager {
 	    	 Integer pid = org.getParentId();
 	           if (parentId == pid) {  
 	        	   List<OrganizationTreeDto> children = getChridenOrg(orgList, orgId); 
-	        	   org.setChilden(children);
+	        	   org.setChildren(children);
 	        	   orgTreeDto.add(org);
 	           }  
 		}
