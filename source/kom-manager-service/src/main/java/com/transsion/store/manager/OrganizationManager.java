@@ -32,28 +32,23 @@ public class OrganizationManager {
 	 * @throws ServiceException
 	 * */
 	public OrganizationResponseDto saveOrg(String token,OrganizationDto organizationDto) throws ServiceException{
-		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
-		}
-		if(UtilHelper.isEmpty(organizationDto)){
+		if(UtilHelper.isEmpty(organizationDto) || UtilHelper.isEmpty(organizationDto.getOrgName())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
-		}
-		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
-		}
-		if(UtilHelper.isEmpty(userContext.getUser().getUserId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERID_IS_NULL);
-		}
 		Organization organization = new Organization();
 		BeanUtils.copyProperties(organizationDto, organization);
+		if(UtilHelper.isEmpty(organizationDto.getParentId())){
+			organization.setParentId(0l);
+		}else{
 		organization.setParentId(new Long(organizationDto.getParentId()));
-		organization.setCreatedBy(userContext.getUser().getUserId().toString());
+		}
+		if(!UtilHelper.isEmpty(userContext)&&!UtilHelper.isEmpty(userContext.getUser())){
+			organization.setCompanyId(userContext.getUser().getCompanyId());
+			organization.setCreatedBy(userContext.getUser().getUserId().toString());
+			organization.setUpdatedBy(userContext.getUser().getUserId().toString());
+		}
 		organization.setCreatedTime(systemDateService.getCurrentDate());
-		organization.setUpdatedBy(userContext.getUser().getUserId().toString());
 		organization.setUpdatedTime(systemDateService.getCurrentDate());
 		organization.setVersion(0);
 		organizationMapper.save(organization);
@@ -89,9 +84,10 @@ public class OrganizationManager {
 	public List<OrganizationTreeDto> findOrg() throws ServiceException{
 		List<OrganizationTreeDto> orgList = organizationMapper.findOrg();
 		if(UtilHelper.isEmpty(orgList)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
-		}
+			return orgList;
+		}else{
 		return getChridenOrg(orgList,0);
+		}
 	}
 	
 	/**

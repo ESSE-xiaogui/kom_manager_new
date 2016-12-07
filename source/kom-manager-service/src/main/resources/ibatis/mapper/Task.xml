@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.TaskMapper">
+	<resultMap id="TaskResultMapper" type="Task">
+		<result column="ID" property="id"/>
+		<result column="TASK_TYPE" property="taskType"/>
+		<result column="FILE_NAME" property="fileName"/>
+		<result column="STAGE" property="stage"/>
+		<result column="UPLOAD_TIME" property="uploadTime"/>
+		<result column="USER_NAME" property="userName"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, TASK_TYPE
+		, FILE_NAME
+		, STAGE
+		, UPLOAD_TIME
+		, USER_NAME
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		TASK_TYPE
+		, FILE_NAME
+		, STAGE
+		, UPLOAD_TIME
+		, USER_NAME
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		TASK_TYPE
+		, FILE_NAME
+		, STAGE
+		, date_format(UPLOAD_TIME, '%Y-%m-%d %H:%i:%s') UPLOAD_TIME
+		, USER_NAME
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="taskType!= null and taskType!= ''"> 
+			AND TASK_TYPE=#{taskType}
+		</if>
+		<if test="fileName!= null and fileName!= ''"> 
+			AND FILE_NAME=#{fileName}
+		</if>
+		<if test="stage!= null and stage!= ''"> 
+			AND STAGE=#{stage}
+		</if>
+		<if test="uploadTime!= null and uploadTime!= ''"> 
+			AND UPLOAD_TIME=str_to_date(#{uploadTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="userName!= null and userName!= ''"> 
+			AND USER_NAME=#{userName}
+		</if>
+	</sql>	
+</mapper>
