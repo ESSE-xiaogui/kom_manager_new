@@ -9,6 +9,11 @@ public class OrganizationDto implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
+	  *	
+	  */
+	private Long id;
+	
+	/**
 	 * 公司Id
 	 * */
 	private Integer companyId;
@@ -21,6 +26,8 @@ public class OrganizationDto implements Serializable {
 	 * 组织ID
 	 * */
 	private Integer orgId;
+	
+	private String pOrgName;
 	/**
 	 * 组织名称
 	 * */
@@ -97,10 +104,27 @@ public class OrganizationDto implements Serializable {
 		this.remark = remark;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getpOrgName() {
+		return pOrgName;
+	}
+
+	public void setpOrgName(String pOrgName) {
+		this.pOrgName = pOrgName;
+	}
+
 	@Override
 	public String toString() {
-		return "OrganizationDto [companyId=" + companyId + ", parentId=" + parentId + ", orgId=" + orgId + ", orgName="
-				+ orgName + ", dutyName=" + dutyName + ", isInactive=" + isInactive + ", remark=" + remark + "]";
+		return "OrganizationDto [id=" + id + ", pOrgName=" + pOrgName + ", companyId=" + companyId + ", parentId="
+				+ parentId + ", orgId=" + orgId + ", orgName=" + orgName + ", dutyName=" + dutyName + ", isInactive="
+				+ isInactive + ", remark=" + remark + "]";
 	}
 	
 }

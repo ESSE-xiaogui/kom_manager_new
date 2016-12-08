@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.Organization;
+import com.transsion.store.dto.OrganizationDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.OrganizationMapper;
@@ -43,9 +44,9 @@ public class OrganizationService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Organization getByPK(java.lang.Long primaryKey) throws ServiceException
+	public OrganizationDto getByPK(java.lang.Long primaryKey) throws ServiceException
 	{
-		return organizationMapper.getByPK(primaryKey);
+		return organizationMapper.getByPKs(primaryKey);
 	}
 
 	/**

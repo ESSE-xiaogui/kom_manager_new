@@ -46,6 +46,18 @@
 		<result column="PARENT" property="childrenName"/>
 	</resultMap>
 	
+	<resultMap id="OrgDtoResultMapper" type="OrganizationDto">
+		<result column="ID" property="id"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="PARENT_ID" property="parentId"/>
+		<result column="ORG_ID" property="orgId"/>
+		<result column="PORG_NAME" property="pOrgName"/>
+		<result column="ORG_NAME" property="orgName"/>
+		<result column="DUTY_NAME" property="dutyName"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, ORG_ID
@@ -282,10 +294,12 @@
 		DELETE FROM T_ORGANIZATION WHERE 1 = 1
 		<include refid="commonCondition"/>
 	</delete>
-	<select id="getByPK" parameterType="java.lang.Long" resultMap="OrganizationResultMapper">
-		<![CDATA[ SELECT ]]>
-			 <include refid="commonProcessDateColumns"/>
-		FROM T_ORGANIZATION WHERE ID = #{id}  
+	<select id="getByPKs" parameterType="java.lang.Long" resultMap="OrgDtoResultMapper">
+		SELECT o1.ID AS ID,o1.COMPANY_ID AS COMPANY_ID,o1.PARENT_ID AS PARENT_ID,o1.ORG_ID AS ORG_ID,o2.ORG_NAME AS PORG_NAME,
+		o1.ORG_NAME AS ORG_NAME,o1.DUTY_NAME AS DUTY_NAME,o1.IS_INACTIVE AS IS_INACTIVE,o1.REMARK	AS REMARK
+		FROM T_ORGANIZATION o1
+		LEFT JOIN T_ORGANIZATION o2 ON o2.ID = o1.PARENT_ID
+		WHERE o1.ID = #{id}  
 	</select>
 	<select id="list" resultMap="OrganizationResultMapper">
 		<![CDATA[ SELECT ]]>

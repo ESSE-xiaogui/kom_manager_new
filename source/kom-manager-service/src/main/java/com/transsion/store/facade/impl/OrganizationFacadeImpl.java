@@ -49,7 +49,7 @@ public class OrganizationFacadeImpl implements OrganizationFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Organization getByPK(java.lang.Long primaryKey) throws ServiceException
+	public OrganizationDto getByPK(java.lang.Long primaryKey) throws ServiceException
 	{
 		return organizationService.getByPK(primaryKey);
 	}

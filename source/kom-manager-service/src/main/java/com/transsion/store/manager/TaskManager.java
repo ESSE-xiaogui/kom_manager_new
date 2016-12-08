@@ -31,7 +31,7 @@ public class TaskManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		if(UtilHelper.isEmpty(taskDto.getTaskType()) || UtilHelper.isEmpty(taskDto.getFileName()) 
-				|| UtilHelper.isEmpty(taskDto.getUserName())){
+				|| UtilHelper.isEmpty(taskDto.getUserName()) || UtilHelper.isEmpty(taskDto.getUploadPath())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		Task task = new Task();

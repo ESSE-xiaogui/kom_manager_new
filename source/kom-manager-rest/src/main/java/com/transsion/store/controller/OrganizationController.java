@@ -48,7 +48,7 @@ public class OrganizationController extends AbstractController{
 	@GET
 	@Path("/getByPK")
 	@Produces({MediaType.APPLICATION_JSON})
-	public Organization getByPK(@QueryParam("key") java.lang.Long primaryKey) throws ServiceException
+	public OrganizationDto getByPK(@QueryParam("key") java.lang.Long primaryKey) throws ServiceException
 	{
 		return organizationFacade.getByPK(primaryKey);
 	}

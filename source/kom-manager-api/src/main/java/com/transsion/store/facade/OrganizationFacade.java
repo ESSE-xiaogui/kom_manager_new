@@ -32,7 +32,7 @@ public interface OrganizationFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Organization getByPK(java.lang.Long primaryKey) throws ServiceException;
+	public OrganizationDto getByPK(java.lang.Long primaryKey) throws ServiceException;
 
 	/**
 	 * 查询所有记录
