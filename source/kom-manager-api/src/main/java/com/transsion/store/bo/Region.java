@@ -50,7 +50,7 @@ public class Region extends Model{
 	/**
 	  *	字典编号：1020
 	  */
-	private String regionType;
+	private java.lang.Integer regionType;
 
 	/**
 	  *	1表示激活状态，被激活有效的数据可以用于新增业务，2表示停用，被停用无效的数据只能用于历史数据查询中
@@ -161,11 +161,11 @@ public class Region extends Model{
 		this.parentId = parentId;
 	}
 	
-	public String getRegionType() {
+	public java.lang.Integer getRegionType() {
 		return regionType;
 	}
 
-	public void setRegionType(String regionType) {
+	public void setRegionType(java.lang.Integer regionType) {
 		this.regionType = regionType;
 	}
 
