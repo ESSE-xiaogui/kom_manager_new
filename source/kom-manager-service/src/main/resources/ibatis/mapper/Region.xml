@@ -36,9 +36,14 @@
 	</resultMap>
 	<resultMap id="RegionDtoResultMapper" type="RegionDto">
 		<result column="ID" property="id"/>
-		<result column="PARENT_ID" property="parentId"/>
+		<result column="COMPANY_ID" property="companyId"/>
 		<result column="REGION_CODE" property="regionCode"/>
 		<result column="REGION_NAME" property="regionName"/>
+		<result column="PREGION_NAME" property="pRegionName"/>
+		<result column="PARENT_ID" property="parentId"/>
+		<result column="REGION_TYPE" property="regionType"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
 	</resultMap>
 	
 	<resultMap id="RegionShopDtoResultMapper" type="RegionShopDto">
@@ -316,6 +321,13 @@
 	</select>
 	<select id="getRegionName"  parameterType="java.lang.Long" resultType = "String">
 		SELECT REGION_NAME FROM T_REGION WHERE ID = #{id} 
+	</select>
+	<select id="getByPKs" parameterType="java.lang.Long" resultMap="RegionDtoResultMapper">
+		SELECT o1.ID AS ID,o1.COMPANY_ID AS COMPANY_ID,o1.PARENT_ID AS PARENT_ID,o2.REGION_NAME AS PREGION_NAME,
+		o1.REGION_NAME AS REGION_NAME,o1.REGION_TYPE AS REGION_TYPE,o1.IS_INACTIVE AS IS_INACTIVE,o1.REMARK	AS REMARK
+		FROM T_REGION o1
+		LEFT JOIN T_REGION o2 ON o2.ID = o1.PARENT_ID
+		WHERE o1.ID = #{id}  
 	</select>
 	<select id="findRegionShop" parameterType="java.lang.Integer" resultMap = "RegionShopDtoResultMapper">
 		SELECT MAX(r.ID) AS ID, r.REGION_NAME FROM T_REGION r

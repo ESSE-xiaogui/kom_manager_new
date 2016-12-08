@@ -2,11 +2,8 @@ package com.transsion.store.manager;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Region;
@@ -56,9 +53,6 @@ public class RegionManager {
 		
 		Integer companyId = usercontext.getUser().getCompanyId();
 		List<RegionDto> regionList = regionService.findRegionsList(companyId);
-		if(UtilHelper.isEmpty(regionList)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
-		}
 		return getChildrenRegion(regionList,Long.valueOf(0));
 	}
 	
@@ -102,11 +96,11 @@ public class RegionManager {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public RegionResponseDto saveRegion(String token, RegionDto regionDto) throws ServiceException {
+	public RegionResponseDto saveRegion(String token, Region region) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
 		}
-		if(UtilHelper.isEmpty(regionDto)){
+		if(UtilHelper.isEmpty(region)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
@@ -116,16 +110,59 @@ public class RegionManager {
 		if(UtilHelper.isEmpty(userContext.getUser())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
 		}
-
-		Region region = new Region();
-		BeanUtils.copyProperties(regionDto, region);
+		/*Region tempReg = new Region();
+		tempReg.setRegionCode(region.getRegionCode());
+		int count = regionMapper.findByCount(tempReg);
+		if(count>0){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_REGIONCODE_IS_DUPLICATE);
+		}*/
+		if(UtilHelper.isEmpty(region.getParentId())){
+			region.setParentId(0l);
+		}
 		region.setCreatedBy(userContext.getUser().getUserCode());
 		region.setCreatedTime(systemDateService.getCurrentDate());
-		region.setUpdatedBy(userContext.getUser().getUserCode());
-		region.setUpdatedTime(systemDateService.getCurrentDate());
 		region.setCompanyId(userContext.getUser().getCompanyId());
-		region.setVersion(0);
 		regionService.save(region);
+		RegionResponseDto rrd = new RegionResponseDto();
+		rrd.setStatus(1);
+		return rrd;
+	}
+	
+	/**
+	 * 修改销售区域
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public RegionResponseDto update(String token, Region region) throws ServiceException {
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+		}
+		if(UtilHelper.isEmpty(region)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		if(UtilHelper.isEmpty(userContext.getUser())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+		}
+		/*Region tempReg = new Region();
+		tempReg.setRegionCode(region.getRegionCode());
+		int count1 = regionMapper.findByCount(tempReg);
+		tempReg.setId(region.getId());
+		int count2 = regionMapper.findByCount(tempReg);
+		if(count1>0 && count2<1){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_REGIONCODE_IS_DUPLICATE);
+		}*/
+		Region formerReg = regionMapper.getByPK(region.getId());
+		formerReg.setParentId(region.getParentId());
+		formerReg.setRegionName(region.getRegionName());
+		formerReg.setRegionType(region.getRegionType());
+		formerReg.setIsInactive(region.getIsInactive());
+		formerReg.setRemark(region.getRemark());
+		formerReg.setCompanyId(userContext.getUser().getCompanyId());
+		regionService.update(formerReg);
 		RegionResponseDto rrd = new RegionResponseDto();
 		rrd.setStatus(1);
 		return rrd;
@@ -146,11 +183,14 @@ public class RegionManager {
 			Shop shop = new Shop();
 			shop.setRegionId(primaryKey);
 			int countShop = shopService.findByCount(shop);
-			if(countChildren>0 || countShop>0){
-				throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_REGION_DELETE_FAIL);
-			}
+			if(countChildren>0){
+				throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EXIST_CHILD_NODE);
+			}else if(countShop>0){
+				throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_BUNDLED_WITH_SHOP);
+			}else{
+				regionService.deleteByPK(primaryKey);
+			}	
 		}
-		regionService.deleteByPKeys(primaryKeys);
 	}
 	
 	/**

@@ -48,7 +48,7 @@ public class RegionController extends AbstractController{
 	@GET
 	@Path("/getByPK")
 	@Produces({MediaType.APPLICATION_JSON})
-	public Region getByPK(@QueryParam("key") java.lang.Long primaryKey) throws ServiceException
+	public RegionDto getByPK(@QueryParam("key") java.lang.Long primaryKey) throws ServiceException
 	{
 		return regionFacade.getByPK(primaryKey);
 	}
@@ -76,19 +76,6 @@ public class RegionController extends AbstractController{
 	}
 
 	/**
-	* 新增记录
-	* @return
-	* @throws ServiceException
-	*/
-	@POST
-	@Path("/add")
-	@Consumes({MediaType.APPLICATION_JSON})
-	public void add(Region region) throws ServiceException
-	{
-		regionFacade.save(region);
-	}
-
-	/**
 	* 根据多条主键值删除记录
 	* @return
 	* @throws ServiceException
@@ -109,9 +96,10 @@ public class RegionController extends AbstractController{
 	@PUT
 	@Path("/update")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void update(Region region) throws ServiceException
+	public RegionResponseDto update(Region region) throws ServiceException
 	{
-		regionFacade.update(region);
+		String token = this.getAuthorization();
+		return regionFacade.update(token,region);
 	}
 	
 	/**
@@ -120,12 +108,12 @@ public class RegionController extends AbstractController{
 	 * @throws ServiceException
 	 * */
 	@POST
-	@Path("/saveRegion")
+	@Path("/add")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public RegionResponseDto saveRegion(RegionDto regionDto) throws ServiceException{
+	public RegionResponseDto saveRegion(Region region) throws ServiceException{
 		String token = this.getAuthorization();
-		return regionFacade.saveRegion(token,regionDto);
+		return regionFacade.saveRegion(token,region);
 	}
 	
 	/**

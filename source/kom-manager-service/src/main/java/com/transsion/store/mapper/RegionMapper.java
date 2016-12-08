@@ -36,4 +36,6 @@ public interface RegionMapper extends GenericIBatisMapper<Region, java.lang.Long
 	public String getRegionName(Long id) throws DataAccessFailureException;
 	
 	public List<RegionShopDto> findRegionShop(@Param("companyId")Integer companyId) throws DataAccessFailureException;
+
+	public RegionDto getByPKs(Long primaryKey) throws DataAccessFailureException;;
 }

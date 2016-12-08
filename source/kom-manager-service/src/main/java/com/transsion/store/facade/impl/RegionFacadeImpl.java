@@ -50,7 +50,7 @@ public class RegionFacadeImpl implements RegionFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Region getByPK(java.lang.Long primaryKey) throws ServiceException
+	public RegionDto getByPK(java.lang.Long primaryKey) throws ServiceException
 	{
 		return regionService.getByPK(primaryKey);
 	}
@@ -136,9 +136,9 @@ public class RegionFacadeImpl implements RegionFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(Region region) throws ServiceException
+	public RegionResponseDto update(String token,Region region) throws ServiceException
 	{
-		return regionService.update(region);
+		return regionManager.update(token,region);
 	}
 
 	/**
@@ -176,8 +176,8 @@ public class RegionFacadeImpl implements RegionFacade {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public RegionResponseDto saveRegion(String token,RegionDto regionDto) throws ServiceException{
-		return regionManager.saveRegion(token,regionDto);
+	public RegionResponseDto saveRegion(String token,Region region) throws ServiceException{
+		return regionManager.saveRegion(token,region);
 	}
 	
 	/**

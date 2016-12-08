@@ -66,4 +66,19 @@ public class MessageStoreResource {
      * resCode重复
      */
     public static final String ERROR_MESSAGE_RESCODE_IS_DUPLICATE = "error_message_resCodeIsDuplicate";
+    
+    /**
+     * regionCode重复
+     */
+    public static final String ERROR_MESSAGE_REGIONCODE_IS_DUPLICATE = "error_message_regionCodeIsDuplicate";
+    
+    /**
+     * 含有子节点
+     */
+    public static final String ERROR_MESSAGE_EXIST_CHILD_NODE = "error_message_existChildNode";
+    
+    /**
+     * 已绑定门店
+     */
+    public static final String ERROR_MESSAGE_BUNDLED_WITH_SHOP = "error_message_bundledWithShop";
 }

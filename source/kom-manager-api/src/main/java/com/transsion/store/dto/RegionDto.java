@@ -24,16 +24,18 @@ public class RegionDto implements Serializable{
 	  *	
 	  */
 	private java.lang.String regionName;
+	
+	private java.lang.Long parentId;
 
 	/**
 	  *	
 	  */
-	private java.lang.Long parentId;
+	private java.lang.String pRegionName;
 
 	/**
 	  *	字典编号：1020
 	  */
-	private java.lang.Integer regionType;
+	private String regionType;
 
 	/**
 	  *	1表示激活状态，被激活有效的数据可以用于新增业务，2表示停用，被停用无效的数据只能用于历史数据查询中
@@ -44,6 +46,8 @@ public class RegionDto implements Serializable{
 	  *	
 	  */
 	private java.lang.String remark;
+	
+	private String parentName;
 	
 	/**
 	  *	
@@ -82,20 +86,30 @@ public class RegionDto implements Serializable{
 		this.regionName = regionName;
 	}
 
+
+	public java.lang.String getpRegionName() {
+		return pRegionName;
+	}
+
+	public void setpRegionName(java.lang.String pRegionName) {
+		this.pRegionName = pRegionName;
+	}
+
+	public String getRegionType() {
+		return regionType;
+	}
+
+	public void setRegionType(String regionType) {
+		this.regionType = regionType;
+	}
+	
+
 	public java.lang.Long getParentId() {
 		return parentId;
 	}
 
 	public void setParentId(java.lang.Long parentId) {
 		this.parentId = parentId;
-	}
-
-	public java.lang.Integer getRegionType() {
-		return regionType;
-	}
-
-	public void setRegionType(java.lang.Integer regionType) {
-		this.regionType = regionType;
 	}
 
 	public java.lang.Integer getIsInactive() {
@@ -113,6 +127,15 @@ public class RegionDto implements Serializable{
 	public void setRemark(java.lang.String remark) {
 		this.remark = remark;
 	}
+	
+
+	public String getParentName() {
+		return parentName;
+	}
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
+	}
 
 	public List<RegionDto> getChildren() {
 		return children;
@@ -125,11 +148,10 @@ public class RegionDto implements Serializable{
 	@Override
 	public String toString() {
 		return "RegionDto [id=" + id + ", companyId=" + companyId + ", regionCode=" + regionCode + ", regionName="
-				+ regionName + ", parentId=" + parentId + ", regionType=" + regionType + ", isInactive=" + isInactive
-				+ ", remark=" + remark + ", children=" + children + "]";
+				+ regionName + ", parentId=" + parentId + ", pRegionName=" + pRegionName + ", regionType=" + regionType
+				+ ", isInactive=" + isInactive + ", remark=" + remark + ", parentName=" + parentName + ", children="
+				+ children + "]";
 	}
 
-
-	
 	
 }

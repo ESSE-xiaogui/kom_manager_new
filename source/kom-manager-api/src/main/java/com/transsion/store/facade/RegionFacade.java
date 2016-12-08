@@ -32,7 +32,7 @@ public interface RegionFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Region getByPK(java.lang.Long primaryKey) throws ServiceException;
+	public RegionDto getByPK(java.lang.Long primaryKey) throws ServiceException;
 
 	/**
 	 * 查询所有记录
@@ -86,7 +86,7 @@ public interface RegionFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(Region region) throws ServiceException;
+	public RegionResponseDto update(String token,Region region) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数
@@ -123,7 +123,7 @@ public interface RegionFacade {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public RegionResponseDto saveRegion(String token, RegionDto regionDto) throws ServiceException;
+	public RegionResponseDto saveRegion(String token, Region region) throws ServiceException;
 	
 	/**
 	 * 查询销售区域已绑定店铺

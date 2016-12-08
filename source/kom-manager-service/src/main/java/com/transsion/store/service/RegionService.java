@@ -47,9 +47,9 @@ public class RegionService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Region getByPK(java.lang.Long primaryKey) throws ServiceException
+	public RegionDto getByPK(java.lang.Long primaryKey) throws ServiceException
 	{
-		return regionMapper.getByPK(primaryKey);
+		return regionMapper.getByPKs(primaryKey);
 	}
 
 	/**
