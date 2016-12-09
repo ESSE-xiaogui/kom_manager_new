@@ -44,7 +44,12 @@ public class EmployeeManager {
 		if(UtilHelper.isEmpty(userContext.getUser())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
 		}
-		
+		Employee tempEmp = new Employee();
+		tempEmp.setEmpCode(employee.getEmpCode());
+		int count = employeeService.findByCount(tempEmp);
+		if(count>0){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMPCODE_IS_DUPLICATE);
+		}
 		employee.setCreatedBy(userContext.getUser().getUserCode());
 		employee.setCreatedTime(systemDateService.getCurrentDate());
 		employee.setCompanyId(userContext.getUser().getCompanyId());
@@ -61,6 +66,27 @@ public class EmployeeManager {
 	 */
 	public EmpResponseDto updateEmp(String token,Employee employee) throws ServiceException
 	{	
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+		}
+		if(UtilHelper.isEmpty(employee)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		if(UtilHelper.isEmpty(userContext.getUser())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+		}
+		Employee tempEmp = new Employee();
+		tempEmp.setEmpCode(employee.getEmpCode());
+		int count1 = employeeService.findByCount(tempEmp);
+		tempEmp.setId(employee.getId());
+		int count2 = employeeService.findByCount(tempEmp);
+		if(count1>0 && count2<1){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMPCODE_IS_DUPLICATE);
+		}
 		Employee formerEmp = employeeService.getByPK(employee.getId());
 		formerEmp.setEmpName(employee.getEmpName());
 		formerEmp.setGender( employee.getGender());
@@ -75,10 +101,7 @@ public class EmployeeManager {
 		formerEmp.setUpperName(employee.getUpperName());
 		formerEmp.setUpperId(employee.getUpperId());
 		formerEmp.setInService(employee.getInService());
-		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
-		}
-		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+
 		formerEmp.setUpdatedBy(userContext.getUser().getUserCode());
 		formerEmp.setUpdatedTime(systemDateService.getCurrentDate());
 		employeeService.update(formerEmp);

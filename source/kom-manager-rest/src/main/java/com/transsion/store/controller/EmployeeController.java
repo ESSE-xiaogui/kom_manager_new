@@ -75,19 +75,6 @@ public class EmployeeController extends AbstractController{
 	}
 
 	/**
-	* 新增记录
-	* @return
-	* @throws ServiceException
-	*/
-	@POST
-	@Path("/add")
-	@Consumes({MediaType.APPLICATION_JSON})
-	public void add(Employee employee) throws ServiceException
-	{
-		employeeFacade.save(employee);
-	}
-
-	/**
 	* 根据多条主键值删除记录
 	* @return
 	* @throws ServiceException
@@ -98,19 +85,6 @@ public class EmployeeController extends AbstractController{
 	public void delete(List<java.lang.Long> primaryKeys) throws ServiceException
 	{
 		employeeFacade.deleteByPKeys(primaryKeys);
-	}
-
-	/**
-	* 修改记录
-	* @return
-	* @throws ServiceException
-	*/
-	@PUT
-	@Path("/update")
-	@Consumes({MediaType.APPLICATION_JSON})
-	public void update(Employee employee) throws ServiceException
-	{
-		employeeFacade.update(employee);
 	}
 	
 	/**
@@ -133,7 +107,7 @@ public class EmployeeController extends AbstractController{
 	 * @throws ServiceException
 	 */
 	@POST
-	@Path("/saveEmp")
+	@Path("/add")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public EmpResponseDto saveEmp(Employee employee) throws ServiceException
@@ -148,7 +122,7 @@ public class EmployeeController extends AbstractController{
 	 * @throws ServiceException
 	 */
 	@PUT
-	@Path("/updateEmp")
+	@Path("/update")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public EmpResponseDto updateEmp(Employee employee) throws ServiceException

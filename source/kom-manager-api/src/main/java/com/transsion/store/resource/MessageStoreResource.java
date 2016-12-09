@@ -81,4 +81,9 @@ public class MessageStoreResource {
      * 已绑定门店
      */
     public static final String ERROR_MESSAGE_BUNDLED_WITH_SHOP = "error_message_bundledWithShop";
+    
+    /**
+     * empCode重复
+     */
+    public static final String ERROR_MESSAGE_EMPCODE_IS_DUPLICATE = "error_message_empCodeIsDuplicate";
 }
