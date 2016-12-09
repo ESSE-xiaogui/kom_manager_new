@@ -64,11 +64,13 @@ public class RegionManager {
 		for(RegionDto region:regionList){
 			Long regionId = region.getId();  
 			Long pid = region.getParentId();
-	           if (parentId.intValue() == pid.intValue()) {  
+			if (parentId != null) {
+				if (parentId.equals(pid)) {  
 	        	   List<RegionDto> children = getChildrenRegion(regionList, regionId); 
 	        	   region.setChildren(children);
 	        	   regionTreeDto.add(region);
 	           }  
+			}
 		}
 		return regionTreeDto;
 	}

@@ -152,15 +152,6 @@ public class UserFacadeImpl implements UserFacade {
 		return userContext;
 	}
 	
-	/**
-	 * @see 登出
-	 * @author guihua.zhang
-	 * @return
-	 * @throws ServiceException
-	 */
-	public Boolean logOut(String token) throws ServiceException{
-		return userManager.logOut(token);
-	}
 	
 	/**
 	 * 根据用户名查询用户信息

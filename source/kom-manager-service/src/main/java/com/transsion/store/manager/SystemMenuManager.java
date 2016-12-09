@@ -44,18 +44,20 @@ public class SystemMenuManager {
 		return treeMenuList(list,0l);
 	}
 	
-	public List<MenuDto> treeMenuList(List<MenuDto> list, Long parentId) {  
-		List<MenuDto> childMenu = new ArrayList<MenuDto>();  
-	       for (MenuDto menuDto : list) {   
-	    	   Long menuId = menuDto.getMenuId();  
-	    	   Long pid = menuDto.getParentMenuId();
-	           if (parentId.intValue() == pid.intValue()) {  
-	        	   List<MenuDto> children = treeMenuList(list, menuId);  
-	        	   menuDto.setChildren(children);
-	        	   childMenu.add(menuDto);
-	           }  
-	       }  	    
-	       return childMenu;  
+	public List<MenuDto> treeMenuList(List<MenuDto> list, Long parentId) {
+		List<MenuDto> childMenu = new ArrayList<MenuDto>();
+		for (MenuDto menuDto : list) {
+			Long menuId = menuDto.getMenuId();
+			Long pid = menuDto.getParentMenuId();
+			if (parentId != null) {
+				if (parentId.equals(pid)) {
+					List<MenuDto> children = treeMenuList(list, menuId);
+					menuDto.setChildren(children);
+					childMenu.add(menuDto);
+				}
+			}
+		}
+		return childMenu;
 	}
 
 	

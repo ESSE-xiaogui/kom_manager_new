@@ -93,20 +93,24 @@ public class OrganizationManager {
 	/**
 	 * 获取树形子菜单
 	 * */
-	public List<OrganizationTreeDto> getChridenOrg(List<OrganizationTreeDto> orgList,Integer parentId) throws ServiceException{
+	public List<OrganizationTreeDto> getChridenOrg(List<OrganizationTreeDto> orgList, Integer parentId)
+					throws ServiceException {
 		List<OrganizationTreeDto> orgTreeDto = new ArrayList<OrganizationTreeDto>();
-		for(OrganizationTreeDto org:orgList){
-			Integer orgId = org.getOrgId();  
-	    	 Integer pid = org.getParentId();
-	           if (parentId.intValue() == pid.intValue()) {  
-	        	   List<OrganizationTreeDto> children = getChridenOrg(orgList, orgId); 
-	        	   org.setChildren(children);
-	        	   orgTreeDto.add(org);
-	           }  
+		for (OrganizationTreeDto org : orgList) {
+			Integer orgId = org.getOrgId();
+			Integer pid = org.getParentId();
+			if (parentId != null) {
+				if (parentId.equals(pid)) {
+					List<OrganizationTreeDto> children = getChridenOrg(orgList, orgId);
+					org.setChildren(children);
+					orgTreeDto.add(org);
+				}
+			}
+
 		}
 		return orgTreeDto;
 	}
-	
+
 	/**
 	 * 删除组织机构
 	 * */

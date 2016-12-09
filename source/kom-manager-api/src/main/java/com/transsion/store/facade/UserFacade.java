@@ -114,15 +114,6 @@ public interface UserFacade {
 	public UserContext validateLogin(String userCode, String password) throws ServiceException;
 	
 	/**
-	 * @see 登出
-	 * @author 
-	 * @return
-	 * @throws ServiceException
-	 */
-	public Boolean logOut(String token) throws ServiceException;
-	
-	
-	/**
 	 * 根据用户名查询用户信息
 	 * */
 	public UserDto findByName(String userCode) throws ServiceException;

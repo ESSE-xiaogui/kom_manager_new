@@ -6,10 +6,8 @@ import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
-import com.transsion.store.dto.UserDto;
 import com.transsion.store.dto.UserInfoDto;
 import com.transsion.store.dto.UserResponseDto;
-import com.transsion.store.mapper.UserMapper;
 import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.service.UserService;
@@ -29,10 +27,6 @@ public class UserManager {
 
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private UserMapper userMapper;
-	
 	@Autowired
 	private SystemDateService systemDateService;
 
