@@ -78,6 +78,7 @@
                 <beans:value>/**/getVersionInfo</beans:value>
                 <beans:value>/**/deleteOrg</beans:value>
                 <beans:value>/task/batchTask</beans:value>
+                <beans:value>/modelPrice/**</beans:value>
             </beans:list>
         </beans:property>
     </beans:bean>

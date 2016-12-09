@@ -28,4 +28,6 @@ import org.apache.ibatis.annotations.Param;
 public interface SaleItemMapper extends GenericIBatisMapper<SaleItem, java.lang.Long> {
 
     public List<SaleItem> listPaginationByProperty(Pagination<SaleItem> pagination, @Param("saleItem")SaleItem saleItem, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public String queryScanDuplicatedIMEI(@Param("imei") String imei);
+
 }

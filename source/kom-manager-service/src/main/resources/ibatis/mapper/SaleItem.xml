@@ -477,5 +477,12 @@
 	<select id="findByCount" parameterType="SaleItem" resultType="int">
 		SELECT count(1) AS totalcount FROM T_SALE_ITEM WHERE 1=1 
 		<include refid="commonCondition"/>
+	</select>	
+	<select id="queryScanDuplicatedIMEI" parameterType="java.lang.String"
+		resultType="String">
+		select IMEI_NO from T_SALE_ITEM
+		where IMEI_LIST like
+		CONCAT('%',#{imei},'%') or IMEI_NO=#{imei}
+		LIMIT 1
 	</select>
 </mapper>

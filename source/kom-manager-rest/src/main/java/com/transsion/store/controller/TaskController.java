@@ -25,7 +25,7 @@ public class TaskController extends AbstractController{
 	@POST
 	@Path("/batchTask")
 	@Consumes({MediaType.APPLICATION_JSON})
-	private void batchTask(TaskDto taskDto) throws ServiceException{
+	public void batchTask(TaskDto taskDto) throws ServiceException{
 		taskFacade.saveTask(taskDto);
 	}
 }

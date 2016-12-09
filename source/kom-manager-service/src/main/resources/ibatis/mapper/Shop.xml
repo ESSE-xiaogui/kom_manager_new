@@ -794,4 +794,7 @@
 		SELECT ID,SHOP_ID,SHOP_NAME FROM T_SHOP	
 		WHERE COMPANY_ID = #{companyId}
 	</select>
+	<select id="findShopId" parameterType="java.lang.String" resultMap="ShopResultMapper">
+	SELECT COMPANY_ID,SHOP_ID FROM T_SHOP WHERE SHOP_CODE=#{shopCode}
+	</select>
 </mapper>

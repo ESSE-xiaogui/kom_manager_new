@@ -86,4 +86,13 @@ public class MessageStoreResource {
      * empCode重复
      */
     public static final String ERROR_MESSAGE_EMPCODE_IS_DUPLICATE = "error_message_empCodeIsDuplicate";
+    
+    /**
+     * 扫描验证参数为空
+     */
+    public static final String ERROR_MESSAGE_SCAN_IS_NULL = "error_message_scan_paramIsNull";
+    /**
+     * 批量验证为空
+     */
+    public static final String ERROR_MESSAGE_IMEI_IS_NULL = "error_message_imeisIsNull";
 }
