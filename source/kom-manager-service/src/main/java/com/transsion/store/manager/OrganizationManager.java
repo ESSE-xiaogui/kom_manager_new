@@ -98,7 +98,7 @@ public class OrganizationManager {
 		for(OrganizationTreeDto org:orgList){
 			Integer orgId = org.getOrgId();  
 	    	 Integer pid = org.getParentId();
-	           if (parentId == pid) {  
+	           if (parentId.intValue() == pid.intValue()) {  
 	        	   List<OrganizationTreeDto> children = getChridenOrg(orgList, orgId); 
 	        	   org.setChildren(children);
 	        	   orgTreeDto.add(org);

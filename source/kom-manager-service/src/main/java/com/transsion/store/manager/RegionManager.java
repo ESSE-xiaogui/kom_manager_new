@@ -64,7 +64,7 @@ public class RegionManager {
 		for(RegionDto region:regionList){
 			Long regionId = region.getId();  
 			Long pid = region.getParentId();
-	           if (parentId == pid) {  
+	           if (parentId.intValue() == pid.intValue()) {  
 	        	   List<RegionDto> children = getChildrenRegion(regionList, regionId); 
 	        	   region.setChildren(children);
 	        	   regionTreeDto.add(region);

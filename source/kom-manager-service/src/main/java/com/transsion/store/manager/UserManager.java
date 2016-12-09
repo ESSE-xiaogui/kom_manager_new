@@ -75,20 +75,6 @@ public class UserManager {
 		return userContext;
 	}
 	
-     /**
-	 * @see 登出
-	 * @author guihua.zhang
-	 * @return
-	 * @throws ServiceException
-	 */
-	public Boolean logOut(String token) throws ServiceException{
-		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
-		}
-		CacheUtils.getSupporter().remove(token);
-		return Boolean.TRUE;
-	}
-	
 
 	/**
 	 * 用户冻结/解冻 

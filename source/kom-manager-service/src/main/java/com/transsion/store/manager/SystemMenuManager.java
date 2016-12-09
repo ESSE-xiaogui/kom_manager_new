@@ -49,7 +49,7 @@ public class SystemMenuManager {
 	       for (MenuDto menuDto : list) {   
 	    	   Long menuId = menuDto.getMenuId();  
 	    	   Long pid = menuDto.getParentMenuId();
-	           if (parentId == pid) {  
+	           if (parentId.intValue() == pid.intValue()) {  
 	        	   List<MenuDto> children = treeMenuList(list, menuId);  
 	        	   menuDto.setChildren(children);
 	        	   childMenu.add(menuDto);
