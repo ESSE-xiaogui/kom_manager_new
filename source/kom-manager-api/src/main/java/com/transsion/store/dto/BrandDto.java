@@ -15,7 +15,7 @@ public class BrandDto implements Serializable{
 	private String brandName;
 	
 	/**
-	 * 是否自有品牌  注：0是  1不是
+	 * 是否自有品牌  注：1不是 2是
 	 * */
 	private Integer isSelf;
 	

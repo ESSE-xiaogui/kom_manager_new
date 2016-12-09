@@ -14,6 +14,7 @@ import com.transsion.store.dto.ModelDto;
 import com.transsion.store.dto.ModelResponseDto;
 import com.transsion.store.mapper.ModelMapper;
 import com.transsion.store.resource.MessageStoreResource;
+import com.transsion.store.service.ModelService;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 
@@ -44,19 +45,11 @@ public class ModelManager {
 		if(UtilHelper.isEmpty(userContext.getUser())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(userContext.getUser().getCompanyId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
-		}
-		if(UtilHelper.isEmpty(userContext.getUser().getUserId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERID_IS_NULL);
-		}
 		Model model = new Model();
 		BeanUtils.copyProperties(modelDto, model);
 		model.setCompanyId(userContext.getUser().getCompanyId());
-		model.setCreatedBy(userContext.getUser().getUserId().toString());
+		model.setCreatedBy(userContext.getUser().getUserCode());
 		model.setCreatedTime(systemDateService.getCurrentDate());
-		model.setUpdatedBy(userContext.getUser().getUserId().toString());
-		model.setUpdatedTime(systemDateService.getCurrentDate());
 		model.setVersion(0);
 		modelMapper.save(model);
 		ModelResponseDto mrd = new ModelResponseDto();
@@ -89,5 +82,41 @@ public class ModelManager {
 		Model model = new Model();
 		BeanUtils.copyProperties(modelDto, model);
 		return modelMapper.findModel(model);
+	}
+
+	/**
+	 * 修改机型
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public ModelResponseDto update(String token, Model model) throws ServiceException {
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+		}
+		if(UtilHelper.isEmpty(model)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		if(UtilHelper.isEmpty(userContext.getUser())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+		}
+		
+		Model formerMo = modelMapper.getByPK(model.getId());
+		formerMo.setBrandCode(model.getBrandCode());
+		formerMo.setSeriesCode(model.getSeriesCode());
+		formerMo.setSaleTime(model.getSaleTime());
+		formerMo.setModelCode(model.getModelCode());
+		formerMo.setModelName(model.getModelName());
+		formerMo.setPriceScale(model.getPriceScale());
+		formerMo.setIsInactive(model.getIsInactive());
+		formerMo.setUpdatedBy(userContext.getUser().getUserCode());
+		formerMo.setUpdatedTime(systemDateService.getCurrentDate());
+		modelMapper.update(formerMo);
+		ModelResponseDto mrd = new ModelResponseDto();
+		mrd.setStatus(1);
+		return mrd;
 	}
 }

@@ -75,19 +75,6 @@ public class ModelController extends AbstractController{
 	}
 
 	/**
-	* 新增记录
-	* @return
-	* @throws ServiceException
-	*/
-	@POST
-	@Path("/add")
-	@Consumes({MediaType.APPLICATION_JSON})
-	public void add(Model model) throws ServiceException
-	{
-		modelFacade.save(model);
-	}
-
-	/**
 	* 根据多条主键值删除记录
 	* @return
 	* @throws ServiceException
@@ -108,9 +95,10 @@ public class ModelController extends AbstractController{
 	@PUT
 	@Path("/update")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void update(Model model) throws ServiceException
+	public ModelResponseDto update(Model model) throws ServiceException
 	{
-		modelFacade.update(model);
+		String token = this.getAuthorization();
+		return modelFacade.update(token,model);
 	}
 	
 	/**
@@ -119,7 +107,7 @@ public class ModelController extends AbstractController{
 	 * @throws ServiceException
 	 * */
 	@POST
-	@Path("/saveModel")
+	@Path("/add")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public ModelResponseDto saveModel(ModelDto modelDto) throws ServiceException{

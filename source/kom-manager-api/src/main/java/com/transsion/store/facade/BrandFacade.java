@@ -86,7 +86,7 @@ public interface BrandFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(Brand brand) throws ServiceException;
+	public BrandResponseDto update(String token,Brand brand) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数

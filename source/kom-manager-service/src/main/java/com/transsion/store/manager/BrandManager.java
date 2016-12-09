@@ -15,6 +15,7 @@ import com.transsion.store.dto.BrandDto;
 import com.transsion.store.dto.BrandResponseDto;
 import com.transsion.store.mapper.BrandMapper;
 import com.transsion.store.resource.MessageStoreResource;
+import com.transsion.store.service.BrandService;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 
@@ -53,12 +54,9 @@ public class BrandManager {
 		}
 		Brand brand = new Brand();
 		BeanUtils.copyProperties(brandDto, brand);
-		brand.setBrandCode(brandDto.getBrandName());
 		brand.setCompanyId(userContext.getUser().getCompanyId());
-		brand.setCreatedBy(userContext.getUser().getUserId().toString());
+		brand.setCreatedBy(userContext.getUser().getUserCode());
 		brand.setCreatedTime(systemDateService.getCurrentDate());
-		brand.setUpdatedBy(userContext.getUser().getUserId().toString());
-		brand.setUpdatedTime(systemDateService.getCurrentDate());
 		brand.setVersion(0);
 		brandMapper.save(brand);
 		BrandResponseDto brd = new BrandResponseDto();
@@ -94,5 +92,33 @@ public class BrandManager {
 		List<BrandDto> brandDtoList = new ArrayList<BrandDto>();
 		BeanUtils.copyProperties(brandDtoList, brandList);
 		return brandDtoList;
+	}
+
+	/**
+	 * 修改品牌
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public BrandResponseDto update(String token, Brand brand) throws ServiceException {
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		if(UtilHelper.isEmpty(userContext.getUser())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+		}
+		Brand formerBr = brandMapper.getByPK(brand.getId());
+		formerBr.setBrandName(brand.getBrandName());
+		formerBr.setIsSelf(brand.getIsSelf());
+		formerBr.setIsInactive(brand.getIsInactive());
+		formerBr.setUpdatedBy(userContext.getUser().getUserCode());
+		formerBr.setUpdatedTime(systemDateService.getCurrentDate());
+		brandMapper.update(formerBr);
+		BrandResponseDto brd = new BrandResponseDto();
+		brd.setStatus(1);
+		return brd;
 	}
 }

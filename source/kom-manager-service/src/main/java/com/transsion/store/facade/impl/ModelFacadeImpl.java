@@ -136,9 +136,9 @@ public class ModelFacadeImpl implements ModelFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(Model model) throws ServiceException
+	public ModelResponseDto update(String token,Model model) throws ServiceException
 	{
-		return modelService.update(model);
+		return modelManager.update(token,model);
 	}
 
 	/**

@@ -86,7 +86,7 @@ public interface ModelFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(Model model) throws ServiceException;
+	public ModelResponseDto update(String token,Model model) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数

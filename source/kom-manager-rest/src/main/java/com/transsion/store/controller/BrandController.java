@@ -75,19 +75,6 @@ public class BrandController extends AbstractController{
 	}
 
 	/**
-	* 新增记录
-	* @return
-	* @throws ServiceException
-	*/
-	@POST
-	@Path("/add")
-	@Consumes({MediaType.APPLICATION_JSON})
-	public void add(Brand brand) throws ServiceException
-	{
-		brandFacade.save(brand);
-	}
-
-	/**
 	* 根据多条主键值删除记录
 	* @return
 	* @throws ServiceException
@@ -108,9 +95,10 @@ public class BrandController extends AbstractController{
 	@PUT
 	@Path("/update")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void update(Brand brand) throws ServiceException
+	public BrandResponseDto update(Brand brand) throws ServiceException
 	{
-		brandFacade.update(brand);
+		String token = this.getAuthorization();
+		return brandFacade.update(token,brand);
 	}
 	/**
 	 * 新增品牌
@@ -118,7 +106,7 @@ public class BrandController extends AbstractController{
 	 * @throws ServiceException
 	 * */
 	@POST
-	@Path("/saveBrand")
+	@Path("/add")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public BrandResponseDto saveBrand(BrandDto brandDto) throws ServiceException{
