@@ -1,38 +1,43 @@
 package com.taobao.yugong.translator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.taobao.yugong.common.db.meta.ColumnValue;
 import com.taobao.yugong.common.model.record.Record;
-import com.taobao.yugong.translator.AbstractDataTranslator;
-import com.taobao.yugong.translator.DataTranslator;
 
-public class BaseDataTranslator extends AbstractDataTranslator implements DataTranslator {
-
-	private static final Logger logger = LoggerFactory.getLogger(BaseDataTranslator.class);
-			
-
-	public BaseDataTranslator()
-	{
-		//class init by yugong, and can't access with spring autowire
-		logger.debug("init");
+public abstract class  BaseDataTranslator extends AbstractDataTranslator implements DataTranslator {
+	
+	public BaseDataTranslator(){
 	}
 	
 	public boolean translator(Record record) {
-		logger.debug("translator " + record);
-		ColumnValue value = record.getColumnByName("BILLNO");
-		Object obj = value.getValue();
-		if (obj != null) {
-			String billNo = obj.toString();
-			try {
-					//tbd
-			} catch (Exception ex) {
-				logger.error(ex.getMessage(), ex);
-				return false;
+		System.out.println(record);
+		record.setSchemaName("kom");
+		record.setTableName(getTableName());
+		
+		String[] srcColumns= getSrcColumnNames(); 
+		String[] destColumns= getDestColumnNames();
+		if (srcColumns != null && destColumns != null && srcColumns.length == destColumns.length && srcColumns.length > 0) {
+			for(int i = 0; i < srcColumns.length; i++) {
+				ColumnValue nameColumn = record.getColumnByName(srcColumns[i]);
+		        nameColumn.getColumn().setName(destColumns[i]);
 			}
+			
+			String[] deleteColumns = getSrcDeleteColumnNames();
+			if (deleteColumns != null && deleteColumns.length > 0) {
+				for (int i = 0; i < deleteColumns.length; i++) {
+					record.removeColumnByName(deleteColumns[i]);
+				}
+			}
+		} else {
+			return false;
 		}
 		return true;
 	}
-
+	
+	public abstract String getTableName();
+		
+	public abstract String[] getSrcColumnNames();
+	
+	public abstract String[] getDestColumnNames();
+	
+	public abstract String[] getSrcDeleteColumnNames();
 }
