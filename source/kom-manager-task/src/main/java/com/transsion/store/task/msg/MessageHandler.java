@@ -17,7 +17,7 @@ import com.transsion.store.task.interfaces.SaleService;
 
 public class MessageHandler implements MessageListener{
 	private static final Logger logger = LoggerFactory.getLogger(MessageHandler.class);
-	public static final String SAVE_TASK = "task.save.task";
+	public static final String SAVE_TASK = "task.saveTask";
 
 	@Autowired
 	private SaleService saleService;
@@ -36,7 +36,7 @@ public class MessageHandler implements MessageListener{
 						if(SAVE_TASK.equals(type)){
 							Task task = (Task)map.get("payload");
 							logger.info("receive msg: msg type = " + SAVE_TASK);
-							saleService.getSaleTaskDto("sales");
+							saleService.getSaleTaskDto(task.getTaskType());
 						}
 					}catch (Throwable e) {
 						logger.error("onMessage error:", e);
