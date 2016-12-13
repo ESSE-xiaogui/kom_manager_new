@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-11-18 15:56:40
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.SystemRoleMapper">
+	<resultMap id="SystemRoleResultMapper" type="SystemRole">
+		<result column="ROLE_ID" property="roleId"/>
+		<result column="ROLE_CODE" property="roleCode"/>
+		<result column="ROLE_NAME" property="roleName"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+	</resultMap>
+	<resultMap id="SystemRoleDtoResultMapper" type="SystemRoleResponseDto">
+		<result column="ROLE_ID" property="roleId"/>
+		<result column="ROLE_NAME" property="roleName"/>
+		<result column="ROLE_CODE" property="roleCode"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ROLE_ID
+		, ROLE_CODE
+		, ROLE_NAME
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, CREATE_TIME
+		, UPDATED_BY
+		, UPDATE_TIME
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 ROLE_CODE
+		, ROLE_NAME
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, CREATE_TIME
+		, UPDATED_BY
+		, UPDATE_TIME
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ROLE_ID
+		, ROLE_CODE
+		, ROLE_NAME
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+		, UPDATED_BY
+		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="roleId!= null and roleId!= ''"> 
+			AND ROLE_ID=#{roleId}
+		</if>
+		<if test="roleCode!= null and roleCode!= ''"> 
+			AND ROLE_CODE=#{roleCode}
+		</if>
+		<if test="roleName!= null and roleName!= ''"> 
+			AND ROLE_NAME=#{roleName}
+		</if>
+		<if test="isInactive!= null and isInactive!= ''"> 
+			AND IS_INACTIVE=#{isInactive}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createdBy!= null and createdBy!= ''"> 
+			AND CREATED_BY=#{createdBy}
+		</if>
+		<if test="createTime!= null and createTime!= ''"> 
+			AND CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updatedBy!= null and updatedBy!= ''"> 
+			AND UPDATED_BY=#{updatedBy}
+		</if>
+		<if test="updateTime!= null and updateTime!= ''"> 
+			AND UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="systemRole != null">
+            <if test="systemRole.roleId!= null and systemRole.roleId!= ''">
+				AND ROLE_ID=#{systemRole.roleId}
+            </if>
+            <if test="systemRole.roleCode!= null and systemRole.roleCode!= ''">
+				AND ROLE_CODE=#{systemRole.roleCode}
+            </if>
+            <if test="systemRole.roleName!= null and systemRole.roleName!= ''">
+				AND ROLE_NAME=#{systemRole.roleName}
+            </if>
+            <if test="systemRole.isInactive!= null and systemRole.isInactive!= ''">
+				AND IS_INACTIVE=#{systemRole.isInactive}
+            </if>
+            <if test="systemRole.remark!= null and systemRole.remark!= ''">
+				AND REMARK=#{systemRole.remark}
+            </if>
+            <if test="systemRole.createdBy!= null and systemRole.createdBy!= ''">
+				AND CREATED_BY=#{systemRole.createdBy}
+            </if>
+            <if test="systemRole.createTime!= null and systemRole.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{systemRole.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="systemRole.updatedBy!= null and systemRole.updatedBy!= ''">
+				AND UPDATED_BY=#{systemRole.updatedBy}
+            </if>
+            <if test="systemRole.updateTime!= null and systemRole.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{systemRole.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'roleId'">
+				ROLE_ID ${value}
+            </when>
+        	<when test="key == 'roleCode'">
+				ROLE_CODE ${value}
+            </when>
+        	<when test="key == 'roleName'">
+				ROLE_NAME ${value}
+            </when>
+        	<when test="key == 'isInactive'">
+				IS_INACTIVE ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createdBy'">
+				CREATED_BY ${value}
+            </when>
+        	<when test="key == 'createTime'">
+				CREATE_TIME ${value}
+            </when>
+        	<when test="key == 'updatedBy'">
+				UPDATED_BY ${value}
+            </when>
+        	<when test="key == 'updateTime'">
+				UPDATE_TIME ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="roleId" parameterType="SystemRole">
+		<![CDATA[ INSERT INTO T_SYSTEM_ROLE ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{roleCode}
+			, #{roleName}
+			, #{isInactive}
+			, #{remark}
+			, #{createdBy}
+			, str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="SystemRole">
+		<![CDATA[ UPDATE T_SYSTEM_ROLE SET 
+			 ROLE_ID=#{roleId} 
+			, ROLE_CODE=#{roleCode} 
+			, ROLE_NAME=#{roleName} 
+			, IS_INACTIVE=#{isInactive} 
+			, REMARK=#{remark} 
+			, CREATED_BY=#{createdBy} 
+			, CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATED_BY=#{updatedBy} 
+			, UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		WHERE ROLE_ID = #{roleId}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_SYSTEM_ROLE WHERE ROLE_ID = #{roleId}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_SYSTEM_ROLE WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ROLE_ID IN(" separator="," close=") ">
+			#{id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="SystemRole">
+		DELETE FROM T_SYSTEM_ROLE WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="SystemRoleResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_SYSTEM_ROLE WHERE ROLE_ID = #{roleId}  
+	</select>
+	<select id="list" resultMap="SystemRoleResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_SYSTEM_ROLE
+	</select>
+	<select id="listByProperty" parameterType="SystemRole" resultMap="SystemRoleResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_SYSTEM_ROLE WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="SystemRole" resultMap="SystemRoleResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_SYSTEM_ROLE WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="SystemRole" resultType="int">
+		SELECT count(1) AS totalcount FROM T_SYSTEM_ROLE WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="findSystemRoleByUser" parameterType="java.lang.Integer" resultMap="SystemRoleDtoResultMapper">
+		SELECT r.ROLE_ID,r.ROLE_NAME FROM T_SYSTEM_ROLE r
+		LEFT JOIN T_USER_ROLE ur ON ur.ROLE_ID = r.ROLE_ID
+		LEFT JOIN T_USER u ON u.ID = ur.USER_ID
+		WHERE u.ID = #{userId} AND r.IS_INACTIVE = 1
+	</select>
+	<select id="findSystemRole" parameterType="java.lang.Integer" resultMap="SystemRoleDtoResultMapper">
+		SELECT ROLE_ID,ROLE_NAME FROM T_SYSTEM_ROLE 
+	</select>
+	<update id="updateRoleStatus" parameterType="java.lang.Integer">
+		UPDATE T_SYSTEM_ROLE r,T_USER u SET r.IS_INACTIVE=#{isInactive}
+		WHERE r.ROLE_ID =#{roleId}  AND u.USER_ID=#{userId}
+	</update>
+	<select id="findRole" parameterType="SystemRole" resultMap="SystemRoleDtoResultMapper">
+		SELECT ROLE_CODE,ROLE_NAME,IS_INACTIVE FROM T_SYSTEM_ROLE WHERE IS_INACTIVE = 1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

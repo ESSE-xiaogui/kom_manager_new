@@ -39,7 +39,7 @@
         </logger>
         <logger name="org.jboss" level="info">
         </logger>
-        <logger name="com.rest" level="info">
+        <logger name="com.rest" level="debug">
         </logger>
         <!-- Game Stat  logger -->
         <!--<logger name="com.u9.global.service.log" level="info"
@@ -47,7 +47,7 @@
             <appender-ref ref="ProductLog"/>
         </logger>-->
         <!-- Root Logger -->
-        <root level="debug">
+        <root level="info">
             <!--<appender-ref ref="DevLog"/>-->
             <appender-ref ref="Console"/>
         </root>

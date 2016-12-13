@@ -41,6 +41,11 @@
             <artifactId>kom-manager-common</artifactId>
             <version>${parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.transsion</groupId>
+            <artifactId>kom-manager-api</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
     </dependencies>
     <!-- 配置两套环境 -->
      <profiles>
