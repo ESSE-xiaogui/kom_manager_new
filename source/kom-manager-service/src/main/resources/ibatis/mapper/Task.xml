@@ -47,4 +47,7 @@
 			, #{userName}
   ) ]]>
 	</insert>
+	<select id="findUploadPath" parameterType="java.lang.String" resultType="String">
+	SELECT UPLOAD_PATH FROM T_TASK WHERE TASK_TYPE = #{taskType}
+	</select>
 </mapper>

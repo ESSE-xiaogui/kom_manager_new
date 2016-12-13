@@ -2,31 +2,23 @@ package com.transsion.store.utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
-
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 public class Excel {
 	File file = null;
 	private Workbook workbook = null;
-	
-	private static final SimpleDateFormat UTC_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-	private static final SimpleDateFormat PRC_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-	static {
-		UTC_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
-		PRC_FORMAT.setTimeZone(TimeZone.getTimeZone("GMT+08:00"));
-	}
+	private static final SimpleDateFormat Date_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	
 	public static Excel create(File file){
 		Excel excel = new Excel(file);
@@ -93,76 +85,93 @@ public class Excel {
 		}
 	}
 	
-	public Map<String, Object> toMap(){
-		Map<String, Object> excelJson = new HashMap<String, Object>();
-		excelJson.put("name", file.getName());
-		List<Map<String, Object>> sheetsJson = new ArrayList<Map<String, Object>>();
+	public  String[][]  getData(int ignoreRows){
+		int rowSize = 0;
+		int cellSize = 0;
+		List<String[]>  rowList = new ArrayList<String[]>();
 		for(int i=0, sSize=workbook.getNumberOfSheets(); i<sSize ;++i){
-			Map<String, Object> sheetJson = new HashMap<String, Object>();
-			sheetJson.put("index", i);
 			Sheet sheet = workbook.getSheetAt(i);
-			sheetJson.put("name", sheet.getSheetName());
-			List<Map<String, Object>> rowsJson = new ArrayList<Map<String, Object>>();
-			for(int j=0, rSize=sheet.getLastRowNum(); j<=rSize ;++j){
-				Map<String, Object> rowJson = new HashMap<String, Object>();
-				rowJson.put("index", j);
+			for(int j=ignoreRows, rSize=sheet.getLastRowNum(); j<=rSize ;++j){
 				Row row = sheet.getRow(j);
-				List<Map<String, Object>> cellsJson = new ArrayList<Map<String, Object>>();
-				if(row != null){
-					for(int k=0,cSize=row.getLastCellNum(); k<cSize; ++k){
-						Map<String, Object> cellJson = new HashMap<String, Object>();
-						cellJson.put("index", k);
-						Cell cell=row.getCell(k);
-						if(cell != null){
-							int cellType = cell.getCellType();
-							if(cellType == Cell.CELL_TYPE_FORMULA){
-								cellType = cell.getCachedFormulaResultType();
-							}
-							cellJson.put("type", cellType);
-							switch(cellType){
-							case Cell.CELL_TYPE_NUMERIC:
-								cellJson.put("value", cell.getNumericCellValue());
-								if(DateUtil.isCellDateFormatted(cell)){
-									cellJson.put("type", 101);
-									cellJson.put("stamp", cell.getDateCellValue().getTime());
-									cellJson.put("utc", UTC_FORMAT.format(cell.getDateCellValue()));
-									cellJson.put("prc", PRC_FORMAT.format(cell.getDateCellValue()));
-								}
-								break;
+			    if (row == null) {
+                  continue;
+                }
+			    int tempCellSize = row.getLastCellNum() + 1; //当前单元格的一列 总条数
+                if (tempCellSize > cellSize) {
+                  cellSize = tempCellSize;
+                }
+                String[] values = new String[cellSize]; // 创建一个数组 且 必须是比单元格一列的总数 要多  
+                Arrays.fill(values, ""); //填充数组
+				for(int k=0,cSize=row.getLastCellNum(); k<cSize; ++k){
+					Object value ="";
+					Cell cell=row.getCell(k);
+					if(cell != null){
+						int cellType = cell.getCellType(); //获取当前单元格内容
+						if(cellType == Cell.CELL_TYPE_FORMULA){
+							cellType = cell.getCachedFormulaResultType();
+						}
+						switch(cellType){
+							case Cell.CELL_TYPE_NUMERIC: //数字类型
+		                         if (HSSFDateUtil.isCellDateFormatted(cell)) { //判断是否是日期
+		                            Date date = cell.getDateCellValue();
+		                            if (date != null) {
+		                                value = Date_FORMAT.format(date);
+		                            } else {
+		                                value = "";
+		                            }
+		                         } else { 
+		                            value = new DecimalFormat("0").format(cell.getNumericCellValue());
+		                         }
+		                         break;
 							case Cell.CELL_TYPE_STRING:
-								cellJson.put("value", cell.getStringCellValue());
+								value = cell.getStringCellValue();
 								break;
 							case Cell.CELL_TYPE_BLANK:
-								cellJson.put("value", null);
+								value = null;
 								break;
 							case Cell.CELL_TYPE_BOOLEAN:
-								cellJson.put("value", cell.getBooleanCellValue());
+								value = cell.getBooleanCellValue();
 								break;
 							case Cell.CELL_TYPE_ERROR:
-								cellJson.put("value", null);
+								value = null;
 								break;
 							default:
-								cellJson.put("value", null);
-							}
-						}else{
-							cellJson.put("type", Cell.CELL_TYPE_BLANK);
+								value = null;
 						}
-						cellsJson.add(cellJson);
 					}
+					values[k] = value == null?"":value.toString();
 				}
-				rowJson.put("cells", cellsJson);
-				rowsJson.add(rowJson);
+				rowList.add(values);
 			}
-			sheetJson.put("rows", rowsJson);
-			sheetsJson.add(sheetJson);
 		}
-		excelJson.put("sheets", sheetsJson);
-		return excelJson;
-	}
 
-	public static void main(String[] args) {
-		Excel excel = Excel.create("C:/Users/guihua.zhang/Desktop/tecno1.xlsx");
-		System.out.println(excel.toMap());
+       String[][] returnArray = new String[rowList.size()][rowSize];
+
+       for (int i = 0; i < returnArray.length; i++) {
+
+           returnArray[i] = (String[]) rowList.get(i);
+
+       }
+		return returnArray;
 	}
+/*	public static void main(String[] args) {
+		File file = new File("C:/Users/guihua.zhang/Desktop/tecno1.xlsx");
+		Excel e = new Excel(file);
+		String [] [] dataArr = e.getData(1);
+		List<SaleTaskDto> saleTaskDtoList = new ArrayList<SaleTaskDto>();
+		for(int i=0;i<dataArr.length;i++){		
+			SaleTaskDto saleTaskDto = new SaleTaskDto();
+			for(int j=0;j<dataArr[i].length;j++){
+				saleTaskDto.setSaleDate(dataArr[i][0]);
+				saleTaskDto.setShopCode(dataArr[i][1]);
+				saleTaskDto.setUserCode(dataArr[i][2]);
+				saleTaskDto.setImeiNo(dataArr[i][3]);
+				saleTaskDto.setPrice(new BigDecimal(dataArr[i][4]));
+			}
+			saleTaskDtoList.add(saleTaskDto);
+		}
+		
+		System.out.println(saleTaskDtoList);
+	}*/
 }
 

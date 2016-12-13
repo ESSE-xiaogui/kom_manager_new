@@ -9,7 +9,6 @@ public class SaleTaskDto implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
 	private Integer companyId;
 	private String saleDate;
 	private String shopCode;
