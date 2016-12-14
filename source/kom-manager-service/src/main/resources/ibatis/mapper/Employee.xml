@@ -29,7 +29,7 @@
 		<result column="COMPANY_ID" property="companyId"/>
 		<result column="ORG_ID" property="orgId"/>
 		<result column="DUTY_ID" property="dutyId"/>
-		<result column="UPPER_ID" property="upperId"/>
+		<result column="UPPER_CODE" property="upperCode"/>
 		<result column="UPPER_NAME" property="upperName"/>
 		<result column="GENDER" property="gender"/>
 		<result column="BIRTHDAY" property="birthday"/>
@@ -49,6 +49,40 @@
 		<result column="VERSION" property="version"/>
 	</resultMap>
 	
+	<resultMap id="EmpResponseDtoResultMapper" type="EmpResponseDto">
+		<result column="ID" property="id"/>
+		<result column="EMP_ID" property="empId"/>
+		<result column="EMP_CODE" property="empCode"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="U_ID" property="uId"/>
+		<result column="ID_NO" property="idNo"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="ORG_ID" property="orgId"/>
+		<result column="ORG_NAME" property="orgName"/>
+		<result column="DUTY_ID" property="dutyId"/>
+		<result column="DUTY_NAME" property="dutyName"/>
+		<result column="UPPER_CODE" property="upperCode"/>
+		<result column="UPPER_NAME" property="upperName"/>
+		<result column="GENDER" property="gender"/>
+		<result column="BIRTHDAY" property="birthday"/>
+		<result column="NATION" property="nation"/>
+		<result column="MARRIED" property="married"/>
+		<result column="PHONE_NO" property="phoneNo"/>
+		<result column="MOBILE_NO" property="mobileNo"/>
+		<result column="EMAIL" property="email"/>
+		<result column="NATIVE_PLACE" property="nativePlace"/>
+		<result column="ZIP_CODE" property="zipCode"/>
+		<result column="IN_SERVICE" property="inService"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	
+	
 	<sql id="commonColumns">
 		 ID
 		, EMP_ID
@@ -59,7 +93,7 @@
 		, COMPANY_ID
 		, ORG_ID
 		, DUTY_ID
-		, UPPER_ID
+		, UPPER_CODE
 		, UPPER_NAME
 		, GENDER
 		, BIRTHDAY
@@ -88,7 +122,7 @@
 		, COMPANY_ID
 		, ORG_ID
 		, DUTY_ID
-		, UPPER_ID
+		, UPPER_CODE
 		, UPPER_NAME
 		, GENDER
 		, BIRTHDAY
@@ -118,7 +152,7 @@
 		, COMPANY_ID
 		, ORG_ID
 		, DUTY_ID
-		, UPPER_ID
+		, UPPER_CODE
 		, UPPER_NAME
 		, GENDER
 		, date_format(BIRTHDAY, '%Y-%m-%d %H:%i:%s') BIRTHDAY
@@ -166,8 +200,8 @@
 		<if test="dutyId!= null and dutyId!= ''"> 
 			AND DUTY_ID=#{dutyId}
 		</if>
-		<if test="upperId!= null and upperId!= ''"> 
-			AND UPPER_ID=#{upperId}
+		<if test="upperCode!= null and upperCode!= ''"> 
+			AND UPPER_CODE=#{upperCode}
 		</if>
 		<if test="upperName!= null and upperName!= ''"> 
 			AND UPPER_NAME=#{upperName}
@@ -251,8 +285,8 @@
             <if test="employee.dutyId!= null and employee.dutyId!= ''">
 				AND DUTY_ID=#{employee.dutyId}
             </if>
-            <if test="employee.upperId!= null and employee.upperId!= ''">
-				AND UPPER_ID=#{employee.upperId}
+            <if test="employee.upperCode!= null and employee.upperCode!= ''">
+				AND UPPER_CODE=#{employee.upperCode}
             </if>
             <if test="employee.upperName!= null and employee.upperName!= ''">
 				AND UPPER_NAME=#{employee.upperName}
@@ -346,8 +380,8 @@
         	<when test="key == 'dutyId'">
 				DUTY_ID ${value}
             </when>
-        	<when test="key == 'upperId'">
-				UPPER_ID ${value}
+        	<when test="key == 'upperCode'">
+				UPPER_CODE ${value}
             </when>
         	<when test="key == 'upperName'">
 				UPPER_NAME ${value}
@@ -416,7 +450,7 @@
 			, #{companyId}
 			, #{orgId}
 			, #{dutyId}
-			, #{upperId}
+			, #{upperCode}
 			, #{upperName}
 			, #{gender}
 			, str_to_date(#{birthday},'%Y-%m-%d %H:%i:%s')
@@ -447,7 +481,7 @@
 			, COMPANY_ID=#{companyId} 
 			, ORG_ID=#{orgId} 
 			, DUTY_ID=#{dutyId} 
-			, UPPER_ID=#{upperId} 
+			, UPPER_CODE=#{upperCode} 
 			, UPPER_NAME=#{upperName} 
 			, GENDER=#{gender} 
 			, BIRTHDAY=str_to_date(#{birthday},'%Y-%m-%d %H:%i:%s')
@@ -497,6 +531,13 @@
 		FROM T_EMPLOYEE WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
+	<select id="listByProp" parameterType="Employee" resultMap="EmpResponseDtoResultMapper">
+		 SELECT e.ID,EMP_CODE, EMP_NAME, ID_NO,ORG_NAME,d.DUTY_NAME, UPPER_CODE, UPPER_NAME,
+		 GENDER, BIRTHDAY, NATION, MARRIED, PHONE_NO,EMAIL, IN_SERVICE FROM T_EMPLOYEE e 
+		 LEFT JOIN T_DUTY d ON d.ID = e.DUTY_ID
+		 LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ID
+		 WHERE e.EMP_CODE = #{empCode}
+	</select>
 	<select id="listPaginationByProperty" parameterType="Employee" resultMap="EmployeeResultMapper">
 		SELECT 
 		<include refid="commonProcessDateColumns"/>
@@ -507,5 +548,8 @@
 	<select id="findByCount" parameterType="Employee" resultType="int">
 		SELECT count(1) AS totalcount FROM T_EMPLOYEE WHERE 1=1 
 		<include refid="commonCondition"/>
+	</select>
+	<select id="getEmpInfo" parameterType="String" resultMap="EmpResponseDtoResultMapper">
+		SELECT ID,EMP_NAME,EMP_CODE FROM T_EMPLOYEE WHERE EMP_NAME LIKE CONCAT('%',#{empName},'%')
 	</select>
 </mapper>

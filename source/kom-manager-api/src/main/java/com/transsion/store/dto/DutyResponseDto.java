@@ -8,12 +8,25 @@ public class DutyResponseDto implements Serializable{
 	/**
 	 * 状态 注：1： 成功 2：失败 
 	 * */
+	
+	private Long id;
+	
 	private Integer status;
 	
 	/**
 	 * 组织机构名称
 	 * */
 	private String dutyName;
+	
+	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public Integer getStatus() {
 		return status;
@@ -33,8 +46,9 @@ public class DutyResponseDto implements Serializable{
 
 	@Override
 	public String toString() {
-		return "DutyResponseDto [status=" + status + ", dutyName=" + dutyName + "]";
+		return "DutyResponseDto [id=" + id + ", status=" + status + ", dutyName=" + dutyName + "]";
 	}
+
 	
 	
 }

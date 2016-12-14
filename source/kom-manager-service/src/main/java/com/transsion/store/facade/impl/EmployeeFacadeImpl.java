@@ -49,9 +49,9 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Employee getByPK(java.lang.Long primaryKey) throws ServiceException
+	public EmpResponseDto getByPK(java.lang.Long primaryKey) throws ServiceException
 	{
-		return employeeService.getByPK(primaryKey);
+		return employeeManager.getByPKey(primaryKey);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<Employee> listByProperty(Employee employee)
+	public List<EmpResponseDto> listByProperty(Employee employee)
 			throws ServiceException
 	{
 		return employeeService.listByProperty(employee);
@@ -187,5 +187,15 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
 	 */
 	public EmpResponseDto editUser(String token,EmpUserDto empUserDto) throws ServiceException{
 		return employeeManager.editUser(token,empUserDto);
+	}
+	
+	/**
+	 * 模糊查询员工姓名
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<EmpResponseDto> getEmpInfo(java.lang.String empName) throws ServiceException
+	{
+		return employeeService.getEmpInfo(empName);
 	}
 }

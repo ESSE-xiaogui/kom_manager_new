@@ -73,7 +73,7 @@ public class Employee extends Model{
 	/**
 	  *	
 	  */
-	private java.lang.Integer upperId;
+	private java.lang.String upperCode;
 
 	/**
 	  *	
@@ -300,17 +300,17 @@ public class Employee extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.Integer getUpperId() 
+	public java.lang.String getUpperCode() 
 	{
-		return upperId;
+		return upperCode;
 	}
 	
 	/**
 	  *	
 	  */
-	public void setUpperId(java.lang.Integer upperId) 
+	public void setUpperCode(java.lang.String upperCode) 
 	{
-		this.upperId = upperId;
+		this.upperCode = upperCode;
 	}
 	
 	/**
@@ -589,7 +589,7 @@ public class Employee extends Model{
 	public String toString() {
 		return "Employee [id=" + id + ", uId=" + uId + ", empId=" + empId + ", empCode=" + empCode + ", empName="
 				+ empName + ", idNo=" + idNo + ", companyId=" + companyId + ", orgId=" + orgId + ", dutyId=" + dutyId
-				+ ", upperId=" + upperId + ", upperName=" + upperName + ", gender=" + gender + ", birthday=" + birthday
+				+ ", upperCode=" + upperCode + ", upperName=" + upperName + ", gender=" + gender + ", birthday=" + birthday
 				+ ", nation=" + nation + ", married=" + married + ", phoneNo=" + phoneNo + ", mobileNo=" + mobileNo
 				+ ", email=" + email + ", nativePlace=" + nativePlace + ", zipCode=" + zipCode + ", inService="
 				+ inService + ", remark=" + remark + ", createdBy=" + createdBy + ", createdTime=" + createdTime

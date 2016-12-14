@@ -108,6 +108,6 @@ public interface DutyFacade {
 	* @return
 	* @throws ServiceException
 	*/
-	public DutyResponseDto findDutyName(Long id) throws ServiceException;
+	public List<DutyResponseDto> findDutyName() throws ServiceException;
 
 }

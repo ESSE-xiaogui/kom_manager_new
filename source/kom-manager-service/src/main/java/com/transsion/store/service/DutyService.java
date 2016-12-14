@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.Duty;
+import com.transsion.store.dto.DutyResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.DutyMapper;
@@ -154,7 +155,7 @@ public class DutyService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public String getDutyName(Long id) throws ServiceException{
-		return dutyMapper.getDutyName(id);
+	public List<DutyResponseDto> getDutyName() throws ServiceException{
+		return dutyMapper.getDutyName();
 	}
 }

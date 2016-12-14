@@ -33,6 +33,11 @@
 		<result column="VERSION" property="version"/>
 	</resultMap>
 	
+	<resultMap id="DutyResponseDtoMapper" type="DutyResponseDto">
+		<result column="ID" property="id"/>
+		<result column="DUTY_NAME" property="dutyName"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, DUTY_CODE
@@ -268,7 +273,7 @@
 		SELECT count(1) AS totalcount FROM T_DUTY WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="getDutyName"  parameterType="java.lang.Long" resultType = "String">
-		SELECT DUTY_NAME FROM T_DUTY WHERE ID = #{id} 
+	<select id="getDutyName"  parameterType="java.lang.Long" resultMap = "DutyResponseDtoMapper">
+		SELECT ID,DUTY_NAME FROM T_DUTY WHERE 1=1 
 	</select>
 </mapper>

@@ -47,7 +47,7 @@ public class EmployeeController extends AbstractController{
 	@GET
 	@Path("/getByPK")
 	@Produces({MediaType.APPLICATION_JSON})
-	public Employee getByPK(@QueryParam("key") java.lang.Long primaryKey) throws ServiceException
+	public EmpResponseDto getByPK(@QueryParam("key") java.lang.Long primaryKey) throws ServiceException
 	{
 		return employeeFacade.getByPK(primaryKey);
 	}
@@ -96,7 +96,7 @@ public class EmployeeController extends AbstractController{
 	@Path("/listByProperty")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public List<Employee> listByProperty(Employee employee) throws ServiceException
+	public List<EmpResponseDto> listByProperty(Employee employee) throws ServiceException
 	{
 		return employeeFacade.listByProperty(employee);	
 	}
@@ -158,4 +158,18 @@ public class EmployeeController extends AbstractController{
 		String token = this.getAuthorization();
 		return employeeFacade.editUser(token,empUserDto);
 	}
+	
+	/**
+	 * 模糊查询员工姓名
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/getEmpInfo")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<EmpResponseDto> getEmpInfo(@QueryParam("empName") java.lang.String empName) throws ServiceException
+	{
+		return employeeFacade.getEmpInfo(empName);
+	}
+	
 }

@@ -294,6 +294,11 @@
 		DELETE FROM T_ORGANIZATION WHERE 1 = 1
 		<include refid="commonCondition"/>
 	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="OrganizationResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_ORGANIZATION WHERE ID = #{id}  
+	</select>
 	<select id="getByPKs" parameterType="java.lang.Long" resultMap="OrgDtoResultMapper">
 		SELECT o1.ID AS ID,o1.COMPANY_ID AS COMPANY_ID,o1.PARENT_ID AS PARENT_ID,o1.ORG_ID AS ORG_ID,o2.ORG_NAME AS PORG_NAME,
 		o1.ORG_NAME AS ORG_NAME,o1.DUTY_NAME AS DUTY_NAME,o1.IS_INACTIVE AS IS_INACTIVE,o1.REMARK	AS REMARK

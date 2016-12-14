@@ -1,16 +1,21 @@
 package com.transsion.store.manager;
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.alibaba.druid.util.Base64;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Employee;
+import com.transsion.store.bo.Organization;
 import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.EmpResponseDto;
 import com.transsion.store.dto.EmpUserDto;
+import com.transsion.store.dto.OrganizationDto;
 import com.transsion.store.dto.UserDto;
+import com.transsion.store.mapper.EmployeeMapper;
+import com.transsion.store.mapper.OrganizationMapper;
 import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.EmployeeService;
 import com.transsion.store.service.SystemDateService;
@@ -24,10 +29,16 @@ public class EmployeeManager {
 	private EmployeeService employeeService;
 	
 	@Autowired
+	private EmployeeMapper employeeMapper;
+	
+	@Autowired
 	private SystemDateService systemDateService;
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private OrganizationMapper organizationMapper;
 	
 	public EmpResponseDto saveEmp(String token,Employee employee) throws ServiceException
 	{
@@ -44,12 +55,12 @@ public class EmployeeManager {
 		if(UtilHelper.isEmpty(userContext.getUser())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
 		}
-		Employee tempEmp = new Employee();
+		/*Employee tempEmp = new Employee();
 		tempEmp.setEmpCode(employee.getEmpCode());
 		int count = employeeService.findByCount(tempEmp);
 		if(count>0){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMPCODE_IS_DUPLICATE);
-		}
+		}*/
 		employee.setCreatedBy(userContext.getUser().getUserCode());
 		employee.setCreatedTime(systemDateService.getCurrentDate());
 		employee.setCompanyId(userContext.getUser().getCompanyId());
@@ -79,15 +90,15 @@ public class EmployeeManager {
 		if(UtilHelper.isEmpty(userContext.getUser())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
 		}
-		Employee tempEmp = new Employee();
+	/*	Employee tempEmp = new Employee();
 		tempEmp.setEmpCode(employee.getEmpCode());
 		int count1 = employeeService.findByCount(tempEmp);
 		tempEmp.setId(employee.getId());
 		int count2 = employeeService.findByCount(tempEmp);
 		if(count1>0 && count2<1){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMPCODE_IS_DUPLICATE);
-		}
-		Employee formerEmp = employeeService.getByPK(employee.getId());
+		}*/
+		Employee formerEmp = employeeMapper.getByPK(employee.getId());
 		formerEmp.setEmpName(employee.getEmpName());
 		formerEmp.setGender( employee.getGender());
 		formerEmp.setNation(employee.getNation());
@@ -99,7 +110,7 @@ public class EmployeeManager {
 		formerEmp.setPhoneNo(employee.getPhoneNo());
 		formerEmp.setEmail(employee.getEmail());
 		formerEmp.setUpperName(employee.getUpperName());
-		formerEmp.setUpperId(employee.getUpperId());
+		formerEmp.setUpperCode(employee.getUpperCode());
 		formerEmp.setInService(employee.getInService());
 
 		formerEmp.setUpdatedBy(userContext.getUser().getUserCode());
@@ -142,7 +153,7 @@ public class EmployeeManager {
 		user.setCreatedBy(userContext.getUser().getUserCode());
 		user.setCreatedTime(systemDateService.getCurrentDate());
 		userService.save(user);
-		Employee employee = employeeService.getByPK(empUserDto.getId());
+		Employee employee = employeeMapper.getByPK(empUserDto.getId());
 		employee.setuId(userService.listByProperty(user).get(0).getId());
 		employeeService.update(employee);
 		
@@ -174,7 +185,7 @@ public class EmployeeManager {
 		}
 		Long empId = empUserDto.getId();
 		
-		Employee employee = employeeService.getByPK(empId);
+		Employee employee = employeeMapper.getByPK(empId);
 		Long uId = employee.getuId();
 		if(!UtilHelper.isEmpty(uId)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_ALREADY_DISTRIBUTED);
@@ -189,4 +200,19 @@ public class EmployeeManager {
 		return erd;
 		
 	}
+
+	/**
+	 * 通过主键获取员工信息
+	 * @return
+	 * @throws ServiceException
+	 */
+	public EmpResponseDto getByPKey(Long primaryKey) throws ServiceException {
+		Employee emp = employeeService.getByPK(primaryKey);
+		EmpResponseDto erd = new EmpResponseDto();
+		BeanUtils.copyProperties(emp, erd);
+		OrganizationDto org = organizationMapper.getByPKs(Long.valueOf(erd.getOrgId()));
+		erd.setOrgName(org.getOrgName());
+		return erd;
+	}
+
 }

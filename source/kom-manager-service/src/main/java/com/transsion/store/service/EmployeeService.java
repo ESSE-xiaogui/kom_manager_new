@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.Employee;
+import com.transsion.store.dto.EmpResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.EmployeeMapper;
@@ -63,10 +64,10 @@ public class EmployeeService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<Employee> listByProperty(Employee employee)
+	public List<EmpResponseDto> listByProperty(Employee employee)
 			throws ServiceException
 	{
-		return employeeMapper.listByProperty(employee);
+		return employeeMapper.listByProp(employee);
 	}
 	
 	/**
@@ -147,5 +148,14 @@ public class EmployeeService {
 	public int findByCount(Employee employee) throws ServiceException
 	{
 		return employeeMapper.findByCount(employee);
+	}
+
+	/**
+	 * 模糊查询员工姓名
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<EmpResponseDto> getEmpInfo(String empName) throws ServiceException{
+		return employeeMapper.getEmpInfo(empName);
 	}
 }

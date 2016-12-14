@@ -154,7 +154,7 @@ public class DutyFacadeImpl implements DutyFacade {
 	* @return
 	* @throws ServiceException
 	*/
-	public DutyResponseDto findDutyName(java.lang.Long id) throws ServiceException{
-		return dutyManager.findDutyName(id);
+	public List<DutyResponseDto> findDutyName() throws ServiceException{
+		return dutyManager.findDutyName();
 	}
 }

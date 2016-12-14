@@ -121,7 +121,7 @@ public class DutyController extends AbstractController{
 	@GET
 	@Path("/findDutyName")
 	@Produces({MediaType.APPLICATION_JSON})
-	public DutyResponseDto findDutyName(@QueryParam("id") java.lang.Long id) throws ServiceException{
-		return dutyFacade.findDutyName(id);
+	public List<DutyResponseDto> findDutyName() throws ServiceException{
+		return dutyFacade.findDutyName();
 	}
 }

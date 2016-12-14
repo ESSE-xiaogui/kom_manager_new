@@ -32,7 +32,7 @@ public interface EmployeeFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Employee getByPK(java.lang.Long primaryKey) throws ServiceException;
+	public EmpResponseDto getByPK(java.lang.Long primaryKey) throws ServiceException;
 
 	/**
 	 * 查询所有记录
@@ -46,7 +46,7 @@ public interface EmployeeFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<Employee> listByProperty(Employee employee)
+	public List<EmpResponseDto> listByProperty(Employee employee)
 			throws ServiceException;
 
 	/**
@@ -131,5 +131,12 @@ public interface EmployeeFacade {
 	 * @throws ServiceException
 	 */
 	public EmpResponseDto editUser(String token, EmpUserDto empUserDto) throws ServiceException;
+
+	/**
+	 *  模糊查询员工姓名
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<EmpResponseDto> getEmpInfo(String empName) throws ServiceException;
 
 }
