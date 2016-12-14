@@ -9,6 +9,8 @@ public class EmpUserDto implements Serializable{
 	private Long id;
 	
 	private String userCode;
+	
+	private String password;
 
 	public Long getId() {
 		return id;
@@ -25,10 +27,18 @@ public class EmpUserDto implements Serializable{
 	public void setUserCode(String userCode) {
 		this.userCode = userCode;
 	}
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	@Override
 	public String toString() {
-		return "EmpUserDto [id=" + id + ", userCode=" + userCode + "]";
+		return "EmpUserDto [id=" + id + ", userCode=" + userCode + ", password=" + password + "]";
 	}
 	
 	

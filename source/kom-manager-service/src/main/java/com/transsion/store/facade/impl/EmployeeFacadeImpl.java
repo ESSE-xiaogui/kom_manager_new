@@ -67,12 +67,11 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
 	/**
 	 * 根据查询条件查询所有记录
 	 * @return
-	 * @throws ServiceException
+	 * @throws ServiceException 
 	 */
-	public List<EmpResponseDto> listByProperty(Employee employee)
-			throws ServiceException
+	public List<EmpResponseDto> listByProperty(Employee employee)throws ServiceException
 	{
-		return employeeService.listByProperty(employee);
+		return employeeManager.listByProperty(employee);
 	}
 	
 	/**

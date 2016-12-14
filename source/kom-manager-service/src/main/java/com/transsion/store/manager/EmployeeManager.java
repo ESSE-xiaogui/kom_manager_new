@@ -134,8 +134,11 @@ public class EmployeeManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+		if(UtilHelper.isEmpty(empUserDto.getUserCode())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERCODE_IS_NULL);
+		}
+		if(UtilHelper.isEmpty(empUserDto.getPassword())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PASSWORD_IS_NULL);
 		}
 		String userCode = empUserDto.getUserCode();
 		User user = new User();
@@ -148,7 +151,7 @@ public class EmployeeManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_ALREADY_DISTRIBUTED);
 		}
 		user.setCompanyId(userContext.getUser().getCompanyId());
-		user.setPassword(MD5Utils.encrypt("123456"));
+		user.setPassword(MD5Utils.encrypt(empUserDto.getPassword()));
 		user.setIsInactive(1);
 		user.setCreatedBy(userContext.getUser().getUserCode());
 		user.setCreatedTime(systemDateService.getCurrentDate());
@@ -213,6 +216,19 @@ public class EmployeeManager {
 		OrganizationDto org = organizationMapper.getByPKs(Long.valueOf(erd.getOrgId()));
 		erd.setOrgName(org.getOrgName());
 		return erd;
+	}
+
+	/**
+	 * 根据查询条件查询员工
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<EmpResponseDto> listByProperty(Employee employee) throws ServiceException {
+		List<EmpResponseDto> erdList = employeeMapper.listByProp(employee);
+		if(UtilHelper.isEmpty(erdList)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_DOESNOT_EXIST);
+		}
+		return erdList;
 	}
 
 }

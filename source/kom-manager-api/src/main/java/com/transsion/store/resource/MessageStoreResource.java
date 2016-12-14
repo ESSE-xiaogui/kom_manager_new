@@ -95,4 +95,20 @@ public class MessageStoreResource {
      * 批量验证为空
      */
     public static final String ERROR_MESSAGE_IMEI_IS_NULL = "error_message_imeisIsNull";
+    
+    /**
+     * 用户名为空
+     */
+    public static final String ERROR_MESSAGE_USERCODE_IS_NULL = "error_message_userCodeIsNull";
+    
+    /**
+     * 密码为空
+     */
+    public static final String ERROR_MESSAGE_PASSWORD_IS_NULL = "error_message_passwordIsNull";
+    
+    /**
+     * 该员工不存在
+     */
+    public static final String ERROR_MESSAGE_EMP_DOESNOT_EXIST = "error_message_empDoesNotExist";
+    
 }
