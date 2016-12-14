@@ -50,7 +50,7 @@ public class UserController extends AbstractController{
 	@GET
 	@Path("/getByPK")
 	@Produces({MediaType.APPLICATION_JSON})
-	public User getByPK(@QueryParam("key") java.lang.Long primaryKey) throws ServiceException
+	public UserDto getByPK(@QueryParam("key") java.lang.Long primaryKey) throws ServiceException
 	{
 		return userFacade.getByPK(primaryKey);
 	}

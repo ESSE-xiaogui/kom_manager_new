@@ -11,6 +11,8 @@ public class EmpUserDto implements Serializable{
 	private String userCode;
 	
 	private String password;
+	
+	private java.lang.Integer isInactive;
 
 	public Long getId() {
 		return id;
@@ -36,10 +38,19 @@ public class EmpUserDto implements Serializable{
 		this.password = password;
 	}
 
+	public java.lang.Integer getIsInactive() {
+		return isInactive;
+	}
+
+	public void setIsInactive(java.lang.Integer isInactive) {
+		this.isInactive = isInactive;
+	}
+
 	@Override
 	public String toString() {
-		return "EmpUserDto [id=" + id + ", userCode=" + userCode + ", password=" + password + "]";
+		return "EmpUserDto [id=" + id + ", userCode=" + userCode + ", password=" + password + ", isInactive="
+						+ isInactive + "]";
 	}
-	
+
 	
 }

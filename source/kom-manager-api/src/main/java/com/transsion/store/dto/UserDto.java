@@ -10,8 +10,9 @@ public class UserDto implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String userCode;
-	private String userName;
+	private String password;
 	private String empName;
+	private String empCode;
 	private String orgName;
 	/**
 	 * 1表示激活状态，被激活有效的数据可以用于新增业务，2表示停用，被停用无效的数据只能用于历史数据查询中
@@ -31,12 +32,6 @@ public class UserDto implements Serializable{
 	}
 	public void setUserCode(String userCode) {
 		this.userCode = userCode;
-	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 	public String getEmpName() {
 		return empName;
@@ -62,11 +57,25 @@ public class UserDto implements Serializable{
 	public void setInService(Integer inService) {
 		this.inService = inService;
 	}
+	
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getEmpCode() {
+		return empCode;
+	}
+	public void setEmpCode(String empCode) {
+		this.empCode = empCode;
+	}
 	@Override
 	public String toString() {
-		return "UserDto [id=" + id + ", userCode=" + userCode + ", userName=" + userName + ", empName=" + empName
-				+ ", orgName=" + orgName + ", isInactive=" + isInactive + ", inService=" + inService + "]";
+		return "UserDto [id=" + id + ", userCode=" + userCode + ", password=" + password + ", empName=" + empName
+						+ ", empCode=" + empCode + ", orgName=" + orgName + ", isInactive=" + isInactive
+						+ ", inService=" + inService + "]";
 	}
 	
-
+	 
 }

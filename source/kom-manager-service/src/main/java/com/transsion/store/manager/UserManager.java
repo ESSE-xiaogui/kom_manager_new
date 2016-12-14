@@ -8,6 +8,7 @@ import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.UserInfoDto;
 import com.transsion.store.dto.UserResponseDto;
+import com.transsion.store.mapper.UserMapper;
 import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.service.UserService;
@@ -27,7 +28,11 @@ public class UserManager {
 
 	@Autowired
 	private UserService userService;
+	
 	@Autowired
+	private UserMapper userMapper;
+	@Autowired
+	
 	private SystemDateService systemDateService;
 
 	
@@ -90,7 +95,7 @@ public class UserManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
 		}
 		
-		User formerUser = userService.getByPK(id);
+		User formerUser = userMapper.getByPK(id);
 		formerUser.setIsInactive(isInactive);
 		formerUser.setUpdatedBy(userContext.getUser().getUserCode());
 		formerUser.setUpdatedTime(systemDateService.getCurrentDate());
@@ -123,7 +128,7 @@ public class UserManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERID_IS_NULL);
 		}
 		
-		User formerUser = userService.getByPK(id);
+		User formerUser = userMapper.getByPK(id);
 		formerUser.setPassword(password);
 		formerUser.setUpdatedBy(userContext.getUser().getUserCode());
 		formerUser.setUpdatedTime(systemDateService.getCurrentDate());
@@ -179,7 +184,7 @@ public class UserManager {
 		if(count1>0 && count2<1){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_ALREADY_EXISTS);			
 		}else{
-			User formerUser = userService.getByPK(user.getId());
+			User formerUser = userMapper.getByPK(user.getId());
 			formerUser.setUserCode(user.getUserCode());
 			formerUser.setPassword(user.getPassword());
 			formerUser.setIsInactive(user.getIsInactive());

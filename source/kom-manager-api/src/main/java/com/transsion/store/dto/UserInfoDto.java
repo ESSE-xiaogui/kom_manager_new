@@ -10,7 +10,7 @@ public class UserInfoDto implements Serializable{
 	
 	private java.lang.String userCode;
 	
-	//private java.lang.String password;
+	private java.lang.String password;
 	
 	private java.lang.Integer companyId; 
 	
@@ -182,14 +182,32 @@ public class UserInfoDto implements Serializable{
 	public void setIsInactive(java.lang.Integer isInactive) {
 		this.isInactive = isInactive;
 	}
+	
+	public java.lang.String getUserCode() {
+		return userCode;
+	}
+
+	public void setUserCode(java.lang.String userCode) {
+		this.userCode = userCode;
+	}
+
+	public java.lang.String getPassword() {
+		return password;
+	}
+
+	public void setPassword(java.lang.String password) {
+		this.password = password;
+	}
 
 	@Override
 	public String toString() {
-		return "UserInfoDto [id=" + id + ", userCode=" + userCode + ", companyId=" + companyId + ", roleName="
-				+ roleName + ", dutyName=" + dutyName + ", orgName=" + orgName + ", empCode=" + empCode + ", empName="
-				+ empName + ", idNo=" + idNo + ", phoneNo=" + phoneNo + ", upperId=" + upperId + ", upperName="
-				+ upperName + ", inService=" + inService + ", isInactive=" + isInactive + ", lastLogin=" + lastLogin
-				+ ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime + ", remark=" + remark + "]";
+		return "UserInfoDto [id=" + id + ", userCode=" + userCode + ", password=" + password + ", companyId="
+						+ companyId + ", roleName=" + roleName + ", dutyName=" + dutyName + ", orgName=" + orgName
+						+ ", empCode=" + empCode + ", empName=" + empName + ", idNo=" + idNo + ", phoneNo=" + phoneNo
+						+ ", upperId=" + upperId + ", upperName=" + upperName + ", inService=" + inService
+						+ ", isInactive=" + isInactive + ", lastLogin=" + lastLogin + ", updatedBy=" + updatedBy
+						+ ", updatedTime=" + updatedTime + ", remark=" + remark + "]";
 	}
 
+	
 }

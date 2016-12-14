@@ -21,9 +21,7 @@
 <mapper namespace="com.transsion.store.mapper.UserMapper">
 	<resultMap id="UserResultMapper" type="User">
 		<result column="ID" property="id"/>
-		<result column="USER_ID" property="userId"/>
 		<result column="USER_CODE" property="userCode"/>
-		<result column="USER_NAME" property="userName"/>
 		<result column="EMP_ID" property="empId"/>
 		<result column="COMPANY_ID" property="companyId"/>
 		<result column="PASSWORD" property="password"/>
@@ -45,17 +43,20 @@
 	<resultMap id="UserDtoResultMapper" type="UserDto">
 		<result column="ID" property="id"/>
 		<result column="USER_CODE" property="userCode"/>
-		<result column="USER_NAME" property="userName"/>
+		<result column="PASSWORD" property="password"/>
 		<result column="EMP_NAME" property="empName"/>
 		<result column="ORG_NAME" property="orgName"/>
 		<result column="IS_INACTIVE" property="isInactive"/>
 		<result column="IN_SERVICE" property="inService"/>
+		<result column="DUTY_NAME" property="dutyName"/>
+		<result column="ORG_NAME" property="orgName"/>
+		<result column="EMP_CODE" property="empCode"/>
 	</resultMap>
 	
 	<resultMap id="UserInfoDtoResultMapper" type="UserInfoDto">
 		<result column="ID" property="id"/>
-		<result column="USER_NAME" property="userName"/>
-		<!-- <result column="PASSWORD" property="password"/> -->
+		<result column="USER_CODE" property="userCode"/>
+		<result column="PASSWORD" property="password"/> 
 		<result column="COMPANY_ID" property="companyId"/>
 		<result column="ROLE_NAME" property="roleName"/>
 		<result column="DUTY_NAME" property="dutyName"/>
@@ -444,6 +445,12 @@
 			 <include refid="commonProcessDateColumns"/>
 		FROM T_USER WHERE ID = #{id}  
 	</select>
+	<select id="getByPKey" parameterType="java.lang.Long" resultMap="UserDtoResultMapper">
+	    SELECT u.ID,u.USER_CODE,u.PASSWORD,e.EMP_CODE,e.EMP_NAME,
+		e.IN_SERVICE,u.IS_INACTIVE FROM T_USER u
+		LEFT JOIN T_EMPLOYEE e ON u.ID = e.U_ID
+		WHERE u.ID = #{id}  
+	</select>
 	<select id="list" resultMap="UserResultMapper">
 		<![CDATA[ SELECT ]]>
 			 <include refid="commonProcessDateColumns"/>
@@ -474,9 +481,8 @@
 		WHERE u.USER_CODE = #{userCode}
 	</select>
 	<select id="getUserInfo" parameterType="UserInfoDto" resultMap="UserInfoDtoResultMapper">
-		SELECT u.ID,u.USER_NAME,r.ROLE_NAME,e.EMP_CODE,e.EMP_NAME,d.DUTY_NAME,o.ORG_NAME,
-		e.PHONE_NO,e.UPPER_ID,e.UPPER_NAME,e.IN_SERVICE,u.IS_INACTIVE,u.UPDATED_TIME,u.LAST_LOGIN,
-		u.UPDATED_BY,u.REMARK FROM T_USER u
+		SELECT u.ID,u.USER_CODE,u.PASSWORD,e.EMP_CODE,e.EMP_NAME,d.DUTY_NAME,
+		o.ORG_NAME,e.IN_SERVICE,u.IS_INACTIVE FROM T_USER u
 		LEFT JOIN T_USER_ROLE r ON u.ID = r.USER_ID
 		LEFT JOIN T_EMPLOYEE e ON u.ID = e.U_ID
 		LEFT JOIN T_DUTY d ON e.DUTY_ID = d.ID

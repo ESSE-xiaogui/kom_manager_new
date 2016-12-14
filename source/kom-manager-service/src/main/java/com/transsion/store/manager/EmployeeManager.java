@@ -178,8 +178,8 @@ public class EmployeeManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+		if(UtilHelper.isEmpty(empUserDto.getUserCode())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERCODE_IS_NULL);
 		}
 		String userCode = empUserDto.getUserCode();
 		UserDto userDto = userService.findByName(userCode);
@@ -189,6 +189,9 @@ public class EmployeeManager {
 		Long empId = empUserDto.getId();
 		
 		Employee employee = employeeMapper.getByPK(empId);
+		if(UtilHelper.isEmpty(employee)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_DOESNOT_EXIST);
+		}
 		Long uId = employee.getuId();
 		if(!UtilHelper.isEmpty(uId)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_ALREADY_DISTRIBUTED);

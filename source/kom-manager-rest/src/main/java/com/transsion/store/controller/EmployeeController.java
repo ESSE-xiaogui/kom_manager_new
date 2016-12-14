@@ -150,7 +150,7 @@ public class EmployeeController extends AbstractController{
 	 * @return
 	 * @throws ServiceException
 	 */
-	@POST
+	@PUT
 	@Path("/editUser")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
