@@ -66,9 +66,15 @@
 		<result column="UPDATE_DATE" property="updateDate"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
-		<resultMap id="ShopDtoResultMapper" type="ShopUserDto">
+	<resultMap id="ShopDtoResultMapper" type="ShopUserDto">
 		<result column="ID" property="id"/>
 		<result column="SHOP_ID" property="shopId"/>
+		<result column="SHOP_NAME" property="shopName"/>
+	</resultMap>
+	
+	<resultMap id="ShopChildrenDtoMapper" type="ShopChildrenDto">
+		<result column="ID" property="id"/>
+		<result column="REGION_ID" property="regionId"/>
 		<result column="SHOP_NAME" property="shopName"/>
 	</resultMap>
 	
@@ -796,5 +802,16 @@
 	</select>
 	<select id="findShopId" parameterType="java.lang.String" resultMap="ShopResultMapper">
 	SELECT COMPANY_ID,SHOP_ID FROM T_SHOP WHERE SHOP_CODE=#{shopCode}
+	</select>
+	<select id="findShopByRegionId" resultMap="ShopChildrenDtoMapper">
+		SELECT p.ID,p.REGION_ID,p.SHOP_NAME FROM T_SHOP p
+		LEFT JOIN T_OPTION o ON p.ID = o.OBJECT_ID
+		LEFT JOIN T_USER_OPTION uo ON uo.OPTION_ID = o.ID
+		LEFT JOIN T_USER u ON u.USER_CODE = uo.USER_CODE
+		WHERE p.COMPANY_ID = 1000 AND p.REGION_ID IS NOT NULL
+		AND p.REGION_ID = #{regionId}
+		<if test="userName!= null and userName!= ''">
+		AND u.USER_NAME = #{userName} 
+		</if> 		
 	</select>
 </mapper>

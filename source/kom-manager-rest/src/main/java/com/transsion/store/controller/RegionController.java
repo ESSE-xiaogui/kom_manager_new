@@ -21,6 +21,7 @@ import com.transsion.store.bo.Region;
 import com.transsion.store.dto.RegionDto;
 import com.transsion.store.dto.RegionResponseDto;
 import com.transsion.store.dto.RegionShopDto;
+import com.transsion.store.dto.ShopBindRegionDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.RegionFacade;
 import com.shangkang.core.bo.Pagination;
@@ -155,5 +156,19 @@ public class RegionController extends AbstractController{
 		return regionFacade.findRegionShop(token);
 	}
 	
+	/**
+	 * @see 门店授权管理:门店绑定区域查询 用户名称为空
+	 * @see 门店授权管理:用户已有门店查询 用户名称不为空
+	 * @return
+	 * @throws ServiceException
+	 * 	 
+	 * */
+	@GET
+	@Path("/findShopBindRegion")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<ShopBindRegionDto> findShopBindRegion(@QueryParam("userName") String userName) throws ServiceException{
+		String token = this.getAuthorization();
+		return regionFacade.findShopBindRegion(token,userName);
+	}
 	
 }

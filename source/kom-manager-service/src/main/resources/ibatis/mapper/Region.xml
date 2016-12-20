@@ -53,6 +53,18 @@
 		<result column="SHOP_NAME" property="shopName"/>
 	</resultMap>
 	
+	<resultMap id="ShopBindRegionDtoResultMapper" type="ShopBindRegionDto">
+		<result column="ID" property="id"/>
+		<result column="PARENT_ID" property="parentId"/>
+		<result column="REGION_NAME" property="regionName"/>
+	</resultMap>
+	
+	<resultMap id="ShopRegionChildrenDtoResultMapper" type="ShopRegionChildrenDto">
+		<result column="ID" property="id"/>
+		<result column="PARENT_ID" property="parentId"/>
+		<result column="REGION_NAME" property="regionName"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, COMPANY_ID
@@ -323,16 +335,52 @@
 		SELECT REGION_NAME FROM T_REGION WHERE ID = #{id} 
 	</select>
 	<select id="getByPKs" parameterType="java.lang.Long" resultMap="RegionDtoResultMapper">
-		SELECT o1.ID AS ID,o1.COMPANY_ID AS COMPANY_ID,o1.PARENT_ID AS PARENT_ID,o2.REGION_NAME AS PREGION_NAME,
-		o1.REGION_NAME AS REGION_NAME,o1.REGION_TYPE AS REGION_TYPE,o1.IS_INACTIVE AS IS_INACTIVE,o1.REMARK	AS REMARK
+		SELECT o1.ID AS ID,o1.COMPANY_ID AS COMPANY_ID,o1.PARENT_ID AS
+		PARENT_ID,o2.REGION_NAME AS PREGION_NAME,
+		o1.REGION_NAME AS
+		REGION_NAME,o1.REGION_TYPE AS REGION_TYPE,o1.IS_INACTIVE AS
+		IS_INACTIVE,o1.REMARK AS REMARK
 		FROM T_REGION o1
-		LEFT JOIN T_REGION o2 ON o2.ID = o1.PARENT_ID
-		WHERE o1.ID = #{id}  
+		LEFT JOIN T_REGION o2
+		ON o2.ID = o1.PARENT_ID
+		WHERE o1.ID = #{id}
 	</select>
-	<select id="findRegionShop" parameterType="java.lang.Integer" resultMap = "RegionShopDtoResultMapper">
+	<select id="findRegionShop" parameterType="java.lang.Integer"
+		resultMap="RegionShopDtoResultMapper">
 		SELECT MAX(r.ID) AS ID, r.REGION_NAME FROM T_REGION r
-		LEFT JOIN T_SHOP p ON p.CITY = r.ID
-		WHERE r.COMPANY_ID = #{companyId} AND p.SHOP_NAME IS NOT NULL
+		LEFT
+		JOIN T_SHOP p ON p.CITY = r.ID
+		WHERE r.COMPANY_ID = #{companyId} AND
+		p.SHOP_NAME IS NOT NULL
 		GROUP BY r.REGION_NAME
+	</select>
+	<select id="findRegion" parameterType="java.lang.String" resultMap="ShopBindRegionDtoResultMapper">
+		SELECT r.ID,r.REGION_NAME FROM T_REGION r
+		LEFT JOIN T_REGION c ON c.PARENT_ID = r.ID
+		LEFT JOIN T_SHOP p ON p.REGION_ID = c.ID
+		<if test="userName!= null and userName!= ''">
+		LEFT JOIN T_OPTION o ON o.OBJECT_ID = p.ID
+		LEFT JOIN T_USER_OPTION uo ON uo.OPTION_ID = o.ID
+		LEFT JOIN T_USER u ON u.USER_CODE = uo.USER_CODE
+        </if>
+		WHERE p.COMPANY_ID = 1000 AND p.REGION_ID IS NOT NULL
+		<if test="userName!= null and userName!= ''">
+		AND u.USER_NAME = #{userName}
+		</if>  
+		GROUP BY r.ID,r.REGION_NAME
+	</select>
+	<select id="findRegionChildren" resultMap="ShopRegionChildrenDtoResultMapper">
+		SELECT c.ID,c.REGION_NAME FROM T_REGION c
+		LEFT JOIN T_SHOP p ON p.REGION_ID = c.ID
+		<if test="userName!= null and userName!= ''">
+		LEFT JOIN T_OPTION o ON o.OBJECT_ID = p.ID
+		LEFT JOIN T_USER_OPTION uo ON uo.OPTION_ID = o.ID
+		LEFT JOIN T_USER u ON u.USER_CODE = uo.USER_CODE
+		</if>
+		WHERE c.PARENT_ID = #{parentId}  AND p.COMPANY_ID = 1000 AND p.REGION_ID IS NOT NULL
+		<if test="userName!= null and userName!= ''">
+		AND u.USER_NAME = #{userName}
+		</if> 
+		GROUP BY c.ID,c.REGION_NAME
 	</select>
 </mapper>

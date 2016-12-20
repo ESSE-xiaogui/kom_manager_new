@@ -21,6 +21,7 @@ import com.transsion.store.bo.Region;
 import com.transsion.store.dto.RegionDto;
 import com.transsion.store.dto.RegionResponseDto;
 import com.transsion.store.dto.RegionShopDto;
+import com.transsion.store.dto.ShopBindRegionDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -131,5 +132,9 @@ public interface RegionFacade {
 	 * @throws ServiceException
 	 * */
 	public List<RegionShopDto> findRegionShop(String token) throws ServiceException;
-
+	
+	/**
+	 * 门店授权管理:门店绑定区域查询
+	 * */
+	public List<ShopBindRegionDto> findShopBindRegion(String token,String userName) throws ServiceException;
 }

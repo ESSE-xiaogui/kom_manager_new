@@ -114,6 +114,7 @@
 				<beans:value>/roleResource/**</beans:value>
 				<beans:value>/systemResource/**</beans:value>
 				<beans:value>/shop/**</beans:value>
+				<beans:value>/**/findShopBindRegion</beans:value>
             </beans:list>
         </beans:property>
     </beans:bean>

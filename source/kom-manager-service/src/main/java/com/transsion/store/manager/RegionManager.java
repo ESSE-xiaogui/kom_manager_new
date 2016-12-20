@@ -2,8 +2,11 @@ package com.transsion.store.manager;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Region;
@@ -12,8 +15,12 @@ import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.RegionDto;
 import com.transsion.store.dto.RegionResponseDto;
 import com.transsion.store.dto.RegionShopDto;
+import com.transsion.store.dto.ShopBindRegionDto;
+import com.transsion.store.dto.ShopChildrenDto;
 import com.transsion.store.dto.ShopDto;
+import com.transsion.store.dto.ShopRegionChildrenDto;
 import com.transsion.store.mapper.RegionMapper;
+import com.transsion.store.mapper.ShopMapper;
 import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.RegionService;
 import com.transsion.store.service.ShopService;
@@ -33,6 +40,9 @@ public class RegionManager {
 	
 	@Autowired
 	private RegionMapper regionMapper;
+	
+	@Autowired
+	private ShopMapper shopMapper;
 	
 	/**
 	 * 查询树形销售区域
@@ -237,4 +247,40 @@ public class RegionManager {
 		return rsdList;
 	}
 	
+	
+	/**
+	 * 门店授权管理:门店绑定区域查询
+	 * */
+	public List<ShopBindRegionDto> findShopBindRegion(String token,String userName) throws ServiceException{
+		if(UtilHelper.isEmpty(token) && UtilHelper.isEmpty(userName)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		List<ShopBindRegionDto> list = new ArrayList<ShopBindRegionDto>();
+		List<ShopBindRegionDto> childrenList = regionMapper.findRegion(userName);
+		if(!UtilHelper.isEmpty(childrenList)){
+			for(ShopBindRegionDto shopBindRegion:childrenList){
+				List<ShopRegionChildrenDto> childrenRegion = childrenRegion(shopBindRegion.getId(),userName);
+				shopBindRegion.setRegionChildren(childrenRegion);
+				list.add(shopBindRegion);
+		}
+		}
+		return list;
+	}
+	
+	public List<ShopRegionChildrenDto> childrenRegion(Long parentId,String userName) throws DataAccessFailureException{
+		List<ShopRegionChildrenDto> list = new ArrayList<ShopRegionChildrenDto>();
+		List<ShopRegionChildrenDto> srcList = regionMapper.findRegionChildren(parentId,userName);
+		if(!UtilHelper.isEmpty(srcList)){
+			for(ShopRegionChildrenDto src:srcList){
+				List<ShopChildrenDto> scDtoList = shopMapper.findShopByRegionId(src.getId(),userName);
+				src.setChildrenShop(scDtoList);
+				list.add(src);
+		}
+		}
+		return list;
+	}
 }
