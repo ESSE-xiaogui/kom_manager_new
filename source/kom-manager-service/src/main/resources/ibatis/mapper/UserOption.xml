@@ -268,4 +268,9 @@
 		SELECT count(1) AS totalcount FROM T_USER_OPTION WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
+	<insert id="saveUserShop" useGeneratedKeys="true" keyProperty="id"
+		parameterType="java.lang.Long">
+		INSERT INTO T_USER_OPTION (USER_ID,OPTION_ID) VALUES ( #{userId},
+		#{optionId})
+	</insert>
 </mapper>

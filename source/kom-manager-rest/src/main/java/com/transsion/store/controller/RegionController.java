@@ -157,8 +157,8 @@ public class RegionController extends AbstractController{
 	}
 	
 	/**
-	 * @see 门店授权管理:门店绑定区域查询 用户名称为空
-	 * @see 门店授权管理:用户已有门店查询 用户名称不为空
+	 * @see 1 门店授权管理:门店绑定区域查询 用户名称为空
+	 * @see 2 门店授权管理:用户已有门店查询 用户名称不为空
 	 * @return
 	 * @throws ServiceException
 	 * 	 

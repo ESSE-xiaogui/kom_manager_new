@@ -28,4 +28,5 @@ import org.apache.ibatis.annotations.Param;
 public interface UserOptionMapper extends GenericIBatisMapper<UserOption, java.lang.Long> {
 
     public List<UserOption> listPaginationByProperty(Pagination<UserOption> pagination, @Param("userOption")UserOption userOption, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+	public void saveUserShop(@Param("optionId")Long optionId,@Param("userId")Long userId) throws DataAccessFailureException;
 }

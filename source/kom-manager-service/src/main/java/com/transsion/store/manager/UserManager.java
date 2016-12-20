@@ -155,9 +155,8 @@ public class UserManager {
 		if(UtilHelper.isEmpty(userContext.getUser())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
 		}
-		
-		userInfoDto.setCompanyId(userContext.getUser().getCompanyId());
-		return userService.getUserInfo(userInfoDto);
+		userInfoDto.setCompanyId(1000);
+		return userMapper.getUserInfo(userInfoDto);
 	}
 
 	/**

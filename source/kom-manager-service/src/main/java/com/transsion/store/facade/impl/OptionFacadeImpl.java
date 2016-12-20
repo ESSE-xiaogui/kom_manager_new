@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.Option;
-import com.transsion.store.dto.OptionDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.OptionFacade;
@@ -151,11 +150,9 @@ public class OptionFacadeImpl implements OptionFacade {
 		return optionService.findByCount(option);
 	}
 	/**
-	 * 修改用户店铺权限
-	 * @return
-	 * @throws ServiceException
+	 * 门店授权管理 给用户绑定店铺
 	 * */
-	public OptionDto updateShopOption(String token, Integer isInactive,Integer shopId) throws ServiceException{
-		return optionManager.updateShopOption(token, isInactive,shopId);
+	public void saveShopOption(Long userId,Long shopId,Long optionId) throws ServiceException{
+		optionManager.saveShopOption(userId, shopId, optionId);
 	}
 }

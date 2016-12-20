@@ -298,8 +298,8 @@
 		SELECT count(1) AS totalcount FROM T_OPTION WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<update id="updateShopOption" parameterType="java.lang.Integer">	
-	UPDATE T_OPTION o,T_SHOP p,T_USER_OPTION uo, T_USER u SET o.IS_INACTIVE = #{isInactive}
-	WHERE o.OBJECT_ID = #{objectId} AND u.USER_ID = #{userId} AND o.COMPANY_ID = #{companyId}
+	<update id="saveShopOption" parameterType="java.lang.Long">
+		update T_OPTION set OBJECT_ID = #{shopId}
+		where ID = #{objectId}
 	</update>
 </mapper>

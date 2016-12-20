@@ -56,6 +56,7 @@
 	<resultMap id="UserInfoDtoResultMapper" type="UserInfoDto">
 		<result column="ID" property="id"/>
 		<result column="USER_CODE" property="userCode"/>
+		<result column="USER_NAME" property="userName"/>
 		<result column="PASSWORD" property="password"/> 
 		<result column="COMPANY_ID" property="companyId"/>
 		<result column="ROLE_NAME" property="roleName"/>
@@ -208,6 +209,9 @@
 	</sql>
 	
 	<sql id="commonCondition2">
+		<if test="userCode!= null and userCode!= ''"> 
+			AND USER_CODE=#{userCode}
+		</if>
 		<if test="userName!= null and userName!= ''"> 
 			AND USER_NAME=#{userName}
 		</if>
@@ -481,13 +485,12 @@
 		WHERE u.USER_CODE = #{userCode}
 	</select>
 	<select id="getUserInfo" parameterType="UserInfoDto" resultMap="UserInfoDtoResultMapper">
-		SELECT u.ID,u.USER_CODE,u.PASSWORD,e.EMP_CODE,e.EMP_NAME,d.DUTY_NAME,
-		o.ORG_NAME,e.IN_SERVICE,u.IS_INACTIVE FROM T_USER u
-		LEFT JOIN T_USER_ROLE r ON u.ID = r.USER_ID
+		SELECT u.ID,u.USER_CODE,u.USER_NAME,u.PASSWORD,e.EMP_CODE,e.EMP_NAME,d.DUTY_NAME,
+		o.ORG_NAME,e.IN_SERVICE,u.IS_INACTIVE FROM T_USER u		
 		LEFT JOIN T_EMPLOYEE e ON u.ID = e.U_ID
 		LEFT JOIN T_DUTY d ON e.DUTY_ID = d.ID
 		LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ORG_ID
-		WHERE u.COMPANY_ID = #{companyId}
+		WHERE e.COMPANY_ID = #{companyId}
 		<include refid="commonCondition2"/>
 	</select>
 </mapper>

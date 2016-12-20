@@ -10,6 +10,8 @@ public class UserInfoDto implements Serializable{
 	
 	private java.lang.String userCode;
 	
+	private java.lang.String userName;
+	
 	private java.lang.String password;
 	
 	private java.lang.Integer companyId; 
@@ -199,15 +201,22 @@ public class UserInfoDto implements Serializable{
 		this.password = password;
 	}
 
-	@Override
-	public String toString() {
-		return "UserInfoDto [id=" + id + ", userCode=" + userCode + ", password=" + password + ", companyId="
-						+ companyId + ", roleName=" + roleName + ", dutyName=" + dutyName + ", orgName=" + orgName
-						+ ", empCode=" + empCode + ", empName=" + empName + ", idNo=" + idNo + ", phoneNo=" + phoneNo
-						+ ", upperId=" + upperId + ", upperName=" + upperName + ", inService=" + inService
-						+ ", isInactive=" + isInactive + ", lastLogin=" + lastLogin + ", updatedBy=" + updatedBy
-						+ ", updatedTime=" + updatedTime + ", remark=" + remark + "]";
+	public java.lang.String getUserName() {
+		return userName;
 	}
 
+	public void setUserName(java.lang.String userName) {
+		this.userName = userName;
+	}
+
+	@Override
+	public String toString() {
+		return "UserInfoDto [id=" + id + ", userCode=" + userCode + ", userName=" + userName + ", password=" + password
+						+ ", companyId=" + companyId + ", roleName=" + roleName + ", dutyName=" + dutyName
+						+ ", orgName=" + orgName + ", empCode=" + empCode + ", empName=" + empName + ", idNo=" + idNo
+						+ ", phoneNo=" + phoneNo + ", upperId=" + upperId + ", upperName=" + upperName + ", inService="
+						+ inService + ", isInactive=" + isInactive + ", lastLogin=" + lastLogin + ", updatedBy="
+						+ updatedBy + ", updatedTime=" + updatedTime + ", remark=" + remark + "]";
+	}
 	
 }

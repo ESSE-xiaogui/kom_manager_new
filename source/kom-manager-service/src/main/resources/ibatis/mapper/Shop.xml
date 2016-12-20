@@ -75,6 +75,7 @@
 	<resultMap id="ShopChildrenDtoMapper" type="ShopChildrenDto">
 		<result column="ID" property="id"/>
 		<result column="REGION_ID" property="regionId"/>
+		<result column="OPTION_ID" property="optionId"/>
 		<result column="SHOP_NAME" property="shopName"/>
 	</resultMap>
 	
@@ -804,7 +805,7 @@
 	SELECT COMPANY_ID,SHOP_ID FROM T_SHOP WHERE SHOP_CODE=#{shopCode}
 	</select>
 	<select id="findShopByRegionId" resultMap="ShopChildrenDtoMapper">
-		SELECT p.ID,p.REGION_ID,p.SHOP_NAME FROM T_SHOP p
+		SELECT p.ID,p.REGION_ID,o.ID AS OPTION_ID,p.SHOP_NAME FROM T_SHOP p
 		LEFT JOIN T_OPTION o ON p.ID = o.OBJECT_ID
 		LEFT JOIN T_USER_OPTION uo ON uo.OPTION_ID = o.ID
 		LEFT JOIN T_USER u ON u.USER_CODE = uo.USER_CODE
