@@ -29,9 +29,9 @@ public class ModelDto implements Serializable{
 	private String saleTime;
 	
 	/**
-	 * 价格档位 注：枚举
+	 * 价格档位 
 	 * */
-	private Integer priceScale;
+	private String priceScale;
 	
 	/**
 	  *	
@@ -83,11 +83,11 @@ public class ModelDto implements Serializable{
 		this.saleTime = saleTime;
 	}
 
-	public Integer getPriceScale() {
+	public String getPriceScale() {
 		return priceScale;
 	}
 
-	public void setPriceScale(Integer priceScale) {
+	public void setPriceScale(String priceScale) {
 		this.priceScale = priceScale;
 	}
 

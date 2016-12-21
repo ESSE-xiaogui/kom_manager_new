@@ -371,19 +371,21 @@
 		<include refid="commonCondition"/>
 	</select>
 	<select id="findModel" parameterType="Model" resultMap="ModelDtoResultMapper">
-	SELECT BRAND_NAME,SERIES_CODE,MODEL_CODE,MODEL_NAME,SALE_TIME,PRICE_SCALE,IS_SELF,IS_INACTIVE FROM T_MODEL
-	WHERE COMPANY_ID=#{companyId}
+	SELECT m.BRAND_CODE,m.SERIES_CODE,m.MODEL_CODE,m.MODEL_NAME,m.SALE_TIME,p.PRICE_SCALE,b.IS_SELF,m.IS_INACTIVE FROM T_MODEL m
+	LEFT JOIN T_MODEL_PRICE p ON p.ID = m.PRICE_SCALE
+	LEFT JOIN T_BRAND b ON b.BRAND_CODE = m.BRAND_CODE
+	WHERE m.COMPANY_ID=#{companyId}
 	<if test="brandCode!= null and brandCode!= ''"> 
-			AND BRAND_CODE=#{brandCode}
+			AND m.BRAND_CODE=#{brandCode}
 	</if>
 	<if test="seriesCode!= null and seriesCode!= ''"> 
-			AND SERIES_CODE=#{seriesCode}
+			AND m.SERIES_CODE=#{seriesCode}
 	</if>
 	<if test="modelCode!= null and modelCode!= ''"> 
-			AND MODEL_CODE=#{modelCode}
+			AND m.MODEL_CODE=#{modelCode}
 	</if> 
 	<if test="isInactive!= null and isInactive!= ''"> 
-			AND IS_INACTIVE=#{isInactive}
+			AND m.IS_INACTIVE=#{isInactive}
 		</if>
 	</select>
 </mapper>

@@ -117,6 +117,8 @@
 				<beans:value>/**/saveShopOption</beans:value>
 				<beans:value>/**/getUserInfo</beans:value>
 				<beans:value>/**/findShopIds</beans:value>
+				<beans:value>/**/findAll</beans:value>
+				<beans:value>/**/findModelPrice</beans:value>
             </beans:list>
         </beans:property>
     </beans:bean>
