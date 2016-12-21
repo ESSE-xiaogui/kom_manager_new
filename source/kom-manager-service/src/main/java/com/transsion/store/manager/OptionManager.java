@@ -1,5 +1,7 @@
 package com.transsion.store.manager;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +21,20 @@ public class OptionManager {
 	/**
 	 * 门店授权管理 给用户绑定店铺
 	 * */
-	public void saveShopOption(Long userId,Long shopId,Long optionId) throws ServiceException{
-		if(UtilHelper.isEmpty(userId) || UtilHelper.isEmpty(shopId) || UtilHelper.isEmpty(optionId)){
+	public void saveShopOption(Long userId,List<Long> shopIds,List<Long> optionIds,List<Long> userOptionIds) throws ServiceException{
+		if(UtilHelper.isEmpty(userId) || UtilHelper.isEmpty(shopIds) || UtilHelper.isEmpty(optionIds) || UtilHelper.isEmpty(userOptionIds)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		optionMapper.saveShopOption(shopId,optionId);
-		userOptionMapper.saveUserShop(optionId, userId);
+		for(Long userOptionId:userOptionIds){
+			userOptionMapper.deleteByPK(userOptionId);
+		}
+		for(Long optionId:optionIds){
+			for(Long shopId:shopIds){
+				optionMapper.saveShopOption(shopId,optionId);
+				continue;
+			}
+			userOptionMapper.saveUserShop(optionId, userId);
+		}
+		
 	}
 }

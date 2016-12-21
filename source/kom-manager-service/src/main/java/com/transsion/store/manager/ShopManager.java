@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
+import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.ShopUserDto;
 import com.transsion.store.mapper.ShopMapper;
+import com.transsion.store.mapper.UserMapper;
 import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.utils.CacheUtils;
 
@@ -17,6 +19,9 @@ import com.transsion.store.utils.CacheUtils;
 public class ShopManager {
 	@Autowired
 	private ShopMapper shopMapper;
+	
+	@Autowired
+	private UserMapper userMapper;
  
 	/**
 	 * 用户已绑定的店铺
@@ -55,5 +60,20 @@ public class ShopManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERID_IS_NULL);
 		}
 		return shopMapper.findShop(userContext.getUser().getCompanyId());
+	}
+	/**
+	 * 门店授权管理:获取此用户已绑定的所有店铺ID
+	 * */
+	public List<Long> findShopIds(String userName) throws ServiceException{
+		if(UtilHelper.isEmpty(userName)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		User user = new User();
+		user.setUserName(userName);
+		int count = userMapper.findByCount(user);
+		if(count == 0){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+		}
+		return shopMapper.findShopIds(userName);
 	}
 }

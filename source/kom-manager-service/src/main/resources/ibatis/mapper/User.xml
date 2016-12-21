@@ -210,10 +210,10 @@
 	
 	<sql id="commonCondition2">
 		<if test="userCode!= null and userCode!= ''"> 
-			AND USER_CODE=#{userCode}
+			AND u.USER_CODE=#{userCode}
 		</if>
 		<if test="userName!= null and userName!= ''"> 
-			AND USER_NAME=#{userName}
+			AND u.USER_NAME=#{userName}
 		</if>
 		<if test="empCode!= null and empCode!= ''"> 
 			AND e.EMP_CODE=#{empCode}
@@ -222,22 +222,22 @@
 			AND e.EMP_NAME=#{empName}
 		</if>
 		<if test="idNo!= null and idNo!= ''"> 
-			AND ID_NO=#{idNo}
+			AND e.ID_NO=#{idNo}
 		</if>
 		<if test="phoneNo!= null and phoneNo!= ''"> 
-			AND PHONE_NO=#{phoneNo}
+			AND e.PHONE_NO=#{phoneNo}
 		</if>
 		<if test="upperId!= null and upperId!= ''"> 
-			AND UPPER_ID=#{upperId}
+			AND e.UPPER_ID=#{upperId}
 		</if>
 		<if test="upperName!= null and upperName!= ''"> 
-			AND UPPER_NAME=#{upperName}
+			AND e.UPPER_NAME=#{upperName}
 		</if>
 		<if test="inService!= null and inService!= ''"> 
-			AND IN_SERVICE=#{inService}
+			AND e.IN_SERVICE=#{inService}
 		</if>
 		<if test="isInactive!= null and isInactive!= ''"> 
-			AND IS_INACTIVE=#{isInactive}
+			AND u.IS_INACTIVE=#{isInactive}
 		</if>
 	</sql>
 
@@ -489,7 +489,7 @@
 		o.ORG_NAME,e.IN_SERVICE,u.IS_INACTIVE FROM T_USER u		
 		LEFT JOIN T_EMPLOYEE e ON u.ID = e.U_ID
 		LEFT JOIN T_DUTY d ON e.DUTY_ID = d.ID
-		LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ORG_ID
+		LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ID
 		WHERE e.COMPANY_ID = #{companyId}
 		<include refid="commonCondition2"/>
 	</select>

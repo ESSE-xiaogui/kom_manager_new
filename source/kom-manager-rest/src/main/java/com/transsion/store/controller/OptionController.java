@@ -110,16 +110,16 @@ public class OptionController extends AbstractController{
 	{
 		optionFacade.update(option);
 	}
-	
+
 	/**
 	 * @see 门店授权管理 给用户绑定店铺
 	 * @return
 	 * @throws ServiceException
-	 * */
+	 */
 	@GET
 	@Path("/saveShopOption")
-	@Consumes({MediaType.APPLICATION_JSON})
-	public void saveShopOption(@QueryParam("userId")Long userId,@QueryParam("shopId")Long shopId,@QueryParam("optionId")Long optionId) throws ServiceException{
-		optionFacade.saveShopOption(userId, shopId,optionId);
+	@Consumes({ MediaType.APPLICATION_JSON })
+	public void saveShopOption(@QueryParam("userId") Long userId, List<Long> shopIds,List<Long> optionIds,List<Long> userOptionIds) throws ServiceException {
+		optionFacade.saveShopOption(userId, shopIds, optionIds,userOptionIds);
 	}
 }

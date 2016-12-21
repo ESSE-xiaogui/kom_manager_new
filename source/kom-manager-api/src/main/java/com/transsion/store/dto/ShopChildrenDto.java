@@ -11,6 +11,7 @@ public class ShopChildrenDto implements Serializable{
 	private Long id;
 	private Long regionId;
 	private Long optionId;
+	private Long userOptionId;
 	private String shopName;
 	public Long getId() {
 		return id;
@@ -37,10 +38,17 @@ public class ShopChildrenDto implements Serializable{
 	public void setShopName(String shopName) {
 		this.shopName = shopName;
 	}
+	
+	public Long getUserOptionId() {
+		return userOptionId;
+	}
+	public void setUserOptionId(Long userOptionId) {
+		this.userOptionId = userOptionId;
+	}
 	@Override
 	public String toString() {
-		return "ShopChildrenDto [id=" + id + ", regionId=" + regionId + ", optionId=" + optionId + ", shopName="
-						+ shopName + "]";
+		return "ShopChildrenDto [id=" + id + ", regionId=" + regionId + ", optionId=" + optionId + ", userOptionId="
+						+ userOptionId + ", shopName=" + shopName + "]";
 	}
 
 }

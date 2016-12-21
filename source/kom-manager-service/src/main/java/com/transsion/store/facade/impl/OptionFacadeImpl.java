@@ -152,7 +152,7 @@ public class OptionFacadeImpl implements OptionFacade {
 	/**
 	 * 门店授权管理 给用户绑定店铺
 	 * */
-	public void saveShopOption(Long userId,Long shopId,Long optionId) throws ServiceException{
-		optionManager.saveShopOption(userId, shopId, optionId);
+	public void saveShopOption(Long userId,List<Long> shopIds,List<Long> optionIds,List<Long> userOptionIds) throws ServiceException{
+		optionManager.saveShopOption(userId, shopIds, optionIds,userOptionIds);
 	}
 }
