@@ -1,13 +1,11 @@
 package com.transsion.store.manager;
 import java.util.List;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Employee;
-import com.transsion.store.bo.Organization;
 import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.EmpResponseDto;

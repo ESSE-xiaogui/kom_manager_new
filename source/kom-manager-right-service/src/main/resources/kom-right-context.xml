@@ -70,8 +70,8 @@
 
     <beans:bean id="authKeyGenerator" class="com.rest.service.security.simple.DefaultAuthKeyGenerator" />
 
-    <beans:bean id="anonResourceService" class="com.transsion.store.service.AnonResourceService">
-        <beans:property name="anonList">
+    <beans:bean id="anonResourceService" class="com.transsion.store.service.AnonResourceService"/>
+        <!-- <beans:property name="anonList">
             <beans:list>
                 <beans:value>/**/login</beans:value>
                 <beans:value>/**/encrypt</beans:value>
@@ -80,11 +80,10 @@
                 <beans:value>/task/batchTask</beans:value>
                 <beans:value>/modelPrice/**</beans:value>
             </beans:list>
-        </beans:property>
-    </beans:bean>
+        </beans:property> -->
 
-    <beans:bean id="resourceService" class="com.transsion.store.service.ResourceService">
-        <beans:property name="resources">
+    <beans:bean id="resourceService" class="com.transsion.store.service.ResourceService"/>
+    <!--     <beans:property name="resources">
             <beans:list>
                 <beans:value>/**/logOut</beans:value>
                 <beans:value>/**/listPg</beans:value>
@@ -120,6 +119,5 @@
 				<beans:value>/**/findAll</beans:value>
 				<beans:value>/**/findModelPrice</beans:value>
             </beans:list>
-        </beans:property>
-    </beans:bean>
+        </beans:property> -->
 </beans:beans>
