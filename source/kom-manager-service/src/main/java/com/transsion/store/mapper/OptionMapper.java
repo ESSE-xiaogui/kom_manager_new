@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.transsion.store.bo.Option;
-import com.transsion.store.dto.OptionDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
@@ -29,7 +28,5 @@ import org.apache.ibatis.annotations.Param;
 public interface OptionMapper extends GenericIBatisMapper<Option, java.lang.Long> {
 
     public List<Option> listPaginationByProperty(Pagination<Option> pagination, @Param("option")Option option, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
-    public void updateShopOption(@Param("userId")Integer userId,@Param("companyId")Integer companyId,
-    		@Param("isInactive")Integer isInactive,@Param("objectId")Integer objectId)throws DataAccessFailureException;
-
+    public void saveShopOption(@Param("shopId")Long shopId,@Param("optionId")Long optionId) throws DataAccessFailureException;
 }

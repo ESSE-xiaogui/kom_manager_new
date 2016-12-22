@@ -25,7 +25,6 @@ import com.transsion.store.bo.User;
 import com.transsion.store.dto.UserDto;
 import com.transsion.store.dto.UserInfoDto;
 import com.shangkang.core.bo.Pagination;
-import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.UserMapper;
 

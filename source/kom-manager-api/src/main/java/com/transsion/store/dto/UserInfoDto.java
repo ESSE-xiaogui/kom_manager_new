@@ -10,6 +10,8 @@ public class UserInfoDto implements Serializable{
 	
 	private java.lang.String userCode;
 	
+	private java.lang.String userName;
+	
 	private java.lang.String password;
 	
 	private java.lang.Integer companyId; 
@@ -31,11 +33,13 @@ public class UserInfoDto implements Serializable{
 	private java.lang.Integer upperId;
 	
 	private java.lang.String upperName;
-	
+	/**
+	 * 是否在职 1:是 2:否
+	 */
 	private java.lang.Integer inService;
 	
 	/**
-	 * 1表示激活状态，被激活有效的数据可以用于新增业务，2表示停用，被停用无效的数据只能用于历史数据查询中
+	 * 用户是否停用 1启用 2 禁用
 	 */	
 	private java.lang.Integer isInactive;
 	
@@ -199,15 +203,22 @@ public class UserInfoDto implements Serializable{
 		this.password = password;
 	}
 
-	@Override
-	public String toString() {
-		return "UserInfoDto [id=" + id + ", userCode=" + userCode + ", password=" + password + ", companyId="
-						+ companyId + ", roleName=" + roleName + ", dutyName=" + dutyName + ", orgName=" + orgName
-						+ ", empCode=" + empCode + ", empName=" + empName + ", idNo=" + idNo + ", phoneNo=" + phoneNo
-						+ ", upperId=" + upperId + ", upperName=" + upperName + ", inService=" + inService
-						+ ", isInactive=" + isInactive + ", lastLogin=" + lastLogin + ", updatedBy=" + updatedBy
-						+ ", updatedTime=" + updatedTime + ", remark=" + remark + "]";
+	public java.lang.String getUserName() {
+		return userName;
 	}
 
+	public void setUserName(java.lang.String userName) {
+		this.userName = userName;
+	}
+
+	@Override
+	public String toString() {
+		return "UserInfoDto [id=" + id + ", userCode=" + userCode + ", userName=" + userName + ", password=" + password
+						+ ", companyId=" + companyId + ", roleName=" + roleName + ", dutyName=" + dutyName
+						+ ", orgName=" + orgName + ", empCode=" + empCode + ", empName=" + empName + ", idNo=" + idNo
+						+ ", phoneNo=" + phoneNo + ", upperId=" + upperId + ", upperName=" + upperName + ", inService="
+						+ inService + ", isInactive=" + isInactive + ", lastLogin=" + lastLogin + ", updatedBy="
+						+ updatedBy + ", updatedTime=" + updatedTime + ", remark=" + remark + "]";
+	}
 	
 }

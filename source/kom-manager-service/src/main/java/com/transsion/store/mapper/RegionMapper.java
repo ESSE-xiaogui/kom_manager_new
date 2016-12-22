@@ -22,6 +22,8 @@ import java.util.Map;
 import com.transsion.store.bo.Region;
 import com.transsion.store.dto.RegionDto;
 import com.transsion.store.dto.RegionShopDto;
+import com.transsion.store.dto.ShopBindRegionDto;
+import com.transsion.store.dto.ShopRegionChildrenDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
@@ -37,5 +39,10 @@ public interface RegionMapper extends GenericIBatisMapper<Region, java.lang.Long
 	
 	public List<RegionShopDto> findRegionShop(@Param("companyId")Integer companyId) throws DataAccessFailureException;
 
-	public RegionDto getByPKs(Long primaryKey) throws DataAccessFailureException;;
+	public RegionDto getByPKs(Long primaryKey) throws DataAccessFailureException;
+	
+	public List<ShopBindRegionDto> findRegion(@Param("userName")String userName) throws DataAccessFailureException;
+	
+	public List<ShopRegionChildrenDto> findRegionChildren(@Param("parentId")Long parentId,@Param("userName")String userName) throws DataAccessFailureException;
+	
 }

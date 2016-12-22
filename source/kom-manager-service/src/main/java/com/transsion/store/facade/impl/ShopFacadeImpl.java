@@ -161,4 +161,10 @@ public class ShopFacadeImpl implements ShopFacade {
 	public List<ShopUserDto> findShop(String token) throws ServiceException{
 		return shopManager.findShop(token);
 	}
+	/**
+	 * 门店授权管理:获取此用户已绑定的所有店铺ID
+	 * */
+	public List<Long> findShopIds(String userName) throws ServiceException{
+		return shopManager.findShopIds(userName);
+	}
 }

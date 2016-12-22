@@ -134,4 +134,18 @@ public class ShopController extends AbstractController{
 		return shopFacade.findShop(token);
 	}
 	
+	/**
+	 * 门店授权管理:获取此用户已绑定的所有店铺ID
+	 * @return
+	 * @throws ServiceException
+	 * */
+	
+	@GET
+	@Path("/findShopIds")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<Long> findShopIds(@QueryParam("userName") String userName) throws ServiceException{
+		return shopFacade.findShopIds(userName);
+	}
+	
 }

@@ -112,5 +112,10 @@ public interface ShopFacade {
 	 * 查询店铺
 	 * */
 	public List<ShopUserDto> findShop(String token) throws ServiceException;
+	
+	/**
+	 * 门店授权管理:获取此用户已绑定的所有店铺ID
+	 * */
+	public List<Long> findShopIds(String userName) throws ServiceException;
 
 }

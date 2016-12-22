@@ -102,7 +102,6 @@
 				<beans:value>/employee/**</beans:value>
 				<beans:value>/shop/**</beans:value>
 				<beans:value>/**/findByName</beans:value>
-				<beans:value>/option/updateShopOption</beans:value>
 				<beans:value>/duty/**</beans:value>
 				<beans:value>/user/**</beans:value>
 				<beans:value>/**/findSystemRoleByUser</beans:value>
@@ -114,6 +113,12 @@
 				<beans:value>/roleResource/**</beans:value>
 				<beans:value>/systemResource/**</beans:value>
 				<beans:value>/shop/**</beans:value>
+				<beans:value>/**/findShopBindRegion</beans:value>
+				<beans:value>/**/saveShopOption</beans:value>
+				<beans:value>/**/getUserInfo</beans:value>
+				<beans:value>/**/findShopIds</beans:value>
+				<beans:value>/**/findAll</beans:value>
+				<beans:value>/**/findModelPrice</beans:value>
             </beans:list>
         </beans:property>
     </beans:bean>

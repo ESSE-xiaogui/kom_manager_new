@@ -15,7 +15,6 @@ import com.transsion.store.dto.BrandDto;
 import com.transsion.store.dto.BrandResponseDto;
 import com.transsion.store.mapper.BrandMapper;
 import com.transsion.store.resource.MessageStoreResource;
-import com.transsion.store.service.BrandService;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 
@@ -90,7 +89,13 @@ public class BrandManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		List<BrandDto> brandDtoList = new ArrayList<BrandDto>();
-		BeanUtils.copyProperties(brandDtoList, brandList);
+		for(Brand b:brandList){
+			BrandDto bd = new BrandDto();
+			bd.setBrandName(b.getBrandName());
+			bd.setIsSelf(b.getIsSelf());
+			bd.setIsInactive(b.getIsInactive());
+			brandDtoList.add(bd);
+		}
 		return brandDtoList;
 	}
 
