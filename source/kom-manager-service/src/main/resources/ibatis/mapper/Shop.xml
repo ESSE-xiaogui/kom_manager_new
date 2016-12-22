@@ -75,8 +75,6 @@
 	<resultMap id="ShopChildrenDtoMapper" type="ShopChildrenDto">
 		<result column="ID" property="shopId"/>
 		<result column="REGION_ID" property="regionId"/>
-		<result column="OPTION_ID" property="optionId"/>
-		<result column="USER_OPTION_ID" property="userOptionId"/>
 		<result column="SHOP_NAME" property="shopName"/>
 	</resultMap>
 	
@@ -806,10 +804,11 @@
 	SELECT COMPANY_ID,SHOP_ID FROM T_SHOP WHERE SHOP_CODE=#{shopCode}
 	</select>
 	<select id="findShopByRegionId" resultMap="ShopChildrenDtoMapper">
-		SELECT p.ID,p.REGION_ID,o.ID AS OPTION_ID,uo.ID AS USER_OPTION_ID,p.SHOP_NAME FROM T_SHOP p
-		LEFT JOIN T_OPTION o ON p.ID = o.OBJECT_ID
-		LEFT JOIN T_USER_OPTION uo ON uo.OPTION_ID = o.ID
-		LEFT JOIN T_USER u ON u.USER_CODE = uo.USER_CODE
+		SELECT p.ID,p.REGION_ID,p.SHOP_NAME FROM T_SHOP p
+		<if test="userName!= null and userName!= ''">
+		JOIN T_USER_SHOP us ON us.SHOP_ID = p.ID
+		JOIN T_USER u ON u.ID = us.USER_ID 
+		</if>
 		WHERE p.COMPANY_ID = 1000 AND p.REGION_ID IS NOT NULL
 		AND p.REGION_ID = #{regionId}
 		<if test="userName!= null and userName!= ''">
@@ -818,8 +817,8 @@
 	</select>
 	<select id="findShopIds" parameterType="java.lang.String" resultType = "Long">
 		SELECT p.ID FROM T_SHOP p
-		LEFT JOIN T_USER_SHOP us ON us.SHOP_ID = p.ID
-		LEFT JOIN T_USER u ON u.ID = us.USER_ID  
+		JOIN T_USER_SHOP us ON us.SHOP_ID = p.ID
+		JOIN T_USER u ON u.ID = us.USER_ID  
 		WHERE p.COMPANY_ID = 1000 AND p.REGION_ID IS NOT NULL
 		AND u.USER_NAME = #{userName}				
 	</select>

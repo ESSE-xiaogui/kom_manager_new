@@ -12,22 +12,22 @@ import org.springframework.stereotype.Controller;
 
 import com.rest.service.controller.AbstractController;
 import com.shangkang.core.exception.ServiceException;
-import com.transsion.store.bo.OrgBiz;
-import com.transsion.store.facade.OrgBizFacade;
+import com.transsion.store.bo.RegionType;
+import com.transsion.store.facade.RegionTypeFacade;
 
 @Controller
 @Path("regionType")
 public class RegionTypeController extends AbstractController{
 
 	@Autowired
-	private OrgBizFacade orgBizFacade;
+	private RegionTypeFacade regionTypeFacade;
 	/**
 	 * 查询所有区域类型
 	 * */
 	@GET
 	@Path("/findAll")
 	@Produces({MediaType.APPLICATION_JSON})
-	public List<OrgBiz> findAll() throws ServiceException{
-		return orgBizFacade.findAll();
+	public List<RegionType> findAll() throws ServiceException{
+		return regionTypeFacade.findAll();
 	}
 }
