@@ -19,12 +19,6 @@ public class ResourceService {
 	@Autowired
 	private SystemResourceMapper systemResourceMapper;
 	 
-    private List<String> resources;
-
-    public void setResources(List<String> resources) {
-        this.resources = resources;
-    }
-    
     public List<String> getResources(String token) throws ServiceException {
     	UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
     	Long id = userContext.getUser().getId();
