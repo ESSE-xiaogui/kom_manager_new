@@ -14,12 +14,6 @@ import com.transsion.store.utils.CacheUtils;
 public class AnonResourceService {
 	@Autowired
     private SystemResourceMapper systemResourceMapper;
-	 
-    private List<String> anonList;
-
-    public void setAnonList(List<String> anonList) {
-        this.anonList = anonList;
-    }
 
     public List<String> getResources() throws ServiceException {
         return systemResourceMapper.getAnonResources();

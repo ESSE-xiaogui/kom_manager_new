@@ -2,6 +2,7 @@ package com.transsion.store.facace.impl;
 
 import com.rest.service.security.simple.SimpleAnonResource;
 import com.shangkang.core.exception.ServiceException;
+import com.transsion.store.facade.AnonResourceFacade;
 import com.transsion.store.service.AnonResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 
 @Component("defaultAnonResource")
-public class DefaultAnonResource implements SimpleAnonResource {
+public class DefaultAnonResource implements SimpleAnonResource, AnonResourceFacade {
 
     @Autowired
     private AnonResourceService anonResourceService;
