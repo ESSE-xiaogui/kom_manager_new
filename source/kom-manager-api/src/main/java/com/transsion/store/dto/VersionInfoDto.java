@@ -5,13 +5,33 @@ import java.io.Serializable;
 public class VersionInfoDto implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	private Long id;
+	
 	private String version;
+	
+	private String appName;
 	
 	private String url;
 	
 	private String downLoad_flag;
 	
 	private String donwLoad_hint;
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getAppName() {
+		return appName;
+	}
+
+	public void setAppName(String appName) {
+		this.appName = appName;
+	}
 
 	public String getVersion() {
 		return version;
@@ -47,8 +67,8 @@ public class VersionInfoDto implements Serializable{
 
 	@Override
 	public String toString() {
-		return "VersionInfoDto [version=" + version + ", url=" + url + ", downLoad_flag=" + downLoad_flag
-				+ ", donwLoad_hint=" + donwLoad_hint + "]";
+		return "VersionInfoDto [id=" + id + ", version=" + version + ", appName=" + appName + ", url=" + url
+						+ ", downLoad_flag=" + downLoad_flag + ", donwLoad_hint=" + donwLoad_hint + "]";
 	}
 
 }
