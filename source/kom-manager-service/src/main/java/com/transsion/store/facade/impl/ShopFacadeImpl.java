@@ -40,6 +40,7 @@ public class ShopFacadeImpl implements ShopFacade {
 		this.shopService = shopService;
 	}
 	
+	@Autowired
 	private ShopManager shopManager;
 	
 	/**

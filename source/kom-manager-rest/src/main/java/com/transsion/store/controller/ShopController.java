@@ -139,7 +139,6 @@ public class ShopController extends AbstractController{
 	 * @return
 	 * @throws ServiceException
 	 * */
-	
 	@GET
 	@Path("/findShopIds")
 	@Consumes({MediaType.APPLICATION_JSON})

@@ -359,9 +359,8 @@
 		LEFT JOIN T_REGION c ON c.PARENT_ID = r.ID
 		LEFT JOIN T_SHOP p ON p.REGION_ID = c.ID
 		<if test="userName!= null and userName!= ''">
-		LEFT JOIN T_OPTION o ON o.OBJECT_ID = p.ID
-		LEFT JOIN T_USER_OPTION uo ON uo.OPTION_ID = o.ID
-		LEFT JOIN T_USER u ON u.USER_CODE = uo.USER_CODE
+		LEFT JOIN T_USER_SHOP us ON us.SHOP_ID = p.ID
+		LEFT JOIN T_USER u ON u.ID = us.USER_ID  
         </if>
 		WHERE p.COMPANY_ID = 1000 AND p.REGION_ID IS NOT NULL
 		<if test="userName!= null and userName!= ''">
@@ -373,9 +372,8 @@
 		SELECT c.ID,c.REGION_NAME FROM T_REGION c
 		LEFT JOIN T_SHOP p ON p.REGION_ID = c.ID
 		<if test="userName!= null and userName!= ''">
-		LEFT JOIN T_OPTION o ON o.OBJECT_ID = p.ID
-		LEFT JOIN T_USER_OPTION uo ON uo.OPTION_ID = o.ID
-		LEFT JOIN T_USER u ON u.USER_CODE = uo.USER_CODE
+		LEFT JOIN T_USER_SHOP us ON us.SHOP_ID = p.ID
+		LEFT JOIN T_USER u ON u.ID = us.USER_ID  
 		</if>
 		WHERE c.PARENT_ID = #{parentId}  AND p.COMPANY_ID = 1000 AND p.REGION_ID IS NOT NULL
 		<if test="userName!= null and userName!= ''">

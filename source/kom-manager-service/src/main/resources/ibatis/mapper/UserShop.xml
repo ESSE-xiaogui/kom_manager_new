@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.UserShopMapper">
+	<resultMap id="UserShopResultMapper" type="UserShop">
+		<result column="ID" property="id"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="REMARK" property="remark"/>
+	</resultMap>
+	<delete id="deleteByUserId" parameterType="java.lang.Long">
+		DELETE FROM T_USER_SHOP WHERE USER_ID = #{userId}
+	</delete>
+	<insert id="saveUserShop" parameterType="UserShop"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO T_USER_SHOP(USER_ID,SHOP_ID,CREATE_BY,CREATE_TIME,REMARK) VALUES
+		(
+		#{userId}
+		, #{shopId}
+		, #{createBy}
+		, #{createTime}
+		, #{remark}
+		)
+	</insert>
+</mapper>

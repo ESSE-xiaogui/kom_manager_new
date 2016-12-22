@@ -73,7 +73,7 @@
 	</resultMap>
 	
 	<resultMap id="ShopChildrenDtoMapper" type="ShopChildrenDto">
-		<result column="ID" property="id"/>
+		<result column="ID" property="shopId"/>
 		<result column="REGION_ID" property="regionId"/>
 		<result column="OPTION_ID" property="optionId"/>
 		<result column="USER_OPTION_ID" property="userOptionId"/>
@@ -816,11 +816,10 @@
 		AND u.USER_NAME = #{userName} 
 		</if> 		
 	</select>
-	<select id="findShopIds" parameterType="java.lang.String">
+	<select id="findShopIds" parameterType="java.lang.String" resultType = "Long">
 		SELECT p.ID FROM T_SHOP p
-		LEFT JOIN T_OPTION o ON p.ID = o.OBJECT_ID
-		LEFT JOIN T_USER_OPTION uo ON uo.OPTION_ID = o.ID
-		LEFT JOIN T_USER u ON u.USER_CODE = uo.USER_CODE
+		LEFT JOIN T_USER_SHOP us ON us.SHOP_ID = p.ID
+		LEFT JOIN T_USER u ON u.ID = us.USER_ID  
 		WHERE p.COMPANY_ID = 1000 AND p.REGION_ID IS NOT NULL
 		AND u.USER_NAME = #{userName}				
 	</select>

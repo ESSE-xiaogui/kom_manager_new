@@ -66,6 +66,7 @@ public class UserController extends AbstractController{
 	public UserContext login(@QueryParam("userCode") java.lang.String userCode,
 			@QueryParam("password") java.lang.String password) throws ServiceException {
 		UserContext userContext = userFacade.validateLogin(userCode, password);
+		System.out.println(userContext);
 		return userContext;
 	}
 
