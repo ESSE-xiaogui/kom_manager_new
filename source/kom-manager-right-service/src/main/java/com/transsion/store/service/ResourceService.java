@@ -2,17 +2,32 @@ package com.transsion.store.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.shangkang.core.exception.ServiceException;
+import com.transsion.store.context.UserContext;
+import com.transsion.store.mapper.SystemResourceMapper;
+import com.transsion.store.utils.CacheUtils;
+
 /**
  * Created by liuzh on 16-6-1.
  */
+@Service("resourceService")
 public class ResourceService {
+	
+	@Autowired
+	private SystemResourceMapper systemResourceMapper;
+	 
     private List<String> resources;
-
-    public List<String> getResources() {
-        return resources;
-    }
 
     public void setResources(List<String> resources) {
         this.resources = resources;
+    }
+    
+    public List<String> getResources(String token) throws ServiceException {
+    	UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+    	Long id = userContext.getUser().getId();
+        return systemResourceMapper.getResourcesByUser(id);
     }
 }

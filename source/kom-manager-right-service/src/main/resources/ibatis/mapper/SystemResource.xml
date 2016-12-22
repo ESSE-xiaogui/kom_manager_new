@@ -290,4 +290,15 @@
 	    LEFT JOIN T_ROLE_RESOURCE r ON s.RES_ID = r.RES_ID
 	    WHERE ROLE_ID = #{roleId} 
 	</select>
+	<select id="getResourcesByUser"  parameterType="java.lang.Long" resultType="String">
+		SELECT DISTINCT RES_URL FROM T_SYSTEM_RESOURCE c 
+		LEFT JOIN T_ROLE_RESOURCE r ON c.RES_ID = r.RES_ID
+		LEFT JOIN T_USER_ROLE s ON s.ROLE_ID = r.ROLE_ID
+		LEFT JOIN T_USER u ON s.USER_ID = u.ID
+		WHERE IS_ANON_ACCESS = 'N' AND u.ID = #{id}
+	</select>
+	<select id="getAnonResources"   resultType="String">
+		SELECT DISTINCT RES_URL FROM T_SYSTEM_RESOURCE c 
+		WHERE IS_ANON_ACCESS = 'Y'
+	</select>
 </mapper>

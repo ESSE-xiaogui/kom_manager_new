@@ -27,6 +27,6 @@ public class SimpleResourceImpl implements SimpleResource {
 
         if(uc == null) throw new AuthenticationForbiddenException("认证超时！");
 
-        return resourceService.getResources();
+        return resourceService.getResources(token);
     }
 }
