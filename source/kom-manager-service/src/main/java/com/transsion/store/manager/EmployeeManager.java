@@ -125,6 +125,7 @@ public class EmployeeManager {
 	 * @throws ServiceException
 	 */
 	public EmpResponseDto createUser(String token,EmpUserDto empUserDto) throws ServiceException{
+		final String PASSWORD = "123456";
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
 		}	
@@ -138,6 +139,9 @@ public class EmployeeManager {
 		if(UtilHelper.isEmpty(empUserDto.getPassword())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PASSWORD_IS_NULL);
 		}
+		
+	
+		
 		String userCode = empUserDto.getUserCode();
 		User user = new User();
 		user.setUserCode(userCode);
@@ -149,7 +153,7 @@ public class EmployeeManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_ALREADY_DISTRIBUTED);
 		}
 		user.setCompanyId(userContext.getUser().getCompanyId());
-		user.setPassword(MD5Utils.encrypt(empUserDto.getPassword()));
+		user.setPassword(MD5Utils.encrypt(PASSWORD));
 		user.setIsInactive(1);
 		user.setCreatedBy(userContext.getUser().getUserCode());
 		user.setCreatedTime(systemDateService.getCurrentDate());
