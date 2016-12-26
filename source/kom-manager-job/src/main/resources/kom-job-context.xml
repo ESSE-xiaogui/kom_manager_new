@@ -136,29 +136,8 @@
       <value>queue.kom.job.schedule</value>
     </constructor-arg>
   </bean>
-
-  <bean id="messageHandler" class="com.transsion.kom.job.msg.MessageHandler" />
-
-  <bean id="scheduleMessageHandler" class="com.transsion.kom.job.msg.ScheduleMessageHandler" />
-
-	<bean id="queueListenerContainer"
-		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
-		<property name="connectionFactory" ref="connectionFactory" />
-		<property name="destination" ref="queueDestination" />
-		<property name="messageListener" ref="messageHandler" />
-	</bean>
 	
-	 <bean id="scheduleQueueListenerContainer"
-    class="org.springframework.jms.listener.DefaultMessageListenerContainer">
-    <property name="connectionFactory" ref="connectionFactory" />
-    <property name="destination" ref="scheduleQueueDestination" />
-    <property name="messageListener" ref="scheduleMessageHandler" />
-  </bean>
 
-   <bean id="scheduleJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
-    <property name="connectionFactory" ref="connectionFactory"/>
-    <property name="defaultDestination" ref="scheduleQueueDestination" />
-  </bean>
 
    <!-- message producer -->
   <bean id="producerTargetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
@@ -184,22 +163,4 @@
   <import resource="classpath*:kom-right-context.xml"/>
   <import resource="classpath*:kom-service-context.xml" />
   	 
-  	 <!-- 使用JobDetailFactoryBean -->  
-    <bean name="quartzTacJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">  
-        <property name="jobClass" value="${task.tac.sync}" /> 
-    </bean>  
-    
-    <bean id="tacCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
-        <property name="jobDetail" ref="quartzTacJob"/>  
-        <property name="cronExpression" value="${task.tac.time}"/>  
-    </bean> 
-  	
-    <!-- 配置SchedulerFactoryBean -->  
-    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
-        <property name="triggers">  
-            <list>
-               <ref bean="tacCronTrigger"/>
-            </list>  
-        </property>  
-    </bean> 
 </beans>
