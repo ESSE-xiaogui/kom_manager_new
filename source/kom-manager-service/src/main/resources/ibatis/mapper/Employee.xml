@@ -28,7 +28,9 @@
 		<result column="ID_NO" property="idNo"/>
 		<result column="COMPANY_ID" property="companyId"/>
 		<result column="ORG_ID" property="orgId"/>
+		<result column="ORG_NAME" property="orgName"/>
 		<result column="DUTY_ID" property="dutyId"/>
+		<result column="DUTY_NAME" property="dutyName"/>
 		<result column="UPPER_CODE" property="upperCode"/>
 		<result column="UPPER_NAME" property="upperName"/>
 		<result column="GENDER" property="gender"/>
@@ -152,6 +154,38 @@
 		, COMPANY_ID
 		, ORG_ID
 		, DUTY_ID
+		, UPPER_CODE
+		, UPPER_NAME
+		, GENDER
+		, date_format(BIRTHDAY, '%Y-%m-%d %H:%i:%s') BIRTHDAY
+		, NATION
+		, MARRIED
+		, PHONE_NO
+		, MOBILE_NO
+		, EMAIL
+		, NATIVE_PLACE
+		, ZIP_CODE
+		, IN_SERVICE
+		, REMARK
+		, CREATED_BY
+		, date_format(CREATED_TIME, '%Y-%m-%d %H:%i:%s') CREATED_TIME
+		, UPDATED_BY
+		, date_format(UPDATED_TIME, '%Y-%m-%d %H:%i:%s') UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateCols">
+		 ID
+		, EMP_ID
+		, EMP_CODE
+		, EMP_NAME
+		, U_ID
+		, ID_NO
+		, COMPANY_ID
+		, ORG_ID
+		, ORG_NAME
+		, DUTY_ID
+		, DUTY_NAME
 		, UPPER_CODE
 		, UPPER_NAME
 		, GENDER
@@ -535,13 +569,15 @@
 		 SELECT e.ID,EMP_CODE, EMP_NAME, ID_NO,ORG_NAME,d.DUTY_NAME, UPPER_CODE, UPPER_NAME,
 		 GENDER, BIRTHDAY, NATION, MARRIED, PHONE_NO,EMAIL, IN_SERVICE FROM T_EMPLOYEE e 
 		 LEFT JOIN T_DUTY d ON d.ID = e.DUTY_ID
-		 LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ID
+		 LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ORG_ID
 		 WHERE e.EMP_CODE = #{empCode}
 	</select>
 	<select id="listPaginationByProperty" parameterType="Employee" resultMap="EmployeeResultMapper">
-		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_EMPLOYEE WHERE 1=1
+		 SELECT e.ID,EMP_CODE, EMP_NAME, ID_NO,ORG_NAME,d.DUTY_NAME, UPPER_CODE, UPPER_NAME,
+		 GENDER, BIRTHDAY, NATION, MARRIED, PHONE_NO,EMAIL, IN_SERVICE FROM T_EMPLOYEE e 
+		 LEFT JOIN T_DUTY d ON d.ID = e.DUTY_ID
+		 LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ORG_ID
+		 WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>

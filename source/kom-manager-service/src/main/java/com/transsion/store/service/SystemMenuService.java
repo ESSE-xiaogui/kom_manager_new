@@ -80,6 +80,11 @@ public class SystemMenuService {
 	{
 		List<SystemMenu> list = systemMenuMapper.listPaginationByProperty(pagination, systemMenu, pagination.getOrderBy());
 		
+		for(SystemMenu sm:list){
+			Long pid = sm.getParentMenuId();
+			if(0!=pid)
+				sm.setParentMenuName(systemMenuMapper.getByPK(pid).getMenuName());
+		}
 		pagination.setResultList(list);
 		
 		return pagination;

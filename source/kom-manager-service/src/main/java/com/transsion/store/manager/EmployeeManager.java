@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
+import com.transsion.store.bo.Duty;
 import com.transsion.store.bo.Employee;
 import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
@@ -12,6 +13,7 @@ import com.transsion.store.dto.EmpResponseDto;
 import com.transsion.store.dto.EmpUserDto;
 import com.transsion.store.dto.OrganizationDto;
 import com.transsion.store.dto.UserDto;
+import com.transsion.store.mapper.DutyMapper;
 import com.transsion.store.mapper.EmployeeMapper;
 import com.transsion.store.mapper.OrganizationMapper;
 import com.transsion.store.resource.MessageStoreResource;
@@ -37,6 +39,9 @@ public class EmployeeManager {
 	
 	@Autowired
 	private OrganizationMapper organizationMapper;
+	
+	@Autowired
+	private DutyMapper dutyMapper;
 	
 	public EmpResponseDto saveEmp(String token,Employee employee) throws ServiceException
 	{
@@ -220,6 +225,8 @@ public class EmployeeManager {
 		BeanUtils.copyProperties(emp, erd);
 		OrganizationDto org = organizationMapper.getByPKs(Long.valueOf(erd.getOrgId()));
 		erd.setOrgName(org.getOrgName());
+		Duty duty = dutyMapper.getByPK(Long.valueOf(erd.getOrgId()));
+		erd.setDutyName(duty.getDutyName());
 		return erd;
 	}
 

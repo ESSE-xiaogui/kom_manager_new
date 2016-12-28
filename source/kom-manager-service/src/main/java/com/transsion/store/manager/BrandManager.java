@@ -48,9 +48,6 @@ public class BrandManager {
 		if(UtilHelper.isEmpty(userContext.getUser().getCompanyId())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(userContext.getUser().getUserId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERID_IS_NULL);
-		}
 		Brand brand = new Brand();
 		BeanUtils.copyProperties(brandDto, brand);
 		brand.setCompanyId(userContext.getUser().getCompanyId());

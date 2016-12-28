@@ -49,6 +49,8 @@ public class SystemMenu extends Model{
 	  *	
 	  */
 	private java.lang.Long parentMenuId;
+	
+	private java.lang.String parentMenuName;
 
 	/**
 	  *	
@@ -207,15 +209,22 @@ public class SystemMenu extends Model{
 		this.version = version;
 	}
 
+	public java.lang.String getParentMenuName() {
+		return parentMenuName;
+	}
+
+	public void setParentMenuName(java.lang.String parentMenuName) {
+		this.parentMenuName = parentMenuName;
+	}
+
 	@Override
 	public String toString() {
 		return "SystemMenu [menuId=" + menuId + ", menuCode=" + menuCode + ", menuName=" + menuName + ", menuOrder="
-				+ menuOrder + ", parentMenuId=" + parentMenuId + ", menuIcon=" + menuIcon + ", pageUrl=" + pageUrl
-				+ ", usable=" + usable + ", remark=" + remark + ", createdBy=" + createdBy + ", createTime="
-				+ createTime + ", updatedBy=" + updatedBy + ", updateTime=" + updateTime + ", version=" + version + "]";
+						+ menuOrder + ", parentMenuId=" + parentMenuId + ", parentMenuName=" + parentMenuName
+						+ ", menuIcon=" + menuIcon + ", pageUrl=" + pageUrl + ", usable=" + usable + ", remark="
+						+ remark + ", createdBy=" + createdBy + ", createTime=" + createTime + ", updatedBy="
+						+ updatedBy + ", updateTime=" + updateTime + ", version=" + version + "]";
 	}
-
-
 
 }
 
