@@ -296,7 +296,7 @@
 		DELETE FROM T_USER_ROLE WHERE
 		<foreach collection="primaryKeys" index="index" item="id"
 			open=" USER_ROLE_ID IN(" separator="," close=") ">
-			${id}
+			#{id}
 		</foreach>
 	</delete>
 	<delete id="deleteByProperty" parameterType="UserRole">

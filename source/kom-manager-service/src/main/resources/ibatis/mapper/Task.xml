@@ -25,6 +25,7 @@
 		<result column="STAGE" property="stage"/>
 		<result column="UPLOAD_TIME" property="uploadTime"/>
 		<result column="USER_NAME" property="userName"/>
+		<result column="STATUS" property="status"/>
 	</resultMap>
 	<sql id="commonColumnsNotPK">
 		TASK_TYPE
@@ -33,6 +34,7 @@
 		, STAGE
 		, UPLOAD_TIME
 		, USER_NAME
+		, STATUS
 	</sql>	
 	<insert id="saveTask" useGeneratedKeys="true" keyProperty="id" parameterType="Task">
 		<![CDATA[ INSERT INTO T_TASK ( ]]>
@@ -45,6 +47,7 @@
 			, #{stage}
 			, #{uploadTime}
 			, #{userName}
+			, #{status}
   ) ]]>
 	</insert>
 	<select id="findUploadPath" parameterType="java.lang.String" resultType="String">

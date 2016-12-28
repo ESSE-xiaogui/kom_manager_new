@@ -444,7 +444,7 @@
 		DELETE FROM T_SALE_ITEM WHERE
 		<foreach collection="primaryKeys" index="index" item="id"
 			open=" ID IN(" separator="," close=") ">
-			${id}
+			#{id}
 		</foreach>
 	</delete>
 	<delete id="deleteByProperty" parameterType="SaleItem">

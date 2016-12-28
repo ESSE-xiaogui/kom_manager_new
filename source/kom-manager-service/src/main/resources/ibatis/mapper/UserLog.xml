@@ -159,7 +159,7 @@
 		DELETE FROM T_USER_LOG WHERE
 		<foreach collection="primaryKeys" index="index" item="id"
 			open=" LOG_ID IN(" separator="," close=") ">
-			${id}
+			#{id}
 		</foreach>
 	</delete>
 	<delete id="deleteByProperty" parameterType="UserLog">

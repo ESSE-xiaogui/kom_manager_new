@@ -234,7 +234,7 @@
 		DELETE FROM T_USER_OPTION WHERE
 		<foreach collection="primaryKeys" index="index" item="id"
 			open=" ID IN(" separator="," close=") ">
-			${id}
+			#{id}
 		</foreach>
 	</delete>
 	<delete id="deleteByProperty" parameterType="UserOption">

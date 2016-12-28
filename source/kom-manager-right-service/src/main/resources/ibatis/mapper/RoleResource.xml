@@ -204,7 +204,7 @@
 		DELETE FROM T_ROLE_RESOURCE WHERE
 		<foreach collection="primaryKeys" index="index" item="id"
 			open=" ROLE_RES_ID IN(" separator="," close=") ">
-			${id}
+			#{id}
 		</foreach>
 	</delete>
 	<delete id="deleteByProperty" parameterType="RoleResource">
