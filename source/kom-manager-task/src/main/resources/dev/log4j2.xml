@@ -35,9 +35,9 @@
     </appenders>
     <loggers>
         <!-- 3rdparty Loggers -->
-        <logger name="org.springframework" level="info">
+        <logger name="org.springframework" level="debug">
         </logger>
-        <logger name="org.jboss" level="info">
+        <logger name="org.jboss" level="debug">
         </logger>
         <logger name="com.transssion" level="info">
         </logger>
@@ -47,7 +47,7 @@
             <appender-ref ref="ProductLog"/>
         </logger>-->
         <!-- Root Logger -->
-        <root level="debug">
+        <root level="info">
             <!--<appender-ref ref="DevLog"/>-->
             <appender-ref ref="Console"/>
         </root>

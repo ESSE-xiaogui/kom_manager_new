@@ -11,11 +11,15 @@ public class TaskDetail extends Model{
 
 	private Long id;
 	
-	private Long pid;
+	private Long taskId;
 	
-	private String describe;
+	private String message;
 	
 	private Integer status;
+	
+	private String createTime;
+	
+	private String constant;
 
 	public Long getId() {
 		return id;
@@ -25,20 +29,20 @@ public class TaskDetail extends Model{
 		this.id = id;
 	}
 
-	public Long getPid() {
-		return pid;
+	public Long getTaskId() {
+		return taskId;
 	}
 
-	public void setPid(Long pid) {
-		this.pid = pid;
+	public void setTaskId(Long taskId) {
+		this.taskId = taskId;
 	}
 
-	public String getDescribe() {
-		return describe;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setDescribe(String describe) {
-		this.describe = describe;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	public Integer getStatus() {
@@ -49,9 +53,26 @@ public class TaskDetail extends Model{
 		this.status = status;
 	}
 
+	public String getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getConstant() {
+		return constant;
+	}
+
+	public void setConstant(String constant) {
+		this.constant = constant;
+	}
+
 	@Override
 	public String toString() {
-		return "TaskDetail [id=" + id + ", pid=" + pid + ", describe=" + describe + ", status=" + status + "]";
+		return "TaskDetail [id=" + id + ", taskId=" + taskId + ", message=" + message + ", status=" + status
+						+ ", createTime=" + createTime + ", constant=" + constant + "]";
 	}
 	
 }

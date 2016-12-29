@@ -1,5 +1,7 @@
 package com.transsion.store.facade.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +18,12 @@ public class TaskFacadeImpl implements TaskFacade{
 	private TaskManager taskManager;
 	
 	
-	public void saveTask(TaskDto taskDto) throws ServiceException {
-		taskManager.saveTask(taskDto);
+	public void saveTask(TaskDto taskDto,String token) throws ServiceException {
+		taskManager.saveTask(taskDto,token);
+	}
+	
+	public List<TaskDto> findTask(String token, TaskDto taskDto) throws ServiceException{
+		return taskManager.findTask(token, taskDto);
 	}
 
 }

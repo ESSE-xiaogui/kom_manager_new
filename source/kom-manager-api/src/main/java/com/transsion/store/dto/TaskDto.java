@@ -16,6 +16,8 @@ public class TaskDto implements Serializable{
 	private String uploadPath;
 	
 	private String userName;
+	
+	private String remark;
 
 	public String getTaskType() {
 		return taskType;
@@ -49,10 +51,18 @@ public class TaskDto implements Serializable{
 		this.userName = userName;
 	}
 
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
 	@Override
 	public String toString() {
 		return "TaskDto [taskType=" + taskType + ", fileName=" + fileName + ", uploadPath=" + uploadPath + ", userName="
-				+ userName + "]";
+						+ userName + ", remark=" + remark + "]";
 	}
 
 }

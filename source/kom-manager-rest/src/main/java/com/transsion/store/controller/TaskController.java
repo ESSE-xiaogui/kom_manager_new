@@ -1,8 +1,11 @@
 package com.transsion.store.controller;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +26,23 @@ public class TaskController extends AbstractController{
 	 * 批量导入
 	 * */
 	@POST
-	@Path("/batchTask")
+	@Path("/saveTask")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void batchTask(TaskDto taskDto) throws ServiceException{
-		taskFacade.saveTask(taskDto);
+	public void saveTask(TaskDto taskDto) throws ServiceException{
+		String token = this.getAuthorization();
+		taskFacade.saveTask(taskDto,token);
 	}
+	
+	/**
+	 * 查询上传信息
+	 * */
+	@POST
+	@Path("findTask")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<TaskDto> findTask(TaskDto taskDto) throws ServiceException{
+		String token = this.getAuthorization();
+		return taskFacade.findTask(token, taskDto);
+	}
+	
 }

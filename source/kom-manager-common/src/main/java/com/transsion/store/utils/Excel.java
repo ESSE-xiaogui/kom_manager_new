@@ -2,6 +2,7 @@ package com.transsion.store.utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,6 +34,19 @@ public class Excel {
 		File file = new File(path);
 		return create(file);
 	}
+	
+	public Excel(InputStream inputStream){
+		try {
+			workbook = new XSSFWorkbook(inputStream);
+		} catch (IOException e) {
+			try {
+				workbook = new HSSFWorkbook(inputStream);
+			} catch (IOException ex) {
+				workbook = null;
+			}
+		}
+	}
+	
 	
 	public Excel(File file){
 		this.file = file;

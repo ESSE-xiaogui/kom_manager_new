@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,17 +14,20 @@ import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Sale;
 import com.transsion.store.bo.SaleItem;
 import com.transsion.store.bo.Shop;
+import com.transsion.store.bo.Task;
+import com.transsion.store.bo.TaskDetail;
 import com.transsion.store.dto.SaleTaskDto;
 import com.transsion.store.dto.ScanValidateDto;
 import com.transsion.store.manager.ScanValidateManager;
 import com.transsion.store.mapper.SaleItemMapper;
 import com.transsion.store.mapper.SaleMapper;
 import com.transsion.store.mapper.ShopMapper;
-import com.transsion.store.mapper.TaskMapper;
+import com.transsion.store.mapper.TaskDetailMapper;
+import com.transsion.store.service.SystemDateService;
 import com.transsion.store.task.interfaces.SaleService;
 import com.transsion.store.utils.Excel;
 
-@Service("saleService")
+@Service("taskSaleService")
 public class SaleServiceImpl implements SaleService {
 	@Autowired
 	private ScanValidateManager scanValidateManager;
@@ -39,35 +41,36 @@ public class SaleServiceImpl implements SaleService {
 	@Autowired
 	private SaleMapper saleMapper;
 	
-	@Autowired 
-	private TaskMapper taskMapper;
+	@Autowired
+	private SystemDateService systemDateService;
+	
+	@Autowired
+	private TaskDetailMapper taskDetailMapper;
+	
 	/**
 	 * 批量上传销量
 	 * */
-	public List<SaleTaskDto> taskSales(List<SaleTaskDto> saleTaskDtoList) throws ServiceException {
-		List<SaleTaskDto> saleList = new ArrayList<SaleTaskDto>();
+	public void taskSales(List<SaleTaskDto> saleTaskDtoList, Long taskId) throws ServiceException {
 		for (SaleTaskDto saleTaskDto : saleTaskDtoList) {
-			SaleTaskDto s = new SaleTaskDto();
-			BeanUtils.copyProperties(saleTaskDto, s);
+			TaskDetail taskDetail = new TaskDetail();
 			/**
 			 * param is null
 			 */
 			if (UtilHelper.isEmpty(saleTaskDto.getImeiNo()) || UtilHelper.isEmpty(saleTaskDto.getUserCode())
 							|| UtilHelper.isEmpty(saleTaskDto.getShopCode())) {
-
-				s.setRemark("IMEI code is null;User ID is null;Shop ID is null");
+				taskDetail.setMessage("IMEI code is null;User ID is null;Shop ID is null");
 			}
 			/**
 			 * imei illeagal
 			 */
 			ScanValidateDto scan = scanValidateManager.scanValidate(saleTaskDto.getImeiNo(), null);
 			if (UtilHelper.isEmpty(scan.getImeis())) {
-				s.setRemark("IMEI illegal");
+				taskDetail.setMessage("IMEI illegal");
 			} else {
 				String imeiNo = saleItemMapper.queryScanDuplicatedIMEI(saleTaskDto.getImeiNo());
 				List<String> imeiLists = Arrays.asList(scan.getImeis());
 				if (imeiLists.contains(imeiNo)) {
-					s.setRemark("IMEI code repeated");
+					taskDetail.setMessage("IMEI code repeated");
 				} else {
 					Sale sale = new Sale();
 					sale.setBillno("");
@@ -101,27 +104,32 @@ public class SaleServiceImpl implements SaleService {
 					String imeiList = imeisList.toString();
 					saleItem.setImeiList(imeiList);
 					saleItemMapper.save(saleItem);
-					s.setRemark("ok");
+					taskDetail.setMessage("IMEI code repeated");
 				}
 			}
-			saleList.add(s);
+			taskDetail.setTaskId(taskId);
+			String constant = saleTaskDto.getSaleDate() + "\r" + saleTaskDto.getShopCode() + "\r"
+							+ saleTaskDto.getUserCode() + "\r" + saleTaskDto.getImeiNo() + "\r"
+							+ saleTaskDto.getPrice();
+			taskDetail.setConstant(constant);
+			taskDetail.setCreateTime(systemDateService.getCurrentDate());
+			taskDetailMapper.save(taskDetail);
 		}
-		return saleList;
 	}
 	
 	/**
 	 * 转换excel
 	 * */
-	public List<SaleTaskDto> getSaleTaskDto(String taskType) throws ServiceException {
-		if (!UtilHelper.isEmpty(taskType)) {
-			String uploadPath = taskMapper.findUploadPath(taskType);
+	public void getSaleTaskDto(Task task) throws ServiceException {
+		if (!UtilHelper.isEmpty(task.getUploadPath())) {
+			String uploadPath = task.getUploadPath();
 			if (!UtilHelper.isEmpty(uploadPath)) {
 				List<SaleTaskDto> saleTaskDtoList = new ArrayList<SaleTaskDto>();
 				File file = new File(uploadPath);
 				Excel e = new Excel(file);
 				String[][] dataArr = e.getData(1);
-				if (dataArr == null || dataArr.length == 0 || (dataArr.length == 1 && dataArr[0].length == 0))
-					return null;
+				//if (dataArr != null && dataArr.length > 0 || (dataArr.length == 1 && dataArr[0].length == 0))
+					
 				for (int i = 0; i < dataArr.length; i++) {
 					SaleTaskDto saleTaskDto = new SaleTaskDto();
 					for (int j = 0; j < dataArr[i].length; j++) {
@@ -134,12 +142,12 @@ public class SaleServiceImpl implements SaleService {
 					saleTaskDtoList.add(saleTaskDto);
 				}
 				if (!UtilHelper.isEmpty(saleTaskDtoList)) {
-					return taskSales(saleTaskDtoList);
+					 taskSales(saleTaskDtoList,task.getId());
 				}
-				return null;
+				
 			}
 		}
-		return null;
+		
 	}
 
 }

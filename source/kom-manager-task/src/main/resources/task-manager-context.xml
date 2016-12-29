@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:jms="http://www.springframework.org/schema/jms"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context.xsd
+      http://www.springframework.org/schema/tx 
+      http://www.springframework.org/schema/tx/spring-tx.xsd
+      http://www.springframework.org/schema/aop
+      http://www.springframework.org/schema/aop/spring-aop.xsd
+	    http://www.springframework.org/schema/jms
+	    http://www.springframework.org/schema/jms/spring-jms.xsd">
+	<context:property-placeholder location="classpath:**/quartz.properties"
+		ignore-unresolvable="true" />
+	<context:property-placeholder location="classpath:**/mq.properties"/>
+	<context:annotation-config />
+	<context:component-scan base-package="com.batch.task,com.sample.task.executions" />
+	<aop:aspectj-autoproxy />
+	 <bean id="beanHelper" class="com.batch.task.helper.BeanHelper"/>
+
+
+	<!-- message -->
+	<bean id="amqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="failover:(tcp://10.250.117.4:61616)?timeout=3000" />
+	</bean>
+
+	<bean id="connectionFactory"
+		class="org.springframework.jms.connection.SingleConnectionFactory">
+		<property name="targetConnectionFactory" ref="amqConnectionFactory" />
+	</bean>
+
+	<bean id="taskQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>queue.task</value>
+		</constructor-arg>
+	</bean>
+
+	 <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <property name="connectionFactory" ref="connectionFactory"/>
+    <property name="defaultDestination" ref="taskQueue" />
+  </bean>
+  
+</beans>

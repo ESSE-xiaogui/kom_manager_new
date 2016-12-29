@@ -9,9 +9,7 @@ public class Main {
 	private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
 	public static final String DEFAULT_SPRING_CONFIG = "classpath*:kom-task-context.xml";
-
 	static ClassPathXmlApplicationContext context;
-
 	public static ClassPathXmlApplicationContext getContext() {
 		return context;
 	}

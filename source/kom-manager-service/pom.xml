@@ -28,6 +28,16 @@
             <version>${parent.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.batch</groupId>
+            <artifactId>task-api</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.batch</groupId>
+            <artifactId>task-message</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
         </dependency>

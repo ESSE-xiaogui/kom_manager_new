@@ -21,6 +21,10 @@ public class Task extends Model{
 	private String uploadTime;
 	
 	private String userName;
+	
+	private Integer status;
+	
+	private String remark;
 
 	public Long getId() {
 		return id;
@@ -78,10 +82,26 @@ public class Task extends Model{
 		this.userName = userName;
 	}
 
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
 	@Override
 	public String toString() {
 		return "Task [id=" + id + ", taskType=" + taskType + ", fileName=" + fileName + ", uploadPath=" + uploadPath
-				+ ", stage=" + stage + ", uploadTime=" + uploadTime + ", userName=" + userName + "]";
+						+ ", stage=" + stage + ", uploadTime=" + uploadTime + ", userName=" + userName + ", status="
+						+ status + ", remark=" + remark + "]";
 	}
-	
 }

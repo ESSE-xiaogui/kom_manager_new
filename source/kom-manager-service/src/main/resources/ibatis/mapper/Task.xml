@@ -26,6 +26,18 @@
 		<result column="UPLOAD_TIME" property="uploadTime"/>
 		<result column="USER_NAME" property="userName"/>
 		<result column="STATUS" property="status"/>
+		<result column="REMARK" property="remark"/>
+	</resultMap>
+	<resultMap id="TaskDtoResultMapper" type="TaskDto">
+		<result column="ID" property="id"/>
+		<result column="TASK_TYPE" property="taskType"/>
+		<result column="FILE_NAME" property="fileName"/>
+		<result column="UPLOAD_PATH" property="uploadPath"/>
+		<result column="STAGE" property="stage"/>
+		<result column="UPLOAD_TIME" property="uploadTime"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="STATUS" property="status"/>
+		<result column="REMARK" property="remark"/>
 	</resultMap>
 	<sql id="commonColumnsNotPK">
 		TASK_TYPE
@@ -35,7 +47,34 @@
 		, UPLOAD_TIME
 		, USER_NAME
 		, STATUS
+		, REMARK
 	</sql>	
+	<sql id="commonCondition">
+		<if test="taskType!= null and taskType!= ''"> 
+			AND TASK_TYPE=#{taskType}
+		</if>
+		<if test="fileName!= null and fileName!= ''"> 
+			AND FILE_NAME=#{fileName}
+		</if>
+		<if test="uploadPath!= null and uploadPath!= ''"> 
+			AND UPLOAD_PATH=#{uploadPath}
+		</if>
+		<if test="stage!= null and stage!= ''"> 
+			AND STAGE=#{stage}
+		</if>
+		<if test="uploadTime!= null and uploadTime!= ''"> 
+			AND UPLOAD_TIME=#{uploadTime}
+		</if>
+		<if test="userName!= null and userName!= ''"> 
+			AND USER_NAME=#{userName}
+		</if>
+		<if test="status!= null and status!= ''"> 
+			AND STATUS=#{status}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+	</sql>
 	<insert id="saveTask" useGeneratedKeys="true" keyProperty="id" parameterType="Task">
 		<![CDATA[ INSERT INTO T_TASK ( ]]>
 		<include refid="commonColumnsNotPK"/>
@@ -48,9 +87,12 @@
 			, #{uploadTime}
 			, #{userName}
 			, #{status}
+			, #{remark}
   ) ]]>
 	</insert>
-	<select id="findUploadPath" parameterType="java.lang.String" resultType="String">
-	SELECT UPLOAD_PATH FROM T_TASK WHERE TASK_TYPE = #{taskType}
+	<select id="findTask" parameterType="TaskDto" resultMap="TaskDtoResultMapper">
+		SELECT ID,TASK_TYPE,FILE_NAME,UPLOAD_PATH,STAGE,STATUS,UPLOAD_TIME,USER_NAME,REMARK FROM T_TASK
+		WHERE USER_NAME = #{userName}
+		<include refid="commonCondition"/>
 	</select>
 </mapper>

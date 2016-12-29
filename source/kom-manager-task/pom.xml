@@ -31,25 +31,30 @@
 			<artifactId>kom-manager-right-service</artifactId>
 			<version>${parent.version}</version>
 		</dependency>
-
+		 <dependency>
+            <groupId>com.batch</groupId>
+            <artifactId>task-main</artifactId>
+            <version>1.0</version>
+        </dependency>
+        </dependencies>
     <!-- message -->
-		<dependency>
+<!-- 		<dependency>
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-client</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jms</artifactId>
-		</dependency>
+		</dependency> -->
 
     <!-- scheduler -->
-		<dependency>
+	<!-- 	<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
 			<version>2.2.2</version>
-		</dependency>
+		</dependency> -->
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
@@ -58,15 +63,15 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>1.2.8</version>
-		</dependency>
+		</dependency> -->
 
 		<!-- Logging -->
-		<dependency>
+	<!-- 	<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-		</dependency>
+		</dependency> -->
 		<!-- log4j2 -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
 		</dependency>
@@ -90,9 +95,9 @@
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j-impl</artifactId>
 		</dependency>
-
+ -->
     <!-- unit test -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
@@ -102,8 +107,8 @@
 			<artifactId>spring-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
-
+	</dependencies> -->
+<!-- 
 	<profiles>
 		<profile>
 			<id>dev</id>
@@ -126,9 +131,9 @@
 				<package.environment>test</package.environment>
 			</properties>
 		</profile>
-	</profiles>
-	<build>
-		<!-- 开启资源文件过滤 -->
+	</profiles> -->
+	<!-- <build>
+		开启资源文件过滤
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -140,7 +145,7 @@
 				</excludes>
 			</resource>
 		</resources>
-		<!-- 动态指定变量环境 -->
+		动态指定变量环境
 		<filters>
 			<filter>src/main/resources/${package.environment}/mq.properties</filter>
 		</filters>
@@ -196,7 +201,7 @@
 									<generator>jsw</generator>
 									<includes>
 										<include>linux-x86-64</include>
-										<!--<include>linux-x86-32</include> <include>windows-x86-32</include> -->
+										<include>linux-x86-32</include> <include>windows-x86-32</include>
 										<include>windows-x86-64</include>
 									</includes>
 									<configuration>
@@ -227,6 +232,6 @@
 
 			</plugin>
 		</plugins>
-	</build>
+	</build> -->
 
 </project>

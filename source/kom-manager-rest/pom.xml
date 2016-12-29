@@ -66,6 +66,11 @@
             <artifactId>kom-manager-common</artifactId>
             <version>${parent.version}</version>
         </dependency>
+         <dependency>
+            <groupId>com.transsion</groupId>
+            <artifactId>kom-manager-service</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
         <!-- spring jars config start-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -170,6 +175,11 @@
             <artifactId>spring-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+			<groupId>commons-configuration</groupId>
+			<artifactId>commons-configuration</artifactId>
+			<version>1.9</version>
+		</dependency>
     </dependencies>
 
     <build>

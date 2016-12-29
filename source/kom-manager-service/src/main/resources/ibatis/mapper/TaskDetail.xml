@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.TaskDetailMapper">
+	<resultMap id="TaskDetailResultMapper" type="TaskDetail">
+		<result column="ID" property="id"/>
+		<result column="TASK_ID" property="taskId"/>
+		<result column="MESSAGE" property="message"/>
+		<result column="STATUS" property="status"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="CONSTANT" property="constant"/>
+	</resultMap>
+	<sql id="commonColumnsNotPK">
+		TASK_ID
+		, MESSAGE
+		, STATUS
+		, CREATE_TIME
+		, CONSTANT
+	</sql>	
+	<insert id="saveTaskDetail" useGeneratedKeys="true" keyProperty="id" parameterType="TaskDetail">
+		<![CDATA[ INSERT INTO T_TASK_DETAIL ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{taskId}
+			, #{message}
+			, #{status}
+			, #{createTime}
+			, #{constant}
+  ) ]]>
+	</insert>
+	<select id="findTaskDetail" parameterType="Long"
+		resultMap="TaskDetailResultMapper">
+		SELECT ID,TASK_ID,MESSAGE,STATUS,CREATE_TIME,CONTANT FROM T_TASK_DETAIL
+		WHERE TASK_ID =#{taskId}
+	</select>
+</mapper>
