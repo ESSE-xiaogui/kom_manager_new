@@ -1,13 +1,9 @@
 package com.transsion.store.service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.shangkang.core.exception.ServiceException;
-import com.transsion.store.context.UserContext;
 import com.transsion.store.mapper.SystemResourceMapper;
-import com.transsion.store.utils.CacheUtils;
 
 /**
  */

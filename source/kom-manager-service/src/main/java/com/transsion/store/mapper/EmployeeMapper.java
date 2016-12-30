@@ -24,7 +24,6 @@ import com.transsion.store.dto.EmpResponseDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
-import com.shangkang.core.exception.ServiceException;
 
 import org.apache.ibatis.annotations.Param;
 

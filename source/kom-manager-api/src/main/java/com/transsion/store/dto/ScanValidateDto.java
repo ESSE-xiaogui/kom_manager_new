@@ -8,7 +8,11 @@ import java.util.List;
  * Created by pradmin on 2016/5/30.
  */
 public class ScanValidateDto implements Serializable{
-    private String brand;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String brand;
     private String model;
     private String[] imeis;
     private String vc;

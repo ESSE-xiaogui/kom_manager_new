@@ -17,16 +17,12 @@
 package com.transsion.store.service;
 
 import java.util.List;
-
-import javax.ws.rs.QueryParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.Region;
 import com.transsion.store.dto.RegionDto;
 import com.shangkang.core.bo.Pagination;
-import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.RegionMapper;
 

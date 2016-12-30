@@ -17,12 +17,9 @@
 package com.transsion.store.service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.transsion.store.bo.SystemResource;
-import com.transsion.store.manager.SystemResourceManager;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.SystemResourceMapper;
@@ -31,9 +28,6 @@ import com.transsion.store.mapper.SystemResourceMapper;
 public class SystemResourceService {
 
 	private SystemResourceMapper	systemResourceMapper;
-	
-	@Autowired
-	private SystemResourceManager 	systemResourceManager;
 
 	@Autowired
 	public void setSystemResourceMapper(SystemResourceMapper systemResourceMapper)

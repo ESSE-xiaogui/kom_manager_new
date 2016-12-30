@@ -19,7 +19,6 @@ package com.transsion.store.controller;
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Duty;
 import com.transsion.store.dto.DutyResponseDto;
-import com.transsion.store.dto.OrganizationResponseDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.DutyFacade;
 import com.shangkang.core.bo.Pagination;

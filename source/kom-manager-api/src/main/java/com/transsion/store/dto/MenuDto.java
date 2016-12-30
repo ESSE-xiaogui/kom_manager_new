@@ -3,9 +3,6 @@ package com.transsion.store.dto;
 import java.io.Serializable;
 import java.util.List;
 
-import com.shangkang.core.bo.Model;
-
-
 public class MenuDto implements Serializable{
 
 	/**

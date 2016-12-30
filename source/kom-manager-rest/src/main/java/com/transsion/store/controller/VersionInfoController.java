@@ -12,7 +12,6 @@ import com.rest.service.controller.AbstractController;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.dto.VersionInfoDto;
 import com.transsion.store.facade.VersionInfoFacade;
-import com.transsion.store.utils.PropertiesUtils;
 
 
 @Controller
