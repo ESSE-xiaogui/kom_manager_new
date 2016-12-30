@@ -34,6 +34,8 @@ public class UserManager {
 	@Autowired
 	
 	private SystemDateService systemDateService;
+	
+	private static final int INACTIVE = 2;
 
 	
 	/**
@@ -44,7 +46,6 @@ public class UserManager {
 	 * @throws ServiceException
 	 */
 	public UserContext validateLogin(String userCode, String password) throws ServiceException {
-		final int INACTIVE = 2;
 		if(UtilHelper.isEmpty(userCode)||UtilHelper.isEmpty(password))
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		User user = new User();
