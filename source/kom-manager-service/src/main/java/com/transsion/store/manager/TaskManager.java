@@ -13,7 +13,6 @@ import com.transsion.store.dto.TaskDto;
 import com.transsion.store.mapper.TaskMapper;
 import com.transsion.store.message.Message.Group;
 import com.transsion.store.message.Message.Type;
-import com.transsion.store.message.MessageConstant;
 import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
