@@ -51,7 +51,7 @@ public class UploadController {
 
                 files.setFileId(fileId);
                 files.setName(fileId);
-                files.setUrl(PropertiesConfigurationHelper.getInstance().getUploadServer() + fileId);
+                files.setUrl(PropertiesConfigurationHelper.getInstance().getDownloadServer() + fileId);
                 files.setThumbnailUrl(files.getUrl());
                 files.setFileIdEncode(encode.encode(fileId.getBytes()));
 
@@ -185,7 +185,7 @@ public class UploadController {
     }
 	
     private final static class PropertiesConfigurationHelper {
-        private String uploadServer;
+        private String downloadServer;
 
         private static PropertiesConfigurationHelper getInstance(){
             return new PropertiesConfigurationHelper();
@@ -194,18 +194,18 @@ public class UploadController {
             try {
                 PropertiesConfiguration config = new PropertiesConfiguration(configFile);
 
-                this.uploadServer = config.getString("upload_server");
+                this.downloadServer = config.getString("download_server");
             } catch (ConfigurationException e) {
                 e.printStackTrace();
             }
         }
 
-        public String getUploadServer() {
-            return uploadServer;
+        public String getDownloadServer() {
+            return downloadServer;
         }
 
-        public void setUploadServer(String uploadServer) {
-            this.uploadServer = uploadServer;
+        public void setDownloadServer(String downloadServer) {
+            this.downloadServer = downloadServer;
         }
     }
 
