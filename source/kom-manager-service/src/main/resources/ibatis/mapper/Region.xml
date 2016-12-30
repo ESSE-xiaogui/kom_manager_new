@@ -24,8 +24,10 @@
 		<result column="COMPANY_ID" property="companyId"/>
 		<result column="REGION_CODE" property="regionCode"/>
 		<result column="REGION_NAME" property="regionName"/>
+		<result column="P_REGION_NAME" property="pRegionName"/>
 		<result column="PARENT_ID" property="parentId"/>
 		<result column="REGION_TYPE" property="regionType"/>
+		<result column="REGION_TYPE_NAME" property="regionTypeName"/>
 		<result column="IS_INACTIVE" property="isInactive"/>
 		<result column="REMARK" property="remark"/>
 		<result column="CREATED_BY" property="createdBy"/>
@@ -318,9 +320,13 @@
 		<include refid="commonCondition"/>
 	</select>
 	<select id="listPaginationByProperty" parameterType="Region" resultMap="RegionResultMapper">
-		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_REGION WHERE 1=1
+		SELECT y.REGION_TYPE AS REGION_TYPE_NAME,r1.ID, r1.COMPANY_ID, r1.REGION_CODE, r1.REGION_NAME
+		,r2.REGION_NAME AS P_REGION_NAME, r1.IS_INACTIVE,r1.REMARK, r1.CREATED_BY, r1.UPDATED_BY,r1.VERSION
+		, r1.CREATED_TIME, r1.UPDATED_TIME
+		FROM T_REGION r1
+		LEFT JOIN T_REGION r2 ON r2.ID = r1.PARENT_ID
+		LEFT JOIN T_REGION_TYPE y ON r1.REGION_TYPE = y.ID
+		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>

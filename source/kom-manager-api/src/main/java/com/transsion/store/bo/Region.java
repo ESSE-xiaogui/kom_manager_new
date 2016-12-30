@@ -46,11 +46,15 @@ public class Region extends Model{
 	  *	
 	  */
 	private java.lang.Long parentId;
+	
+	private java.lang.String pRegionName;
 
 	/**
 	  *	字典编号：1020
 	  */
 	private java.lang.Integer regionType;
+	
+	private java.lang.String regionTypeName;
 
 	/**
 	  *	1表示激活状态，被激活有效的数据可以用于新增业务，2表示停用，被停用无效的数据只能用于历史数据查询中
@@ -145,6 +149,14 @@ public class Region extends Model{
 		this.regionName = regionName;
 	}
 	
+	public java.lang.String getpRegionName() {
+		return pRegionName;
+	}
+
+	public void setpRegionName(java.lang.String pRegionName) {
+		this.pRegionName = pRegionName;
+	}
+
 	/**
 	  *	
 	  */
@@ -167,6 +179,15 @@ public class Region extends Model{
 
 	public void setRegionType(java.lang.Integer regionType) {
 		this.regionType = regionType;
+	}
+	
+
+	public java.lang.String getRegionTypeName() {
+		return regionTypeName;
+	}
+
+	public void setRegionTypeName(java.lang.String regionTypeName) {
+		this.regionTypeName = regionTypeName;
 	}
 
 	/**
@@ -284,9 +305,11 @@ public class Region extends Model{
 	@Override
 	public String toString() {
 		return "Region [id=" + id + ", companyId=" + companyId + ", regionCode=" + regionCode + ", regionName="
-				+ regionName + ", parentId=" + parentId + ", regionType=" + regionType + ", isInactive=" + isInactive
-				+ ", remark=" + remark + ", createdBy=" + createdBy + ", createdTime=" + createdTime + ", updatedBy="
-				+ updatedBy + ", updatedTime=" + updatedTime + ", version=" + version + "]";
+						+ regionName + ", parentId=" + parentId + ", pRegionName=" + pRegionName + ", regionType="
+						+ regionType + ", regionTypeName=" + regionTypeName + ", isInactive=" + isInactive + ", remark="
+						+ remark + ", createdBy=" + createdBy + ", createdTime=" + createdTime + ", updatedBy="
+						+ updatedBy + ", updatedTime=" + updatedTime + ", version=" + version + "]";
 	}
+
 }
 
