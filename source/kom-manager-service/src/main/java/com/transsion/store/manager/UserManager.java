@@ -44,15 +44,18 @@ public class UserManager {
 	 * @throws ServiceException
 	 */
 	public UserContext validateLogin(String userCode, String password) throws ServiceException {
+		final int INACTIVE = 2;
 		if(UtilHelper.isEmpty(userCode)||UtilHelper.isEmpty(password))
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		User user = new User();
 		user.setUserCode(userCode);
 		user.setPassword(password);
-		user.setIsInactive(1);
 		List<User> list = userService.listByProperty(user);
 		if (UtilHelper.isEmpty(list)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_LOGIN_FAIL);
+		}
+		if(list.get(0).getIsInactive().equals(INACTIVE)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_INACTIVE_USER);
 		}
 		UserContext userContext = new UserContext();
 		long exp = 3600 * 24;
