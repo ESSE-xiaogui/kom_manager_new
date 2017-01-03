@@ -43,6 +43,8 @@ public class EmployeeManager {
 	@Autowired
 	private DutyMapper dutyMapper;
 	
+	private static final String PASSWORD = "123456";
+	
 	public EmpResponseDto saveEmp(String token,Employee employee) throws ServiceException
 	{
 		if(UtilHelper.isEmpty(token)){
@@ -130,7 +132,6 @@ public class EmployeeManager {
 	 * @throws ServiceException
 	 */
 	public EmpResponseDto createUser(String token,EmpUserDto empUserDto) throws ServiceException{
-		final String PASSWORD = "123456";
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
 		}	

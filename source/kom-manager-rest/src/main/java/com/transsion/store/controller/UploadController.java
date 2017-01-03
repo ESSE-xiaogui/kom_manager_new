@@ -1,11 +1,14 @@
 package com.transsion.store.controller;
 
 import com.rest.service.codec.response.StandardResult;
+import com.rest.service.controller.AbstractController;
 import net.mikesu.fastdfs.FastdfsClient;
 import net.mikesu.fastdfs.FastdfsClientFactory;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.io.IOUtils;
+import org.apache.james.mime4j.field.FieldName;
+import org.apache.james.mime4j.message.BodyPart;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import org.springframework.stereotype.Controller;
@@ -13,63 +16,84 @@ import sun.misc.BASE64Encoder;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 import java.io.*;
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
 @Controller
 @Path("/fastdfs")
-public class UploadController {
+public class UploadController extends AbstractController{
 	private static FastdfsClient fastdfsClient = FastdfsClientFactory.getFastdfsClient();
     private static final String configFile = "FastdfsClient.properties";
-	private static final String SERVER_UPLOAD_LOCATION_FOLDER = "";
+	private static final String SERVER_UPLOAD_LOCATION_FOLDER = "tmp";
 
     @POST
     @Path("/upload")
     @Consumes({MediaType.MULTIPART_FORM_DATA})
     @Produces({MediaType.APPLICATION_JSON})
     public Object uploadFile(MultipartFormDataInput input) {
-        String fileName = "";
-        Map<String, List<InputPart>> formParts = input.getFormDataMap();
-        List<InputPart> inPart = formParts.get("files");
-        for (InputPart inputPart : inPart) {
+        try {
 
-            try {
+            String fileName = "";
+            Map<String, List<InputPart>> formParts = input.getFormDataMap();
+            List<InputPart> inPart = formParts.get("file");
+
+            for (InputPart inputPart : inPart) {
+
+                Field bodyPartField = inputPart.getClass().getDeclaredField("bodyPart");
+                bodyPartField.setAccessible(true);
+                BodyPart bodyPart = (BodyPart) bodyPartField.get(inputPart);
+
                 // Retrieve headers, read the Content-Disposition header to obtain the original name of the file
-                MultivaluedMap<String, String> headers = inputPart.getHeaders();
-                fileName = parseFileName(headers);
+                for (org.apache.james.mime4j.parser.Field field : bodyPart.getHeader()) {
+                    if(!FieldName.CONTENT_DISPOSITION.equals(field.getName()))
+                        continue;
+
+                    fileName = parseFileName(field.getRaw().toString());
+                    logger.debug("The Content-Disposition:[{}], filename:[{}]", field.getRaw(), fileName);
+
+                    break;
+                }
+
+                File tmp = new File(SERVER_UPLOAD_LOCATION_FOLDER);
+
+                if(!tmp.exists()){
+                    tmp.mkdirs();
+                }
+
+                tmp = new File(SERVER_UPLOAD_LOCATION_FOLDER, fileName);
 
                 // Handle the body of that part with an InputStream
                 InputStream istream = inputPart.getBody(InputStream.class,null);
 
-                fileName = SERVER_UPLOAD_LOCATION_FOLDER + fileName;
                 BASE64Encoder encode = new BASE64Encoder();
                 Files files = new Files();
-
-                String fileId = uploadFile(istream,fileName, files);
+                String fileId = uploadFile(istream, tmp);
 
                 files.setFileId(fileId);
-                files.setName(fileId);
-                files.setUrl(PropertiesConfigurationHelper.getInstance().getUploadServer() + fileId);
+                files.setName(fileName);
+                files.setSize(tmp.length());
+                files.setUrl(PropertiesConfigurationHelper.getInstance().getDownloadServer() + fileId);
                 files.setThumbnailUrl(files.getUrl());
                 files.setFileIdEncode(encode.encode(fileId.getBytes()));
 
-                return new FileResult(files);
-            }catch (IOException e) {
-                e.printStackTrace();
-                return new StandardResult(500,e.getMessage());
-            } catch (Exception e) {
-                e.printStackTrace();
-                return new StandardResult(500,e.getMessage());
-            }
+                tmp.delete();
 
+                return new FileResult(files);
+            }
+        }catch (IOException e) {
+            e.printStackTrace();
+            return new StandardResult(500,e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new StandardResult(500,e.getMessage());
         }
         return null;
     }
-    private String parseFileName(MultivaluedMap<String, String> headers) {
+    private String parseFileName(String headers) {
 
-        String[] contentDispositionHeader = headers.getFirst("Content-Disposition").split(";");
+        String[] contentDispositionHeader = headers.split(";");
 
         for (String name : contentDispositionHeader) {
 
@@ -84,7 +108,7 @@ public class UploadController {
         }
         return "randomName";
     }
-	private static void saveFile(InputStream uploadedInputStream, File serverLocation, Files files) {
+	private static void saveFile(InputStream uploadedInputStream, File serverLocation) {
 
 		try {
 			OutputStream outpuStream = null;
@@ -95,7 +119,6 @@ public class UploadController {
 			while ((read = uploadedInputStream.read(bytes)) != -1) {
 				outpuStream.write(bytes, 0, read);
 			}
-			files.setSize(serverLocation.length());
 			outpuStream.flush();
 			outpuStream.close();
 		} catch (IOException e) {
@@ -104,11 +127,9 @@ public class UploadController {
 		}
 	}
 
-	private static String uploadFile(InputStream uploadedInputStream, String serverLocation, Files files) throws Exception {
-		File uploadFile = new File(serverLocation);
-		saveFile(uploadedInputStream, uploadFile, files);
+	private static String uploadFile(InputStream uploadedInputStream, File uploadFile) throws Exception {
+		saveFile(uploadedInputStream, uploadFile);
 		String fileId = fastdfsClient.upload(uploadFile);
-		uploadFile.delete();
 		return fileId;
 	}
 
@@ -185,7 +206,7 @@ public class UploadController {
     }
 	
     private final static class PropertiesConfigurationHelper {
-        private String uploadServer;
+        private String downloadServer;
 
         private static PropertiesConfigurationHelper getInstance(){
             return new PropertiesConfigurationHelper();
@@ -194,18 +215,18 @@ public class UploadController {
             try {
                 PropertiesConfiguration config = new PropertiesConfiguration(configFile);
 
-                this.uploadServer = config.getString("upload_server");
+                this.downloadServer = config.getString("download_server");
             } catch (ConfigurationException e) {
                 e.printStackTrace();
             }
         }
 
-        public String getUploadServer() {
-            return uploadServer;
+        public String getDownloadServer() {
+            return downloadServer;
         }
 
-        public void setUploadServer(String uploadServer) {
-            this.uploadServer = uploadServer;
+        public void setDownloadServer(String downloadServer) {
+            this.downloadServer = downloadServer;
         }
     }
 

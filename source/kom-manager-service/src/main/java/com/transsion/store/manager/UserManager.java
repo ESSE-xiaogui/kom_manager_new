@@ -34,6 +34,8 @@ public class UserManager {
 	@Autowired
 	
 	private SystemDateService systemDateService;
+	
+	private static final int INACTIVE = 2;
 
 	
 	/**
@@ -49,10 +51,12 @@ public class UserManager {
 		User user = new User();
 		user.setUserCode(userCode);
 		user.setPassword(password);
-		user.setIsInactive(1);
 		List<User> list = userService.listByProperty(user);
 		if (UtilHelper.isEmpty(list)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_LOGIN_FAIL);
+		}
+		if(list.get(0).getIsInactive().equals(INACTIVE)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_INACTIVE_USER);
 		}
 		UserContext userContext = new UserContext();
 		long exp = 3600 * 24;

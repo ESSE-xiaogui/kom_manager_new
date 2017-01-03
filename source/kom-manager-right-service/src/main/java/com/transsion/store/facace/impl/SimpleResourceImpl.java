@@ -24,7 +24,7 @@ public class SimpleResourceImpl implements SimpleResource,ResourceFacade {
 
     @Override
     public List<String> listResourcesBySubject(String subject, String token) throws ServiceException {
-        IUserContext uc = (IUserContext) CacheUtils.getSupporter().get(token);
+        IUserContext uc = CacheUtils.getSupporter().get(token);
 
         if(uc == null) throw new AuthenticationForbiddenException("认证超时！");
 
