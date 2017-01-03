@@ -111,7 +111,7 @@ public class SaleServiceImpl implements SaleService {
 			String constant = saleTaskDto.getSaleDate() + "\r" + saleTaskDto.getShopCode() + "\r"
 							+ saleTaskDto.getUserCode() + "\r" + saleTaskDto.getImeiNo() + "\r"
 							+ saleTaskDto.getPrice();
-			taskDetail.setConstant(constant);
+			taskDetail.setContant(constant);
 			taskDetail.setCreateTime(systemDateService.getCurrentDate());
 			taskDetailMapper.save(taskDetail);
 		}
