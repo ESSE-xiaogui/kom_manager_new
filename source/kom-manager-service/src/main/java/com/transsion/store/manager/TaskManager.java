@@ -8,9 +8,11 @@ import com.batch.task.msg.api.TaskMessage;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Task;
+import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.TaskDto;
 import com.transsion.store.mapper.TaskMapper;
+import com.transsion.store.mapper.UserMapper;
 import com.transsion.store.message.Message.Group;
 import com.transsion.store.message.Message.Type;
 import com.transsion.store.resource.MessageStoreResource;
@@ -28,6 +30,9 @@ public class TaskManager {
 	
 	@Autowired
 	private ProducerService producerService;
+	
+	@Autowired
+	private UserMapper userMapper;
 	
 	public void saveTask(TaskDto taskDto,String token) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
@@ -61,7 +66,7 @@ public class TaskManager {
 		msg.setParams(task);
 		producerService.sendMessage(msg);
 	}
-	public List<TaskDto> findTask(String token, TaskDto taskDto) throws ServiceException{
+	public List<Task> findTask(String token, Task task) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
 		}
@@ -69,6 +74,8 @@ public class TaskManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		return taskMapper.findTask(taskDto);
+		User u = userMapper.getByPK(userContext.getUser().getId());
+		task.setUserName(u.getUserName());
+		return  taskMapper.findTask(task);
 	}
 }

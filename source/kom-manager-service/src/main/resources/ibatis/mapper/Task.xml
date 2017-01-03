@@ -28,17 +28,6 @@
 		<result column="STATUS" property="status"/>
 		<result column="REMARK" property="remark"/>
 	</resultMap>
-	<resultMap id="TaskDtoResultMapper" type="TaskDto">
-		<result column="ID" property="id"/>
-		<result column="TASK_TYPE" property="taskType"/>
-		<result column="FILE_NAME" property="fileName"/>
-		<result column="UPLOAD_PATH" property="uploadPath"/>
-		<result column="STAGE" property="stage"/>
-		<result column="UPLOAD_TIME" property="uploadTime"/>
-		<result column="USER_NAME" property="userName"/>
-		<result column="STATUS" property="status"/>
-		<result column="REMARK" property="remark"/>
-	</resultMap>
 	<sql id="commonColumnsNotPK">
 		TASK_TYPE
 		, FILE_NAME
@@ -48,7 +37,89 @@
 		, USER_NAME
 		, STATUS
 		, REMARK
+	</sql>
+	<sql id="commonProcessDateColumns">
+		 ID
+		, TASK_TYPE
+		, FILE_NAME
+		, UPLOAD_PATH
+		, STAGE
+		, date_format(UPLOAD_TIME, '%Y-%m-%d %H:%i:%s') UPLOAD_TIME
+		, USER_NAME
+		, STATUS
+		, REMARK
 	</sql>	
+	<sql id="commonConditionByPrefix">
+	<if test="task != null">
+	    <if test="task.id!= null and task.id!= ''">
+			AND ID=#{task.id}
+        </if>
+        <if test="task.taskType!= null and task.taskType!= ''"> 
+			AND TASK_TYPE=#{taskType}
+		</if>
+		<if test="task.fileName!= null and task.fileName!= ''"> 
+			AND FILE_NAME=#{fileName}
+		</if>
+		<if test="task.uploadPath!= null and task.uploadPath!= ''"> 
+			AND UPLOAD_PATH=#{uploadPath}
+		</if>
+		<if test="task.stage!= null and task.stage!= ''"> 
+			AND STAGE=#{stage}
+		</if>
+		<if test="task.uploadTime!= null and task.uploadTime!= ''"> 
+			AND UPLOAD_TIME=str_to_date(#{task.uploadTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="task.userName!= null and task.userName!= ''"> 
+			AND USER_NAME=#{userName}
+		</if>
+		<if test="task.status!= null and task.status!= ''"> 
+			AND STATUS=#{status}
+		</if>
+		<if test="task.remark!= null and task.remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+	</if>
+	</sql>
+ 	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+	<sql id="orderBy">
+		<choose>
+			<when test="key == 'id'">
+				ID ${value}
+			</when>
+			<when test="key == 'taskType'">
+				TASK_TYPE ${value}
+			</when>
+			<when test="key == 'fileName'">
+				FILE_NAME ${value}
+			</when>
+			<when test="key == 'uploadPath'">
+				UPLOAD_PATH ${value}
+			</when>
+			<when test="key == 'stage'">
+				STAGE ${value}
+			</when>
+			<when test="key == 'uploadTime'">
+				UPLOAD_TIME ${value}
+			</when>
+			<when test="key == 'userName'">
+				USER_NAME ${value}
+			</when>
+			<when test="key == 'status'">
+				STATUS ${value}
+			</when>
+			<when test="key == 'remark'">
+				REMARK ${value}
+			</when>
+		</choose>
+	</sql>
+
 	<sql id="commonCondition">
 		<if test="taskType!= null and taskType!= ''"> 
 			AND TASK_TYPE=#{taskType}
@@ -63,7 +134,7 @@
 			AND STAGE=#{stage}
 		</if>
 		<if test="uploadTime!= null and uploadTime!= ''"> 
-			AND UPLOAD_TIME=#{uploadTime}
+			AND UPLOAD_TIME=str_to_date(#{uploadTime},'%Y-%m-%d %H:%i:%s')
 		</if>
 		<if test="userName!= null and userName!= ''"> 
 			AND USER_NAME=#{userName}
@@ -90,9 +161,16 @@
 			, #{remark}
   ) ]]>
 	</insert>
-	<select id="findTask" parameterType="TaskDto" resultMap="TaskDtoResultMapper">
+	<select id="findTask" parameterType="Task" resultMap="TaskResultMapper">
 		SELECT ID,TASK_TYPE,FILE_NAME,UPLOAD_PATH,STAGE,STATUS,UPLOAD_TIME,USER_NAME,REMARK FROM T_TASK
 		WHERE USER_NAME = #{userName}
 		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="Task" resultMap="TaskResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_TASK WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
 	</select>
 </mapper>
