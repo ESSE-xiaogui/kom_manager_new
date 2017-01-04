@@ -80,6 +80,23 @@
         </pluginRepository>
     </pluginRepositories>
 
+    <!-- 配置远程发布到私服，mvn deploy -->
+    <distributionManagement>
+        <!--<repository>
+            <id>nexus-releases</id>	&lt;!&ndash; 这里的id必须与setting.xml中配置server账号的id保持一致 &ndash;&gt;
+            <url>http://10.6.80.145:8088/nexus/content/repositories/releases/</url>
+        </repository>-->
+        <!--
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://10.6.80.145:8088/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository> -->
+        <repository>
+            <id>thirdparty</id>
+            <url>http://10.250.117.5:8081/nexus/content/repositories/thirdparty</url>
+        </repository>
+    </distributionManagement>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
