@@ -1,14 +1,10 @@
 package com.transsion.store.task.service;
-
-import java.io.File;
+import java.io.InputStream;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Sale;
@@ -26,6 +22,8 @@ import com.transsion.store.mapper.TaskDetailMapper;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.task.interfaces.SaleService;
 import com.transsion.store.utils.Excel;
+import net.mikesu.fastdfs.FastdfsClient;
+import net.mikesu.fastdfs.FastdfsClientFactory;
 
 @Service("taskSaleService")
 public class SaleServiceImpl implements SaleService {
@@ -50,11 +48,10 @@ public class SaleServiceImpl implements SaleService {
 	/**
 	 * 批量上传销量
 	 * */
-	public void taskSales(List<SaleTaskDto> saleTaskDtoList, Long taskId) throws ServiceException {
-		for (SaleTaskDto saleTaskDto : saleTaskDtoList) {
+	public TaskDetail taskSales(SaleTaskDto saleTaskDto) throws ServiceException {
 			TaskDetail taskDetail = new TaskDetail();
 			/**
-			 * param is null
+			 * param is null 
 			 */
 			if (UtilHelper.isEmpty(saleTaskDto.getImeiNo()) || UtilHelper.isEmpty(saleTaskDto.getUserCode())
 							|| UtilHelper.isEmpty(saleTaskDto.getShopCode())) {
@@ -107,47 +104,112 @@ public class SaleServiceImpl implements SaleService {
 					taskDetail.setMessage("IMEI code repeated");
 				}
 			}
-			taskDetail.setTaskId(taskId);
-			String constant = saleTaskDto.getSaleDate() + "\r" + saleTaskDto.getShopCode() + "\r"
-							+ saleTaskDto.getUserCode() + "\r" + saleTaskDto.getImeiNo() + "\r"
-							+ saleTaskDto.getPrice();
-			taskDetail.setContant(constant);
-			taskDetail.setCreateTime(systemDateService.getCurrentDate());
-			taskDetailMapper.save(taskDetail);
+			return taskDetail;
+	}
+
+	public void getSaleTaskDto(Task task) throws ServiceException {
+		FastdfsClient fastdfsClient = FastdfsClientFactory.getFastdfsClient();
+    	InputStream input;
+		try {
+		//	input = fastdfsClient.download("group1/M00/00/00/Cvp1BlhrUqeARHnQAACQAHwDqpY24.xlsx");
+			input = fastdfsClient.download(task.getUploadPath());
+			Excel e = new Excel(input);
+			String [] [] dataArr = e.getData(1);
+			for(int i=0;i<dataArr.length;i++){		
+				for(int j=0;j<dataArr[i].length;j++){
+					TaskDetail taskDetail = new TaskDetail();
+					if(UtilHelper.isEmpty(dataArr[i][j])){
+						taskDetail.setMessage("file is null");
+					}else
+					if(UtilHelper.isEmpty(dataArr[i][0])){
+						taskDetail.setMessage("sale date is null");
+					}else
+					if(UtilHelper.isEmpty(dataArr[i][1])){
+						taskDetail.setMessage("shop code is null");
+					}else
+					if(UtilHelper.isEmpty(dataArr[i][2])){
+						taskDetail.setMessage("user code is null");
+					}else
+					if(UtilHelper.isEmpty(dataArr[i][3])){
+						taskDetail.setMessage("imei is null");
+					}else
+					if(UtilHelper.isEmpty(dataArr[i][4])){
+						taskDetail.setMessage("price is null");
+					}else{
+					SaleTaskDto saleTaskDto = new SaleTaskDto();
+					saleTaskDto.setSaleDate(dataArr[i][0]);
+					saleTaskDto.setShopCode(dataArr[i][1]);
+					saleTaskDto.setUserCode(dataArr[i][2]);
+					saleTaskDto.setImeiNo(dataArr[i][3]);
+					saleTaskDto.setPrice(new BigDecimal(dataArr[i][4]));
+					taskDetail = this.taskSales(saleTaskDto);
+					taskDetail.setTaskId(task.getId());
+					String context = "Sales date:" + saleTaskDto.getSaleDate() + "\r" + "Shop ID:"+saleTaskDto.getShopCode() + "\r"
+									+ "User ID:" +saleTaskDto.getUserCode() + "\r" + "IMEI code:" +saleTaskDto.getImeiNo() + "\r"
+									+ "Price:" +saleTaskDto.getPrice();
+					taskDetail.setContext(context);
+					taskDetail.setCreateTime(systemDateService.getCurrentDate());
+					taskDetailMapper.save(taskDetail);
+					}
+				}
+			}
+		} catch (Exception e1) {
+			e1.printStackTrace();
 		}
+		
 	}
 	
 	/**
 	 * 转换excel
 	 * */
-	public void getSaleTaskDto(Task task) throws ServiceException {
-		if (!UtilHelper.isEmpty(task.getUploadPath())) {
-			String uploadPath = task.getUploadPath();
-			if (!UtilHelper.isEmpty(uploadPath)) {
-				List<SaleTaskDto> saleTaskDtoList = new ArrayList<SaleTaskDto>();
-				File file = new File(uploadPath);
-				Excel e = new Excel(file);
-				String[][] dataArr = e.getData(1);
-				//if (dataArr != null && dataArr.length > 0 || (dataArr.length == 1 && dataArr[0].length == 0))
-					
-				for (int i = 0; i < dataArr.length; i++) {
-					SaleTaskDto saleTaskDto = new SaleTaskDto();
-					for (int j = 0; j < dataArr[i].length; j++) {
-						saleTaskDto.setSaleDate(dataArr[i][0]);
-						saleTaskDto.setShopCode(dataArr[i][1]);
-						saleTaskDto.setUserCode(dataArr[i][2]);
-						saleTaskDto.setImeiNo(dataArr[i][3]);
-						saleTaskDto.setPrice(new BigDecimal(dataArr[i][4]));
+	/*public static void main(String[] args){
+		Task task =new Task();
+		task.setId(1L);
+		FastdfsClient fastdfsClient = FastdfsClientFactory.getFastdfsClient();
+    	InputStream input;
+		try {
+			input = fastdfsClient.download("group1/M00/00/00/Cvp1BlhrUqeARHnQAACQAHwDqpY24.xlsx");
+			Excel e = new Excel(input);
+			String [] [] dataArr = e.getData(1);
+			for(int i=0;i<dataArr.length;i++){		
+				for(int j=0;j<dataArr[i].length;j++){
+					for(String a:dataArr[j]){
+						System.out.println(a);
 					}
-					saleTaskDtoList.add(saleTaskDto);
+					TaskDetail taskDetail = new TaskDetail();
+					if(UtilHelper.isEmpty(dataArr[i][j])){
+						taskDetail.setMessage("file is null");
+					}else
+					if(UtilHelper.isEmpty(dataArr[i][0])){
+						taskDetail.setMessage("sale date is null");
+					}else
+					if(UtilHelper.isEmpty(dataArr[i][1])){
+						taskDetail.setMessage("shop code is null");
+					}else
+					if(UtilHelper.isEmpty(dataArr[i][2])){
+						taskDetail.setMessage("user code is null");
+					}else
+					if(UtilHelper.isEmpty(dataArr[i][3])){
+						taskDetail.setMessage("imei is null");
+					}else
+					if(UtilHelper.isEmpty(dataArr[i][4])){
+						taskDetail.setMessage("price is null");
+					}else{
+					SaleTaskDto saleTaskDto = new SaleTaskDto();
+					saleTaskDto.setSaleDate(dataArr[i][0]);
+					saleTaskDto.setShopCode(dataArr[i][1]);
+					saleTaskDto.setUserCode(dataArr[i][2]);
+					saleTaskDto.setImeiNo(dataArr[i][3]);
+					saleTaskDto.setPrice(new BigDecimal(dataArr[i][4]));
+					SaleServiceImpl s = new SaleServiceImpl();
+					s.taskSales(saleTaskDto, task);
+					}
 				}
-				if (!UtilHelper.isEmpty(saleTaskDtoList)) {
-					 taskSales(saleTaskDtoList,task.getId());
-				}
-				
 			}
+		} catch (Exception e1) {
+			e1.printStackTrace();
 		}
 		
-	}
+	}*/
 
 }

@@ -3,14 +3,20 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PushbackInputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -37,13 +43,24 @@ public class Excel {
 	
 	public Excel(InputStream inputStream){
 		try {
-			workbook = new XSSFWorkbook(inputStream);
+			 if (!inputStream.markSupported()) {
+				 inputStream = new PushbackInputStream(inputStream, 8);
+		        }
+		        if (POIFSFileSystem.hasPOIFSHeader(inputStream)) {
+		        	workbook = new HSSFWorkbook(inputStream);
+		        }
+		        else if (POIXMLDocument.hasOOXMLHeader(inputStream)) {
+		        	workbook =  new XSSFWorkbook(OPCPackage.open(inputStream));
+		        }
 		} catch (IOException e) {
+			e.printStackTrace();
 			try {
 				workbook = new HSSFWorkbook(inputStream);
 			} catch (IOException ex) {
 				workbook = null;
 			}
+		} catch (InvalidFormatException e) {
+			e.printStackTrace();
 		}
 	}
 	

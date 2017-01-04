@@ -3,6 +3,7 @@ package com.transsion.store.controller;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -47,7 +48,7 @@ public class TaskDetailController extends AbstractController{
 	/**
 	 * 查询上传信息
 	 * */
-	@POST
+	@GET
 	@Path("findTaskDetail")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})

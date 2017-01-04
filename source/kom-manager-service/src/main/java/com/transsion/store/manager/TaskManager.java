@@ -41,12 +41,15 @@ public class TaskManager {
 		if(UtilHelper.isEmpty(taskDto)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(taskDto.getTaskType()) || UtilHelper.isEmpty(taskDto.getFileName()) 
-				|| UtilHelper.isEmpty(taskDto.getUserName()) || UtilHelper.isEmpty(taskDto.getUploadPath())){
+		if(UtilHelper.isEmpty(taskDto.getTaskType()) || UtilHelper.isEmpty(taskDto.getFileName()) || UtilHelper.isEmpty(taskDto.getUploadPath())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		User u = userMapper.getByPK(userContext.getUser().getId());
+		if(UtilHelper.isEmpty(u)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		Task task = new Task();
@@ -55,7 +58,7 @@ public class TaskManager {
 		task.setUploadPath(taskDto.getUploadPath());
 		task.setStage(1);
 		task.setUploadTime(systemDateService.getCurrentDate());
-		task.setUserName(taskDto.getUserName());
+		task.setUserName(u.getUserName());
 		task.setRemark(taskDto.getRemark());
 		taskMapper.saveTask(task);
 		TaskMessage msg = new TaskMessage();

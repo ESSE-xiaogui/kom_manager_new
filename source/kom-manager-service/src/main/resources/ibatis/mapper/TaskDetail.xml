@@ -23,14 +23,14 @@
 		<result column="MESSAGE" property="message"/>
 		<result column="STATUS" property="status"/>
 		<result column="CREATE_TIME" property="createTime"/>
-		<result column="CONTANT" property="contant"/>
+		<result column="CONTEXT" property="context"/>
 	</resultMap>
 	<sql id="commonColumnsNotPK">
 		TASK_ID
 		, MESSAGE
 		, STATUS
 		, CREATE_TIME
-		, CONTANT
+		, CONTEXT
 	</sql>
 	<sql id="commonProcessDateColumns">
 		ID
@@ -38,7 +38,7 @@
 		, MESSAGE
 		, STATUS
 		, CREATE_TIME
-		, CONTANT
+		, CONTEXT
 	</sql>
 	<sql id="commonConditionByPrefix">
 	<if test="taskDetail != null">
@@ -57,8 +57,8 @@
         <if test="taskDetail.createTime!= null and taskDetail.createTime!= ''">
         	AND CREATE_TIME=str_to_date(#{taskDetail.createTime},'%Y-%m-%d %H:%i:%s')
         </if>
-        <if test="taskDetail.contant!= null and taskDetail.contant!= ''">
-			AND CONTANT=#{taskDetail.contant}
+        <if test="taskDetail.context!= null and taskDetail.context!= ''">
+			AND CONTEXT=#{taskDetail.context}
         </if>
 	</if>
 	</sql>
@@ -87,8 +87,8 @@
 		<when test="key == 'createTime'">
 			CREATE_TIME ${value}
 		</when>
-		<when test="key == 'contant'">
-			CONTANT ${value}
+		<when test="key == 'context'">
+			CONTEXT ${value}
 		</when>
 	</choose>
 </sql>
@@ -101,12 +101,12 @@
 			, #{message}
 			, #{status}
 			, #{createTime}
-			, #{contant}
+			, #{context}
   ) ]]>
 	</insert>
 	<select id="findTaskDetail" parameterType="Long"
 		resultMap="TaskDetailResultMapper">
-		SELECT ID,TASK_ID,MESSAGE,STATUS,CREATE_TIME,CONTANT FROM T_TASK_DETAIL
+		SELECT ID,TASK_ID,MESSAGE,STATUS,CREATE_TIME,CONTEXT FROM T_TASK_DETAIL
 		WHERE TASK_ID =#{taskId}
 	</select>
 	<select id="listPaginationByProperty" parameterType="TaskDetail" resultMap="TaskDetailResultMapper">
