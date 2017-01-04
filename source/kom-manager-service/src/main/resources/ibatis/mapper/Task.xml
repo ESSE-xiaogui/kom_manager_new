@@ -173,4 +173,8 @@
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>
+	<select id="findTaskById" parameterType="Long" resultMap="TaskResultMapper">
+		SELECT ID,TASK_TYPE,FILE_NAME,UPLOAD_PATH,STAGE,STATUS,UPLOAD_TIME,USER_NAME,REMARK FROM T_TASK
+		WHERE ID = #{taskId}
+	</select>
 </mapper>

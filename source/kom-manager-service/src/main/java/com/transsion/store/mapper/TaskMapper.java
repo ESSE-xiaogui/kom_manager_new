@@ -13,5 +13,5 @@ public interface TaskMapper extends GenericIBatisMapper<Task, java.lang.Long>{
 	public void saveTask(Task task) throws DataAccessFailureException;
 	public List<Task> findTask (Task task) throws DataAccessFailureException;
 	public List<Task> listPaginationByProperty(Pagination<Task> pagination, @Param("task")Task task, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
-
+	public Task findTaskById(@Param("taskId")Long taskId) throws DataAccessFailureException;
 }

@@ -66,7 +66,7 @@ public class TaskManager {
 		msg.setName(Type.TASK_SALE_IMPORT.toString() + msg.getTimestamp());
 		msg.setBeanName("taskSaleService");
 		msg.setMethod("getSaleTaskDto");
-		msg.setParams(task);
+		msg.setParams(task.getId());
 		producerService.sendMessage(msg);
 	}
 	public List<Task> findTask(String token, Task task) throws ServiceException{

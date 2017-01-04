@@ -19,6 +19,7 @@ import com.transsion.store.mapper.SaleItemMapper;
 import com.transsion.store.mapper.SaleMapper;
 import com.transsion.store.mapper.ShopMapper;
 import com.transsion.store.mapper.TaskDetailMapper;
+import com.transsion.store.mapper.TaskMapper;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.task.interfaces.SaleService;
 import com.transsion.store.utils.Excel;
@@ -44,6 +45,9 @@ public class SaleServiceImpl implements SaleService {
 	
 	@Autowired
 	private TaskDetailMapper taskDetailMapper;
+	
+	@Autowired
+	private TaskMapper taskMapper;
 	
 	/**
 	 * 批量上传销量
@@ -107,7 +111,8 @@ public class SaleServiceImpl implements SaleService {
 			return taskDetail;
 	}
 
-	public void getSaleTaskDto(Task task) throws ServiceException {
+	public void getSaleTaskDto(Long taskId) throws ServiceException {
+		Task task = taskMapper.findTaskById(taskId);
 		FastdfsClient fastdfsClient = FastdfsClientFactory.getFastdfsClient();
     	InputStream input;
 		try {
@@ -143,7 +148,7 @@ public class SaleServiceImpl implements SaleService {
 					saleTaskDto.setImeiNo(dataArr[i][3]);
 					saleTaskDto.setPrice(new BigDecimal(dataArr[i][4]));
 					taskDetail = this.taskSales(saleTaskDto);
-					taskDetail.setTaskId(task.getId());
+					taskDetail.setTaskId(taskId);
 					String context = "Sales date:" + saleTaskDto.getSaleDate() + "\r" + "Shop ID:"+saleTaskDto.getShopCode() + "\r"
 									+ "User ID:" +saleTaskDto.getUserCode() + "\r" + "IMEI code:" +saleTaskDto.getImeiNo() + "\r"
 									+ "Price:" +saleTaskDto.getPrice();
