@@ -22,6 +22,7 @@ import com.transsion.store.mapper.SaleMapper;
 import com.transsion.store.mapper.ShopMapper;
 import com.transsion.store.mapper.TaskDetailMapper;
 import com.transsion.store.mapper.TaskMapper;
+import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.task.interfaces.SaleService;
 import com.transsion.store.utils.ExcelUtil;
@@ -56,13 +57,6 @@ public class SaleServiceImpl implements SaleService {
 	 * */
 	public TaskDetail taskSales(SaleTaskDto saleTaskDto) throws ServiceException {
 		TaskDetail taskDetail = new TaskDetail();
-		/**
-		 * param is null
-		 */
-		if (UtilHelper.isEmpty(saleTaskDto.getImeiNo()) || UtilHelper.isEmpty(saleTaskDto.getUserCode())
-						|| UtilHelper.isEmpty(saleTaskDto.getShopCode())) {
-			taskDetail.setMessage("IMEI code is null;User ID is null;Shop ID is null");
-		}
 		/**
 		 * imei illeagal
 		 */
@@ -115,7 +109,7 @@ public class SaleServiceImpl implements SaleService {
 
 	/**
 	 * excel解析 转成实体
-	 * */
+	 */
 	public void getSaleTaskDto(Long taskId) throws ServiceException {
 		Task task = taskMapper.findTaskById(taskId);
 		FastdfsClient fastdfsClient = FastdfsClientFactory.getFastdfsClient();
@@ -128,8 +122,7 @@ public class SaleServiceImpl implements SaleService {
 			List<Map<String, Object>> list = TaskUtil.formatArr(dataArr,
 							new String[] { "Sales date", "Shop ID", "User ID", "IMEI code", "Price" });
 			if (UtilHelper.isEmpty(list)) {
-				taskDetail.setMessage("excel is null");
-				taskDetailMapper.save(taskDetail);
+				throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EXCEL_IS_NULL);
 			} else {
 				for (Map<String, Object> map : list) {
 					SaleTaskDto saleTaskDto = new SaleTaskDto();
@@ -140,35 +133,31 @@ public class SaleServiceImpl implements SaleService {
 					String price = (String) map.get("Price");
 					if (UtilHelper.isEmpty(saleDate)) {
 						taskDetail.setMessage("Sales date is null");
-					} else {
-						saleTaskDto.setSaleDate(saleDate);
 					}
-
 					if (UtilHelper.isEmpty(shopCode)) {
 						taskDetail.setMessage("Shop ID is null");
-					} else {
-						saleTaskDto.setShopCode(shopCode);
 					}
-
 					if (UtilHelper.isEmpty(userCode)) {
 						taskDetail.setMessage("User ID is null");
-					} else {
-						saleTaskDto.setUserCode(userCode);
 					}
-
 					if (UtilHelper.isEmpty(imeiNo)) {
 						taskDetail.setMessage("IMEI code is null");
-					} else {
-						saleTaskDto.setImeiNo(imeiNo);
 					}
-
 					if (UtilHelper.isEmpty(price)) {
 						taskDetail.setMessage("Price is null");
-					} else {
+					}
+
+					if (!UtilHelper.isEmpty(saleDate) && !UtilHelper.isEmpty(shopCode) && !UtilHelper.isEmpty(userCode)
+									&& !UtilHelper.isEmpty(imeiNo) && !UtilHelper.isEmpty(price)) {
+						saleTaskDto.setSaleDate(saleDate);
+						saleTaskDto.setShopCode(shopCode);
+						saleTaskDto.setUserCode(userCode);
+						saleTaskDto.setImeiNo(imeiNo);
 						BigDecimal bd = new BigDecimal(price);
 						saleTaskDto.setPrice(bd);
+						taskDetail = this.taskSales(saleTaskDto);
 					}
-					taskDetail = this.taskSales(saleTaskDto);
+
 					taskDetail.setTaskId(taskId);
 					String context = "Sales date:" + saleTaskDto.getSaleDate() + "\r" + "Shop ID:"
 									+ saleTaskDto.getShopCode() + "\r" + "User ID:" + saleTaskDto.getUserCode() + "\r"
