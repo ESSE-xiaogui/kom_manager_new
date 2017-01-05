@@ -38,3 +38,40 @@ SET s.REGION_ID = r.ID
 WHERE s.CITY = r.REGION_CODE
 
 ---------------------------------------------------------------------------
+
+
+UPDATE T_EMPLOYEE e,T_ORGANIZATION o SET e.ORG_ID = o.ID
+WHERE e.ORG_ID = o.ORG_ID;
+
+-----------------------------------------------------------------------------
+
+CREATE PROCEDURE update_org_id()
+BEGIN
+DECLARE finished INTEGER DEFAULT 0;
+DECLARE id BIGINT(20) DEFAULT 0;
+DECLARE orgid CHAR(12) DEFAULT "";
+DECLARE org_cur CURSOR FOR SELECT o.ID, o.ORG_ID FROM T_ORGANIZATION o ORDER BY o.ID;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
+
+OPEN org_cur;
+
+update_org_id: LOOP
+FETCH org_cur INTO id, orgid;
+IF finished THEN
+LEAVE update_org_id;
+END IF;
+UPDATE T_EMPLOYEE SET ORG_ID = id WHERE ORG_ID = orgid;
+IF (MOD(id, 5000) = 0) THEN
+SELECT  "................";
+END IF;
+END LOOP update_org_id;
+
+CLOSE org_cur;
+SELECT  "last id " + id;
+
+END
+
+select now();
+call update_org_id;
+select now();
+------------------------------------------------------------------------------------

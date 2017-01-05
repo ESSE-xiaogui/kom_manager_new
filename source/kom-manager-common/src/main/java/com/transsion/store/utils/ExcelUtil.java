@@ -22,13 +22,13 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-public class Excel {
+public class ExcelUtil {
 	File file = null;
 	private Workbook workbook = null;
 	private static final SimpleDateFormat Date_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	
-	public static Excel create(File file){
-		Excel excel = new Excel(file);
+	public static ExcelUtil create(File file){
+		ExcelUtil excel = new ExcelUtil(file);
 		if(excel.workbook == null){
 			return null;
 		}
@@ -36,12 +36,12 @@ public class Excel {
 		return excel;
 	}
 	
-	public static Excel create(String path){
+	public static ExcelUtil create(String path){
 		File file = new File(path);
 		return create(file);
 	}
 	
-	public Excel(InputStream inputStream){
+	public ExcelUtil(InputStream inputStream){
 		try {
 			 if (!inputStream.markSupported()) {
 				 inputStream = new PushbackInputStream(inputStream, 8);
@@ -65,7 +65,7 @@ public class Excel {
 	}
 	
 	
-	public Excel(File file){
+	public ExcelUtil(File file){
 		this.file = file;
 		FileInputStream fis = null;
 		
@@ -187,7 +187,7 @@ public class Excel {
 	}
 /*	public static void main(String[] args) {
 		File file = new File("C:/Users/guihua.zhang/Desktop/tecno1.xlsx");
-		Excel e = new Excel(file);
+		ExcelUtil e = new ExcelUtil(file);
 		String [] [] dataArr = e.getData(1);
 		List<SaleTaskDto> saleTaskDtoList = new ArrayList<SaleTaskDto>();
 		for(int i=0;i<dataArr.length;i++){		
