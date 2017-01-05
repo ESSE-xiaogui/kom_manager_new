@@ -146,8 +146,6 @@ public class EmployeeManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PASSWORD_IS_NULL);
 		}
 		
-	
-		
 		String userCode = empUserDto.getUserCode();
 		User user = new User();
 		user.setUserCode(userCode);
@@ -221,13 +219,20 @@ public class EmployeeManager {
 	 * @throws ServiceException
 	 */
 	public EmpResponseDto getByPKey(Long primaryKey) throws ServiceException {
+		if(UtilHelper.isEmpty(primaryKey)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
 		Employee emp = employeeService.getByPK(primaryKey);
 		EmpResponseDto erd = new EmpResponseDto();
 		BeanUtils.copyProperties(emp, erd);
 		OrganizationDto org = organizationMapper.getByPKs(Long.valueOf(erd.getOrgId()));
-		erd.setOrgName(org.getOrgName());
+		if(!UtilHelper.isEmpty(org)){
+			erd.setOrgName(org.getOrgName());
+		}
 		Duty duty = dutyMapper.getByPK(Long.valueOf(erd.getOrgId()));
-		erd.setDutyName(duty.getDutyName());
+		if(!UtilHelper.isEmpty(duty)){
+			erd.setDutyName(duty.getDutyName());
+		}
 		return erd;
 	}
 
