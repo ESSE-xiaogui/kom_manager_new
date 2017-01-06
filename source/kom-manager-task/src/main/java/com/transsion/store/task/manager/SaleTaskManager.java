@@ -1,4 +1,5 @@
-package com.transsion.store.task.service;
+package com.transsion.store.task.manager;
+
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Sale;
@@ -24,13 +26,13 @@ import com.transsion.store.mapper.TaskDetailMapper;
 import com.transsion.store.mapper.TaskMapper;
 import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
-import com.transsion.store.task.interfaces.SaleService;
 import com.transsion.store.utils.ExcelUtil;
+
 import net.mikesu.fastdfs.FastdfsClient;
 import net.mikesu.fastdfs.FastdfsClientFactory;
 
-@Service("taskSaleService")
-public class SaleServiceImpl implements SaleService {
+@Service("saleTaskManager")
+public class SaleTaskManager {
 	@Autowired
 	private ScanValidateManager scanValidateManager;
 	
@@ -73,6 +75,9 @@ public class SaleServiceImpl implements SaleService {
 				sale.setBillno("");
 				sale.setUserCode(saleTaskDto.getUserCode());
 				Shop shop = shopMapper.findShopId(saleTaskDto.getShopCode());
+				if(UtilHelper.isEmpty(shop)){
+					throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+				}
 				sale.setCompanyId(shop.getCompanyId());
 				sale.setShopId(shop.getShopId().intValue());
 				sale.setTrantype(24020005);
@@ -111,6 +116,9 @@ public class SaleServiceImpl implements SaleService {
 	 * excel解析 转成实体
 	 */
 	public void getSaleTaskDto(Long taskId) throws ServiceException {
+		if(UtilHelper.isEmpty(taskId)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
 		Task task = taskMapper.findTaskById(taskId);
 		FastdfsClient fastdfsClient = FastdfsClientFactory.getFastdfsClient();
 		InputStream input;
@@ -173,6 +181,5 @@ public class SaleServiceImpl implements SaleService {
 		}
 
 	}
-
 
 }

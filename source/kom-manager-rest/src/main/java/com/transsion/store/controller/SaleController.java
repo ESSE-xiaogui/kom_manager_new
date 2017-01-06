@@ -20,6 +20,7 @@ import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Sale;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.SaleFacade;
+import com.transsion.store.task.facade.SaleTaskFacade;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ public class SaleController extends AbstractController{
 
 	@Autowired
 	private SaleFacade saleFacade;
+	
+	@Autowired
+	private SaleTaskFacade saleTaskFacade;
 	
 	/**
 	 * 通过主键查询实体对象
@@ -109,5 +113,15 @@ public class SaleController extends AbstractController{
 	public void update(Sale sale) throws ServiceException
 	{
 		saleFacade.update(sale);
+	}
+	
+	/**
+	 * 销量上传[文件导入]
+	 * */
+	@GET
+	@Path("saveSaleTask/{taskId}")
+	public void saveSaleTask(@PathParam("taskId") Long taskId) throws ServiceException {
+		logger.debug("aaaaaaaaaaaaa");
+		saleTaskFacade.saveSaleTask(77L);
 	}
 }

@@ -2,6 +2,7 @@ package com.transsion.store.facade;
 
 import java.util.List;
 
+
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Task;
@@ -24,4 +25,5 @@ public interface TaskFacade {
 			throws ServiceException;
 	
 	public List<Task> findTask(String token, Task task) throws ServiceException;
+	
 }
