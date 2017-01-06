@@ -63,6 +63,9 @@ public class SaleTaskManager {
 		 * imei illeagal
 		 */
 		ScanValidateDto scan = scanValidateManager.scanValidate(saleTaskDto.getImeiNo(), null);
+		if(UtilHelper.isEmpty(scan)){
+			taskDetail.setMessage("IMEI illegal");
+		}
 		if (UtilHelper.isEmpty(scan.getImeis())) {
 			taskDetail.setMessage("IMEI illegal");
 		} else {
@@ -76,8 +79,11 @@ public class SaleTaskManager {
 				sale.setUserCode(saleTaskDto.getUserCode());
 				Shop shop = shopMapper.findShopId(saleTaskDto.getShopCode());
 				if(UtilHelper.isEmpty(shop)){
-					throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+					taskDetail.setMessage("shop code is null");
 				}
+				if(UtilHelper.isEmpty(shop.getCompanyId()) || UtilHelper.isEmpty(shop.getShopId())){
+					taskDetail.setMessage("shop code is null");
+				}else{
 				sale.setCompanyId(shop.getCompanyId());
 				sale.setShopId(shop.getShopId().intValue());
 				sale.setTrantype(24020005);
@@ -88,7 +94,7 @@ public class SaleTaskManager {
 				saleMapper.save(sale);
 				SaleItem saleItem = new SaleItem();
 				saleItem.setSaleId(sale.getId());
-				saleItem.setCompanyId(saleTaskDto.getCompanyId());
+				saleItem.setCompanyId(shop.getCompanyId());
 				saleItem.setBillno("");
 				saleItem.setBrandCode(scan.getBrand());
 				saleItem.setModelCode(scan.getModel());
@@ -107,6 +113,7 @@ public class SaleTaskManager {
 				saleItem.setImeiList(imeiList);
 				saleItemMapper.save(saleItem);
 				taskDetail.setMessage("ok");
+				}
 			}
 		}
 		return taskDetail;
@@ -120,6 +127,9 @@ public class SaleTaskManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		Task task = taskMapper.findTaskById(taskId);
+		if(UtilHelper.isEmpty(task)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
 		FastdfsClient fastdfsClient = FastdfsClientFactory.getFastdfsClient();
 		InputStream input;
 		try {
