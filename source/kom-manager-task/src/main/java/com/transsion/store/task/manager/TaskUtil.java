@@ -1,4 +1,4 @@
-package com.transsion.store.task.service;
+package com.transsion.store.task.manager;
 
 import java.util.ArrayList;
 import java.util.HashMap;

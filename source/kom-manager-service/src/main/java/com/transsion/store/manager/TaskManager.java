@@ -3,6 +3,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.batch.task.api.TaskInvokerInfo;
 import com.batch.task.msg.api.ProducerService;
 import com.batch.task.msg.api.TaskMessage;
 import com.shangkang.core.exception.ServiceException;
@@ -63,9 +65,11 @@ public class TaskManager {
 		taskMapper.saveTask(task);
 		TaskMessage msg = new TaskMessage();
 		msg.setGroup(Group.TASK.toString());
-		msg.setName(Type.TASK_SALE_IMPORT.toString() + msg.getTimestamp());
-		msg.setBeanName("taskSaleService");
-		msg.setMethod("getSaleTaskDto");
+		msg.setName(Type.TASK_SALE_IMPORT.toString());
+		msg.setInvokerType(TaskInvokerInfo.Type.REST);
+		msg.setKey(task.getId());
+		msg.setBeanName("http://10.151.170.123:9101/sale/saveSaleTask/" + task.getId());
+		msg.setMethod(TaskInvokerInfo.RestMethod.GET.toString());
 		msg.setParams(task.getId());
 		producerService.sendMessage(msg);
 	}
