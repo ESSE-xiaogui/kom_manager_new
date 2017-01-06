@@ -1,4 +1,4 @@
-package com.transsion.store.utils;
+package com.transsion.store.support;
 
 import com.shangkang.core.util.SpringBeanHelper;
 import org.slf4j.Logger;
@@ -15,21 +15,11 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by liuzh on 16-5-31.
  */
-public class RedisCacheSupporter {
-    private static RedisCacheSupporter factory;
+public class RedisCacheSupporter implements ICacheSupporter{
 
     private final static Logger logger = LoggerFactory.getLogger(RedisCacheSupporter.class);
 
     private RedisTemplate redisTemplate;
-
-    public static RedisCacheSupporter getSingleton()
-    {
-        if(factory == null)
-        {
-            factory = new RedisCacheSupporter();
-        }
-        return factory;
-    }
 
     public RedisCacheSupporter() {
         redisTemplate = (RedisTemplate) SpringBeanHelper.getBean("redisTemplate");
@@ -84,12 +74,12 @@ public class RedisCacheSupporter {
      * @param key
      * @return
      */
-    public Object get(final String key) {
-        Object result = null;
+    public <T> T get(final String key) {
+        T result = null;
         try {
             ValueOperations<Serializable, Object> operations = redisTemplate
                     .opsForValue();
-            result = operations.get(key);
+            result = (T) operations.get(key);
         }catch (Exception e)
         {
             logger.error("Err: " + e);
@@ -189,12 +179,12 @@ public class RedisCacheSupporter {
      * @param hashKey
      * @return
      */
-    public Object getObject(final String key, final String hashKey) {
-        Object result = null;
+    public  <T> T  getObject(final String key, final String hashKey) {
+        T result = null;
 
         try {
             HashOperations operations = redisTemplate.opsForHash();
-            result = operations.get(key, hashKey);
+            result = (T) operations.get(key, hashKey);
         }catch (Exception e)
         {
             logger.error("Err: " + e);

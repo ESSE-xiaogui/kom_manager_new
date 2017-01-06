@@ -111,4 +111,14 @@ public class MessageStoreResource {
      */
     public static final String ERROR_MESSAGE_EMP_DOESNOT_EXIST = "error_message_empDoesNotExist";
     
+    /**
+     * 用户已停用
+     */
+    public static final String ERROR_MESSAGE_INACTIVE_USER = "error_message_inactiveUser";
+    
+    /**
+     * 入参为空
+     */
+    public static final String ERROR_MESSAGE_EXCEL_IS_NULL = "error_message_excelIsNull";
+    
 }

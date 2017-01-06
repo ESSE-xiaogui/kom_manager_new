@@ -12,7 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.rest.service.controller.AbstractController;
+import com.shangkang.core.bo.Pagination;
+import com.shangkang.core.dto.RequestModel;
 import com.shangkang.core.exception.ServiceException;
+import com.transsion.store.bo.Task;
 import com.transsion.store.dto.TaskDto;
 import com.transsion.store.facade.TaskFacade;
 @Controller
@@ -34,15 +37,37 @@ public class TaskController extends AbstractController{
 	}
 	
 	/**
+	* 分页查询记录
+	* @return
+	* @throws ServiceException
+	*/
+	@POST
+	@Path("/listPg")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public Pagination<Task> listPgTask(RequestModel<Task> requestModel) throws ServiceException
+	{
+		Pagination<Task> pagination = new Pagination<Task>();
+
+		pagination.setPaginationFlag(requestModel.isPaginationFlag());
+		pagination.setPageNo(requestModel.getPageNo());
+		pagination.setPageSize(requestModel.getPageSize());
+		pagination.setParams(requestModel.getParams());
+		pagination.setOrderBy(requestModel.getOrderBy());
+
+		return taskFacade.listPaginationByProperty(pagination, requestModel.getParams());
+	}
+	
+	/**
 	 * 查询上传信息
 	 * */
 	@POST
 	@Path("findTask")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public List<TaskDto> findTask(TaskDto taskDto) throws ServiceException{
+	public List<Task> findTask(Task task) throws ServiceException{
 		String token = this.getAuthorization();
-		return taskFacade.findTask(token, taskDto);
+		return taskFacade.findTask(token, task);
 	}
 	
 }

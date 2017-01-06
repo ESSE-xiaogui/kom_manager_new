@@ -22,6 +22,7 @@
 	<resultMap id="UserResultMapper" type="User">
 		<result column="ID" property="id"/>
 		<result column="USER_CODE" property="userCode"/>
+		<result column="USER_NAME" property="userName"/>
 		<result column="EMP_ID" property="empId"/>
 		<result column="COMPANY_ID" property="companyId"/>
 		<result column="PASSWORD" property="password"/>

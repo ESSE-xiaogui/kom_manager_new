@@ -43,6 +43,8 @@ public class EmployeeManager {
 	@Autowired
 	private DutyMapper dutyMapper;
 	
+	private static final String PASSWORD = "123456";
+	
 	public EmpResponseDto saveEmp(String token,Employee employee) throws ServiceException
 	{
 		if(UtilHelper.isEmpty(token)){
@@ -130,7 +132,6 @@ public class EmployeeManager {
 	 * @throws ServiceException
 	 */
 	public EmpResponseDto createUser(String token,EmpUserDto empUserDto) throws ServiceException{
-		final String PASSWORD = "123456";
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
 		}	
@@ -144,8 +145,6 @@ public class EmployeeManager {
 		if(UtilHelper.isEmpty(empUserDto.getPassword())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PASSWORD_IS_NULL);
 		}
-		
-	
 		
 		String userCode = empUserDto.getUserCode();
 		User user = new User();
@@ -220,13 +219,20 @@ public class EmployeeManager {
 	 * @throws ServiceException
 	 */
 	public EmpResponseDto getByPKey(Long primaryKey) throws ServiceException {
+		if(UtilHelper.isEmpty(primaryKey)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
 		Employee emp = employeeService.getByPK(primaryKey);
 		EmpResponseDto erd = new EmpResponseDto();
 		BeanUtils.copyProperties(emp, erd);
 		OrganizationDto org = organizationMapper.getByPKs(Long.valueOf(erd.getOrgId()));
-		erd.setOrgName(org.getOrgName());
+		if(!UtilHelper.isEmpty(org)){
+			erd.setOrgName(org.getOrgName());
+		}
 		Duty duty = dutyMapper.getByPK(Long.valueOf(erd.getOrgId()));
-		erd.setDutyName(duty.getDutyName());
+		if(!UtilHelper.isEmpty(duty)){
+			erd.setDutyName(duty.getDutyName());
+		}
 		return erd;
 	}
 

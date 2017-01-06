@@ -19,7 +19,7 @@ public class TaskDetail extends Model{
 	
 	private String createTime;
 	
-	private String constant;
+	private String context;
 
 	public Long getId() {
 		return id;
@@ -61,18 +61,19 @@ public class TaskDetail extends Model{
 		this.createTime = createTime;
 	}
 
-	public String getConstant() {
-		return constant;
+
+	public String getContext() {
+		return context;
 	}
 
-	public void setConstant(String constant) {
-		this.constant = constant;
+	public void setContext(String context) {
+		this.context = context;
 	}
 
 	@Override
 	public String toString() {
 		return "TaskDetail [id=" + id + ", taskId=" + taskId + ", message=" + message + ", status=" + status
-						+ ", createTime=" + createTime + ", constant=" + constant + "]";
+						+ ", createTime=" + createTime + ", context=" + context + "]";
 	}
 	
 }

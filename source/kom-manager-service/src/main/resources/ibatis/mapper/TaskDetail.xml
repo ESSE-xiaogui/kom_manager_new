@@ -23,15 +23,75 @@
 		<result column="MESSAGE" property="message"/>
 		<result column="STATUS" property="status"/>
 		<result column="CREATE_TIME" property="createTime"/>
-		<result column="CONSTANT" property="constant"/>
+		<result column="CONTEXT" property="context"/>
 	</resultMap>
 	<sql id="commonColumnsNotPK">
 		TASK_ID
 		, MESSAGE
 		, STATUS
 		, CREATE_TIME
-		, CONSTANT
-	</sql>	
+		, CONTEXT
+	</sql>
+	<sql id="commonProcessDateColumns">
+		ID
+		, TASK_ID
+		, MESSAGE
+		, STATUS
+		, CREATE_TIME
+		, CONTEXT
+	</sql>
+	<sql id="commonConditionByPrefix">
+	<if test="taskDetail != null">
+		<if test="taskDetail.id!= null and taskDetail.id!= ''">
+			AND ID=#{taskDetail.id}
+        </if>
+        <if test="taskDetail.taskId!= null and taskDetail.taskId!= ''">
+			AND TASK_ID=#{taskDetail.taskId}
+        </if>
+        <if test="taskDetail.message!= null and taskDetail.message!= ''">
+			AND MESSAGE=#{taskDetail.message}
+        </if>
+        <if test="taskDetail.status!= null and taskDetail.status!= ''">
+			AND STATUS=#{taskDetail.status}
+        </if>
+        <if test="taskDetail.createTime!= null and taskDetail.createTime!= ''">
+        	AND CREATE_TIME=str_to_date(#{taskDetail.createTime},'%Y-%m-%d %H:%i:%s')
+        </if>
+        <if test="taskDetail.context!= null and taskDetail.context!= ''">
+			AND CONTEXT=#{taskDetail.context}
+        </if>
+	</if>
+	</sql>
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+	<sql id="orderBy">
+	<choose>
+		<when test="key == 'id'">
+			ID ${value}
+		</when>
+		<when test="key == 'taskId'">
+			TASK_ID ${value}
+		</when>
+		<when test="key == 'message'">
+			MESSAGE ${value}
+		</when>
+		<when test="key == 'status'">
+			STATUS ${value}
+		</when>
+		<when test="key == 'createTime'">
+			CREATE_TIME ${value}
+		</when>
+		<when test="key == 'context'">
+			CONTEXT ${value}
+		</when>
+	</choose>
+</sql>
 	<insert id="saveTaskDetail" useGeneratedKeys="true" keyProperty="id" parameterType="TaskDetail">
 		<![CDATA[ INSERT INTO T_TASK_DETAIL ( ]]>
 		<include refid="commonColumnsNotPK"/>
@@ -41,12 +101,19 @@
 			, #{message}
 			, #{status}
 			, #{createTime}
-			, #{constant}
+			, #{context}
   ) ]]>
 	</insert>
 	<select id="findTaskDetail" parameterType="Long"
 		resultMap="TaskDetailResultMapper">
-		SELECT ID,TASK_ID,MESSAGE,STATUS,CREATE_TIME,CONTANT FROM T_TASK_DETAIL
+		SELECT ID,TASK_ID,MESSAGE,STATUS,CREATE_TIME,CONTEXT FROM T_TASK_DETAIL
 		WHERE TASK_ID =#{taskId}
+	</select>
+	<select id="listPaginationByProperty" parameterType="TaskDetail" resultMap="TaskDetailResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_TASK_DETAIL WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
 	</select>
 </mapper>

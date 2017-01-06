@@ -3,26 +3,32 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PushbackInputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-public class Excel {
+public class ExcelUtil {
 	File file = null;
 	private Workbook workbook = null;
 	private static final SimpleDateFormat Date_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	
-	public static Excel create(File file){
-		Excel excel = new Excel(file);
+	public static ExcelUtil create(File file){
+		ExcelUtil excel = new ExcelUtil(file);
 		if(excel.workbook == null){
 			return null;
 		}
@@ -30,25 +36,36 @@ public class Excel {
 		return excel;
 	}
 	
-	public static Excel create(String path){
+	public static ExcelUtil create(String path){
 		File file = new File(path);
 		return create(file);
 	}
 	
-	public Excel(InputStream inputStream){
+	public ExcelUtil(InputStream inputStream){
 		try {
-			workbook = new XSSFWorkbook(inputStream);
+			 if (!inputStream.markSupported()) {
+				 inputStream = new PushbackInputStream(inputStream, 8);
+		        }
+		        if (POIFSFileSystem.hasPOIFSHeader(inputStream)) {
+		        	workbook = new HSSFWorkbook(inputStream);
+		        }
+		        else if (POIXMLDocument.hasOOXMLHeader(inputStream)) {
+		        	workbook =  new XSSFWorkbook(OPCPackage.open(inputStream));
+		        }
 		} catch (IOException e) {
+			e.printStackTrace();
 			try {
 				workbook = new HSSFWorkbook(inputStream);
 			} catch (IOException ex) {
 				workbook = null;
 			}
+		} catch (InvalidFormatException e) {
+			e.printStackTrace();
 		}
 	}
 	
 	
-	public Excel(File file){
+	public ExcelUtil(File file){
 		this.file = file;
 		FileInputStream fis = null;
 		
@@ -170,7 +187,7 @@ public class Excel {
 	}
 /*	public static void main(String[] args) {
 		File file = new File("C:/Users/guihua.zhang/Desktop/tecno1.xlsx");
-		Excel e = new Excel(file);
+		ExcelUtil e = new ExcelUtil(file);
 		String [] [] dataArr = e.getData(1);
 		List<SaleTaskDto> saleTaskDtoList = new ArrayList<SaleTaskDto>();
 		for(int i=0;i<dataArr.length;i++){		
