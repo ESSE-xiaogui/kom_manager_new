@@ -15,7 +15,7 @@
 	<context:annotation-config />
 	<!-- message -->
 	<bean id="amqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-		<property name="brokerURL" value="failover:(tcp://10.250.117.4:61616)?timeout=3000" />
+		<property name="brokerURL" value="${mq.url}" />
 	</bean>
 
 	<bean id="connectionFactory"
