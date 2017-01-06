@@ -118,10 +118,11 @@ public class SaleController extends AbstractController{
 	/**
 	 * 销量上传[文件导入]
 	 * */
-	@GET
-	@Path("saveSaleTask/{taskId}")
+	@PUT
+	@Path("/saveSaleTask/{taskId}")
+	@Consumes({MediaType.APPLICATION_JSON})
 	public void saveSaleTask(@PathParam("taskId") Long taskId) throws ServiceException {
-		logger.debug("aaaaaaaaaaaaa");
-		saleTaskFacade.saveSaleTask(77L);
+		logger.debug("taskId=[{}]", taskId);
+		saleTaskFacade.saveSaleTask(taskId);
 	}
 }
