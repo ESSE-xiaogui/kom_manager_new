@@ -164,7 +164,7 @@ public class ModelFacadeImpl implements ModelFacade {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public List<ModelDto> findModel(String token,ModelDto modelDto) throws ServiceException{
-		return modelManager.findModel(token, modelDto);
+	public List<ModelDto> findModel(ModelDto modelDto) throws ServiceException{
+		return modelManager.findModel( modelDto);
 	}
 }

@@ -44,7 +44,7 @@ public class OrganizationManager {
 		organization.setParentId(new Long(organizationDto.getParentId()));
 		}
 		if(!UtilHelper.isEmpty(userContext)&&!UtilHelper.isEmpty(userContext.getUser())){
-			organization.setCompanyId(userContext.getUser().getCompanyId());
+			organization.setCompanyId(userContext.getCompanyId().intValue());
 			organization.setCreatedBy(userContext.getUser().getUserId().toString());
 			organization.setUpdatedBy(userContext.getUser().getUserId().toString());
 		}

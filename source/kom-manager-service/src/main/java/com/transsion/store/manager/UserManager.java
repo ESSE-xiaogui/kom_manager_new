@@ -51,7 +51,6 @@ public class UserManager {
 		user.setUserCode(userCode);
 		user.setPassword(password);
 		UserResponseDto urd = userMapper.getUser(user);
-		//List<User> list = userService.listByProperty(user);
 		if (UtilHelper.isEmpty(urd) ||UtilHelper.isEmpty(urd.getId()) || UtilHelper.isEmpty(urd.getCompanyId())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_LOGIN_FAIL);
 		}
@@ -65,6 +64,7 @@ public class UserManager {
 	    if(!UtilHelper.isEmpty(token)) {
 	    	userContext.setUserCode(userCode);
 			userContext.setPassword(password);
+			userContext.setCompanyId(urd.getCompanyId());
 			userContext.setToken(token);
 			user.setId(urd.getId());
 			user.setUserId(urd.getUserId().intValue());
@@ -95,13 +95,9 @@ public class UserManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
-		}
-		
 		User formerUser = userMapper.getByPK(id);
 		formerUser.setIsInactive(isInactive);
-		formerUser.setUpdatedBy(userContext.getUser().getUserCode());
+		formerUser.setUpdatedBy(userContext.getUserCode());
 		formerUser.setUpdatedTime(systemDateService.getCurrentDate());
 		userService.update(formerUser);
 		UserResponseDto urd = new UserResponseDto();
@@ -125,16 +121,9 @@ public class UserManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
-		}
-		if(UtilHelper.isEmpty(userContext.getUser().getUserId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERID_IS_NULL);
-		}
-		
 		User formerUser = userMapper.getByPK(id);
 		formerUser.setPassword(password);
-		formerUser.setUpdatedBy(userContext.getUser().getUserCode());
+		formerUser.setUpdatedBy(userContext.getUserCode());
 		formerUser.setUpdatedTime(systemDateService.getCurrentDate());
 		formerUser.setPwdUpdated(systemDateService.getCurrentDate());
 		userService.update(formerUser);
@@ -156,10 +145,7 @@ public class UserManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
-		}
-		userInfoDto.setCompanyId(1000);
+		userInfoDto.setCompanyId(userContext.getCompanyId().intValue());
 		return userMapper.getUserInfo(userInfoDto);
 	}
 
@@ -176,9 +162,6 @@ public class UserManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
-		}
 		User tempUser = new User();
 		tempUser.setUserCode(user.getUserCode());
 		int count1 = userService.findByCount(tempUser);
@@ -191,7 +174,7 @@ public class UserManager {
 			formerUser.setUserCode(user.getUserCode());
 			formerUser.setPassword(user.getPassword());
 			formerUser.setIsInactive(user.getIsInactive());
-			formerUser.setUpdatedBy(userContext.getUser().getUserCode());
+			formerUser.setUpdatedBy(userContext.getUserCode());
 			formerUser.setUpdatedTime(systemDateService.getCurrentDate());
 			userService.update(formerUser);
 			UserResponseDto urd = new UserResponseDto();

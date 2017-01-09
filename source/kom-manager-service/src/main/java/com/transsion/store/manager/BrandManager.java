@@ -42,16 +42,13 @@ public class BrandManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
-		}
-		if(UtilHelper.isEmpty(userContext.getUser().getCompanyId())){
+		if(UtilHelper.isEmpty(userContext.getCompanyId())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		Brand brand = new Brand();
 		BeanUtils.copyProperties(brandDto, brand);
-		brand.setCompanyId(userContext.getUser().getCompanyId());
-		brand.setCreatedBy(userContext.getUser().getUserCode());
+		brand.setCompanyId(userContext.getCompanyId().intValue());
+		brand.setCreatedBy(userContext.getUserCode());
 		brand.setCreatedTime(systemDateService.getCurrentDate());
 		brand.setVersion(0);
 		brandMapper.save(brand);
@@ -73,14 +70,11 @@ public class BrandManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
-		}
-		if(UtilHelper.isEmpty(userContext.getUser().getCompanyId())){
+		if(UtilHelper.isEmpty(userContext.getCompanyId())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		Brand brand = new Brand();
-		brand.setCompanyId(userContext.getUser().getCompanyId());
+		brand.setCompanyId(userContext.getCompanyId().intValue());
 		List<Brand> brandList = brandMapper.listByProperty(brand);
 		if(UtilHelper.isEmpty(brandList)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
@@ -108,9 +102,6 @@ public class BrandManager {
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
-		}
-		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
 		}
 		Brand formerBr = brandMapper.getByPK(brand.getId());
 		formerBr.setBrandName(brand.getBrandName());

@@ -125,7 +125,6 @@ public class ModelController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public List<ModelDto> findModel(ModelDto modelDto) throws ServiceException{
-		String token = this.getAuthorization();
-		return modelFacade.findModel(token, modelDto);
+		return modelFacade.findModel(modelDto);
 	}
 }

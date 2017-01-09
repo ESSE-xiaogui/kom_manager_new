@@ -119,9 +119,6 @@ public class RegionManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
-		}
 		/*Region tempReg = new Region();
 		tempReg.setRegionCode(region.getRegionCode());
 		int count = regionMapper.findByCount(tempReg);
@@ -131,7 +128,7 @@ public class RegionManager {
 		if(UtilHelper.isEmpty(region.getParentId())){
 			region.setParentId(0l);
 		}
-		region.setCreatedBy(userContext.getUser().getUserCode());
+		region.setCreatedBy(userContext.getUserCode());
 		region.setCreatedTime(systemDateService.getCurrentDate());
 		region.setCompanyId(userContext.getUser().getCompanyId());
 		regionService.save(region);
@@ -156,9 +153,6 @@ public class RegionManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
-		}
 		/*Region tempReg = new Region();
 		tempReg.setRegionCode(region.getRegionCode());
 		int count1 = regionMapper.findByCount(tempReg);
@@ -173,7 +167,7 @@ public class RegionManager {
 		formerReg.setRegionType(region.getRegionType());
 		formerReg.setIsInactive(region.getIsInactive());
 		formerReg.setRemark(region.getRemark());
-		formerReg.setCompanyId(userContext.getUser().getCompanyId());
+		formerReg.setCompanyId(userContext.getCompanyId().intValue());
 		regionService.update(formerReg);
 		RegionResponseDto rrd = new RegionResponseDto();
 		rrd.setStatus(1);

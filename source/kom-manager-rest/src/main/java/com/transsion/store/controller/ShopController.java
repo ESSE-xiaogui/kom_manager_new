@@ -113,7 +113,7 @@ public class ShopController extends AbstractController{
 	}
 	
 	/**
-	 * 用户已绑定的店铺
+	 * 用户已绑定的店铺: 前端未调用
 	 * */
 	@GET
 	@Path("/findShopUser")
@@ -124,7 +124,7 @@ public class ShopController extends AbstractController{
 	}
 	
 	/**
-	 * 用户已绑定的店铺
+	 * 用户已绑定的店铺 : 前端未调用
 	 * */
 	@GET
 	@Path("/findShop")

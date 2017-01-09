@@ -95,7 +95,6 @@ public class OrganizationController extends AbstractController{
 	*/
 	@POST
 	@Path("/delete")
-	//@Consumes({MediaType.APPLICATION_JSON})
 	public void delete(List<java.lang.Long> primaryKeys) throws ServiceException
 	{
 		organizationFacade.deleteByPKeys(primaryKeys);

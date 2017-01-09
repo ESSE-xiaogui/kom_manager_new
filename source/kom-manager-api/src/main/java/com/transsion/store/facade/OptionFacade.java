@@ -102,8 +102,4 @@ public interface OptionFacade {
 	public Pagination<Option> listPaginationByProperty(Pagination<Option> pagination, Option option)
 			throws ServiceException;
 	
-	/**
-	 * 门店授权管理 给用户绑定店铺
-	 * */
-	public void saveShopOption(Long userId,List<Long> shopIds,List<Long> optionIds,List<Long> userOptionIds) throws ServiceException;
 }

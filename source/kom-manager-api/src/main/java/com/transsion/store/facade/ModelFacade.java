@@ -116,6 +116,6 @@ public interface ModelFacade {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public List<ModelDto> findModel(String token,ModelDto modelDto) throws ServiceException;
+	public List<ModelDto> findModel(ModelDto modelDto) throws ServiceException;
 
 }

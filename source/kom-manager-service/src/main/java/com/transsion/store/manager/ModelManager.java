@@ -41,13 +41,10 @@ public class ModelManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
-		}
 		Model model = new Model();
 		BeanUtils.copyProperties(modelDto, model);
-		model.setCompanyId(userContext.getUser().getCompanyId());
-		model.setCreatedBy(userContext.getUser().getUserCode());
+		model.setCompanyId(userContext.getCompanyId().intValue());
+		model.setCreatedBy(userContext.getUserCode());
 		model.setCreatedTime(systemDateService.getCurrentDate());
 		model.setVersion(0);
 		modelMapper.save(model);
@@ -61,21 +58,8 @@ public class ModelManager {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public List<ModelDto> findModel(String token,ModelDto modelDto) throws ServiceException{
-		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
-		}
+	public List<ModelDto> findModel(ModelDto modelDto) throws ServiceException{
 		if(UtilHelper.isEmpty(modelDto)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
-		}
-		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
-		}
-		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
-		}
-		if(UtilHelper.isEmpty(userContext.getUser().getCompanyId())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		Model model = new Model();
@@ -99,10 +83,6 @@ public class ModelManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
-		}
-		
 		Model formerMo = modelMapper.getByPK(model.getId());
 		formerMo.setBrandCode(model.getBrandCode());
 		formerMo.setSeriesCode(model.getSeriesCode());
@@ -115,7 +95,7 @@ public class ModelManager {
 		formerMo.setModelName(model.getModelName());
 		formerMo.setPriceScale(model.getPriceScale());
 		formerMo.setIsInactive(model.getIsInactive());
-		formerMo.setUpdatedBy(userContext.getUser().getUserCode());
+		formerMo.setUpdatedBy(userContext.getUserCode());
 		formerMo.setUpdatedTime(systemDateService.getCurrentDate());
 		modelMapper.update(formerMo);
 		ModelResponseDto mrd = new ModelResponseDto();

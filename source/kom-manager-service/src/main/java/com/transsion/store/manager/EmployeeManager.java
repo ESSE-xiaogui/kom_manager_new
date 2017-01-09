@@ -139,6 +139,9 @@ public class EmployeeManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
+		if(UtilHelper.isEmpty(userContext.getCompanyId())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
 		if(UtilHelper.isEmpty(empUserDto.getUserCode())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERCODE_IS_NULL);
 		}
@@ -156,7 +159,7 @@ public class EmployeeManager {
 		if(!UtilHelper.isEmpty(uId)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_ALREADY_DISTRIBUTED);
 		}
-		user.setCompanyId(userContext.getUser().getCompanyId());
+		user.setCompanyId(userContext.getCompanyId().intValue());
 		user.setPassword(MD5Utils.encrypt(PASSWORD));
 		user.setIsInactive(1);
 		user.setCreatedBy(userContext.getUser().getUserCode());
