@@ -77,11 +77,11 @@ public class SaleTaskManager {
 				Sale sale = new Sale();
 				sale.setBillno("");
 				sale.setUserCode(saleTaskDto.getUserCode());
-				Shop shop = shopMapper.findShopId(saleTaskDto.getShopCode());
+				Shop shop = new Shop();
+				shop = shopMapper.findShopId(saleTaskDto.getShopCode());
 				if(UtilHelper.isEmpty(shop)){
 					taskDetail.setMessage("shop code is null");
-				}
-				if(UtilHelper.isEmpty(shop.getCompanyId()) || UtilHelper.isEmpty(shop.getShopId())){
+				}else if(UtilHelper.isEmpty(shop.getCompanyId()) || UtilHelper.isEmpty(shop.getShopId())){
 					taskDetail.setMessage("shop code is null");
 				}else{
 				sale.setCompanyId(shop.getCompanyId());
@@ -96,6 +96,7 @@ public class SaleTaskManager {
 				saleItem.setSaleId(sale.getId());
 				saleItem.setCompanyId(shop.getCompanyId());
 				saleItem.setBillno("");
+				saleItem.setImeiNo(saleTaskDto.getImeiNo());
 				saleItem.setBrandCode(scan.getBrand());
 				saleItem.setModelCode(scan.getModel());
 				saleItem.setLineId(0);
@@ -104,9 +105,9 @@ public class SaleTaskManager {
 				if (!UtilHelper.isEmpty(imeis)) {
 					for (int i = 0; i < imeis.length; i++) {
 						imeisList.append(imeis[i] + ";");
-						if (!imeiLists.contains(imeis[i])) {
+						/*if (!imeiLists.contains(imeis[i])) {
 							imeiLists.add(imeis[i]);
-						}
+						}*/
 					}
 				}
 				String imeiList = imeisList.toString();
@@ -182,7 +183,7 @@ public class SaleTaskManager {
 									+ "IMEI code:" + saleTaskDto.getImeiNo() + "\r" + "Price:" + saleTaskDto.getPrice();
 					taskDetail.setContext(context);
 					taskDetail.setCreateTime(systemDateService.getCurrentDate());
-					taskDetailMapper.save(taskDetail);
+					taskDetailMapper.saveTaskDetail(taskDetail);
 				}
 
 			}

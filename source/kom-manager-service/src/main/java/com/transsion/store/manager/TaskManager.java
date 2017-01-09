@@ -11,6 +11,7 @@ import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Task;
 import com.transsion.store.bo.User;
+import com.transsion.store.common.Constants;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.TaskDto;
 import com.transsion.store.mapper.TaskMapper;
@@ -68,8 +69,8 @@ public class TaskManager {
 		msg.setName(Type.TASK_SALE_IMPORT.toString());
 		msg.setInvokerType(TaskInvokerInfo.Type.REST);
 		msg.setKey(task.getId());
-		msg.setBeanName("http://10.151.170.123:9101/sale/saveSaleTask/" + task.getId());
-		msg.setMethod(TaskInvokerInfo.RestMethod.GET.toString());
+		msg.setBeanName(Constants.IMPORTTASK + task.getId());
+		msg.setMethod(TaskInvokerInfo.RestMethod.PUT.toString());
 		msg.setParams(task.getId());
 		producerService.sendMessage(msg);
 	}
