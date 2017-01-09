@@ -54,6 +54,16 @@
 		<result column="EMP_CODE" property="empCode"/>
 	</resultMap>
 	
+	<resultMap id="UserResponseDtoMapper" type="UserResponseDto">
+		<result column="ID" property="id"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="USER_CODE" property="userCode"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="PASSWORD" property="password"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+	</resultMap>
+	
 	<resultMap id="UserInfoDtoResultMapper" type="UserInfoDto">
 		<result column="ID" property="id"/>
 		<result column="USER_CODE" property="userCode"/>
@@ -493,5 +503,10 @@
 		LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ID
 		WHERE e.COMPANY_ID = #{companyId}
 		<include refid="commonCondition2"/>
+	</select>
+	<select id="getUser" parameterType="User" resultMap="UserResponseDtoMapper">
+		SELECT u.ID,u.USER_ID,u.USER_CODE,u.USER_NAME,u.PASSWORD,e.COMPANY_ID,u.IS_INACTIVE FROM T_USER u
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID
+		WHERE u.USER_CODE = #{userCode} AND u.PASSWORD = #{password} 
 	</select>
 </mapper>

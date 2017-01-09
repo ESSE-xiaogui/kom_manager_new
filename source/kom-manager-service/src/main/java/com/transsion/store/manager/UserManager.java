@@ -13,7 +13,6 @@ import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.service.UserService;
 import com.transsion.store.utils.CacheUtils;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,11 +50,12 @@ public class UserManager {
 		User user = new User();
 		user.setUserCode(userCode);
 		user.setPassword(password);
-		List<User> list = userService.listByProperty(user);
-		if (UtilHelper.isEmpty(list)){
+		UserResponseDto urd = userMapper.getUser(user);
+		//List<User> list = userService.listByProperty(user);
+		if (UtilHelper.isEmpty(urd) ||UtilHelper.isEmpty(urd.getId()) || UtilHelper.isEmpty(urd.getCompanyId())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_LOGIN_FAIL);
 		}
-		if(list.get(0).getIsInactive().equals(INACTIVE)){
+		if(urd.getIsInactive().equals(INACTIVE)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_INACTIVE_USER);
 		}
 		UserContext userContext = new UserContext();
@@ -66,10 +66,10 @@ public class UserManager {
 	    	userContext.setUserCode(userCode);
 			userContext.setPassword(password);
 			userContext.setToken(token);
-			user.setId(list.get(0).getId());
-			user.setUserId(list.get(0).getUserId());
-			user.setCompanyId(list.get(0).getCompanyId());
-			user.setUserName(list.get(0).getUserName());
+			user.setId(urd.getId());
+			user.setUserId(urd.getUserId().intValue());
+			user.setCompanyId(urd.getCompanyId().intValue());
+			user.setUserName(urd.getUserName());
 			userContext.setUser(user);
 			CacheUtils.getSupporter().set(token, userContext, exp);
 	    } else {

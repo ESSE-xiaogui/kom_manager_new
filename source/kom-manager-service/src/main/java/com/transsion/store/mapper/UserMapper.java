@@ -22,6 +22,7 @@ import java.util.Map;
 import com.transsion.store.bo.User;
 import com.transsion.store.dto.UserDto;
 import com.transsion.store.dto.UserInfoDto;
+import com.transsion.store.dto.UserResponseDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
@@ -36,5 +37,7 @@ public interface UserMapper extends GenericIBatisMapper<User, java.lang.Long> {
     public UserInfoDto getUserInfo(UserInfoDto userInfoDto) throws DataAccessFailureException;
 
 	public UserDto getByPKey(Long primaryKey) throws DataAccessFailureException;
+	
+	public UserResponseDto getUser(User user) throws DataAccessFailureException;
 
 }

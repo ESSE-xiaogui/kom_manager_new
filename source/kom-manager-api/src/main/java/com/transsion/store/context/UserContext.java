@@ -47,6 +47,10 @@ public class UserContext implements IUserContext {
      */
     private User user;
     
+    /**
+     * 公司ID
+     * */
+    private Long companyId;
     
     /**
      * 店铺名称
@@ -104,10 +108,19 @@ public class UserContext implements IUserContext {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	public Long getCompanyId() {
+		return companyId;
+	}
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
+	}
+	
 	@Override
 	public String toString() {
 		return "UserContext [token=" + token + ", userCode=" + userCode + ", password=" + password + ", cityName="
-				+ cityName + ", shop=" + shop + ", dealerName=" + dealerName + ", user=" + user + "]";
+						+ cityName + ", shop=" + shop + ", dealerName=" + dealerName + ", user=" + user + ", companyId="
+						+ companyId + "]";
 	}
     
 }

@@ -51,7 +51,7 @@ public class User extends Model{
 	private java.lang.Integer empId;
 
 	/**
-	  *	
+	  *	keep for align with kom pc
 	  */
 	private java.lang.Integer companyId;
 
