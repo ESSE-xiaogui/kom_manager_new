@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.Brand;
 import com.transsion.store.dto.BrandDto;
+import com.transsion.store.dto.BrandModelListDto;
 import com.transsion.store.dto.BrandResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
@@ -167,6 +168,16 @@ public class BrandFacadeImpl implements BrandFacade {
 	 * */
 	public List<BrandDto> findBrand(String token) throws ServiceException{
 		return brandManager.findBrand(token);
+	}
+	/**
+	 * 查询所有品牌
+	 * 
+	 * @return
+	 * @throws ServiceException
+	 */
+	@Override
+	public List<BrandModelListDto> queryBrandList() throws ServiceException {
+		return brandService.queryBrandList();
 	}
 
 }

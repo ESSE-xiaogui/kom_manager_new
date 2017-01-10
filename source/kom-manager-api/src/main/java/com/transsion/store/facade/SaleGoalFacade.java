@@ -101,5 +101,13 @@ public interface SaleGoalFacade {
 	 */
 	public Pagination<SaleGoal> listPaginationByProperty(Pagination<SaleGoal> pagination, SaleGoal saleGoal)
 			throws ServiceException;
+	/**
+	 * @see 用户查看绩效
+	 * @author guihua.zhang
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public int findMonthSaleAmount(String token,String goalMonth) 
+			throws ServiceException;
 
 }

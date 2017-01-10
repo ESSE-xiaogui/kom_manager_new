@@ -110,4 +110,17 @@ public class SaleGoalController extends AbstractController{
 	{
 		saleGoalFacade.update(saleGoal);
 	}
+	/**
+	 * @see 用户查看绩效
+	 * @author guihua.zhang
+	 * @return
+	 * @throws ServiceException
+	 * */
+	@GET
+	@Path("findMonthSaleAmount")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public int findMonthSaleAmount(@QueryParam("goalMonth") java.lang.String goalMonth) throws ServiceException{
+		String token = this.getAuthorization();
+		return saleGoalFacade.findMonthSaleAmount(token,goalMonth);
+	}
 }

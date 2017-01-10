@@ -343,4 +343,37 @@
 		SELECT count(1) AS totalcount FROM T_STOCK_ITEM WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
+	<update id="updateByHistory" parameterType="java.lang.String">
+		UPDATE T_STOCK_ITEM
+		SET ISHISTORY = 1 WHERE 1=1
+		AND BRAND_CODE=#{brandCode}
+		AND	MODEL_CODE=#{modelCode} 
+		AND	BILLNO in (SELECT BILLNO FROM T_STOCK WHERE USER_ID = #{userId})
+	</update>
+	<insert id="saveStockDetailUpload" parameterType="java.util.List">
+		INSERT INTO T_STOCK_ITEM (
+		<include refid="commonColumnsNotPK" />
+		) VALUES
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(
+			#{item.stockId}
+			, #{item.companyId}
+			, #{item.billno}
+			, #{item.lineId}
+			, #{item.brandCode}
+			, #{item.modelCode}
+			, #{item.qty}
+			, #{item.price}
+			, #{item.amount}
+			, #{item.ishistory}
+			, #{item.remark}
+			, #{item.createBy}
+			, str_to_date(#{item.createTime},'%Y-%m-%d %H:%i:%s')
+			, #{item.updateBy}
+			, str_to_date(#{item.updateTime},'%Y-%m-%d %H:%i:%s')
+			)
+		</foreach>
+
+	</insert>
 </mapper>

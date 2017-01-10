@@ -6,7 +6,7 @@
  * recording, or otherwise, without the prior written permission of Liuzh.
  *
  * Created By: Liuzh
- * Created On: 2016-11-18 17:33:10
+ * Created On: 2016-5-25 11:40:37
  *
  * Amendment History:
  * 
@@ -17,18 +17,16 @@
 package com.transsion.store.mapper;
 
 import java.util.List;
-import java.util.Map;
 
-import com.transsion.store.bo.SaleItem;
 import com.shangkang.core.mapper.GenericIBatisMapper;
+import com.transsion.store.bo.Currency;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
 import org.apache.ibatis.annotations.Param;
 
-public interface SaleItemMapper extends GenericIBatisMapper<SaleItem, java.lang.Long> {
+public interface CurrencyMapper extends GenericIBatisMapper<Currency, java.lang.Long> {
 
-    public List<SaleItem> listPaginationByProperty(Pagination<SaleItem> pagination, @Param("saleItem")SaleItem saleItem, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
-    public String queryScanDuplicatedIMEI(@Param("imei") String imei);
-    public void saveSaleItem(List<SaleItem> tShopSaleitem);
+	public List<Currency> listPaginationByProperty(Pagination<Currency> pagination, Currency currency) throws DataAccessFailureException;
 
+	public java.math.BigDecimal queryCurrencyRatio(@Param("dealerId") Integer dealerId,@Param("companyId") Integer companyId);
 }

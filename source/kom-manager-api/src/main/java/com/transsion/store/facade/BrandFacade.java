@@ -20,6 +20,7 @@ import java.util.List;
 
 import com.transsion.store.bo.Brand;
 import com.transsion.store.dto.BrandDto;
+import com.transsion.store.dto.BrandModelListDto;
 import com.transsion.store.dto.BrandResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
@@ -117,5 +118,12 @@ public interface BrandFacade {
 	 * @throws ServiceException
 	 * */
 	public List<BrandDto> findBrand(String token) throws ServiceException;
+	
+	/**
+     * 获取所有品牌机型
+     * @return
+     * @throws ServiceException
+     */
+    public List<BrandModelListDto> queryBrandList()throws ServiceException;
 
 }

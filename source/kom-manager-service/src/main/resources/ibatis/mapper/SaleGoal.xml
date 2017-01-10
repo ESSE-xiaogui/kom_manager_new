@@ -38,7 +38,9 @@
 		<result column="UPDATE_TIME" property="updateTime"/>
 		<result column="REMARK" property="remark"/>
 	</resultMap>
-	
+	<resultMap id="ResultQty" type="SaleGoalDto" >  
+    <result column="GOAL_QTY" property="goalQty"/>  
+  	</resultMap>
 	<sql id="commonColumns">
 		 ID
 		, GOAL_CODE
@@ -358,4 +360,10 @@
 		SELECT count(1) AS totalcount FROM T_SALE_GOAL WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
+	  <select id="findByQty" resultMap="ResultQty">
+  	<![CDATA[ SELECT ]]>
+			g.GOAL_QTY
+		FROM T_SALE_GOAL g  
+  		WHERE g.USER_ID = #{userId} AND g.GOAL_MONTH = #{goalMonth}
+  </select>
 </mapper>

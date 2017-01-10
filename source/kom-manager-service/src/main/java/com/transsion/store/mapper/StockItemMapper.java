@@ -18,7 +18,6 @@ package com.transsion.store.mapper;
 
 import java.util.List;
 import java.util.Map;
-
 import com.transsion.store.bo.StockItem;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
@@ -28,4 +27,8 @@ import org.apache.ibatis.annotations.Param;
 public interface StockItemMapper extends GenericIBatisMapper<StockItem, java.lang.Long> {
 
     public List<StockItem> listPaginationByProperty(Pagination<StockItem> pagination, @Param("stockItem")StockItem stockItem, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public int updateByHistory(@Param("brandCode")String brandCode,@Param("modelMatCode")String modelMatCode, @Param("userId")String userId);
+    public void saveStockDetailUpload(List<StockItem> stockItemList);
+
+
 }

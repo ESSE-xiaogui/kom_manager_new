@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-5-27 15:55:54
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.CurrencyMapper">
+	<resultMap id="CurrencyResultMapper" type="Currency">
+		<result column="ID" property="id"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="FACTORY_CODE" property="factoryCode"/>
+		<result column="FINDEX" property="findex"/>
+		<result column="WERKS" property="werks"/>
+		<result column="CURRENCY_NAME" property="currencyName"/>
+		<result column="EXCHANGERATE" property="exchangerate"/>
+		<result column="EXCHANGERATE2" property="exchangerate2"/>
+		<result column="BEGINDATE" property="begindate"/>
+		<result column="ENDDATE" property="enddate"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, COMPANY_ID
+		, FACTORY_CODE
+		, FINDEX
+		, WERKS
+		, CURRENCY_NAME
+		, EXCHANGERATE
+		, EXCHANGERATE2
+		, BEGINDATE
+		, ENDDATE
+		, IS_INACTIVE
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 COMPANY_ID
+		, FACTORY_CODE
+		, FINDEX
+		, WERKS
+		, CURRENCY_NAME
+		, EXCHANGERATE
+		, EXCHANGERATE2
+		, BEGINDATE
+		, ENDDATE
+		, IS_INACTIVE
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, COMPANY_ID
+		, FACTORY_CODE
+		, FINDEX
+		, WERKS
+		, CURRENCY_NAME
+		, EXCHANGERATE
+		, EXCHANGERATE2
+		, date_format(BEGINDATE, '%Y-%m-%d %H:%i:%s') BEGINDATE
+		, date_format(ENDDATE, '%Y-%m-%d %H:%i:%s') ENDDATE
+		, IS_INACTIVE
+		, UPDATED_BY
+		, date_format(UPDATED_TIME, '%Y-%m-%d %H:%i:%s') UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="factoryCode!= null and factoryCode!= ''"> 
+			AND FACTORY_CODE=#{factoryCode}
+		</if>
+		<if test="findex!= null and findex!= ''"> 
+			AND FINDEX=#{findex}
+		</if>
+		<if test="werks!= null and werks!= ''"> 
+			AND WERKS=#{werks}
+		</if>
+		<if test="currencyName!= null and currencyName!= ''"> 
+			AND CURRENCY_NAME=#{currencyName}
+		</if>
+		<if test="exchangerate!= null and exchangerate!= ''"> 
+			AND EXCHANGERATE=#{exchangerate}
+		</if>
+		<if test="exchangerate2!= null and exchangerate2!= ''"> 
+			AND EXCHANGERATE2=#{exchangerate2}
+		</if>
+		<if test="begindate!= null and begindate!= ''"> 
+			AND BEGINDATE=str_to_date(#{begindate},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="enddate!= null and enddate!= ''"> 
+			AND ENDDATE=str_to_date(#{enddate},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="isInactive!= null and isInactive!= ''"> 
+			AND IS_INACTIVE=#{isInactive}
+		</if>
+		<if test="updatedBy!= null and updatedBy!= ''"> 
+			AND UPDATED_BY=#{updatedBy}
+		</if>
+		<if test="updatedTime!= null and updatedTime!= ''"> 
+			AND UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+	
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Currency">
+		<![CDATA[ INSERT INTO T_CURRENCY ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{companyId}
+			, #{factoryCode}
+			, #{findex}
+			, #{werks}
+			, #{currencyName}
+			, #{exchangerate}
+			, #{exchangerate2}
+			, str_to_date(#{begindate},'%Y-%m-%d %H:%i:%s')
+			, str_to_date(#{enddate},'%Y-%m-%d %H:%i:%s')
+			, #{isInactive}
+			, #{updatedBy}
+			, str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="Currency">
+		<![CDATA[ UPDATE T_CURRENCY SET 
+			 ID=#{id} 
+			, COMPANY_ID=#{companyId} 
+			, FACTORY_CODE=#{factoryCode} 
+			, FINDEX=#{findex} 
+			, WERKS=#{werks} 
+			, CURRENCY_NAME=#{currencyName} 
+			, EXCHANGERATE=#{exchangerate} 
+			, EXCHANGERATE2=#{exchangerate2} 
+			, BEGINDATE=str_to_date(#{begindate},'%Y-%m-%d %H:%i:%s')
+			, ENDDATE=str_to_date(#{enddate},'%Y-%m-%d %H:%i:%s')
+			, IS_INACTIVE=#{isInactive} 
+			, UPDATED_BY=#{updatedBy} 
+			, UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_CURRENCY WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_CURRENCY WHERE ID IN
+		<foreach collection="primaryKeys" index="index" item="id"
+			open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="Currency">
+		DELETE FROM T_CURRENCY WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="TBbCurrencyResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_CURRENCY WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="TBbCurrencyResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_CURRENCY
+	</select>
+	<select id="listByProperty" parameterType="Currency" resultMap="TBbCurrencyResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_CURRENCY WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="Currency" resultMap="TBbCurrencyResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_CURRENCY WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="findByCount" parameterType="Currency" resultType="int">
+		SELECT count(1) AS totalcount FROM T_CURRENCY WHERE 1=1
+		<include refid="commonCondition"/>
+	</select>
+
+	<select id="queryCurrencyRatio"  resultType="java.math.BigDecimal">
+		select	EXCHANGERATE from	T_CURRENCY
+		where REGION_ID in (select REGION_ID from T_SHOP  where SHOP_ID = #{dealerId} and COMPANY_ID=#{companyId})
+		order by ENDDATE desc
+		 limit 1
+	</select>
+</mapper>

@@ -38,7 +38,12 @@
 		<result column="UPDATED_TIME" property="updatedTime"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
-	
+	<resultMap id="PromoterStockResultMapper" type="StockDto">
+		<result column="STOCK_DATE" property="fdate" />
+		<result column="BRAND_CODE" property="brandCode" />
+		<result column="MODEL_CODE" property="modelMatCode" />
+		<result column="QTY" property="fqty" />
+	</resultMap>
 	<sql id="commonColumns">
 		 ID
 		, COMPANY_ID
@@ -357,5 +362,36 @@
 	<select id="findByCount" parameterType="Stock" resultType="int">
 		SELECT count(1) AS totalcount FROM T_STOCK WHERE 1=1 
 		<include refid="commonCondition"/>
+	</select>
+	<select id="findPromoterStock" resultMap="PromoterStockResultMapper">
+		SELECT m.STOCK_DATE,UPPER(d.BRAND_CODE) as
+		BRAND_CODE,d.MODEL_CODE,MAX(d.QTY) AS QTY FROM T_STOCK m
+		LEFT JOIN T_STOCK_ITEM d ON d.STOCK_ID = m.ID
+		WHERE m.USER_ID = #{userId}
+		<if test="modelCode!=null and modelCode!=''">
+			AND d.MODEL_CODE=#{modelCode}
+		</if>
+		<if test="endDate!=null and endDate!=''">
+			AND m.STOCK_DATE = (SELECT MAX(t.STOCK_DATE) FROM T_STOCK
+			t where t.STOCK_DATE &lt;= date_format(#{endDate}, '%Y-%m-%d
+			%H:%i:%s') AND t.USER_ID = #{userId})
+		</if>
+		AND d.BRAND_CODE IS NOT NULL
+		AND d.MODEL_CODE IS NOT NULL
+		GROUP BY
+		m.STOCK_DATE,d.BRAND_CODE,d.MODEL_CODE
+		ORDER BY m.STOCK_DATE DESC
+	</select>
+	
+	<select id="findPromoterCurrentStock" resultMap="PromoterStockResultMapper">
+		SELECT
+		m.STOCK_DATE,UPPER(d.BRAND_CODE) as BRAND_CODE,d.MODEL_CODE,MAX(d.QTY) as
+		QTY,MAX(d.PRICE) AS PRICE FROM T_STOCK m
+		LEFT JOIN T_STOCK_ITEM d ON d.STOCK_ID = m.ID
+		WHERE m.USER_ID=#{userId} and d.ISHISTORY = 0 AND d.BRAND_CODE = 'TECNO'
+		AND d.BRAND_CODE IS NOT NULL 
+		AND d.MODEL_CODE IS NOT NULL
+		GROUP BY m.STOCK_DATE,d.MODEL_CODE
+		ORDER BY d.MODEL_CODE
 	</select>
 </mapper>

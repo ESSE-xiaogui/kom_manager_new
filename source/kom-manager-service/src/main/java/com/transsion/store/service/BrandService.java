@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.Brand;
+import com.transsion.store.dto.BrandModelListDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.BrandMapper;
@@ -147,5 +148,8 @@ public class BrandService {
 	public int findByCount(Brand brand) throws ServiceException
 	{
 		return brandMapper.findByCount(brand);
+	}
+	public List<BrandModelListDto> queryBrandList() throws ServiceException {
+		return brandMapper.queryBrandList();
 	}
 }

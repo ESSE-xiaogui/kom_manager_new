@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.transsion.store.bo.Stock;
+import com.transsion.store.dto.StockDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
@@ -28,4 +29,8 @@ import org.apache.ibatis.annotations.Param;
 public interface StockMapper extends GenericIBatisMapper<Stock, java.lang.Long> {
 
     public List<Stock> listPaginationByProperty(Pagination<Stock> pagination, @Param("stock")Stock stock, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<StockDto> findPromoterStock(@Param("startDate")String startDate,@Param("endDate")String endDate, @Param("model") String model,@Param("userId") Integer userId);
+
+	public List<StockDto> findPromoterCurrentStock(@Param("userId") Integer userId);
+
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.TacMapper">
+	<resultMap id="TacResultMapper" type="Tac">
+	  <result column="ID" property="id"/>
+		<result column="TAC" property="tac"/>
+		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="MODEL_CODE" property="modelCode"/>
+	</resultMap>
+
+  	<select id="findAllTac" resultMap="TacResultMapper">
+    	SELECT ID, TAC, BRAND_CODE, MODEL_CODE FROM T_IMEI_TAC 
+  	</select>
+
+</mapper>

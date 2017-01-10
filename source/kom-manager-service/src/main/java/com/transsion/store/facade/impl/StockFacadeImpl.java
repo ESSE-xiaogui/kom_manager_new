@@ -20,11 +20,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.transsion.store.bo.Stock;
+import com.transsion.store.dto.StockDto;
+import com.transsion.store.dto.StockResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.StockFacade;
+import com.transsion.store.manager.StockManager;
 import com.transsion.store.service.StockService;
 
 @Component("stockFacade")
@@ -37,6 +39,9 @@ public class StockFacadeImpl implements StockFacade {
 	{
 		this.stockService = stockService;
 	}
+	
+	@Autowired
+	private StockManager stockManager;
 	
 	/**
 	 * 通过主键查询实体对象
@@ -144,5 +149,39 @@ public class StockFacadeImpl implements StockFacade {
 	public int findByCount(Stock stock) throws ServiceException
 	{
 		return stockService.findByCount(stock);
+	}
+	/**
+	 * 保存库存上报记录
+	 * 
+	 * @param promoterStockDto
+	 * @throws ServiceException
+	 */
+	public StockResponseDto saveStockUpload(List<StockDto> stockDtoList, String token) throws ServiceException {
+		return stockManager.saveStockUpload(stockDtoList, token);
+	}
+	/**
+	 * 查询库存上报记录
+	 * 
+	 * @param token
+	 * @param startDate
+	 * @param endDate
+	 * @param model
+	 * @return
+	 * @throws ServiceException
+	 */
+	@Override
+	public List<StockDto> findPromoterStock(String token, String startDate, String endDate, String model)
+			throws ServiceException {
+		return stockManager.findPromoterStock(token, startDate, endDate, model);
+	}
+
+	/**
+	 * @author guihua.zhang 查询库存上报最新记录
+	 * @return
+	 * @throws ServiceException
+	 */
+	@Override
+	public List<StockDto> findPromoterCurrentStock(String token) throws ServiceException {
+		return stockManager.findPromoterCurrentStock(token);
 	}
 }
