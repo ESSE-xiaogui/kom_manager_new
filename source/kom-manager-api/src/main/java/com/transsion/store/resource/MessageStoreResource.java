@@ -121,4 +121,13 @@ public class MessageStoreResource {
      */
     public static final String ERROR_MESSAGE_EXCEL_IS_NULL = "error_message_excelIsNull";
     
+    /**
+     * empCode为空
+     */
+    public static final String ERROR_MESSAGE_EMPCODE_IS_NULL = "error_message_empCodeIsNull";
+    
+    /**
+     * empId为空
+     */
+    public static final String ERROR_MESSAGE_EMPID_IS_NULL = "error_message_empIdIsNull";
 }

@@ -39,6 +39,8 @@ public class Organization extends Model{
 	  *	
 	  */
 	private java.lang.String orgName;
+	
+	private java.lang.String pOrgName;
 
 	/**
 	  *	
@@ -135,6 +137,14 @@ public class Organization extends Model{
 		this.orgName = orgName;
 	}
 	
+	public java.lang.String getpOrgName() {
+		return pOrgName;
+	}
+
+	public void setpOrgName(java.lang.String pOrgName) {
+		this.pOrgName = pOrgName;
+	}
+
 	/**
 	  *	
 	  */
@@ -289,10 +299,13 @@ public class Organization extends Model{
 
 	@Override
 	public String toString() {
-		return "Organization [id=" + id + ", orgId=" + orgId + ", orgName=" + orgName + ", companyId=" + companyId
-				+ ", parentId=" + parentId + ", dutyName=" + dutyName + ", isInactive="
-				+ isInactive + ", remark=" + remark + ", createdBy=" + createdBy + ", createdTime=" + createdTime
-				+ ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime + ", version=" + version + "]";
+		return "Organization [id=" + id + ", orgId=" + orgId + ", orgName=" + orgName + ", pOrgName=" + pOrgName
+						+ ", companyId=" + companyId + ", parentId=" + parentId + ", dutyName=" + dutyName
+						+ ", isInactive=" + isInactive + ", remark=" + remark + ", createdBy=" + createdBy
+						+ ", createdTime=" + createdTime + ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime
+						+ ", version=" + version + "]";
 	}
+
+
 }
 

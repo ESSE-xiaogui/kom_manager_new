@@ -25,6 +25,7 @@
 		<result column="PARENT_ID" property="parentId"/>
 		<result column="ORG_ID" property="orgId"/>
 		<result column="ORG_NAME" property="orgName"/>
+		<result column="PORG_NAME" property="pOrgName"/>
 		<result column="DUTY_NAME" property="dutyName"/>
 		<result column="IS_INACTIVE" property="isInactive"/>
 		<result column="REMARK" property="remark"/>
@@ -318,9 +319,11 @@
 		<include refid="commonCondition"/>
 	</select>
 	<select id="listPaginationByProperty" parameterType="Organization" resultMap="OrganizationResultMapper">
-		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_ORGANIZATION WHERE 1=1
+		SELECT o1.ID, o1.ORG_NAME, o2.ORG_NAME as PORG_NAME ,o1.COMPANY_ID, o1.DUTY_NAME, 
+		o1.IS_INACTIVE, o1.REMARK, o1.CREATED_BY, o1.CREATED_TIME, o1.UPDATED_BY, 
+		o1.UPDATED_TIME, o1.VERSION FROM T_ORGANIZATION o1
+		LEFT JOIN T_ORGANIZATION o2 ON o2.ID = o1.PARENT_ID
+		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>
