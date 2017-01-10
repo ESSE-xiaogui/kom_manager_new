@@ -162,7 +162,6 @@ public class RegionManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_REGIONCODE_IS_DUPLICATE);
 		}*/
 		Region formerReg = regionMapper.getByPK(region.getId());
-		formerReg.setParentId(region.getParentId());
 		formerReg.setRegionName(region.getRegionName());
 		formerReg.setRegionType(region.getRegionType());
 		formerReg.setIsInactive(region.getIsInactive());

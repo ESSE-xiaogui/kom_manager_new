@@ -94,7 +94,7 @@ public class Employee extends Model{
 	/**
 	  *	
 	  */
-	private Date birthday;
+	private java.lang.String birthday;
 
 	/**
 	  *	
@@ -370,7 +370,7 @@ public class Employee extends Model{
 	/**
 	  *	
 	  */
-	public Date getBirthday() 
+	public java.lang.String getBirthday() 
 	{
 		return birthday;
 	}
@@ -378,7 +378,7 @@ public class Employee extends Model{
 	/**
 	  *	
 	  */
-	public void setBirthday(Date birthday) 
+	public void setBirthday(java.lang.String birthday) 
 	{
 		this.birthday = birthday;
 	}

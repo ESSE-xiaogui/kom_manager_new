@@ -82,9 +82,6 @@ public class EmployeeManager {
 		if(UtilHelper.isEmpty(employee)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(employee.getEmpCode())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMPCODE_IS_NULL);
-		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
@@ -92,14 +89,14 @@ public class EmployeeManager {
 		if(UtilHelper.isEmpty(userContext.getUser())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
 		}
-		Employee tempEmp = new Employee();
+		/*Employee tempEmp = new Employee();
 		tempEmp.setEmpCode(employee.getEmpCode());
 		int count1 = employeeService.findByCount(tempEmp);
 		tempEmp.setId(employee.getId());
 		int count2 = employeeService.findByCount(tempEmp);
 		if(count1>0 && count2<1){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMPCODE_IS_DUPLICATE);
-		}
+		}*/
 		Employee formerEmp = employeeMapper.getByPK(employee.getId());
 		formerEmp.setEmpName(employee.getEmpName());
 		formerEmp.setGender( employee.getGender());
