@@ -25,7 +25,6 @@ import com.transsion.store.bo.Option;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.OptionFacade;
-import com.transsion.store.manager.OptionManager;
 import com.transsion.store.service.OptionService;
 
 @Component("optionFacade")
@@ -38,9 +37,6 @@ public class OptionFacadeImpl implements OptionFacade {
 	{
 		this.optionService = optionService;
 	}
-	
-	@Autowired
-	private OptionManager optionManager;
 	
 	/**
 	 * 通过主键查询实体对象
