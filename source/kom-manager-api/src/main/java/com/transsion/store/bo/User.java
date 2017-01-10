@@ -43,8 +43,36 @@ public class User extends Model{
 	/**
 	  *	
 	  */
+	private java.lang.String empCode;
+	
+	private java.lang.String empName;
+	
 	private java.lang.String userName;
-
+	
+	private java.lang.String roleName;
+	
+	private java.lang.String dutyName;
+	
+	private java.lang.String orgName;
+	
+	private java.lang.String mobileNo;
+	
+	private java.lang.String upperName;
+	
+	private java.lang.Integer inService;
+	
+	private java.lang.Integer gender;
+	
+	private java.lang.String nation;
+	
+	private java.lang.Integer married;
+	
+	private java.lang.String idNo;
+	
+	private java.lang.String birthday;
+	
+	private java.lang.String email;
+	
 	/**
 	  *	
 	  */
@@ -431,16 +459,136 @@ public class User extends Model{
 		this.version = version;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", userId=" + userId + ", userCode=" + userCode + ", userName=" + userName
-				+ ", empId=" + empId + ", companyId=" + companyId + ", password=" + password + ", userCategory="
-				+ userCategory + ", forbiddenTime=" + forbiddenTime + ", pwdUpdated=" + pwdUpdated + ", loginTimes="
-				+ loginTimes + ", lastLogin=" + lastLogin + ", isOnline=" + isOnline + ", isInactive=" + isInactive
-				+ ", remark=" + remark + ", createdBy=" + createdBy + ", createdTime=" + createdTime + ", updatedBy="
-				+ updatedBy + ", updatedTime=" + updatedTime + ", version=" + version + "]";
+	public java.lang.String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(java.lang.String roleName) {
+		this.roleName = roleName;
+	}
+
+	public java.lang.String getDutyName() {
+		return dutyName;
+	}
+
+	public void setDutyName(java.lang.String dutyName) {
+		this.dutyName = dutyName;
+	}
+
+	public java.lang.String getOrgName() {
+		return orgName;
+	}
+
+	public void setOrgName(java.lang.String orgName) {
+		this.orgName = orgName;
+	}
+
+	public java.lang.String getMobileNo() {
+		return mobileNo;
+	}
+
+	public void setMobileNo(java.lang.String mobileNo) {
+		this.mobileNo = mobileNo;
+	}
+
+	public java.lang.String getUpperName() {
+		return upperName;
+	}
+
+	public void setUpperName(java.lang.String upperName) {
+		this.upperName = upperName;
+	}
+
+	public java.lang.Integer getInService() {
+		return inService;
+	}
+
+	public void setInService(java.lang.Integer inService) {
+		this.inService = inService;
 	}
 	
+
+	public java.lang.Integer getGender() {
+		return gender;
+	}
+
+	public void setGender(java.lang.Integer gender) {
+		this.gender = gender;
+	}
+
+	public java.lang.String getNation() {
+		return nation;
+	}
+
+	public void setNation(java.lang.String nation) {
+		this.nation = nation;
+	}
+
+	public java.lang.Integer getMarried() {
+		return married;
+	}
+
+	public void setMarried(java.lang.Integer married) {
+		this.married = married;
+	}
+
+	public java.lang.String getIdNo() {
+		return idNo;
+	}
+
+	public void setIdNo(java.lang.String idNo) {
+		this.idNo = idNo;
+	}
+
+	public java.lang.String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(java.lang.String birthday) {
+		this.birthday = birthday;
+	}
+
+	public java.lang.String getEmail() {
+		return email;
+	}
+
+	public void setEmail(java.lang.String email) {
+		this.email = email;
+	}
+
+	public java.lang.String getEmpCode() {
+		return empCode;
+	}
+
+	public void setEmpCode(java.lang.String empCode) {
+		this.empCode = empCode;
+	}
+
+	public java.lang.String getEmpName() {
+		return empName;
+	}
+
+	public void setEmpName(java.lang.String empName) {
+		this.empName = empName;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", userId=" + userId + ", userCode=" + userCode + ", empCode=" + empCode
+						+ ", empName=" + empName + ", userName=" + userName + ", roleName=" + roleName + ", dutyName="
+						+ dutyName + ", orgName=" + orgName + ", mobileNo=" + mobileNo + ", upperName=" + upperName
+						+ ", inService=" + inService + ", gender=" + gender + ", nation=" + nation + ", married="
+						+ married + ", idNo=" + idNo + ", birthday=" + birthday + ", email=" + email + ", empId="
+						+ empId + ", companyId=" + companyId + ", password=" + password + ", userCategory="
+						+ userCategory + ", forbiddenTime=" + forbiddenTime + ", pwdUpdated=" + pwdUpdated
+						+ ", loginTimes=" + loginTimes + ", lastLogin=" + lastLogin + ", isOnline=" + isOnline
+						+ ", isInactive=" + isInactive + ", remark=" + remark + ", createdBy=" + createdBy
+						+ ", createdTime=" + createdTime + ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime
+						+ ", version=" + version + "]";
+	}
+
+
+
 
 }
 

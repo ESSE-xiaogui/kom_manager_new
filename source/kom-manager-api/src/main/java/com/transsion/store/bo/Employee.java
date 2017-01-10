@@ -16,6 +16,8 @@
  **/
 package com.transsion.store.bo;
 
+import java.util.Date;
+
 import com.shangkang.core.bo.Model;
 
 public class Employee extends Model{
@@ -92,7 +94,7 @@ public class Employee extends Model{
 	/**
 	  *	
 	  */
-	private java.lang.String birthday;
+	private Date birthday;
 
 	/**
 	  *	
@@ -368,7 +370,7 @@ public class Employee extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.String getBirthday() 
+	public Date getBirthday() 
 	{
 		return birthday;
 	}
@@ -376,7 +378,7 @@ public class Employee extends Model{
 	/**
 	  *	
 	  */
-	public void setBirthday(java.lang.String birthday) 
+	public void setBirthday(Date birthday) 
 	{
 		this.birthday = birthday;
 	}

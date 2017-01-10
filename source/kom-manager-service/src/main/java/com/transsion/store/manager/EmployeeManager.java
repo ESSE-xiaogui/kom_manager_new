@@ -60,12 +60,6 @@ public class EmployeeManager {
 		if(UtilHelper.isEmpty(userContext.getUser())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
 		}
-		/*Employee tempEmp = new Employee();
-		tempEmp.setEmpCode(employee.getEmpCode());
-		int count = employeeService.findByCount(tempEmp);
-		if(count>0){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMPCODE_IS_DUPLICATE);
-		}*/
 		employee.setCreatedBy(userContext.getUser().getUserCode());
 		employee.setCreatedTime(systemDateService.getCurrentDate());
 		employee.setCompanyId(userContext.getUser().getCompanyId());
@@ -88,6 +82,9 @@ public class EmployeeManager {
 		if(UtilHelper.isEmpty(employee)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
+		if(UtilHelper.isEmpty(employee.getEmpCode())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMPCODE_IS_NULL);
+		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
@@ -95,14 +92,14 @@ public class EmployeeManager {
 		if(UtilHelper.isEmpty(userContext.getUser())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
 		}
-	/*	Employee tempEmp = new Employee();
+		Employee tempEmp = new Employee();
 		tempEmp.setEmpCode(employee.getEmpCode());
 		int count1 = employeeService.findByCount(tempEmp);
 		tempEmp.setId(employee.getId());
 		int count2 = employeeService.findByCount(tempEmp);
 		if(count1>0 && count2<1){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMPCODE_IS_DUPLICATE);
-		}*/
+		}
 		Employee formerEmp = employeeMapper.getByPK(employee.getId());
 		formerEmp.setEmpName(employee.getEmpName());
 		formerEmp.setGender( employee.getGender());
@@ -139,34 +136,37 @@ public class EmployeeManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(userContext.getCompanyId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		Long empId = empUserDto.getId();
+		String userCode = empUserDto.getUserCode();
+		String password = empUserDto.getPassword();
+		if(UtilHelper.isEmpty(empId)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMPID_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(empUserDto.getUserCode())){
+		if(UtilHelper.isEmpty(userCode)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERCODE_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(empUserDto.getPassword())){
+		if(UtilHelper.isEmpty(password)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PASSWORD_IS_NULL);
 		}
 		
-		String userCode = empUserDto.getUserCode();
 		User user = new User();
 		user.setUserCode(userCode);
 		if(userService.findByCount(user)>0){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_ALREADY_EXISTS);
 		}
-		Long uId = employeeService.getByPK(empUserDto.getId()).getuId();
+		Employee employee = employeeService.getByPK(empId);
+		Long uId =employee.getuId();
 		if(!UtilHelper.isEmpty(uId)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_ALREADY_DISTRIBUTED);
 		}
-		user.setCompanyId(userContext.getCompanyId().intValue());
+		user.setCompanyId(userContext.getUser().getCompanyId());
 		user.setPassword(MD5Utils.encrypt(PASSWORD));
 		user.setIsInactive(1);
 		user.setCreatedBy(userContext.getUser().getUserCode());
 		user.setCreatedTime(systemDateService.getCurrentDate());
 		userService.save(user);
-		Employee employee = employeeMapper.getByPK(empUserDto.getId());
-		employee.setuId(userService.listByProperty(user).get(0).getId());
+		List<User> list = userService.listByProperty(user);
+		employee.setuId(list.get(0).getId());
 		employeeService.update(employee);
 		
 		EmpResponseDto erd = new EmpResponseDto();
@@ -202,7 +202,11 @@ public class EmployeeManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_DOESNOT_EXIST);
 		}
 		Long uId = employee.getuId();
-		if(!UtilHelper.isEmpty(uId)){
+		Employee tempEmp = new Employee();
+		tempEmp.setId(empId);
+		tempEmp.setuId(uId);
+		List<Employee> list = employeeMapper.listByProperty(tempEmp);
+		if(!UtilHelper.isEmpty(uId)&&UtilHelper.isEmpty(list)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_ALREADY_DISTRIBUTED);
 		}
 		User user = new User();
@@ -232,7 +236,7 @@ public class EmployeeManager {
 		if(!UtilHelper.isEmpty(org)){
 			erd.setOrgName(org.getOrgName());
 		}
-		Duty duty = dutyMapper.getByPK(Long.valueOf(erd.getOrgId()));
+		Duty duty = dutyMapper.getByPK(Long.valueOf(erd.getDutyId()));
 		if(!UtilHelper.isEmpty(duty)){
 			erd.setDutyName(duty.getDutyName());
 		}

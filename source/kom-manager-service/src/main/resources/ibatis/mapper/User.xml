@@ -23,8 +23,21 @@
 		<result column="ID" property="id"/>
 		<result column="USER_CODE" property="userCode"/>
 		<result column="USER_NAME" property="userName"/>
+		<result column="ROLE_NAME" property="roleName"/>
 		<result column="EMP_ID" property="empId"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="EMP_CODE" property="empCode"/>
 		<result column="COMPANY_ID" property="companyId"/>
+		<result column="GENDER" property="gender"/>
+		<result column="NATION" property="nation"/>
+		<result column="MARRIED" property="married"/>
+		<result column="ID_NO" property="idNo"/>
+		<result column="BIRTHDAY" property="birthday"/>
+		<result column="EMAIL" property="email"/>
+		<result column="DUTY_NAME" property="dutyName"/>
+		<result column="ORG_NAME" property="orgName"/>
+		<result column="MOBILE_NO" property="mobileNo"/>
+		<result column="UPPER_NAME" property="upperName"/>
 		<result column="PASSWORD" property="password"/>
 		<result column="USER_CATEGORY" property="userCategory"/>
 		<result column="FORBIDDEN_TIME" property="forbiddenTime"/>
@@ -477,10 +490,13 @@
 		FROM T_USER WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="User" resultMap="UserResultMapper">
-		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_USER WHERE 1=1
+		<select id="listPaginationByProperty" parameterType="User" resultMap="UserResultMapper">
+		SELECT u.ID,u.USER_CODE,u.PASSWORD,e.EMP_CODE,e.EMP_NAME,d.DUTY_NAME,GENDER,
+		NATION,MARRIED,ID_NO,BIRTHDAY,e.COMPANY_ID,EMAIL,LAST_LOGIN,o.ORG_NAME,e.MOBILE_NO,
+		e.UPPER_CODE,e.UPPER_NAME,e.IN_SERVICE,u.IS_INACTIVE FROM T_USER u	
+		LEFT JOIN T_EMPLOYEE e ON u.ID = e.U_ID
+		LEFT JOIN T_DUTY d ON e.DUTY_ID = d.ID
+		LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ID
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>
