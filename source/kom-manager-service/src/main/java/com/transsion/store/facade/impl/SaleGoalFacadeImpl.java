@@ -25,6 +25,7 @@ import com.transsion.store.bo.SaleGoal;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.SaleGoalFacade;
+import com.transsion.store.manager.SaleGoalManager;
 import com.transsion.store.service.SaleGoalService;
 
 @Component("saleGoalFacade")
@@ -37,6 +38,9 @@ public class SaleGoalFacadeImpl implements SaleGoalFacade {
 	{
 		this.saleGoalService = saleGoalService;
 	}
+	
+	@Autowired
+	private SaleGoalManager saleGoalManager;
 	
 	/**
 	 * 通过主键查询实体对象
@@ -144,5 +148,15 @@ public class SaleGoalFacadeImpl implements SaleGoalFacade {
 	public int findByCount(SaleGoal saleGoal) throws ServiceException
 	{
 		return saleGoalService.findByCount(saleGoal);
+	}
+	/**
+	 * @see 用户查看绩效
+	 * @author guihua.zhang
+	 * @return
+	 * @throws ServiceException
+	 * */
+	@Override
+	public int findMonthSaleAmount(String token, String goalMonth) throws ServiceException {
+		return saleGoalManager.findMonthSaleAmount(token,goalMonth);
 	}
 }

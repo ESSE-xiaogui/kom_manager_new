@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.transsion.store.bo.Brand;
+import com.transsion.store.dto.BrandModelListDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
@@ -28,5 +29,5 @@ import org.apache.ibatis.annotations.Param;
 public interface BrandMapper extends GenericIBatisMapper<Brand, java.lang.Long> {
 
     public List<Brand> listPaginationByProperty(Pagination<Brand> pagination, @Param("brand")Brand brand, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
-
+    public List<BrandModelListDto> queryBrandList();
 }

@@ -19,6 +19,7 @@ package com.transsion.store.controller;
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Brand;
 import com.transsion.store.dto.BrandDto;
+import com.transsion.store.dto.BrandModelListDto;
 import com.transsion.store.dto.BrandResponseDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.BrandFacade;
@@ -124,5 +125,18 @@ public class BrandController extends AbstractController{
 	public List<BrandDto> findBrand() throws ServiceException{
 		String token = this.getAuthorization();
 		return brandFacade.findBrand(token);
+	}
+	
+	/**
+	 * 获取所有品牌机型
+	 * 
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/brandList")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<BrandModelListDto> queryBrandList() throws ServiceException {
+		return brandFacade.queryBrandList();
 	}
 }

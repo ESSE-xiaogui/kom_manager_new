@@ -485,4 +485,38 @@
 		CONCAT('%',#{imei},'%') or IMEI_NO=#{imei}
 		LIMIT 1
 	</select>
+	<insert id="saveSaleItem" parameterType="java.util.List">
+		INSERT INTO T_SALE_ITEM (
+		<include refid="commonColumnsNotPK" />
+		) VALUES
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(
+			 #{item.saleId}
+			, #{item.billno}
+			, #{item.lineId}
+			, #{item.shopId}
+			, #{item.companyId}
+			, #{item.brandCode}
+			, #{item.modelCode}
+			, #{item.imeiNo}
+			, #{item.imeiList}
+			, #{item.saleQty}
+			, #{item.salePrice}
+			, #{item.saleAmount}
+			, #{item.sellerId}
+			, #{item.invoiceNo}
+			, #{item.qrCode}
+			, str_to_date(#{item.productDate},'%Y-%m-%d %H:%i:%s')
+			, #{item.factoryCode}
+			, #{item.userName}
+			, #{item.gender}
+			, #{item.phoneNo}
+			, #{item.email}
+			, #{item.homeAddress}
+			, #{item.zipCode}
+			, #{item.remark}
+			)
+		</foreach>
+	</insert>
 </mapper>

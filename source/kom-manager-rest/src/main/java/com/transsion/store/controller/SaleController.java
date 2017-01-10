@@ -18,9 +18,13 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Sale;
+import com.transsion.store.dto.SalesDto;
+import com.transsion.store.dto.SalesUploadDto;
+import com.transsion.store.dto.TShopSaleDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.SaleFacade;
 import com.transsion.store.task.facade.SaleTaskFacade;
+import com.transsion.store.utils.PropertiesUtils;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,7 +126,51 @@ public class SaleController extends AbstractController{
 	@Path("/saveSaleTask/{taskId}")
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void saveSaleTask(@PathParam("taskId") Long taskId) throws ServiceException {
-		logger.debug("taskId=[{}]", taskId);
 		saleTaskFacade.saveSaleTask(taskId);
+	}
+	/**
+	 * @see 销量上报记录
+	 * @author guihua.zhang
+	 * @return list
+	 * @throws ServiceException
+	 * */
+	@POST
+	@Path("/saveSalesUpload")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<SalesUploadDto> saveSalesUpload (TShopSaleDto tshopSaleDto) throws ServiceException{
+		String token = this.getAuthorization();
+		long imeiCacheTimeOut = Long.valueOf(PropertiesUtils.readProperties("imei.cache.timeout"));
+		logger.info("cache time out is:" + imeiCacheTimeOut);
+		return saleFacade.saveSalesUpload(tshopSaleDto, token, imeiCacheTimeOut);
+	}
+	
+	/**
+	 * 销量上报记录查询
+	 * 
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/findSales")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<SalesDto> findPromoterSales(@QueryParam("startDate") java.lang.String startDate,
+			@QueryParam("endDate") java.lang.String endDate, @QueryParam("model") String model)
+			throws ServiceException {
+		String token = this.getAuthorization();
+		return saleFacade.findPromoterSales(token, startDate, endDate, model);
+	}
+	/**
+	 * @see 用户销量数
+	 * @author guihua.zhang
+	 * @return
+	 * @throws ServiceException
+	 * */
+	@GET
+	@Path("findSaleQty")
+	@Produces({MediaType.APPLICATION_JSON})
+	public int findSaleQty(@QueryParam("startDate") java.lang.String startDate,@QueryParam("endDate") java.lang.String endDate) throws ServiceException{
+		String token = this.getAuthorization();
+		return saleFacade.findSaleQty(token,startDate,endDate);
 	}
 }

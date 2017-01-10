@@ -33,7 +33,15 @@
 		<result column="UPDATED_TIME" property="updatedTime"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
-	
+		<resultMap id="BrandModelListDtoResultMapper" type="BrandModelListDto">
+		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="BRAND_NAME" property="brandName"/>
+		<result column="IS_SELF" property="isSelf"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="SERIES_CODE" property="seriesCode"/>
+		<result column="MODEL_CODE" property="modelMatCode"/>
+		<result column="MODEL_NAME" property="modelMatName"/>
+	</resultMap>
 	<sql id="commonColumns">
 		 ID
 		, BRAND_CODE
@@ -282,5 +290,11 @@
 	<select id="findByCount" parameterType="Brand" resultType="int">
 		SELECT count(1) AS totalcount FROM T_BRAND WHERE 1=1 
 		<include refid="commonCondition"/>
+	</select>
+	<select id="queryBrandList"  resultMap="BrandModelListDtoResultMapper">
+		SELECT DISTINCT b.BRAND_CODE,b.BRAND_NAME,b.IS_SELF,m.SERIES_CODE, m.MODEL_CODE,m.MODEL_NAME FROM T_BRAND b		
+		LEFT JOIN T_MODEL m ON  m.BRAND_CODE = b.BRAND_CODE
+		WHERE b.IS_INACTIVE = 1 AND  m.IS_INACTIVE = 1
+		AND b.BRAND_CODE = 'TECNO' ORDER BY m.MODEL_CODE
 	</select>
 </mapper>

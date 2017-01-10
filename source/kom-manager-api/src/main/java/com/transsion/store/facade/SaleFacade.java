@@ -19,6 +19,9 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.Sale;
+import com.transsion.store.dto.SalesDto;
+import com.transsion.store.dto.SalesUploadDto;
+import com.transsion.store.dto.TShopSaleDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -101,5 +104,26 @@ public interface SaleFacade {
 	 */
 	public Pagination<Sale> listPaginationByProperty(Pagination<Sale> pagination, Sale sale)
 			throws ServiceException;
-
+	
+	
+	/**
+	 * @see 销量上报记录
+	 * @author guihua.zhang
+	 * @return list
+	 * @throws ServiceException
+	 * */
+	public List<SalesUploadDto> saveSalesUpload (TShopSaleDto tshopSaleDto,String token, long imeiCacheTimeOut) throws ServiceException;
+	 /**
+     * 销量上报记录查询
+     * @return
+     * @throws ServiceException
+     */
+    public List<SalesDto> findPromoterSales(String token, String startDate, String endDate, String model)throws ServiceException;
+    /**
+	 * @see 用户销量数
+	 * @author guihua.zhang
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public int findSaleQty(String token,String startDate,String endDate) throws ServiceException;
 }

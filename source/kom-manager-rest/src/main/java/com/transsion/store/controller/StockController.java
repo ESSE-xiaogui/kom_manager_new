@@ -18,6 +18,8 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Stock;
+import com.transsion.store.dto.StockDto;
+import com.transsion.store.dto.StockResponseDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.StockFacade;
 import com.shangkang.core.bo.Pagination;
@@ -109,5 +111,47 @@ public class StockController extends AbstractController{
 	public void update(Stock stock) throws ServiceException
 	{
 		stockFacade.update(stock);
+	}
+	/**
+	 * 库存上报记录
+	 * 
+	 * @return
+	 * @throws ServiceException
+	 */
+	@POST
+	@Path("/stocks")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public StockResponseDto saveStockUpload(List<StockDto> stockDtoList) throws ServiceException {
+		String token = this.getAuthorization();
+		return stockFacade.saveStockUpload(stockDtoList, token);
+	}
+	/**
+	 * 库存上报记录查询
+	 * 
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/findStocks")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<StockDto> findPromoterStock(@QueryParam("startDate") java.lang.String startDate,
+			@QueryParam("endDate") java.lang.String endDate, @QueryParam("model") java.lang.String model)
+			throws ServiceException {
+		String token = this.getAuthorization();
+		return stockFacade.findPromoterStock(token, startDate, endDate, model);
+	}
+	/**
+	 * 库存上报记录查询最新
+	 * 
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/findCurrentStock")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<StockDto> findPromoterCurrentStock() throws ServiceException {
+		String token = this.getAuthorization();
+		return stockFacade.findPromoterCurrentStock(token);
 	}
 }

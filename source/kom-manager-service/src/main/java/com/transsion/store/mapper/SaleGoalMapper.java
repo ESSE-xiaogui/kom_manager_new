@@ -20,12 +20,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.transsion.store.bo.SaleGoal;
+import com.transsion.store.dto.SaleGoalDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
 import org.apache.ibatis.annotations.Param;
 
 public interface SaleGoalMapper extends GenericIBatisMapper<SaleGoal, java.lang.Long> {
-
+	public SaleGoalDto findByQty(@Param("userId")Integer userId,@Param("goalMonth")String goalMonth);
     public List<SaleGoal> listPaginationByProperty(Pagination<SaleGoal> pagination, @Param("saleGoal")SaleGoal saleGoal, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
 }

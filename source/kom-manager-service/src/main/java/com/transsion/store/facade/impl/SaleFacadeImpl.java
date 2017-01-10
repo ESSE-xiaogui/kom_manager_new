@@ -22,9 +22,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.Sale;
+import com.transsion.store.dto.SalesDto;
+import com.transsion.store.dto.SalesUploadDto;
+import com.transsion.store.dto.TShopSaleDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.SaleFacade;
+import com.transsion.store.manager.SalesMannager;
 import com.transsion.store.service.SaleService;
 
 @Component("saleFacade")
@@ -37,6 +41,9 @@ public class SaleFacadeImpl implements SaleFacade {
 	{
 		this.saleService = saleService;
 	}
+	
+	@Autowired
+	private SalesMannager salesMannager;
 	
 	/**
 	 * 通过主键查询实体对象
@@ -144,5 +151,37 @@ public class SaleFacadeImpl implements SaleFacade {
 	public int findByCount(Sale sale) throws ServiceException
 	{
 		return saleService.findByCount(sale);
+	}
+	/**
+	 * @see 销量上报记录
+	 * @return list
+	 * @throws ServiceException
+	 */
+	public List<SalesUploadDto> saveSalesUpload(TShopSaleDto tshopSaleDto, String token, long imeiCacheTimeOut) throws ServiceException {
+		return salesMannager.saveSalesUpload(tshopSaleDto, token, imeiCacheTimeOut);
+	}
+	/**
+	 * 查询促销员的销售记录
+	 * 
+	 * @param token
+	 * @param startDate
+	 * @param endDate
+	 * @param model
+	 * @return
+	 * @throws ServiceException
+	 */
+	@Override
+	public List<SalesDto> findPromoterSales(String token, String startDate, String endDate, String model)
+			throws ServiceException {
+		return salesMannager.findPromoterSales(token, startDate, endDate, model);
+	}
+	/**
+	 * @see 用户销量数
+	 * @author guihua.zhang
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public int findSaleQty(String token,String startDate,String endDate) throws ServiceException{
+		return salesMannager.findSaleQty(token,startDate,endDate);
 	}
 }
