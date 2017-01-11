@@ -295,7 +295,7 @@
 			, #{modelCode}
 			, #{modelName}
 			, #{companyId}
-			, #{saleTime}
+			, str_to_date(#{saleTime},'%Y-%m-%d %H:%i:%s')
 			, #{priceScale}
 			, #{elementType}
 			, #{elementCode}

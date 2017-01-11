@@ -43,6 +43,7 @@ public class ModelManager {
 		}
 		Model model = new Model();
 		BeanUtils.copyProperties(modelDto, model);
+		model.setSaleTime(modelDto.getSaleTime().equals("") ? null : modelDto.getSaleTime());
 		model.setCompanyId(userContext.getCompanyId().intValue());
 		model.setCreatedBy(userContext.getUserCode());
 		model.setCreatedTime(systemDateService.getCurrentDate());

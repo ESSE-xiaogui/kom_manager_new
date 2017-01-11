@@ -412,7 +412,7 @@
 		</if>
 		ORDER BY d.MODEL_CODE
 	</select>
-	<select id="findSaleQty" resultMap="PromoterSalesResultMapper">
+	<select id="findSaleQty" resultMap="SaleResultMapper">
 		SELECT SUM(m.SALE_QTY) as saleQty FROM T_SALE s
 		LEFT JOIN T_SALE_ITEM m ON m.SALE_ID = s.ID
 		WHERE s.USER_ID = #{userId}
