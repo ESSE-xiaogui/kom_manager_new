@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
+import com.transsion.store.bo.Employee;
 import com.transsion.store.bo.Organization;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.OrganizationDto;
 import com.transsion.store.dto.OrganizationResponseDto;
 import com.transsion.store.dto.OrganizationTreeDto;
+import com.transsion.store.mapper.EmployeeMapper;
 import com.transsion.store.mapper.OrganizationMapper;
 import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
@@ -25,6 +27,9 @@ public class OrganizationManager {
 	
 	@Autowired
 	private SystemDateService systemDateService;
+	
+	@Autowired
+	private EmployeeMapper employeeMapper;
 	
 	/**
 	 * 新增组织机构
@@ -121,9 +126,15 @@ public class OrganizationManager {
 		OrganizationResponseDto orDto = new OrganizationResponseDto();
 		Organization org = new Organization();
 		org.setParentId(new Long(orgId));
+		Employee e = new Employee();
+		e.setId(new Long(orgId));
+		int empCount = employeeMapper.findByCount(e);
+		if(empCount>0){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ORG_BINDEMP);
+		}
 		int count = organizationMapper.findByCount(org);
 		if(count>0){
-			orDto.setStatus(3);
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ORG_CHILDREN);
 		}else{
 			org.setId(new Long(orgId));
 			int counts = organizationMapper.deleteByProperty(org);

@@ -28,7 +28,7 @@ public class OrganizationResponseDto implements Serializable{
 	}
 
 	/**
-	 * 状态 注：1： 成功 2：失败
+	 * 状态 注：1： 成功 2：失败 3:组织下有子组织,不能删除 4:组织下绑定员工不能删除
 	 * */
 	public void setStatus(Integer status) {
 		this.status = status;

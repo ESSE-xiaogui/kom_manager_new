@@ -11,6 +11,15 @@ public class MessageStoreResource {
      * 入参为空
      */
     public static final String ERROR_MESSAGE_PARAM_IS_NULL = "error_message_paramIsNull";
+    /**
+     * 组织机构下有子组织,不能删除此组织机构
+     */
+    public static final String ERROR_MESSAGE_ORG_CHILDREN = "error_message_orgChildren";
+    
+    /**
+     * 此组织机构绑定员工不能删除
+     */
+    public static final String ERROR_MESSAGE_ORG_BINDEMP = "error_message_orgBindEmp";
     
     /**
      * 根据入参查询用户表为空
