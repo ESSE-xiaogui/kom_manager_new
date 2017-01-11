@@ -183,23 +183,23 @@
 		DELETE FROM T_CURRENCY WHERE 1 = 1
 		<include refid="commonCondition"/>
 	</delete>
-	<select id="getByPK" parameterType="java.lang.Long" resultMap="TBbCurrencyResultMapper">
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="CurrencyResultMapper">
 		<![CDATA[ SELECT ]]>
 			 <include refid="commonProcessDateColumns"/>
 		FROM T_CURRENCY WHERE ID = #{id}  
 	</select>
-	<select id="list" resultMap="TBbCurrencyResultMapper">
+	<select id="list" resultMap="CurrencyResultMapper">
 		<![CDATA[ SELECT ]]>
 			 <include refid="commonProcessDateColumns"/>
  		FROM T_CURRENCY
 	</select>
-	<select id="listByProperty" parameterType="Currency" resultMap="TBbCurrencyResultMapper">
+	<select id="listByProperty" parameterType="Currency" resultMap="CurrencyResultMapper">
 		<![CDATA[ SELECT ]]>
 			<include refid="commonProcessDateColumns"/>
 		FROM T_CURRENCY WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="Currency" resultMap="TBbCurrencyResultMapper">
+	<select id="listPaginationByProperty" parameterType="Currency" resultMap="CurrencyResultMapper">
 		SELECT 
 		<include refid="commonProcessDateColumns"/>
 		FROM T_CURRENCY WHERE 1=1 
