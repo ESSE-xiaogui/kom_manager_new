@@ -50,11 +50,9 @@ public class OrganizationManager {
 		}
 		if(!UtilHelper.isEmpty(userContext)&&!UtilHelper.isEmpty(userContext.getUser())){
 			organization.setCompanyId(userContext.getCompanyId().intValue());
-			organization.setCreatedBy(userContext.getUser().getUserId().toString());
-			organization.setUpdatedBy(userContext.getUser().getUserId().toString());
+			organization.setCreatedBy(userContext.getUser().getUserCode());
 		}
 		organization.setCreatedTime(systemDateService.getCurrentDate());
-		organization.setUpdatedTime(systemDateService.getCurrentDate());
 		organization.setVersion(0);
 		organizationMapper.save(organization);
 		OrganizationResponseDto ozrd = new OrganizationResponseDto();
@@ -147,4 +145,32 @@ public class OrganizationManager {
 		}
 		return orDto;
 	}
+
+	/**
+	 * 修改组织机构
+	 * @throws ServiceException 
+	 * */
+	public OrganizationResponseDto update(String token, Organization organization) throws ServiceException {
+		if(UtilHelper.isEmpty(organization) || UtilHelper.isEmpty(organization.getOrgName())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		Organization formerOrg = organizationMapper.getByPK(organization.getId());
+		formerOrg.setOrgName(organization.getOrgName());
+		formerOrg.setDutyName(organization.getDutyName());
+		formerOrg.setIsInactive(organization.getIsInactive());
+		formerOrg.setRemark(organization.getRemark());
+		if(UtilHelper.isEmpty(organization.getParentId())){
+			organization.setParentId(0l);
+		}else{
+		organization.setParentId(new Long(organization.getParentId()));
+		}
+		formerOrg.setUpdatedBy(userContext.getUser().getUserCode());
+		formerOrg.setUpdatedTime(systemDateService.getCurrentDate());
+		organizationMapper.update(formerOrg);
+		OrganizationResponseDto ozrd = new OrganizationResponseDto();
+		ozrd.setStatus(1);
+		return ozrd;
+	}
+	
 }

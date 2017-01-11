@@ -108,9 +108,10 @@ public class OrganizationController extends AbstractController{
 	@PUT
 	@Path("/update")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void update(Organization organization) throws ServiceException
+	public OrganizationResponseDto update(Organization organization) throws ServiceException
 	{
-		organizationFacade.update(organization);
+		String token = this.getAuthorization();
+		return organizationFacade.update(token,organization);
 	}
 	/**
 	 * 新增组织机构

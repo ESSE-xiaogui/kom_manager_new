@@ -86,7 +86,7 @@ public interface OrganizationFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(Organization organization) throws ServiceException;
+	public OrganizationResponseDto update(String token,Organization organization) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数

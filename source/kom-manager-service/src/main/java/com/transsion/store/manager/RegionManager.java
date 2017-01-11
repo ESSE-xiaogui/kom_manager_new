@@ -167,6 +167,8 @@ public class RegionManager {
 		formerReg.setIsInactive(region.getIsInactive());
 		formerReg.setRemark(region.getRemark());
 		formerReg.setCompanyId(userContext.getCompanyId().intValue());
+		formerReg.setUpdatedBy(userContext.getUser().getUserCode());
+		formerReg.setUpdatedTime(systemDateService.getCurrentDate());
 		regionService.update(formerReg);
 		RegionResponseDto rrd = new RegionResponseDto();
 		rrd.setStatus(1);

@@ -87,11 +87,7 @@ public class ModelManager {
 		Model formerMo = modelMapper.getByPK(model.getId());
 		formerMo.setBrandCode(model.getBrandCode());
 		formerMo.setSeriesCode(model.getSeriesCode());
-		if(UtilHelper.isEmpty(formerMo.getSaleTime())){
-			formerMo.setSaleTime(null);
-		}else{
-			formerMo.setSaleTime(model.getSaleTime());
-		}
+		formerMo.setSaleTime(model.getSaleTime().equals("")?null:model.getSaleTime());
 		formerMo.setModelCode(model.getModelCode());
 		formerMo.setModelName(model.getModelName());
 		formerMo.setPriceScale(model.getPriceScale());

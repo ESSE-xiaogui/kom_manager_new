@@ -5,10 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
-import com.transsion.store.bo.ConstantUtil;
 import com.transsion.store.bo.Duty;
 import com.transsion.store.bo.Employee;
-import com.transsion.store.bo.Organization;
 import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.EmpResponseDto;
@@ -18,6 +16,7 @@ import com.transsion.store.dto.UserDto;
 import com.transsion.store.mapper.DutyMapper;
 import com.transsion.store.mapper.EmployeeMapper;
 import com.transsion.store.mapper.OrganizationMapper;
+import com.transsion.store.mapper.UserMapper;
 import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.EmployeeService;
 import com.transsion.store.service.SystemDateService;
@@ -47,6 +46,8 @@ public class EmployeeManager {
 	
 	private static final String PASSWORD = "123456";
 	
+	private static final Integer IS_INACTIVE = 2;
+	
 	public EmpResponseDto saveEmp(String token,Employee employee) throws ServiceException
 	{
 		if(UtilHelper.isEmpty(token)){
@@ -61,22 +62,6 @@ public class EmployeeManager {
 		}
 		if(UtilHelper.isEmpty(userContext.getUser())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
-		}
-		/**
-		 * 新建员工必须绑定组织机构,组织机构ID不能为空
-		 * */
-		if(UtilHelper.isEmpty(employee.getOrgId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
-		}
-		Organization org = organizationMapper.getByPK(new Long(employee.getOrgId()));
-		if(UtilHelper.isEmpty(org)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ORG_ISEXIST);
-		}
-		/**
-		 * 组织机构停用 不能绑定员工
-		 * */
-		if(UtilHelper.isEmpty(org.getIsInactive().equals(ConstantUtil.STATUS_TWO))){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ORG_ISINACTIVE);
 		}
 		employee.setCreatedBy(userContext.getUser().getUserCode());
 		employee.setCreatedTime(systemDateService.getCurrentDate());
@@ -207,9 +192,12 @@ public class EmployeeManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERCODE_IS_NULL);
 		}
 		String userCode = empUserDto.getUserCode();
-		UserDto userDto = userService.findByName(userCode);
-		if(UtilHelper.isEmpty(userDto)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+		User tempUser = new User();
+		tempUser.setUserCode(userCode);
+		List<User> userList = userService.listByProperty(tempUser);
+		Integer userStatus = userList.get(0).getIsInactive();
+		if(IS_INACTIVE.equals(userStatus)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_INACTIVE_USER);
 		}
 		Long empId = empUserDto.getId();
 		
