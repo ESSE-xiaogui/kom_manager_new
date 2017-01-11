@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
+import com.transsion.store.bo.ConstantUtil;
 import com.transsion.store.bo.Duty;
 import com.transsion.store.bo.Employee;
+import com.transsion.store.bo.Organization;
 import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.EmpResponseDto;
@@ -59,6 +61,22 @@ public class EmployeeManager {
 		}
 		if(UtilHelper.isEmpty(userContext.getUser())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+		}
+		/**
+		 * 新建员工必须绑定组织机构,组织机构ID不能为空
+		 * */
+		if(UtilHelper.isEmpty(employee.getOrgId())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		Organization org = organizationMapper.getByPK(new Long(employee.getOrgId()));
+		if(UtilHelper.isEmpty(org)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ORG_ISEXIST);
+		}
+		/**
+		 * 组织机构停用 不能绑定员工
+		 * */
+		if(UtilHelper.isEmpty(org.getIsInactive().equals(ConstantUtil.STATUS_TWO))){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ORG_ISINACTIVE);
 		}
 		employee.setCreatedBy(userContext.getUser().getUserCode());
 		employee.setCreatedTime(systemDateService.getCurrentDate());

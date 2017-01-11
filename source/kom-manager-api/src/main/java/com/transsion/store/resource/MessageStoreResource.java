@@ -22,6 +22,15 @@ public class MessageStoreResource {
     public static final String ERROR_MESSAGE_ORG_BINDEMP = "error_message_orgBindEmp";
     
     /**
+     * 此组织机构不存在
+     */
+    public static final String ERROR_MESSAGE_ORG_ISEXIST = "error_message_orgIsExist";
+    /**
+     * 此组织机构已停用
+     */
+    public static final String ERROR_MESSAGE_ORG_ISINACTIVE = "error_message_orgIsinactive";
+    
+    /**
      * 根据入参查询用户表为空
      * */
     public static final String ERROR_MESSAGE_USER_IS_NULL = "error_message_userIsNull";
