@@ -213,11 +213,11 @@ public class EmployeeManager {
 		if(!UtilHelper.isEmpty(uId)&&UtilHelper.isEmpty(list)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_ALREADY_DISTRIBUTED);
 		}
-		User user = new User();
-		user.setUserCode(userCode);
-		employee.setuId(userService.listByProperty(user).get(0).getId());
+		//账号绑定新员工
+		employee.setuId(userList.get(0).getId());
 		employeeService.update(employee);
-	
+		
+		//TODO:旧员工解绑
 		EmpResponseDto erd = new EmpResponseDto();
 		erd.setStatus(1);
 		return erd;
