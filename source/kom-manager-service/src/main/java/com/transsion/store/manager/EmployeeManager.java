@@ -62,6 +62,7 @@ public class EmployeeManager {
 		}
 		employee.setCreatedBy(userContext.getUser().getUserCode());
 		employee.setCreatedTime(systemDateService.getCurrentDate());
+		employee.setBirthday(employee.getBirthday().equals("")?null:employee.getBirthday());
 		employee.setCompanyId(userContext.getUser().getCompanyId());
 		employeeService.save(employee);
 		EmpResponseDto emp = new EmpResponseDto();
