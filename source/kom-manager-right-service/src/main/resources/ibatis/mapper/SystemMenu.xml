@@ -335,7 +335,7 @@
 		LEFT JOIN T_SYSTEM_ROLE e ON r.ROLE_ID = e.ROLE_ID
 		LEFT JOIN T_USER_ROLE o ON o.ROLE_ID = e.ROLE_ID
 		LEFT JOIN T_USER u ON u.ID = o.USER_ID
-		WHERE u.ID = #{userId}
+		WHERE u.ID = #{userId} AND e.IS_INACTIVE = 1
 		ORDER BY MENU_ORDER ASC
 	</select>
 	<select id="listByParentId" parameterType="java.lang.Long" resultMap="SystemMenuResultMapper">
