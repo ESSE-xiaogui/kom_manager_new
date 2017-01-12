@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import com.transsion.store.bo.SystemResource;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
 import com.transsion.store.mapper.SystemResourceMapper;
 
 @Service("systemResourceService")
@@ -75,6 +76,15 @@ public class SystemResourceService {
 	public Pagination<SystemResource> listPaginationByProperty(Pagination<SystemResource> pagination, SystemResource systemResource)
 			throws ServiceException
 	{
+		if(!UtilHelper.isEmpty(systemResource) && !UtilHelper.isEmpty(systemResource.getIsAnonAccess())){
+			if(systemResource.getIsAnonAccess().equals("0")){
+				systemResource.setIsAnonAccess(null);
+			}else if(systemResource.getIsAnonAccess().equals("1")){
+				systemResource.setIsAnonAccess("N");
+			}else if(systemResource.getIsAnonAccess().equals("2")){
+				systemResource.setIsAnonAccess("Y");
+			}
+		}
 		List<SystemResource> list = systemResourceMapper.listPaginationByProperty(pagination, systemResource, pagination.getOrderBy());
 		
 		pagination.setResultList(list);
