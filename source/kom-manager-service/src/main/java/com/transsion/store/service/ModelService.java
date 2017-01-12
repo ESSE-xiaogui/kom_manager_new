@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import com.transsion.store.bo.Model;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
 import com.transsion.store.mapper.ModelMapper;
 
 @Service("modelService")
@@ -77,6 +78,16 @@ public class ModelService {
 	public Pagination<Model> listPaginationByProperty(Pagination<Model> pagination, Model model)
 			throws ServiceException
 	{
+		if(!UtilHelper.isEmpty(model) && !UtilHelper.isEmpty(model.getSeriesCode())){
+			if(model.getSeriesCode().equals("1")){
+				model.setSeriesCode("Smart");
+			}else if(model.getSeriesCode().equals("2")){
+				model.setSeriesCode("Feature");
+			}else if(model.getSeriesCode().equals("0")){
+				model.setSeriesCode(null);
+			}
+		}
+		
 		List<Model> list = modelMapper.listPaginationByProperty(pagination, model, pagination.getOrderBy());
 		
 		pagination.setResultList(list);
