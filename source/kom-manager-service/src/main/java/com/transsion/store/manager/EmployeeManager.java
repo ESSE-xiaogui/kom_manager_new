@@ -213,20 +213,20 @@ public class EmployeeManager {
 		if(!UtilHelper.isEmpty(uId)&&UtilHelper.isEmpty(list)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_ALREADY_DISTRIBUTED);
 		}
-		//旧员工解绑
+		
 		Employee formerEmp = new Employee();
 		Long formerUID = userList.get(0).getId();
 		formerEmp.setuId(formerUID);
-		List<EmpResponseDto> formerList = employeeService.listByProperty(formerEmp);
-		EmpResponseDto empdto = formerList.get(0);
-		Employee newEmp = new Employee();
-		newEmp.setId(empdto.getId());
-		newEmp.setuId(null);
-		employeeService.update(newEmp);
+		List<Employee> formerList = employeeMapper.listByProperty(formerEmp);
+		if(!UtilHelper.isEmpty(formerList)){
+			//旧员工解绑
+			Employee emp = formerList.get(0);
+			emp.setuId(null);
+			employeeService.update(emp);
+		}
 		//账号绑定新员工
 		employee.setuId(formerUID);
 		employeeService.update(employee);
-		
 		
 		EmpResponseDto erd = new EmpResponseDto();
 		erd.setStatus(1);

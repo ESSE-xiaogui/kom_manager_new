@@ -67,7 +67,9 @@ public class UserManager {
 			userContext.setCompanyId(urd.getCompanyId());
 			userContext.setToken(token);
 			user.setId(urd.getId());
-			user.setUserId(urd.getUserId().intValue());
+			if(!UtilHelper.isEmpty(urd.getUserId())){
+				user.setUserId(urd.getUserId().intValue());
+			}
 			user.setCompanyId(urd.getCompanyId().intValue());
 			user.setUserName(urd.getUserName());
 			userContext.setUser(user);
