@@ -30,7 +30,7 @@ public interface SystemMenuMapper extends GenericIBatisMapper<SystemMenu, java.l
 
     public List<SystemMenu> listPaginationByProperty(Pagination<SystemMenu> pagination, @Param("systemMenu")SystemMenu systemMenu, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     
-    public List<MenuDto> querySystemMenuList(Integer userId) throws DataAccessFailureException;
+    public List<MenuDto> querySystemMenuList(Long userId) throws DataAccessFailureException;
 
 	public List<SystemMenu> listByParentId(Long parentMenuId) throws DataAccessFailureException;
 

@@ -31,7 +31,7 @@
 		<result column="ORG_NAME" property="orgName"/>
 		<result column="DUTY_ID" property="dutyId"/>
 		<result column="DUTY_NAME" property="dutyName"/>
-		<result column="UPPER_CODE" property="upperCode"/>
+		<result column="UPPER_ID" property="upperId"/>
 		<result column="UPPER_NAME" property="upperName"/>
 		<result column="GENDER" property="gender"/>
 		<result column="BIRTHDAY" property="birthday"/>
@@ -63,7 +63,7 @@
 		<result column="ORG_NAME" property="orgName"/>
 		<result column="DUTY_ID" property="dutyId"/>
 		<result column="DUTY_NAME" property="dutyName"/>
-		<result column="UPPER_CODE" property="upperCode"/>
+		<result column="UPPER_ID" property="upperId"/>
 		<result column="UPPER_NAME" property="upperName"/>
 		<result column="GENDER" property="gender"/>
 		<result column="BIRTHDAY" property="birthday"/>
@@ -95,7 +95,7 @@
 		, COMPANY_ID
 		, ORG_ID
 		, DUTY_ID
-		, UPPER_CODE
+		, UPPER_ID
 		, UPPER_NAME
 		, GENDER
 		, BIRTHDAY
@@ -124,7 +124,7 @@
 		, COMPANY_ID
 		, ORG_ID
 		, DUTY_ID
-		, UPPER_CODE
+		, UPPER_ID
 		, UPPER_NAME
 		, GENDER
 		, BIRTHDAY
@@ -154,7 +154,7 @@
 		, COMPANY_ID
 		, ORG_ID
 		, DUTY_ID
-		, UPPER_CODE
+		, UPPER_ID
 		, UPPER_NAME
 		, GENDER
 		, date_format(BIRTHDAY, '%Y-%m-%d') BIRTHDAY
@@ -186,7 +186,7 @@
 		, ORG_NAME
 		, DUTY_ID
 		, DUTY_NAME
-		, UPPER_CODE
+		, UPPER_ID
 		, UPPER_NAME
 		, GENDER
 		, date_format(BIRTHDAY, '%Y-%m-%d') BIRTHDAY
@@ -234,8 +234,8 @@
 		<if test="dutyId!= null and dutyId!= ''"> 
 			AND DUTY_ID=#{dutyId}
 		</if>
-		<if test="upperCode!= null and upperCode!= ''"> 
-			AND UPPER_CODE=#{upperCode}
+		<if test="upperId!= null and upperId!= ''"> 
+			AND UPPER_ID=#{upperId}
 		</if>
 		<if test="upperName!= null and upperName!= ''"> 
 			AND UPPER_NAME=#{upperName}
@@ -319,8 +319,8 @@
             <if test="employee.dutyId!= null and employee.dutyId!= ''">
 				AND DUTY_ID=#{employee.dutyId}
             </if>
-            <if test="employee.upperCode!= null and employee.upperCode!= ''">
-				AND UPPER_CODE=#{employee.upperCode}
+            <if test="employee.upperId!= null and employee.upperId!= ''">
+				AND UPPER_ID=#{employee.upperId}
             </if>
             <if test="employee.upperName!= null and employee.upperName!= ''">
 				AND UPPER_NAME=#{employee.upperName}
@@ -414,8 +414,8 @@
         	<when test="key == 'dutyId'">
 				DUTY_ID ${value}
             </when>
-        	<when test="key == 'upperCode'">
-				UPPER_CODE ${value}
+        	<when test="key == 'upperId'">
+				UPPER_ID ${value}
             </when>
         	<when test="key == 'upperName'">
 				UPPER_NAME ${value}
@@ -484,7 +484,7 @@
 			, #{companyId}
 			, #{orgId}
 			, #{dutyId}
-			, #{upperCode}
+			, #{upperId}
 			, #{upperName}
 			, #{gender}
 			, str_to_date(#{birthday},'%Y-%m-%d')
@@ -515,7 +515,7 @@
 			, COMPANY_ID=#{companyId} 
 			, ORG_ID=#{orgId} 
 			, DUTY_ID=#{dutyId} 
-			, UPPER_CODE=#{upperCode} 
+			, UPPER_ID=#{upperId} 
 			, UPPER_NAME=#{upperName} 
 			, GENDER=#{gender} 
 			, BIRTHDAY=str_to_date(#{birthday},'%Y-%m-%d')
@@ -566,14 +566,14 @@
 		<include refid="commonCondition"/>
 	</select>
 	<select id="listByProp" parameterType="Employee" resultMap="EmpResponseDtoResultMapper">
-		 SELECT e.ID,EMP_CODE, EMP_NAME, ID_NO,ORG_NAME,d.DUTY_NAME, UPPER_CODE, UPPER_NAME,
+		 SELECT e.ID,EMP_CODE, EMP_NAME, ID_NO,ORG_NAME,d.DUTY_NAME, UPPER_ID, UPPER_NAME,
 		 GENDER, BIRTHDAY, NATION, MARRIED, PHONE_NO,EMAIL, IN_SERVICE FROM T_EMPLOYEE e 
 		 LEFT JOIN T_DUTY d ON d.ID = e.DUTY_ID
 		 LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ID
 		 WHERE e.ID = #{id}
 	</select>
 	<select id="listPaginationByProperty" parameterType="Employee" resultMap="EmployeeResultMapper">
-		 SELECT e.ID,EMP_CODE, EMP_NAME, ID_NO,ORG_NAME,d.DUTY_NAME, UPPER_CODE, UPPER_NAME,
+		 SELECT e.ID,EMP_CODE, EMP_NAME, ID_NO,ORG_NAME,d.DUTY_NAME,UPPER_ID, UPPER_NAME,
 		 GENDER, BIRTHDAY, NATION, MARRIED, PHONE_NO,EMAIL, IN_SERVICE,e.CREATED_BY,
 		 e.CREATED_TIME FROM T_EMPLOYEE e 
 		 LEFT JOIN T_DUTY d ON d.ID = e.DUTY_ID

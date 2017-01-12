@@ -65,7 +65,7 @@ public class EmpResponseDto implements Serializable{
 	/**
 	  *	
 	  */
-	private java.lang.String upperCode;
+	private java.lang.Long upperId;
 
 	/**
 	  *	
@@ -226,12 +226,12 @@ public class EmpResponseDto implements Serializable{
 		this.dutyName = dutyName;
 	}
 
-	public java.lang.String getUpperCode() {
-		return upperCode;
+	public java.lang.Long getUpperId() {
+		return upperId;
 	}
 
-	public void setUpperCode(java.lang.String upperCode) {
-		this.upperCode = upperCode;
+	public void setUpperId(java.lang.Long upperId) {
+		this.upperId = upperId;
 	}
 
 	public java.lang.String getUpperName() {
@@ -343,7 +343,7 @@ public class EmpResponseDto implements Serializable{
 		return "EmpResponseDto [status=" + status + ", id=" + id + ", uId=" + uId + ", empId=" + empId + ", empCode="
 						+ empCode + ", empName=" + empName + ", idNo=" + idNo + ", companyId=" + companyId + ", orgId="
 						+ orgId + ", orgName=" + orgName + ", dutyId=" + dutyId + ", dutyName=" + dutyName
-						+ ", upperCode=" + upperCode + ", upperName=" + upperName + ", gender=" + gender + ", birthday="
+						+ ", upperId=" + upperId + ", upperName=" + upperName + ", gender=" + gender + ", birthday="
 						+ birthday + ", nation=" + nation + ", married=" + married + ", phoneNo=" + phoneNo
 						+ ", mobileNo=" + mobileNo + ", email=" + email + ", nativePlace=" + nativePlace + ", zipCode="
 						+ zipCode + ", inService=" + inService + ", remark=" + remark + ", version=" + version + "]";

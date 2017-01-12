@@ -29,7 +29,7 @@ public class SystemMenuManager {
 	*/
 	public List<MenuDto> findMenuList(String token) throws ServiceException {
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
-		Integer userId = userContext.getUser().getId().intValue();
+		Long userId = userContext.getUser().getId();
 		List<MenuDto> list = systemMenuService.querySystemMenuList(userId); 
 		return treeMenuList(list,0l);
 	}

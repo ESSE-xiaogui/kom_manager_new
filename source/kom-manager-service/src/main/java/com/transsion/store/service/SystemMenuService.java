@@ -155,7 +155,7 @@ public class SystemMenuService {
 		return systemMenuMapper.findByCount(systemMenu);
 	}
 	
-	public List<MenuDto> querySystemMenuList(Integer userId)  throws ServiceException{
+	public List<MenuDto> querySystemMenuList(Long userId)  throws ServiceException{
 		return systemMenuMapper.querySystemMenuList(userId);
 	}
 	

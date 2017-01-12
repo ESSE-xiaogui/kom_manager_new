@@ -57,6 +57,8 @@ public class User extends Model{
 	
 	private java.lang.String mobileNo;
 	
+	private java.lang.Long upperId;
+	
 	private java.lang.String upperName;
 	
 	private java.lang.Integer inService;
@@ -73,9 +75,6 @@ public class User extends Model{
 	
 	private java.lang.String email;
 	
-	/**
-	  *	
-	  */
 	private java.lang.Integer empId;
 
 	/**
@@ -572,22 +571,28 @@ public class User extends Model{
 		this.empName = empName;
 	}
 
+	public java.lang.Long getUpperId() {
+		return upperId;
+	}
+
+	public void setUpperId(java.lang.Long upperId) {
+		this.upperId = upperId;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userId=" + userId + ", userCode=" + userCode + ", empCode=" + empCode
 						+ ", empName=" + empName + ", userName=" + userName + ", roleName=" + roleName + ", dutyName="
-						+ dutyName + ", orgName=" + orgName + ", mobileNo=" + mobileNo + ", upperName=" + upperName
-						+ ", inService=" + inService + ", gender=" + gender + ", nation=" + nation + ", married="
-						+ married + ", idNo=" + idNo + ", birthday=" + birthday + ", email=" + email + ", empId="
-						+ empId + ", companyId=" + companyId + ", password=" + password + ", userCategory="
-						+ userCategory + ", forbiddenTime=" + forbiddenTime + ", pwdUpdated=" + pwdUpdated
-						+ ", loginTimes=" + loginTimes + ", lastLogin=" + lastLogin + ", isOnline=" + isOnline
-						+ ", isInactive=" + isInactive + ", remark=" + remark + ", createdBy=" + createdBy
+						+ dutyName + ", orgName=" + orgName + ", mobileNo=" + mobileNo + ", upperId=" + upperId
+						+ ", upperName=" + upperName + ", inService=" + inService + ", gender=" + gender + ", nation="
+						+ nation + ", married=" + married + ", idNo=" + idNo + ", birthday=" + birthday + ", email="
+						+ email + ", empId=" + empId + ", companyId=" + companyId + ", password=" + password
+						+ ", userCategory=" + userCategory + ", forbiddenTime=" + forbiddenTime + ", pwdUpdated="
+						+ pwdUpdated + ", loginTimes=" + loginTimes + ", lastLogin=" + lastLogin + ", isOnline="
+						+ isOnline + ", isInactive=" + isInactive + ", remark=" + remark + ", createdBy=" + createdBy
 						+ ", createdTime=" + createdTime + ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime
 						+ ", version=" + version + "]";
 	}
-
-
 
 
 }

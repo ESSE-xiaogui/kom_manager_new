@@ -40,7 +40,7 @@ public class UserInfoDto implements Serializable{
 	
 	private java.lang.String mobileNo;
 	
-	private java.lang.Integer upperCode;
+	private java.lang.Long upperId;
 	
 	private java.lang.String upperName;
 	/**
@@ -189,12 +189,12 @@ public class UserInfoDto implements Serializable{
 		this.mobileNo = mobileNo;
 	}
 
-	public java.lang.Integer getUpperCode() {
-		return upperCode;
+	public java.lang.Long getUpperId() {
+		return upperId;
 	}
 
-	public void setUpperCode(java.lang.Integer upperCode) {
-		this.upperCode = upperCode;
+	public void setUpperCode(java.lang.Long upperId) {
+		this.upperId = upperId;
 	}
 
 	public java.lang.String getUpperName() {
@@ -267,7 +267,7 @@ public class UserInfoDto implements Serializable{
 						+ ", companyId=" + companyId + ", roleName=" + roleName + ", dutyName=" + dutyName
 						+ ", orgName=" + orgName + ", empCode=" + empCode + ", empName=" + empName + ", gender="
 						+ gender + ", nation=" + nation + ", married=" + married + ", birthday=" + birthday + ", email="
-						+ email + ", idNo=" + idNo + ", mobileNo=" + mobileNo + ", upperCode=" + upperCode
+						+ email + ", idNo=" + idNo + ", mobileNo=" + mobileNo + ", upperId=" + upperId
 						+ ", upperName=" + upperName + ", inService=" + inService + ", isInactive=" + isInactive
 						+ ", lastLogin=" + lastLogin + ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime
 						+ ", remark=" + remark + "]";

@@ -95,7 +95,7 @@
 		<result column="ID_NO" property="idNo"/>
 		<result column="MOBILE_NO" property="mobileNo"/>
 		<result column="EMAIL" property="email"/>
-		<result column="UPPER_CODE" property="upperCode"/>
+		<result column="UPPER_ID" property="upperId"/>
 		<result column="UPPER_NAME" property="upperName"/>
 		<result column="IN_SERVICE" property="inService"/>
 		<result column="LAST_LOGIN" property="lastLogin"/>
@@ -480,7 +480,7 @@
 	</select>
 	<select id="getByPKey" parameterType="java.lang.Long" resultMap="UserInfoDtoResultMapper">
 	    SELECT u.USER_CODE,u.PASSWORD,e.ID,EMP_CODE, EMP_NAME, ID_NO,ORG_NAME,
-	    d.DUTY_NAME, UPPER_CODE, UPPER_NAME,GENDER, BIRTHDAY, NATION, MARRIED, 
+	    d.DUTY_NAME, UPPER_ID, UPPER_NAME,GENDER, BIRTHDAY, NATION, MARRIED, 
 	    MOBILE_NO,EMAIL,IN_SERVICE,e.EMP_CODE,e.EMP_NAME,
 		e.IN_SERVICE,u.IS_INACTIVE FROM T_USER u
 		LEFT JOIN T_EMPLOYEE e ON u.ID = e.U_ID
@@ -502,7 +502,7 @@
 		<select id="listPaginationByProperty" parameterType="User" resultMap="UserResultMapper">
 		SELECT u.ID,u.USER_CODE,u.PASSWORD,e.EMP_CODE,e.EMP_NAME,d.DUTY_NAME,GENDER,
 		NATION,MARRIED,ID_NO,BIRTHDAY,e.COMPANY_ID,EMAIL,LAST_LOGIN,o.ORG_NAME,e.MOBILE_NO,
-		e.UPPER_CODE,e.UPPER_NAME,e.IN_SERVICE,u.IS_INACTIVE FROM T_USER u	
+		e.UPPER_ID,e.UPPER_NAME,e.IN_SERVICE,u.IS_INACTIVE FROM T_USER u	
 		LEFT JOIN T_EMPLOYEE e ON u.ID = e.U_ID
 		LEFT JOIN T_DUTY d ON e.DUTY_ID = d.ID
 		LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ID

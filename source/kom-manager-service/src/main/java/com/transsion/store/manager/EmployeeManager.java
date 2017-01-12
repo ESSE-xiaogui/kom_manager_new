@@ -113,7 +113,7 @@ public class EmployeeManager {
 		formerEmp.setPhoneNo(employee.getPhoneNo());
 		formerEmp.setEmail(employee.getEmail());
 		formerEmp.setUpperName(employee.getUpperName());
-		formerEmp.setUpperCode(employee.getUpperCode());
+		formerEmp.setUpperId(employee.getUpperId());
 		formerEmp.setInService(employee.getInService());
 
 		formerEmp.setUpdatedBy(userContext.getUser().getUserCode());

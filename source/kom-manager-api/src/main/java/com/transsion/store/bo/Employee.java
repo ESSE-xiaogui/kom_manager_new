@@ -16,8 +16,6 @@
  **/
 package com.transsion.store.bo;
 
-import java.util.Date;
-
 import com.shangkang.core.bo.Model;
 
 public class Employee extends Model{
@@ -79,7 +77,7 @@ public class Employee extends Model{
 	/**
 	  *	
 	  */
-	private java.lang.String upperCode;
+	private java.lang.Long upperId;
 
 	/**
 	  *	
@@ -322,17 +320,17 @@ public class Employee extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.String getUpperCode() 
+	public java.lang.Long getUpperId() 
 	{
-		return upperCode;
+		return upperId;
 	}
 	
 	/**
 	  *	
 	  */
-	public void setUpperCode(java.lang.String upperCode) 
+	public void setUpperId(java.lang.Long upperId) 
 	{
-		this.upperCode = upperCode;
+		this.upperId = upperId;
 	}
 	
 	/**
@@ -611,7 +609,7 @@ public class Employee extends Model{
 	public String toString() {
 		return "Employee [id=" + id + ", uId=" + uId + ", empId=" + empId + ", empCode=" + empCode + ", empName="
 						+ empName + ", idNo=" + idNo + ", companyId=" + companyId + ", orgId=" + orgId + ", orgName="
-						+ orgName + ", dutyId=" + dutyId + ", dutyName=" + dutyName + ", upperCode=" + upperCode
+						+ orgName + ", dutyId=" + dutyId + ", dutyName=" + dutyName + ", upperId=" + upperId
 						+ ", upperName=" + upperName + ", gender=" + gender + ", birthday=" + birthday + ", nation="
 						+ nation + ", married=" + married + ", phoneNo=" + phoneNo + ", mobileNo=" + mobileNo
 						+ ", email=" + email + ", nativePlace=" + nativePlace + ", zipCode=" + zipCode + ", inService="
