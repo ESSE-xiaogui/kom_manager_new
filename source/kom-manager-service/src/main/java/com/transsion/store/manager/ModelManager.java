@@ -30,20 +30,18 @@ public class ModelManager {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public ModelResponseDto saveModel(String token,ModelDto modelDto) throws ServiceException{
+	public ModelResponseDto saveModel(String token,Model model) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
 		}
-		if(UtilHelper.isEmpty(modelDto)){
+		if(UtilHelper.isEmpty(model)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		Model model = new Model();
-		BeanUtils.copyProperties(modelDto, model);
-		model.setSaleTime(modelDto.getSaleTime().equals("") ? null : modelDto.getSaleTime());
+		model.setSaleTime(model.getSaleTime().equals("") ? null : model.getSaleTime());
 		model.setCompanyId(userContext.getCompanyId().intValue());
 		model.setCreatedBy(userContext.getUserCode());
 		model.setCreatedTime(systemDateService.getCurrentDate());

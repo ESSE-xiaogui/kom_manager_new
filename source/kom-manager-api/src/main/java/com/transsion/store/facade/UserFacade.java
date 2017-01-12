@@ -34,7 +34,7 @@ public interface UserFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public UserDto getByPK(java.lang.Long primaryKey) throws ServiceException;
+	public UserInfoDto getByPK(java.lang.Long primaryKey) throws ServiceException;
 
 	/**
 	 * 查询所有记录

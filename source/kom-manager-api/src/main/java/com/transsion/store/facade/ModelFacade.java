@@ -109,7 +109,7 @@ public interface ModelFacade {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public ModelResponseDto saveModel(String token,ModelDto modelDto) throws ServiceException;
+	public ModelResponseDto saveModel(String token,Model model) throws ServiceException;
 	
 	/**
 	 * 查询品牌产品系列机型

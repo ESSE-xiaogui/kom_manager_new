@@ -45,7 +45,7 @@ public class UserService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public UserDto getByPK(java.lang.Long primaryKey) throws ServiceException
+	public UserInfoDto getByPK(java.lang.Long primaryKey) throws ServiceException
 	{
 		return userMapper.getByPKey(primaryKey);
 	}

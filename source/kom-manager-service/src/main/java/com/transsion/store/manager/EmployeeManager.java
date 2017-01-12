@@ -107,7 +107,7 @@ public class EmployeeManager {
 		formerEmp.setNation(employee.getNation());
 		formerEmp.setMarried(employee.getMarried());
 		formerEmp.setIdNo(employee.getIdNo());
-		formerEmp.setBirthday(employee.getBirthday());
+		formerEmp.setBirthday(employee.getBirthday().equals("")?null:employee.getBirthday());
 		formerEmp.setOrgId(employee.getOrgId());
 		formerEmp.setDutyId(employee.getDutyId());
 		formerEmp.setPhoneNo(employee.getPhoneNo());
@@ -213,11 +213,21 @@ public class EmployeeManager {
 		if(!UtilHelper.isEmpty(uId)&&UtilHelper.isEmpty(list)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_ALREADY_DISTRIBUTED);
 		}
+		//旧员工解绑
+		Employee formerEmp = new Employee();
+		Long formerUID = userList.get(0).getId();
+		formerEmp.setuId(formerUID);
+		List<EmpResponseDto> formerList = employeeService.listByProperty(formerEmp);
+		EmpResponseDto empdto = formerList.get(0);
+		Employee newEmp = new Employee();
+		newEmp.setId(empdto.getId());
+		newEmp.setuId(null);
+		employeeService.update(newEmp);
 		//账号绑定新员工
-		employee.setuId(userList.get(0).getId());
+		employee.setuId(formerUID);
 		employeeService.update(employee);
 		
-		//TODO:旧员工解绑
+		
 		EmpResponseDto erd = new EmpResponseDto();
 		erd.setStatus(1);
 		return erd;

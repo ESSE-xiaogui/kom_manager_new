@@ -110,9 +110,9 @@ public class ModelController extends AbstractController{
 	@Path("/add")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public ModelResponseDto saveModel(ModelDto modelDto) throws ServiceException{
+	public ModelResponseDto saveModel(Model model) throws ServiceException{
 		String token = this.getAuthorization();
-		return modelFacade.saveModel(token, modelDto);
+		return modelFacade.saveModel(token, model);
 	}
 	
 	/**

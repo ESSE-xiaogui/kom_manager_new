@@ -36,7 +36,7 @@ public interface UserMapper extends GenericIBatisMapper<User, java.lang.Long> {
 	
     public UserInfoDto getUserInfo(UserInfoDto userInfoDto) throws DataAccessFailureException;
 
-	public UserDto getByPKey(Long primaryKey) throws DataAccessFailureException;
+	public UserInfoDto getByPKey(Long primaryKey) throws DataAccessFailureException;
 	
 	public UserResponseDto getUser(User user) throws DataAccessFailureException;
 

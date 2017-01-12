@@ -156,8 +156,8 @@ public class ModelFacadeImpl implements ModelFacade {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public ModelResponseDto saveModel(String token,ModelDto modelDto) throws ServiceException{
-		return modelManager.saveModel(token, modelDto);
+	public ModelResponseDto saveModel(String token,Model model) throws ServiceException{
+		return modelManager.saveModel(token, model);
 	}
 	/**
 	 * 查询品牌产品系列机型

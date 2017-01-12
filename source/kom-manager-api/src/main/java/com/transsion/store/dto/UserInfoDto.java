@@ -26,11 +26,21 @@ public class UserInfoDto implements Serializable{
 	
 	private java.lang.String empName;
 	
+	private java.lang.Integer gender;
+	
+	private java.lang.String nation;
+	
+	private java.lang.Integer married;
+	
+	private java.lang.String birthday;
+	
+	private java.lang.String email;
+	
 	private java.lang.String idNo;
 	
-	private java.lang.String phoneNo;
+	private java.lang.String mobileNo;
 	
-	private java.lang.Integer upperId;
+	private java.lang.Integer upperCode;
 	
 	private java.lang.String upperName;
 	/**
@@ -50,13 +60,45 @@ public class UserInfoDto implements Serializable{
 	private java.lang.String updatedTime;
 	
 	private java.lang.String remark;
-	
+
 	public java.lang.Long getId() {
 		return id;
 	}
 
 	public void setId(java.lang.Long id) {
 		this.id = id;
+	}
+
+	public java.lang.String getUserCode() {
+		return userCode;
+	}
+
+	public void setUserCode(java.lang.String userCode) {
+		this.userCode = userCode;
+	}
+
+	public java.lang.String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(java.lang.String userName) {
+		this.userName = userName;
+	}
+
+	public java.lang.String getPassword() {
+		return password;
+	}
+
+	public void setPassword(java.lang.String password) {
+		this.password = password;
+	}
+
+	public java.lang.Integer getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(java.lang.Integer companyId) {
+		this.companyId = companyId;
 	}
 
 	public java.lang.String getRoleName() {
@@ -99,6 +141,38 @@ public class UserInfoDto implements Serializable{
 		this.empName = empName;
 	}
 
+	public java.lang.Integer getGender() {
+		return gender;
+	}
+
+	public void setGender(java.lang.Integer gender) {
+		this.gender = gender;
+	}
+
+	public java.lang.String getNation() {
+		return nation;
+	}
+
+	public void setNation(java.lang.String nation) {
+		this.nation = nation;
+	}
+
+	public java.lang.Integer getMarried() {
+		return married;
+	}
+
+	public void setMarried(java.lang.Integer married) {
+		this.married = married;
+	}
+
+	public java.lang.String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(java.lang.String birthday) {
+		this.birthday = birthday;
+	}
+
 	public java.lang.String getIdNo() {
 		return idNo;
 	}
@@ -107,20 +181,20 @@ public class UserInfoDto implements Serializable{
 		this.idNo = idNo;
 	}
 
-	public java.lang.String getPhoneNo() {
-		return phoneNo;
+	public java.lang.String getMobileNo() {
+		return mobileNo;
 	}
 
-	public void setPhoneNo(java.lang.String phoneNo) {
-		this.phoneNo = phoneNo;
+	public void setMobileNo(java.lang.String mobileNo) {
+		this.mobileNo = mobileNo;
 	}
 
-	public java.lang.Integer getUpperId() {
-		return upperId;
+	public java.lang.Integer getUpperCode() {
+		return upperCode;
 	}
 
-	public void setUpperId(java.lang.Integer upperId) {
-		this.upperId = upperId;
+	public void setUpperCode(java.lang.Integer upperCode) {
+		this.upperCode = upperCode;
 	}
 
 	public java.lang.String getUpperName() {
@@ -131,12 +205,28 @@ public class UserInfoDto implements Serializable{
 		this.upperName = upperName;
 	}
 
+	public java.lang.String getEmail() {
+		return email;
+	}
+
+	public void setEmail(java.lang.String email) {
+		this.email = email;
+	}
+
 	public java.lang.Integer getInService() {
 		return inService;
 	}
 
 	public void setInService(java.lang.Integer inService) {
 		this.inService = inService;
+	}
+
+	public java.lang.Integer getIsInactive() {
+		return isInactive;
+	}
+
+	public void setIsInactive(java.lang.Integer isInactive) {
+		this.isInactive = isInactive;
 	}
 
 	public java.lang.String getLastLogin() {
@@ -170,55 +260,18 @@ public class UserInfoDto implements Serializable{
 	public void setRemark(java.lang.String remark) {
 		this.remark = remark;
 	}
-	
-	public java.lang.Integer getCompanyId() {
-		return companyId;
-	}
-
-	public void setCompanyId(java.lang.Integer companyId) {
-		this.companyId = companyId;
-	}
-	
-	public java.lang.Integer getIsInactive() {
-		return isInactive;
-	}
-
-	public void setIsInactive(java.lang.Integer isInactive) {
-		this.isInactive = isInactive;
-	}
-	
-	public java.lang.String getUserCode() {
-		return userCode;
-	}
-
-	public void setUserCode(java.lang.String userCode) {
-		this.userCode = userCode;
-	}
-
-	public java.lang.String getPassword() {
-		return password;
-	}
-
-	public void setPassword(java.lang.String password) {
-		this.password = password;
-	}
-
-	public java.lang.String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(java.lang.String userName) {
-		this.userName = userName;
-	}
 
 	@Override
 	public String toString() {
 		return "UserInfoDto [id=" + id + ", userCode=" + userCode + ", userName=" + userName + ", password=" + password
 						+ ", companyId=" + companyId + ", roleName=" + roleName + ", dutyName=" + dutyName
-						+ ", orgName=" + orgName + ", empCode=" + empCode + ", empName=" + empName + ", idNo=" + idNo
-						+ ", phoneNo=" + phoneNo + ", upperId=" + upperId + ", upperName=" + upperName + ", inService="
-						+ inService + ", isInactive=" + isInactive + ", lastLogin=" + lastLogin + ", updatedBy="
-						+ updatedBy + ", updatedTime=" + updatedTime + ", remark=" + remark + "]";
+						+ ", orgName=" + orgName + ", empCode=" + empCode + ", empName=" + empName + ", gender="
+						+ gender + ", nation=" + nation + ", married=" + married + ", birthday=" + birthday + ", email="
+						+ email + ", idNo=" + idNo + ", mobileNo=" + mobileNo + ", upperCode=" + upperCode
+						+ ", upperName=" + upperName + ", inService=" + inService + ", isInactive=" + isInactive
+						+ ", lastLogin=" + lastLogin + ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime
+						+ ", remark=" + remark + "]";
 	}
+	
 	
 }

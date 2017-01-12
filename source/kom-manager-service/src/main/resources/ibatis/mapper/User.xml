@@ -88,9 +88,14 @@
 		<result column="ORG_NAME" property="orgName"/>
 		<result column="EMP_CODE" property="empCode"/>
 		<result column="EMP_NAME" property="empName"/>
+		<result column="GENDER" property="gender"/>
+		<result column="NATION" property="nation"/>
+		<result column="MARRIED" property="married"/>
+		<result column="BIRTHDAY" property="birthday"/>
 		<result column="ID_NO" property="idNo"/>
-		<result column="PHONE_NO" property="phoneNo"/>
-		<result column="UPPER_ID" property="upperId"/>
+		<result column="MOBILE_NO" property="mobileNo"/>
+		<result column="EMAIL" property="email"/>
+		<result column="UPPER_CODE" property="upperCode"/>
 		<result column="UPPER_NAME" property="upperName"/>
 		<result column="IN_SERVICE" property="inService"/>
 		<result column="LAST_LOGIN" property="lastLogin"/>
@@ -473,10 +478,14 @@
 			 <include refid="commonProcessDateColumns"/>
 		FROM T_USER WHERE ID = #{id}  
 	</select>
-	<select id="getByPKey" parameterType="java.lang.Long" resultMap="UserDtoResultMapper">
-	    SELECT u.ID,u.USER_CODE,u.PASSWORD,e.EMP_CODE,e.EMP_NAME,
+	<select id="getByPKey" parameterType="java.lang.Long" resultMap="UserInfoDtoResultMapper">
+	    SELECT u.USER_CODE,u.PASSWORD,e.ID,EMP_CODE, EMP_NAME, ID_NO,ORG_NAME,
+	    d.DUTY_NAME, UPPER_CODE, UPPER_NAME,GENDER, BIRTHDAY, NATION, MARRIED, 
+	    MOBILE_NO,EMAIL,IN_SERVICE,e.EMP_CODE,e.EMP_NAME,
 		e.IN_SERVICE,u.IS_INACTIVE FROM T_USER u
 		LEFT JOIN T_EMPLOYEE e ON u.ID = e.U_ID
+		LEFT JOIN T_DUTY d ON d.ID = e.DUTY_ID
+		LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ID
 		WHERE u.ID = #{id}  
 	</select>
 	<select id="list" resultMap="UserResultMapper">
