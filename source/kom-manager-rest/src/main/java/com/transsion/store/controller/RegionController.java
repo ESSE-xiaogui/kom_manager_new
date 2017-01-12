@@ -169,8 +169,7 @@ public class RegionController extends AbstractController{
 	@Produces({MediaType.APPLICATION_JSON})
 	public List<ShopBindRegionDto> findShopBindRegion(@QueryParam("userName") String userName) throws ServiceException{
 		String token = this.getAuthorization();
-		List<ShopBindRegionDto> list = regionFacade.findShopBindRegion(token,userName);
-		return list;
+		return regionFacade.findShopBindRegion(token,userName);
 		
 	}
 	

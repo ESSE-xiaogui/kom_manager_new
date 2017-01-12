@@ -388,7 +388,7 @@
         </if>
 		WHERE p.COMPANY_ID = 1000 AND p.REGION_ID IS NOT NULL
 		<if test="userName!= null and userName!= ''">
-		AND u.USER_NAME = #{userName}
+		AND u.USER_CODE = #{userName}
 		</if>  
 		GROUP BY r.ID,r.REGION_NAME
 	</select>
@@ -401,7 +401,7 @@
 		</if>
 		WHERE c.PARENT_ID = #{parentId}  AND p.COMPANY_ID = 1000 AND p.REGION_ID IS NOT NULL
 		<if test="userName!= null and userName!= ''">
-		AND u.USER_NAME = #{userName}
+		AND u.USER_CODE = #{userName}
 		</if> 
 		GROUP BY c.ID,c.REGION_NAME
 	</select>
