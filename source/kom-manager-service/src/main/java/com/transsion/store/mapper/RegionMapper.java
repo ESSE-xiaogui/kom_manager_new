@@ -21,6 +21,7 @@ import java.util.Map;
 
 import com.transsion.store.bo.Region;
 import com.transsion.store.dto.RegionDto;
+import com.transsion.store.dto.RegionListDto;
 import com.transsion.store.dto.RegionShopDto;
 import com.transsion.store.dto.ShopBindRegionDto;
 import com.transsion.store.dto.ShopRegionChildrenDto;
@@ -31,7 +32,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface RegionMapper extends GenericIBatisMapper<Region, java.lang.Long> {
 
-    public List<Region> listPaginationByProperty(Pagination<Region> pagination, @Param("region")Region region, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<RegionListDto> listPaginationByProperty(Pagination<RegionListDto> pagination, @Param("regionListDto")RegionListDto regionListDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
 
 	public List<RegionDto> findRegionsList(Integer companyId) throws DataAccessFailureException;
 

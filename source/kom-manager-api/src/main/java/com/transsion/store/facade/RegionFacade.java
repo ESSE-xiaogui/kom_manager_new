@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 import com.transsion.store.bo.Region;
 import com.transsion.store.dto.RegionDto;
+import com.transsion.store.dto.RegionListDto;
 import com.transsion.store.dto.RegionResponseDto;
 import com.transsion.store.dto.RegionShopDto;
 import com.transsion.store.dto.ShopBindRegionDto;
@@ -102,7 +103,7 @@ public interface RegionFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Region> listPaginationByProperty(Pagination<Region> pagination, Region region)
+	public Pagination<RegionListDto> listPaginationByProperty(Pagination<RegionListDto> pagination,RegionListDto regionListDto)
 			throws ServiceException;
 
 	/**

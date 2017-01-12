@@ -19,6 +19,7 @@ package com.transsion.store.controller;
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Region;
 import com.transsion.store.dto.RegionDto;
+import com.transsion.store.dto.RegionListDto;
 import com.transsion.store.dto.RegionResponseDto;
 import com.transsion.store.dto.RegionShopDto;
 import com.transsion.store.dto.ShopBindRegionDto;
@@ -63,9 +64,9 @@ public class RegionController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<Region> listPgRegion(RequestModel<Region> requestModel) throws ServiceException
+	public Pagination<RegionListDto> listPgRegion(RequestModel<RegionListDto> requestModel) throws ServiceException
 	{
-		Pagination<Region> pagination = new Pagination<Region>();
+		Pagination<RegionListDto> pagination = new Pagination<RegionListDto>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());

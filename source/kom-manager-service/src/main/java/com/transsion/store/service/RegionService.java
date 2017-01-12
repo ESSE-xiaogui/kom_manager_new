@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.Region;
 import com.transsion.store.dto.RegionDto;
+import com.transsion.store.dto.RegionListDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.RegionMapper;
@@ -74,10 +75,10 @@ public class RegionService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Region> listPaginationByProperty(Pagination<Region> pagination, Region region)
+	public Pagination<RegionListDto> listPaginationByProperty(Pagination<RegionListDto> pagination, RegionListDto regionListDto)
 			throws ServiceException
 	{
-		List<Region> list = regionMapper.listPaginationByProperty(pagination, region, pagination.getOrderBy());
+		List<RegionListDto> list = regionMapper.listPaginationByProperty(pagination, regionListDto, pagination.getOrderBy());
 		
 		pagination.setResultList(list);
 		

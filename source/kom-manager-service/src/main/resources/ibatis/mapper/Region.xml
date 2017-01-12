@@ -67,6 +67,21 @@
 		<result column="REGION_NAME" property="regionName"/>
 	</resultMap>
 	
+	<resultMap id="RegionListDtoResultMapper" type="RegionListDto">
+		<result column="ID" property="id"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="REGION_CODE" property="regionCode"/>
+		<result column="REGION_NAME" property="regionName"/>
+		<result column="P_REGION_NAME" property="pRegionName"/>
+		<result column="REGION_TYPE_NAME" property="regionTypeName"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
 	<sql id="commonColumns">
 		 ID
 		, COMPANY_ID
@@ -157,48 +172,49 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="region != null">
-            <if test="region.id!= null and region.id!= ''">
-				AND ID=#{region.id}
+		<if test="regionListDto != null">
+            <if test="regionListDto.id!= null and regionListDto.id!= ''">
+				AND r1.ID=#{regionListDto.id}
             </if>
-            <if test="region.companyId!= null and region.companyId!= ''">
-				AND COMPANY_ID=#{region.companyId}
+            <if test="regionListDto.companyId!= null and regionListDto.companyId!= ''">
+				AND r1.COMPANY_ID=#{regionListDto.companyId}
             </if>
-            <if test="region.regionCode!= null and region.regionCode!= ''">
-				AND REGION_CODE=#{region.regionCode}
+            <if test="regionListDto.regionCode!= null and regionListDto.regionCode!= ''">
+				AND r1.REGION_CODE=#{regionListDto.regionCode}
             </if>
-            <if test="region.regionName!= null and region.regionName!= ''">
-				AND REGION_NAME=#{region.regionName}
+            <if test="regionListDto.regionName!= null and regionListDto.regionName!= ''">
+				AND r1.REGION_NAME=#{regionListDto.regionName}
             </if>
-            <if test="region.parentId!= null and region.parentId!= ''">
-				AND PARENT_ID=#{region.parentId}
+            <if test="regionListDto.pRegionName!= null and regionListDto.pRegionName!= ''">
+				AND r2.REGION_NAME=#{regionListDto.pRegionName}
             </if>
-            <if test="region.regionType!= null and region.regionType!= ''">
-				AND REGION_TYPE=#{region.regionType}
+            <if test="regionListDto.regionTypeName!= null and regionListDto.regionTypeName!= ''">
+				AND y.REGION_TYPE=#{regionListDto.regionTypeName}
             </if>
-            <if test="region.isInactive!= null and region.isInactive!= ''">
-				AND IS_INACTIVE=#{region.isInactive}
+            <if test="regionListDto.isInactive!= null and regionListDto.isInactive!= ''">
+				AND r1.IS_INACTIVE=#{regionListDto.isInactive}
             </if>
-            <if test="region.remark!= null and region.remark!= ''">
-				AND REMARK=#{region.remark}
+            <if test="regionListDto.remark!= null and regionListDto.remark!= ''">
+				AND r1.REMARK=#{regionListDto.remark}
             </if>
-            <if test="region.createdBy!= null and region.createdBy!= ''">
-				AND CREATED_BY=#{region.createdBy}
+            <if test="regionListDto.createdBy!= null and regionListDto.createdBy!= ''">
+				AND r1.CREATED_BY=#{regionListDto.createdBy}
             </if>
-            <if test="region.createdTime!= null and region.createdTime!= ''">
-				AND CREATED_TIME=str_to_date(#{region.createdTime},'%Y-%m-%d %H:%i:%s')
+            <if test="regionListDto.createdTime!= null and regionListDto.createdTime!= ''">
+				AND r1.CREATED_TIME=str_to_date(#{regionListDto.createdTime},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="region.updatedBy!= null and region.updatedBy!= ''">
-				AND UPDATED_BY=#{region.updatedBy}
+            <if test="regionListDto.updatedBy!= null and regionListDto.updatedBy!= ''">
+				AND r1.UPDATED_BY=#{regionListDto.updatedBy}
             </if>
-            <if test="region.updatedTime!= null and region.updatedTime!= ''">
-				AND UPDATED_TIME=str_to_date(#{region.updatedTime},'%Y-%m-%d %H:%i:%s')
+            <if test="regionListDto.updatedTime!= null and regionListDto.updatedTime!= ''">
+				AND r1.UPDATED_TIME=str_to_date(#{regionListDto.updatedTime},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="region.version!= null and region.version!= ''">
-				AND VERSION=#{region.version}
+            <if test="regionListDto.version!= null and regionListDto.version!= ''">
+				AND r1.VERSION=#{regionListDto.version}
             </if>
         </if>
     </sql>
+      
 
 	<sql id="orderByClause">
 		<if test="orderBy != null">
@@ -212,43 +228,43 @@
 	<sql id="orderBy">
 		<choose>
         	<when test="key == 'id'">
-				ID ${value}
+				r1.ID ${value}
             </when>
             <when test="key == 'companyId'">
-				COMPANY_ID ${value}
+				r1.COMPANY_ID ${value}
             </when>
         	<when test="key == 'regionCode'">
-				REGION_CODE ${value}
+				r1.REGION_CODE ${value}
             </when>
         	<when test="key == 'regionName'">
-				REGION_NAME ${value}
+				r1.REGION_NAME ${value}
             </when>
-        	<when test="key == 'parentId'">
-				PARENT_ID ${value}
+        	<when test="key == 'pRegionName'">
+				r2.REGION_NAME ${value}
             </when>
-        	<when test="key == 'regionType'">
-				REGION_TYPE ${value}
+        	<when test="key == 'regionTypeName'">
+				y.REGION_TYPE ${value}
             </when>
         	<when test="key == 'isInactive'">
-				IS_INACTIVE ${value}
+				r1.IS_INACTIVE ${value}
             </when>
         	<when test="key == 'remark'">
-				REMARK ${value}
+				r1.REMARK ${value}
             </when>
         	<when test="key == 'createdBy'">
-				CREATED_BY ${value}
+				r1.CREATED_BY ${value}
             </when>
         	<when test="key == 'createdTime'">
-				CREATED_TIME ${value}
+				r1.CREATED_TIME ${value}
             </when>
         	<when test="key == 'updatedBy'">
-				UPDATED_BY ${value}
+				r1.UPDATED_BY ${value}
             </when>
         	<when test="key == 'updatedTime'">
-				UPDATED_TIME ${value}
+				r1.UPDATED_TIME ${value}
             </when>
         	<when test="key == 'version'">
-				VERSION ${value}
+				r1.VERSION ${value}
             </when>
 		</choose>
 	</sql>
@@ -319,16 +335,18 @@
 		FROM T_REGION WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="Region" resultMap="RegionResultMapper">
-		SELECT y.REGION_TYPE AS REGION_TYPE_NAME,r1.ID, r1.COMPANY_ID, r1.REGION_CODE, r1.REGION_NAME
-		,r2.REGION_NAME AS P_REGION_NAME, r1.IS_INACTIVE,r1.REMARK, r1.CREATED_BY, r1.UPDATED_BY,r1.VERSION
-		, r1.CREATED_TIME, r1.UPDATED_TIME
+	<select id="listPaginationByProperty" parameterType="RegionListDto"
+		resultMap="RegionListDtoResultMapper">
+		SELECT r1.ID, r1.COMPANY_ID, r1.REGION_CODE, r1.REGION_NAME,
+		r2.REGION_NAME AS P_REGION_NAME,y.REGION_TYPE AS REGION_TYPE_NAME,
+		r1.IS_INACTIVE,r1.REMARK, r1.CREATED_BY, r1.UPDATED_BY,
+		r1.CREATED_TIME, r1.UPDATED_TIME,r1.VERSION
 		FROM T_REGION r1
 		LEFT JOIN T_REGION r2 ON r2.ID = r1.PARENT_ID
-		LEFT JOIN T_REGION_TYPE y ON r1.REGION_TYPE = y.ID
+		LEFT JOIN T_REGION_TYPE y ON r1.REGION_TYPE =y.ID
 		WHERE 1=1
-    	<include refid="commonConditionByPrefix"/>
-    	<include refid="orderByClause" />
+		<include refid="commonConditionByPrefix" />
+		<include refid="orderByClause" />
 	</select>
 	<select id="findByCount" parameterType="Region" resultType="int">
 		SELECT count(1) AS totalcount FROM T_REGION WHERE 1=1 
