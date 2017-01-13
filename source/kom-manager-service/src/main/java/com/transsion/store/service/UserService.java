@@ -81,9 +81,7 @@ public class UserService {
 			throws ServiceException
 	{
 		List<UserListDto> list = userMapper.listPaginationByProperty(pagination, userListDto, pagination.getOrderBy());
-		System.out.println(list);
 		pagination.setResultList(list);
-		
 		return pagination;
 	}
 
