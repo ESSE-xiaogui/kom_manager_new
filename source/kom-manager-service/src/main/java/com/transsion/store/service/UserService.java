@@ -39,7 +39,8 @@ public class UserService {
 	{
 		this.userMapper = userMapper;
 	}
-	
+	@Autowired
+	private SystemDateService systemDateService;
 	/**
 	 * 通过主键查询实体对象
 	 * @param primaryKey
@@ -125,6 +126,10 @@ public class UserService {
 	 */
 	public void save(User user) throws ServiceException
 	{
+		user.setCreatedBy(user.getUserCode());
+		user.setCreatedTime(systemDateService.getCurrentDate());
+		user.setUpdatedBy(user.getUserCode());
+		user.setUpdatedTime(systemDateService.getCurrentDate());
 		userMapper.save(user);
 	}
 
