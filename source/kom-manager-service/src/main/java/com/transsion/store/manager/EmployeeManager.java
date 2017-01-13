@@ -14,6 +14,7 @@ import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.EmpResponseDto;
 import com.transsion.store.dto.EmpUserDto;
 import com.transsion.store.dto.OrganizationDto;
+import com.transsion.store.dto.UserDto;
 import com.transsion.store.mapper.DutyMapper;
 import com.transsion.store.mapper.EmployeeMapper;
 import com.transsion.store.mapper.OrganizationMapper;
@@ -172,16 +173,15 @@ public class EmployeeManager {
 		if(!UtilHelper.isEmpty(uId)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_ALREADY_DISTRIBUTED);
 		}
-		user.setCompanyId(userContext.getUser().getCompanyId());
+		user.setCompanyId(userContext.getCompanyId().intValue());
 		user.setPassword(MD5Utils.encrypt(PASSWORD));
 		user.setIsInactive(1);
 		user.setCreatedBy(userContext.getUser().getUserCode());
 		user.setCreatedTime(systemDateService.getCurrentDate());
 		userService.save(user);
-		List<User> list = userService.listByProperty(user);
-		employee.setuId(list.get(0).getId());
+		UserDto u= userService.findByName(userCode);
+		employee.setuId(u.getId());
 		employeeService.update(employee);
-		
 		EmpResponseDto erd = new EmpResponseDto();
 		erd.setStatus(1);
 		return erd;
