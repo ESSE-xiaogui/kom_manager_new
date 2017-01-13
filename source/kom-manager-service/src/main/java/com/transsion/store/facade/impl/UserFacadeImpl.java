@@ -147,9 +147,8 @@ public class UserFacadeImpl implements UserFacade {
 	 * @return
 	 * @throws ServiceException 
 	 */
-	public UserContext validateLogin(String userCode,String password) throws ServiceException {
-		UserContext userContext = userManager.validateLogin(userCode, password);
-		return userContext;
+	public UserContext executeLogin(String userCode,String password) throws ServiceException {
+		return userManager.executeLogin(userCode, password);
 	}
 	
 	

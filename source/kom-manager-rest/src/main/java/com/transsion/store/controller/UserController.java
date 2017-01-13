@@ -65,7 +65,7 @@ public class UserController extends AbstractController{
 	@Produces({ MediaType.APPLICATION_JSON })
 	public UserContext login(@QueryParam("userCode") java.lang.String userCode,
 			@QueryParam("password") java.lang.String password) throws ServiceException {
-		return userFacade.validateLogin(userCode, password);
+		return userFacade.executeLogin(userCode, password);
 	}
 
 	/**

@@ -111,7 +111,7 @@ public interface UserFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public UserContext validateLogin(String userCode, String password) throws ServiceException;
+	public UserContext executeLogin(String userCode, String password) throws ServiceException;
 	
 	/**
 	 * 根据用户名查询用户信息

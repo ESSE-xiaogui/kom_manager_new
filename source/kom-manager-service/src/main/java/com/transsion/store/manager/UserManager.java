@@ -13,6 +13,7 @@ import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.service.UserService;
 import com.transsion.store.utils.CacheUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,13 +45,14 @@ public class UserManager {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public UserContext validateLogin(String userCode, String password) throws ServiceException {
+	public UserContext executeLogin(String userCode, String password) throws ServiceException {
 		if(UtilHelper.isEmpty(userCode)||UtilHelper.isEmpty(password))
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		User user = new User();
 		user.setUserCode(userCode);
 		user.setPassword(password);
-		UserResponseDto urd = userMapper.getUser(user);
+		UserResponseDto urd = findUser(user);
+		//UserResponseDto urd = userMapper.getUser(user);
 		if (UtilHelper.isEmpty(urd) ||UtilHelper.isEmpty(urd.getId()) || UtilHelper.isEmpty(urd.getCompanyId())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_LOGIN_FAIL);
 		}
@@ -70,6 +72,7 @@ public class UserManager {
 			if(!UtilHelper.isEmpty(urd.getUserId())){
 				user.setUserId(urd.getUserId().intValue());
 			}
+			user.setLastLogin(urd.getLastLogin());
 			user.setCompanyId(urd.getCompanyId().intValue());
 			user.setUserName(urd.getUserName());
 			userContext.setUser(user);
@@ -183,5 +186,14 @@ public class UserManager {
 			urd.setStatus(1);
 			return urd;
 		}
+	}
+	
+	/**
+	 * 登录接口为只读,根据用户编码先更新,再查询返回新的结果
+	 * */
+	public UserResponseDto findUser(User user) throws ServiceException{
+		user.setLastLogin(systemDateService.getCurrentDate());
+		userMapper.update(user);
+		return userMapper.getUser(user);
 	}
 }

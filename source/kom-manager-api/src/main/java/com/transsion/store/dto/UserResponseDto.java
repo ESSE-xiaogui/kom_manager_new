@@ -28,6 +28,8 @@ public class UserResponseDto implements Serializable{
 	private String password;
 	
 	private Long isInactive;
+	
+	private String lastLogin;
 
 	public Integer getStatus() {
 		return status;
@@ -93,11 +95,19 @@ public class UserResponseDto implements Serializable{
 		this.isInactive = isInactive;
 	}
 
+	public String getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(String lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
 	@Override
 	public String toString() {
 		return "UserResponseDto [status=" + status + ", id=" + id + ", userId=" + userId + ", companyId=" + companyId
 						+ ", userName=" + userName + ", userCode=" + userCode + ", password=" + password
-						+ ", isInactive=" + isInactive + "]";
+						+ ", isInactive=" + isInactive + ", lastLogin=" + lastLogin + "]";
 	}
 	
 }

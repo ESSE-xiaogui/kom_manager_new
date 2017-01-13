@@ -75,6 +75,7 @@
 		<result column="USER_NAME" property="userName"/>
 		<result column="PASSWORD" property="password"/>
 		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="LAST_LOGIN" property="lastLogin"/>
 	</resultMap>
 	
 	<resultMap id="UserInfoDtoResultMapper" type="UserInfoDto">
@@ -530,7 +531,7 @@
 		<include refid="commonCondition2"/>
 	</select>
 	<select id="getUser" parameterType="User" resultMap="UserResponseDtoMapper">
-		SELECT u.ID,u.USER_ID,u.USER_CODE,u.USER_NAME,u.PASSWORD,e.COMPANY_ID,u.IS_INACTIVE FROM T_USER u
+		SELECT u.ID,u.USER_ID,u.USER_CODE,u.USER_NAME,u.PASSWORD,e.COMPANY_ID,u.IS_INACTIVE,u.LAST_LOGIN FROM T_USER u
 		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID
 		WHERE u.USER_CODE = #{userCode} AND u.PASSWORD = #{password} 
 	</select>
