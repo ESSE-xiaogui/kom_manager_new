@@ -66,7 +66,7 @@ public class TaskManager {
 		taskMapper.saveTask(task);
 		TaskMessage msg = new TaskMessage();
 		msg.setGroup(Group.TASK.toString());
-		msg.setName(Type.TASK_SALE_IMPORT.toString());
+		msg.setName(Type.TASK_SALE_IMPORT.getDesc());
 		msg.setInvokerType(TaskInvokerInfo.Type.REST);
 		msg.setKey(task.getId());
 		msg.setBeanName(Constants.IMPORTTASK + task.getId());
