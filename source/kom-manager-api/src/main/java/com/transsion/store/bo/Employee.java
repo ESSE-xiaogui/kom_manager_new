@@ -65,15 +65,11 @@ public class Employee extends Model{
 	  */
 	private java.lang.Integer orgId;
 	
-	private java.lang.String orgName;
-
 	/**
 	  *	
 	  */
 	private java.lang.Integer dutyId;
 	
-	private java.lang.String dutyName;
-
 	/**
 	  *	
 	  */
@@ -164,23 +160,14 @@ public class Employee extends Model{
 	  */
 	private java.lang.Integer version;
 
-	/**
-	  *	
-	  */
-	public java.lang.Long getId() 
-	{
+	public java.lang.Long getId() {
 		return id;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setId(java.lang.Long id) 
-	{
+
+	public void setId(java.lang.Long id) {
 		this.id = id;
 	}
-	
-	
+
 	public java.lang.Long getuId() {
 		return uId;
 	}
@@ -189,433 +176,218 @@ public class Employee extends Model{
 		this.uId = uId;
 	}
 
-	/**
-	  *	keep for align with kom pc 
-	  */
-	public java.lang.Integer getEmpId() 
-	{
+	public java.lang.Integer getEmpId() {
 		return empId;
 	}
-	
-	/**
-	  *	keep for align with kom pc 
-	  */
-	public void setEmpId(java.lang.Integer empId) 
-	{
+
+	public void setEmpId(java.lang.Integer empId) {
 		this.empId = empId;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getEmpCode() 
-	{
+
+	public java.lang.String getEmpCode() {
 		return empCode;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setEmpCode(java.lang.String empCode) 
-	{
+
+	public void setEmpCode(java.lang.String empCode) {
 		this.empCode = empCode;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getEmpName() 
-	{
+
+	public java.lang.String getEmpName() {
 		return empName;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setEmpName(java.lang.String empName) 
-	{
+
+	public void setEmpName(java.lang.String empName) {
 		this.empName = empName;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getIdNo() 
-	{
+
+	public java.lang.String getIdNo() {
 		return idNo;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setIdNo(java.lang.String idNo) 
-	{
+
+	public void setIdNo(java.lang.String idNo) {
 		this.idNo = idNo;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.Integer getCompanyId() 
-	{
+
+	public java.lang.Integer getCompanyId() {
 		return companyId;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setCompanyId(java.lang.Integer companyId) 
-	{
+
+	public void setCompanyId(java.lang.Integer companyId) {
 		this.companyId = companyId;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.Integer getOrgId() 
-	{
+
+	public java.lang.Integer getOrgId() {
 		return orgId;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setOrgId(java.lang.Integer orgId) 
-	{
+
+	public void setOrgId(java.lang.Integer orgId) {
 		this.orgId = orgId;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.Integer getDutyId() 
-	{
+
+	public java.lang.Integer getDutyId() {
 		return dutyId;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setDutyId(java.lang.Integer dutyId) 
-	{
+
+	public void setDutyId(java.lang.Integer dutyId) {
 		this.dutyId = dutyId;
 	}
-	
-	public java.lang.String getOrgName() {
-		return orgName;
-	}
 
-	public void setOrgName(java.lang.String orgName) {
-		this.orgName = orgName;
-	}
-
-	public java.lang.String getDutyName() {
-		return dutyName;
-	}
-
-	public void setDutyName(java.lang.String dutyName) {
-		this.dutyName = dutyName;
-	}
-
-	/**
-	  *	
-	  */
-	public java.lang.Long getUpperId() 
-	{
+	public java.lang.Long getUpperId() {
 		return upperId;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setUpperId(java.lang.Long upperId) 
-	{
+
+	public void setUpperId(java.lang.Long upperId) {
 		this.upperId = upperId;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getUpperName() 
-	{
+
+	public java.lang.String getUpperName() {
 		return upperName;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setUpperName(java.lang.String upperName) 
-	{
+
+	public void setUpperName(java.lang.String upperName) {
 		this.upperName = upperName;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.Integer getGender() 
-	{
+
+	public java.lang.Integer getGender() {
 		return gender;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setGender(java.lang.Integer gender) 
-	{
+
+	public void setGender(java.lang.Integer gender) {
 		this.gender = gender;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getBirthday() 
-	{
+
+	public java.lang.String getBirthday() {
 		return birthday;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setBirthday(java.lang.String birthday) 
-	{
+
+	public void setBirthday(java.lang.String birthday) {
 		this.birthday = birthday;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getNation() 
-	{
+
+	public java.lang.String getNation() {
 		return nation;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setNation(java.lang.String nation) 
-	{
+
+	public void setNation(java.lang.String nation) {
 		this.nation = nation;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.Integer getMarried() 
-	{
+
+	public java.lang.Integer getMarried() {
 		return married;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setMarried(java.lang.Integer married) 
-	{
+
+	public void setMarried(java.lang.Integer married) {
 		this.married = married;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getPhoneNo() 
-	{
+
+	public java.lang.String getPhoneNo() {
 		return phoneNo;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setPhoneNo(java.lang.String phoneNo) 
-	{
+
+	public void setPhoneNo(java.lang.String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getMobileNo() 
-	{
+
+	public java.lang.String getMobileNo() {
 		return mobileNo;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setMobileNo(java.lang.String mobileNo) 
-	{
+
+	public void setMobileNo(java.lang.String mobileNo) {
 		this.mobileNo = mobileNo;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getEmail() 
-	{
+
+	public java.lang.String getEmail() {
 		return email;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setEmail(java.lang.String email) 
-	{
+
+	public void setEmail(java.lang.String email) {
 		this.email = email;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getNativePlace() 
-	{
+
+	public java.lang.String getNativePlace() {
 		return nativePlace;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setNativePlace(java.lang.String nativePlace) 
-	{
+
+	public void setNativePlace(java.lang.String nativePlace) {
 		this.nativePlace = nativePlace;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getZipCode() 
-	{
+
+	public java.lang.String getZipCode() {
 		return zipCode;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setZipCode(java.lang.String zipCode) 
-	{
+
+	public void setZipCode(java.lang.String zipCode) {
 		this.zipCode = zipCode;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.Integer getInService() 
-	{
+
+	public java.lang.Integer getInService() {
 		return inService;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setInService(java.lang.Integer inService) 
-	{
+
+	public void setInService(java.lang.Integer inService) {
 		this.inService = inService;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getRemark() 
-	{
+
+	public java.lang.String getRemark() {
 		return remark;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setRemark(java.lang.String remark) 
-	{
+
+	public void setRemark(java.lang.String remark) {
 		this.remark = remark;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getCreatedBy() 
-	{
+
+	public java.lang.String getCreatedBy() {
 		return createdBy;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setCreatedBy(java.lang.String createdBy) 
-	{
+
+	public void setCreatedBy(java.lang.String createdBy) {
 		this.createdBy = createdBy;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getCreatedTime() 
-	{
+
+	public java.lang.String getCreatedTime() {
 		return createdTime;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setCreatedTime(java.lang.String createdTime) 
-	{
+
+	public void setCreatedTime(java.lang.String createdTime) {
 		this.createdTime = createdTime;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getUpdatedBy() 
-	{
+
+	public java.lang.String getUpdatedBy() {
 		return updatedBy;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setUpdatedBy(java.lang.String updatedBy) 
-	{
+
+	public void setUpdatedBy(java.lang.String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getUpdatedTime() 
-	{
+
+	public java.lang.String getUpdatedTime() {
 		return updatedTime;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setUpdatedTime(java.lang.String updatedTime) 
-	{
+
+	public void setUpdatedTime(java.lang.String updatedTime) {
 		this.updatedTime = updatedTime;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.Integer getVersion() 
-	{
+
+	public java.lang.Integer getVersion() {
 		return version;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setVersion(java.lang.Integer version) 
-	{
+
+	public void setVersion(java.lang.Integer version) {
 		this.version = version;
 	}
 
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", uId=" + uId + ", empId=" + empId + ", empCode=" + empCode + ", empName="
-						+ empName + ", idNo=" + idNo + ", companyId=" + companyId + ", orgId=" + orgId + ", orgName="
-						+ orgName + ", dutyId=" + dutyId + ", dutyName=" + dutyName + ", upperId=" + upperId
-						+ ", upperName=" + upperName + ", gender=" + gender + ", birthday=" + birthday + ", nation="
-						+ nation + ", married=" + married + ", phoneNo=" + phoneNo + ", mobileNo=" + mobileNo
-						+ ", email=" + email + ", nativePlace=" + nativePlace + ", zipCode=" + zipCode + ", inService="
-						+ inService + ", remark=" + remark + ", createdBy=" + createdBy + ", createdTime=" + createdTime
-						+ ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime + ", version=" + version + "]";
+						+ empName + ", idNo=" + idNo + ", companyId=" + companyId + ", orgId=" + orgId + ", dutyId="
+						+ dutyId + ", upperId=" + upperId + ", upperName=" + upperName + ", gender=" + gender
+						+ ", birthday=" + birthday + ", nation=" + nation + ", married=" + married + ", phoneNo="
+						+ phoneNo + ", mobileNo=" + mobileNo + ", email=" + email + ", nativePlace=" + nativePlace
+						+ ", zipCode=" + zipCode + ", inService=" + inService + ", remark=" + remark + ", createdBy="
+						+ createdBy + ", createdTime=" + createdTime + ", updatedBy=" + updatedBy + ", updatedTime="
+						+ updatedTime + ", version=" + version + "]";
 	}
+
 
 
 }

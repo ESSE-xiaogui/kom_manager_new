@@ -101,7 +101,8 @@ public class UserController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void add(User user) throws ServiceException
 	{
-		userFacade.save(user);
+		String token = this.getAuthorization();
+		userFacade.save(token,user);
 	}
 
 	/**

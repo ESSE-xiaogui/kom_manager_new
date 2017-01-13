@@ -126,10 +126,6 @@ public class UserService {
 	 */
 	public void save(User user) throws ServiceException
 	{
-		user.setCreatedBy(user.getUserCode());
-		user.setCreatedTime(systemDateService.getCurrentDate());
-		user.setUpdatedBy(user.getUserCode());
-		user.setUpdatedTime(systemDateService.getCurrentDate());
 		userMapper.save(user);
 	}
 

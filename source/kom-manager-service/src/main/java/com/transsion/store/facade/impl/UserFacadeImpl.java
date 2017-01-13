@@ -126,9 +126,9 @@ public class UserFacadeImpl implements UserFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(User user) throws ServiceException
+	public void save(String token,User user) throws ServiceException
 	{
-		userService.save(user);
+		userManager.save(token,user);
 	}
 
 	/**

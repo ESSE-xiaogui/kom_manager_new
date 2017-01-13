@@ -28,9 +28,7 @@
 		<result column="ID_NO" property="idNo"/>
 		<result column="COMPANY_ID" property="companyId"/>
 		<result column="ORG_ID" property="orgId"/>
-		<result column="ORG_NAME" property="orgName"/>
 		<result column="DUTY_ID" property="dutyId"/>
-		<result column="DUTY_NAME" property="dutyName"/>
 		<result column="UPPER_ID" property="upperId"/>
 		<result column="UPPER_NAME" property="upperName"/>
 		<result column="GENDER" property="gender"/>

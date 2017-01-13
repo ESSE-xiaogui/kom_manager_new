@@ -13,6 +13,7 @@ import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.service.UserService;
 import com.transsion.store.utils.CacheUtils;
+import com.transsion.store.utils.MD5Utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -195,5 +196,40 @@ public class UserManager {
 		user.setLastLogin(systemDateService.getCurrentDate());
 		userMapper.update(user);
 		return userMapper.getUser(user);
+	}
+
+	/**
+	 * 新建用户
+	 * @throws ServiceException 
+	 * */
+	public void save(String token, User user) throws ServiceException {
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		String userCode = user.getUserCode();
+		String password = user.getPassword();
+		if(UtilHelper.isEmpty(userCode)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERCODE_IS_NULL);
+		}
+		if(UtilHelper.isEmpty(password)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PASSWORD_IS_NULL);
+		}
+		User u = new User();
+		u.setUserCode(userCode);
+		int countUser = userService.findByCount(u);
+		if(countUser>0){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_ALREADY_EXISTS);
+		}
+		
+		user.setCompanyId(userContext.getUser().getCompanyId());
+		user.setPassword(MD5Utils.encrypt(password));
+		user.setIsInactive(1);
+		user.setCreatedBy(userContext.getUser().getUserCode());
+		user.setCreatedTime(systemDateService.getCurrentDate());
+		userService.save(user);
 	}
 }

@@ -21,23 +21,12 @@
 <mapper namespace="com.transsion.store.mapper.UserMapper">
 	<resultMap id="UserResultMapper" type="User">
 		<result column="ID" property="id"/>
+		<result column="USER_ID" property="userID"/>
 		<result column="USER_CODE" property="userCode"/>
 		<result column="USER_NAME" property="userName"/>
-		<result column="ROLE_NAME" property="roleName"/>
 		<result column="EMP_ID" property="empId"/>
-		<result column="EMP_NAME" property="empName"/>
-		<result column="EMP_CODE" property="empCode"/>
 		<result column="COMPANY_ID" property="companyId"/>
-		<result column="GENDER" property="gender"/>
-		<result column="NATION" property="nation"/>
-		<result column="MARRIED" property="married"/>
-		<result column="ID_NO" property="idNo"/>
-		<result column="BIRTHDAY" property="birthday"/>
-		<result column="EMAIL" property="email"/>
-		<result column="DUTY_NAME" property="dutyName"/>
-		<result column="ORG_NAME" property="orgName"/>
-		<result column="MOBILE_NO" property="mobileNo"/>
-		<result column="UPPER_NAME" property="upperName"/>
+		<result column="DUTY_ID" property="dutyId"/>
 		<result column="PASSWORD" property="password"/>
 		<result column="USER_CATEGORY" property="userCategory"/>
 		<result column="FORBIDDEN_TIME" property="forbiddenTime"/>

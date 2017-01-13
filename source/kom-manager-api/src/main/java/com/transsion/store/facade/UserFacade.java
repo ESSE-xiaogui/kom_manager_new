@@ -77,11 +77,12 @@ public interface UserFacade {
 
 	/**
 	 * 保存记录
+	 * @param token 
 	 * @param user
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(User user) throws ServiceException;
+	public void save(String token, User user) throws ServiceException;
 
 	/**
 	 * 更新记录

@@ -78,8 +78,6 @@ public class EmployeeManager {
 		}
 		employee.setCreatedBy(userContext.getUserCode());
 		employee.setCreatedTime(systemDateService.getCurrentDate());
-		employee.setUpdatedBy(userContext.getUserCode());
-		employee.setUpdatedTime(systemDateService.getCurrentDate());
 		employee.setBirthday(employee.getBirthday().equals("")?null:employee.getBirthday());
 		employee.setCompanyId(userContext.getUser().getCompanyId());
 		employeeService.save(employee);
@@ -130,8 +128,6 @@ public class EmployeeManager {
 		formerEmp.setUpperName(employee.getUpperName());
 		formerEmp.setUpperId(employee.getUpperId());
 		formerEmp.setInService(employee.getInService());
-		formerEmp.setCreatedBy(userContext.getUserCode());
-		formerEmp.setCreatedTime(systemDateService.getCurrentDate());
 		formerEmp.setUpdatedBy(userContext.getUserCode());
 		formerEmp.setUpdatedTime(systemDateService.getCurrentDate());
 		employeeService.update(formerEmp);
