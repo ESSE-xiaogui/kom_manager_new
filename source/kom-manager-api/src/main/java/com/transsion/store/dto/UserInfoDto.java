@@ -59,6 +59,16 @@ public class UserInfoDto implements Serializable{
 	
 	private java.lang.String updatedTime;
 	
+	/**
+	  *	系统保留字段，记录数据创建用户，用于审计，无业务含义
+	  */
+	private java.lang.String createdBy;
+
+	/**
+	  *	系统保留字段，记录数据创建时间，用于系统审计，无实际业务含义
+	  */
+	private java.lang.String createdTime;
+	
 	private java.lang.String remark;
 
 	public java.lang.Long getId() {
@@ -236,6 +246,27 @@ public class UserInfoDto implements Serializable{
 	public void setLastLogin(java.lang.String lastLogin) {
 		this.lastLogin = lastLogin;
 	}
+	
+
+	public java.lang.String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(java.lang.String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public java.lang.String getCreatedTime() {
+		return createdTime;
+	}
+
+	public void setCreatedTime(java.lang.String createdTime) {
+		this.createdTime = createdTime;
+	}
+
+	public void setUpperId(java.lang.Long upperId) {
+		this.upperId = upperId;
+	}
 
 	public java.lang.String getUpdatedBy() {
 		return updatedBy;
@@ -267,11 +298,12 @@ public class UserInfoDto implements Serializable{
 						+ ", companyId=" + companyId + ", roleName=" + roleName + ", dutyName=" + dutyName
 						+ ", orgName=" + orgName + ", empCode=" + empCode + ", empName=" + empName + ", gender="
 						+ gender + ", nation=" + nation + ", married=" + married + ", birthday=" + birthday + ", email="
-						+ email + ", idNo=" + idNo + ", mobileNo=" + mobileNo + ", upperId=" + upperId
-						+ ", upperName=" + upperName + ", inService=" + inService + ", isInactive=" + isInactive
-						+ ", lastLogin=" + lastLogin + ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime
-						+ ", remark=" + remark + "]";
+						+ email + ", idNo=" + idNo + ", mobileNo=" + mobileNo + ", upperId=" + upperId + ", upperName="
+						+ upperName + ", inService=" + inService + ", isInactive=" + isInactive + ", lastLogin="
+						+ lastLogin + ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime + ", createdBy="
+						+ createdBy + ", createdTime=" + createdTime + ", remark=" + remark + "]";
 	}
-	
+
+
 	
 }
