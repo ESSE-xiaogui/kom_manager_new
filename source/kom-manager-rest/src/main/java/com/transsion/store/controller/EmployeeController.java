@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Employee;
+import com.transsion.store.dto.EmpInfoDto;
 import com.transsion.store.dto.EmpResponseDto;
 import com.transsion.store.dto.EmpUserDto;
 import com.shangkang.core.dto.RequestModel;
@@ -61,9 +62,9 @@ public class EmployeeController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<Employee> listPgEmployee(RequestModel<Employee> requestModel) throws ServiceException
+	public Pagination<EmpInfoDto> listPgEmployee(RequestModel<EmpInfoDto> requestModel) throws ServiceException
 	{
-		Pagination<Employee> pagination = new Pagination<Employee>();
+		Pagination<EmpInfoDto> pagination = new Pagination<EmpInfoDto>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());

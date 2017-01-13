@@ -51,6 +51,37 @@
 		<result column="VERSION" property="version"/>
 	</resultMap>
 	
+	<resultMap id="EmpInfoDtoResultMapper" type="EmpInfoDto">
+		<result column="ID" property="id"/>
+		<result column="EMP_ID" property="empId"/>
+		<result column="EMP_CODE" property="empCode"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="U_ID" property="uId"/>
+		<result column="ID_NO" property="idNo"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="ORG_ID" property="orgId"/>
+		<result column="ORG_NAME" property="orgName"/>
+		<result column="DUTY_ID" property="dutyId"/>
+		<result column="DUTY_NAME" property="dutyName"/>
+		<result column="UPPER_ID" property="upperId"/>
+		<result column="UPPER_NAME" property="upperName"/>
+		<result column="GENDER" property="gender"/>
+		<result column="BIRTHDAY" property="birthday"/>
+		<result column="NATION" property="nation"/>
+		<result column="MARRIED" property="married"/>
+		<result column="PHONE_NO" property="phoneNo"/>
+		<result column="MOBILE_NO" property="mobileNo"/>
+		<result column="EMAIL" property="email"/>
+		<result column="NATIVE_PLACE" property="nativePlace"/>
+		<result column="ZIP_CODE" property="zipCode"/>
+		<result column="IN_SERVICE" property="inService"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
 	<resultMap id="EmpResponseDtoResultMapper" type="EmpResponseDto">
 		<result column="ID" property="id"/>
 		<result column="EMP_ID" property="empId"/>
@@ -291,87 +322,87 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="employee != null">
-            <if test="employee.id!= null and employee.id!= ''">
-				AND ID=#{employee.id}
+		<if test="empInfoDto != null">
+            <if test="empInfoDto.id!= null and empInfoDto.id!= ''">
+				AND e.ID=#{empInfoDto.id}
             </if>
-            <if test="employee.empId!= null and employee.empId!= ''">
-				AND EMP_ID=#{employee.empId}
+            <if test="empInfoDto.empId!= null and empInfoDto.empId!= ''">
+				AND EMP_ID=#{empInfoDto.empId}
             </if>
-            <if test="employee.empCode!= null and employee.empCode!= ''">
-				AND EMP_CODE=#{employee.empCode}
+            <if test="empInfoDto.empCode!= null and empInfoDto.empCode!= ''">
+				AND EMP_CODE=#{empInfoDto.empCode}
             </if>
-            <if test="employee.empName!= null and employee.empName!= ''">
-				AND EMP_NAME=#{employee.empName}
+            <if test="empInfoDto.empName!= null and empInfoDto.empName!= ''">
+				AND EMP_NAME=#{empInfoDto.empName}
             </if>
-            <if test="employee.uId!= null and employee.uId!= ''">
-				AND U_ID=#{employee.uId}
+            <if test="empInfoDto.uId!= null and empInfoDto.uId!= ''">
+				AND U_ID=#{empInfoDto.uId}
             </if>
-            <if test="employee.idNo!= null and employee.idNo!= ''">
-				AND ID_NO=#{employee.idNo}
+            <if test="empInfoDto.idNo!= null and empInfoDto.idNo!= ''">
+				AND ID_NO=#{empInfoDto.idNo}
             </if>
-            <if test="employee.companyId!= null and employee.companyId!= ''">
-				AND COMPANY_ID=#{employee.companyId}
+            <if test="empInfoDto.companyId!= null and empInfoDto.companyId!= ''">
+				AND COMPANY_ID=#{empInfoDto.companyId}
             </if>
-            <if test="employee.orgId!= null and employee.orgId!= ''">
-				AND ORG_ID=#{employee.orgId}
+            <if test="empInfoDto.orgId!= null and empInfoDto.orgId!= ''">
+				AND e.ORG_ID=#{empInfoDto.orgId}
             </if>
-            <if test="employee.dutyId!= null and employee.dutyId!= ''">
-				AND DUTY_ID=#{employee.dutyId}
+            <if test="empInfoDto.dutyId!= null and empInfoDto.dutyId!= ''">
+				AND e.DUTY_ID=#{empInfoDto.dutyId}
             </if>
-            <if test="employee.upperId!= null and employee.upperId!= ''">
-				AND UPPER_ID=#{employee.upperId}
+            <if test="empInfoDto.upperId!= null and empInfoDto.upperId!= ''">
+				AND UPPER_ID=#{empInfoDto.upperId}
             </if>
-            <if test="employee.upperName!= null and employee.upperName!= ''">
-				AND UPPER_NAME=#{employee.upperName}
+            <if test="empInfoDto.upperName!= null and empInfoDto.upperName!= ''">
+				AND UPPER_NAME=#{empInfoDto.upperName}
             </if>
-            <if test="employee.gender!= null and employee.gender!= ''">
-				AND GENDER=#{employee.gender}
+            <if test="empInfoDto.gender!= null and empInfoDto.gender!= ''">
+				AND GENDER=#{empInfoDto.gender}
             </if>
-            <if test="employee.birthday!= null and employee.birthday!= ''">
-				AND BIRTHDAY=str_to_date(#{employee.birthday},'%Y-%m-%d')
+            <if test="empInfoDto.birthday!= null and empInfoDto.birthday!= ''">
+				AND BIRTHDAY=str_to_date(#{empInfoDto.birthday},'%Y-%m-%d')
             </if>
-            <if test="employee.nation!= null and employee.nation!= ''">
-				AND NATION=#{employee.nation}
+            <if test="empInfoDto.nation!= null and empInfoDto.nation!= ''">
+				AND NATION=#{empInfoDto.nation}
             </if>
-            <if test="employee.married!= null and employee.married!= ''">
-				AND MARRIED=#{employee.married}
+            <if test="empInfoDto.married!= null and empInfoDto.married!= ''">
+				AND MARRIED=#{empInfoDto.married}
             </if>
-            <if test="employee.phoneNo!= null and employee.phoneNo!= ''">
-				AND PHONE_NO=#{employee.phoneNo}
+            <if test="empInfoDto.phoneNo!= null and empInfoDto.phoneNo!= ''">
+				AND PHONE_NO=#{empInfoDto.phoneNo}
             </if>
-            <if test="employee.mobileNo!= null and employee.mobileNo!= ''">
-				AND MOBILE_NO=#{employee.mobileNo}
+            <if test="empInfoDto.mobileNo!= null and empInfoDto.mobileNo!= ''">
+				AND MOBILE_NO=#{empInfoDto.mobileNo}
             </if>
-            <if test="employee.email!= null and employee.email!= ''">
-				AND EMAIL=#{employee.email}
+            <if test="empInfoDto.email!= null and empInfoDto.email!= ''">
+				AND EMAIL=#{empInfoDto.email}
             </if>
-            <if test="employee.nativePlace!= null and employee.nativePlace!= ''">
-				AND NATIVE_PLACE=#{employee.nativePlace}
+            <if test="empInfoDto.nativePlace!= null and empInfoDto.nativePlace!= ''">
+				AND NATIVE_PLACE=#{empInfoDto.nativePlace}
             </if>
-            <if test="employee.zipCode!= null and employee.zipCode!= ''">
-				AND ZIP_CODE=#{employee.zipCode}
+            <if test="empInfoDto.zipCode!= null and empInfoDto.zipCode!= ''">
+				AND ZIP_CODE=#{empInfoDto.zipCode}
             </if>
-            <if test="employee.inService!= null and employee.inService!= ''">
-				AND IN_SERVICE=#{employee.inService}
+            <if test="empInfoDto.inService!= null and empInfoDto.inService!= ''">
+				AND IN_SERVICE=#{empInfoDto.inService}
             </if>
-            <if test="employee.remark!= null and employee.remark!= ''">
-				AND REMARK=#{employee.remark}
+            <if test="empInfoDto.remark!= null and empInfoDto.remark!= ''">
+				AND REMARK=#{empInfoDto.remark}
             </if>
-            <if test="employee.createdBy!= null and employee.createdBy!= ''">
-				AND CREATED_BY=#{employee.createdBy}
+            <if test="empInfoDto.createdBy!= null and empInfoDto.createdBy!= ''">
+				AND CREATED_BY=#{empInfoDto.createdBy}
             </if>
-            <if test="employee.createdTime!= null and employee.createdTime!= ''">
-				AND CREATED_TIME=str_to_date(#{employee.createdTime},'%Y-%m-%d %H:%i:%s')
+            <if test="empInfoDto.createdTime!= null and empInfoDto.createdTime!= ''">
+				AND CREATED_TIME=str_to_date(#{empInfoDto.createdTime},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="employee.updatedBy!= null and employee.updatedBy!= ''">
-				AND UPDATED_BY=#{employee.updatedBy}
+            <if test="empInfoDto.updatedBy!= null and empInfoDto.updatedBy!= ''">
+				AND UPDATED_BY=#{empInfoDto.updatedBy}
             </if>
-            <if test="employee.updatedTime!= null and employee.updatedTime!= ''">
-				AND UPDATED_TIME=str_to_date(#{employee.updatedTime},'%Y-%m-%d %H:%i:%s')
+            <if test="empInfoDto.updatedTime!= null and empInfoDto.updatedTime!= ''">
+				AND UPDATED_TIME=str_to_date(#{empInfoDto.updatedTime},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="employee.version!= null and employee.version!= ''">
-				AND VERSION=#{employee.version}
+            <if test="empInfoDto.version!= null and empInfoDto.version!= ''">
+				AND VERSION=#{empInfoDto.version}
             </if>
         </if>
     </sql>
@@ -572,10 +603,10 @@
 		 LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ID
 		 WHERE e.ID = #{id}
 	</select>
-	<select id="listPaginationByProperty" parameterType="Employee" resultMap="EmployeeResultMapper">
+	<select id="listPaginationByProperty" parameterType="EmpInfoDto" resultMap="EmpInfoDtoResultMapper">
 		 SELECT e.ID,EMP_CODE, EMP_NAME, ID_NO,ORG_NAME,d.DUTY_NAME,UPPER_ID, UPPER_NAME,
-		 GENDER, BIRTHDAY, NATION, MARRIED, PHONE_NO,EMAIL, IN_SERVICE,e.CREATED_BY,
-		 e.CREATED_TIME FROM T_EMPLOYEE e 
+		 GENDER, BIRTHDAY, NATION, MARRIED, MOBILE_NO,EMAIL, IN_SERVICE,e.CREATED_BY,
+		 e.CREATED_TIME, e.UPDATED_BY,e.UPDATED_TIME FROM T_EMPLOYEE e 
 		 LEFT JOIN T_DUTY d ON d.ID = e.DUTY_ID
 		 LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ID
 		 WHERE 1=1

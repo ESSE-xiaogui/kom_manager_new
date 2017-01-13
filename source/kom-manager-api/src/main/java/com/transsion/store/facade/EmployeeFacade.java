@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.Employee;
+import com.transsion.store.dto.EmpInfoDto;
 import com.transsion.store.dto.EmpResponseDto;
 import com.transsion.store.dto.EmpUserDto;
 import com.shangkang.core.bo.Pagination;
@@ -101,7 +102,7 @@ public interface EmployeeFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Employee> listPaginationByProperty(Pagination<Employee> pagination, Employee employee)
+	public Pagination<EmpInfoDto> listPaginationByProperty(Pagination<EmpInfoDto> pagination, EmpInfoDto empInfoDto)
 			throws ServiceException;
 
 	/**

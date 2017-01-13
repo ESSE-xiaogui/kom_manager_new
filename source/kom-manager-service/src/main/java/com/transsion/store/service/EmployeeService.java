@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.Employee;
+import com.transsion.store.dto.EmpInfoDto;
 import com.transsion.store.dto.EmpResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
@@ -75,10 +76,10 @@ public class EmployeeService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Employee> listPaginationByProperty(Pagination<Employee> pagination, Employee employee)
+	public Pagination<EmpInfoDto> listPaginationByProperty(Pagination<EmpInfoDto> pagination, EmpInfoDto empInfoDto)
 			throws ServiceException
 	{
-		List<Employee> list = employeeMapper.listPaginationByProperty(pagination, employee, pagination.getOrderBy());
+		List<EmpInfoDto> list = employeeMapper.listPaginationByProperty(pagination, empInfoDto, pagination.getOrderBy());
 		
 		pagination.setResultList(list);
 		

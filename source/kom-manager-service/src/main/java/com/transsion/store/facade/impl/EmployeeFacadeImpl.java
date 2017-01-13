@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.Employee;
+import com.transsion.store.dto.EmpInfoDto;
 import com.transsion.store.dto.EmpResponseDto;
 import com.transsion.store.dto.EmpUserDto;
 import com.shangkang.core.bo.Pagination;
@@ -79,10 +80,10 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Employee> listPaginationByProperty(Pagination<Employee> pagination, Employee employee)
+	public Pagination<EmpInfoDto> listPaginationByProperty(Pagination<EmpInfoDto> pagination, EmpInfoDto empInfoDto)
 			throws ServiceException
 	{
-		return employeeService.listPaginationByProperty(pagination, employee);
+		return employeeService.listPaginationByProperty(pagination, empInfoDto);
 	}
 
 	/**

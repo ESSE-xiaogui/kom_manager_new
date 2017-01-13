@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.transsion.store.bo.Employee;
+import com.transsion.store.dto.EmpInfoDto;
 import com.transsion.store.dto.EmpResponseDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
@@ -29,7 +30,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface EmployeeMapper extends GenericIBatisMapper<Employee, java.lang.Long> {
 
-    public List<Employee> listPaginationByProperty(Pagination<Employee> pagination, @Param("employee")Employee employee, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<EmpInfoDto> listPaginationByProperty(Pagination<EmpInfoDto> pagination, @Param("empInfoDto")EmpInfoDto empInfoDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
 
 	public List<EmpResponseDto> getEmpInfo(String empName)throws DataAccessFailureException;
 
