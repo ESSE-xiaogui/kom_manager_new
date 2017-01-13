@@ -24,6 +24,7 @@ import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.UserDto;
 import com.transsion.store.dto.UserInfoDto;
+import com.transsion.store.dto.UserListDto;
 import com.transsion.store.dto.UserResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
@@ -81,10 +82,10 @@ public class UserFacadeImpl implements UserFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<User> listPaginationByProperty(Pagination<User> pagination, User user)
+	public Pagination<UserListDto> listPaginationByProperty(Pagination<UserListDto> pagination, UserListDto userListDto)
 			throws ServiceException
 	{
-		return userService.listPaginationByProperty(pagination, user);
+		return userService.listPaginationByProperty(pagination, userListDto);
 	}
 
 	/**

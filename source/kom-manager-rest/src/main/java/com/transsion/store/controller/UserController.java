@@ -21,6 +21,7 @@ import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.UserDto;
 import com.transsion.store.dto.UserInfoDto;
+import com.transsion.store.dto.UserListDto;
 import com.transsion.store.dto.UserResponseDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.UserFacade;
@@ -77,9 +78,9 @@ public class UserController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<User> listPgUser(RequestModel<User> requestModel) throws ServiceException
+	public Pagination<UserListDto> listPgUser(RequestModel<UserListDto> requestModel) throws ServiceException
 	{
-		Pagination<User> pagination = new Pagination<User>();
+		Pagination<UserListDto> pagination = new Pagination<UserListDto>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());

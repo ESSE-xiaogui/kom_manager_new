@@ -73,7 +73,7 @@ public class EmployeeManager {
 		/**
 		 * 组织机构停用 不能绑定员工
 		 * */
-		if(UtilHelper.isEmpty(org.getIsInactive().equals(ConstantUtil.STATUS_TWO))){
+		if(org.getIsInactive().equals(ConstantUtil.STATUS_TWO)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ORG_ISINACTIVE);
 		}
 		employee.setCreatedBy(userContext.getUserCode());

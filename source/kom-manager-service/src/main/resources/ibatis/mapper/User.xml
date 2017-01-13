@@ -54,6 +54,35 @@
 		<result column="VERSION" property="version"/>
 	</resultMap>
 	
+	<resultMap id="UserListDtoResultMapper" type="UserListDto">
+		<result column="ID" property="id"/>
+		<result column="USER_CODE" property="userCode"/>
+		<result column="ROLE_NAME" property="roleName"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="EMP_CODE" property="empCode"/>
+		<result column="PASSWORD" property="password"/>
+		<result column="DUTY_NAME" property="dutyName"/>
+		<result column="GENDER" property="gender"/>
+		<result column="NATION" property="nation"/>
+		<result column="MARRIED" property="married"/>
+		<result column="ID_NO" property="idNo"/>
+		<result column="BIRTHDAY" property="birthday"/>
+		<result column="EMAIL" property="email"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="ORG_NAME" property="orgName"/>
+		<result column="MOBILE_NO" property="mobileNo"/>
+		<result column="UPPER_ID" property="upperId"/>
+		<result column="UPPER_NAME" property="upperName"/>
+		<result column="LAST_LOGIN" property="lastLogin"/>
+		<result column="IN_SERVICE" property="inService"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+	</resultMap>
+	
 	<resultMap id="UserDtoResultMapper" type="UserDto">
 		<result column="ID" property="id"/>
 		<result column="USER_CODE" property="userCode"/>
@@ -272,66 +301,84 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="user != null">
-            <if test="user.id!= null and user.id!= ''">
-				AND ID=#{user.id}
+		<if test="userListDto != null">
+            <if test="userListDto.id!= null and userListDto.id!= ''">
+				AND u.ID=#{userListDto.id}
             </if>
-            <if test="user.userId!= null and user.userId!= ''">
-				AND USER_ID=#{user.userId}
+            <if test="userListDto.userCode!= null and userListDto.userCode!= ''">
+				AND u.USER_CODE=#{userListDto.userCode}
             </if>
-            <if test="user.userCode!= null and user.userCode!= ''">
-				AND USER_CODE=#{user.userCode}
+            <if test="userListDto.roleName!= null and userListDto.roleName!= ''">
+				AND r.ROLE_NAME=#{userListDto.roleName}
             </if>
-            <if test="user.userName!= null and user.userName!= ''">
-				AND USER_NAME=#{user.userName}
+            <if test="userListDto.empCode!= null and userListDto.empCode!= ''">
+				AND e.EMP_CODE=#{userListDto.empCode}
             </if>
-            <if test="user.empId!= null and user.empId!= ''">
-				AND EMP_ID=#{user.empId}
+            <if test="userListDto.empName!= null and userListDto.empName!= ''">
+				AND e.EMP_NAME=#{userListDto.empName}
             </if>
-            <if test="user.companyId!= null and user.companyId!= ''">
-				AND COMPANY_ID=#{user.companyId}
+            <if test="userListDto.password!= null and userListDto.password!= ''">
+				AND u.PASSWORD=#{userListDto.password}
             </if>
-            <if test="user.password!= null and user.password!= ''">
-				AND PASSWORD=#{user.password}
+            <if test="userListDto.dutyName!= null and userListDto.dutyName!= ''">
+				AND d.DUTY_NAME=#{userListDto.dutyName}
             </if>
-            <if test="user.userCategory!= null and user.userCategory!= ''">
-				AND USER_CATEGORY=#{user.userCategory}
+            <if test="userListDto.gender!= null and userListDto.gender!= ''">
+				AND e.GENDER=#{userListDto.gender}
             </if>
-            <if test="user.forbiddenTime!= null and user.forbiddenTime!= ''">
-				AND FORBIDDEN_TIME=str_to_date(#{user.forbiddenTime},'%Y-%m-%d %H:%i:%s')
+            <if test="userListDto.nation!= null and userListDto.nation!= ''">
+				AND e.NATION=#{userListDto.nation}
             </if>
-            <if test="user.pwdUpdated!= null and user.pwdUpdated!= ''">
-				AND PWD_UPDATED=str_to_date(#{user.pwdUpdated},'%Y-%m-%d %H:%i:%s')
+            <if test="userListDto.married!= null and userListDto.married!= ''">
+				AND e.MARRIED=#{userListDto.married}
             </if>
-            <if test="user.loginTimes!= null and user.loginTimes!= ''">
-				AND LOGIN_TIMES=#{user.loginTimes}
+            <if test="userListDto.idNo!= null and userListDto.idNo!= ''">
+				AND e.ID_NO=#{userListDto.idNo}
             </if>
-            <if test="user.lastLogin!= null and user.lastLogin!= ''">
-				AND LAST_LOGIN=str_to_date(#{user.lastLogin},'%Y-%m-%d %H:%i:%s')
+            <if test="userListDto.birthday!= null and userListDto.birthday!= ''">
+				AND e.BIRTHDAY=#{userListDto.birthday}
             </if>
-            <if test="user.isOnline!= null and user.isOnline!= ''">
-				AND IS_ONLINE=#{user.isOnline}
+            <if test="userListDto.email!= null and userListDto.email!= ''">
+				AND e.EMAIL=#{userListDto.email}
             </if>
-            <if test="user.isInactive!= null and user.isInactive!= ''">
-				AND IS_INACTIVE=#{user.isInactive}
+            <if test="userListDto.companyId!= null and userListDto.companyId!= ''">
+				AND e.COMPANY_ID=#{userListDto.companyId}
             </if>
-            <if test="user.remark!= null and user.remark!= ''">
-				AND REMARK=#{user.remark}
+             <if test="userListDto.lastLogin!= null and userListDto.lastLogin!= ''">
+				AND u.LAST_LOGIN=str_to_date(#{userListDto.lastLogin},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="user.createdBy!= null and user.createdBy!= ''">
-				AND CREATED_BY=#{user.createdBy}
+            <if test="userListDto.orgName!= null and userListDto.orgName!= ''">
+				AND o.ORG_NAME=#{userListDto.orgName}
             </if>
-            <if test="user.createdTime!= null and user.createdTime!= ''">
-				AND CREATED_TIME=str_to_date(#{user.createdTime},'%Y-%m-%d %H:%i:%s')
+            <if test="userListDto.mobileNo!= null and userListDto.mobileNo!= ''">
+				AND e.MOBILE_NO=#{userListDto.mobileNo}
             </if>
-            <if test="user.updatedBy!= null and user.updatedBy!= ''">
-				AND UPDATED_BY=#{user.updatedBy}
+            <if test="userListDto.upperId!= null and userListDto.upperId!= ''">
+				AND e.UPPER_ID=#{userListDto.upperId}
             </if>
-            <if test="user.updatedTime!= null and user.updatedTime!= ''">
-				AND UPDATED_TIME=str_to_date(#{user.updatedTime},'%Y-%m-%d %H:%i:%s')
+            <if test="userListDto.upperName!= null and userListDto.upperName!= ''">
+				AND e.UPPER_NAME=#{userListDto.upperName}
             </if>
-            <if test="user.version!= null and user.version!= ''">
-				AND VERSION=#{user.version}
+            <if test="userListDto.inService!= null and userListDto.inService!= ''">
+				AND e.IN_SERVICE=#{userListDto.inService}
+            </if>
+            <if test="userListDto.isInactive!= null and userListDto.isInactive!= ''">
+				AND u.IS_INACTIVE=#{userListDto.isInactive}
+            </if>
+             <if test="userListDto.remark!= null and userListDto.remark!= ''">
+				AND REMARK=#{userListDto.remark}
+            </if>
+            <if test="userListDto.createdBy!= null and userListDto.createdBy!= ''">
+				AND CREATED_BY=#{userListDto.createdBy}
+            </if>
+            <if test="userListDto.createdTime!= null and userListDto.createdTime!= ''">
+				AND CREATED_TIME=str_to_date(#{userListDto.createdTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="userListDto.updatedBy!= null and userListDto.updatedBy!= ''">
+				AND UPDATED_BY=#{userListDto.updatedBy}
+            </if>
+            <if test="userListDto.updatedTime!= null and userListDto.updatedTime!= ''">
+				AND UPDATED_TIME=str_to_date(#{userListDto.updatedTime},'%Y-%m-%d %H:%i:%s')
             </if>
         </if>
     </sql>
@@ -348,64 +395,82 @@
 	<sql id="orderBy">
 		<choose>
         	<when test="key == 'id'">
-				ID ${value}
-            </when>
-        	<when test="key == 'userId'">
-				USER_ID ${value}
+				u.ID ${value}
             </when>
         	<when test="key == 'userCode'">
-				USER_CODE ${value}
+				u.USER_CODE ${value}
             </when>
-        	<when test="key == 'userName'">
-				USER_NAME ${value}
+            <when test="key == 'roleName'">
+				r.ROLE_NAME ${value}
             </when>
-        	<when test="key == 'empId'">
-				EMP_ID ${value}
+            <when test="key == 'empCode'">
+				e.EMP_CODE ${value}
             </when>
-        	<when test="key == 'companyId'">
-				COMPANY_ID ${value}
+        	<when test="key == 'empName'">
+				e.EMP_NAME ${value}
+            </when>
+        	<when test="key == 'dutyName'">
+				d.DUTY_NAME ${value}
+            </when>
+        	<when test="key == 'gender'">
+				e.GENDER ${value}
+            </when>
+            <when test="key == 'nation'">
+				e.NATION ${value}
+            </when>
+            <when test="key == 'married'">
+				e.MARRIED ${value}
+            </when>
+            <when test="key == 'idNo'">
+				e.ID_NO ${value}
+            </when>
+            <when test="key == 'birthday'">
+				e.BIRTHDAY ${value}
+            </when>
+            <when test="key == 'companyId'">
+				e.COMPANY_ID ${value}
+            </when>
+            <when test="key == 'email'">
+				e.EMAIL ${value}
+            </when>
+            <when test="key == 'orgName'">
+				o.ORG_NAME ${value}
+            </when>
+            <when test="key == 'mobileNo'">
+				e.MOBILE_NO ${value}
+            </when>
+            <when test="key == 'upperId'">
+				e.UPPER_ID ${value}
+            </when>
+            <when test="key == 'upperName'">
+				e.UPPER_NAME ${value}
+            </when>
+            <when test="key == 'inService'">
+				e.IN_SERVICE ${value}
             </when>
         	<when test="key == 'password'">
-				PASSWORD ${value}
-            </when>
-        	<when test="key == 'userCategory'">
-				USER_CATEGORY ${value}
-            </when>
-        	<when test="key == 'forbiddenTime'">
-				FORBIDDEN_TIME ${value}
-            </when>
-        	<when test="key == 'pwdUpdated'">
-				PWD_UPDATED ${value}
-            </when>
-        	<when test="key == 'loginTimes'">
-				LOGIN_TIMES ${value}
+				u.PASSWORD ${value}
             </when>
         	<when test="key == 'lastLogin'">
-				LAST_LOGIN ${value}
-            </when>
-        	<when test="key == 'isOnline'">
-				IS_ONLINE ${value}
+				u.LAST_LOGIN ${value}
             </when>
         	<when test="key == 'isInactive'">
-				IS_INACTIVE ${value}
+				u.IS_INACTIVE ${value}
             </when>
-        	<when test="key == 'remark'">
-				REMARK ${value}
+            <when test="key == 'remark'">
+				u.REMARK ${value}
             </when>
         	<when test="key == 'createdBy'">
-				CREATED_BY ${value}
+				u.CREATED_BY ${value}
             </when>
         	<when test="key == 'createdTime'">
-				CREATED_TIME ${value}
+				u.CREATED_TIME ${value}
             </when>
         	<when test="key == 'updatedBy'">
-				UPDATED_BY ${value}
+				u.UPDATED_BY ${value}
             </when>
         	<when test="key == 'updatedTime'">
-				UPDATED_TIME ${value}
-            </when>
-        	<when test="key == 'version'">
-				VERSION ${value}
+				u.UPDATED_TIME ${value}
             </when>
 		</choose>
 	</sql>
@@ -500,15 +565,22 @@
 		FROM T_USER WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-		<select id="listPaginationByProperty" parameterType="User" resultMap="UserResultMapper">
-		SELECT u.ID,u.USER_CODE,u.PASSWORD,e.EMP_CODE,e.EMP_NAME,d.DUTY_NAME,GENDER,
-		NATION,MARRIED,ID_NO,BIRTHDAY,e.COMPANY_ID,EMAIL,LAST_LOGIN,o.ORG_NAME,e.MOBILE_NO,
-		e.UPPER_ID,e.UPPER_NAME,e.IN_SERVICE,u.IS_INACTIVE FROM T_USER u	
+	<select id="listPaginationByProperty" parameterType="UserListDto"
+		resultMap="UserListDtoResultMapper">
+		SELECT
+		u.ID,u.USER_CODE,u.PASSWORD,r.ROLE_NAME,e.EMP_CODE,e.EMP_NAME,d.DUTY_NAME,e.GENDER,
+		e.NATION,e.MARRIED,e.ID_NO,e.BIRTHDAY,e.COMPANY_ID,e.EMAIL,u.LAST_LOGIN,o.ORG_NAME,e.MOBILE_NO,
+		e.UPPER_ID,e.UPPER_NAME,e.IN_SERVICE,u.IS_INACTIVE,u.REMARK,u.CREATED_BY,u.CREATED_TIME,u.UPDATED_BY,u.UPDATED_TIME
+		FROM T_USER u
+		LEFT JOIN T_USER_ROLE ur ON ur.USER_ID = u.ID
+		LEFT JOIN T_SYSTEM_ROLE r ON r.ROLE_ID = ur.ROLE_ID
 		LEFT JOIN T_EMPLOYEE e ON u.ID = e.U_ID
-		LEFT JOIN T_DUTY d ON e.DUTY_ID = d.ID
+		LEFT JOIN T_DUTY d
+		ON e.DUTY_ID =	d.ID
 		LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ID
-    	<include refid="commonConditionByPrefix"/>
-    	<include refid="orderByClause" />
+		WHERE 1=1
+		<include refid="commonConditionByPrefix" />
+		<include refid="orderByClause" />
 	</select>
 	<select id="findByCount" parameterType="User" resultType="int">
 		SELECT count(1) AS totalcount FROM T_USER WHERE 1=1 

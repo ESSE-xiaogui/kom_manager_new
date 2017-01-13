@@ -22,6 +22,7 @@ import java.util.Map;
 import com.transsion.store.bo.User;
 import com.transsion.store.dto.UserDto;
 import com.transsion.store.dto.UserInfoDto;
+import com.transsion.store.dto.UserListDto;
 import com.transsion.store.dto.UserResponseDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
@@ -30,7 +31,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper extends GenericIBatisMapper<User, java.lang.Long> {
 
-    public List<User> listPaginationByProperty(Pagination<User> pagination, @Param("user")User user, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<UserListDto> listPaginationByProperty(Pagination<UserListDto> pagination, @Param("userListDto")UserListDto userListDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
    
     public UserDto findByName(@Param("userCode")String userCode) throws DataAccessFailureException;
 	
