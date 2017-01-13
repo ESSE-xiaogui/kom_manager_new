@@ -268,4 +268,9 @@
 		SELECT count(1) AS totalcount FROM T_COMPANY WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
+	<select id="findAll" resultMap="CompanyResultMapper">
+		SELECT
+		<include refid="commonColumns" />
+		FROM T_COMPANY
+	</select>
 </mapper>

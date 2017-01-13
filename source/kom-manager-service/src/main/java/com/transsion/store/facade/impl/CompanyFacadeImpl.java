@@ -145,4 +145,7 @@ public class CompanyFacadeImpl implements CompanyFacade {
 	{
 		return companyService.findByCount(company);
 	}
+	public List<Company> findAll() throws ServiceException{
+		return companyService.findAll();
+	}
 }

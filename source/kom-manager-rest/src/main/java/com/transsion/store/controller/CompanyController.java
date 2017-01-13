@@ -110,4 +110,14 @@ public class CompanyController extends AbstractController{
 	{
 		companyFacade.update(company);
 	}
+	
+	/**
+	 * 查询所有事业部名称
+	 * */
+	@GET
+	@Path("findAll")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<Company> findAll() throws ServiceException{
+		return companyFacade.findAll();
+	}
 }

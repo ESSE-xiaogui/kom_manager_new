@@ -23,9 +23,11 @@ import com.transsion.store.bo.Company;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface CompanyMapper extends GenericIBatisMapper<Company, java.lang.Long> {
 
     public List<Company> listPaginationByProperty(Pagination<Company> pagination, @Param("company")Company company, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<Company> findAll() throws DataAccessFailureException;
 }

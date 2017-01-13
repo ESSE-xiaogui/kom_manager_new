@@ -148,4 +148,7 @@ public class CompanyService {
 	{
 		return companyMapper.findByCount(company);
 	}
+	public List<Company> findAll() throws ServiceException{
+		return companyMapper.findAll();
+	}
 }
