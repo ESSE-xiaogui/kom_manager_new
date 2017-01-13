@@ -5,18 +5,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
+import com.transsion.store.bo.ConstantUtil;
 import com.transsion.store.bo.Duty;
 import com.transsion.store.bo.Employee;
+import com.transsion.store.bo.Organization;
 import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.EmpResponseDto;
 import com.transsion.store.dto.EmpUserDto;
 import com.transsion.store.dto.OrganizationDto;
-import com.transsion.store.dto.UserDto;
 import com.transsion.store.mapper.DutyMapper;
 import com.transsion.store.mapper.EmployeeMapper;
 import com.transsion.store.mapper.OrganizationMapper;
-import com.transsion.store.mapper.UserMapper;
 import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.EmployeeService;
 import com.transsion.store.service.SystemDateService;
@@ -60,11 +60,26 @@ public class EmployeeManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+		/**
+		 * 新建员工必须绑定组织机构,组织机构ID不能为空
+		 * */
+		if(UtilHelper.isEmpty(employee.getOrgId())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		employee.setCreatedBy(userContext.getUser().getUserCode());
+		Organization org = organizationMapper.getByPK(new Long(employee.getOrgId()));
+		if(UtilHelper.isEmpty(org)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ORG_ISEXIST);
+		}
+		/**
+		 * 组织机构停用 不能绑定员工
+		 * */
+		if(UtilHelper.isEmpty(org.getIsInactive().equals(ConstantUtil.STATUS_TWO))){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ORG_ISINACTIVE);
+		}
+		employee.setCreatedBy(userContext.getUserCode());
 		employee.setCreatedTime(systemDateService.getCurrentDate());
+		employee.setUpdatedBy(userContext.getUserCode());
+		employee.setUpdatedTime(systemDateService.getCurrentDate());
 		employee.setBirthday(employee.getBirthday().equals("")?null:employee.getBirthday());
 		employee.setCompanyId(userContext.getUser().getCompanyId());
 		employeeService.save(employee);
@@ -115,8 +130,9 @@ public class EmployeeManager {
 		formerEmp.setUpperName(employee.getUpperName());
 		formerEmp.setUpperId(employee.getUpperId());
 		formerEmp.setInService(employee.getInService());
-
-		formerEmp.setUpdatedBy(userContext.getUser().getUserCode());
+		formerEmp.setCreatedBy(userContext.getUserCode());
+		formerEmp.setCreatedTime(systemDateService.getCurrentDate());
+		formerEmp.setUpdatedBy(userContext.getUserCode());
 		formerEmp.setUpdatedTime(systemDateService.getCurrentDate());
 		employeeService.update(formerEmp);
 		EmpResponseDto emp = new EmpResponseDto();
