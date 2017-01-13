@@ -1,24 +1,8 @@
-/**
- * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
- *
- * No part of this publication may be reproduced, stored in a retrieval system,
- * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
- * recording, or otherwise, without the prior written permission of Liuzh.
- *
- * Created By: Liuzh
- * Created On: 2016-11-18 15:56:36
- *
- * Amendment History:
- * 
- * Amended By       Amended On      Amendment Description
- * ------------     -----------     ---------------------------------------------
- *
- **/
-package com.transsion.store.bo;
+package com.transsion.store.dto;
 
 import com.shangkang.core.bo.Model;
 
-public class Organization extends Model{
+public class OrgInfoDto extends Model{
 
 	/**
 	 * 
@@ -40,6 +24,7 @@ public class Organization extends Model{
 	  */
 	private java.lang.String orgName;
 	
+	private java.lang.String pOrgName;
 
 	/**
 	  *	
@@ -136,6 +121,14 @@ public class Organization extends Model{
 		this.orgName = orgName;
 	}
 	
+	public java.lang.String getpOrgName() {
+		return pOrgName;
+	}
+
+	public void setpOrgName(java.lang.String pOrgName) {
+		this.pOrgName = pOrgName;
+	}
+
 	/**
 	  *	
 	  */
@@ -290,10 +283,11 @@ public class Organization extends Model{
 
 	@Override
 	public String toString() {
-		return "Organization [id=" + id + ", orgId=" + orgId + ", orgName=" + orgName + ", companyId=" + companyId
-						+ ", parentId=" + parentId + ", dutyName=" + dutyName + ", isInactive=" + isInactive
-						+ ", remark=" + remark + ", createdBy=" + createdBy + ", createdTime=" + createdTime
-						+ ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime + ", version=" + version + "]";
+		return "Organization [id=" + id + ", orgId=" + orgId + ", orgName=" + orgName + ", pOrgName=" + pOrgName
+						+ ", companyId=" + companyId + ", parentId=" + parentId + ", dutyName=" + dutyName
+						+ ", isInactive=" + isInactive + ", remark=" + remark + ", createdBy=" + createdBy
+						+ ", createdTime=" + createdTime + ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime
+						+ ", version=" + version + "]";
 	}
 
 

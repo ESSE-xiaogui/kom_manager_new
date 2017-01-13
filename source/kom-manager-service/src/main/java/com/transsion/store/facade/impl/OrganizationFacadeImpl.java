@@ -20,6 +20,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.transsion.store.bo.Organization;
+import com.transsion.store.dto.OrgInfoDto;
 import com.transsion.store.dto.OrganizationDto;
 import com.transsion.store.dto.OrganizationResponseDto;
 import com.transsion.store.dto.OrganizationTreeDto;
@@ -80,10 +81,10 @@ public class OrganizationFacadeImpl implements OrganizationFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Organization> listPaginationByProperty(Pagination<Organization> pagination, Organization organization)
+	public Pagination<OrgInfoDto> listPaginationByProperty(Pagination<OrgInfoDto> pagination, OrgInfoDto orgInfoDto)
 			throws ServiceException
 	{
-		return organizationService.listPaginationByProperty(pagination, organization);
+		return organizationService.listPaginationByProperty(pagination, orgInfoDto);
 	}
 
 	/**

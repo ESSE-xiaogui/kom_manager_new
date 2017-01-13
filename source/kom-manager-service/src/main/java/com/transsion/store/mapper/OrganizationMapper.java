@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.transsion.store.bo.Organization;
+import com.transsion.store.dto.OrgInfoDto;
 import com.transsion.store.dto.OrganizationDto;
 import com.transsion.store.dto.OrganizationResponseDto;
 import com.transsion.store.dto.OrganizationTreeDto;
@@ -30,7 +31,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface OrganizationMapper extends GenericIBatisMapper<Organization, java.lang.Long> {
 
-    public List<Organization> listPaginationByProperty(Pagination<Organization> pagination, @Param("organization")Organization organization, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<OrgInfoDto> listPaginationByProperty(Pagination<OrgInfoDto> pagination, @Param("orgInfoDto")OrgInfoDto orgInfoDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     public OrganizationResponseDto getOrgName(@Param("orgId") Integer orgId);
     public List<OrganizationTreeDto> findOrg();
     public OrganizationDto getByPKs(@Param("id") Long id) throws DataAccessFailureException;

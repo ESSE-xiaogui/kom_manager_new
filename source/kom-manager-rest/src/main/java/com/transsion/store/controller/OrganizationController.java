@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Organization;
+import com.transsion.store.dto.OrgInfoDto;
 import com.transsion.store.dto.OrganizationDto;
 import com.transsion.store.dto.OrganizationResponseDto;
 import com.transsion.store.dto.OrganizationTreeDto;
@@ -62,9 +63,9 @@ public class OrganizationController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<Organization> listPgOrganization(RequestModel<Organization> requestModel) throws ServiceException
+	public Pagination<OrgInfoDto> listPgOrganization(RequestModel<OrgInfoDto> requestModel) throws ServiceException
 	{
-		Pagination<Organization> pagination = new Pagination<Organization>();
+		Pagination<OrgInfoDto> pagination = new Pagination<OrgInfoDto>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());

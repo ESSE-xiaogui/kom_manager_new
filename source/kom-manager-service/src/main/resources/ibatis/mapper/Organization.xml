@@ -25,6 +25,21 @@
 		<result column="PARENT_ID" property="parentId"/>
 		<result column="ORG_ID" property="orgId"/>
 		<result column="ORG_NAME" property="orgName"/>
+		<result column="DUTY_NAME" property="dutyName"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	<resultMap id="OrgInfoDtoResultMapper" type="OrgInfoDto">
+		<result column="ID" property="id"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="PARENT_ID" property="parentId"/>
+		<result column="ORG_ID" property="orgId"/>
+		<result column="ORG_NAME" property="orgName"/>
 		<result column="PORG_NAME" property="pOrgName"/>
 		<result column="DUTY_NAME" property="dutyName"/>
 		<result column="IS_INACTIVE" property="isInactive"/>
@@ -35,7 +50,6 @@
 		<result column="UPDATED_TIME" property="updatedTime"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
-	
 	<resultMap id="OrganizationDtoResultMapper" type="OrganizationTreeDto">
 		<result column="ID" property="orgId"/>
 		<result column="PARENT_ID" property="parentId"/>
@@ -149,45 +163,45 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="organization != null">
-            <if test="organization.id!= null and organization.id!= ''">
-				AND ID=#{organization.id}
+		<if test="orgInfoDto != null">
+            <if test="orgInfoDto.id!= null and orgInfoDto.id!= ''">
+				AND o1.ID=#{orgInfoDto.id}
             </if>
-            <if test="organization.orgId!= null and organization.orgId!= ''">
-				AND ORG_ID=#{organization.orgId}
+            <if test="orgInfoDto.orgId!= null and orgInfoDto.orgId!= ''">
+				AND o1.ORG_ID=#{orgInfoDto.orgId}
             </if>
-            <if test="organization.orgName!= null and organization.orgName!= ''">
-				AND ORG_NAME=#{organization.orgName}
+            <if test="orgInfoDto.orgName!= null and orgInfoDto.orgName!= ''">
+				AND o1.ORG_NAME=#{orgInfoDto.orgName}
             </if>
-            <if test="organization.companyId!= null and organization.companyId!= ''">
-				AND COMPANY_ID=#{organization.companyId}
+            <if test="orgInfoDto.companyId!= null and orgInfoDto.companyId!= ''">
+				AND o1.COMPANY_ID=#{orgInfoDto.companyId}
             </if>
-            <if test="organization.parentId!= null and organization.parentId!= ''">
-				AND PARENT_ID=#{organization.parentId}
+            <if test="orgInfoDto.parentId!= null and orgInfoDto.parentId!= ''">
+				AND o1.PARENT_ID=#{orgInfoDto.parentId}
             </if>
-             <if test="organization.dutyName!= null and organization.dutyName!= ''">
-				AND DUTY_NAME=#{organization.dutyName}
+             <if test="orgInfoDto.dutyName!= null and orgInfoDto.dutyName!= ''">
+				AND o1.DUTY_NAME=#{orgInfoDto.dutyName}
             </if>
-            <if test="organization.isInactive!= null and organization.isInactive!= ''">
-				AND IS_INACTIVE=#{organization.isInactive}
+            <if test="orgInfoDto.isInactive!= null and orgInfoDto.isInactive!= ''">
+				AND o1.IS_INACTIVE=#{orgInfoDto.isInactive}
             </if>
-            <if test="organization.remark!= null and organization.remark!= ''">
-				AND REMARK=#{organization.remark}
+            <if test="orgInfoDto.remark!= null and orgInfoDto.remark!= ''">
+				AND o1.REMARK=#{orgInfoDto.remark}
             </if>
-            <if test="organization.createdBy!= null and organization.createdBy!= ''">
-				AND CREATED_BY=#{organization.createdBy}
+            <if test="orgInfoDto.createdBy!= null and orgInfoDto.createdBy!= ''">
+				AND o1.CREATED_BY=#{orgInfoDto.createdBy}
             </if>
-            <if test="organization.createdTime!= null and organization.createdTime!= ''">
-				AND CREATED_TIME=str_to_date(#{organization.createdTime},'%Y-%m-%d %H:%i:%s')
+            <if test="orgInfoDto.createdTime!= null and orgInfoDto.createdTime!= ''">
+				AND o1.CREATED_TIME=str_to_date(#{orgInfoDto.createdTime},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="organization.updatedBy!= null and organization.updatedBy!= ''">
-				AND UPDATED_BY=#{organization.updatedBy}
+            <if test="orgInfoDto.updatedBy!= null and orgInfoDto.updatedBy!= ''">
+				AND o1.UPDATED_BY=#{orgInfoDto.updatedBy}
             </if>
-            <if test="organization.updatedTime!= null and organization.updatedTime!= ''">
-				AND UPDATED_TIME=str_to_date(#{organization.updatedTime},'%Y-%m-%d %H:%i:%s')
+            <if test="orgInfoDto.updatedTime!= null and orgInfoDto.updatedTime!= ''">
+				AND o1.UPDATED_TIME=str_to_date(#{orgInfoDto.updatedTime},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="organization.version!= null and organization.version!= ''">
-				AND VERSION=#{organization.version}
+            <if test="orgInfoDto.version!= null and orgInfoDto.version!= ''">
+				AND o1.VERSION=#{orgInfoDto.version}
             </if>
         </if>
     </sql>
@@ -318,7 +332,7 @@
 		FROM T_ORGANIZATION WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="Organization" resultMap="OrganizationResultMapper">
+	<select id="listPaginationByProperty" parameterType="OrgInfoDto" resultMap="OrgInfoDtoResultMapper">
 		SELECT o1.ID, o1.ORG_NAME, o2.ORG_NAME as PORG_NAME ,o1.COMPANY_ID, o1.DUTY_NAME, 
 		o1.IS_INACTIVE, o1.REMARK, o1.CREATED_BY, o1.CREATED_TIME, o1.UPDATED_BY, 
 		o1.UPDATED_TIME, o1.VERSION FROM T_ORGANIZATION o1
