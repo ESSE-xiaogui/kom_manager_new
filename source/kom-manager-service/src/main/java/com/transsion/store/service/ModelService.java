@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.Model;
+import com.transsion.store.dto.ModelListDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
@@ -75,21 +76,20 @@ public class ModelService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Model> listPaginationByProperty(Pagination<Model> pagination, Model model)
+	public Pagination<ModelListDto> listPaginationByProperty(Pagination<ModelListDto> pagination, ModelListDto modelListDto)
 			throws ServiceException
 	{
-		if(!UtilHelper.isEmpty(model) && !UtilHelper.isEmpty(model.getSeriesCode())){
-			if(model.getSeriesCode().equals("1")){
-				model.setSeriesCode("Smart");
-			}else if(model.getSeriesCode().equals("2")){
-				model.setSeriesCode("Feature");
-			}else if(model.getSeriesCode().equals("0")){
-				model.setSeriesCode(null);
+		if(!UtilHelper.isEmpty(modelListDto) && !UtilHelper.isEmpty(modelListDto.getSeriesCode())){
+			if(modelListDto.getSeriesCode().equals("1")){
+				modelListDto.setSeriesCode("Smart");
+			}else if(modelListDto.getSeriesCode().equals("2")){
+				modelListDto.setSeriesCode("Feature");
+			}else if(modelListDto.getSeriesCode().equals("0")){
+				modelListDto.setSeriesCode(null);
 			}
 		}
 		
-		List<Model> list = modelMapper.listPaginationByProperty(pagination, model, pagination.getOrderBy());
-		
+		List<ModelListDto> list = modelMapper.listPaginationByProperty(pagination, modelListDto, pagination.getOrderBy());
 		pagination.setResultList(list);
 		
 		return pagination;

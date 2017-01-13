@@ -21,6 +21,7 @@ import java.util.Map;
 
 import com.transsion.store.bo.Model;
 import com.transsion.store.dto.ModelDto;
+import com.transsion.store.dto.ModelListDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
@@ -28,7 +29,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface ModelMapper extends GenericIBatisMapper<Model, java.lang.Long> {
 
-    public List<Model> listPaginationByProperty(Pagination<Model> pagination, @Param("model")Model model, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<ModelListDto> listPaginationByProperty(Pagination<ModelListDto> pagination, @Param("modelListDto")ModelListDto modelListDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     public List<ModelDto> findModel (Model model) throws DataAccessFailureException;
 
 }

@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.Model;
 import com.transsion.store.dto.ModelDto;
+import com.transsion.store.dto.ModelListDto;
 import com.transsion.store.dto.ModelResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
@@ -81,10 +82,10 @@ public class ModelFacadeImpl implements ModelFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Model> listPaginationByProperty(Pagination<Model> pagination, Model model)
+	public Pagination<ModelListDto> listPaginationByProperty(Pagination<ModelListDto> pagination, ModelListDto modelListDto)
 			throws ServiceException
 	{
-		return modelService.listPaginationByProperty(pagination, model);
+		return modelService.listPaginationByProperty(pagination, modelListDto);
 	}
 
 	/**

@@ -19,6 +19,7 @@ package com.transsion.store.controller;
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Model;
 import com.transsion.store.dto.ModelDto;
+import com.transsion.store.dto.ModelListDto;
 import com.transsion.store.dto.ModelResponseDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.ModelFacade;
@@ -61,9 +62,9 @@ public class ModelController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<Model> listPgModel(RequestModel<Model> requestModel) throws ServiceException
+	public Pagination<ModelListDto> listPgModel(RequestModel<ModelListDto> requestModel) throws ServiceException
 	{
-		Pagination<Model> pagination = new Pagination<Model>();
+		Pagination<ModelListDto> pagination = new Pagination<ModelListDto>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());
