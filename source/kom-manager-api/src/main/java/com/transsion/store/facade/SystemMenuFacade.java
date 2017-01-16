@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 import com.transsion.store.bo.SystemMenu;
 import com.transsion.store.dto.MenuDto;
+import com.transsion.store.dto.SystemMenuInfo;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -99,7 +100,7 @@ public interface SystemMenuFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<SystemMenu> listPaginationByProperty(Pagination<SystemMenu> pagination, SystemMenu systemMenu)
+	public Pagination<SystemMenuInfo> listPaginationByProperty(Pagination<SystemMenuInfo> pagination, SystemMenuInfo systemMenuInfo)
 			throws ServiceException;
 	
 	/**

@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.SystemMenu;
 import com.transsion.store.dto.MenuDto;
+import com.transsion.store.dto.SystemMenuInfo;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.SystemMenuMapper;
@@ -75,16 +76,11 @@ public class SystemMenuService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<SystemMenu> listPaginationByProperty(Pagination<SystemMenu> pagination, SystemMenu systemMenu)
+	public Pagination<SystemMenuInfo> listPaginationByProperty(Pagination<SystemMenuInfo> pagination, SystemMenuInfo systemMenuInfo)
 			throws ServiceException
 	{
-		List<SystemMenu> list = systemMenuMapper.listPaginationByProperty(pagination, systemMenu, pagination.getOrderBy());
+		List<SystemMenuInfo> list = systemMenuMapper.listPaginationByProperty(pagination, systemMenuInfo, pagination.getOrderBy());
 		
-		for(SystemMenu sm:list){
-			Long pid = sm.getParentMenuId();
-			if(0!=pid)
-				sm.setParentMenuName(systemMenuMapper.getByPK(pid).getMenuName());
-		}
 		pagination.setResultList(list);
 		
 		return pagination;

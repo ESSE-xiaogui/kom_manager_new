@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.SystemMenu;
 import com.transsion.store.dto.MenuDto;
+import com.transsion.store.dto.SystemMenuInfo;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.SystemMenuFacade;
@@ -79,10 +80,10 @@ public class SystemMenuFacadeImpl implements SystemMenuFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<SystemMenu> listPaginationByProperty(Pagination<SystemMenu> pagination, SystemMenu systemMenu)
+	public Pagination<SystemMenuInfo> listPaginationByProperty(Pagination<SystemMenuInfo> pagination, SystemMenuInfo systemMenuInfo)
 			throws ServiceException
 	{
-		return systemMenuService.listPaginationByProperty(pagination, systemMenu);
+		return systemMenuService.listPaginationByProperty(pagination, systemMenuInfo);
 	}
 
 	/**

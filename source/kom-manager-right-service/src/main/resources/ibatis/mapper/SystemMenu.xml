@@ -35,6 +35,23 @@
 		<result column="UPDATE_TIME" property="updateTime"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
+	<resultMap id="SystemMenuInfoResultMapper" type="SystemMenuInfo">
+		<result column="MENU_ID" property="menuId"/>
+		<result column="MENU_CODE" property="menuCode"/>
+		<result column="MENU_NAME" property="menuName"/>
+		<result column="MENU_ORDER" property="menuOrder"/>
+		<result column="PARENT_MENU_ID" property="parentMenuId"/>
+		<result column="PMENU_NAME" property="parentMenuName"/>
+		<result column="MENU_ICON" property="menuIcon"/>
+		<result column="PAGE_URL" property="pageUrl"/>
+		<result column="USABLE" property="usable"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
 	<resultMap id="MenuDtoResultMapper" type="MenuDto">
 		<result column="MENU_ID" property="menuId"/>
 		<result column="MENU_CODE" property="menuCode"/>
@@ -149,48 +166,48 @@
 	</sql>
 	
 	<sql id="commonConditionByPrefix">
-		<if test="systemMenu != null">
-            <if test="systemMenu.menuId!= null and systemMenu.menuId!= ''">
-				AND MENU_ID=#{systemMenu.menuId}
+		<if test="systemMenuInfo!= null">
+            <if test="systemMenuInfo.menuId!= null and systemMenuInfo.menuId!= ''">
+				AND m1.MENU_ID=#{systemMenuInfo.menuId}
             </if>
-            <if test="systemMenu.menuCode!= null and systemMenu.menuCode!= ''">
-				AND MENU_CODE=#{systemMenu.menuCode}
+            <if test="systemMenuInfo.menuCode!= null and systemMenuInfo.menuCode!= ''">
+				AND m1.MENU_CODE=#{systemMenuInfo.menuCode}
             </if>
-            <if test="systemMenu.menuName!= null and systemMenu.menuName!= ''">
-				AND MENU_NAME=#{systemMenu.menuName}
+            <if test="systemMenuInfo.menuName!= null and systemMenuInfo.menuName!= ''">
+				AND m1.MENU_NAME=#{systemMenuInfo.menuName}
             </if>
-            <if test="systemMenu.menuOrder!= null and systemMenu.menuOrder!= ''">
-				AND MENU_ORDER=#{systemMenu.menuOrder}
+            <if test="systemMenuInfo.menuOrder!= null and systemMenuInfo.menuOrder!= ''">
+				AND m1.MENU_ORDER=#{systemMenuInfo.menuOrder}
             </if>
-            <if test="systemMenu.parentMenuId!= null and systemMenu.parentMenuId!= ''">
-				AND PARENT_MENU_ID=#{systemMenu.parentMenuId}
+            <if test="systemMenuInfo.parentMenuId!= null and systemMenuInfo.parentMenuId!= ''">
+				AND m1.PARENT_MENU_ID=#{systemMenuInfo.parentMenuId}
             </if>
-            <if test="systemMenu.menuIcon!= null and systemMenu.menuIcon!= ''">
-				AND MENU_ICON=#{systemMenu.menuIcon}
+            <if test="systemMenuInfo.menuIcon!= null and systemMenuInfo.menuIcon!= ''">
+				AND m1.MENU_ICON=#{systemMenuInfo.menuIcon}
             </if>
-            <if test="systemMenu.pageUrl!= null and systemMenu.pageUrl!= ''">
-				AND PAGE_URL=#{systemMenu.pageUrl}
+            <if test="systemMenuInfo.pageUrl!= null and systemMenuInfo.pageUrl!= ''">
+				AND m1.PAGE_URL=#{systemMenuInfo.pageUrl}
             </if>
-            <if test="systemMenu.usable!= null and systemMenu.usable!= ''">
-				AND USABLE=#{systemMenu.usable}
+            <if test="systemMenuInfo.usable!= null and systemMenuInfo.usable!= ''">
+				AND m1.USABLE=#{systemMenuInfo.usable}
             </if>
-            <if test="systemMenu.remark!= null and systemMenu.remark!= ''">
-				AND REMARK=#{systemMenu.remark}
+            <if test="systemMenuInfo.remark!= null and systemMenuInfo.remark!= ''">
+				AND m1.REMARK=#{systemMenuInfo.remark}
             </if>
-            <if test="systemMenu.createdBy!= null and systemMenu.createdBy!= ''">
-				AND CREATED_BY=#{systemMenu.createdBy}
+            <if test="systemMenuInfo.createdBy!= null and systemMenuInfo.createdBy!= ''">
+				AND m1.CREATED_BY=#{systemMenuInfo.createdBy}
             </if>
-            <if test="systemMenu.createTime!= null and systemMenu.createTime!= ''">
-				AND CREATE_TIME=str_to_date(#{systemMenu.createTime},'%Y-%m-%d %H:%i:%s')
+            <if test="systemMenuInfo.createTime!= null and systemMenuInfo.createTime!= ''">
+				AND m1.CREATE_TIME=str_to_date(#{systemMenuInfo.createTime},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="systemMenu.updatedBy!= null and systemMenu.updatedBy!= ''">
-				AND UPDATED_BY=#{systemMenu.updatedBy}
+            <if test="systemMenuInfo.updatedBy!= null and systemMenuInfo.updatedBy!= ''">
+				AND m1.UPDATED_BY=#{systemMenuInfo.updatedBy}
             </if>
-            <if test="systemMenu.updateTime!= null and systemMenu.updateTime!= ''">
-				AND UPDATE_TIME=str_to_date(#{systemMenu.updateTime},'%Y-%m-%d %H:%i:%s')
+            <if test="systemMenuInfo.updateTime!= null and systemMenuInfo.updateTime!= ''">
+				AND m1.UPDATE_TIME=str_to_date(#{systemMenuInfo.updateTime},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="systemMenu.version!= null and systemMenu.version!= ''">
-				AND VERSION=#{systemMenu.version}
+            <if test="systemMenuInfo.version!= null and systemMenuInfo.version!= ''">
+				AND m1.VERSION=#{systemMenuInfo.version}
             </if>
         </if>
     </sql>
@@ -319,10 +336,13 @@
 		FROM T_SYSTEM_MENU WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="SystemMenu" resultMap="SystemMenuResultMapper">
-		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_SYSTEM_MENU WHERE 1=1
+	<select id="listPaginationByProperty" parameterType="SystemMenuInfo" resultMap="SystemMenuInfoResultMapper">
+		SELECT m1.MENU_ID, m1.MENU_CODE, m1.MENU_NAME,m2.MENU_NAME AS PMENU_NAME,m1.MENU_ORDER
+		, m1.PARENT_MENU_ID, m1.MENU_ICON, m1.PAGE_URL, m1.USABLE, m1.REMARK, m1.CREATED_BY
+		, m1.CREATE_TIME, m1.UPDATED_BY, m1.UPDATE_TIME, m1.VERSION
+		FROM T_SYSTEM_MENU m1
+		LEFT JOIN T_SYSTEM_MENU m2 ON m2.MENU_ID = m1.PARENT_MENU_ID
+		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>

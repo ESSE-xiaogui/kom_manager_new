@@ -36,6 +36,7 @@ import com.shangkang.core.dto.RequestModel;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.SystemMenu;
 import com.transsion.store.dto.MenuDto;
+import com.transsion.store.dto.SystemMenuInfo;
 import com.transsion.store.facade.SystemMenuFacade;
 
 @Controller
@@ -68,8 +69,8 @@ public class SystemMenuController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<SystemMenu> listPgSystemMenu(RequestModel<SystemMenu> requestModel) throws ServiceException
-	{		Pagination<SystemMenu> pagination = new Pagination<SystemMenu>();
+	public Pagination<SystemMenuInfo> listPgSystemMenu(RequestModel<SystemMenuInfo> requestModel) throws ServiceException
+	{	Pagination<SystemMenuInfo> pagination = new Pagination<SystemMenuInfo>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());

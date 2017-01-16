@@ -21,6 +21,7 @@ import java.util.Map;
 
 import com.transsion.store.bo.SystemMenu;
 import com.transsion.store.dto.MenuDto;
+import com.transsion.store.dto.SystemMenuInfo;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
@@ -28,7 +29,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface SystemMenuMapper extends GenericIBatisMapper<SystemMenu, java.lang.Long> {
 
-    public List<SystemMenu> listPaginationByProperty(Pagination<SystemMenu> pagination, @Param("systemMenu")SystemMenu systemMenu, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<SystemMenuInfo> listPaginationByProperty(Pagination<SystemMenuInfo> pagination, @Param("systemMenuInfo")SystemMenuInfo systemMenuInfo, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     
     public List<MenuDto> querySystemMenuList(Long userId) throws DataAccessFailureException;
 

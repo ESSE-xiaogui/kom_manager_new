@@ -24,10 +24,8 @@
 		<result column="COMPANY_ID" property="companyId"/>
 		<result column="REGION_CODE" property="regionCode"/>
 		<result column="REGION_NAME" property="regionName"/>
-		<result column="P_REGION_NAME" property="pRegionName"/>
 		<result column="PARENT_ID" property="parentId"/>
 		<result column="REGION_TYPE" property="regionType"/>
-		<result column="REGION_TYPE_NAME" property="regionTypeName"/>
 		<result column="IS_INACTIVE" property="isInactive"/>
 		<result column="REMARK" property="remark"/>
 		<result column="CREATED_BY" property="createdBy"/>
