@@ -47,6 +47,8 @@ public class MenuDto implements Serializable{
 	  */
 	private java.lang.String parentMenuName;
 	
+	private java.lang.String remark;
+	
 	
 	public java.lang.String getParentMenuName() {
 		return parentMenuName;
@@ -102,12 +104,20 @@ public class MenuDto implements Serializable{
 	public void setMenuIcon(java.lang.String menuIcon) {
 		this.menuIcon = menuIcon;
 	}
+	
+	public java.lang.String getRemark() {
+		return remark;
+	}
+	public void setRemark(java.lang.String remark) {
+		this.remark = remark;
+	}
 	@Override
 	public String toString() {
 		return "MenuDto [menuId=" + menuId + ", menuCode=" + menuCode + ", menuName=" + menuName + ", parentMenuId="
-				+ parentMenuId + ", menuOrder=" + menuOrder + ", menuIcon=" + menuIcon + ", pageUrl=" + pageUrl
-				+ ", children=" + children + ", parentMenuName=" + parentMenuName + "]";
+						+ parentMenuId + ", menuOrder=" + menuOrder + ", menuIcon=" + menuIcon + ", pageUrl=" + pageUrl
+						+ ", children=" + children + ", parentMenuName=" + parentMenuName + ", remark=" + remark + "]";
 	}
+
 	
 
 }

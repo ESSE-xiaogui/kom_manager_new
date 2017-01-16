@@ -43,6 +43,7 @@
 		<result column="PARENT_MENU_ID" property="parentMenuId"/>
 		<result column="MENU_ICON" property="menuIcon"/>
 		<result column="PAGE_URL" property="pageUrl"/>
+		<result column="REMARK" property="remark"/>
 	</resultMap>
 	<resultMap id="MenuIDResultMapper" type="java.lang.Long">
 		<result column="MENU_ID" property="menuId"/>
@@ -353,7 +354,8 @@
 		SELECT MENU_ID FROM T_SYSTEM_MENU WHERE PARENT_MENU_ID = #{menuId}
 	</select>
 	<select id="findMenuByMenuId"  parameterType="java.lang.Long" resultMap="MenuDtoResultMapper">
-		SELECT MENU_ID,MENU_CODE,MENU_NAME,MENU_ORDER,PARENT_MENU_ID,MENU_ICON,PAGE_URL FROM T_SYSTEM_MENU
+		SELECT MENU_ID,MENU_CODE,MENU_NAME,MENU_ORDER,PARENT_MENU_ID,MENU_ICON,PAGE_URL,REMARK
+		FROM T_SYSTEM_MENU
 	    WHERE MENU_ID = #{menuId}
 	</select>
 	<select id="findMenuByRoleId"  parameterType="java.lang.Long" resultMap="MenuDtoResultMapper">
