@@ -51,15 +51,10 @@
 	
 	<resultMap id="EmpInfoDtoResultMapper" type="EmpInfoDto">
 		<result column="ID" property="id"/>
-		<result column="EMP_ID" property="empId"/>
-		<result column="EMP_CODE" property="empCode"/>
 		<result column="EMP_NAME" property="empName"/>
-		<result column="U_ID" property="uId"/>
-		<result column="ID_NO" property="idNo"/>
+		<result column="USER_CODE" property="userName"/>
 		<result column="COMPANY_ID" property="companyId"/>
-		<result column="ORG_ID" property="orgId"/>
 		<result column="ORG_NAME" property="orgName"/>
-		<result column="DUTY_ID" property="dutyId"/>
 		<result column="DUTY_NAME" property="dutyName"/>
 		<result column="UPPER_ID" property="upperId"/>
 		<result column="UPPER_NAME" property="upperName"/>
@@ -67,7 +62,6 @@
 		<result column="BIRTHDAY" property="birthday"/>
 		<result column="NATION" property="nation"/>
 		<result column="MARRIED" property="married"/>
-		<result column="PHONE_NO" property="phoneNo"/>
 		<result column="MOBILE_NO" property="mobileNo"/>
 		<result column="EMAIL" property="email"/>
 		<result column="NATIVE_PLACE" property="nativePlace"/>
@@ -324,83 +318,71 @@
             <if test="empInfoDto.id!= null and empInfoDto.id!= ''">
 				AND e.ID=#{empInfoDto.id}
             </if>
-            <if test="empInfoDto.empId!= null and empInfoDto.empId!= ''">
-				AND EMP_ID=#{empInfoDto.empId}
+            <if test="empInfoDto.userName!= null and empInfoDto.userName!= ''">
+				AND u.USER_CODE=#{empInfoDto.userName}
             </if>
-            <if test="empInfoDto.empCode!= null and empInfoDto.empCode!= ''">
-				AND EMP_CODE=#{empInfoDto.empCode}
-            </if>
-            <if test="empInfoDto.empName!= null and empInfoDto.empName!= ''">
-				AND EMP_NAME=#{empInfoDto.empName}
-            </if>
-            <if test="empInfoDto.uId!= null and empInfoDto.uId!= ''">
-				AND U_ID=#{empInfoDto.uId}
-            </if>
-            <if test="empInfoDto.idNo!= null and empInfoDto.idNo!= ''">
-				AND ID_NO=#{empInfoDto.idNo}
+             <if test="empInfoDto.empName!= null and empInfoDto.empName!= ''">
+				AND e.EMP_NAME=#{empInfoDto.empName}
             </if>
             <if test="empInfoDto.companyId!= null and empInfoDto.companyId!= ''">
-				AND COMPANY_ID=#{empInfoDto.companyId}
+				AND e.COMPANY_ID=#{empInfoDto.companyId}
             </if>
-            <if test="empInfoDto.orgId!= null and empInfoDto.orgId!= ''">
-				AND e.ORG_ID=#{empInfoDto.orgId}
+            <if test="empInfoDto.orgName!= null and empInfoDto.orgName!= ''">
+				AND o.ORG_NAME=#{empInfoDto.orgName}
             </if>
-            <if test="empInfoDto.dutyId!= null and empInfoDto.dutyId!= ''">
-				AND e.DUTY_ID=#{empInfoDto.dutyId}
+            <if test="empInfoDto.dutyName!= null and empInfoDto.dutyName!= ''">
+				AND d.DUTY_NAME=#{empInfoDto.dutyName}
             </if>
             <if test="empInfoDto.upperId!= null and empInfoDto.upperId!= ''">
-				AND UPPER_ID=#{empInfoDto.upperId}
+				AND e.UPPER_ID=#{empInfoDto.upperId}
             </if>
             <if test="empInfoDto.upperName!= null and empInfoDto.upperName!= ''">
-				AND UPPER_NAME=#{empInfoDto.upperName}
+				AND e.UPPER_NAME=#{empInfoDto.upperName}
             </if>
             <if test="empInfoDto.gender!= null and empInfoDto.gender!= ''">
-				AND GENDER=#{empInfoDto.gender}
+				AND e.GENDER=#{empInfoDto.gender}
             </if>
             <if test="empInfoDto.birthday!= null and empInfoDto.birthday!= ''">
-				AND BIRTHDAY=str_to_date(#{empInfoDto.birthday},'%Y-%m-%d')
+				AND e.BIRTHDAY=str_to_date(#{empInfoDto.birthday},'%Y-%m-%d')
             </if>
             <if test="empInfoDto.nation!= null and empInfoDto.nation!= ''">
-				AND NATION=#{empInfoDto.nation}
+				AND e.NATION=#{empInfoDto.nation}
             </if>
             <if test="empInfoDto.married!= null and empInfoDto.married!= ''">
-				AND MARRIED=#{empInfoDto.married}
-            </if>
-            <if test="empInfoDto.phoneNo!= null and empInfoDto.phoneNo!= ''">
-				AND PHONE_NO=#{empInfoDto.phoneNo}
+				AND e.MARRIED=#{empInfoDto.married}
             </if>
             <if test="empInfoDto.mobileNo!= null and empInfoDto.mobileNo!= ''">
-				AND MOBILE_NO=#{empInfoDto.mobileNo}
+				AND e.MOBILE_NO=#{empInfoDto.mobileNo}
             </if>
             <if test="empInfoDto.email!= null and empInfoDto.email!= ''">
-				AND EMAIL=#{empInfoDto.email}
+				AND e.EMAIL=#{empInfoDto.email}
             </if>
             <if test="empInfoDto.nativePlace!= null and empInfoDto.nativePlace!= ''">
-				AND NATIVE_PLACE=#{empInfoDto.nativePlace}
+				AND e.NATIVE_PLACE=#{empInfoDto.nativePlace}
             </if>
             <if test="empInfoDto.zipCode!= null and empInfoDto.zipCode!= ''">
-				AND ZIP_CODE=#{empInfoDto.zipCode}
+				AND e.ZIP_CODE=#{empInfoDto.zipCode}
             </if>
             <if test="empInfoDto.inService!= null and empInfoDto.inService!= ''">
-				AND IN_SERVICE=#{empInfoDto.inService}
+				AND e.IN_SERVICE=#{empInfoDto.inService}
             </if>
             <if test="empInfoDto.remark!= null and empInfoDto.remark!= ''">
-				AND REMARK=#{empInfoDto.remark}
+				AND e.REMARK=#{empInfoDto.remark}
             </if>
             <if test="empInfoDto.createdBy!= null and empInfoDto.createdBy!= ''">
-				AND CREATED_BY=#{empInfoDto.createdBy}
+				AND e.CREATED_BY=#{empInfoDto.createdBy}
             </if>
             <if test="empInfoDto.createdTime!= null and empInfoDto.createdTime!= ''">
-				AND CREATED_TIME=str_to_date(#{empInfoDto.createdTime},'%Y-%m-%d %H:%i:%s')
+				AND e.CREATED_TIME=str_to_date(#{empInfoDto.createdTime},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="empInfoDto.updatedBy!= null and empInfoDto.updatedBy!= ''">
-				AND UPDATED_BY=#{empInfoDto.updatedBy}
+				AND e.UPDATED_BY=#{empInfoDto.updatedBy}
             </if>
             <if test="empInfoDto.updatedTime!= null and empInfoDto.updatedTime!= ''">
-				AND UPDATED_TIME=str_to_date(#{empInfoDto.updatedTime},'%Y-%m-%d %H:%i:%s')
+				AND e.UPDATED_TIME=str_to_date(#{empInfoDto.updatedTime},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="empInfoDto.version!= null and empInfoDto.version!= ''">
-				AND VERSION=#{empInfoDto.version}
+				AND e.VERSION=#{empInfoDto.version}
             </if>
         </if>
     </sql>
@@ -417,85 +399,73 @@
 	<sql id="orderBy">
 		<choose>
         	<when test="key == 'id'">
-				ID ${value}
-            </when>
-        	<when test="key == 'empId'">
-				EMP_ID ${value}
-            </when>
-        	<when test="key == 'empCode'">
-				EMP_CODE ${value}
+				e.ID ${value}
             </when>
         	<when test="key == 'empName'">
-				EMP_NAME ${value}
+				e.EMP_NAME ${value}
             </when>
-            <when test="key == 'uId'">
-				U_ID ${value}
-            </when>
-        	<when test="key == 'idNo'">
-				ID_NO ${value}
+            <when test="key == 'userName'">
+				u.USER_CODE ${value}
             </when>
         	<when test="key == 'companyId'">
-				COMPANY_ID ${value}
+				e.COMPANY_ID ${value}
             </when>
-        	<when test="key == 'orgId'">
-				ORG_ID ${value}
+        	<when test="key == 'orgName'">
+				o.ORG_NAME ${value}
             </when>
-        	<when test="key == 'dutyId'">
-				DUTY_ID ${value}
+        	<when test="key == 'dutyName'">
+				d.DUTY_NAME ${value}
             </when>
         	<when test="key == 'upperId'">
-				UPPER_ID ${value}
+				e.UPPER_ID ${value}
             </when>
         	<when test="key == 'upperName'">
-				UPPER_NAME ${value}
+				e.UPPER_NAME ${value}
             </when>
         	<when test="key == 'gender'">
-				GENDER ${value}
+				e.GENDER ${value}
             </when>
         	<when test="key == 'birthday'">
-				BIRTHDAY ${value}
+				e.BIRTHDAY ${value}
             </when>
         	<when test="key == 'nation'">
-				NATION ${value}
+				e.NATION ${value}
             </when>
         	<when test="key == 'married'">
-				MARRIED ${value}
-            </when>
-        	<when test="key == 'phoneNo'">
-				PHONE_NO ${value}
+				e.MARRIED ${value}
             </when>
         	<when test="key == 'mobileNo'">
-				MOBILE_NO ${value}
+				e.MOBILE_NO ${value}
             </when>
         	<when test="key == 'email'">
-				EMAIL ${value}
+				e.EMAIL ${value}
             </when>
         	<when test="key == 'nativePlace'">
-				NATIVE_PLACE ${value}
+				e.NATIVE_PLACE ${value}
             </when>
         	<when test="key == 'zipCode'">
-				ZIP_CODE ${value}
+				e.ZIP_CODE ${value}
             </when>
         	<when test="key == 'inService'">
-				IN_SERVICE ${value}
+				e.IN_SERVICE ${value}
             </when>
         	<when test="key == 'remark'">
-				REMARK ${value}
+				e.REMARK ${value}
             </when>
         	<when test="key == 'createdBy'">
-				CREATED_BY ${value}
+				e.CREATED_BY ${value}
             </when>
         	<when test="key == 'createdTime'">
-				CREATED_TIME ${value}
+				e.CREATED_TIME ${value}
             </when>
         	<when test="key == 'updatedBy'">
-				UPDATED_BY ${value}
+				e.UPDATED_BY ${value}
             </when>
         	<when test="key == 'updatedTime'">
-				UPDATED_TIME ${value}
+				e.UPDATED_TIME ${value}
             </when>
         	<when test="key == 'version'">
-				VERSION ${value}
+				e.VERSION ${value}
             </when>
 		</choose>
 	</sql>
@@ -602,11 +572,12 @@
 		 WHERE e.ID = #{id}
 	</select>
 	<select id="listPaginationByProperty" parameterType="EmpInfoDto" resultMap="EmpInfoDtoResultMapper">
-		 SELECT e.ID,EMP_CODE, EMP_NAME, ID_NO,ORG_NAME,d.DUTY_NAME,UPPER_ID, UPPER_NAME,
-		 GENDER, BIRTHDAY, NATION, MARRIED, MOBILE_NO,EMAIL, IN_SERVICE,e.CREATED_BY,
+		 SELECT e.ID,EMP_CODE, e.EMP_NAME, o.ORG_NAME,u.USER_CODE,d.DUTY_NAME,UPPER_ID, e.UPPER_NAME,
+		 e.GENDER, e.BIRTHDAY, e.NATION, e.MARRIED, e.MOBILE_NO,e.EMAIL, e.IN_SERVICE,e.CREATED_BY,
 		 e.CREATED_TIME, e.UPDATED_BY,e.UPDATED_TIME FROM T_EMPLOYEE e 
 		 LEFT JOIN T_DUTY d ON d.ID = e.DUTY_ID
 		 LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ID
+		 LEFT JOIN T_USER u ON u.ID = e.U_ID
 		 WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />

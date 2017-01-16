@@ -24,7 +24,6 @@ import org.springframework.stereotype.Service;
 import com.transsion.store.bo.User;
 import com.transsion.store.dto.UserDto;
 import com.transsion.store.dto.UserInfoDto;
-import com.transsion.store.dto.UserListDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.UserMapper;
@@ -76,10 +75,10 @@ public class UserService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<UserListDto> listPaginationByProperty(Pagination<UserListDto> pagination, UserListDto userListDto)
+	public Pagination<User> listPaginationByProperty(Pagination<User> pagination, User user)
 			throws ServiceException
 	{
-		List<UserListDto> list = userMapper.listPaginationByProperty(pagination, userListDto, pagination.getOrderBy());
+		List<User> list = userMapper.listPaginationByProperty(pagination, user, pagination.getOrderBy());
 		pagination.setResultList(list);
 		return pagination;
 	}

@@ -15,6 +15,7 @@ import com.transsion.store.service.UserService;
 import com.transsion.store.utils.CacheUtils;
 import com.transsion.store.utils.MD5Utils;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -232,4 +233,5 @@ public class UserManager {
 		user.setCreatedTime(systemDateService.getCurrentDate());
 		userService.save(user);
 	}
+	
 }
