@@ -54,6 +54,7 @@
 		<result column="EMP_NAME" property="empName"/>
 		<result column="USER_CODE" property="userName"/>
 		<result column="COMPANY_ID" property="companyId"/>
+		<result column="ID_NO" property="idNo"/>
 		<result column="ORG_NAME" property="orgName"/>
 		<result column="DUTY_NAME" property="dutyName"/>
 		<result column="UPPER_ID" property="upperId"/>
@@ -321,6 +322,9 @@
             <if test="empInfoDto.userName!= null and empInfoDto.userName!= ''">
 				AND u.USER_CODE=#{empInfoDto.userName}
             </if>
+            <if test="empInfoDto.idNo!= null and empInfoDto.idNo!= ''">
+				AND e.ID_NO=#{empInfoDto.idNo}
+            </if>
              <if test="empInfoDto.empName!= null and empInfoDto.empName!= ''">
 				AND e.EMP_NAME=#{empInfoDto.empName}
             </if>
@@ -403,6 +407,9 @@
             </when>
         	<when test="key == 'empName'">
 				e.EMP_NAME ${value}
+            </when>
+            <when test="key == 'idNo'">
+				e.ID_NO ${value}
             </when>
             <when test="key == 'userName'">
 				u.USER_CODE ${value}
@@ -572,7 +579,7 @@
 		 WHERE e.ID = #{id}
 	</select>
 	<select id="listPaginationByProperty" parameterType="EmpInfoDto" resultMap="EmpInfoDtoResultMapper">
-		 SELECT e.ID,EMP_CODE, e.EMP_NAME, o.ORG_NAME,u.USER_CODE,d.DUTY_NAME,UPPER_ID, e.UPPER_NAME,
+		 SELECT e.ID,EMP_CODE, e.EMP_NAME, e.ID_NO,o.ORG_NAME,u.USER_CODE,d.DUTY_NAME,UPPER_ID, e.UPPER_NAME,
 		 e.GENDER, e.BIRTHDAY, e.NATION, e.MARRIED, e.MOBILE_NO,e.EMAIL, e.IN_SERVICE,e.CREATED_BY,
 		 e.CREATED_TIME, e.UPDATED_BY,e.UPDATED_TIME FROM T_EMPLOYEE e 
 		 LEFT JOIN T_DUTY d ON d.ID = e.DUTY_ID

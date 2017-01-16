@@ -21,7 +21,7 @@
 <mapper namespace="com.transsion.store.mapper.UserMapper">
 	<resultMap id="UserResultMapper" type="User">
 		<result column="ID" property="id"/>
-		<result column="USER_ID" property="userID"/>
+		<result column="USER_ID" property="userId"/>
 		<result column="USER_CODE" property="userCode"/>
 		<result column="USER_NAME" property="userName"/>
 		<result column="EMP_ID" property="empId"/>

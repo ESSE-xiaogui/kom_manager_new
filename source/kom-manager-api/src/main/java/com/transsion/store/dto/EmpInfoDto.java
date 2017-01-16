@@ -18,6 +18,8 @@ public class EmpInfoDto extends Model{
 
 	private String dutyName;
 
+	private String idNo;
+	
 	private Long upperId;
 
 	private String upperName;
@@ -58,6 +60,14 @@ public class EmpInfoDto extends Model{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getIdNo() {
+		return idNo;
+	}
+
+	public void setIdNo(String idNo) {
+		this.idNo = idNo;
 	}
 
 	public String getEmpName() {
@@ -239,10 +249,10 @@ public class EmpInfoDto extends Model{
 	@Override
 	public String toString() {
 		return "EmpInfoDto [id=" + id + ", empName=" + empName + ", userName=" + userName + ", companyId=" + companyId
-						+ ", orgName=" + orgName + ", dutyName=" + dutyName + ", upperId=" + upperId + ", upperName="
-						+ upperName + ", gender=" + gender + ", birthday=" + birthday + ", nation=" + nation
-						+ ", married=" + married + ", mobileNo=" + mobileNo + ", email="
-						+ email + ", nativePlace=" + nativePlace + ", zipCode=" + zipCode + ", inService=" + inService
+						+ ", orgName=" + orgName + ", dutyName=" + dutyName + ", idNo=" + idNo + ", upperId=" + upperId
+						+ ", upperName=" + upperName + ", gender=" + gender + ", birthday=" + birthday + ", nation="
+						+ nation + ", married=" + married + ", mobileNo=" + mobileNo + ", email=" + email
+						+ ", nativePlace=" + nativePlace + ", zipCode=" + zipCode + ", inService=" + inService
 						+ ", remark=" + remark + ", createdBy=" + createdBy + ", createdTime=" + createdTime
 						+ ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime + ", version=" + version + "]";
 	}
