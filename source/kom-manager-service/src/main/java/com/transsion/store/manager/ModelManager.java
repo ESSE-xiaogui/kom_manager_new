@@ -45,8 +45,6 @@ public class ModelManager {
 		model.setCompanyId(userContext.getCompanyId().intValue());
 		model.setCreatedBy(userContext.getUserCode());
 		model.setCreatedTime(systemDateService.getCurrentDate());
-		model.setUpdatedBy(userContext.getUserCode());
-		model.setUpdatedTime(systemDateService.getCurrentDate());
 		model.setVersion(0);
 		modelMapper.save(model);
 		ModelResponseDto mrd = new ModelResponseDto();
@@ -92,8 +90,6 @@ public class ModelManager {
 		formerMo.setModelName(model.getModelName());
 		formerMo.setPriceScale(model.getPriceScale());
 		formerMo.setIsInactive(model.getIsInactive());
-		formerMo.setCreatedBy(userContext.getUserCode());
-		formerMo.setCreatedTime(systemDateService.getCurrentDate());
 		formerMo.setUpdatedBy(userContext.getUserCode());
 		formerMo.setUpdatedTime(systemDateService.getCurrentDate());
 		modelMapper.update(formerMo);

@@ -51,7 +51,7 @@ public class UserFacadeImpl implements UserFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public UserInfoDto getByPK(java.lang.Long primaryKey) throws ServiceException
+	public User getByPK(java.lang.Long primaryKey) throws ServiceException
 	{
 		return userService.getByPK(primaryKey);
 	}
