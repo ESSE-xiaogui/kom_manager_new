@@ -579,12 +579,11 @@
 		 WHERE e.ID = #{id}
 	</select>
 	<select id="listPaginationByProperty" parameterType="EmpInfoDto" resultMap="EmpInfoDtoResultMapper">
-		 SELECT e.ID,EMP_CODE, e.EMP_NAME, e.ID_NO,o.ORG_NAME,u.USER_CODE,d.DUTY_NAME,UPPER_ID, e.UPPER_NAME,
+		 SELECT e.ID,EMP_CODE, e.EMP_NAME, e.ID_NO,o.ORG_NAME,d.DUTY_NAME,UPPER_ID, e.UPPER_NAME,
 		 e.GENDER, e.BIRTHDAY, e.NATION, e.MARRIED, e.MOBILE_NO,e.EMAIL, e.IN_SERVICE,e.CREATED_BY,
 		 e.CREATED_TIME, e.UPDATED_BY,e.UPDATED_TIME FROM T_EMPLOYEE e 
 		 LEFT JOIN T_DUTY d ON d.ID = e.DUTY_ID
 		 LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ID
-		 LEFT JOIN T_USER u ON u.ID = e.U_ID
 		 WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
