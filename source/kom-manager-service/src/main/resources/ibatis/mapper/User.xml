@@ -301,7 +301,7 @@
 				AND r.ROLE_NAME=#{userListDto.roleName}
             </if>
             <if test="userListDto.empCode!= null and userListDto.empCode!= ''">
-				AND e.EMP_CODE=#{userListDto.empCode}
+				AND e.ID=#{userListDto.empCode}
             </if>
             <if test="userListDto.empName!= null and userListDto.empName!= ''">
 				AND e.EMP_NAME=#{userListDto.empName}

@@ -128,6 +128,10 @@ public class MessageStoreResource {
      * 该员工不存在
      */
     public static final String ERROR_MESSAGE_EMP_DOESNOT_EXIST = "error_message_empDoesNotExist";
+    /**
+     * 该员工已离职不能绑定用户
+     */
+    public static final String ERROR_MESSAGE_EMP_UNBIND_USER = "error_message_empUnbindUser";
     
     /**
      * 用户已停用

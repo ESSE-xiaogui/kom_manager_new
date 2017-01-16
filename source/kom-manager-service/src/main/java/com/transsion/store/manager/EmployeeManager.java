@@ -170,6 +170,12 @@ public class EmployeeManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_ALREADY_EXISTS);
 		}
 		Employee employee = employeeService.getByPK(empId);
+		if(UtilHelper.isEmpty(employee)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PASSWORD_IS_NULL);
+		}
+		if(UtilHelper.isEmpty(employee.getInService().intValue() == 2)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_UNBIND_USER);
+		}
 		Long uId =employee.getuId();
 		if(!UtilHelper.isEmpty(uId)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_ALREADY_DISTRIBUTED);

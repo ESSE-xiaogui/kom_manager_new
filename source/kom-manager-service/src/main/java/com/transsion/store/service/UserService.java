@@ -39,8 +39,6 @@ public class UserService {
 	{
 		this.userMapper = userMapper;
 	}
-	@Autowired
-	private SystemDateService systemDateService;
 	/**
 	 * 通过主键查询实体对象
 	 * @param primaryKey
