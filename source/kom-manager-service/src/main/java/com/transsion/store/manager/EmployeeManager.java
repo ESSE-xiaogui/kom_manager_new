@@ -83,6 +83,7 @@ public class EmployeeManager {
 		employee.setCompanyId(userContext.getUser().getCompanyId());
 		employeeService.save(employee);
 		EmpResponseDto emp = new EmpResponseDto();
+		emp.setId(employee.getId());
 		emp.setStatus(1);
 		return emp;
 	}
