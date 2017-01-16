@@ -125,7 +125,7 @@ public class EmployeeManager {
 		formerEmp.setBirthday(employee.getBirthday().equals("")?null:employee.getBirthday());
 		formerEmp.setOrgId(employee.getOrgId());
 		formerEmp.setDutyId(employee.getDutyId());
-		formerEmp.setPhoneNo(employee.getPhoneNo());
+		formerEmp.setMobileNo(employee.getMobileNo());
 		formerEmp.setEmail(employee.getEmail());
 		formerEmp.setUpperName(employee.getUpperName());
 		formerEmp.setUpperId(employee.getUpperId());
