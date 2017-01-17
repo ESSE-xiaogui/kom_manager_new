@@ -36,11 +36,9 @@
 		<result column="VERSION" property="version"/>
 	</resultMap>
 	<resultMap id="SystemMenuInfoResultMapper" type="SystemMenuInfo">
-		<result column="MENU_ID" property="menuId"/>
-		<result column="MENU_CODE" property="menuCode"/>
+		<result column="MENU_ID" property="menuCode"/>
 		<result column="MENU_NAME" property="menuName"/>
 		<result column="MENU_ORDER" property="menuOrder"/>
-		<result column="PARENT_MENU_ID" property="parentMenuId"/>
 		<result column="PMENU_NAME" property="parentMenuName"/>
 		<result column="MENU_ICON" property="menuIcon"/>
 		<result column="PAGE_URL" property="pageUrl"/>
@@ -50,7 +48,6 @@
 		<result column="CREATE_TIME" property="createTime"/>
 		<result column="UPDATED_BY" property="updatedBy"/>
 		<result column="UPDATE_TIME" property="updateTime"/>
-		<result column="VERSION" property="version"/>
 	</resultMap>
 	<resultMap id="MenuDtoResultMapper" type="MenuDto">
 		<result column="MENU_ID" property="menuId"/>
@@ -167,11 +164,8 @@
 	
 	<sql id="commonConditionByPrefix">
 		<if test="systemMenuInfo!= null">
-            <if test="systemMenuInfo.menuId!= null and systemMenuInfo.menuId!= ''">
-				AND m1.MENU_ID=#{systemMenuInfo.menuId}
-            </if>
             <if test="systemMenuInfo.menuCode!= null and systemMenuInfo.menuCode!= ''">
-				AND m1.MENU_CODE=#{systemMenuInfo.menuCode}
+				AND m1.MENU_ID=#{systemMenuInfo.menuCode}
             </if>
             <if test="systemMenuInfo.menuName!= null and systemMenuInfo.menuName!= ''">
 				AND m1.MENU_NAME=#{systemMenuInfo.menuName}
@@ -181,9 +175,6 @@
             </if>
             <if test="systemMenuInfo.menuOrder!= null and systemMenuInfo.menuOrder!= ''">
 				AND m1.MENU_ORDER=#{systemMenuInfo.menuOrder}
-            </if>
-            <if test="systemMenuInfo.parentMenuId!= null and systemMenuInfo.parentMenuId!= ''">
-				AND m1.PARENT_MENU_ID=#{systemMenuInfo.parentMenuId}
             </if>
             <if test="systemMenuInfo.menuIcon!= null and systemMenuInfo.menuIcon!= ''">
 				AND m1.MENU_ICON=#{systemMenuInfo.menuIcon}
@@ -209,9 +200,6 @@
             <if test="systemMenuInfo.updateTime!= null and systemMenuInfo.updateTime!= ''">
 				AND m1.UPDATE_TIME=str_to_date(#{systemMenuInfo.updateTime},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="systemMenuInfo.version!= null and systemMenuInfo.version!= ''">
-				AND m1.VERSION=#{systemMenuInfo.version}
-            </if>
         </if>
     </sql>
 
@@ -226,47 +214,41 @@
 
 	<sql id="orderBy">
 		<choose>
-        	<when test="key == 'menuId'">
-				MENU_ID ${value}
-            </when>
         	<when test="key == 'menuCode'">
-				MENU_CODE ${value}
+				m1.MENU_ID ${value}
             </when>
         	<when test="key == 'menuName'">
-				MENU_NAME ${value}
+				m1.MENU_NAME ${value}
+            </when>
+            <when test="key == 'parentMenuName'">
+				m2.MENU_NAME ${value}
             </when>
         	<when test="key == 'menuOrder'">
-				MENU_ORDER ${value}
-            </when>
-        	<when test="key == 'parentMenuId'">
-				PARENT_MENU_ID ${value}
+				m1.MENU_ORDER ${value}
             </when>
         	<when test="key == 'menuIcon'">
-				MENU_ICON ${value}
+				m1.MENU_ICON ${value}
             </when>
         	<when test="key == 'pageUrl'">
-				PAGE_URL ${value}
+				m1.PAGE_URL ${value}
             </when>
         	<when test="key == 'usable'">
-				USABLE ${value}
+				m1.USABLE ${value}
             </when>
         	<when test="key == 'remark'">
-				REMARK ${value}
+				m1.REMARK ${value}
             </when>
         	<when test="key == 'createdBy'">
-				CREATED_BY ${value}
+				m1.CREATED_BY ${value}
             </when>
         	<when test="key == 'createTime'">
-				CREATE_TIME ${value}
+				m1.CREATE_TIME ${value}
             </when>
         	<when test="key == 'updatedBy'">
-				UPDATED_BY ${value}
+				m1.UPDATED_BY ${value}
             </when>
         	<when test="key == 'updateTime'">
-				UPDATE_TIME ${value}
-            </when>
-        	<when test="key == 'version'">
-				VERSION ${value}
+				m1.UPDATE_TIME ${value}
             </when>
 		</choose>
 	</sql>
@@ -340,9 +322,9 @@
 		<include refid="commonCondition"/>
 	</select>
 	<select id="listPaginationByProperty" parameterType="SystemMenuInfo" resultMap="SystemMenuInfoResultMapper">
-		SELECT m1.MENU_ID, m1.MENU_CODE, m1.MENU_NAME,m2.MENU_NAME AS PMENU_NAME,m1.MENU_ORDER
-		, m1.PARENT_MENU_ID, m1.MENU_ICON, m1.PAGE_URL, m1.USABLE, m1.REMARK, m1.CREATED_BY
-		, m1.CREATE_TIME, m1.UPDATED_BY, m1.UPDATE_TIME, m1.VERSION
+		SELECT m1.MENU_ID, m1.MENU_NAME,m2.MENU_NAME AS PMENU_NAME,m1.MENU_ORDER
+		, m1.MENU_ICON, m1.PAGE_URL, m1.USABLE, m1.REMARK, m1.CREATED_BY
+		, m1.CREATE_TIME, m1.UPDATED_BY, m1.UPDATE_TIME
 		FROM T_SYSTEM_MENU m1
 		LEFT JOIN T_SYSTEM_MENU m2 ON m2.MENU_ID = m1.PARENT_MENU_ID
 		WHERE 1=1
