@@ -70,7 +70,8 @@ public class SystemMenuController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public Pagination<SystemMenuInfo> listPgSystemMenu(RequestModel<SystemMenuInfo> requestModel) throws ServiceException
-	{	Pagination<SystemMenuInfo> pagination = new Pagination<SystemMenuInfo>();
+	{	
+		Pagination<SystemMenuInfo> pagination = new Pagination<SystemMenuInfo>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());

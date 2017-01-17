@@ -176,6 +176,9 @@
             <if test="systemMenuInfo.menuName!= null and systemMenuInfo.menuName!= ''">
 				AND m1.MENU_NAME=#{systemMenuInfo.menuName}
             </if>
+            <if test="systemMenuInfo.parentMenuName!= null and systemMenuInfo.parentMenuName!= ''">
+				AND m2.MENU_NAME=#{systemMenuInfo.parentMenuName}
+            </if>
             <if test="systemMenuInfo.menuOrder!= null and systemMenuInfo.menuOrder!= ''">
 				AND m1.MENU_ORDER=#{systemMenuInfo.menuOrder}
             </if>
