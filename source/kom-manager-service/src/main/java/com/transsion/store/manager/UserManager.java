@@ -37,8 +37,6 @@ public class UserManager {
 	
 	private SystemDateService systemDateService;
 	
-	private static final int INACTIVE = 2;
-
 	
 	/**
 	 * 通过用户名密码查询实体对象
@@ -59,7 +57,7 @@ public class UserManager {
 		if (UtilHelper.isEmpty(urd) ||UtilHelper.isEmpty(urd.getId()) || UtilHelper.isEmpty(urd.getCompanyId())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_LOGIN_FAIL);
 		}
-		if(urd.getIsInactive().equals(INACTIVE)){
+		if(urd.getIsInactive().intValue() == 2){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_INACTIVE_USER);
 		}
 		UserContext userContext = new UserContext();
