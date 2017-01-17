@@ -63,7 +63,7 @@ public class SystemMenu extends Model{
 	/**
 	  *	是否可用：0表示不可以用，1表示可用
 	  */
-	private java.lang.Long usable;
+	private java.lang.Integer usable;
 
 	/**
 	  *	
@@ -151,11 +151,11 @@ public class SystemMenu extends Model{
 		this.pageUrl = pageUrl;
 	}
 
-	public java.lang.Long getUsable() {
+	public java.lang.Integer getUsable() {
 		return usable;
 	}
 
-	public void setUsable(java.lang.Long usable) {
+	public void setUsable(java.lang.Integer usable) {
 		this.usable = usable;
 	}
 
