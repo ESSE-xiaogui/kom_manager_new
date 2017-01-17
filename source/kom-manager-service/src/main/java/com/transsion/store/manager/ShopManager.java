@@ -10,6 +10,7 @@ import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.ShopUserDto;
+import com.transsion.store.dto.UserDto;
 import com.transsion.store.mapper.ShopMapper;
 import com.transsion.store.mapper.UserMapper;
 import com.transsion.store.resource.MessageStoreResource;
@@ -68,12 +69,11 @@ public class ShopManager {
 		if(UtilHelper.isEmpty(userName)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		User user = new User();
-		user.setUserName(userName);
-		int count = userMapper.findByCount(user);
-		if(count == 0){
+		UserDto userDto = new UserDto();
+		userDto =  userMapper.findByName(userName);
+		if(UtilHelper.isEmpty(userDto)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
 		}
-		return shopMapper.findShopIds(userName);
+		return shopMapper.findShopIds(userDto.getId());
 	}
 }
