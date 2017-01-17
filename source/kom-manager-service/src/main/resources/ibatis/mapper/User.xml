@@ -517,4 +517,7 @@
 		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID
 		WHERE u.USER_CODE = #{userCode} AND u.PASSWORD = #{password} 
 	</select>
+	<update id="updateLastLogin" parameterType="User">
+	update T_USER set LAST_LOGIN=str_to_date(#{lastLogin},'%Y-%m-%d %H:%i:%s') where  USER_CODE = #{userCode}
+	</update>
 </mapper>

@@ -53,8 +53,9 @@ public class UserManager {
 		User user = new User();
 		user.setUserCode(userCode);
 		user.setPassword(password);
-		UserResponseDto urd = findUser(user);
-		//UserResponseDto urd = userMapper.getUser(user);
+		user.setLastLogin(systemDateService.getCurrentDate());
+		userMapper.updateLastLogin(user);
+		UserResponseDto urd = userMapper.getUser(user);
 		if (UtilHelper.isEmpty(urd) ||UtilHelper.isEmpty(urd.getId()) || UtilHelper.isEmpty(urd.getCompanyId())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_LOGIN_FAIL);
 		}
@@ -190,14 +191,6 @@ public class UserManager {
 		}
 	}
 	
-	/**
-	 * 登录接口为只读,根据用户编码先更新,再查询返回新的结果
-	 * */
-	public UserResponseDto findUser(User user) throws ServiceException{
-		user.setLastLogin(systemDateService.getCurrentDate());
-		userMapper.update(user);
-		return userMapper.getUser(user);
-	}
 
 	/**
 	 * 新建用户
