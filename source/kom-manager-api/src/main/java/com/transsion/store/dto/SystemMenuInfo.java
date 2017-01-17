@@ -9,10 +9,6 @@ public class SystemMenuInfo extends Model{
 	 */
 	private static final long	serialVersionUID	= 1L;
 	
-	/**
-	  *	
-	  */
-	private java.lang.Long menuId;
 
 	/**
 	  *	
@@ -29,10 +25,6 @@ public class SystemMenuInfo extends Model{
 	  */
 	private java.lang.Long menuOrder;
 
-	/**
-	  *	
-	  */
-	private java.lang.Long parentMenuId;
 	
 	private java.lang.String parentMenuName;
 
@@ -49,7 +41,7 @@ public class SystemMenuInfo extends Model{
 	/**
 	  *	是否可用：0表示不可以用，1表示可用
 	  */
-	private java.lang.Long usable;
+	private java.lang.Integer usable;
 
 	/**
 	  *	
@@ -76,18 +68,6 @@ public class SystemMenuInfo extends Model{
 	  */
 	private java.lang.String updateTime;
 
-	/**
-	  *	
-	  */
-	private java.lang.Integer version;
-
-	public java.lang.Long getMenuId() {
-		return menuId;
-	}
-
-	public void setMenuId(java.lang.Long menuId) {
-		this.menuId = menuId;
-	}
 
 	public java.lang.String getMenuCode() {
 		return menuCode;
@@ -113,13 +93,6 @@ public class SystemMenuInfo extends Model{
 		this.menuOrder = menuOrder;
 	}
 
-	public java.lang.Long getParentMenuId() {
-		return parentMenuId;
-	}
-
-	public void setParentMenuId(java.lang.Long parentMenuId) {
-		this.parentMenuId = parentMenuId;
-	}
 
 	public java.lang.String getMenuIcon() {
 		return menuIcon;
@@ -135,14 +108,6 @@ public class SystemMenuInfo extends Model{
 
 	public void setPageUrl(java.lang.String pageUrl) {
 		this.pageUrl = pageUrl;
-	}
-
-	public java.lang.Long getUsable() {
-		return usable;
-	}
-
-	public void setUsable(java.lang.Long usable) {
-		this.usable = usable;
 	}
 
 	public java.lang.String getRemark() {
@@ -185,14 +150,6 @@ public class SystemMenuInfo extends Model{
 		this.updateTime = updateTime;
 	}
 
-	public java.lang.Integer getVersion() {
-		return version;
-	}
-
-	public void setVersion(java.lang.Integer version) {
-		this.version = version;
-	}
-
 	public java.lang.String getParentMenuName() {
 		return parentMenuName;
 	}
@@ -203,11 +160,10 @@ public class SystemMenuInfo extends Model{
 
 	@Override
 	public String toString() {
-		return "SystemMenu [menuId=" + menuId + ", menuCode=" + menuCode + ", menuName=" + menuName + ", menuOrder="
-						+ menuOrder + ", parentMenuId=" + parentMenuId + ", parentMenuName=" + parentMenuName
-						+ ", menuIcon=" + menuIcon + ", pageUrl=" + pageUrl + ", usable=" + usable + ", remark="
-						+ remark + ", createdBy=" + createdBy + ", createTime=" + createTime + ", updatedBy="
-						+ updatedBy + ", updateTime=" + updateTime + ", version=" + version + "]";
+		return "SystemMenuInfo [menuCode=" + menuCode + ", menuName=" + menuName + ", menuOrder=" + menuOrder
+						+ ", parentMenuName=" + parentMenuName + ", menuIcon=" + menuIcon + ", pageUrl=" + pageUrl
+						+ ", usable=" + usable + ", remark=" + remark + ", createdBy=" + createdBy + ", createTime="
+						+ createTime + ", updatedBy=" + updatedBy + ", updateTime=" + updateTime + "]";
 	}
 
 }
