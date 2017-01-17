@@ -20,7 +20,7 @@ public class OrganizationDto implements Serializable {
 	/**
 	 * 父级组织ID
 	 * */
-	private Integer parentId;
+	private Long parentId;
 	
 	/**
 	 * 组织ID
@@ -56,11 +56,11 @@ public class OrganizationDto implements Serializable {
 		this.companyId = companyId;
 	}
 
-	public Integer getParentId() {
+	public Long getParentId() {
 		return parentId;
 	}
 
-	public void setParentId(Integer parentId) {
+	public void setParentId(Long parentId) {
 		this.parentId = parentId;
 	}
 

@@ -45,6 +45,12 @@ public class BrandManager {
 		if(UtilHelper.isEmpty(userContext.getCompanyId())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
+		Brand tempBr = new Brand();
+		tempBr.setBrandName(brandDto.getBrandName());
+		int count = brandMapper.findByCount(tempBr);
+		if(count>0){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_BRAND_ALREADY_EXISTS);
+		}
 		Brand brand = new Brand();
 		BeanUtils.copyProperties(brandDto, brand);
 		brand.setCompanyId(userContext.getCompanyId().intValue());
@@ -102,6 +108,14 @@ public class BrandManager {
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		Brand tempBr = new Brand();
+		tempBr.setBrandName(brand.getBrandName());
+		int count1 = brandMapper.findByCount(tempBr);
+		tempBr.setId(brand.getId());
+		int count2 = brandMapper.findByCount(tempBr);
+		if(count1>0 && count2<1){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_BRAND_ALREADY_EXISTS);
 		}
 		Brand formerBr = brandMapper.getByPK(brand.getId());
 		formerBr.setBrandName(brand.getBrandName());

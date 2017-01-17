@@ -152,4 +152,24 @@ public class MessageStoreResource {
      * empId为空
      */
     public static final String ERROR_MESSAGE_EMPID_IS_NULL = "error_message_empIdIsNull";
+    
+    /**
+     * 品牌已存在
+     */
+    public static final String ERROR_MESSAGE_BRAND_ALREADY_EXISTS = "error_message_brandAlreadyExists";
+
+    /**
+     * 机型已存在
+     */
+	public static final String ERROR_MESSAGE_MODEL_ALREADY_EXISTS = "error_message_modelAlreadyExists";
+
+	/**
+     * 销售区域已存在
+     */
+	public static final String ERROR_MESSAGE_REGION_ALREADY_EXISTS = "error_message_regionAlreadyExists";
+
+	/**
+     * 组织机构已存在
+     */
+	public static final String ERROR_MESSAGE_ORGANIZATION_ALREADY_EXISTS = "error_message_organizationAlreadyExists";
 }

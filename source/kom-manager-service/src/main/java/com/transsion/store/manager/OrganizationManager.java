@@ -41,6 +41,13 @@ public class OrganizationManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		Organization tempOrg = new Organization();
+		tempOrg.setOrgName(organizationDto.getOrgName());
+		tempOrg.setParentId(organizationDto.getParentId());
+		int count = organizationMapper.findByCount(tempOrg);
+		if(count>0){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ORGANIZATION_ALREADY_EXISTS);
+		}
 		Organization organization = new Organization();
 		BeanUtils.copyProperties(organizationDto, organization);
 		if(UtilHelper.isEmpty(organizationDto.getParentId())){
@@ -155,6 +162,15 @@ public class OrganizationManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		Organization tempOrg = new Organization();
+		tempOrg.setOrgName(organization.getOrgName());
+		tempOrg.setParentId(organization.getParentId());
+		int count1 = organizationMapper.findByCount(tempOrg);
+		tempOrg.setId(organization.getId());
+		int count2 = organizationMapper.findByCount(tempOrg);
+		if(count1>0 && count2<1){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ORGANIZATION_ALREADY_EXISTS);
+		}
 		Organization formerOrg = organizationMapper.getByPK(organization.getId());
 		formerOrg.setOrgName(organization.getOrgName());
 		formerOrg.setDutyName(organization.getDutyName());

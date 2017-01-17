@@ -119,12 +119,13 @@ public class RegionManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		/*Region tempReg = new Region();
-		tempReg.setRegionCode(region.getRegionCode());
+		Region tempReg = new Region();
+		tempReg.setRegionName(region.getRegionName());
+		tempReg.setParentId(region.getParentId());
 		int count = regionMapper.findByCount(tempReg);
 		if(count>0){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_REGIONCODE_IS_DUPLICATE);
-		}*/
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_REGION_ALREADY_EXISTS);
+		}
 		if(UtilHelper.isEmpty(region.getParentId())){
 			region.setParentId(0l);
 		}
@@ -153,14 +154,15 @@ public class RegionManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		/*Region tempReg = new Region();
-		tempReg.setRegionCode(region.getRegionCode());
+		Region tempReg = new Region();
+		tempReg.setRegionName(region.getRegionName());
+		tempReg.setParentId(region.getParentId());
 		int count1 = regionMapper.findByCount(tempReg);
 		tempReg.setId(region.getId());
 		int count2 = regionMapper.findByCount(tempReg);
 		if(count1>0 && count2<1){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_REGIONCODE_IS_DUPLICATE);
-		}*/
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_REGION_ALREADY_EXISTS);
+		}
 		Region formerReg = regionMapper.getByPK(region.getId());
 		formerReg.setRegionName(region.getRegionName());
 		formerReg.setRegionType(region.getRegionType());

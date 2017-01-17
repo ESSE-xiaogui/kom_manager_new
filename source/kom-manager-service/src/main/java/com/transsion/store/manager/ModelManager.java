@@ -41,6 +41,14 @@ public class ModelManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
+		//同一品牌下的机型不能重复，不同品牌下的机型可以重复
+		Model tempMo = new Model();
+		tempMo.setModelName(model.getModelName());
+		tempMo.setBrandCode(model.getBrandCode());
+		int count = modelMapper.findByCount(tempMo);
+		if(count>0){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_MODEL_ALREADY_EXISTS);
+		}
 		model.setSaleTime(model.getSaleTime().equals("") ? null : model.getSaleTime());
 		model.setCompanyId(userContext.getCompanyId().intValue());
 		model.setCreatedBy(userContext.getUserCode());
@@ -81,6 +89,16 @@ public class ModelManager {
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		//同一品牌下的机型不能重复，不同品牌下的机型可以重复
+		Model tempMo = new Model();
+		tempMo.setModelName(model.getModelName());
+		tempMo.setBrandCode(model.getBrandCode());
+		int count1 = modelMapper.findByCount(tempMo);
+		tempMo.setId(model.getId());
+		int count2 = modelMapper.findByCount(tempMo);
+		if(count1>0 && count2<1){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_MODEL_ALREADY_EXISTS);
 		}
 		Model formerMo = modelMapper.getByPK(model.getId());
 		formerMo.setBrandCode(model.getBrandCode());
