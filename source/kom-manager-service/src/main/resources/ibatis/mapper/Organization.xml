@@ -173,6 +173,9 @@
             <if test="orgInfoDto.orgName!= null and orgInfoDto.orgName!= ''">
 				AND o1.ORG_NAME=#{orgInfoDto.orgName}
             </if>
+            <if test="orgInfoDto.pOrgName!= null and orgInfoDto.pOrgName!= ''">
+				AND o2.ORG_NAME=#{orgInfoDto.pOrgName}
+            </if>
             <if test="orgInfoDto.companyId!= null and orgInfoDto.companyId!= ''">
 				AND o1.COMPANY_ID=#{orgInfoDto.companyId}
             </if>
