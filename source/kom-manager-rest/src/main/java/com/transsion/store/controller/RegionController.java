@@ -170,7 +170,6 @@ public class RegionController extends AbstractController{
 	public List<ShopBindRegionDto> findShopBindRegion(@QueryParam("userName") String userName) throws ServiceException{
 		String token = this.getAuthorization();
 		List<ShopBindRegionDto> list = regionFacade.findShopBindRegion(token,userName);
-		System.out.println(list);
 		return list;
 		
 	}

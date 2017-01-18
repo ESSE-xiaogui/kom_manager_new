@@ -30,56 +30,57 @@ import com.transsion.store.utils.CacheUtils;
 @Service("regionManager")
 public class RegionManager {
 	@Autowired
-	private RegionService regionService ;
-	
+	private RegionService regionService;
+
 	@Autowired
 	private SystemDateService systemDateService;
-	
+
 	@Autowired
 	private ShopService shopService;
-	
+
 	@Autowired
 	private RegionMapper regionMapper;
-	
+
 	@Autowired
 	private ShopMapper shopMapper;
-	
+
 	/**
 	 * 查询树形销售区域
+	 * 
 	 * @return
 	 * @throws serviceException
-	 * */
-	public List<RegionDto> findRegionsList(String token) throws ServiceException{
-		if(UtilHelper.isEmpty(token)){
+	 */
+	public List<RegionDto> findRegionsList(String token) throws ServiceException {
+		if (UtilHelper.isEmpty(token)) {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
 		}
-		UserContext usercontext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(usercontext)){
+		UserContext usercontext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(usercontext)) {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(usercontext.getUser())){
+		if (UtilHelper.isEmpty(usercontext.getUser())) {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
 		}
-		
+
 		Integer companyId = usercontext.getUser().getCompanyId();
 		List<RegionDto> regionList = regionService.findRegionsList(companyId);
-		return getChildrenRegion(regionList,Long.valueOf(0));
+		return getChildrenRegion(regionList, Long.valueOf(0));
 	}
-	
+
 	/**
 	 * 获取树形子菜单
-	 * */
-	public List<RegionDto> getChildrenRegion(List<RegionDto> regionList,Long parentId) throws ServiceException{
+	 */
+	public List<RegionDto> getChildrenRegion(List<RegionDto> regionList, Long parentId) throws ServiceException {
 		List<RegionDto> regionTreeDto = new ArrayList<>();
-		for(RegionDto region:regionList){
-			Long regionId = region.getId();  
+		for (RegionDto region : regionList) {
+			Long regionId = region.getId();
 			Long pid = region.getParentId();
 			if (parentId != null) {
-				if (parentId.equals(pid)) {  
-	        	   List<RegionDto> children = getChildrenRegion(regionList, regionId); 
-	        	   region.setChildren(children);
-	        	   regionTreeDto.add(region);
-	           }  
+				if (parentId.equals(pid)) {
+					List<RegionDto> children = getChildrenRegion(regionList, regionId);
+					region.setChildren(children);
+					regionTreeDto.add(region);
+				}
 			}
 		}
 		return regionTreeDto;
@@ -87,15 +88,16 @@ public class RegionManager {
 
 	/**
 	 * 查询销售区域名称
+	 * 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Region findRegionName(java.lang.Long id) throws ServiceException{
-		if(UtilHelper.isEmpty(id)){
+	public Region findRegionName(java.lang.Long id) throws ServiceException {
+		if (UtilHelper.isEmpty(id)) {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		String regionName = regionService.getRegionName(id);
-		if(UtilHelper.isEmpty(regionName)){
+		if (UtilHelper.isEmpty(regionName)) {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		Region region = new Region();
@@ -105,28 +107,29 @@ public class RegionManager {
 
 	/**
 	 * 新增销售区域
+	 * 
 	 * @return
 	 * @throws ServiceException
-	 * */
+	 */
 	public RegionResponseDto saveRegion(String token, Region region) throws ServiceException {
-		if(UtilHelper.isEmpty(token)){
+		if (UtilHelper.isEmpty(token)) {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
 		}
-		if(UtilHelper.isEmpty(region)){
+		if (UtilHelper.isEmpty(region)) {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext)){
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext)) {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		Region tempReg = new Region();
 		tempReg.setRegionName(region.getRegionName());
 		tempReg.setParentId(region.getParentId());
 		int count = regionMapper.findByCount(tempReg);
-		if(count>0){
+		if (count > 0) {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_REGION_ALREADY_EXISTS);
 		}
-		if(UtilHelper.isEmpty(region.getParentId())){
+		if (UtilHelper.isEmpty(region.getParentId())) {
 			region.setParentId(0l);
 		}
 		region.setCreatedBy(userContext.getUserCode());
@@ -137,21 +140,22 @@ public class RegionManager {
 		rrd.setStatus(1);
 		return rrd;
 	}
-	
+
 	/**
 	 * 修改销售区域
+	 * 
 	 * @return
 	 * @throws ServiceException
-	 * */
+	 */
 	public RegionResponseDto update(String token, Region region) throws ServiceException {
-		if(UtilHelper.isEmpty(token)){
+		if (UtilHelper.isEmpty(token)) {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
 		}
-		if(UtilHelper.isEmpty(region)){
+		if (UtilHelper.isEmpty(region)) {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext)){
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext)) {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		Region tempReg = new Region();
@@ -160,7 +164,7 @@ public class RegionManager {
 		int count1 = regionMapper.findByCount(tempReg);
 		tempReg.setId(region.getId());
 		int count2 = regionMapper.findByCount(tempReg);
-		if(count1>0 && count2<1){
+		if (count1 > 0 && count2 < 1) {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_REGION_ALREADY_EXISTS);
 		}
 		Region formerReg = regionMapper.getByPK(region.getId());
@@ -179,58 +183,60 @@ public class RegionManager {
 
 	/**
 	 * 根据主键删除记录
+	 * 
 	 * @param primaryKey
 	 * @return
 	 * @throws ServiceException
 	 */
 	public void deleteByPKeys(List<java.lang.Long> primaryKeys) throws ServiceException {
-		for(int i=0;i<primaryKeys.size();i++){
-			Long primaryKey = primaryKeys.get(i); 
+		for (int i = 0; i < primaryKeys.size(); i++) {
+			Long primaryKey = primaryKeys.get(i);
 			Region region = new Region();
 			region.setParentId(primaryKey);
-			int countChildren = regionService.findByCount(region); 
+			int countChildren = regionService.findByCount(region);
 			Shop shop = new Shop();
 			shop.setRegionId(primaryKey);
 			int countShop = shopService.findByCount(shop);
-			if(countChildren>0){
+			if (countChildren > 0) {
 				throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EXIST_CHILD_NODE);
-			}else if(countShop>0){
+			} else if (countShop > 0) {
 				throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_BUNDLED_WITH_SHOP);
-			}else{
+			} else {
 				regionService.deleteByPK(primaryKey);
-			}	
+			}
 		}
 	}
-	
+
 	/**
 	 * 查询销售区域已绑定店铺
+	 * 
 	 * @return
 	 * @throws ServiceException
-	 * */
-	public List<RegionShopDto> findRegionShop(String token) throws ServiceException{
-		if(UtilHelper.isEmpty(token)){
+	 */
+	public List<RegionShopDto> findRegionShop(String token) throws ServiceException {
+		if (UtilHelper.isEmpty(token)) {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
 		}
-		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext)){
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext)) {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(userContext.getUser())){
+		if (UtilHelper.isEmpty(userContext.getUser())) {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
 		}
-		if(UtilHelper.isEmpty(userContext.getUser().getCompanyId())){
+		if (UtilHelper.isEmpty(userContext.getUser().getCompanyId())) {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		List<RegionShopDto> rsdList = new ArrayList<RegionShopDto>();
 		Integer companyId = userContext.getUser().getCompanyId();
 		List<RegionShopDto> rsDto = regionMapper.findRegionShop(companyId);
-		for(RegionShopDto rs:rsDto){
+		for (RegionShopDto rs : rsDto) {
 			List<ShopDto> regDtoList = new ArrayList<ShopDto>();
 			Shop shop = new Shop();
 			shop.setCity(rs.getId().intValue());
 			List<Shop> shopList = shopService.listByProperty(shop);
-			if(shopList.size()>0){
-				for(Shop s:shopList){
+			if (shopList.size() > 0) {
+				for (Shop s : shopList) {
 					ShopDto sd = new ShopDto();
 					sd.setId(s.getId());
 					sd.setCity(s.getCity());
@@ -243,41 +249,42 @@ public class RegionManager {
 		}
 		return rsdList;
 	}
-	
-	
+
 	/**
 	 * 门店授权管理:门店绑定区域查询
-	 * */
-	public List<ShopBindRegionDto> findShopBindRegion(String token,String userName) throws ServiceException{
-		if(UtilHelper.isEmpty(token) && UtilHelper.isEmpty(userName)){
+	 */
+	public List<ShopBindRegionDto> findShopBindRegion(String token, String userName) throws ServiceException {
+		if (UtilHelper.isEmpty(token) && UtilHelper.isEmpty(userName)) {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
 		}
-		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext)){
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext)) {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		List<ShopBindRegionDto> list = new ArrayList<ShopBindRegionDto>();
+		//List<ShopBindRegionDto> list = new ArrayList<ShopBindRegionDto>();
 		List<ShopBindRegionDto> childrenList = regionMapper.findRegion(userName);
-		if(!UtilHelper.isEmpty(childrenList)){
-			for(ShopBindRegionDto shopBindRegion:childrenList){
-				List<ShopRegionChildrenDto> childrenRegion = childrenRegion(shopBindRegion.getId(),userName);
+		if (!UtilHelper.isEmpty(childrenList)) {
+			for (ShopBindRegionDto shopBindRegion : childrenList) {
+				List<ShopRegionChildrenDto> childrenRegion = childrenRegion(shopBindRegion.getId(), userName);
 				shopBindRegion.setRegionChildren(childrenRegion);
-				list.add(shopBindRegion);
+				//list.add(shopBindRegion);
+			}
 		}
-		}
-		return list;
+		return childrenList;
 	}
-	
-	public List<ShopRegionChildrenDto> childrenRegion(Long parentId,String userName) throws DataAccessFailureException{
-		List<ShopRegionChildrenDto> list = new ArrayList<ShopRegionChildrenDto>();
-		List<ShopRegionChildrenDto> srcList = regionMapper.findRegionChildren(parentId,userName);
-		if(!UtilHelper.isEmpty(srcList)){
-			for(ShopRegionChildrenDto src:srcList){
-				List<ShopChildrenDto> scDtoList = shopMapper.findShopByRegionId(src.getId(),userName);
+
+	public List<ShopRegionChildrenDto> childrenRegion(Long parentId, String userName)
+					throws DataAccessFailureException {
+		//List<ShopRegionChildrenDto> list = new ArrayList<ShopRegionChildrenDto>();
+		List<ShopRegionChildrenDto> srcList = regionMapper.findRegionChildren(parentId, userName);
+		if (!UtilHelper.isEmpty(srcList)) {
+			for (ShopRegionChildrenDto src : srcList) {
+				List<ShopChildrenDto> scDtoList = shopMapper.findShopByRegionId(src.getId(), userName);
 				src.setChildrenShop(scDtoList);
-				list.add(src);
+				//list.add(src);
+			}
 		}
-		}
-		return list;
+		return srcList;
+		//return srcList;
 	}
 }

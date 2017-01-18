@@ -221,28 +221,31 @@
 	<sql id="orderBy">
 		<choose>
         	<when test="key == 'id'">
-				ID ${value}
+				o1.ID ${value}
             </when>
         	<when test="key == 'orgId'">
-				ORG_ID ${value}
+				o1.ORG_ID ${value}
             </when>
         	<when test="key == 'orgName'">
-				ORG_NAME ${value}
+				o1.ORG_NAME ${value}
+            </when>
+            <when test="key == 'pOrgName'">
+				o2.ORG_NAME ${value}
             </when>
         	<when test="key == 'companyId'">
-				COMPANY_ID ${value}
+				o1.COMPANY_ID ${value}
             </when>
         	<when test="key == 'parentId'">
-				PARENT_ID ${value}
+				o1.PARENT_ID ${value}
             </when>
             <when test="key == 'dutyName'">
-				DUTY_NAME ${value}
+				o1.DUTY_NAME ${value}
             </when>
         	<when test="key == 'isInactive'">
-				IS_INACTIVE ${value}
+				o1.IS_INACTIVE ${value}
             </when>
         	<when test="key == 'remark'">
-				REMARK ${value}
+				o1.REMARK ${value}
             </when>
         	<when test="key == 'createdBy'">
 				CREATED_BY ${value}

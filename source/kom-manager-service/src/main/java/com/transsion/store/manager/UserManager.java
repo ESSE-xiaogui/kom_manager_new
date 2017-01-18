@@ -219,7 +219,7 @@ public class UserManager {
 		
 		user.setCompanyId(userContext.getUser().getCompanyId());
 		user.setPassword(MD5Utils.encrypt(password));
-		user.setIsInactive(1);
+		user.setIsInactive(user.getIsInactive());
 		user.setCreatedBy(userContext.getUser().getUserCode());
 		user.setCreatedTime(systemDateService.getCurrentDate());
 		userService.save(user);
