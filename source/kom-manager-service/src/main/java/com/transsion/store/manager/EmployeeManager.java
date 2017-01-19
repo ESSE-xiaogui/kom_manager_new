@@ -77,6 +77,7 @@ public class EmployeeManager {
 		if(org.getIsInactive().equals(ConstantUtil.STATUS_TWO)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ORG_ISINACTIVE);
 		}
+		employee.setIsHistory(2);
 		employee.setCreatedBy(userContext.getUserCode());
 		employee.setCreatedTime(systemDateService.getCurrentDate());
 		employee.setBirthday(employee.getBirthday().equals("")?null:employee.getBirthday());
