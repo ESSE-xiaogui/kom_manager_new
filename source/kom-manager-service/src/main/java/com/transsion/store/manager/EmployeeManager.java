@@ -175,7 +175,7 @@ public class EmployeeManager {
 		}
 		Integer inService = employee.getInService();
 		if(!UtilHelper.isEmpty(inService) && 1 == employee.getInService().intValue() ){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_UNBIND_USER);
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_NOT_IN_SERVICE);
 		}
 		Long uId =employee.getuId();
 		if(!UtilHelper.isEmpty(uId)){

@@ -172,4 +172,9 @@ public class MessageStoreResource {
      * 组织机构已存在
      */
 	public static final String ERROR_MESSAGE_ORGANIZATION_ALREADY_EXISTS = "error_message_organizationAlreadyExists";
+
+	/**
+     * 员工已离职
+     */
+	public static final String ERROR_MESSAGE_EMP_NOT_IN_SERVICE = "error_message_empNotInService";
 }
