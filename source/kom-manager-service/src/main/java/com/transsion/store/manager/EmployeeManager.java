@@ -173,7 +173,8 @@ public class EmployeeManager {
 		if(UtilHelper.isEmpty(employee)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PASSWORD_IS_NULL);
 		}
-		if(employee.getInService().intValue() == 2){
+		Integer inService = employee.getInService();
+		if(!UtilHelper.isEmpty(inService) && 2 == employee.getInService().intValue() ){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_UNBIND_USER);
 		}
 		Long uId =employee.getuId();
