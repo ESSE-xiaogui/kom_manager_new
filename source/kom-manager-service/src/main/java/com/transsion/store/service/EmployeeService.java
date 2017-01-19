@@ -104,6 +104,7 @@ public class EmployeeService {
 	 */
 	public void deleteByPKeys(List<java.lang.Long> primaryKeys) throws ServiceException
 	{
+		
 		employeeMapper.deleteByPKeys(primaryKeys);
 	}
 	

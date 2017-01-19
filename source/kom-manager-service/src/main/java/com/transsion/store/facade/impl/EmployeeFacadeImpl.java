@@ -94,7 +94,7 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
 	 */
 	public int deleteByPK(java.lang.Long primaryKey) throws ServiceException
 	{
-		return employeeService.deleteByPK(primaryKey);
+		return employeeManager.updateIsHistory(primaryKey);
 	}
 	
 	/**
@@ -104,7 +104,7 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
 	 */
 	public void deleteByPKeys(List<java.lang.Long> primaryKeys) throws ServiceException
 	{
-		employeeService.deleteByPKeys(primaryKeys);
+		employeeManager.updateIsHistorys(primaryKeys);
 	}
 	
 	/**

@@ -289,5 +289,17 @@ public class EmployeeManager {
 		}
 		return erdList;
 	}
+	/**
+	 * 根据主键删除记录
+	 */
+	public int updateIsHistory(Long primaryKey) throws ServiceException{
+		return employeeMapper.updateIsHistory(primaryKey);
+	}
+	/**
+	 * 根据多个主键删除记录
+	 * */
+	public void updateIsHistorys(List<Long> primaryKeys) throws ServiceException{
+		employeeMapper.updateIsHistorys(primaryKeys);
+	}
 
 }

@@ -35,5 +35,9 @@ public interface EmployeeMapper extends GenericIBatisMapper<Employee, java.lang.
 	public List<EmpResponseDto> getEmpInfo(String empName)throws DataAccessFailureException;
 
 	public List<EmpResponseDto> listByProp(Employee employee) throws DataAccessFailureException;
+	
+	public int updateIsHistory(Long primaryKey) throws DataAccessFailureException;
+	
+	public void updateIsHistorys(@Param("primaryKeys") List<Long> primaryKeys) throws DataAccessFailureException;
 
 }

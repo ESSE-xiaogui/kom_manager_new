@@ -129,6 +129,8 @@ public class Employee extends Model{
 	  *	
 	  */
 	private java.lang.Integer inService;
+	
+	private Integer isHistory;
 
 	/**
 	  *	
@@ -327,6 +329,14 @@ public class Employee extends Model{
 	public void setInService(java.lang.Integer inService) {
 		this.inService = inService;
 	}
+	
+	public Integer getIsHistory() {
+		return isHistory;
+	}
+
+	public void setIsHistory(Integer isHistory) {
+		this.isHistory = isHistory;
+	}
 
 	public java.lang.String getRemark() {
 		return remark;
@@ -383,12 +393,10 @@ public class Employee extends Model{
 						+ dutyId + ", upperId=" + upperId + ", upperName=" + upperName + ", gender=" + gender
 						+ ", birthday=" + birthday + ", nation=" + nation + ", married=" + married + ", phoneNo="
 						+ phoneNo + ", mobileNo=" + mobileNo + ", email=" + email + ", nativePlace=" + nativePlace
-						+ ", zipCode=" + zipCode + ", inService=" + inService + ", remark=" + remark + ", createdBy="
-						+ createdBy + ", createdTime=" + createdTime + ", updatedBy=" + updatedBy + ", updatedTime="
-						+ updatedTime + ", version=" + version + "]";
+						+ ", zipCode=" + zipCode + ", inService=" + inService + ", isHistory=" + isHistory + ", remark="
+						+ remark + ", createdBy=" + createdBy + ", createdTime=" + createdTime + ", updatedBy="
+						+ updatedBy + ", updatedTime=" + updatedTime + ", version=" + version + "]";
 	}
-
-
 
 }
 
