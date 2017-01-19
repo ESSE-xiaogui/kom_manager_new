@@ -42,7 +42,7 @@
 		<result column="PMENU_NAME" property="parentMenuName"/>
 		<result column="MENU_ICON" property="menuIcon"/>
 		<result column="PAGE_URL" property="pageUrl"/>
-		<result column="USABLE" property="usable"/>
+		<!-- <result column="USABLE" property="usable"/> -->
 		<result column="REMARK" property="remark"/>
 		<result column="CREATED_BY" property="createdBy"/>
 		<result column="CREATE_TIME" property="createTime"/>
@@ -182,9 +182,9 @@
             <if test="systemMenuInfo.pageUrl!= null and systemMenuInfo.pageUrl!= ''">
 				AND m1.PAGE_URL=#{systemMenuInfo.pageUrl}
             </if>
-            <if test="systemMenuInfo.usable!= null and systemMenuInfo.usable!= ''">
+         <!--    <if test="systemMenuInfo.usable!= null and systemMenuInfo.usable!= ''">
 				AND m1.USABLE=#{systemMenuInfo.usable}
-            </if>
+            </if> -->
             <if test="systemMenuInfo.remark!= null and systemMenuInfo.remark!= ''">
 				AND m1.REMARK=#{systemMenuInfo.remark}
             </if>
@@ -232,9 +232,9 @@
         	<when test="key == 'pageUrl'">
 				m1.PAGE_URL ${value}
             </when>
-        	<when test="key == 'usable'">
+        	<!-- <when test="key == 'usable'">
 				m1.USABLE ${value}
-            </when>
+            </when> -->
         	<when test="key == 'remark'">
 				m1.REMARK ${value}
             </when>
@@ -323,7 +323,7 @@
 	</select>
 	<select id="listPaginationByProperty" parameterType="SystemMenuInfo" resultMap="SystemMenuInfoResultMapper">
 		SELECT m1.MENU_ID, m1.MENU_NAME,m2.MENU_NAME AS PMENU_NAME,m1.MENU_ORDER
-		, m1.MENU_ICON, m1.PAGE_URL, m1.USABLE, m1.REMARK, m1.CREATED_BY
+		, m1.MENU_ICON, m1.PAGE_URL, m1.REMARK, m1.CREATED_BY
 		, m1.CREATE_TIME, m1.UPDATED_BY, m1.UPDATE_TIME
 		FROM T_SYSTEM_MENU m1
 		LEFT JOIN T_SYSTEM_MENU m2 ON m2.MENU_ID = m1.PARENT_MENU_ID
