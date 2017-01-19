@@ -41,6 +41,7 @@
 		<result column="NATIVE_PLACE" property="nativePlace"/>
 		<result column="ZIP_CODE" property="zipCode"/>
 		<result column="IN_SERVICE" property="inService"/>
+		<result column="IS_HISTORY" property="isHistory"/>
 		<result column="REMARK" property="remark"/>
 		<result column="CREATED_BY" property="createdBy"/>
 		<result column="CREATED_TIME" property="createdTime"/>
@@ -558,17 +559,17 @@
 	<select id="getByPK" parameterType="java.lang.Long" resultMap="EmployeeResultMapper">
 		<![CDATA[ SELECT ]]>
 			 <include refid="commonProcessDateColumns"/>
-		FROM T_EMPLOYEE WHERE ID = #{id}  
+		FROM T_EMPLOYEE WHERE ID = #{id}  AND IS_HISTORY = 2
 	</select>
 	<select id="list" resultMap="EmployeeResultMapper">
 		<![CDATA[ SELECT ]]>
 			 <include refid="commonProcessDateColumns"/>
- 		FROM T_EMPLOYEE
+ 		FROM T_EMPLOYEE WHERE IS_HISTORY = 2
 	</select>
 	<select id="listByProperty" parameterType="Employee" resultMap="EmployeeResultMapper">
 		<![CDATA[ SELECT ]]>
 			<include refid="commonProcessDateColumns"/>
-		FROM T_EMPLOYEE WHERE 1=1 
+		FROM T_EMPLOYEE WHERE 1=1 AND IS_HISTORY = 2
 		<include refid="commonCondition"/>
 	</select>
 	<select id="listByProp" parameterType="Employee" resultMap="EmpResponseDtoResultMapper">
@@ -576,7 +577,7 @@
 		 GENDER, BIRTHDAY, NATION, MARRIED, PHONE_NO,EMAIL, IN_SERVICE FROM T_EMPLOYEE e 
 		 LEFT JOIN T_DUTY d ON d.ID = e.DUTY_ID
 		 LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ID
-		 WHERE e.ID = #{id}
+		 WHERE e.ID = #{id} AND IS_HISTORY = 2
 	</select>
 	<select id="listPaginationByProperty" parameterType="EmpInfoDto" resultMap="EmpInfoDtoResultMapper">
 		 SELECT e.ID,EMP_CODE, e.EMP_NAME, e.ID_NO,o.ORG_NAME,u.USER_CODE,d.DUTY_NAME,UPPER_ID, e.UPPER_NAME,
@@ -585,15 +586,25 @@
 		 LEFT JOIN T_DUTY d ON d.ID = e.DUTY_ID
 		 LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ID
 		 LEFT JOIN T_USER u ON u.ID = e.U_ID
-		 WHERE 1=1
+		 WHERE 1=1 AND e.IS_HISTORY = 2
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>
 	<select id="findByCount" parameterType="Employee" resultType="int">
-		SELECT count(1) AS totalcount FROM T_EMPLOYEE WHERE 1=1 
+		SELECT count(1) AS totalcount FROM T_EMPLOYEE WHERE 1=1 AND IS_HISTORY = 2
 		<include refid="commonCondition"/>
 	</select>
 	<select id="getEmpInfo" parameterType="String" resultMap="EmpResponseDtoResultMapper">
-		SELECT ID,EMP_NAME,EMP_CODE FROM T_EMPLOYEE WHERE EMP_NAME LIKE CONCAT('%',#{empName},'%')
+		SELECT ID,EMP_NAME,EMP_CODE FROM T_EMPLOYEE WHERE EMP_NAME LIKE CONCAT('%',#{empName},'%') AND IS_HISTORY = 2
 	</select>
+	<update id="updateIsHistory" parameterType="java.lang.Long">
+	<![CDATA[ UPDATE T_EMPLOYEE SET IS_HISTORY = 1 WHERE ID = #{id}  ]]>
+	</update>
+	<update id="updateIsHistorys" parameterType="map">
+	UPDATE T_EMPLOYEE SET IS_HISTORY = 1 WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			#{id}
+		</foreach>
+	</update>
 </mapper>
