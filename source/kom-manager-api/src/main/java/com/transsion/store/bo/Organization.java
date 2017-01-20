@@ -51,7 +51,7 @@ public class Organization extends Model{
 	  */
 	private java.lang.Long parentId;
 
-	private java.lang.String dutyName;
+	private java.lang.Long dutyId;
 
 	/**
 	  *	1表示激活状态，被激活有效的数据可以用于新增业务，2表示停用，被停用无效的数据只能用于历史数据查询中
@@ -168,14 +168,6 @@ public class Organization extends Model{
 		this.parentId = parentId;
 	}
 	
-	public java.lang.String getDutyName() {
-		return dutyName;
-	}
-
-	public void setDutyName(java.lang.String dutyName) {
-		this.dutyName = dutyName;
-	}
-	
 	/**
 	  *	0表示激活状态，被激活有效的数据可以用于新增业务，1表示停用，被停用无效的数据只能用于历史数据查询中
 	  */
@@ -288,14 +280,23 @@ public class Organization extends Model{
 		this.version = version;
 	}
 
+	public java.lang.Long getDutyId() {
+		return dutyId;
+	}
+
+	public void setDutyId(java.lang.Long dutyId) {
+		this.dutyId = dutyId;
+	}
+
 	@Override
 	public String toString() {
 		return "Organization [id=" + id + ", orgId=" + orgId + ", orgName=" + orgName + ", companyId=" + companyId
-						+ ", parentId=" + parentId + ", dutyName=" + dutyName + ", isInactive=" + isInactive
-						+ ", remark=" + remark + ", createdBy=" + createdBy + ", createdTime=" + createdTime
-						+ ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime + ", version=" + version + "]";
+						+ ", parentId=" + parentId + ", dutyId=" + dutyId + ", isInactive=" + isInactive + ", remark="
+						+ remark + ", createdBy=" + createdBy + ", createdTime=" + createdTime + ", updatedBy="
+						+ updatedBy + ", updatedTime=" + updatedTime + ", version=" + version + "]";
 	}
 
+	
 
 }
 

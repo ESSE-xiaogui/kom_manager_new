@@ -25,7 +25,7 @@
 		<result column="PARENT_ID" property="parentId"/>
 		<result column="ORG_ID" property="orgId"/>
 		<result column="ORG_NAME" property="orgName"/>
-		<result column="DUTY_NAME" property="dutyName"/>
+		<result column="DUTY_ID" property="dutyId"/>
 		<result column="IS_INACTIVE" property="isInactive"/>
 		<result column="REMARK" property="remark"/>
 		<result column="CREATED_BY" property="createdBy"/>
@@ -68,7 +68,7 @@
 		<result column="ORG_ID" property="orgId"/>
 		<result column="PORG_NAME" property="pOrgName"/>
 		<result column="ORG_NAME" property="orgName"/>
-		<result column="DUTY_NAME" property="dutyName"/>
+		<result column="DUTY_ID" property="dutyId"/>
 		<result column="IS_INACTIVE" property="isInactive"/>
 		<result column="REMARK" property="remark"/>
 	</resultMap>
@@ -79,7 +79,7 @@
 		, ORG_NAME
 		, COMPANY_ID
 		, PARENT_ID
-		, DUTY_NAME
+		, DUTY_ID
 		, IS_INACTIVE
 		, REMARK
 		, CREATED_BY
@@ -94,7 +94,7 @@
 		, PARENT_ID
 		, ORG_ID
 		, ORG_NAME
-		, DUTY_NAME
+		, DUTY_ID
 		, IS_INACTIVE
 		, REMARK
 		, CREATED_BY
@@ -110,7 +110,7 @@
 		, ORG_NAME
 		, COMPANY_ID
 		, PARENT_ID
-		, DUTY_NAME
+		, DUTY_ID
 		, IS_INACTIVE
 		, REMARK
 		, CREATED_BY
@@ -136,8 +136,8 @@
 		<if test="parentId!= null and parentId!= ''"> 
 			AND PARENT_ID=#{parentId}
 		</if>
-		<if test="dutyName!= null and dutyName!= ''"> 
-			AND DUTY_NAME=#{dutyName}
+		<if test="dutyId!= null and dutyId!= ''"> 
+			AND DUTY_ID=#{dutyId}
 		</if>
 		<if test="isInactive!= null and isInactive!= ''"> 
 			AND IS_INACTIVE=#{isInactive}
@@ -182,8 +182,8 @@
             <if test="orgInfoDto.parentId!= null and orgInfoDto.parentId!= ''">
 				AND o1.PARENT_ID=#{orgInfoDto.parentId}
             </if>
-             <if test="orgInfoDto.dutyName!= null and orgInfoDto.dutyName!= ''">
-				AND o1.DUTY_NAME=#{orgInfoDto.dutyName}
+            <if test="orgInfoDto.dutyName!= null and orgInfoDto.dutyName!= ''">
+				AND d.DUTY_NAME=#{orgInfoDto.dutyName}
             </if>
             <if test="orgInfoDto.isInactive!= null and orgInfoDto.isInactive!= ''">
 				AND o1.IS_INACTIVE=#{orgInfoDto.isInactive}
@@ -239,7 +239,7 @@
 				o1.PARENT_ID ${value}
             </when>
             <when test="key == 'dutyName'">
-				o1.DUTY_NAME ${value}
+				d.DUTY_NAME ${value}
             </when>
         	<when test="key == 'isInactive'">
 				o1.IS_INACTIVE ${value}
@@ -274,7 +274,7 @@
 			, #{parentId}
 			, #{orgId}
 			, #{orgName}
-			, #{dutyName}
+			, #{dutyId}
 			, #{isInactive}
 			, #{remark}
 			, #{createdBy}
@@ -291,7 +291,7 @@
 			, ORG_NAME=#{orgName} 
 			, COMPANY_ID=#{companyId} 
 			, PARENT_ID=#{parentId} 
-			, DUTY_NAME=#{dutyName} 
+			, DUTY_ID=#{dutyId} 
 			, IS_INACTIVE=#{isInactive} 
 			, REMARK=#{remark} 
 			, CREATED_BY=#{createdBy} 
@@ -322,7 +322,7 @@
 	</select>
 	<select id="getByPKs" parameterType="java.lang.Long" resultMap="OrgDtoResultMapper">
 		SELECT o1.ID AS ID,o1.COMPANY_ID AS COMPANY_ID,o1.PARENT_ID AS PARENT_ID,o1.ORG_ID AS ORG_ID,o2.ORG_NAME AS PORG_NAME,
-		o1.ORG_NAME AS ORG_NAME,o1.DUTY_NAME AS DUTY_NAME,o1.IS_INACTIVE AS IS_INACTIVE,o1.REMARK	AS REMARK
+		o1.ORG_NAME AS ORG_NAME,o1.DUTY_ID AS DUTY_ID,o1.IS_INACTIVE AS IS_INACTIVE,o1.REMARK AS REMARK
 		FROM T_ORGANIZATION o1
 		LEFT JOIN T_ORGANIZATION o2 ON o2.ID = o1.PARENT_ID
 		WHERE o1.ID = #{id}  
@@ -339,10 +339,11 @@
 		<include refid="commonCondition"/>
 	</select>
 	<select id="listPaginationByProperty" parameterType="OrgInfoDto" resultMap="OrgInfoDtoResultMapper">
-		SELECT o1.ID, o1.ORG_NAME, o2.ORG_NAME as PORG_NAME ,o1.COMPANY_ID, o1.DUTY_NAME, 
+		SELECT o1.ID, o1.ORG_NAME, o2.ORG_NAME as PORG_NAME ,o1.COMPANY_ID, d.DUTY_NAME, 
 		o1.IS_INACTIVE, o1.REMARK, o1.CREATED_BY, o1.CREATED_TIME, o1.UPDATED_BY, 
 		o1.UPDATED_TIME, o1.VERSION FROM T_ORGANIZATION o1
 		LEFT JOIN T_ORGANIZATION o2 ON o2.ID = o1.PARENT_ID
+		LEFT JOIN T_DUTY d ON o1.DUTY_ID = d.ID
 		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />

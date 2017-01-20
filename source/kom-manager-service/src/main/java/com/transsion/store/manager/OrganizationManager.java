@@ -173,7 +173,7 @@ public class OrganizationManager {
 		}
 		Organization formerOrg = organizationMapper.getByPK(organization.getId());
 		formerOrg.setOrgName(organization.getOrgName());
-		formerOrg.setDutyName(organization.getDutyName());
+		formerOrg.setDutyId(organization.getDutyId());
 		formerOrg.setIsInactive(organization.getIsInactive());
 		formerOrg.setRemark(organization.getRemark());
 		if(UtilHelper.isEmpty(organization.getParentId())){
