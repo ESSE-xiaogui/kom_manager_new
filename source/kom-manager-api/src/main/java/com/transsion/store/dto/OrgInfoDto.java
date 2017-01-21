@@ -36,7 +36,7 @@ public class OrgInfoDto extends Model{
 	  */
 	private java.lang.Long parentId;
 
-	private java.lang.String dutyName;
+	private java.lang.String bizName;
 
 	/**
 	  *	1表示激活状态，被激活有效的数据可以用于新增业务，2表示停用，被停用无效的数据只能用于历史数据查询中
@@ -161,14 +161,15 @@ public class OrgInfoDto extends Model{
 		this.parentId = parentId;
 	}
 	
-	public java.lang.String getDutyName() {
-		return dutyName;
+	
+	public java.lang.String getBizName() {
+		return bizName;
 	}
 
-	public void setDutyName(java.lang.String dutyName) {
-		this.dutyName = dutyName;
+	public void setBizName(java.lang.String bizName) {
+		this.bizName = bizName;
 	}
-	
+
 	/**
 	  *	0表示激活状态，被激活有效的数据可以用于新增业务，1表示停用，被停用无效的数据只能用于历史数据查询中
 	  */
@@ -283,8 +284,8 @@ public class OrgInfoDto extends Model{
 
 	@Override
 	public String toString() {
-		return "Organization [id=" + id + ", orgId=" + orgId + ", orgName=" + orgName + ", pOrgName=" + pOrgName
-						+ ", companyId=" + companyId + ", parentId=" + parentId + ", dutyName=" + dutyName
+		return "OrgInfoDto [id=" + id + ", orgId=" + orgId + ", orgName=" + orgName + ", pOrgName=" + pOrgName
+						+ ", companyId=" + companyId + ", parentId=" + parentId + ", bizName=" + bizName
 						+ ", isInactive=" + isInactive + ", remark=" + remark + ", createdBy=" + createdBy
 						+ ", createdTime=" + createdTime + ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime
 						+ ", version=" + version + "]";

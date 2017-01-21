@@ -36,7 +36,7 @@ public class OrganizationDto implements Serializable {
 	/**
 	 * 业务属性
 	 * */
-	private String dutyId;
+	private Long bizId;
 	
 	/**
 	 * 1表示激活状态，被激活有效的数据可以用于新增业务，2表示停用，被停用无效的数据只能用于历史数据查询中
@@ -112,19 +112,20 @@ public class OrganizationDto implements Serializable {
 		this.pOrgName = pOrgName;
 	}
 
-	public String getDutyId() {
-		return dutyId;
+	public Long getBizId() {
+		return bizId;
 	}
 
-	public void setDutyId(String dutyId) {
-		this.dutyId = dutyId;
+	public void setBizId(Long bizId) {
+		this.bizId = bizId;
 	}
 
 	@Override
 	public String toString() {
 		return "OrganizationDto [id=" + id + ", companyId=" + companyId + ", parentId=" + parentId + ", orgId=" + orgId
-						+ ", pOrgName=" + pOrgName + ", orgName=" + orgName + ", dutyId=" + dutyId + ", isInactive="
+						+ ", pOrgName=" + pOrgName + ", orgName=" + orgName + ", bizId=" + bizId + ", isInactive="
 						+ isInactive + ", remark=" + remark + "]";
 	}
-	
+
+
 }
