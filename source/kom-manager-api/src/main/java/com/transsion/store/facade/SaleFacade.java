@@ -126,4 +126,11 @@ public interface SaleFacade {
 	 * @throws ServiceException
 	 * */
 	public int findSaleQty(String token,String startDate,String endDate) throws ServiceException;
+
+	/**
+	* 根据订单号删除记录
+	* @return
+	* @throws ServiceException
+	*/
+	public void deleteByBillNo(String billNo, String token)throws ServiceException;
 }

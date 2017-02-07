@@ -4,10 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
-import com.transsion.store.bo.User;
+import com.transsion.store.bo.Shop;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.ShopUserDto;
 import com.transsion.store.dto.UserDto;
@@ -75,5 +74,32 @@ public class ShopManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
 		}
 		return shopMapper.findShopIds(userDto.getId());
+	}
+	
+	/**
+	 * 查询促销员的店铺
+	 */
+	public List<Shop> queryPromoterShop(String token) throws ServiceException {
+		validateToken(token);
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext)) {
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_QUERY_ISNULL);
+		}
+		if (UtilHelper.isEmpty(userContext.getUser())) {
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_QUERY_USER_ISNULL);
+		}
+		// 获取token里的用户信息
+		Integer userId = userContext.getUser().getUserId();
+		Integer companyId = userContext.getUser().getCompanyId();
+		if (UtilHelper.isEmpty(userId) || UtilHelper.isEmpty(companyId)) {
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_SALESPARAM_IS_NULL);
+		}
+		return shopMapper.findByPromoter(userId, companyId);
+	}
+	
+	public void validateToken(String token) throws ServiceException {
+		if (UtilHelper.isEmpty(token)) {
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_INVALID);
+		}
 	}
 }

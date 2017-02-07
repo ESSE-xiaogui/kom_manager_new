@@ -177,4 +177,23 @@ public class MessageStoreResource {
      * 员工已离职
      */
 	public static final String ERROR_MESSAGE_EMP_NOT_IN_SERVICE = "error_message_empNotInService";
+
+	   /**
+     * 用户查询user表为空
+     * */
+    public static final String ERROR_MESSAGE_USER_QUERY_USER_ISNULL = "error_message_userQueryUserIsnull";
+    /**
+     * 用户查询shop表为空
+     * */
+    public static final String ERROR_MESSAGE_USER_QUERY_SHOP_UNBAND = "error_message_userQueryShopUnband";
+    
+    /**
+     * 用户查询为空
+     * */
+    public static final String ERROR_MESSAGE_USER_QUERY_ISNULL = "error_message_userQueryIsnull";
+    
+    /**
+     * 入参为空
+     * */
+    public static final String ERROR_MESSAGE_SALESPARAM_IS_NULL = "error_message_salesparamisnull";
 }

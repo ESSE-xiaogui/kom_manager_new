@@ -147,4 +147,17 @@ public class ShopController extends AbstractController{
 		return shopFacade.findShopIds(userName);
 	}
 	
+	/**
+	 * 获取促销员店铺
+	 * 
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/shops")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<Shop> findShops() throws ServiceException {
+		String token = this.getAuthorization();
+		return shopFacade.queryPromoterShop(token);
+	}	
 }

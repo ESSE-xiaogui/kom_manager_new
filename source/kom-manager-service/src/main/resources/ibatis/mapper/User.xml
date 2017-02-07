@@ -65,6 +65,7 @@
 		<result column="USER_NAME" property="userName"/>
 		<result column="PASSWORD" property="password"/>
 		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="DUTY_NAME" property="dutyName"/>
 		<result column="LAST_LOGIN" property="lastLogin"/>
 	</resultMap>
 	
@@ -513,8 +514,10 @@
 		<include refid="commonCondition2"/>
 	</select>
 	<select id="getUser" parameterType="User" resultMap="UserResponseDtoMapper">
-		SELECT u.ID,u.USER_ID,u.USER_CODE,u.USER_NAME,u.PASSWORD,e.COMPANY_ID,u.IS_INACTIVE,u.LAST_LOGIN FROM T_USER u
+		SELECT u.ID,u.USER_ID,u.USER_CODE,u.USER_NAME,u.PASSWORD,e.COMPANY_ID,
+		u.IS_INACTIVE,u.LAST_LOGIN,d.DUTY_NAME FROM T_USER u
 		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID
+		LEFT JOIN T_DUTY d ON d.ID = e.DUTY_ID
 		WHERE u.USER_CODE = #{userCode} AND u.PASSWORD = #{password} 
 	</select>
 	<update id="updateLastLogin" parameterType="User">

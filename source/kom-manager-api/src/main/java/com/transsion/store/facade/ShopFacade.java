@@ -118,4 +118,10 @@ public interface ShopFacade {
 	 * */
 	public List<Long> findShopIds(String userName) throws ServiceException;
 
+	/**
+	 * 获取促销员店铺
+	 * 
+	 */
+	public List<Shop> queryPromoterShop(String token)throws ServiceException;
+
 }

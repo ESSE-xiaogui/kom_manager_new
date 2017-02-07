@@ -65,6 +65,9 @@
 		<result column="UPDATE_BY" property="updateBy"/>
 		<result column="UPDATE_DATE" property="updateDate"/>
 		<result column="VERSION" property="version"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="WERKS" property="werks"/>
 	</resultMap>
 	<resultMap id="ShopDtoResultMapper" type="ShopUserDto">
 		<result column="ID" property="id"/>
@@ -821,5 +824,26 @@
 		JOIN T_USER u ON u.ID = us.USER_ID  
 		WHERE p.COMPANY_ID = 1000 AND p.REGION_ID IS NOT NULL
 		AND u.ID = #{uid}				
+	</select>
+	<select id="findByPromoter" parameterType="java.lang.Integer" resultMap="ShopResultMapper">
+		SELECT SHOP_ID,SHOP_CODE, SHOP_NAME,r.REGION_NAME as COUNTRY_NAME,
+		c.REGION_NAME as CITY_NAME ,cc.WERKS
+		FROM T_SHOP p
+		LEFT JOIN T_REGION r on p.COUNTRY = r.ID
+		LEFT JOIN T_REGION c on p.CITY = c.ID
+		LEFT JOIN T_CURRENCY cc on p.COUNTRY = cc.REGION_ID
+		WHERE <!-- p.IS_INACTIVE = 1 AND --> p.COMPANY_ID=#{companyId} AND p.SHOP_ID IN
+		(SELECT OBJECT_ID FROM T_OPTION WHERE COMPANY_ID=#{companyId} AND OPTION_TYPE=11010020 AND ID IN
+		(SELECT OPTION_ID FROM T_USER_OPTION WHERE COMPANY_ID=#{companyId} AND USER_ID = #{userId} ))
+		LIMIT 1
+	</select>
+	<select id="findByPromoters" parameterType="java.lang.Integer" resultMap="ShopResultMapper">
+		SELECT p.SHOP_ID,p.SHOP_NAME,c.REGION_NAME as CITY_NAME,cc.WERKS FROM T_SHOP p		
+		LEFT JOIN T_REGION c on p.CITY = c.ID	
+		LEFT JOIN T_CURRENCY cc on p.COUNTRY = cc.REGION_ID
+		WHERE <!--p.IS_INACTIVE = 0 AND--> p.COMPANY_ID=1000 AND p.SHOP_ID IN
+		(SELECT OBJECT_ID FROM T_OPTION WHERE COMPANY_ID=#{companyId} AND OPTION_TYPE=11010020 AND IS_INACTIVE = 1 AND ID IN
+		(SELECT OPTION_ID FROM T_USER_OPTION WHERE COMPANY_ID=#{companyId} AND USER_ID = #{userId} ))
+		GROUP BY p.SHOP_ID,p.SHOP_NAME,	c.REGION_NAME,cc.WERKS	
 	</select>
 </mapper>

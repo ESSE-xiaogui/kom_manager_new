@@ -191,4 +191,17 @@ public class UserController extends AbstractController{
 		return userFacade.update(token,user);
 	}
 	
+	/**
+	 * @see 登出
+	 * @author guihua.zhang
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/logOut")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Boolean logOut() throws ServiceException {
+		String token = this.getAuthorization();
+		return userFacade.logOut(token);
+	}
 }

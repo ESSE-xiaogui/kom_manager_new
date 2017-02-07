@@ -27,7 +27,7 @@ import org.apache.ibatis.annotations.Param;
 public interface StockItemMapper extends GenericIBatisMapper<StockItem, java.lang.Long> {
 
     public List<StockItem> listPaginationByProperty(Pagination<StockItem> pagination, @Param("stockItem")StockItem stockItem, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
-    public int updateByHistory(@Param("brandCode")String brandCode,@Param("modelMatCode")String modelMatCode, @Param("userId")String userId);
+    public int updateByHistory(@Param("brandCode")String brandCode,@Param("modelCode")String modelCode, @Param("userId")String userId);
     public void saveStockDetailUpload(List<StockItem> stockItemList);
 
 

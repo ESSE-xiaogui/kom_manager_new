@@ -19,7 +19,6 @@ package com.transsion.store.facade.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.UserDto;
@@ -193,5 +192,16 @@ public class UserFacadeImpl implements UserFacade {
 	 * */
 	public UserResponseDto update(String token,User user) throws ServiceException{
 		return userManager.update(token,user);
+	}
+	
+	/**
+	 * @see 登出
+	 * @author guihua.zhang
+	 * @param token
+	 * @return
+	 * @throws ServiceException
+	 */
+	public Boolean logOut(String token) throws ServiceException {
+		return userManager.logOut(token);
 	}
 }

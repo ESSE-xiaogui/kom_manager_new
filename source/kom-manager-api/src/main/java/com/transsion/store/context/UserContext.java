@@ -1,5 +1,6 @@
 package com.transsion.store.context;
 
+import java.util.List;
 import com.transsion.store.IUserContext;
 import com.transsion.store.bo.Shop;
 import com.transsion.store.bo.User;
@@ -36,11 +37,21 @@ public class UserContext implements IUserContext {
      * 店铺信息
      */
     private Shop shop;
+    
+    /**
+     * 职务名称
+     * */
+    private String dutyName;
+    
+    /**
+     * 店铺信息
+     */
+    private List<Shop> shopList;
 
     /**
      * 店铺名称
      * */
-	private String dealerName;
+	private String shopName;
 
     /**
      * 用户信息
@@ -55,21 +66,37 @@ public class UserContext implements IUserContext {
     /**
      * 店铺名称
      * */
-    public String getDealerName() {
-		return dealerName;
-	}
-    /**
-     * 店铺名称
-     * */
-	public void setDealerName(String dealerName) {
-		this.dealerName = dealerName;
-	}
+   
 
 	public String getToken() {
         return token;
     }
 
-    public void setToken(String token) {
+    public String getDutyName() {
+		return dutyName;
+	}
+
+	public void setDutyName(String dutyName) {
+		this.dutyName = dutyName;
+	}
+
+	public List<Shop> getShopList() {
+		return shopList;
+	}
+
+	public void setShopList(List<Shop> shopList) {
+		this.shopList = shopList;
+	}
+
+	public String getShopName() {
+		return shopName;
+	}
+
+	public void setShopName(String shopName) {
+		this.shopName = shopName;
+	}
+
+	public void setToken(String token) {
         this.token = token;
     }
 
@@ -80,8 +107,8 @@ public class UserContext implements IUserContext {
     public void setUserCode(String userCode) {
         this.userCode = userCode;
     }
-
-    public String getCityName() {
+    
+	public String getCityName() {
 		return cityName;
 	}
 
@@ -96,12 +123,15 @@ public class UserContext implements IUserContext {
     public void setPassword(String password) {
         this.password = password;
     }
+	
 	public Shop getShop() {
 		return shop;
 	}
+
 	public void setShop(Shop shop) {
 		this.shop = shop;
 	}
+
 	public User getUser() {
 		return user;
 	}
@@ -115,12 +145,12 @@ public class UserContext implements IUserContext {
 	public void setCompanyId(Long companyId) {
 		this.companyId = companyId;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "UserContext [token=" + token + ", userCode=" + userCode + ", password=" + password + ", cityName="
-						+ cityName + ", shop=" + shop + ", dealerName=" + dealerName + ", user=" + user + ", companyId="
-						+ companyId + "]";
+						+ cityName + ", shop=" + shop + ", dutyName=" + dutyName + ", shopList=" + shopList
+						+ ", shopName=" + shopName + ", user=" + user + ", companyId=" + companyId + "]";
 	}
-    
+
 }

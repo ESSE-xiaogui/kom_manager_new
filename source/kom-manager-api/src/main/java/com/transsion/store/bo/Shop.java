@@ -249,6 +249,11 @@ public class Shop extends Model{
 	  *	
 	  */
 	private java.lang.Integer version;
+	
+	private String countryName;
+
+	private String cityName;
+	private String werks;
 
 	/**
 	  *	
@@ -971,55 +976,49 @@ public class Shop extends Model{
 		this.version = version;
 	}
 	
-	public String toString()
-	{
-		return "Shop [" + 
-					"id=" + id + 
-					", shopId=" + shopId + 
-					", shopCode=" + shopCode + 
-					", shopName=" + shopName + 
-					", companyId=" + companyId + 
-					", parentId=" + parentId + 
-					", regionId=" + regionId + 
-					", country=" + country + 
-					", city=" + city + 
-					", shopIcon=" + shopIcon + 
-					", address=" + address + 
-					", ownerName=" + ownerName + 
-					", ownerPhone=" + ownerPhone + 
-					", promoter=" + promoter + 
-					", assistant=" + assistant + 
-					", materielId=" + materielId + 
-					", gradeId=" + gradeId + 
-					", bizId=" + bizId + 
-					", totalNum=" + totalNum + 
-					", currentNum=" + currentNum + 
-					", clerkNum=" + clerkNum + 
-					", brandsFirst=" + brandsFirst + 
-					", brandsTwo=" + brandsTwo + 
-					", brandsThree=" + brandsThree + 
-					", counterNum=" + counterNum + 
-					", darkPro=" + darkPro + 
-					", purchasChannel=" + purchasChannel + 
-					", isKom=" + isKom + 
-					", relationship=" + relationship + 
-					", incorporator=" + incorporator + 
-					", incorporatorTel=" + incorporatorTel + 
-					", fwidth=" + fwidth + 
-					", fdepth=" + fdepth + 
-					", shopArea=" + shopArea + 
-					", showNum=" + showNum + 
-					", staffNum=" + staffNum + 
-					", salesNum=" + salesNum + 
-					", openDate=" + openDate + 
-					", status=" + status + 
-					", remark=" + remark + 
-					", createBy=" + createBy + 
-					", createDate=" + createDate + 
-					", updateBy=" + updateBy + 
-					", updateDate=" + updateDate + 
-					", version=" + version + 
-				"]";
+	public String getCountryName() {
+		return countryName;
 	}
+
+	public void setCountryName(String countryName) {
+		this.countryName = countryName;
+	}
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+
+	public String getWerks() {
+		return werks;
+	}
+
+	public void setWerks(String werks) {
+		this.werks = werks;
+	}
+
+	@Override
+	public String toString() {
+		return "Shop [id=" + id + ", shopId=" + shopId + ", shopCode=" + shopCode + ", shopName=" + shopName
+						+ ", companyId=" + companyId + ", parentId=" + parentId + ", regionId=" + regionId
+						+ ", country=" + country + ", city=" + city + ", shopIcon=" + shopIcon + ", address=" + address
+						+ ", ownerName=" + ownerName + ", ownerPhone=" + ownerPhone + ", promoter=" + promoter
+						+ ", assistant=" + assistant + ", materielId=" + materielId + ", gradeId=" + gradeId
+						+ ", bizId=" + bizId + ", totalNum=" + totalNum + ", currentNum=" + currentNum + ", clerkNum="
+						+ clerkNum + ", brandsFirst=" + brandsFirst + ", brandsTwo=" + brandsTwo + ", brandsThree="
+						+ brandsThree + ", counterNum=" + counterNum + ", darkPro=" + darkPro + ", purchasChannel="
+						+ purchasChannel + ", isKom=" + isKom + ", relationship=" + relationship + ", incorporator="
+						+ incorporator + ", incorporatorTel=" + incorporatorTel + ", fwidth=" + fwidth + ", fdepth="
+						+ fdepth + ", shopArea=" + shopArea + ", showNum=" + showNum + ", staffNum=" + staffNum
+						+ ", salesNum=" + salesNum + ", openDate=" + openDate + ", status=" + status + ", remark="
+						+ remark + ", createBy=" + createBy + ", createDate=" + createDate + ", updateBy=" + updateBy
+						+ ", updateDate=" + updateDate + ", version=" + version + ", countryName=" + countryName
+						+ ", cityName=" + cityName + ", werks=" + werks + "]";
+	}
+
+
 }
 

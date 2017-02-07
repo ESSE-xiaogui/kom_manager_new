@@ -80,7 +80,7 @@ public class SalesMannager {
 		Integer dealerId = userContext.getShop().getShopId().intValue();
 		Integer companyId = userContext.getUser().getCompanyId();
 		Integer userId = userContext.getUser().getUserId();
-		String werks = userContext.getShop().getCurrentNum().toString();
+		String werks = userContext.getShop().getWerks();
 		if(UtilHelper.isEmpty(userId) || UtilHelper.isEmpty(companyId) 
 				|| UtilHelper.isEmpty(dealerId) || UtilHelper.isEmpty(werks)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);

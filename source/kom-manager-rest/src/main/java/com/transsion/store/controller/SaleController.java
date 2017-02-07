@@ -173,4 +173,17 @@ public class SaleController extends AbstractController{
 		String token = this.getAuthorization();
 		return saleFacade.findSaleQty(token,startDate,endDate);
 	}
+	
+	/**
+	* 根据订单号删除记录
+	* @return
+	* @throws ServiceException
+	*/
+	@POST
+	@Path("/deleteByBillNo")
+	public void deleteByBillNo(String billNo) throws ServiceException
+	{
+		String token = this.getAuthorization();
+		saleFacade.deleteByBillNo(billNo,token);
+	}
 }

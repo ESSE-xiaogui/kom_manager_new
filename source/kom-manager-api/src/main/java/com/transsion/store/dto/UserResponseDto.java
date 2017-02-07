@@ -13,7 +13,7 @@ public class UserResponseDto implements Serializable{
 	/***/
 	private Long id;
 	
-	private Long userId;
+	private Integer userId;
 	
 	private Long companyId;
 	
@@ -30,6 +30,8 @@ public class UserResponseDto implements Serializable{
 	private Long isInactive;
 	
 	private String lastLogin;
+	
+	private String dutyName;
 
 	public Integer getStatus() {
 		return status;
@@ -55,11 +57,11 @@ public class UserResponseDto implements Serializable{
 		this.id = id;
 	}
 
-	public Long getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
@@ -103,11 +105,20 @@ public class UserResponseDto implements Serializable{
 		this.lastLogin = lastLogin;
 	}
 
+	public String getDutyName() {
+		return dutyName;
+	}
+
+	public void setDutyName(String dutyName) {
+		this.dutyName = dutyName;
+	}
+
 	@Override
 	public String toString() {
 		return "UserResponseDto [status=" + status + ", id=" + id + ", userId=" + userId + ", companyId=" + companyId
 						+ ", userName=" + userName + ", userCode=" + userCode + ", password=" + password
-						+ ", isInactive=" + isInactive + ", lastLogin=" + lastLogin + "]";
+						+ ", isInactive=" + isInactive + ", lastLogin=" + lastLogin + ", dutyName=" + dutyName + "]";
 	}
+
 	
 }

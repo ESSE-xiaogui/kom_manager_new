@@ -124,4 +124,8 @@ public interface StockFacade {
      */
     public List<StockDto> findPromoterCurrentStock(String token)throws ServiceException;
 
+	public List<StockDto> findStocksByProp(String token, Integer shopId, String startDate, String endDate,String model)throws ServiceException;
+
+	public List<StockDto> findCurrentStockByProp(String token, Integer shopId)throws ServiceException;
+
 }

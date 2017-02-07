@@ -20,7 +20,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.transsion.store.bo.Shop;
 import com.transsion.store.dto.ShopUserDto;
 import com.shangkang.core.bo.Pagination;
@@ -167,5 +166,13 @@ public class ShopFacadeImpl implements ShopFacade {
 	 * */
 	public List<Long> findShopIds(String userName) throws ServiceException{
 		return shopManager.findShopIds(userName);
+	}
+	
+	/**
+	 * 查询促销员的店铺
+	 */
+	@Override
+	public List<Shop> queryPromoterShop(String token) throws ServiceException {
+		return shopManager.queryPromoterShop(token);
 	}
 }

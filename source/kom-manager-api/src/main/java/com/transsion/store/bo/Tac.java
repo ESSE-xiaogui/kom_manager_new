@@ -9,6 +9,8 @@ public class Tac implements java.io.Serializable{
 
 	private String id;
 	
+	private String imei;
+	
     private String tac;
 
     private String brandCode;
@@ -21,6 +23,14 @@ public class Tac implements java.io.Serializable{
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getImei() {
+		return imei;
+	}
+
+	public void setImei(String imei) {
+		this.imei = imei;
 	}
 
 	public String getTac() {
@@ -49,7 +59,9 @@ public class Tac implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "Tac [id=" + id + ", tac=" + tac + ", brandCode=" + brandCode + ", modelCode=" + modelCode + "]";
+		return "Tac [id=" + id + ", imei=" + imei + ", tac=" + tac + ", brandCode=" + brandCode + ", modelCode="
+						+ modelCode + "]";
 	}
+
 
 }

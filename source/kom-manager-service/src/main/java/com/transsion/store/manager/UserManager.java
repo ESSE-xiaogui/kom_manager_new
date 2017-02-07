@@ -4,17 +4,20 @@ import com.rest.service.security.AuthKeyGenerator;
 import com.rest.service.utils.JwtUtils;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
+import com.transsion.store.bo.Shop;
 import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.UserInfoDto;
 import com.transsion.store.dto.UserResponseDto;
 import com.transsion.store.mapper.UserMapper;
 import com.transsion.store.resource.MessageStoreResource;
+import com.transsion.store.service.ShopService;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.service.UserService;
 import com.transsion.store.utils.CacheUtils;
 import com.transsion.store.utils.MD5Utils;
 
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,9 +36,12 @@ public class UserManager {
 	
 	@Autowired
 	private UserMapper userMapper;
-	@Autowired
 	
+	@Autowired
 	private SystemDateService systemDateService;
+	
+	@Autowired
+	private ShopService shopService;
 	
 	
 	/**
@@ -60,9 +66,11 @@ public class UserManager {
 		if(urd.getIsInactive().intValue() == 2){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_INACTIVE_USER);
 		}
+		List<Shop> shops = shopService.queryPromoterShop(urd.getUserId(), urd.getCompanyId().intValue());
 		UserContext userContext = new UserContext();
 		long exp = 3600 * 24;
 	    String token = JwtUtils.tokenBuilder(authKeyGenerator.generateAuthKey(), userCode, 3600 * 24);
+		userContext.setDutyName(urd.getDutyName());
 		//TODO:调用查询国家区域表接口
 	    if(!UtilHelper.isEmpty(token)) {
 	    	userContext.setUserCode(userCode);
@@ -77,10 +85,21 @@ public class UserManager {
 			user.setCompanyId(urd.getCompanyId().intValue());
 			user.setUserName(urd.getUserName());
 			userContext.setUser(user);
-			CacheUtils.getSupporter().set(token, userContext, exp);
 	    } else {
 	    	throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 	    }
+		if(!UtilHelper.isEmpty(shops)){
+			userContext.setCityName(shops.get(0).getCityName());
+			userContext.setShopName(shops.get(0).getShopName());
+			Shop shop = new Shop();
+			shop.setShopId(shops.get(0).getShopId());
+			shop.setWerks(shops.get(0).getWerks());
+			shop.setCityName(shops.get(0).getCityName());
+			shop.setShopName(shops.get(0).getShopName());
+			userContext.setShop(shop);
+			userContext.setShopList(shops);
+		}
+		CacheUtils.getSupporter().set(token, userContext, exp);
 		return userContext;
 	}
 	
@@ -224,5 +243,20 @@ public class UserManager {
 		user.setCreatedTime(systemDateService.getCurrentDate());
 		userService.save(user);
 	}
-	
+
+
+	/**
+	 * @see 通过token退出登录
+	 * @author guihua.zhang
+	 * @param token
+	 * @return
+	 * @throws ServiceException
+	 */
+	public Boolean logOut(String token) throws ServiceException {
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+		}
+		CacheUtils.getSupporter().remove(token);
+		return Boolean.TRUE;
+	}
 }

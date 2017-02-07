@@ -184,4 +184,15 @@ public class StockFacadeImpl implements StockFacade {
 	public List<StockDto> findPromoterCurrentStock(String token) throws ServiceException {
 		return stockManager.findPromoterCurrentStock(token);
 	}
+
+	@Override
+	public List<StockDto> findStocksByProp(String token, Integer shopId, String startDate, String endDate, String model)
+			throws ServiceException {
+		return stockManager.findStocksByProp(token, shopId, startDate, endDate, model);
+	}
+	
+	@Override
+	public List<StockDto> findCurrentStockByProp(String token, Integer shopId) throws ServiceException {
+		return stockManager.findCurrentStockByProp(token, shopId);
+	}
 }

@@ -26,7 +26,6 @@ import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -141,6 +140,17 @@ public class StockController extends AbstractController{
 		String token = this.getAuthorization();
 		return stockFacade.findPromoterStock(token, startDate, endDate, model);
 	}
+	
+	@GET
+	@Path("/findStocksByProp")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<StockDto> findStocksByProp(@QueryParam("shopId")Integer shopId,@QueryParam("startDate") java.lang.String startDate,
+			@QueryParam("endDate") java.lang.String endDate, @QueryParam("model") java.lang.String model)
+			throws ServiceException {
+		String token = this.getAuthorization();
+		return stockFacade.findStocksByProp(token, shopId, startDate, endDate, model);
+	}
+	
 	/**
 	 * 库存上报记录查询最新
 	 * 
@@ -153,5 +163,19 @@ public class StockController extends AbstractController{
 	public List<StockDto> findPromoterCurrentStock() throws ServiceException {
 		String token = this.getAuthorization();
 		return stockFacade.findPromoterCurrentStock(token);
+	}
+	
+	/**
+	 * 查询单店铺最新库存上报记录
+	 * 
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/findCurrentStockByProp")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<StockDto> findCurrentStockByProp(@QueryParam("shopId")Integer shopId) throws ServiceException {
+		String token = this.getAuthorization();
+		return stockFacade.findCurrentStockByProp(token, shopId);
 	}
 }

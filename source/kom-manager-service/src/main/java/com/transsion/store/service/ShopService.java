@@ -20,11 +20,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.transsion.store.bo.Shop;
 import com.shangkang.core.bo.Pagination;
+import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
 import com.transsion.store.mapper.ShopMapper;
+import com.transsion.store.resource.MessageStoreResource;
 
 @Service("shopService")
 public class ShopService {
@@ -147,5 +149,19 @@ public class ShopService {
 	public int findByCount(Shop shop) throws ServiceException
 	{
 		return shopMapper.findByCount(shop);
+	}
+
+	/**
+	 * 查询促销员店铺
+	 * @param userId
+	 * @return
+	 * @throws DataAccessFailureException 
+	 * @throws ServiceException
+     */
+	public List<Shop> queryPromoterShop(Integer userId, Integer companyId) throws ServiceException {
+		if(UtilHelper.isEmpty(userId))
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_LOGIN_FAIL);
+
+		return shopMapper.findByPromoters(userId,companyId);
 	}
 }

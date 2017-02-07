@@ -147,4 +147,11 @@ public interface UserFacade {
 	 * */
 	public UserResponseDto update(String token, User user)throws ServiceException;
 
+	/**
+	 * 登出
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public Boolean logOut(String token)throws ServiceException;
+
 }

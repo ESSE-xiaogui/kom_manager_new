@@ -31,6 +31,9 @@ public interface StockMapper extends GenericIBatisMapper<Stock, java.lang.Long> 
     public List<Stock> listPaginationByProperty(Pagination<Stock> pagination, @Param("stock")Stock stock, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     public List<StockDto> findPromoterStock(@Param("startDate")String startDate,@Param("endDate")String endDate, @Param("model") String model,@Param("userId") Integer userId);
 
-	public List<StockDto> findPromoterCurrentStock(@Param("userId") Integer userId);
+	public List<StockDto> findPromoterCurrentStock(@Param("userId") Integer userId)throws DataAccessFailureException;
+	
+	public List<StockDto> findStocksByProp(@Param("shopId")Integer shopId,@Param("startDate")String startDate,@Param("endDate")String endDate, @Param("model") String model,@Param("userId") Integer userId)throws DataAccessFailureException;
+	public List<StockDto> findCurrentStockByProp(@Param("userId") Integer userId, @Param("shopId")Integer shopId)throws DataAccessFailureException;
 
 }

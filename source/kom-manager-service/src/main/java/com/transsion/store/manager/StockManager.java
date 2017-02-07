@@ -2,10 +2,8 @@ package com.transsion.store.manager;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Stock;
@@ -58,7 +56,7 @@ public class StockManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		Integer companyId = userContext.getCompanyId().intValue();
-		Long dealerId = userContext.getShop().getId();
+		Long dealerId = userContext.getShop().getShopId();
 		Long userId = userContext.getUser().getId();
 		if(UtilHelper.isEmpty(companyId) || UtilHelper.isEmpty(dealerId) || UtilHelper.isEmpty(userId)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
@@ -78,9 +76,9 @@ public class StockManager {
 		shopstockMain.setBillno(" ");
 		shopstockMain.setTrantype(24020005);
 		shopstockMain.setStatus(24030005);
-		Integer werks = userContext.getShop().getCurrentNum();
+		String werks = userContext.getShop().getWerks();
 		if(!UtilHelper.isEmpty(werks)){
-			shopstockMain.setWerks(werks.toString());
+			shopstockMain.setWerks(werks);
 		}
 		java.math.BigDecimal ratio = currencyMapper.queryCurrencyRatio(dealerId.intValue(),companyId);
 		if (!UtilHelper.isEmpty(ratio)){
@@ -104,15 +102,15 @@ public class StockManager {
 			if(!UtilHelper.isEmpty(stockDto.getBrandCode())){
 				stockDetail.setBrandCode(stockDto.getBrandCode().toUpperCase());
 			}
-			String modelMatCode = stockDto.getModelMatCode();
-			stockDetail.setModelCode(modelMatCode);
+			String modelCode = stockDto.getModelMatCode();
+			stockDetail.setModelCode(modelCode);
 			stockDetail.setQty(stockDto.getFqty());
 			stockDetail.setPrice(stockDto.getFprice());
 			stockDetail.setBillno(" ");
 			stockDetail.setCompanyId(companyId);
 			stockDetail.setStockId(shopstockMain.getId());
 			stockDetail.setLineId(lineId);
-			stockItemMapper.updateByHistory(stockDto.getBrandCode().toUpperCase(), modelMatCode, userId.toString());
+			stockItemMapper.updateByHistory(stockDto.getBrandCode().toUpperCase(), modelCode, userId.toString());
 			stockDetail.setIshistory(0);
 			stockDetails.add(stockDetail);
 			lineId++;
@@ -166,6 +164,50 @@ public class StockManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		return stockMapper.findPromoterCurrentStock(userId);
+	}
+	
+	public List<StockDto> findStocksByProp(String token, Integer shopId, String startDate, String endDate,
+					String model) throws ServiceException {
+				validateToken(token);
+				if (UtilHelper.isEmpty(startDate)) {
+					throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+				}
+				UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+				if (UtilHelper.isEmpty(userContext)) {
+					throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+				}
+				if (UtilHelper.isEmpty(userContext.getUser())) {
+					throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+				}
+				// 获取token里的用户信息
+				Integer userId = userContext.getUser().getUserId();
+				if (UtilHelper.isEmpty(userId)) {
+					throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+				}
+				return stockMapper.findStocksByProp(shopId, startDate, endDate, model, userId);
+			}
+	
+	public List<StockDto> findCurrentStockByProp(String token, Integer shopId) throws ServiceException {
+		validateToken(token);
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext)) {
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		if (UtilHelper.isEmpty(userContext.getUser())) {
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		// 获取token里的用户信息
+		Integer userId = userContext.getUser().getUserId();
+		if (UtilHelper.isEmpty(userId)) {
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		return stockMapper.findCurrentStockByProp(userId, shopId);
+	}
+	
+	public void validateToken(String token) throws ServiceException {
+		if (UtilHelper.isEmpty(token)) {
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_INVALID);
+		}
 	}
 
 }

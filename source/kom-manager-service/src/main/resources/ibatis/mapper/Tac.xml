@@ -12,5 +12,10 @@
   	<select id="findAllTac" resultMap="TacResultMapper">
     	SELECT ID, TAC, BRAND_CODE, MODEL_CODE FROM T_IMEI_TAC 
   	</select>
+  	
+  	<select id="findTac" parameterType="java.lang.String" resultMap="TacResultMapper">
+		SELECT m.ID, m.TAC, m.BRAND_CODE, m.MODEL_CODE FROM T_TAC m
+		WHERE m.TAC=#{tac}
+	</select>
 
 </mapper>

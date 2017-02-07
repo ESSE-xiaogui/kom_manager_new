@@ -184,4 +184,14 @@ public class SaleFacadeImpl implements SaleFacade {
 	public int findSaleQty(String token,String startDate,String endDate) throws ServiceException{
 		return salesMannager.findSaleQty(token,startDate,endDate);
 	}
+	
+	/**
+	* 根据订单号删除记录
+	* @return
+	* @throws ServiceException
+	*/
+	public void deleteByBillNo(String billNo,String token) throws ServiceException
+	{
+		salesMannager.deleteByBillNo(billNo,token);
+	}
 }

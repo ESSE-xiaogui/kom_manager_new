@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Tac;
+import com.transsion.store.dto.TacDto;
 
 public interface TacFacade {
 	/**
@@ -13,4 +14,6 @@ public interface TacFacade {
      * @throws ServiceException
      */
     public List<Tac> queryAllTacInfo()throws ServiceException;
+
+	public TacDto queryTacInfoByImei(String imei) throws ServiceException;
 }
