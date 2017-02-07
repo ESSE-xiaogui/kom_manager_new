@@ -89,7 +89,7 @@ public class ShopManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_QUERY_USER_ISNULL);
 		}
 		// 获取token里的用户信息
-		Integer userId = userContext.getUser().getUserId();
+		Integer userId = userContext.getUser().getId().intValue();
 		Integer companyId = userContext.getUser().getCompanyId();
 		if (UtilHelper.isEmpty(userId) || UtilHelper.isEmpty(companyId)) {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_SALESPARAM_IS_NULL);

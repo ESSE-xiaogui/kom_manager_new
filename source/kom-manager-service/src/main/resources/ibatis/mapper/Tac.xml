@@ -10,7 +10,7 @@
 	</resultMap>
 
   	<select id="findAllTac" resultMap="TacResultMapper">
-    	SELECT ID, TAC, BRAND_CODE, MODEL_CODE FROM T_IMEI_TAC 
+    	SELECT ID, TAC, BRAND_CODE, MODEL_CODE FROM T_TAC 
   	</select>
   	
   	<select id="findTac" parameterType="java.lang.String" resultMap="TacResultMapper">

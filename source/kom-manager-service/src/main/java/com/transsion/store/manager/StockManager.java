@@ -180,7 +180,7 @@ public class StockManager {
 					throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 				}
 				// 获取token里的用户信息
-				Integer userId = userContext.getUser().getUserId();
+				Integer userId = userContext.getUser().getId().intValue();
 				if (UtilHelper.isEmpty(userId)) {
 					throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 				}
@@ -197,7 +197,7 @@ public class StockManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		// 获取token里的用户信息
-		Integer userId = userContext.getUser().getUserId();
+		Integer userId = userContext.getUser().getId().intValue();
 		if (UtilHelper.isEmpty(userId)) {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
