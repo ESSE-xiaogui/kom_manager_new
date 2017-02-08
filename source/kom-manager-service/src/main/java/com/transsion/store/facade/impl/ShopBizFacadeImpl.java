@@ -25,6 +25,7 @@ import com.transsion.store.bo.ShopBiz;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.ShopBizFacade;
+import com.transsion.store.manager.ShopBizManager;
 import com.transsion.store.service.ShopBizService;
 
 @Component("shopBizFacade")
@@ -37,6 +38,9 @@ public class ShopBizFacadeImpl implements ShopBizFacade {
 	{
 		this.shopBizService = shopBizService;
 	}
+	
+	@Autowired
+	private ShopBizManager shopBizManager;
 	
 	/**
 	 * 通过主键查询实体对象
@@ -119,9 +123,9 @@ public class ShopBizFacadeImpl implements ShopBizFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(ShopBiz shopBiz) throws ServiceException
+	public void save(ShopBiz shopBiz,String token) throws ServiceException
 	{
-		shopBizService.save(shopBiz);
+		shopBizManager.save(shopBiz,token);
 	}
 
 	/**

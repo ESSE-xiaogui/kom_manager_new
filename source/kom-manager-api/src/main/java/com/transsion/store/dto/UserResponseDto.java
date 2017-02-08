@@ -17,6 +17,8 @@ public class UserResponseDto implements Serializable{
 	
 	private Long companyId;
 	
+	private String brandCode;
+	
 	/**
 	 * 用户名称
 	 * */
@@ -39,6 +41,14 @@ public class UserResponseDto implements Serializable{
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public String getBrandCode() {
+		return brandCode;
+	}
+
+	public void setBrandCode(String brandCode) {
+		this.brandCode = brandCode;
 	}
 
 	public String getUserName() {
@@ -116,9 +126,9 @@ public class UserResponseDto implements Serializable{
 	@Override
 	public String toString() {
 		return "UserResponseDto [status=" + status + ", id=" + id + ", userId=" + userId + ", companyId=" + companyId
-						+ ", userName=" + userName + ", userCode=" + userCode + ", password=" + password
-						+ ", isInactive=" + isInactive + ", lastLogin=" + lastLogin + ", dutyName=" + dutyName + "]";
+						+ ", brandCode=" + brandCode + ", userName=" + userName + ", userCode=" + userCode
+						+ ", password=" + password + ", isInactive=" + isInactive + ", lastLogin=" + lastLogin
+						+ ", dutyName=" + dutyName + "]";
 	}
-
 	
 }

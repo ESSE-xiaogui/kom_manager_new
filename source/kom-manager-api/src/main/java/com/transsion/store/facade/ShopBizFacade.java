@@ -76,7 +76,7 @@ public interface ShopBizFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(ShopBiz shopBiz) throws ServiceException;
+	public void save(ShopBiz shopBiz,String token) throws ServiceException;
 
 	/**
 	 * 更新记录

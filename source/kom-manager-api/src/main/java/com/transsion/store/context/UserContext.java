@@ -28,6 +28,12 @@ public class UserContext implements IUserContext {
      * password
      */
     private String password;
+    
+    /**
+     * 品牌
+     * */
+    private String brandCode;
+    
     /**
      * 地址
      * */
@@ -108,6 +114,14 @@ public class UserContext implements IUserContext {
         this.userCode = userCode;
     }
     
+	public String getBrandCode() {
+		return brandCode;
+	}
+
+	public void setBrandCode(String brandCode) {
+		this.brandCode = brandCode;
+	}
+
 	public String getCityName() {
 		return cityName;
 	}
@@ -148,9 +162,11 @@ public class UserContext implements IUserContext {
 
 	@Override
 	public String toString() {
-		return "UserContext [token=" + token + ", userCode=" + userCode + ", password=" + password + ", cityName="
-						+ cityName + ", shop=" + shop + ", dutyName=" + dutyName + ", shopList=" + shopList
-						+ ", shopName=" + shopName + ", user=" + user + ", companyId=" + companyId + "]";
+		return "UserContext [token=" + token + ", userCode=" + userCode + ", password=" + password + ", brandCode="
+						+ brandCode + ", cityName=" + cityName + ", shop=" + shop + ", dutyName=" + dutyName
+						+ ", shopList=" + shopList + ", shopName=" + shopName + ", user=" + user + ", companyId="
+						+ companyId + "]";
 	}
+
 
 }

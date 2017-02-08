@@ -61,6 +61,7 @@
 		<result column="ID" property="id"/>
 		<result column="USER_ID" property="userId"/>
 		<result column="COMPANY_ID" property="companyId"/>
+		<result column="COMPANY_CODE" property="brandCode"/>
 		<result column="USER_CODE" property="userCode"/>
 		<result column="USER_NAME" property="userName"/>
 		<result column="PASSWORD" property="password"/>
@@ -514,9 +515,10 @@
 		<include refid="commonCondition2"/>
 	</select>
 	<select id="getUser" parameterType="User" resultMap="UserResponseDtoMapper">
-		SELECT u.ID,u.USER_ID,u.USER_CODE,u.USER_NAME,u.PASSWORD,e.COMPANY_ID,
+		SELECT u.ID,u.USER_ID,u.USER_CODE,u.USER_NAME,u.PASSWORD,e.COMPANY_ID,c.COMPANY_CODE,
 		u.IS_INACTIVE,u.LAST_LOGIN,d.DUTY_NAME FROM T_USER u
 		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID
+		LEFT JOIN T_COMPANY c ON c.ID = e.COMPANY_ID
 		LEFT JOIN T_DUTY d ON d.ID = e.DUTY_ID
 		WHERE u.USER_CODE = #{userCode} AND u.PASSWORD = #{password} 
 	</select>

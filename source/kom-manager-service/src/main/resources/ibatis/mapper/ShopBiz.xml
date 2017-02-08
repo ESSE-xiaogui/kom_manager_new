@@ -23,6 +23,10 @@
 		<result column="ID" property="id"/>
 		<result column="BIZ_NAME" property="bizName"/>
 		<result column="COMPANY_ID" property="companyId"/>
+		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="CN_NAME" property="CNName"/>
+		<result column="EN_NAME" property="ENName"/>
+		<result column="IS_INACTIVE" property="isInActive"/>
 		<result column="REMARK" property="remark"/>
 		<result column="CREATE_BY" property="createBy"/>
 		<result column="CREATE_DATE" property="createDate"/>
@@ -35,6 +39,10 @@
 		 ID
 		, BIZ_NAME
 		, COMPANY_ID
+		, BRAND_CODE
+		, CN_NAME
+		, EN_NAME
+		, IS_INACTIVE
 		, REMARK
 		, CREATE_BY
 		, CREATE_DATE
@@ -46,6 +54,10 @@
 	<sql id="commonColumnsNotPK">
 		 BIZ_NAME
 		, COMPANY_ID
+		, BRAND_CODE
+		, CN_NAME
+		, EN_NAME
+		, IS_INACTIVE
 		, REMARK
 		, CREATE_BY
 		, CREATE_DATE
@@ -58,6 +70,10 @@
 		 ID
 		, BIZ_NAME
 		, COMPANY_ID
+		, BRAND_CODE
+		, CN_NAME
+		, EN_NAME
+		, IS_INACTIVE
 		, REMARK
 		, CREATE_BY
 		, date_format(CREATE_DATE, '%Y-%m-%d %H:%i:%s') CREATE_DATE
@@ -75,6 +91,18 @@
 		</if>
 		<if test="companyId!= null and companyId!= ''"> 
 			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="brandCode!= null and brandCode!= ''"> 
+			AND BRAND_CODE=#{brandCode}
+		</if>
+		<if test="CNName!= null and CNName!= ''"> 
+			AND CN_NAME=#{CNName}
+		</if>
+		<if test="ENName!= null and ENName!= ''"> 
+			AND EN_NAME=#{ENName}
+		</if>
+		<if test="isInActive!= null and isInActive!= ''"> 
+			AND IS_INACTIVE=#{isInActive}
 		</if>
 		<if test="remark!= null and remark!= ''"> 
 			AND REMARK=#{remark}
@@ -106,6 +134,18 @@
             </if>
             <if test="shopBiz.companyId!= null and shopBiz.companyId!= ''">
 				AND COMPANY_ID=#{shopBiz.companyId}
+            </if>
+            <if test="shopBiz.brandCode!= null and shopBiz.brandCode!= ''">
+				AND BRAND_CODE=#{shopBiz.brandCode}
+            </if>
+            <if test="shopBiz.CNName!= null and shopBiz.CNName!= ''">
+				AND CN_NAME=#{shopBiz.companyId}
+            </if>
+            <if test="shopBiz.ENName!= null and shopBiz.ENName!= ''">
+				AND EN_NAME=#{shopBiz.ENName}
+            </if>
+            <if test="shopBiz.isInActive!= null and shopBiz.isInActive!= ''">
+				AND IS_INACTIVE=#{shopBiz.isInActive}
             </if>
             <if test="shopBiz.remark!= null and shopBiz.remark!= ''">
 				AND REMARK=#{shopBiz.remark}
@@ -148,6 +188,18 @@
         	<when test="key == 'companyId'">
 				COMPANY_ID ${value}
             </when>
+            <when test="key == 'brandCode'">
+				BRAND_CODE ${value}
+            </when>
+            <when test="key == 'CNName'">
+				CN_NAME ${value}
+            </when>
+            <when test="key == 'ENName'">
+				EN_NAME ${value}
+            </when>
+            <when test="key == 'isInActive'">
+				IS_INACTIVE ${value}
+            </when>
         	<when test="key == 'remark'">
 				REMARK ${value}
             </when>
@@ -176,6 +228,10 @@
 			) VALUES ( 
 			 #{bizName}
 			, #{companyId}
+			, #{brandCode}
+			, #{CNName}
+			, #{ENName}
+			, #{isInActive}
 			, #{remark}
 			, #{createBy}
 			, str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
@@ -189,6 +245,10 @@
 			 ID=#{id} 
 			, BIZ_NAME=#{bizName} 
 			, COMPANY_ID=#{companyId} 
+			, BRAND_CODE=#{brandCode} 
+			, CN_NAME=#{CNName} 
+			, EN_NAME=#{ENName} 
+			, IS_INACTIVE=#{isInActive} 
 			, REMARK=#{remark} 
 			, CREATE_BY=#{createBy} 
 			, CREATE_DATE=str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')

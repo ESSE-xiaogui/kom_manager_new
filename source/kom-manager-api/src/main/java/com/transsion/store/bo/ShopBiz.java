@@ -29,6 +29,11 @@ public class ShopBiz extends Model{
 	  *	
 	  */
 	private java.lang.Long id;
+	
+	/**
+	  *	
+	  */
+	private java.lang.Long companyId;
 
 	/**
 	  *	业务类型
@@ -36,9 +41,24 @@ public class ShopBiz extends Model{
 	private java.lang.String bizName;
 
 	/**
-	  *	
-	  */
-	private java.lang.Integer companyId;
+	 * 品牌
+	 * */
+	private String brandCode;
+	
+	/**
+	 * 类型名称(CN)
+	 * */
+	private String CNName;
+	
+	/**
+	 * 类型名称(EN)
+	 * */
+	private String ENName;
+	
+	/**
+	 * 是否启用 1启用 2停用
+	 * */
+	private Integer isInActive;
 
 	/**
 	  *	
@@ -105,7 +125,7 @@ public class ShopBiz extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.Integer getCompanyId() 
+	public java.lang.Long getCompanyId() 
 	{
 		return companyId;
 	}
@@ -113,11 +133,43 @@ public class ShopBiz extends Model{
 	/**
 	  *	
 	  */
-	public void setCompanyId(java.lang.Integer companyId) 
+	public void setCompanyId(java.lang.Long companyId) 
 	{
 		this.companyId = companyId;
 	}
 	
+	public String getBrandCode() {
+		return brandCode;
+	}
+
+	public void setBrandCode(String brandCode) {
+		this.brandCode = brandCode;
+	}
+
+	public String getCNName() {
+		return CNName;
+	}
+
+	public void setCNName(String cNName) {
+		CNName = cNName;
+	}
+
+	public String getENName() {
+		return ENName;
+	}
+
+	public void setENName(String eNName) {
+		ENName = eNName;
+	}
+
+	public Integer getIsInActive() {
+		return isInActive;
+	}
+
+	public void setIsInActive(Integer isInActive) {
+		this.isInActive = isInActive;
+	}
+
 	/**
 	  *	
 	  */
@@ -213,20 +265,14 @@ public class ShopBiz extends Model{
 	{
 		this.version = version;
 	}
-	
-	public String toString()
-	{
-		return "ShopBiz [" + 
-					"id=" + id + 
-					", bizName=" + bizName + 
-					", companyId=" + companyId + 
-					", remark=" + remark + 
-					", createBy=" + createBy + 
-					", createDate=" + createDate + 
-					", updateBy=" + updateBy + 
-					", updateDate=" + updateDate + 
-					", version=" + version + 
-				"]";
+
+	@Override
+	public String toString() {
+		return "ShopBiz [id=" + id + ", companyId=" + companyId + ", bizName=" + bizName + ", brandCode=" + brandCode
+						+ ", CNName=" + CNName + ", ENName=" + ENName + ", isInActive=" + isInActive + ", remark="
+						+ remark + ", createBy=" + createBy + ", createDate=" + createDate + ", updateBy=" + updateBy
+						+ ", updateDate=" + updateDate + ", version=" + version + "]";
 	}
+
 }
 

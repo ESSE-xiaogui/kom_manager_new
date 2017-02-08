@@ -60,7 +60,8 @@ public class UserManager {
 		user.setLastLogin(systemDateService.getCurrentDate());
 		userMapper.updateLastLogin(user);
 		UserResponseDto urd = userMapper.getUser(user);
-		if (UtilHelper.isEmpty(urd) ||UtilHelper.isEmpty(urd.getId()) || UtilHelper.isEmpty(urd.getCompanyId())){
+		if (UtilHelper.isEmpty(urd) ||UtilHelper.isEmpty(urd.getId()) || UtilHelper.isEmpty(urd.getCompanyId())
+						|| UtilHelper.isEmpty(urd.getBrandCode())){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_LOGIN_FAIL);
 		}
 		if(urd.getIsInactive().intValue() == 2){
@@ -78,6 +79,7 @@ public class UserManager {
 			userContext.setCompanyId(urd.getCompanyId());
 			userContext.setToken(token);
 			user.setId(urd.getId());
+			userContext.setBrandCode(urd.getBrandCode());
 			if(!UtilHelper.isEmpty(urd.getUserId())){
 				user.setUserId(urd.getUserId().intValue());
 			}

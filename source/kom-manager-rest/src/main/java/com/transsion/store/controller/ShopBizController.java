@@ -82,7 +82,8 @@ public class ShopBizController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void add(ShopBiz shopBiz) throws ServiceException
 	{
-		shopBizFacade.save(shopBiz);
+		String token=this.getAuthorization();
+		shopBizFacade.save(shopBiz,token);
 	}
 
 	/**
