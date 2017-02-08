@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.Sale;
+import com.transsion.store.dto.SaleDailyDto;
 import com.transsion.store.dto.SalesDto;
 import com.transsion.store.dto.SalesUploadDto;
 import com.transsion.store.dto.TShopSaleDto;
@@ -86,6 +87,14 @@ public class SaleFacadeImpl implements SaleFacade {
 			throws ServiceException
 	{
 		return saleService.listPaginationByProperty(pagination, sale);
+	}
+	
+	/**
+	 * @see 查询销量日报的记录
+	 * */
+	public Pagination<SaleDailyDto> listPaginationByPropertys(Pagination<SaleDailyDto> pagination, SaleDailyDto saleDailyDto)
+					throws ServiceException{
+		return saleService.listPaginationByPropertys(pagination, saleDailyDto);
 	}
 
 	/**

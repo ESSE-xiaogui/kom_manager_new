@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DeadlockLoserDataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
-
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.ConstantUtil;
@@ -48,8 +47,6 @@ public class SalesMannager {
 	
 	@Autowired
 	private SystemDateService systemDateService;
-
-	
 	/**
 	 * @see 销量上报记录
 	 * @author guihua.zhang

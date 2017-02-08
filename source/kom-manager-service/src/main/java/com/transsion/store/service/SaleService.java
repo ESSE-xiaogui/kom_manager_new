@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.Sale;
+import com.transsion.store.dto.SaleDailyDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.SaleMapper;
@@ -78,6 +79,21 @@ public class SaleService {
 			throws ServiceException
 	{
 		List<Sale> list = saleMapper.listPaginationByProperty(pagination, sale, pagination.getOrderBy());
+		
+		pagination.setResultList(list);
+		
+		return pagination;
+	}
+	
+	/**
+	 * 根据查询条件查询分页记录
+	 * @return
+	 * @throws ServiceException
+	 */
+	public Pagination<SaleDailyDto> listPaginationByPropertys(Pagination<SaleDailyDto> pagination, SaleDailyDto saleDailyDto)
+			throws ServiceException
+	{
+		List<SaleDailyDto> list = saleMapper.listPaginationByPropertys(pagination, saleDailyDto, pagination.getOrderBy());
 		
 		pagination.setResultList(list);
 		

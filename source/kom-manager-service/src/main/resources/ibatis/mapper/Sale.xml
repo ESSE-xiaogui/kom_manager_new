@@ -40,7 +40,32 @@
 		<result column="UPDATED_TIME" property="updatedTime"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
-		<resultMap id="SalesDtoResultMapper" type="SalesDto">
+	<resultMap id="SaleDailyDtoResultMapper" type="SaleDailyDto">
+		<result column="ID" property="id"/>
+		<result column="BILLNO" property="billNo"/>
+		<result column="SALE_DATE" property="saleDate"/>
+		<result column="COUNTRY" property="country"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY" property="city"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="GRADE_NAME" property="gradeName"/>
+		<result column="BIZ_NAME" property="bizName"/>
+		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="MODEL_CODE" property="modelCode"/>
+		<result column="IMEI_NO" property="imeiNo"/>
+		<result column="IMEI_LIST" property="imeiList"/>
+		<result column="SALE_QTY" property="saleQty"/>
+		<result column="SALE_PRICE" property="salePrice"/>
+		<result column="SALE_AMOUNT" property="saleAmount"/>
+		<result column="EXCHANGERATE" property="currencyRatio"/>
+		<result column="USER_CODE" property="userName"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="NATION" property="nation"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+	</resultMap>
+	<resultMap id="SalesDtoResultMapper" type="SalesDto">
 		<result column="SALE_DATE" property="saleDate"/>
 		<result column="BRAND_CODE" property="brandCode"/>
 		<result column="MODEL_CODE" property="modelMatCode"/>
@@ -111,6 +136,31 @@
 		, UPDATED_BY
 		, date_format(UPDATED_TIME, '%Y-%m-%d %H:%i:%s') UPDATED_TIME
 		, VERSION
+	</sql>
+	<sql id="commonProcessDateColumns1">
+		 ID
+		 ,BILLNO
+		 , date_format(SALE_DATE, '%Y-%m-%d %H:%i:%s') SALE_DATE
+		 ,COUNTRY
+		 ,COUNTRY_NAME
+		 ,CITY
+		 ,CITY_NAME
+		 ,SHOP_ID
+		 ,SHOP_NAME
+		 ,GRADE_NAME
+		 ,BIZ_NAME
+		 ,BRAND_CODE
+		 ,MODEL_CODE
+		 ,IMEI_NO
+		 ,IMEI_LIST
+		 ,SALE_QTY
+		 ,SALE_PRICE
+		 ,SALE_AMOUNT
+		 ,EXCHANGERATE
+		 ,USER_CODE
+		 ,EMP_NAME
+		 ,NATION
+		, date_format(CREATED_TIME, '%Y-%m-%d %H:%i:%s') CREATED_TIME
 	</sql>
 	
 	<sql id="commonCondition">
@@ -234,8 +284,7 @@
             </if>
         </if>
     </sql>
-
-	<sql id="orderByClause">
+    <sql id="orderByClause">
 		<if test="orderBy != null">
 			<foreach collection="orderBy" index="key" item="value"
 					 open=" order by " separator="," close=" ">
@@ -243,7 +292,6 @@
 			</foreach>
 		</if>
 	</sql>
-
 	<sql id="orderBy">
 		<choose>
         	<when test="key == 'id'">
@@ -302,6 +350,167 @@
             </when>
         	<when test="key == 'version'">
 				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+	
+    <sql id="commonConditionByPrefix1">
+		<if test="saleDailyDto != null">
+			<if test="saleDailyDto.id!= null and saleDailyDto.id!= ''">
+				AND ID=#{saleDailyDto.id}
+            </if> 
+			<if test="saleDailyDto.billNo!= null and saleDailyDto.billNo!= ''">
+				AND BILLNO=#{saleDailyDto.billNo}
+            </if>            
+            <if test="saleDailyDto.saleDate!= null and saleDailyDto.saleDate!= ''">
+				AND SALE_DATE &gt;= str_to_date(#{saleDailyDto.saleDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="saleDailyDto.saleEndDate!= null and saleDailyDto.saleEndDate!= ''">
+				AND SALE_DATE &lt;= str_to_date(#{saleDailyDto.saleEndDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="saleDailyDto.country!= null and saleDailyDto.country!= ''">
+				AND COUNTRY=#{saleDailyDto.country}
+            </if>
+            <if test="saleDailyDto.countryName!= null and saleDailyDto.countryName!= ''">
+				AND COUNTRY_NAME=#{saleDailyDto.countryName}
+            </if>      
+            <if test="saleDailyDto.city!= null and saleDailyDto.city!= ''">
+				AND CITY=#{saleDailyDto.city}
+            </if>
+            <if test="saleDailyDto.cityName!= null and saleDailyDto.cityName!= ''">
+				AND CITY_NAME=#{saleDailyDto.cityName}
+            </if>
+            <if test="saleDailyDto.shopId!= null and saleDailyDto.shopId!= ''">
+				AND SHOP_ID=#{saleDailyDto.shopId}
+            </if>
+            <if test="saleDailyDto.shopName!= null and saleDailyDto.shopName!= ''">
+				AND SHOP_NAME=#{saleDailyDto.shopName}
+            </if>
+            <if test="saleDailyDto.gradeName!= null and saleDailyDto.gradeName!= ''">
+				AND GRADE_NAME=#{saleDailyDto.gradeName}
+            </if>
+            <if test="saleDailyDto.bizName!= null and saleDailyDto.bizName!= ''">
+				AND BIZ_NAME=#{saleDailyDto.bizName}
+            </if>
+            <if test="saleDailyDto.brandCode!= null and saleDailyDto.brandCode!= ''">
+				AND BRAND_CODE=#{saleDailyDto.brandCode}
+            </if>
+            <if test="saleDailyDto.modelCode!= null and saleDailyDto.modelCode!= ''">
+				AND MODEL_CODE=#{saleDailyDto.modelCode}
+            </if>
+            <if test="saleDailyDto.imeiNo!= null and saleDailyDto.imeiNo!= ''">
+				AND IMEI_NO=#{saleDailyDto.imeiNo}
+            </if>
+            <if test="saleDailyDto.imeiList!= null and saleDailyDto.imeiList!= ''">
+				AND IMEI_LIST=#{saleDailyDto.imeiList}
+            </if>
+            <if test="saleDailyDto.saleQty!= null and saleDailyDto.saleQty!= ''">
+				AND SALE_QTY=#{saleDailyDto.saleQty}
+            </if>
+            <if test="saleDailyDto.salePrice!= null and saleDailyDto.salePrice!= ''">
+				AND SALE_PRICE=#{saleDailyDto.salePrice}
+            </if>
+            <if test="saleDailyDto.saleAmount!= null and saleDailyDto.saleAmount!= ''">
+				AND SALE_AMOUNT=#{saleDailyDto.saleAmount}
+            </if>
+            <if test="saleDailyDto.currencyRatio!= null and saleDailyDto.currencyRatio!= ''">
+				AND EXCHANGERATE=#{saleDailyDto.currencyRatio}
+            </if>
+            <if test="saleDailyDto.createdTime!= null and saleDailyDto.createdTime!= ''">
+				AND CREATED_TIME &gt;= str_to_date(#{saleDailyDto.createdTime},'%Y-%m-%d %H:%i:%s')
+            </if>          
+            <if test="saleDailyDto.createdEndTime!= null and saleDailyDto.createdEndTime!= ''">
+				AND CREATED_TIME &lt;= str_to_date(#{saleDailyDto.createdEndTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="saleDailyDto.userName!= null and saleDailyDto.userName!= ''">
+				AND USER_CODE=#{saleDailyDto.userName}
+            </if>
+            <if test="saleDailyDto.empName!= null and saleDailyDto.empName!= ''">
+				AND EMP_NAME=#{saleDailyDto.empName}
+            </if>
+            <if test="saleDailyDto.nation!= null and saleDailyDto.nation!= ''">
+				AND NATION=#{saleDailyDto.nation}
+            </if>  
+        </if>
+    </sql>
+	<sql id="orderByClause1">
+		<if test="orderBy1 != null">
+			<foreach collection="orderBy1" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy1" />
+			</foreach>
+		</if>
+	</sql>
+	<sql id="orderBy1">
+		<choose>
+			<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'billNo'">
+				BILLNO ${value}
+            </when>
+        	<when test="key == 'saleDate'">
+				SALE_DATE ${value}
+            </when>
+            <when test="key == 'country'">
+				COUNTRY ${value}
+            </when>
+            <when test="key == 'countryName'">
+				COUNTRY_NAME ${value}
+            </when>
+        	<when test="key == 'city'">
+				CITY ${value}
+            </when>
+            <when test="key == 'cityName'">
+				CITY_NAME ${value}
+            </when>
+        	<when test="key == 'shopId'">
+				SHOP_ID ${value}
+            </when>
+            <when test="key == 'shopName'">
+				SHOP_NAME ${value}
+            </when>
+            <when test="key == 'gradeName'">
+				GRADE_NAME ${value}
+            </when>
+            <when test="key == 'bizName'">
+				BIZ_NAME ${value}
+            </when>
+        	<when test="key == 'brandCode'">
+				BRAND_CODE ${value}
+            </when>
+        	<when test="key == 'modelCode'">
+				MODEL_CODE ${value}
+            </when>
+        	<when test="key == 'imeiNo'">
+				IMEI_NO ${value}
+            </when>
+        	<when test="key == 'imeiList'">
+				IMEI_LIST ${value}
+            </when>
+        	<when test="key == 'saleQty'">
+				SALE_QTY ${value}
+            </when>
+            <when test="key == 'salePrice'">
+				SALE_PRICE ${value}
+            </when>
+        	<when test="key == 'saleAmount'">
+				SALE_AMOUNT ${value}
+            </when>
+            <when test="key == 'currencyRatio'">
+				EXCHANGERATE ${value}
+            </when>
+        	<when test="key == 'createdTime'">
+				CREATED_TIME ${value}
+            </when>
+        	<when test="key == 'userName'">
+				USER_CODE ${value}
+            </when>
+            <when test="key == 'empName'">
+				EMP_NAME ${value}
+            </when>
+            <when test="key == 'nation'">
+				NATION ${value}
             </when>
 		</choose>
 	</sql>
@@ -390,6 +599,14 @@
 		FROM T_SALE WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
+	</select>
+	<select id="listPaginationByPropertys" parameterType="SaleDailyDto"
+		resultMap="SaleDailyDtoResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns1"/>
+		FROM SALE_LIST_VIEW WHERE 1=1
+		<include refid="commonConditionByPrefix1" />
+		<include refid="orderByClause1" />
 	</select>
 	<select id="findByCount" parameterType="Sale" resultType="int">
 		SELECT count(1) AS totalcount FROM T_SALE WHERE 1=1 

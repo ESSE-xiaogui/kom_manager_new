@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.Sale;
+import com.transsion.store.dto.SaleDailyDto;
 import com.transsion.store.dto.SalesDto;
 import com.transsion.store.dto.SalesUploadDto;
 import com.transsion.store.dto.TShopSaleDto;
@@ -104,6 +105,11 @@ public interface SaleFacade {
 	 */
 	public Pagination<Sale> listPaginationByProperty(Pagination<Sale> pagination, Sale sale)
 			throws ServiceException;
+	/**
+	 * @see 查询销量日报的记录
+	 * */
+	public Pagination<SaleDailyDto> listPaginationByPropertys(Pagination<SaleDailyDto> pagination, SaleDailyDto saleDailyDto)
+					throws ServiceException;
 	
 	
 	/**

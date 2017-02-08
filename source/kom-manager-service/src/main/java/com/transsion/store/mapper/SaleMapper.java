@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.transsion.store.bo.Sale;
+import com.transsion.store.dto.SaleDailyDto;
 import com.transsion.store.dto.SalesDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
@@ -29,6 +30,7 @@ import org.apache.ibatis.annotations.Param;
 public interface SaleMapper extends GenericIBatisMapper<Sale, java.lang.Long> {
 
     public List<Sale> listPaginationByProperty(Pagination<Sale> pagination, @Param("sale")Sale sale, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<SaleDailyDto> listPaginationByPropertys(Pagination<SaleDailyDto> pagination, @Param("saleDailyDto")SaleDailyDto saleDailyDto, @Param("orderBy1") Map<String, String> orderBy1) throws DataAccessFailureException;
     public SalesDto findSaleQty(@Param("userId")Integer userId,@Param("startDate")String startDate, @Param("endDate")String endDate);
     public List<SalesDto> findPromoterSales(@Param("startDate")String startDate, @Param("endDate")String endDate, @Param("model") String model, @Param("userId") Integer userId);
 

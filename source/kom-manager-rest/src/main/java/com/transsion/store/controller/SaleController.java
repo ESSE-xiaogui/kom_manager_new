@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Sale;
+import com.transsion.store.dto.SaleDailyDto;
 import com.transsion.store.dto.SalesDto;
 import com.transsion.store.dto.SalesUploadDto;
 import com.transsion.store.dto.TShopSaleDto;
@@ -78,6 +79,26 @@ public class SaleController extends AbstractController{
 		pagination.setOrderBy(requestModel.getOrderBy());
 
 		return saleFacade.listPaginationByProperty(pagination, requestModel.getParams());
+	}
+	
+
+	/**
+	 * @see 查询销量日报的记录
+	 * */
+	@POST
+	@Path("listSale")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public Pagination<SaleDailyDto> listPgSales(RequestModel<SaleDailyDto> requestModel) throws ServiceException{
+		Pagination<SaleDailyDto> pagination = new Pagination<SaleDailyDto>();
+
+		pagination.setPaginationFlag(requestModel.isPaginationFlag());
+		pagination.setPageNo(requestModel.getPageNo());
+		pagination.setPageSize(requestModel.getPageSize());
+		pagination.setParams(requestModel.getParams());
+		pagination.setOrderBy(requestModel.getOrderBy());
+
+		return saleFacade.listPaginationByPropertys(pagination, requestModel.getParams());
 	}
 
 	/**
