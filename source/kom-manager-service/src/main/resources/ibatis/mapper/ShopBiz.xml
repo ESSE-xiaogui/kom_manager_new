@@ -24,8 +24,8 @@
 		<result column="BIZ_NAME" property="bizName"/>
 		<result column="COMPANY_ID" property="companyId"/>
 		<result column="BRAND_CODE" property="brandCode"/>
-		<result column="CN_NAME" property="CNName"/>
-		<result column="EN_NAME" property="ENName"/>
+		<result column="CN_NAME" property="chinaName"/>
+		<result column="EN_NAME" property="englishName"/>
 		<result column="IS_INACTIVE" property="isInActive"/>
 		<result column="REMARK" property="remark"/>
 		<result column="CREATE_BY" property="createBy"/>
@@ -95,11 +95,11 @@
 		<if test="brandCode!= null and brandCode!= ''"> 
 			AND BRAND_CODE=#{brandCode}
 		</if>
-		<if test="CNName!= null and CNName!= ''"> 
-			AND CN_NAME=#{CNName}
+		<if test="chinaName!= null and chinaName!= ''"> 
+			AND CN_NAME=#{chinaName}
 		</if>
-		<if test="ENName!= null and ENName!= ''"> 
-			AND EN_NAME=#{ENName}
+		<if test="englishName!= null and englishName!= ''"> 
+			AND EN_NAME=#{englishName}
 		</if>
 		<if test="isInActive!= null and isInActive!= ''"> 
 			AND IS_INACTIVE=#{isInActive}
@@ -138,11 +138,11 @@
             <if test="shopBiz.brandCode!= null and shopBiz.brandCode!= ''">
 				AND BRAND_CODE=#{shopBiz.brandCode}
             </if>
-            <if test="shopBiz.CNName!= null and shopBiz.CNName!= ''">
+            <if test="shopBiz.chinaName!= null and shopBiz.chinaName!= ''">
 				AND CN_NAME=#{shopBiz.companyId}
             </if>
-            <if test="shopBiz.ENName!= null and shopBiz.ENName!= ''">
-				AND EN_NAME=#{shopBiz.ENName}
+            <if test="shopBiz.englishName!= null and shopBiz.englishName!= ''">
+				AND EN_NAME=#{shopBiz.englishName}
             </if>
             <if test="shopBiz.isInActive!= null and shopBiz.isInActive!= ''">
 				AND IS_INACTIVE=#{shopBiz.isInActive}
@@ -191,10 +191,10 @@
             <when test="key == 'brandCode'">
 				BRAND_CODE ${value}
             </when>
-            <when test="key == 'CNName'">
+            <when test="key == 'chinaName'">
 				CN_NAME ${value}
             </when>
-            <when test="key == 'ENName'">
+            <when test="key == 'englishName'">
 				EN_NAME ${value}
             </when>
             <when test="key == 'isInActive'">
@@ -229,8 +229,8 @@
 			 #{bizName}
 			, #{companyId}
 			, #{brandCode}
-			, #{CNName}
-			, #{ENName}
+			, #{chinaName}
+			, #{englishName}
 			, #{isInActive}
 			, #{remark}
 			, #{createBy}
@@ -246,8 +246,8 @@
 			, BIZ_NAME=#{bizName} 
 			, COMPANY_ID=#{companyId} 
 			, BRAND_CODE=#{brandCode} 
-			, CN_NAME=#{CNName} 
-			, EN_NAME=#{ENName} 
+			, CN_NAME=#{chinaName} 
+			, EN_NAME=#{englishName} 
 			, IS_INACTIVE=#{isInActive} 
 			, REMARK=#{remark} 
 			, CREATE_BY=#{createBy} 

@@ -43,22 +43,22 @@ public class ShopBiz extends Model{
 	/**
 	 * 品牌
 	 * */
-	private String brandCode;
+	private java.lang.String brandCode;
 	
 	/**
 	 * 类型名称(CN)
 	 * */
-	private String CNName;
+	private java.lang.String chinaName;
 	
 	/**
 	 * 类型名称(EN)
 	 * */
-	private String ENName;
+	private java.lang.String englishName;
 	
 	/**
 	 * 是否启用 1启用 2停用
 	 * */
-	private Integer isInActive;
+	private java.lang.Integer isInActive;
 
 	/**
 	  *	
@@ -90,186 +90,114 @@ public class ShopBiz extends Model{
 	  */
 	private java.lang.Integer version;
 
-	/**
-	  *	
-	  */
-	public java.lang.Long getId() 
-	{
+	public java.lang.Long getId() {
 		return id;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setId(java.lang.Long id) 
-	{
+
+	public void setId(java.lang.Long id) {
 		this.id = id;
 	}
-	
-	/**
-	  *	业务类型
-	  */
-	public java.lang.String getBizName() 
-	{
-		return bizName;
-	}
-	
-	/**
-	  *	业务类型
-	  */
-	public void setBizName(java.lang.String bizName) 
-	{
-		this.bizName = bizName;
-	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.Long getCompanyId() 
-	{
+
+	public java.lang.Long getCompanyId() {
 		return companyId;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setCompanyId(java.lang.Long companyId) 
-	{
+
+	public void setCompanyId(java.lang.Long companyId) {
 		this.companyId = companyId;
 	}
-	
-	public String getBrandCode() {
+
+	public java.lang.String getBizName() {
+		return bizName;
+	}
+
+	public void setBizName(java.lang.String bizName) {
+		this.bizName = bizName;
+	}
+
+	public java.lang.String getBrandCode() {
 		return brandCode;
 	}
 
-	public void setBrandCode(String brandCode) {
+	public void setBrandCode(java.lang.String brandCode) {
 		this.brandCode = brandCode;
 	}
 
-	public String getCNName() {
-		return CNName;
+	public java.lang.String getChinaName() {
+		return chinaName;
 	}
 
-	public void setCNName(String cNName) {
-		CNName = cNName;
+	public void setChinaName(java.lang.String chinaName) {
+		this.chinaName = chinaName;
 	}
 
-	public String getENName() {
-		return ENName;
+	public java.lang.String getEnglishName() {
+		return englishName;
 	}
 
-	public void setENName(String eNName) {
-		ENName = eNName;
+	public void setEnglishName(java.lang.String englishName) {
+		this.englishName = englishName;
 	}
 
-	public Integer getIsInActive() {
+	public java.lang.Integer getIsInActive() {
 		return isInActive;
 	}
 
-	public void setIsInActive(Integer isInActive) {
+	public void setIsInActive(java.lang.Integer isInActive) {
 		this.isInActive = isInActive;
 	}
 
-	/**
-	  *	
-	  */
-	public java.lang.String getRemark() 
-	{
+	public java.lang.String getRemark() {
 		return remark;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setRemark(java.lang.String remark) 
-	{
+
+	public void setRemark(java.lang.String remark) {
 		this.remark = remark;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getCreateBy() 
-	{
+
+	public java.lang.String getCreateBy() {
 		return createBy;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setCreateBy(java.lang.String createBy) 
-	{
+
+	public void setCreateBy(java.lang.String createBy) {
 		this.createBy = createBy;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getCreateDate() 
-	{
+
+	public java.lang.String getCreateDate() {
 		return createDate;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setCreateDate(java.lang.String createDate) 
-	{
+
+	public void setCreateDate(java.lang.String createDate) {
 		this.createDate = createDate;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getUpdateBy() 
-	{
+
+	public java.lang.String getUpdateBy() {
 		return updateBy;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setUpdateBy(java.lang.String updateBy) 
-	{
+
+	public void setUpdateBy(java.lang.String updateBy) {
 		this.updateBy = updateBy;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getUpdateDate() 
-	{
+
+	public java.lang.String getUpdateDate() {
 		return updateDate;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setUpdateDate(java.lang.String updateDate) 
-	{
+
+	public void setUpdateDate(java.lang.String updateDate) {
 		this.updateDate = updateDate;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.Integer getVersion() 
-	{
+
+	public java.lang.Integer getVersion() {
 		return version;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setVersion(java.lang.Integer version) 
-	{
+
+	public void setVersion(java.lang.Integer version) {
 		this.version = version;
 	}
 
 	@Override
 	public String toString() {
 		return "ShopBiz [id=" + id + ", companyId=" + companyId + ", bizName=" + bizName + ", brandCode=" + brandCode
-						+ ", CNName=" + CNName + ", ENName=" + ENName + ", isInActive=" + isInActive + ", remark="
+						+ ", chinaName=" + chinaName + ", englishName=" + englishName + ", isInActive=" + isInActive + ", remark="
 						+ remark + ", createBy=" + createBy + ", createDate=" + createDate + ", updateBy=" + updateBy
 						+ ", updateDate=" + updateDate + ", version=" + version + "]";
 	}
