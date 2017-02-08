@@ -73,18 +73,20 @@ public interface ShopGradeFacade {
 	/**
 	 * 保存记录
 	 * @param shopGrade
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(ShopGrade shopGrade) throws ServiceException;
+	public void save(ShopGrade shopGrade, String token) throws ServiceException;
 
 	/**
 	 * 更新记录
 	 * @param shopGrade
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(ShopGrade shopGrade) throws ServiceException;
+	public int update(ShopGrade shopGrade, String token) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数
@@ -101,5 +103,21 @@ public interface ShopGradeFacade {
 	 */
 	public Pagination<ShopGrade> listPaginationByProperty(Pagination<ShopGrade> pagination, ShopGrade shopGrade)
 			throws ServiceException;
+
+	/**
+	 * 查询门店等级列表
+	 * @param brandCode
+	 * @param isInactive
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<ShopGrade> getShopGradeList(String brandCode, Integer isInactive, String token)throws ServiceException;
+
+	/**
+	 * 查询已启用的门店等级
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<ShopGrade> findActiveShopGrade(String token)throws ServiceException;
 
 }

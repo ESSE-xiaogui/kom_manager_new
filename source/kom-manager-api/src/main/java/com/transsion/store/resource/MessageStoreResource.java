@@ -196,4 +196,9 @@ public class MessageStoreResource {
      * 入参为空
      * */
     public static final String ERROR_MESSAGE_SALESPARAM_IS_NULL = "error_message_salesparamisnull";
+
+    /**
+     * 该门店等级已存在
+     * */
+	public static final String ERROR_MESSAGE_SHOP_GRADE_ALREADY_EXISTS = "error_message_shopGradeAlreadyExists";
 }

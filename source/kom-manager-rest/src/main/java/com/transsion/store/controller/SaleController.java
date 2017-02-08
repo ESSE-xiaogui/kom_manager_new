@@ -140,7 +140,7 @@ public class SaleController extends AbstractController{
 	@Produces({MediaType.APPLICATION_JSON})
 	public List<SalesUploadDto> saveSalesUpload (TShopSaleDto tshopSaleDto) throws ServiceException{
 		String token = this.getAuthorization();
-		long imeiCacheTimeOut = Long.valueOf(PropertiesUtils.readProperties("imei.cache.timeout"));
+		long imeiCacheTimeOut = Long.valueOf(PropertiesUtils.rtReadProperties("imei.cache.timeout","cache.properties"));
 		logger.info("cache time out is:" + imeiCacheTimeOut);
 		return saleFacade.saveSalesUpload(tshopSaleDto, token, imeiCacheTimeOut);
 	}

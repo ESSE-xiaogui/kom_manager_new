@@ -82,7 +82,8 @@ public class ShopGradeController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void add(ShopGrade shopGrade) throws ServiceException
 	{
-		shopGradeFacade.save(shopGrade);
+		String token = this.getAuthorization();
+		shopGradeFacade.save(shopGrade,token);
 	}
 
 	/**
@@ -108,6 +109,35 @@ public class ShopGradeController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void update(ShopGrade shopGrade) throws ServiceException
 	{
-		shopGradeFacade.update(shopGrade);
+		String token = this.getAuthorization();
+		shopGradeFacade.update(shopGrade,token);
+	}
+	
+	/**
+	 * 查询门店等级列表
+	 * @param brandCode
+	 * @param isInactive
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("getShopGradeList")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<ShopGrade> getShopGradeList(@QueryParam("brandCode") java.lang.String brandCode,@QueryParam("isInactive") java.lang.Integer isInactive ) throws ServiceException{
+		String token = this.getAuthorization();
+		return shopGradeFacade.getShopGradeList(brandCode,isInactive,token);	
+	}
+	
+	/**
+	 * 查询已启用的门店等级
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("findActiveShopGrade")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<ShopGrade> findActiveShopGrade() throws ServiceException{
+		String token = this.getAuthorization();
+		return shopGradeFacade.findActiveShopGrade(token);	
 	}
 }

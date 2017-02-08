@@ -25,12 +25,15 @@ import com.transsion.store.bo.ShopGrade;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.ShopGradeFacade;
+import com.transsion.store.manager.ShopGradeManager;
 import com.transsion.store.service.ShopGradeService;
 
 @Component("shopGradeFacade")
 public class ShopGradeFacadeImpl implements ShopGradeFacade {
 
 	private ShopGradeService shopGradeService;
+	@Autowired
+	private ShopGradeManager shopGradeManager;
 	
 	@Autowired
 	public void setShopGradeService(ShopGradeService shopGradeService)
@@ -119,9 +122,9 @@ public class ShopGradeFacadeImpl implements ShopGradeFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(ShopGrade shopGrade) throws ServiceException
+	public void save(ShopGrade shopGrade,String token) throws ServiceException
 	{
-		shopGradeService.save(shopGrade);
+		shopGradeManager.save(shopGrade,token);
 	}
 
 	/**
@@ -130,9 +133,9 @@ public class ShopGradeFacadeImpl implements ShopGradeFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(ShopGrade shopGrade) throws ServiceException
+	public int update(ShopGrade shopGrade,String token) throws ServiceException
 	{
-		return shopGradeService.update(shopGrade);
+		return shopGradeManager.update(shopGrade,token);
 	}
 
 	/**
@@ -145,4 +148,25 @@ public class ShopGradeFacadeImpl implements ShopGradeFacade {
 	{
 		return shopGradeService.findByCount(shopGrade);
 	}
+
+	/**
+	 * 查询门店等级列表
+	 * @param brandCode
+	 * @param isInactive
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<ShopGrade> getShopGradeList(String brandCode, Integer isInactive, String token)throws ServiceException {
+		return shopGradeManager.getShopGradeList(brandCode,isInactive,token);
+	}
+
+	/**
+	 * 查询已启用的门店等级
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<ShopGrade> findActiveShopGrade(String token) throws ServiceException {
+		return shopGradeManager.findActiveShopGrade(token);
+	}
+		
 }

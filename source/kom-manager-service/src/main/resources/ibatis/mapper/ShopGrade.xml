@@ -22,7 +22,9 @@
 	<resultMap id="ShopGradeResultMapper" type="ShopGrade">
 		<result column="ID" property="id"/>
 		<result column="GRADE_NAME" property="gradeName"/>
+		<result column="BRAND_CODE" property="brandCode"/>
 		<result column="COMPANY_ID" property="companyId"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
 		<result column="REMARK" property="remark"/>
 		<result column="CREATE_BY" property="createBy"/>
 		<result column="CREATE_DATE" property="createDate"/>
@@ -34,7 +36,9 @@
 	<sql id="commonColumns">
 		 ID
 		, GRADE_NAME
+		, BRAND_CODE
 		, COMPANY_ID
+		, IS_INACTIVE
 		, REMARK
 		, CREATE_BY
 		, CREATE_DATE
@@ -45,7 +49,9 @@
 
 	<sql id="commonColumnsNotPK">
 		 GRADE_NAME
+		, BRAND_CODE
 		, COMPANY_ID
+		, IS_INACTIVE
 		, REMARK
 		, CREATE_BY
 		, CREATE_DATE
@@ -57,7 +63,9 @@
 	<sql id="commonProcessDateColumns">
 		 ID
 		, GRADE_NAME
+		, BRAND_CODE
 		, COMPANY_ID
+		, IS_INACTIVE
 		, REMARK
 		, CREATE_BY
 		, date_format(CREATE_DATE, '%Y-%m-%d %H:%i:%s') CREATE_DATE
@@ -73,8 +81,14 @@
 		<if test="gradeName!= null and gradeName!= ''"> 
 			AND GRADE_NAME=#{gradeName}
 		</if>
+		<if test="brandCode!= null and brandCode!= ''"> 
+			AND BRAND_CODE=#{brandCode}
+		</if>
 		<if test="companyId!= null and companyId!= ''"> 
 			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="isInactive!= null and isInactive!= ''"> 
+			AND IS_INACTIVE=#{isInactive}
 		</if>
 		<if test="remark!= null and remark!= ''"> 
 			AND REMARK=#{remark}
@@ -104,8 +118,14 @@
             <if test="shopGrade.gradeName!= null and shopGrade.gradeName!= ''">
 				AND GRADE_NAME=#{shopGrade.gradeName}
             </if>
+            <if test="shopGrade.brandCode!= null and shopGrade.brandCode!= ''">
+				AND BRAND_CODE=#{shopGrade.brandCode}
+            </if>
             <if test="shopGrade.companyId!= null and shopGrade.companyId!= ''">
 				AND COMPANY_ID=#{shopGrade.companyId}
+            </if>
+            <if test="shopGrade.isInactive!= null and shopGrade.isInactive!= ''">
+				AND IS_INACTIVE=#{shopGrade.isInactive}
             </if>
             <if test="shopGrade.remark!= null and shopGrade.remark!= ''">
 				AND REMARK=#{shopGrade.remark}
@@ -145,8 +165,14 @@
         	<when test="key == 'gradeName'">
 				GRADE_NAME ${value}
             </when>
+            <when test="key == 'brandCode'">
+				BRAND_CODE ${value}
+            </when>
         	<when test="key == 'companyId'">
 				COMPANY_ID ${value}
+            </when>
+            <when test="key == 'isInactive'">
+				IS_INACTIVE ${value}
             </when>
         	<when test="key == 'remark'">
 				REMARK ${value}
@@ -175,7 +201,9 @@
 		<![CDATA[
 			) VALUES ( 
 			 #{gradeName}
+			, #{brandCode}
 			, #{companyId}
+			, #{isInactive}
 			, #{remark}
 			, #{createBy}
 			, str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')

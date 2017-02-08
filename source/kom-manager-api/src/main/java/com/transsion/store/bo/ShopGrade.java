@@ -34,6 +34,10 @@ public class ShopGrade extends Model{
 	  *	店铺等级
 	  */
 	private java.lang.String gradeName;
+	
+	private java.lang.String brandCode;
+	
+	private java.lang.Integer isInactive;
 
 	/**
 	  *	
@@ -214,19 +218,29 @@ public class ShopGrade extends Model{
 		this.version = version;
 	}
 	
-	public String toString()
-	{
-		return "ShopGrade [" + 
-					"id=" + id + 
-					", gradeName=" + gradeName + 
-					", companyId=" + companyId + 
-					", remark=" + remark + 
-					", createBy=" + createBy + 
-					", createDate=" + createDate + 
-					", updateBy=" + updateBy + 
-					", updateDate=" + updateDate + 
-					", version=" + version + 
-				"]";
+	public java.lang.String getBrandCode() {
+		return brandCode;
 	}
+
+	public void setBrandCode(java.lang.String brandCode) {
+		this.brandCode = brandCode;
+	}
+
+	public java.lang.Integer getIsInactive() {
+		return isInactive;
+	}
+
+	public void setIsInactive(java.lang.Integer isInactive) {
+		this.isInactive = isInactive;
+	}
+
+	@Override
+	public String toString() {
+		return "ShopGrade [id=" + id + ", gradeName=" + gradeName + ", brandCode=" + brandCode + ", isInactive="
+						+ isInactive + ", companyId=" + companyId + ", remark=" + remark + ", createBy=" + createBy
+						+ ", createDate=" + createDate + ", updateBy=" + updateBy + ", updateDate=" + updateDate
+						+ ", version=" + version + "]";
+	}
+
 }
 
