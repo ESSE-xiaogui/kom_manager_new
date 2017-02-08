@@ -31,7 +31,7 @@ public class TacController {
 	@GET
 	@Path("/tac")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public TacDto queryTacInfoByImei(@QueryParam("imei") java.lang.String imei) throws ServiceException {
+	public Tac queryTacInfoByImei(@QueryParam("imei") java.lang.String imei) throws ServiceException {
 		return tacFacade.queryTacInfoByImei(imei);
 	}
 	

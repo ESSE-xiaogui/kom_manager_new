@@ -10,6 +10,6 @@ public interface TacMapper extends GenericIBatisMapper<Tac, java.lang.Long> {
 	
 	public List<Tac> findAllTac();
 
-	public TacDto findTac(String tac);
+	public Tac findTac(String tac);
 
 }

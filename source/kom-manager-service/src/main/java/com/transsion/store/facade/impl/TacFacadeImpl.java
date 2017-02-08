@@ -24,7 +24,7 @@ public class TacFacadeImpl implements TacFacade{
 	}
 	
 	@Override
-	public TacDto queryTacInfoByImei(String imei) throws ServiceException {
+	public Tac queryTacInfoByImei(String imei) throws ServiceException {
 		return tacManager.queryTacInfoByImei(imei);
 	}
 

@@ -15,5 +15,5 @@ public interface TacFacade {
      */
     public List<Tac> queryAllTacInfo()throws ServiceException;
 
-	public TacDto queryTacInfoByImei(String imei) throws ServiceException;
+	public Tac queryTacInfoByImei(String imei) throws ServiceException;
 }
