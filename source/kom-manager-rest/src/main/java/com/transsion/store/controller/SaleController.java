@@ -207,4 +207,16 @@ public class SaleController extends AbstractController{
 		String token = this.getAuthorization();
 		saleFacade.deleteByBillNo(billNo,token);
 	}
+	
+	/**
+	 * 销量导出Excel
+	 * @return
+	 */
+	@GET
+	@Path("/getSaleByExcel")
+	public String getSaleByExcel(SaleDailyDto saleDailyDto) throws ServiceException{
+		String token = this.getAuthorization();
+		return saleFacade.getSaleByExcel(saleDailyDto,token);
+	}
+	
 }

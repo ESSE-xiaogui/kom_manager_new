@@ -642,4 +642,11 @@
 			%H:%i:%s')
 		</if>
 	</select>
+	<select id="getSaleByExcel" parameterType="SaleDailyDto"
+		resultMap="SaleDailyDtoResultMapper">>
+		SELECT 
+		<include refid="commonProcessDateColumns1"/>
+		FROM SALE_LIST_VIEW WHERE 1=1
+		<include refid="commonConditionByPrefix1" />
+	</select>
 </mapper>

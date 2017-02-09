@@ -67,7 +67,7 @@ public class UserManager {
 		if(urd.getIsInactive().intValue() == 2){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_INACTIVE_USER);
 		}
-		List<Shop> shops = shopService.queryPromoterShop(urd.getUserId(), urd.getCompanyId().intValue());
+		List<Shop> shops = shopService.queryPromoterShop(urd.getId().intValue(), urd.getCompanyId().intValue());
 		UserContext userContext = new UserContext();
 		long exp = 3600 * 24;
 	    String token = JwtUtils.tokenBuilder(authKeyGenerator.generateAuthKey(), userCode, 3600 * 24);

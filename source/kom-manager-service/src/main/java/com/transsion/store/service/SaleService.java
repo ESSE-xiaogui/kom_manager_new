@@ -164,4 +164,14 @@ public class SaleService {
 	{
 		return saleMapper.findByCount(sale);
 	}
+	
+	/**
+	 * 根据条件查询记录
+	 * @param sale
+	 * @return
+	 * @throws ServiceException
+	 */
+	public SaleDailyDto listSaleByProperty(SaleDailyDto saleDailyDto)throws ServiceException{
+		return saleMapper.listSaleByProperty(saleDailyDto);
+	}
 }

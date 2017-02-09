@@ -1,10 +1,12 @@
 package com.transsion.store.manager;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.http.client.methods.HttpUriRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -18,6 +20,7 @@ import com.transsion.store.bo.ConstantUtil;
 import com.transsion.store.bo.Sale;
 import com.transsion.store.bo.SaleItem;
 import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.SaleDailyDto;
 import com.transsion.store.dto.SalesDto;
 import com.transsion.store.dto.SalesUploadDto;
 import com.transsion.store.dto.ScanValidateDto;
@@ -378,5 +381,22 @@ public class SalesMannager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		return saleMapper.findPromoterSales(startDate, endDate, model, userId);
+	}
+
+	/**
+	 * 销量导出Excel
+	 * @param saleDailyDto 
+	 * @return
+	 */
+	public String getSaleByExcel(SaleDailyDto saleDailyDto, String token) {
+		ArrayList<String> fieldName =  new ArrayList<String>(){{add(""); add("单号");add("销售日期");
+		add("国家"); add("城市");add("门店代码");add("门店名称"); add("门店等级");add("门店类型");add("品牌"); 
+		add("IMEI code");add("IMEI List");add("数量");add("价格");add("总金额");add("当前汇率");
+		add("用户名");add("员工姓名");add("职务");add("上传时间");}};
+		
+		
+		
+		
+		return null;
 	}
 }

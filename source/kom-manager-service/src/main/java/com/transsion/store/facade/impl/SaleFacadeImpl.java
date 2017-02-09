@@ -18,6 +18,9 @@ package com.transsion.store.facade.impl;
 
 import java.util.List;
 
+import javax.ws.rs.core.Context;
+
+import org.jboss.resteasy.plugins.server.servlet.HttpServletResponseHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -45,6 +48,7 @@ public class SaleFacadeImpl implements SaleFacade {
 	
 	@Autowired
 	private SalesMannager salesMannager;
+	
 	
 	/**
 	 * 通过主键查询实体对象
@@ -202,5 +206,13 @@ public class SaleFacadeImpl implements SaleFacade {
 	public void deleteByBillNo(String billNo,String token) throws ServiceException
 	{
 		salesMannager.deleteByBillNo(billNo,token);
+	}
+
+	/**
+	 * 销量导出Excel
+	 * @return
+	 */
+	public String getSaleByExcel(SaleDailyDto saleDailyDto,String token) throws ServiceException {
+		return salesMannager.getSaleByExcel(saleDailyDto,token);
 	}
 }
