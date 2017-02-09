@@ -79,7 +79,6 @@ public class ShopBizService {
 	{
 		List<ShopBiz> list = shopBizMapper.listPaginationByProperty(pagination, shopBiz, pagination.getOrderBy());
 		pagination.setResultList(list);
-		
 		return pagination;
 	}
 

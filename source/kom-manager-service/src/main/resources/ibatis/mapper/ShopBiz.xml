@@ -139,7 +139,7 @@
 				AND BRAND_CODE=#{shopBiz.brandCode}
             </if>
             <if test="shopBiz.chinaName!= null and shopBiz.chinaName!= ''">
-				AND CN_NAME=#{shopBiz.companyId}
+				AND CN_NAME=#{shopBiz.chinaName}
             </if>
             <if test="shopBiz.englishName!= null and shopBiz.englishName!= ''">
 				AND EN_NAME=#{shopBiz.englishName}
