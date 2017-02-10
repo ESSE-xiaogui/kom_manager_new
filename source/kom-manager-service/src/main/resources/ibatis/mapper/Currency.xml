@@ -37,7 +37,7 @@
 	</resultMap>
 	<resultMap id="CurrencyDtoResultMapper" type="CurrencyDto">
 		<result column="ID" property="id"/>
-		<result column="REGION_ID" property="country"/>
+		<result column="COUNTRY" property="country"/>
 		<result column="COUNTRY_NAME" property="countryName"/>
 		<result column="WERKS" property="werks"/>
 		<result column="CURRENCY_NAME" property="currencyName"/>
@@ -170,10 +170,10 @@
 				AND r.REGION_NAME=#{currencyDto.countryName}
 			</if>
 			<if test="currencyDto.werks!= null and currencyDto.werks!= ''">
-				AND C.WERKS=#{currencyDto.werks}
+				AND c.WERKS=#{currencyDto.werks}
 			</if>
 			<if	test="currencyDto.currencyName!= null and currencyDto.currencyName!= ''">
-				AND C.CURRENCY_NAME=#{currencyDto.currencyName}
+				AND c.CURRENCY_NAME=#{currencyDto.currencyName}
 			</if>
 			<if test="currencyDto.exchangerate!= null and currencyDto.exchangerate!= ''">
 				AND c.EXCHANGERATE=#{currencyDto.exchangerate}
@@ -215,7 +215,7 @@
 	<sql id="orderBy">
 		<choose>
 			<when test="key == 'id'">
-				C.ID ${value}
+				c.ID ${value}
 			</when>
 			<when test="key == 'country'">
 				r.ID ${value}
@@ -224,37 +224,37 @@
 				r.REGION_NAME ${value}
 			</when>
 			<when test="key == 'werks'">
-				C.WERKS ${value}
+				c.WERKS ${value}
 			</when>
 			<when test="key == 'currencyName'">
-				C.CURRENCY_NAME ${value}
+				c.CURRENCY_NAME ${value}
 			</when>
 			<when test="key == 'exchangerate'">
-				C.EXCHANGERATE ${value}
+				c.EXCHANGERATE ${value}
 			</when>
 			<when test="key == 'exchangerate2'">
-				C.EXCHANGERATE2 ${value}
+				c.EXCHANGERATE2 ${value}
 			</when>
 			<when test="key == 'beginTime'">
-				C.BEGINDATE ${value}
+				c.BEGINDATE ${value}
 			</when>
 			<when test="key == 'endTime'">
-				C.ENDDATE ${value}
+				c.ENDDATE ${value}
 			</when>
 			<when test="key == 'isInactive'">
-				C.IS_INACTIVE ${value}
+				c.IS_INACTIVE ${value}
 			</when>
 			<when test="key == 'createdBy'">
-				C.CREATED_BY ${value}
+				c.CREATED_BY ${value}
 			</when>
 			<when test="key == 'createdTime'">
-				C.CREATED_TIME ${value}
+				c.CREATED_TIME ${value}
 			</when>
 			<when test="key == 'updateBy'">
-				C.UPDATED_BY ${value}
+				c.UPDATED_BY ${value}
 			</when>
 			<when test="key == 'updateTime'">
-				C.UPDATED_TIME ${value}
+				c.UPDATED_TIME ${value}
 			</when>
 		</choose>
 	</sql>
@@ -332,7 +332,7 @@
 	</select>
 	<select id="listPaginationByProperty" parameterType="CurrencyDto" resultMap="CurrencyDtoResultMapper">
 		SELECT c.ID,r.ID AS COUNTRY,r.REGION_NAME AS COUNTRY_NAME,c.WERKS,c.CURRENCY_NAME,c.EXCHANGERATE,c.EXCHANGERATE2,
-		c.BEGINDATE,c.ENDDATE,c.IS_INACTIVE FROM T_CURRENCY c
+		c.BEGINDATE,c.ENDDATE,c.IS_INACTIVE,c.CREATED_BY,c.CREATED_TIME,c.UPDATED_BY,c.UPDATED_TIME FROM T_CURRENCY c
 		LEFT JOIN T_REGION r ON r.ID = c.REGION_ID
 		WHERE 1=1 
 		<include refid="commonConditionByPrefix"/>

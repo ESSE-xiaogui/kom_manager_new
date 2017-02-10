@@ -70,12 +70,12 @@ public class CurrencyDto implements Serializable{
 	/**
 	 * 更新人
 	 * */
-	private Long updateBy;
+	private Long updatedBy;
 	
 	/**
 	 * 更新时间
 	 * */
-	private String updateTime;
+	private String updatedTime;
 
 	public Long getId() {
 		return id;
@@ -173,20 +173,20 @@ public class CurrencyDto implements Serializable{
 		this.createdTime = createdTime;
 	}
 
-	public Long getUpdateBy() {
-		return updateBy;
+	public Long getUpdatedBy() {
+		return updatedBy;
 	}
 
-	public void setUpdateBy(Long updateBy) {
-		this.updateBy = updateBy;
+	public void setUpdatedBy(Long updatedBy) {
+		this.updatedBy = updatedBy;
 	}
 
-	public String getUpdateTime() {
-		return updateTime;
+	public String getUpdatedTime() {
+		return updatedTime;
 	}
 
-	public void setUpdateTime(String updateTime) {
-		this.updateTime = updateTime;
+	public void setUpdatedTime(String updatedTime) {
+		this.updatedTime = updatedTime;
 	}
 
 	@Override
@@ -194,8 +194,8 @@ public class CurrencyDto implements Serializable{
 		return "CurrencyDto [id=" + id + ", country=" + country + ", countryName=" + countryName + ", werks=" + werks
 						+ ", currencyName=" + currencyName + ", exchangerate=" + exchangerate + ", exchangerate2="
 						+ exchangerate2 + ", beginTime=" + beginTime + ", endTime=" + endTime + ", isInactive="
-						+ isInactive + ", createdBy=" + createdBy + ", createdTime=" + createdTime + ", updateBy="
-						+ updateBy + ", updateTime=" + updateTime + "]";
+						+ isInactive + ", createdBy=" + createdBy + ", createdTime=" + createdTime + ", updatedBy="
+						+ updatedBy + ", updatedTime=" + updatedTime + "]";
 	}
 
 }

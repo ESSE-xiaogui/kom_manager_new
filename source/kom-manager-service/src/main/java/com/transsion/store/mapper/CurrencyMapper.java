@@ -29,7 +29,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface CurrencyMapper extends GenericIBatisMapper<Currency, java.lang.Long> {
 
-	public List<CurrencyDto> listPaginationByProperty(Pagination<CurrencyDto> pagination, CurrencyDto currencyDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+	public List<CurrencyDto> listPaginationByProperty(Pagination<CurrencyDto> pagination, @Param("currencyDto")CurrencyDto currencyDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
 
 	public BigDecimal queryCurrencyRatio(@Param("dealerId") Integer dealerId,@Param("companyId") Integer companyId);
 	
