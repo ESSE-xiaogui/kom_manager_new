@@ -26,7 +26,7 @@
 		<result column="BRAND_CODE" property="brandCode"/>
 		<result column="CN_NAME" property="chinaName"/>
 		<result column="EN_NAME" property="englishName"/>
-		<result column="IS_INACTIVE" property="isInActive"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
 		<result column="REMARK" property="remark"/>
 		<result column="CREATE_BY" property="createBy"/>
 		<result column="CREATE_DATE" property="createDate"/>
@@ -101,8 +101,8 @@
 		<if test="englishName!= null and englishName!= ''"> 
 			AND EN_NAME=#{englishName}
 		</if>
-		<if test="isInActive!= null and isInActive!= ''"> 
-			AND IS_INACTIVE=#{isInActive}
+		<if test="isInactive!= null and isInactive!= ''"> 
+			AND IS_INACTIVE=#{isInactive}
 		</if>
 		<if test="remark!= null and remark!= ''"> 
 			AND REMARK=#{remark}
@@ -144,8 +144,8 @@
             <if test="shopBiz.englishName!= null and shopBiz.englishName!= ''">
 				AND EN_NAME=#{shopBiz.englishName}
             </if>
-            <if test="shopBiz.isInActive!= null and shopBiz.isInActive!= ''">
-				AND IS_INACTIVE=#{shopBiz.isInActive}
+            <if test="shopBiz.isInactive!= null and shopBiz.isInactive!= ''">
+				AND IS_INACTIVE=#{shopBiz.isInactive}
             </if>
             <if test="shopBiz.remark!= null and shopBiz.remark!= ''">
 				AND REMARK=#{shopBiz.remark}
@@ -197,7 +197,7 @@
             <when test="key == 'englishName'">
 				EN_NAME ${value}
             </when>
-            <when test="key == 'isInActive'">
+            <when test="key == 'isInactive'">
 				IS_INACTIVE ${value}
             </when>
         	<when test="key == 'remark'">
@@ -231,7 +231,7 @@
 			, #{brandCode}
 			, #{chinaName}
 			, #{englishName}
-			, #{isInActive}
+			, #{isInactive}
 			, #{remark}
 			, #{createBy}
 			, str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
@@ -248,7 +248,7 @@
 			, BRAND_CODE=#{brandCode} 
 			, CN_NAME=#{chinaName} 
 			, EN_NAME=#{englishName} 
-			, IS_INACTIVE=#{isInActive} 
+			, IS_INACTIVE=#{isInactive} 
 			, REMARK=#{remark} 
 			, CREATE_BY=#{createBy} 
 			, CREATE_DATE=str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')

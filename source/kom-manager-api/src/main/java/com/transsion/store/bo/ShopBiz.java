@@ -58,7 +58,7 @@ public class ShopBiz extends Model{
 	/**
 	 * 是否启用 1启用 2停用
 	 * */
-	private java.lang.Integer isInActive;
+	private java.lang.Integer isInactive;
 
 	/**
 	  *	
@@ -138,12 +138,12 @@ public class ShopBiz extends Model{
 		this.englishName = englishName;
 	}
 
-	public java.lang.Integer getIsInActive() {
-		return isInActive;
+	public java.lang.Integer getIsInactive() {
+		return isInactive;
 	}
 
-	public void setIsInActive(java.lang.Integer isInActive) {
-		this.isInActive = isInActive;
+	public void setIsInactive(java.lang.Integer isInactive) {
+		this.isInactive = isInactive;
 	}
 
 	public java.lang.String getRemark() {
@@ -197,10 +197,9 @@ public class ShopBiz extends Model{
 	@Override
 	public String toString() {
 		return "ShopBiz [id=" + id + ", companyId=" + companyId + ", bizName=" + bizName + ", brandCode=" + brandCode
-						+ ", chinaName=" + chinaName + ", englishName=" + englishName + ", isInActive=" + isInActive + ", remark="
-						+ remark + ", createBy=" + createBy + ", createDate=" + createDate + ", updateBy=" + updateBy
-						+ ", updateDate=" + updateDate + ", version=" + version + "]";
+						+ ", chinaName=" + chinaName + ", englishName=" + englishName + ", isInactive=" + isInactive
+						+ ", remark=" + remark + ", createBy=" + createBy + ", createDate=" + createDate + ", updateBy="
+						+ updateBy + ", updateDate=" + updateDate + ", version=" + version + "]";
 	}
-
 }
 

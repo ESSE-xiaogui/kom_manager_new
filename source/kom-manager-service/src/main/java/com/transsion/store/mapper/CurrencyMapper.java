@@ -16,17 +16,24 @@
  **/
 package com.transsion.store.mapper;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.transsion.store.bo.Currency;
+import com.transsion.store.dto.CurrencyDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
 import org.apache.ibatis.annotations.Param;
 
 public interface CurrencyMapper extends GenericIBatisMapper<Currency, java.lang.Long> {
 
-	public List<Currency> listPaginationByProperty(Pagination<Currency> pagination, Currency currency) throws DataAccessFailureException;
+	public List<CurrencyDto> listPaginationByProperty(Pagination<CurrencyDto> pagination, CurrencyDto currencyDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
 
-	public java.math.BigDecimal queryCurrencyRatio(@Param("dealerId") Integer dealerId,@Param("companyId") Integer companyId);
+	public BigDecimal queryCurrencyRatio(@Param("dealerId") Integer dealerId,@Param("companyId") Integer companyId);
+	
+	public void save(Currency currency); 
+	
+	public int update(Currency currency);
 }

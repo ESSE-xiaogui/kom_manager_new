@@ -22,24 +22,40 @@
 	<resultMap id="CurrencyResultMapper" type="Currency">
 		<result column="ID" property="id"/>
 		<result column="COMPANY_ID" property="companyId"/>
-		<result column="FACTORY_CODE" property="factoryCode"/>
+		<result column="REGION_ID" property="country"/>
 		<result column="FINDEX" property="findex"/>
 		<result column="WERKS" property="werks"/>
 		<result column="CURRENCY_NAME" property="currencyName"/>
 		<result column="EXCHANGERATE" property="exchangerate"/>
 		<result column="EXCHANGERATE2" property="exchangerate2"/>
-		<result column="BEGINDATE" property="begindate"/>
-		<result column="ENDDATE" property="enddate"/>
+		<result column="BEGINDATE" property="beginTime"/>
+		<result column="ENDDATE" property="endTime"/>
 		<result column="IS_INACTIVE" property="isInactive"/>
 		<result column="UPDATED_BY" property="updatedBy"/>
 		<result column="UPDATED_TIME" property="updatedTime"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
+	<resultMap id="CurrencyDtoResultMapper" type="CurrencyDto">
+		<result column="ID" property="id"/>
+		<result column="REGION_ID" property="country"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="WERKS" property="werks"/>
+		<result column="CURRENCY_NAME" property="currencyName"/>
+		<result column="EXCHANGERATE" property="exchangerate"/>
+		<result column="EXCHANGERATE2" property="exchangerate2"/>
+		<result column="BEGINDATE" property="beginTime"/>
+		<result column="ENDDATE" property="endTime"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+	</resultMap>
 	
 	<sql id="commonColumns">
 		 ID
 		, COMPANY_ID
-		, FACTORY_CODE
+		, REGION_ID
 		, FINDEX
 		, WERKS
 		, CURRENCY_NAME
@@ -48,6 +64,8 @@
 		, BEGINDATE
 		, ENDDATE
 		, IS_INACTIVE
+		, CREATED_BY
+		, CREATED_TIME
 		, UPDATED_BY
 		, UPDATED_TIME
 		, VERSION
@@ -55,7 +73,7 @@
 
 	<sql id="commonColumnsNotPK">
 		 COMPANY_ID
-		, FACTORY_CODE
+		 , REGION_ID
 		, FINDEX
 		, WERKS
 		, CURRENCY_NAME
@@ -64,6 +82,8 @@
 		, BEGINDATE
 		, ENDDATE
 		, IS_INACTIVE
+		, CREATED_BY
+		, CREATED_TIME
 		, UPDATED_BY
 		, UPDATED_TIME
 		, VERSION
@@ -72,7 +92,7 @@
 	<sql id="commonProcessDateColumns">
 		 ID
 		, COMPANY_ID
-		, FACTORY_CODE
+		, REGION_ID
 		, FINDEX
 		, WERKS
 		, CURRENCY_NAME
@@ -81,6 +101,8 @@
 		, date_format(BEGINDATE, '%Y-%m-%d %H:%i:%s') BEGINDATE
 		, date_format(ENDDATE, '%Y-%m-%d %H:%i:%s') ENDDATE
 		, IS_INACTIVE
+		, CREATED_BY
+		, date_format(CREATED_TIME, '%Y-%m-%d %H:%i:%s') CREATED_TIME
 		, UPDATED_BY
 		, date_format(UPDATED_TIME, '%Y-%m-%d %H:%i:%s') UPDATED_TIME
 		, VERSION
@@ -93,8 +115,8 @@
 		<if test="companyId!= null and companyId!= ''"> 
 			AND COMPANY_ID=#{companyId}
 		</if>
-		<if test="factoryCode!= null and factoryCode!= ''"> 
-			AND FACTORY_CODE=#{factoryCode}
+		<if test="country!= null and country!= ''"> 
+			AND REGION_ID=#{country}
 		</if>
 		<if test="findex!= null and findex!= ''"> 
 			AND FINDEX=#{findex}
@@ -111,14 +133,20 @@
 		<if test="exchangerate2!= null and exchangerate2!= ''"> 
 			AND EXCHANGERATE2=#{exchangerate2}
 		</if>
-		<if test="begindate!= null and begindate!= ''"> 
-			AND BEGINDATE=str_to_date(#{begindate},'%Y-%m-%d %H:%i:%s')
+		<if test="beginTime!= null and beginTime!= ''"> 
+			AND BEGINDATE=str_to_date(#{beginTime},'%Y-%m-%d %H:%i:%s')
 		</if>
-		<if test="enddate!= null and enddate!= ''"> 
-			AND ENDDATE=str_to_date(#{enddate},'%Y-%m-%d %H:%i:%s')
+		<if test="endTime!= null and endTime!= ''"> 
+			AND ENDDATE=str_to_date(#{endTime},'%Y-%m-%d %H:%i:%s')
 		</if>
 		<if test="isInactive!= null and isInactive!= ''"> 
 			AND IS_INACTIVE=#{isInactive}
+		</if>
+		<if test="createdBy!= null and createdBy!= ''"> 
+			AND CREATED_BY=#{createdBy}
+		</if>
+		<if test="createdTime!= null and createdTime!= ''"> 
+			AND CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
 		</if>
 		<if test="updatedBy!= null and updatedBy!= ''"> 
 			AND UPDATED_BY=#{updatedBy}
@@ -130,22 +158,123 @@
 			AND VERSION=#{version}
 		</if>
 	</sql>
-	
+	<sql id="commonConditionByPrefix">
+		<if test="currencyDto != null">
+			<if test="currencyDto.id!= null and currencyDto.id!= ''">
+				AND c.ID=#{currencyDto.id}
+			</if>
+			<if test="currencyDto.country!= null and currencyDto.country!= ''">
+				AND r.ID=#{currencyDto.country}
+			</if>
+			<if test="currencyDto.countryName!= null and currencyDto.countryName!= ''">
+				AND r.REGION_NAME=#{currencyDto.countryName}
+			</if>
+			<if test="currencyDto.werks!= null and currencyDto.werks!= ''">
+				AND C.WERKS=#{currencyDto.werks}
+			</if>
+			<if	test="currencyDto.currencyName!= null and currencyDto.currencyName!= ''">
+				AND C.CURRENCY_NAME=#{currencyDto.currencyName}
+			</if>
+			<if test="currencyDto.exchangerate!= null and currencyDto.exchangerate!= ''">
+				AND c.EXCHANGERATE=#{currencyDto.exchangerate}
+			</if>
+			<if test="currencyDto.exchangerate2!= null and currencyDto.exchangerate2!= ''">
+				AND c.EXCHANGERATE2=#{currencyDto.exchangerate2}
+			</if>
+			<if test="currencyDto.beginTime!= null and currencyDto.beginTime!= ''">
+				AND c.BEGINDATE=str_to_date(#{currencyDto.beginTime},'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="currencyDto.endTime!= null and currencyDto.endTime!= ''">
+				AND c.ENDDATE=str_to_date(#{currencyDto.endTime},'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="currencyDto.isInactive!= null and currencyDto.isInactive!= ''">
+				AND c.IS_INACTIVE=#{currencyDto.isInactive}
+			</if>
+			<if test="currencyDto.createdBy!= null and currencyDto.createdBy!= ''">
+				AND c.CREATED_BY=#{currencyDto.createdBy}
+			</if>
+			<if test="currencyDto.createdTime!= null and currencyDto.createdTime!= ''">
+				AND c.CREATED_TIME=str_to_date(#{currencyDto.createdTime},'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="currencyDto.updatedBy!= null and currencyDto.updatedBy!= ''">
+				AND c.UPDATED_BY=#{currencyDto.updatedBy}
+			</if>
+			<if test="currencyDto.updatedTime!= null and currencyDto.updatedTime!= ''">
+				AND c.UPDATED_TIME=str_to_date(#{currencyDto.updatedTime},'%Y-%m-%d %H:%i:%s')
+			</if>
+		</if>
+	</sql>
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+	<sql id="orderBy">
+		<choose>
+			<when test="key == 'id'">
+				C.ID ${value}
+			</when>
+			<when test="key == 'country'">
+				r.ID ${value}
+			</when>
+			<when test="key == 'countryName'">
+				r.REGION_NAME ${value}
+			</when>
+			<when test="key == 'werks'">
+				C.WERKS ${value}
+			</when>
+			<when test="key == 'currencyName'">
+				C.CURRENCY_NAME ${value}
+			</when>
+			<when test="key == 'exchangerate'">
+				C.EXCHANGERATE ${value}
+			</when>
+			<when test="key == 'exchangerate2'">
+				C.EXCHANGERATE2 ${value}
+			</when>
+			<when test="key == 'beginTime'">
+				C.BEGINDATE ${value}
+			</when>
+			<when test="key == 'endTime'">
+				C.ENDDATE ${value}
+			</when>
+			<when test="key == 'isInactive'">
+				C.IS_INACTIVE ${value}
+			</when>
+			<when test="key == 'createdBy'">
+				C.CREATED_BY ${value}
+			</when>
+			<when test="key == 'createdTime'">
+				C.CREATED_TIME ${value}
+			</when>
+			<when test="key == 'updateBy'">
+				C.UPDATED_BY ${value}
+			</when>
+			<when test="key == 'updateTime'">
+				C.UPDATED_TIME ${value}
+			</when>
+		</choose>
+	</sql>
 	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Currency">
 		<![CDATA[ INSERT INTO T_CURRENCY ( ]]>
 		<include refid="commonColumnsNotPK"/>
 		<![CDATA[
 			) VALUES ( 
 			 #{companyId}
-			, #{factoryCode}
-			, #{findex}
+			 ,#{findex}
+			, #{country}
 			, #{werks}
 			, #{currencyName}
 			, #{exchangerate}
 			, #{exchangerate2}
-			, str_to_date(#{begindate},'%Y-%m-%d %H:%i:%s')
-			, str_to_date(#{enddate},'%Y-%m-%d %H:%i:%s')
+			, str_to_date(#{beginTime},'%Y-%m-%d %H:%i:%s')
+			, str_to_date(#{endTime},'%Y-%m-%d %H:%i:%s')
 			, #{isInactive}
+			, #{createdBy}
+			, str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
 			, #{updatedBy}
 			, str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
 			, #{version}
@@ -155,15 +284,17 @@
 		<![CDATA[ UPDATE T_CURRENCY SET 
 			 ID=#{id} 
 			, COMPANY_ID=#{companyId} 
-			, FACTORY_CODE=#{factoryCode} 
+			, REGION_ID=#{counrty} 
 			, FINDEX=#{findex} 
 			, WERKS=#{werks} 
 			, CURRENCY_NAME=#{currencyName} 
 			, EXCHANGERATE=#{exchangerate} 
 			, EXCHANGERATE2=#{exchangerate2} 
-			, BEGINDATE=str_to_date(#{begindate},'%Y-%m-%d %H:%i:%s')
-			, ENDDATE=str_to_date(#{enddate},'%Y-%m-%d %H:%i:%s')
+			, BEGINDATE=str_to_date(#{beginTime},'%Y-%m-%d %H:%i:%s')
+			, ENDDATE=str_to_date(#{endTime},'%Y-%m-%d %H:%i:%s')
 			, IS_INACTIVE=#{isInactive} 
+			, CREATED_BY=#{createdBy} 
+			, CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
 			, UPDATED_BY=#{updatedBy} 
 			, UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
 			, VERSION=#{version} 
@@ -199,17 +330,18 @@
 		FROM T_CURRENCY WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="Currency" resultMap="CurrencyResultMapper">
-		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_CURRENCY WHERE 1=1 
-		<include refid="commonCondition"/>
+	<select id="listPaginationByProperty" parameterType="CurrencyDto" resultMap="CurrencyDtoResultMapper">
+		SELECT c.ID,r.ID AS COUNTRY,r.REGION_NAME AS COUNTRY_NAME,c.WERKS,c.CURRENCY_NAME,c.EXCHANGERATE,c.EXCHANGERATE2,
+		c.BEGINDATE,c.ENDDATE,c.IS_INACTIVE FROM T_CURRENCY c
+		LEFT JOIN T_REGION r ON r.ID = c.REGION_ID
+		WHERE 1=1 
+		<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
 	</select>
 	<select id="findByCount" parameterType="Currency" resultType="int">
 		SELECT count(1) AS totalcount FROM T_CURRENCY WHERE 1=1
 		<include refid="commonCondition"/>
 	</select>
-
 	<select id="queryCurrencyRatio"  resultType="java.math.BigDecimal">
 		select	EXCHANGERATE from	T_CURRENCY
 		where REGION_ID in (select REGION_ID from T_SHOP  where SHOP_ID = #{dealerId} and COMPANY_ID=#{companyId})

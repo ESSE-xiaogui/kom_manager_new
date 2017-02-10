@@ -33,12 +33,10 @@ public class Currency extends Model{
 	/**
 	  *	指使用系统的公司，即事业部或经销商对应的公司
 	  */
-	private Integer companyId;
+	private Long companyId;
+	
+	private Long country;
 
-	/**
-	  *	
-	  */
-	private String factoryCode;
 
 	/**
 	  *	
@@ -68,22 +66,32 @@ public class Currency extends Model{
 	/**
 	  *	
 	  */
-	private String begindate;
+	private String beginTime;
 
 	/**
 	  *	
 	  */
-	private String enddate;
+	private String endTime;
 
 	/**
 	  *	0表示激活状态，被激活有效的数据可以用于新增业务，1表示停用，被停用无效的数据只能用于历史数据查询中
 	  */
 	private Integer isInactive;
+	
+	/**
+	  *	
+	  */
+	private java.lang.Long createdBy;
+
+	/**
+	  *	
+	  */
+	private java.lang.String createdTime;
 
 	/**
 	  *	系统保留字段，记录数据最后更新用户，用于审计，无业务含义
 	  */
-	private Integer updatedBy;
+	private Long updatedBy;
 
 	/**
 	  *	系统保留字段，记录数据最后时间，用于审计，无业务含义
@@ -114,7 +122,7 @@ public class Currency extends Model{
 	/**
 	  *	指使用系统的公司，即事业部或经销商对应的公司
 	  */
-	public Integer getCompanyId()
+	public Long getCompanyId()
 	{
 		return companyId;
 	}
@@ -122,26 +130,19 @@ public class Currency extends Model{
 	/**
 	  *	指使用系统的公司，即事业部或经销商对应的公司
 	  */
-	public void setCompanyId(Integer companyId)
+	public void setCompanyId(Long companyId)
 	{
 		this.companyId = companyId;
 	}
 	
-	/**
-	  *	
-	  */
-	public String getFactoryCode()
-	{
-		return factoryCode;
+	public Long getCountry() {
+		return country;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setFactoryCode(String factoryCode)
-	{
-		this.factoryCode = factoryCode;
+
+	public void setCountry(Long country) {
+		this.country = country;
 	}
+
 	
 	/**
 	  *	
@@ -223,38 +224,23 @@ public class Currency extends Model{
 		this.exchangerate2 = exchangerate2;
 	}
 	
-	/**
-	  *	
-	  */
-	public String getBegindate()
-	{
-		return begindate;
+
+	public String getBeginTime() {
+		return beginTime;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setBegindate(String begindate)
-	{
-		this.begindate = begindate;
+
+	public void setBeginTime(String beginTime) {
+		this.beginTime = beginTime;
 	}
-	
-	/**
-	  *	
-	  */
-	public String getEnddate()
-	{
-		return enddate;
+
+	public String getEndTime() {
+		return endTime;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setEnddate(String enddate)
-	{
-		this.enddate = enddate;
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
 	}
-	
+
 	/**
 	  *	0表示激活状态，被激活有效的数据可以用于新增业务，1表示停用，被停用无效的数据只能用于历史数据查询中
 	  */
@@ -271,10 +257,26 @@ public class Currency extends Model{
 		this.isInactive = isInactive;
 	}
 	
+	public java.lang.Long getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(java.lang.Long createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public java.lang.String getCreatedTime() {
+		return createdTime;
+	}
+
+	public void setCreatedTime(java.lang.String createdTime) {
+		this.createdTime = createdTime;
+	}
+
 	/**
 	  *	系统保留字段，记录数据最后更新用户，用于审计，无业务含义
 	  */
-	public Integer getUpdatedBy()
+	public Long getUpdatedBy()
 	{
 		return updatedBy;
 	}
@@ -282,7 +284,7 @@ public class Currency extends Model{
 	/**
 	  *	系统保留字段，记录数据最后更新用户，用于审计，无业务含义
 	  */
-	public void setUpdatedBy(Integer updatedBy)
+	public void setUpdatedBy(Long updatedBy)
 	{
 		this.updatedBy = updatedBy;
 	}
@@ -318,25 +320,16 @@ public class Currency extends Model{
 	{
 		this.version = version;
 	}
-	
-	public String toString()
-	{
-		return "Currency [" + 
-					"id=" + id + 
-					", companyId=" + companyId + 
-					", factoryCode=" + factoryCode + 
-					", findex=" + findex + 
-					", werks=" + werks + 
-					", currencyName=" + currencyName + 
-					", exchangerate=" + exchangerate + 
-					", exchangerate2=" + exchangerate2 + 
-					", begindate=" + begindate + 
-					", enddate=" + enddate + 
-					", isInactive=" + isInactive + 
-					", updatedBy=" + updatedBy + 
-					", updatedTime=" + updatedTime + 
-					", version=" + version + 
-				"]";
+
+	@Override
+	public String toString() {
+		return "Currency [id=" + id + ", companyId=" + companyId + ", country=" + country + ", findex=" + findex
+						+ ", werks=" + werks + ", currencyName=" + currencyName + ", exchangerate=" + exchangerate
+						+ ", exchangerate2=" + exchangerate2 + ", beginTime=" + beginTime + ", endTime=" + endTime
+						+ ", isInactive=" + isInactive + ", createdBy=" + createdBy + ", createdTime=" + createdTime
+						+ ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime + ", version=" + version + "]";
 	}
+
+	
 }
 
