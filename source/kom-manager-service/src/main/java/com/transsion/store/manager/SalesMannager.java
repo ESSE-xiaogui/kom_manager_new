@@ -1,5 +1,6 @@
 package com.transsion.store.manager;
 import java.net.HttpURLConnection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.poi.hssf.extractor.ExcelExtractor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -14,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DeadlockLoserDataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+
+import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.ConstantUtil;
@@ -31,6 +35,7 @@ import com.transsion.store.mapper.SaleMapper;
 import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
+import com.transsion.store.utils.ExcelUtils;
 
 @Service("salesMannager")
 public class SalesMannager {
@@ -387,16 +392,24 @@ public class SalesMannager {
 	 * 销量导出Excel
 	 * @param saleDailyDto 
 	 * @return
+	 * @throws ServiceException
 	 */
-	public String getSaleByExcel(SaleDailyDto saleDailyDto, String token) {
-		ArrayList<String> fieldName =  new ArrayList<String>(){{add(""); add("单号");add("销售日期");
-		add("国家"); add("城市");add("门店代码");add("门店名称"); add("门店等级");add("门店类型");add("品牌"); 
-		add("IMEI code");add("IMEI List");add("数量");add("价格");add("总金额");add("当前汇率");
-		add("用户名");add("员工姓名");add("职务");add("上传时间");}};
-		
-		
-		
-		
-		return null;
+	public byte[] getSaleByExcel(SaleDailyDto saleDailyDto, String token) throws ServiceException {
+		String[] headers = {"序号","单号","销售日期","国家","城市","门店名称","门店等级","门店类型","品牌", 
+		"IMEI号","IMEI List","数量","价格","总金额","当前汇率","用户名","员工姓名","上传时间"};
+		//String[] headers = {"序号","单号","销售日期","国家","城市"};
+		List<SaleDailyDto> list = saleMapper.listSaleByProperty(saleDailyDto);
+		List<Object[]> dataset = new ArrayList<Object[]>();
+		int i=1;
+		for(SaleDailyDto saleDailyDto1 :list){
+			dataset.add(new Object[]{i++,saleDailyDto1.getBillNo(),saleDailyDto1.getSaleDate(),saleDailyDto1.getCountryName(),
+							saleDailyDto1.getCityName(),saleDailyDto1.getShopName(),saleDailyDto1.getGradeName(),
+							saleDailyDto1.getBizName(),saleDailyDto1.getBrandCode(),saleDailyDto1.getImeiNo(),
+							saleDailyDto1.getImeiList(),saleDailyDto1.getSaleQty(),saleDailyDto1.getSalePrice(),
+							saleDailyDto1.getSaleAmount(),saleDailyDto1.getCurrencyRatio(),saleDailyDto1.getUserName(),
+							saleDailyDto1.getEmpName(),saleDailyDto1.getCreatedTime()});
+		}
+		String title = "销量报表";
+		return ExcelUtils.exportExcel(title, headers, dataset);
 	}
 }

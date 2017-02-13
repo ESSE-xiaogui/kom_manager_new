@@ -642,10 +642,11 @@
 			%H:%i:%s')
 		</if>
 	</select>
-	<select id="getSaleByExcel" parameterType="SaleDailyDto"
-		resultMap="SaleDailyDtoResultMapper">>
-		SELECT 
-		<include refid="commonProcessDateColumns1"/>
+	<select id="listSaleByProperty" parameterType="SaleDailyDto"
+		resultMap="SaleDailyDtoResultMapper">
+		SELECT BILLNO,SALE_DATE,COUNTRY_NAME,CITY_NAME,SHOP_NAME,GRADE_NAME,BIZ_NAME,
+		BRAND_CODE,IMEI_NO,IMEI_LIST,SALE_QTY,SALE_PRICE,SALE_AMOUNT,EXCHANGERATE,
+		USER_CODE,EMP_NAME,CREATED_TIME
 		FROM SALE_LIST_VIEW WHERE 1=1
 		<include refid="commonConditionByPrefix1" />
 	</select>

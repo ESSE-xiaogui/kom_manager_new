@@ -33,6 +33,6 @@ public interface SaleMapper extends GenericIBatisMapper<Sale, java.lang.Long> {
     public List<SaleDailyDto> listPaginationByPropertys(Pagination<SaleDailyDto> pagination, @Param("saleDailyDto")SaleDailyDto saleDailyDto, @Param("orderBy1") Map<String, String> orderBy1) throws DataAccessFailureException;
     public SalesDto findSaleQty(@Param("userId")Integer userId,@Param("startDate")String startDate, @Param("endDate")String endDate);
     public List<SalesDto> findPromoterSales(@Param("startDate")String startDate, @Param("endDate")String endDate, @Param("model") String model, @Param("userId") Integer userId);
-	public SaleDailyDto listSaleByProperty(SaleDailyDto saleDailyDto)throws DataAccessFailureException;
+	public List<SaleDailyDto> listSaleByProperty(@Param("saleDailyDto")SaleDailyDto saleDailyDto)throws DataAccessFailureException;
 
 }

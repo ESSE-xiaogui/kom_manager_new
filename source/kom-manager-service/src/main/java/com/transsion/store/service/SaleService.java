@@ -171,7 +171,7 @@ public class SaleService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public SaleDailyDto listSaleByProperty(SaleDailyDto saleDailyDto)throws ServiceException{
+	public List<SaleDailyDto> listSaleByProperty(SaleDailyDto saleDailyDto)throws ServiceException{
 		return saleMapper.listSaleByProperty(saleDailyDto);
 	}
 }

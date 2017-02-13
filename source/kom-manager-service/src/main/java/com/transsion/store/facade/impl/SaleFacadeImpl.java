@@ -212,7 +212,7 @@ public class SaleFacadeImpl implements SaleFacade {
 	 * 销量导出Excel
 	 * @return
 	 */
-	public String getSaleByExcel(SaleDailyDto saleDailyDto,String token) throws ServiceException {
+	public byte[] getSaleByExcel(SaleDailyDto saleDailyDto,String token) throws ServiceException {
 		return salesMannager.getSaleByExcel(saleDailyDto,token);
 	}
 }
