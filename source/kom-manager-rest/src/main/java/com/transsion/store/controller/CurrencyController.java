@@ -3,10 +3,12 @@ package com.transsion.store.controller;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,21 @@ public class CurrencyController extends AbstractController{
 	
 	@Autowired
 	private CurrencyFacade currencyFacade;
+	
+	/**
+	 * 通过主键查询实体对象
+	 * @param primaryKey
+	 * @return
+	 * @throws ServiceException
+	 * 
+	 */
+	@GET
+	@Path("/getByPK")
+	@Produces({MediaType.APPLICATION_JSON})
+	public Currency getByPK(@QueryParam("key") java.lang.Long primaryKey) throws ServiceException
+	{
+		return currencyFacade.getByPK(primaryKey);
+	}
 	
 	/**
 	 * 新增汇率
@@ -63,9 +80,9 @@ public class CurrencyController extends AbstractController{
 	@PUT
 	@Path("/update")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void updateCurrency(CurrencyDto currencyDto) throws ServiceException{
+	public void updateCurrency(Currency currency) throws ServiceException{
 		String token=this.getAuthorization();
-		currencyFacade.updateCurrency(currencyDto,token);
+		currencyFacade.updateCurrency(currency,token);
 	}
 	
 	/**

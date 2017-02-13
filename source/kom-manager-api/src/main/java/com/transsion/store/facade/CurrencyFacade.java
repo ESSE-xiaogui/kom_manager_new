@@ -8,6 +8,14 @@ import com.transsion.store.bo.Currency;
 import com.transsion.store.dto.CurrencyDto;
 
 public interface CurrencyFacade {
+	
+	/**
+	 * 通过主键查询实体对象
+	 * @param primaryKey
+	 * @return
+	 * @throws ServiceException
+	 */
+	public Currency getByPK(java.lang.Long primaryKey) throws ServiceException;
 
 	/**
 	 * 保存汇率
@@ -25,7 +33,7 @@ public interface CurrencyFacade {
 	/**
 	 * 更新汇率
 	 * */
-	public void updateCurrency(CurrencyDto currencyDto,String token) throws ServiceException;
+	public void updateCurrency(Currency currency,String token) throws ServiceException;
 	
 	/**
 	 * 根据多个主键删除记录

@@ -284,7 +284,7 @@
 		<![CDATA[ UPDATE T_CURRENCY SET 
 			 ID=#{id} 
 			, COMPANY_ID=#{companyId} 
-			, REGION_ID=#{counrty} 
+			, REGION_ID=#{country} 
 			, FINDEX=#{findex} 
 			, WERKS=#{werks} 
 			, CURRENCY_NAME=#{currencyName} 

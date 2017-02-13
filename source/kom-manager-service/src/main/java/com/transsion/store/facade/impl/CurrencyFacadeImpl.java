@@ -21,6 +21,16 @@ public class CurrencyFacadeImpl implements CurrencyFacade{
 	
 	@Autowired
 	private CurrencyService currencyService;
+	/**
+	 * 通过主键查询实体对象
+	 * @param primaryKey
+	 * @return
+	 * @throws ServiceException
+	 */
+	public Currency getByPK(java.lang.Long primaryKey) throws ServiceException
+	{
+		return currencyService.getByPK(primaryKey);
+	}
 	
 	/**
 	 * 保存汇率
@@ -41,8 +51,8 @@ public class CurrencyFacadeImpl implements CurrencyFacade{
 	/**
 	 * 更新汇率
 	 * */
-	public void updateCurrency(CurrencyDto currencyDto,String token) throws ServiceException{
-		currencyManager.updateCurrency(currencyDto, token);
+	public void updateCurrency(Currency currency,String token) throws ServiceException{
+		currencyManager.updateCurrency(currency, token);
 	}
 	/**
 	 * 根据多个主键删除记录
