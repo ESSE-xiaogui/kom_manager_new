@@ -218,6 +218,7 @@
 			, GRADE_NAME=#{gradeName} 
 			, COMPANY_ID=#{companyId} 
 			, REMARK=#{remark} 
+			, IS_INACTIVE=#{isInactive}
 			, CREATE_BY=#{createBy} 
 			, CREATE_DATE=str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
 			, UPDATE_BY=#{updateBy} 
