@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.transsion.store.bo.Currency;
 import com.transsion.store.dto.CurrencyDto;
 import com.transsion.store.mapper.CurrencyMapper;
 
@@ -15,6 +16,17 @@ public class CurrencyService {
 	
 	@Autowired
 	private CurrencyMapper currencyMapper;
+	
+	/**
+	 * 通过主键查询实体对象
+	 * @param primaryKey
+	 * @return
+	 * @throws ServiceException
+	 */
+	public Currency getByPK(java.lang.Long primaryKey) throws ServiceException
+	{
+		return currencyMapper.getByPK(primaryKey);
+	}
 	
 	/**
 	 * 根据查询条件查询分页记录

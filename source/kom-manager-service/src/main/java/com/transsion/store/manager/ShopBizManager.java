@@ -44,4 +44,29 @@ public class ShopBizManager {
 		shopBiz.setCreateDate(systemDateService.getCurrentDate());
 		shopBizMapper.save(shopBiz);
 	}
+	/**
+	 * 更新记录
+	 * @param shopBiz
+	 * @return
+	 * @throws ServiceException
+	 */
+	public int update(ShopBiz shopBiz,String token) throws ServiceException
+	{
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+		}
+		if(UtilHelper.isEmpty(shopBiz)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext.getCompanyId()) || UtilHelper.isEmpty(userContext.getUserCode())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		shopBiz.setCompanyId(userContext.getCompanyId());
+		shopBiz.setCreateBy(userContext.getUserCode());
+		shopBiz.setCreateDate(systemDateService.getCurrentDate());
+		shopBiz.setUpdateBy(userContext.getUserCode());
+		shopBiz.setUpdateDate(systemDateService.getCurrentDate());
+		return shopBizMapper.update(shopBiz);
+	}
 }

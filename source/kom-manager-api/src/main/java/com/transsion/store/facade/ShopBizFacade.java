@@ -84,7 +84,7 @@ public interface ShopBizFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(ShopBiz shopBiz) throws ServiceException;
+	public int update(ShopBiz shopBiz,String token) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数

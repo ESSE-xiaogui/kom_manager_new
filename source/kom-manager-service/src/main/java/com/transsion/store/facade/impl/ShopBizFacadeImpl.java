@@ -134,9 +134,9 @@ public class ShopBizFacadeImpl implements ShopBizFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(ShopBiz shopBiz) throws ServiceException
+	public int update(ShopBiz shopBiz,String token) throws ServiceException
 	{
-		return shopBizService.update(shopBiz);
+		return shopBizManager.update(shopBiz,token);
 	}
 
 	/**
