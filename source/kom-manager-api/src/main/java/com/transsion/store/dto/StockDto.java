@@ -10,6 +10,8 @@ public class StockDto implements java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private String shopId;
 
 	private String brandCode;
 
@@ -20,6 +22,14 @@ public class StockDto implements java.io.Serializable {
 	private String fdate;
 
 	private java.math.BigDecimal fprice;
+	
+	public String getShopId() {
+		return shopId;
+	}
+
+	public void setShopId(String shopId) {
+		this.shopId = shopId;
+	}
 
 	public java.math.BigDecimal getFprice() {
 		return fprice;
@@ -63,8 +73,9 @@ public class StockDto implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "StockDto [brandCode=" + brandCode + ", modelMatCode=" + modelMatCode + ", fqty=" + fqty + ", fdate="
-				+ fdate + ", fprice=" + fprice + "]";
+		return "StockDto [shopId=" + shopId + ", brandCode=" + brandCode + ", modelMatCode=" + modelMatCode + ", fqty="
+						+ fqty + ", fdate=" + fdate + ", fprice=" + fprice + "]";
 	}
+
 
 }

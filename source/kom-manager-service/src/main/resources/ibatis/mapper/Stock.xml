@@ -396,7 +396,7 @@
 		ORDER BY d.MODEL_CODE
 	</select>
 	<select id="findStocksByProp" resultMap="PromoterStockResultMapper">
-		SELECT m.STOCK_DATE,UPPER(d.BRAND_CODE) as BRAND_CODE,d.MODEL_CODE,MAX(d.QTY) AS QTY FROM
+		SELECT m.SHOP_ID,m.STOCK_DATE,UPPER(d.BRAND_CODE) as BRAND_CODE,d.MODEL_CODE,MAX(d.QTY) AS QTY FROM
 		T_STOCK m
 		LEFT JOIN T_STOCK_ITEM d on d.STOCK_ID=m.ID
 		WHERE m.SHOP_ID=#{shopId} 
