@@ -111,7 +111,7 @@ public class CurrencyController extends AbstractController{
 	 * @throws ServiceException
 	 * @throws IOException
 	 */
-	@GET
+	@POST
 	@Path("/exportExcel")
 	@Consumes({MediaType.APPLICATION_JSON}) 
 	@Produces({MediaType.TEXT_PLAIN})  
