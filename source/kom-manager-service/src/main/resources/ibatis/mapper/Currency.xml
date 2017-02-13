@@ -348,4 +348,12 @@
 		order by ENDDATE desc
 		 limit 1
 	</select>
+	<select id="listCurrencyByProperty" parameterType="CurrencyDto" resultMap="CurrencyDtoResultMapper">
+		SELECT r.REGION_NAME AS COUNTRY_NAME,c.WERKS,c.CURRENCY_NAME,c.EXCHANGERATE,c.EXCHANGERATE2,
+		c.BEGINDATE,c.ENDDATE,c.IS_INACTIVE
+		FROM T_CURRENCY c
+		LEFT JOIN T_REGION r ON r.ID = c.REGION_ID
+		WHERE 1=1 
+		<include refid="commonConditionByPrefix"/>
+	</select>
 </mapper>

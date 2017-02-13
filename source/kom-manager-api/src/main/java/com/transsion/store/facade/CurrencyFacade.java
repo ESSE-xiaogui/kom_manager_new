@@ -1,5 +1,6 @@
 package com.transsion.store.facade;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.shangkang.core.bo.Pagination;
@@ -41,5 +42,13 @@ public interface CurrencyFacade {
 	 * @throws ServiceException
 	 */
 	public void deleteByPKeys(List<java.lang.Long> primaryKeys) throws ServiceException;
+
+	/**
+	 * 汇率导出Excel
+	 * @param currencyDto
+	 * @return
+	 * @throws ServiceException
+	 */
+	public byte[] getCurrencyByExcel(CurrencyDto currencyDto)throws ServiceException;
 	
 }

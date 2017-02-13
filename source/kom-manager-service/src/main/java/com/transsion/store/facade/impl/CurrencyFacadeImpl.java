@@ -1,5 +1,6 @@
 package com.transsion.store.facade.impl;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +62,15 @@ public class CurrencyFacadeImpl implements CurrencyFacade{
 	 */
 	public void deleteByPKeys(List<java.lang.Long> primaryKeys) throws ServiceException{
 		currencyService.deleteByPKeys(primaryKeys);
+	}
+	
+	/**
+	 * 汇率导出Excel
+	 * @param currencyDto
+	 * @return
+	 * @throws ServiceException
+	 */
+	public byte[] getCurrencyByExcel(CurrencyDto currencyDto)throws ServiceException{
+		return currencyManager.getCurrencyByExcel(currencyDto);
 	}
 }
