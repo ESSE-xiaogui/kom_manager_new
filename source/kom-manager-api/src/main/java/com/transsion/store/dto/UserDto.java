@@ -13,6 +13,7 @@ public class UserDto implements Serializable{
 	private String password;
 	private String empName;
 	private Long empCode;
+	private String orgName;
 	/**
 	 * 1表示激活状态，被激活有效的数据可以用于新增业务，2表示停用，被停用无效的数据只能用于历史数据查询中
 	 */
@@ -31,6 +32,13 @@ public class UserDto implements Serializable{
 	}
 	public void setUserCode(String userCode) {
 		this.userCode = userCode;
+	}
+	
+	public String getOrgName() {
+		return orgName;
+	}
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
 	}
 	public String getEmpName() {
 		return empName;
@@ -66,9 +74,9 @@ public class UserDto implements Serializable{
 	@Override
 	public String toString() {
 		return "UserDto [id=" + id + ", userCode=" + userCode + ", password=" + password + ", empName=" + empName
-						+ ", empCode=" + empCode +  ", isInactive=" + isInactive
+						+ ", empCode=" + empCode + ", orgName=" + orgName + ", isInactive=" + isInactive
 						+ ", inService=" + inService + "]";
 	}
-	
+
 	 
 }

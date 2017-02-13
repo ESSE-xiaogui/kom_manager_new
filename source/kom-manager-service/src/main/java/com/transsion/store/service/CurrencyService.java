@@ -36,7 +36,7 @@ public class CurrencyService {
 	public Pagination<CurrencyDto> listPaginationByProperty(Pagination<CurrencyDto> pagination, CurrencyDto currencyDto)
 					throws ServiceException {
 		List<CurrencyDto> list = currencyMapper.listPaginationByProperty(pagination, currencyDto, pagination.getOrderBy());
-		
+		System.out.println(list);
 		pagination.setResultList(list);
 		
 		return pagination;
