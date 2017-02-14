@@ -17,13 +17,8 @@
 package com.transsion.store.facade.impl;
 
 import java.util.List;
-
-import javax.ws.rs.core.Context;
-
-import org.jboss.resteasy.plugins.server.servlet.HttpServletResponseHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.transsion.store.bo.Sale;
 import com.transsion.store.dto.SaleDailyDto;
 import com.transsion.store.dto.SalesDto;
@@ -99,6 +94,10 @@ public class SaleFacadeImpl implements SaleFacade {
 	public Pagination<SaleDailyDto> listPaginationByPropertys(Pagination<SaleDailyDto> pagination, SaleDailyDto saleDailyDto)
 					throws ServiceException{
 		return saleService.listPaginationByPropertys(pagination, saleDailyDto);
+	}
+	
+	public SaleDailyDto findSaleItem(Long saleId) throws ServiceException{
+		return salesMannager.findSaleItem(saleId);
 	}
 
 	/**

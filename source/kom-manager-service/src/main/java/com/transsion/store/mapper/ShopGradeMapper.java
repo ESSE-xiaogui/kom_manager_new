@@ -19,6 +19,8 @@ package com.transsion.store.mapper;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.QueryParam;
+
 import com.transsion.store.bo.ShopGrade;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
@@ -28,4 +30,5 @@ import org.apache.ibatis.annotations.Param;
 public interface ShopGradeMapper extends GenericIBatisMapper<ShopGrade, java.lang.Long> {
 
     public List<ShopGrade> listPaginationByProperty(Pagination<ShopGrade> pagination, @Param("shopGrade")ShopGrade shopGrade, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public ShopGrade findShopGrade(@QueryParam("saleId") Long saleId);
 }

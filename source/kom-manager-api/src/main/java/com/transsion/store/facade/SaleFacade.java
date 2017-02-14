@@ -111,6 +111,8 @@ public interface SaleFacade {
 	public Pagination<SaleDailyDto> listPaginationByPropertys(Pagination<SaleDailyDto> pagination, SaleDailyDto saleDailyDto)
 					throws ServiceException;
 	
+	public SaleDailyDto findSaleItem(Long saleId) throws ServiceException;
+	
 	
 	/**
 	 * @see 销量上报记录

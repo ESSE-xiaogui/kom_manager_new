@@ -298,4 +298,12 @@
 		SELECT count(1) AS totalcount FROM T_SHOP_BIZ WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
+	<select id="findShopBiz" parameterType="java.lang.Long"
+		resultMap="ShopBizResultMapper">
+		SELECT b.ID,b.BIZ_NAME FROM T_SHOP_BIZ b
+		LEFT JOIN T_SHOP p ON p.BIZ_ID = b.ID
+		LEFT JOIN T_SALE s ON s.SHOP_ID = p.ID
+		LEFT JOIN T_SALE_ITEM i ON i.SALE_ID = s.ID
+		WHERE i.ID = #{saleId}
+	</select>
 </mapper>

@@ -1,14 +1,10 @@
 package com.transsion.store.manager;
-import java.net.HttpURLConnection;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.poi.hssf.extractor.ExcelExtractor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -17,12 +13,14 @@ import org.springframework.dao.DeadlockLoserDataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
-import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.ConstantUtil;
+import com.transsion.store.bo.Employee;
 import com.transsion.store.bo.Sale;
 import com.transsion.store.bo.SaleItem;
+import com.transsion.store.bo.ShopBiz;
+import com.transsion.store.bo.ShopGrade;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.SaleDailyDto;
 import com.transsion.store.dto.SalesDto;
@@ -30,8 +28,11 @@ import com.transsion.store.dto.SalesUploadDto;
 import com.transsion.store.dto.ScanValidateDto;
 import com.transsion.store.dto.TShopSaleDto;
 import com.transsion.store.mapper.CurrencyMapper;
+import com.transsion.store.mapper.EmployeeMapper;
 import com.transsion.store.mapper.SaleItemMapper;
 import com.transsion.store.mapper.SaleMapper;
+import com.transsion.store.mapper.ShopBizMapper;
+import com.transsion.store.mapper.ShopGradeMapper;
 import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
@@ -55,6 +56,15 @@ public class SalesMannager {
 	
 	@Autowired
 	private SystemDateService systemDateService;
+	
+	@Autowired
+	private ShopBizMapper shopBizMapper;
+	
+	@Autowired
+	private ShopGradeMapper shopGradeMapper;
+	
+	@Autowired
+	private EmployeeMapper employeeMapper;
 	/**
 	 * @see 销量上报记录
 	 * @author guihua.zhang
@@ -387,7 +397,29 @@ public class SalesMannager {
 		}
 		return saleMapper.findPromoterSales(startDate, endDate, model, userId);
 	}
-
+	public SaleDailyDto findSaleItem(Long saleId) throws ServiceException{
+		if(UtilHelper.isEmpty(saleId)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		SaleDailyDto sdDto = new SaleDailyDto();
+		ShopBiz shopBiz = shopBizMapper.findShopBiz(saleId);
+		if(UtilHelper.isEmpty(shopBiz)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		sdDto.setBizName(shopBiz.getBizName());
+		ShopGrade shopGrade = shopGradeMapper.findShopGrade(saleId);
+		if(UtilHelper.isEmpty(shopGrade)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		sdDto.setGradeName(shopGrade.getGradeName());
+		Employee employee = employeeMapper.findEmployee(saleId);
+		if(UtilHelper.isEmpty(employee)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		sdDto.setEmpName(employee.getEmpName());
+		sdDto.setNation(employee.getNation());
+		return sdDto;
+	}
 	/**
 	 * 销量导出Excel
 	 * @param saleDailyDto 

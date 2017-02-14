@@ -19,6 +19,8 @@ package com.transsion.store.mapper;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.QueryParam;
+
 import com.transsion.store.bo.Employee;
 import com.transsion.store.dto.EmpInfoDto;
 import com.transsion.store.dto.EmpResponseDto;
@@ -39,5 +41,7 @@ public interface EmployeeMapper extends GenericIBatisMapper<Employee, java.lang.
 	public int updateIsHistory(Long primaryKey) throws DataAccessFailureException;
 	
 	public void updateIsHistorys(@Param("primaryKeys") List<Long> primaryKeys) throws DataAccessFailureException;
+	
+	public Employee findEmployee(@QueryParam("saleId") Long saleId);
 
 }

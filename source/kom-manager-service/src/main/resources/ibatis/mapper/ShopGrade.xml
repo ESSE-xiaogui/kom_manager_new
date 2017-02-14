@@ -267,4 +267,12 @@
 		SELECT count(1) AS totalcount FROM T_SHOP_GRADE WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
+	<select id="findShopGrade" parameterType="java.lang.Long"
+		resultMap="ShopGradeResultMapper">
+		SELECT b.ID,b.GRADE_NAME FROM T_SHOP_GRADE b
+		LEFT JOIN T_SHOP p ON p.GRADE_ID = b.ID
+		LEFT JOIN T_SALE s ON s.SHOP_ID = p.ID
+		LEFT JOIN T_SALE_ITEM i ON i.SALE_ID = s.ID
+		WHERE i.ID = #{saleId}
+	</select>
 </mapper>

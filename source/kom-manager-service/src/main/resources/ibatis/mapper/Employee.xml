@@ -601,10 +601,18 @@
 	<![CDATA[ UPDATE T_EMPLOYEE SET IS_HISTORY = 1 WHERE ID = #{id}  ]]>
 	</update>
 	<update id="updateIsHistorys" parameterType="map">
-	UPDATE T_EMPLOYEE SET IS_HISTORY = 1 WHERE
+		UPDATE T_EMPLOYEE SET IS_HISTORY = 1 WHERE
 		<foreach collection="primaryKeys" index="index" item="id"
 			open=" ID IN(" separator="," close=") ">
 			#{id}
 		</foreach>
 	</update>
+	<select id="findEmployee" parameterType="java.lang.Long"
+		resultMap="EmployeeResultMapper">
+		SELECT b.ID,b.EMP_NAME,b.NATION FROM T_EMPLOYEE b
+		LEFT JOIN T_USER u ON u.ID = b.ID
+		LEFT JOIN T_SALE s ON s.USER_ID = u.ID
+		LEFT JOIN T_SALE_ITEM i ON i.SALE_ID = s.ID
+		WHERE i.ID = #{saleId}
+	</select>
 </mapper>

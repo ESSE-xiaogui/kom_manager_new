@@ -147,8 +147,6 @@
 		 ,CITY_NAME
 		 ,SHOP_ID
 		 ,SHOP_NAME
-		 ,GRADE_NAME
-		 ,BIZ_NAME
 		 ,BRAND_CODE
 		 ,MODEL_CODE
 		 ,IMEI_NO
@@ -158,8 +156,6 @@
 		 ,SALE_AMOUNT
 		 ,EXCHANGERATE
 		 ,USER_CODE
-		 ,EMP_NAME
-		 ,NATION
 		, date_format(CREATED_TIME, '%Y-%m-%d %H:%i:%s') CREATED_TIME
 	</sql>
 	
@@ -363,10 +359,10 @@
 				AND BILLNO=#{saleDailyDto.billNo}
             </if>            
             <if test="saleDailyDto.saleDate!= null and saleDailyDto.saleDate!= ''">
-				AND SALE_DATE &gt;= str_to_date(#{saleDailyDto.saleDate},'%Y-%m-%d %H:%i:%s')
+				AND SALE_DATE &gt;= date_format(#{saleDailyDto.saleDate},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="saleDailyDto.saleEndDate!= null and saleDailyDto.saleEndDate!= ''">
-				AND SALE_DATE &lt;= str_to_date(#{saleDailyDto.saleEndDate},'%Y-%m-%d %H:%i:%s')
+				AND SALE_DATE &lt;= date_format(#{saleDailyDto.saleEndDate},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="saleDailyDto.country!= null and saleDailyDto.country!= ''">
 				AND COUNTRY=#{saleDailyDto.country}
@@ -417,10 +413,10 @@
 				AND EXCHANGERATE=#{saleDailyDto.currencyRatio}
             </if>
             <if test="saleDailyDto.createdTime!= null and saleDailyDto.createdTime!= ''">
-				AND CREATED_TIME &gt;= str_to_date(#{saleDailyDto.createdTime},'%Y-%m-%d %H:%i:%s')
+				AND CREATED_TIME &gt;= date_format(#{saleDailyDto.createdTime},'%Y-%m-%d %H:%i:%s')
             </if>          
             <if test="saleDailyDto.createdEndTime!= null and saleDailyDto.createdEndTime!= ''">
-				AND CREATED_TIME &lt;= str_to_date(#{saleDailyDto.createdEndTime},'%Y-%m-%d %H:%i:%s')
+				AND CREATED_TIME &lt;= date_format(#{saleDailyDto.createdEndTime},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="saleDailyDto.userName!= null and saleDailyDto.userName!= ''">
 				AND USER_CODE=#{saleDailyDto.userName}
@@ -596,7 +592,7 @@
 	<select id="listPaginationByProperty" parameterType="Sale" resultMap="SaleResultMapper">
 		SELECT 
 		<include refid="commonProcessDateColumns"/>
-		FROM T_SALE WHERE 1=1
+		FROM SALE_LIST_VIEW WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>

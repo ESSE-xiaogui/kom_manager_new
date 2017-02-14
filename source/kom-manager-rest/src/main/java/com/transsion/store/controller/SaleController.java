@@ -109,7 +109,15 @@ public class SaleController extends AbstractController {
 
 		return saleFacade.listPaginationByPropertys(pagination, requestModel.getParams());
 	}
-
+	
+	/**
+	 * 销量明细
+	 * */
+	public SaleDailyDto findSaleItem(@QueryParam("saleId") java.lang.Long saleId) throws ServiceException{
+		return saleFacade.findSaleItem(saleId);
+	}
+	
+	
 	/**
 	 * 新增记录
 	 * 
