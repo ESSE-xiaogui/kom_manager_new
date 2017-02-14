@@ -122,9 +122,9 @@ public class DutyFacadeImpl implements DutyFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(Duty duty) throws ServiceException
+	public void save(Duty duty,String token) throws ServiceException
 	{
-		dutyService.save(duty);
+		dutyManager.save(duty,token);
 	}
 
 	/**
@@ -133,9 +133,9 @@ public class DutyFacadeImpl implements DutyFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(Duty duty) throws ServiceException
+	public int update(Duty duty,String token) throws ServiceException
 	{
-		return dutyService.update(duty);
+		return dutyManager.update(duty,token);
 	}
 
 	/**

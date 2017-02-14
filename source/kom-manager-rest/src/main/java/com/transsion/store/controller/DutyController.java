@@ -81,9 +81,9 @@ public class DutyController extends AbstractController{
 	@POST
 	@Path("/add")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void add(Duty duty) throws ServiceException
+	public void add(Duty duty,String token) throws ServiceException
 	{
-		dutyFacade.save(duty);
+		dutyFacade.save(duty,token);
 	}
 
 	/**
@@ -107,9 +107,9 @@ public class DutyController extends AbstractController{
 	@PUT
 	@Path("/update")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void update(Duty duty) throws ServiceException
+	public void update(Duty duty,String token) throws ServiceException
 	{
-		dutyFacade.update(duty);
+		dutyFacade.update(duty,token);
 	}
 	
 	/**

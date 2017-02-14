@@ -58,7 +58,7 @@ public class Duty extends Model{
 	/**
 	  *	
 	  */
-	private java.lang.Integer createdBy;
+	private java.lang.String createdBy;
 
 	/**
 	  *	
@@ -68,7 +68,7 @@ public class Duty extends Model{
 	/**
 	  *	
 	  */
-	private java.lang.Integer updatedBy;
+	private java.lang.String updatedBy;
 
 	/**
 	  *	
@@ -179,7 +179,7 @@ public class Duty extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.Integer getCreatedBy() 
+	public java.lang.String getCreatedBy() 
 	{
 		return createdBy;
 	}
@@ -187,7 +187,7 @@ public class Duty extends Model{
 	/**
 	  *	
 	  */
-	public void setCreatedBy(java.lang.Integer createdBy) 
+	public void setCreatedBy(java.lang.String createdBy) 
 	{
 		this.createdBy = createdBy;
 	}
@@ -211,7 +211,7 @@ public class Duty extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.Integer getUpdatedBy() 
+	public java.lang.String getUpdatedBy() 
 	{
 		return updatedBy;
 	}
@@ -219,7 +219,7 @@ public class Duty extends Model{
 	/**
 	  *	
 	  */
-	public void setUpdatedBy(java.lang.Integer updatedBy) 
+	public void setUpdatedBy(java.lang.String updatedBy) 
 	{
 		this.updatedBy = updatedBy;
 	}

@@ -77,7 +77,7 @@ public interface DutyFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(Duty duty) throws ServiceException;
+	public void save(Duty duty,String token) throws ServiceException;
 
 	/**
 	 * 更新记录
@@ -85,7 +85,7 @@ public interface DutyFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(Duty duty) throws ServiceException;
+	public int update(Duty duty,String token) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数
