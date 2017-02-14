@@ -404,9 +404,7 @@
 			AND d.MODEL_CODE=#{model}
 		</if>	
 		<if test="endDate!=null and endDate!=''">
-			AND m.STOCK_DATE = (SELECT MAX(t.STOCK_DATE) FROM T_STOCK
-			t where t.STOCK_DATE &lt;= date_format(#{endDate}, '%Y-%m-%d
-			%H:%i:%s') AND t.USER_ID = #{userId})
+			AND m.STOCK_DATE = #{endDate}
 		</if>
 		AND d.BRAND_CODE IS NOT NULL 
 		GROUP BY m.STOCK_DATE,d.BRAND_CODE,d.MODEL_CODE

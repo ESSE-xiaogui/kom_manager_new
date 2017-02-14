@@ -111,7 +111,7 @@ public class StockManager {
 			stockDetail.setStockId(shopstockMain.getId());
 			stockDetail.setLineId(lineId);
 			stockItemMapper.updateByHistory(stockDto.getBrandCode().toUpperCase(), modelCode, userId.toString());
-			stockDetail.setIshistory(0);
+			stockDetail.setIshistory(1);
 			stockDetails.add(stockDetail);
 			lineId++;
 		}

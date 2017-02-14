@@ -345,7 +345,7 @@
 	</select>
 	<update id="updateByHistory" parameterType="java.lang.String">
 		UPDATE T_STOCK_ITEM
-		SET ISHISTORY = 1 WHERE 1=1
+		SET ISHISTORY = 2 WHERE 1=1
 		AND BRAND_CODE=#{brandCode}
 		AND	MODEL_CODE=#{modelCode} 
 		AND	BILLNO in (SELECT BILLNO FROM T_STOCK WHERE USER_ID = #{userId})
