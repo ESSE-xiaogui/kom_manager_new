@@ -5,11 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
+import com.transsion.store.bo.Shop;
 import com.transsion.store.bo.ShopGrade;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.mapper.ShopGradeMapper;
+import com.transsion.store.mapper.ShopMapper;
 import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
@@ -18,6 +21,9 @@ import com.transsion.store.utils.CacheUtils;
 public class ShopGradeManager {
 	@Autowired
 	ShopGradeMapper shopGradeMapper;
+	
+	@Autowired
+	ShopMapper shopMapper;
 	
 	@Autowired
 	SystemDateService systemDateService;
@@ -128,6 +134,23 @@ public class ShopGradeManager {
 		sg.setIsInactive(1);
 		sg.setCompanyId(userContext.getUser().getCompanyId());
 		return shopGradeMapper.listByProperty(sg);
+	}
+
+	/**
+	 * 根据多个主键删除记录
+	 * @param primaryKeys
+	 * @throws ServiceException 
+	 */
+	public void deleteByPKeys(List<Long> primaryKeys) throws ServiceException {
+		for(long primaryKey:primaryKeys){
+			Shop shop = new Shop();
+			shop.setGradeId(primaryKey);
+			List<Shop> list = shopMapper.listByProperty(shop);
+			if(!UtilHelper.isEmpty(list)){
+				throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_GRADE_IN_USE);
+			}
+			shopGradeMapper.deleteByPK(primaryKey);
+		}
 	}
 	
 	

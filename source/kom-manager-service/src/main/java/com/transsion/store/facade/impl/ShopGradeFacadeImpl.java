@@ -102,7 +102,7 @@ public class ShopGradeFacadeImpl implements ShopGradeFacade {
 	 */
 	public void deleteByPKeys(List<java.lang.Long> primaryKeys) throws ServiceException
 	{
-		shopGradeService.deleteByPKeys(primaryKeys);
+		shopGradeManager.deleteByPKeys(primaryKeys);
 	}
 	
 	/**
