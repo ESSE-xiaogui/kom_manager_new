@@ -365,7 +365,7 @@
 		<include refid="commonCondition"/>
 	</select>
 	<select id="findPromoterStock" resultMap="PromoterStockResultMapper">
-		SELECT m.STOCK_DATE,UPPER(d.BRAND_CODE) as
+		SELECT m.SHOP_ID,m.STOCK_DATE,UPPER(d.BRAND_CODE) as
 		BRAND_CODE,d.MODEL_CODE,MAX(d.QTY) AS QTY FROM T_STOCK m
 		LEFT JOIN T_STOCK_ITEM d ON d.STOCK_ID = m.ID
 		WHERE m.USER_ID = #{userId}
@@ -380,19 +380,19 @@
 		AND d.BRAND_CODE IS NOT NULL
 		AND d.MODEL_CODE IS NOT NULL
 		GROUP BY
-		m.STOCK_DATE,d.BRAND_CODE,d.MODEL_CODE
+		m.SHOP_ID,m.STOCK_DATE,d.BRAND_CODE,d.MODEL_CODE
 		ORDER BY m.STOCK_DATE DESC
 	</select>
 	
 	<select id="findPromoterCurrentStock" resultMap="PromoterStockResultMapper">
 		SELECT
-		m.STOCK_DATE,UPPER(d.BRAND_CODE) as BRAND_CODE,d.MODEL_CODE,MAX(d.QTY) as
+		m.SHOP_ID,m.STOCK_DATE,UPPER(d.BRAND_CODE) as BRAND_CODE,d.MODEL_CODE,MAX(d.QTY) as
 		QTY,MAX(d.PRICE) AS PRICE FROM T_STOCK m
 		LEFT JOIN T_STOCK_ITEM d ON d.STOCK_ID = m.ID
 		WHERE m.USER_ID=#{userId} and d.ISHISTORY = 0 AND d.BRAND_CODE = 'TECNO'
 		AND d.BRAND_CODE IS NOT NULL 
 		AND d.MODEL_CODE IS NOT NULL
-		GROUP BY m.STOCK_DATE,d.MODEL_CODE
+		GROUP BY m.SHOP_ID,m.STOCK_DATE,d.MODEL_CODE
 		ORDER BY d.MODEL_CODE
 	</select>
 	<select id="findStocksByProp" resultMap="PromoterStockResultMapper">
@@ -414,13 +414,13 @@
 	</select>
 	<select id="findCurrentStockByProp" resultMap="PromoterStockResultMapper">
 		SELECT
-		m.STOCK_DATE,UPPER(d.BRAND_CODE) as BRAND_CODE,d.MODEL_CODE,MAX(d.QTY) as
+		m.SHOP_ID,m.STOCK_DATE,UPPER(d.BRAND_CODE) as BRAND_CODE,d.MODEL_CODE,MAX(d.QTY) as
 		QTY,MAX(d.PRICE) AS PRICE FROM T_STOCK m
 		LEFT JOIN T_STOCK_ITEM d ON d.STOCK_ID = m.ID
 		WHERE m.USER_ID=#{userId} and m.SHOP_ID=#{shopId} and d.ISHISTORY = 1 AND d.BRAND_CODE = 'TECNO'
 		AND d.BRAND_CODE IS NOT NULL 
 		AND d.MODEL_CODE IS NOT NULL
-		GROUP BY m.STOCK_DATE,d.MODEL_CODE
+		GROUP BY m.SHOP_ID,m.STOCK_DATE,d.MODEL_CODE
 		ORDER BY d.MODEL_CODE
 	</select>
 </mapper>
