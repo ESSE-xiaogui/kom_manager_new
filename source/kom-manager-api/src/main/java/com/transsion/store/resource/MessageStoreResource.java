@@ -201,4 +201,9 @@ public class MessageStoreResource {
      * 该门店等级已存在
      * */
 	public static final String ERROR_MESSAGE_SHOP_GRADE_ALREADY_EXISTS = "error_message_shopGradeAlreadyExists";
+
+	/**
+	 * 该门店等级已在使用
+	 */
+	public static final String ERROR_MESSAGE_GRADE_IN_USE = "error_message_gradeInUse";
 }
