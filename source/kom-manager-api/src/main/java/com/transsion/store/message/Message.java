@@ -9,9 +9,10 @@ public interface Message {
 	public enum Type{
 		//task group
 		TASK_SALE_IMPORT(100,"TASK_SALE_IMPORT"),
-		TASK_GOAL_IMPORT(101,"TASK_GOAL_IMPORT");
+		TASK_GOAL_IMPORT(101,"TASK_GOAL_IMPORT"),
 		//user
-		
+		//currency
+		TASK_CURRENCY_IMPORT(102,"TASK_CURRENCY_IMPORT");
 		private int value;
 		private String desc;
 

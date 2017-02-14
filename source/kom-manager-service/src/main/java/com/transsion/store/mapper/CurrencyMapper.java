@@ -38,4 +38,6 @@ public interface CurrencyMapper extends GenericIBatisMapper<Currency, java.lang.
 	public int update(Currency currency);
 
 	public List<CurrencyDto> listCurrencyByProperty(@Param("currencyDto") CurrencyDto currencyDto);
+	
+	public void updateCurrency(@Param("country") Integer country,@Param("beginTime")String beginTime);
 }

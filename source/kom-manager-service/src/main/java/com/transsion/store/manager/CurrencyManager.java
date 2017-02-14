@@ -42,7 +42,7 @@ public class CurrencyManager {
 		}
 		currency.setCompanyId(userContext.getCompanyId());
 		if(!UtilHelper.isEmpty(userContext.getUser())){
-			currency.setCreatedBy(userContext.getUser().getId());
+			currency.setCreatedBy(userContext.getUserCode());
 		}
 		currency.setFindex(1);
 		currency.setCreatedTime(systemDateService.getCurrentDate());
@@ -66,13 +66,13 @@ public class CurrencyManager {
 		currency.setCompanyId(userContext.getCompanyId());
 		if(!UtilHelper.isEmpty(userContext.getUser())){
 			if(!UtilHelper.isEmpty(userContext.getUser().getUserId())){
-				currency.setCreatedBy(new Long(userContext.getUser().getUserId()));
+				currency.setCreatedBy(userContext.getUserCode());
 			}
 		}
 		currency.setCreatedTime(systemDateService.getCurrentDate());
 		if(!UtilHelper.isEmpty(userContext.getUser())){
 			if(!UtilHelper.isEmpty(userContext.getUser().getUserId())){
-				currency.setUpdatedBy(new Long(userContext.getUser().getUserId()));
+				currency.setUpdatedBy(userContext.getUserCode());
 			}
 		}
 		currency.setUpdatedTime(systemDateService.getCurrentDate());

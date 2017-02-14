@@ -81,7 +81,7 @@ public class Currency extends Model{
 	/**
 	  *	
 	  */
-	private java.lang.Long createdBy;
+	private java.lang.String createdBy;
 
 	/**
 	  *	
@@ -91,7 +91,7 @@ public class Currency extends Model{
 	/**
 	  *	系统保留字段，记录数据最后更新用户，用于审计，无业务含义
 	  */
-	private Long updatedBy;
+	private String updatedBy;
 
 	/**
 	  *	系统保留字段，记录数据最后时间，用于审计，无业务含义
@@ -257,11 +257,11 @@ public class Currency extends Model{
 		this.isInactive = isInactive;
 	}
 	
-	public java.lang.Long getCreatedBy() {
+	public java.lang.String getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(java.lang.Long createdBy) {
+	public void setCreatedBy(java.lang.String createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -276,7 +276,7 @@ public class Currency extends Model{
 	/**
 	  *	系统保留字段，记录数据最后更新用户，用于审计，无业务含义
 	  */
-	public Long getUpdatedBy()
+	public String getUpdatedBy()
 	{
 		return updatedBy;
 	}
@@ -284,7 +284,7 @@ public class Currency extends Model{
 	/**
 	  *	系统保留字段，记录数据最后更新用户，用于审计，无业务含义
 	  */
-	public void setUpdatedBy(Long updatedBy)
+	public void setUpdatedBy(String updatedBy)
 	{
 		this.updatedBy = updatedBy;
 	}

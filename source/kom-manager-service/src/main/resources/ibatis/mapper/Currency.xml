@@ -300,6 +300,14 @@
 			, VERSION=#{version} 
 		WHERE ID = #{id}  ]]>
 	</update>
+	
+	<update id="updateCurrency" parameterType="java.lang.Integer">
+	UPDATE T_CURRENCY SET
+	BEGINDATE=str_to_date(#{beginTime},'%Y-%m-%d %H:%i:%s'),
+	ENDDATE=str_to_date(#{endTime},'%Y-%m-%d %H:%i:%s')
+	WHERE 1=1 AND
+	REGION_ID=#{country} AND BEGINDATE=str_to_date(#{beginTime},'%Y-%m-%d')
+	</update>
 	<delete id="deleteByPK" parameterType="java.lang.Long">
 		<![CDATA[ DELETE FROM T_CURRENCY WHERE ID = #{id}  ]]>
 	</delete>
