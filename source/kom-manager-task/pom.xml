@@ -12,7 +12,7 @@
 
 	<properties>
 		<build.jvmArguments>-Xms4096m -Xmx4096m</build.jvmArguments>
-		<build.main.class>com.transsion.store.task.Main</build.main.class>
+		<build.main.class>com.batch.task.Main</build.main.class>
 	</properties>
 
 	<dependencies>
