@@ -403,7 +403,7 @@
 		</if> 
 		GROUP BY c.ID,c.REGION_NAME
 	</select>
-	<select id="getCityAll" parameterType="java.lang.Long" resultMap="List">
+	<select id="getCityAll" parameterType="java.lang.Long" resultType="List">
 	<![CDATA[ SELECT ]]>
 			 <include refid="commonProcessDateColumns"/>
 		FROM T_REGION WHERE PARENT_ID = #{parentId} 
