@@ -6,5 +6,5 @@ import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.ModelPrice;
 
 public interface ModelPriceFacde {
-	public List<ModelPrice> findModelPrice() throws ServiceException;
+	public List<ModelPrice> findModelPrice(String tableType) throws ServiceException;
 }

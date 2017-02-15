@@ -21,9 +21,11 @@
 <mapper namespace="com.transsion.store.mapper.ModelPriceMapper">
 	<resultMap id="ModelPriceResultMapper" type="ModelPrice">
 		<result column="ID" property="id"/>
+		<result column="TABLE_TYPE" property="tableType"/>
 		<result column="PRICE_SCALE" property="priceScale"/>
 	</resultMap>
 	<select id="findModelPrice"  resultMap="ModelPriceResultMapper">
 	SELECT ID,PRICE_SCALE FROM T_MODEL_PRICE
+	WHERE TABLE_TYPE = #{tableType}
 	</select>	
 </mapper>

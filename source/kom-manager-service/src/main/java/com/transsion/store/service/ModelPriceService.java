@@ -15,10 +15,10 @@ public class ModelPriceService {
 	@Autowired
 	private ModelPriceMapper modelPriceMapper;
 	
-	
-	
-	
-	public List<ModelPrice> findModelPrice() throws ServiceException{
-		return modelPriceMapper.findModelPrice();
+	/**
+	 * 根据类型查询信息
+	 * */
+	public List<ModelPrice> findModelPrice(String tableType) throws ServiceException{
+		return modelPriceMapper.findModelPrice(tableType);
 	}
 }

@@ -12,6 +12,8 @@ public class ModelPrice extends com.shangkang.core.bo.Model{
 	  */
 	private java.lang.Long id;
 	
+	private String tableType;
+	
 	private String priceScale;
 
 	public java.lang.Long getId() {
@@ -20,6 +22,14 @@ public class ModelPrice extends com.shangkang.core.bo.Model{
 
 	public void setId(java.lang.Long id) {
 		this.id = id;
+	}
+
+	public String getTableType() {
+		return tableType;
+	}
+
+	public void setTableType(String tableType) {
+		this.tableType = tableType;
 	}
 
 	public String getPriceScale() {
@@ -32,7 +42,7 @@ public class ModelPrice extends com.shangkang.core.bo.Model{
 
 	@Override
 	public String toString() {
-		return "ModelPrice [id=" + id + ", priceScale=" + priceScale + "]";
+		return "ModelPrice [id=" + id + ", tableType=" + tableType + ", priceScale=" + priceScale + "]";
 	}
 
 }

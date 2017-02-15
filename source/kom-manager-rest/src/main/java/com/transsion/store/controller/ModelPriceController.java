@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,7 @@ public class ModelPriceController extends AbstractController{
 	@GET
 	@Path("/findModelPrice")
 	@Produces({MediaType.APPLICATION_JSON})
-	public List<ModelPrice> findModelPrice() throws ServiceException{
-		return modelPriceFacde.findModelPrice();
-		
+	public List<ModelPrice> findModelPrice(@QueryParam("tableType") java.lang.String tableType) throws ServiceException{
+		return modelPriceFacde.findModelPrice(tableType);
 	}
 }

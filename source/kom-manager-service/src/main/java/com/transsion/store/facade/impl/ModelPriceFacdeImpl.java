@@ -17,8 +17,8 @@ public class ModelPriceFacdeImpl implements ModelPriceFacde {
 	
 	
 	//查询 价格档位
-	public List<ModelPrice> findModelPrice() throws ServiceException {
-		return modelPriceService.findModelPrice();
+	public List<ModelPrice> findModelPrice(String tableType) throws ServiceException {
+		return modelPriceService.findModelPrice(tableType);
 	}
 
 }
