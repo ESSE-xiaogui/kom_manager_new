@@ -428,19 +428,17 @@ public class SalesMannager {
 	 * @throws ServiceException
 	 */
 	public byte[] getSaleByExcel(SaleDailyDto saleDailyDto, String token) throws ServiceException {
-		String[] headers = {"序号","单号","销售日期","国家","城市","门店名称","门店等级","门店类型","品牌", 
-		"IMEI号","IMEI List","数量","价格","总金额","当前汇率","用户名","员工姓名","上传时间"};
-		//String[] headers = {"序号","单号","销售日期","国家","城市"};
+		String[] headers = {"序号","单号","销售日期","国家","城市","门店名称","品牌", "机型",
+		"IMEI号","IMEI List","数量","价格","当前汇率","用户名","上传时间"};
 		List<SaleDailyDto> list = saleMapper.listSaleByProperty(saleDailyDto);
 		List<Object[]> dataset = new ArrayList<Object[]>();
 		int i=1;
 		for(SaleDailyDto saleDailyDto1 :list){
 			dataset.add(new Object[]{i++,saleDailyDto1.getBillNo(),saleDailyDto1.getSaleDate(),saleDailyDto1.getCountryName(),
-							saleDailyDto1.getCityName(),saleDailyDto1.getShopName(),saleDailyDto1.getGradeName(),
-							saleDailyDto1.getBizName(),saleDailyDto1.getBrandCode(),saleDailyDto1.getImeiNo(),
-							saleDailyDto1.getImeiList(),saleDailyDto1.getSaleQty(),saleDailyDto1.getSalePrice(),
-							saleDailyDto1.getSaleAmount(),saleDailyDto1.getCurrencyRatio(),saleDailyDto1.getUserName(),
-							saleDailyDto1.getEmpName(),saleDailyDto1.getCreatedTime()});
+							saleDailyDto1.getCityName(),saleDailyDto1.getShopName(),saleDailyDto1.getBrandCode(),
+							saleDailyDto1.getModelCode(),saleDailyDto1.getImeiNo(),saleDailyDto1.getImeiList(),
+							saleDailyDto1.getSaleQty(),saleDailyDto1.getSalePrice(),saleDailyDto1.getCurrencyRatio(),
+							saleDailyDto1.getUserName(),saleDailyDto1.getCreatedTime()});
 		}
 		String title = "销量报表";
 		return ExcelUtils.exportExcel(title, headers, dataset);

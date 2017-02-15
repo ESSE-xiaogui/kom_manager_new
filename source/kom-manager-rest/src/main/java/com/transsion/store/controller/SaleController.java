@@ -29,6 +29,7 @@ import com.transsion.store.task.facade.SaleTaskFacade;
 import com.transsion.store.utils.PropertiesUtils;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -237,15 +238,28 @@ public class SaleController extends AbstractController {
 	 * 
 	 * @return
 	 */
-	@POST
-	@Path("/exportExcel")
-	@Consumes({MediaType.APPLICATION_JSON}) 
+	@GET
+	@Path("/exportExcel") 
+	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.TEXT_PLAIN})  
-	public Response getSaleByExcel(SaleDailyDto saleDailyDto) throws ServiceException,IOException {
-//		String token = this.getAuthorization();    
-//		SaleDailyDto saleDailyDto = new SaleDailyDto();
-		
-//		saleDailyDto.setBillNo(no);
+	public Response getSaleByExcel(@QueryParam("saleDate") String saleDate,@QueryParam("saleEndDate") String saleEndDate,
+					@QueryParam("countryName") String countryName,@QueryParam("cityName") String cityName,
+					@QueryParam("shopId") String shopId,@QueryParam("shopName") String shopName,
+					@QueryParam("brandCode") String brandCode,@QueryParam("modelCode") String modelCode,
+					@QueryParam("imeiNo") String imeiNo,@QueryParam("userName") String userName) throws ServiceException,IOException {
+		SaleDailyDto saleDailyDto = new SaleDailyDto();
+		saleDailyDto.setSaleDate(saleDate);
+		saleDailyDto.setSaleEndDate(saleEndDate);
+		saleDailyDto.setCountryName(countryName);
+		saleDailyDto.setCityName(cityName);
+		if(!UtilHelper.isEmpty(shopId)){
+			saleDailyDto.setShopId(Integer.getInteger(shopId));
+		}
+		saleDailyDto.setShopName(shopName);
+		saleDailyDto.setBrandCode(brandCode);
+		saleDailyDto.setModelCode(modelCode);
+		saleDailyDto.setImeiNo(imeiNo);
+		saleDailyDto.setUserName(userName);
 		byte[] bytes = saleFacade.getSaleByExcel(saleDailyDto, null);       
 		InputStream inputStream = new ByteArrayInputStream(bytes);          
 		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));          
