@@ -418,6 +418,7 @@ public class SalesMannager {
 		}
 		sdDto.setEmpName(employee.getEmpName());
 		sdDto.setNation(employee.getNation());
+		System.out.println(sdDto);
 		return sdDto;
 	}
 	/**

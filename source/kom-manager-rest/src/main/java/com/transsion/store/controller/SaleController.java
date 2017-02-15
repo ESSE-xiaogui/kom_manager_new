@@ -113,6 +113,9 @@ public class SaleController extends AbstractController {
 	/**
 	 * 销量明细
 	 * */
+	@GET
+	@Path("findSaleItem")
+	@Produces({ MediaType.APPLICATION_JSON })
 	public SaleDailyDto findSaleItem(@QueryParam("saleId") java.lang.Long saleId) throws ServiceException{
 		return saleFacade.findSaleItem(saleId);
 	}

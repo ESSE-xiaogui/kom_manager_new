@@ -94,6 +94,7 @@ public class SaleService {
 			throws ServiceException
 	{
 		List<SaleDailyDto> list = saleMapper.listPaginationByPropertys(pagination, saleDailyDto, pagination.getOrderBy());
+		System.out.println(list);
 		pagination.setResultList(list);
 		return pagination;
 	}
