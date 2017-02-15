@@ -42,5 +42,13 @@
     <property name="connectionFactory" ref="connectionFactory"/>
     <property name="defaultDestination" ref="taskQueue" />
   </bean>
-  
+
+	<bean id="taskStart" class="com.batch.task.TaskStart" init-method="start" destroy-method="stop" />
+	
+	<bean id="zookeeperService" class="com.batch.task.helper.ZookeeperService">
+		<constructor-arg>
+			<value>${zk.url}</value>
+		</constructor-arg>
+	</bean>
+
 </beans>

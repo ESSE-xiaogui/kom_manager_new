@@ -36,7 +36,7 @@
         <mybatis.spring.version>1.3.0</mybatis.spring.version>
         <aspectj.version>1.6.3</aspectj.version>
         <aspectjweaver.version>1.6.8</aspectjweaver.version>
-        <resteasy.version>3.0.19.Final</resteasy.version>
+        <resteasy.version>3.1.0.Final</resteasy.version>
         <druid.version>1.0.19</druid.version>
         <mysql.version>5.1.38</mysql.version>
         <jsonwebtoken.version>0.6.0</jsonwebtoken.version>
