@@ -56,7 +56,12 @@ public class RegionFacadeImpl implements RegionFacade {
 	{
 		return regionService.getByPK(primaryKey);
 	}
-
+	/**
+	 * 根据国家ID查询所有城市
+	 * */
+	public List<Region> getCityAll(Long parentId) throws ServiceException{
+		return regionService.getCityAll(parentId);
+	}
 	/**
 	 * 查询所有记录
 	 * @return

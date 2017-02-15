@@ -48,6 +48,13 @@ public class RegionService {
 	{
 		return regionMapper.getByPKs(primaryKey);
 	}
+	
+	/**
+	 * 根据国家ID查询所有城市
+	 * */
+	public List<Region> getCityAll(Long parentId) throws ServiceException{
+		return regionMapper.getCityAll(parentId);
+	}
 
 	/**
 	 * 查询所有记录

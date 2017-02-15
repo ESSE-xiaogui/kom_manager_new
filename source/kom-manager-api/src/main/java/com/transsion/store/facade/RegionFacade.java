@@ -35,6 +35,11 @@ public interface RegionFacade {
 	 * @throws ServiceException
 	 */
 	public RegionDto getByPK(java.lang.Long primaryKey) throws ServiceException;
+	
+	/**
+	 * 根据国家ID查询所有城市
+	 * */
+	public List<Region> getCityAll(Long parentId) throws ServiceException;
 
 	/**
 	 * 查询所有记录

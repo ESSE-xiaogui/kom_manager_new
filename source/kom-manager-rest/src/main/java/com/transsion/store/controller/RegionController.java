@@ -54,6 +54,16 @@ public class RegionController extends AbstractController{
 	{
 		return regionFacade.getByPK(primaryKey);
 	}
+	
+	/**
+	 * 根据国家ID查询所有城市
+	 * */
+	@GET
+	@Path("getCityAll")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<Region> getCityAll(@QueryParam("parentId") java.lang.Long parentId) throws ServiceException{
+		return regionFacade.getCityAll(parentId);
+	}
 
 	/**
 	* 分页查询记录
