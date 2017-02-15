@@ -49,9 +49,6 @@ public class DutyManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
-		if(!UtilHelper.isEmpty(userContext.getCompanyId())){
-			duty.setCompanyId(userContext.getCompanyId().intValue());
-		}
 		if(!UtilHelper.isEmpty(userContext.getUserCode())){
 			duty.setCreatedBy(userContext.getUserCode());
 		}
@@ -72,9 +69,6 @@ public class DutyManager {
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
-		}
-		if(!UtilHelper.isEmpty(userContext.getCompanyId())){
-			duty.setCompanyId(userContext.getCompanyId().intValue());
 		}
 		if(!UtilHelper.isEmpty(userContext.getUserCode())){
 			duty.setUpdatedBy(userContext.getUserCode());

@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.Duty;
+import com.transsion.store.dto.DutyDto;
 import com.transsion.store.dto.DutyResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
@@ -75,10 +76,10 @@ public class DutyService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Duty> listPaginationByProperty(Pagination<Duty> pagination, Duty duty)
+	public Pagination<DutyDto> listPaginationByProperty(Pagination<DutyDto> pagination, DutyDto dutyDto)
 			throws ServiceException
 	{
-		List<Duty> list = dutyMapper.listPaginationByProperty(pagination, duty, pagination.getOrderBy());
+		List<DutyDto> list = dutyMapper.listPaginationByProperty(pagination, dutyDto, pagination.getOrderBy());
 		
 		pagination.setResultList(list);
 		

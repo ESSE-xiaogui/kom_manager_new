@@ -20,6 +20,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.transsion.store.bo.Duty;
+import com.transsion.store.dto.DutyDto;
 import com.transsion.store.dto.DutyResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
@@ -78,10 +79,10 @@ public class DutyFacadeImpl implements DutyFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Duty> listPaginationByProperty(Pagination<Duty> pagination, Duty duty)
+	public Pagination<DutyDto> listPaginationByProperty(Pagination<DutyDto> pagination, DutyDto dutyDto)
 			throws ServiceException
 	{
-		return dutyService.listPaginationByProperty(pagination, duty);
+		return dutyService.listPaginationByProperty(pagination, dutyDto);
 	}
 
 	/**

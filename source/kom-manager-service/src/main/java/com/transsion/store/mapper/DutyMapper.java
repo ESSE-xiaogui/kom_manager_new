@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.transsion.store.bo.Duty;
+import com.transsion.store.dto.DutyDto;
 import com.transsion.store.dto.DutyResponseDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
@@ -28,7 +29,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface DutyMapper extends GenericIBatisMapper<Duty, java.lang.Long> {
 
-    public List<Duty> listPaginationByProperty(Pagination<Duty> pagination, @Param("duty")Duty duty, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<DutyDto> listPaginationByProperty(Pagination<DutyDto> pagination, @Param("dutyDto")DutyDto dutyDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
 
 	public List<DutyResponseDto> getDutyName() throws DataAccessFailureException;
 }

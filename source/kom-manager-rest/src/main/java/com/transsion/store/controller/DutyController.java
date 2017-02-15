@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Duty;
+import com.transsion.store.dto.DutyDto;
 import com.transsion.store.dto.DutyResponseDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.DutyFacade;
@@ -60,9 +61,9 @@ public class DutyController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<Duty> listPgDuty(RequestModel<Duty> requestModel) throws ServiceException
+	public Pagination<DutyDto> listPgDuty(RequestModel<DutyDto> requestModel) throws ServiceException
 	{
-		Pagination<Duty> pagination = new Pagination<Duty>();
+		Pagination<DutyDto> pagination = new Pagination<DutyDto>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());
@@ -81,8 +82,9 @@ public class DutyController extends AbstractController{
 	@POST
 	@Path("/add")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void add(Duty duty,String token) throws ServiceException
+	public void add(Duty duty) throws ServiceException
 	{
+		String token =this.getAuthorization();
 		dutyFacade.save(duty,token);
 	}
 
@@ -107,8 +109,9 @@ public class DutyController extends AbstractController{
 	@PUT
 	@Path("/update")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void update(Duty duty,String token) throws ServiceException
+	public void update(Duty duty) throws ServiceException
 	{
+		String token = this.getAuthorization();
 		dutyFacade.update(duty,token);
 	}
 	

@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.Duty;
+import com.transsion.store.dto.DutyDto;
 import com.transsion.store.dto.DutyResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
@@ -100,7 +101,7 @@ public interface DutyFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Duty> listPaginationByProperty(Pagination<Duty> pagination, Duty duty)
+	public Pagination<DutyDto> listPaginationByProperty(Pagination<DutyDto> pagination, DutyDto dutyDto)
 			throws ServiceException;
 
 	/**
