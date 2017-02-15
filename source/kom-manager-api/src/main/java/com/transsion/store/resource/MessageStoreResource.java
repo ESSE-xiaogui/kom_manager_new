@@ -206,4 +206,9 @@ public class MessageStoreResource {
 	 * 该门店等级已在使用
 	 */
 	public static final String ERROR_MESSAGE_GRADE_IN_USE = "error_message_gradeInUse";
+
+	/**
+     * 该道具已存在
+     * */
+	public static final String ERROR_MESSAGE_MATERIEL_ALREADY_EXISTS = "error_message_materielAlreadyExists";
 }
