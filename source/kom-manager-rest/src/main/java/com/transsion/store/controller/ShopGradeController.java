@@ -114,7 +114,7 @@ public class ShopGradeController extends AbstractController{
 	}
 	
 	/**
-	 * 查询门店等级列表
+	 * 查询门店等级列表(app)
 	 * @param brandCode
 	 * @param isInactive
 	 * @return
@@ -123,9 +123,9 @@ public class ShopGradeController extends AbstractController{
 	@GET
 	@Path("getShopGradeList")
 	@Produces({MediaType.APPLICATION_JSON})
-	public List<ShopGrade> getShopGradeList(@QueryParam("brandCode") java.lang.String brandCode,@QueryParam("isInactive") java.lang.Integer isInactive ) throws ServiceException{
+	public List<ShopGrade> getShopGradeList(@QueryParam("brandCode") java.lang.String brandCode ) throws ServiceException{
 		String token = this.getAuthorization();
-		return shopGradeFacade.getShopGradeList(brandCode,isInactive,token);	
+		return shopGradeFacade.getShopGradeList(brandCode,token);	
 	}
 	
 	/**

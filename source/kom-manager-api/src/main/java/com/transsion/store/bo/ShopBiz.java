@@ -34,6 +34,8 @@ public class ShopBiz extends Model{
 	  *	
 	  */
 	private java.lang.Long companyId;
+	
+	private java.lang.Integer shopType;
 
 	/**
 	  *	业务类型
@@ -104,6 +106,14 @@ public class ShopBiz extends Model{
 
 	public void setCompanyId(java.lang.Long companyId) {
 		this.companyId = companyId;
+	}
+
+	public java.lang.Integer getShopType() {
+		return shopType;
+	}
+
+	public void setShopType(java.lang.Integer shopType) {
+		this.shopType = shopType;
 	}
 
 	public java.lang.String getBizName() {
@@ -196,10 +206,12 @@ public class ShopBiz extends Model{
 
 	@Override
 	public String toString() {
-		return "ShopBiz [id=" + id + ", companyId=" + companyId + ", bizName=" + bizName + ", brandCode=" + brandCode
-						+ ", chinaName=" + chinaName + ", englishName=" + englishName + ", isInactive=" + isInactive
-						+ ", remark=" + remark + ", createBy=" + createBy + ", createDate=" + createDate + ", updateBy="
-						+ updateBy + ", updateDate=" + updateDate + ", version=" + version + "]";
+		return "ShopBiz [id=" + id + ", companyId=" + companyId + ", shopType=" + shopType + ", bizName=" + bizName
+						+ ", brandCode=" + brandCode + ", chinaName=" + chinaName + ", englishName=" + englishName
+						+ ", isInactive=" + isInactive + ", remark=" + remark + ", createBy=" + createBy
+						+ ", createDate=" + createDate + ", updateBy=" + updateBy + ", updateDate=" + updateDate
+						+ ", version=" + version + "]";
 	}
+
 }
 

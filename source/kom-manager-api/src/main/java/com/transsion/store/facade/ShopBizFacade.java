@@ -102,4 +102,10 @@ public interface ShopBizFacade {
 	public Pagination<ShopBiz> listPaginationByProperty(Pagination<ShopBiz> pagination, ShopBiz shopBiz)
 			throws ServiceException;
 
+	/**
+	 * 根据BrandCode查询门店类型列表(app)
+	 * @param shopType 
+	 */
+	public List<ShopBiz> getShopBizListByBrandCode(String brandCode, Integer shopType, String token)throws ServiceException;
+
 }

@@ -149,4 +149,11 @@ public class ShopBizFacadeImpl implements ShopBizFacade {
 	{
 		return shopBizService.findByCount(shopBiz);
 	}
+
+	/**
+	 * 根据BrandCode查询门店类型列表(app)
+	 */
+	public List<ShopBiz> getShopBizListByBrandCode(String brandCode,Integer shopType, String token) throws ServiceException {
+		return shopBizManager.getShopBizListByBrandCode(brandCode,shopType,token);
+	}
 }

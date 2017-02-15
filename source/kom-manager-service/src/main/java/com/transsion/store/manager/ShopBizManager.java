@@ -1,5 +1,7 @@
 package com.transsion.store.manager;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,5 +70,32 @@ public class ShopBizManager {
 		shopBiz.setUpdateBy(userContext.getUserCode());
 		shopBiz.setUpdateDate(systemDateService.getCurrentDate());
 		return shopBizMapper.update(shopBiz);
+	}
+	
+	/**
+	 * 根据BrandCode查询门店类型列表(app)
+	 * @param brandCode
+	 * @param shopType 
+	 * @param token
+	 * @return
+	 * @throws ServiceException 
+	 */
+	public List<ShopBiz> getShopBizListByBrandCode(String brandCode, Integer shopType, String token) throws ServiceException {
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+		}
+		if(UtilHelper.isEmpty(brandCode)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext.getCompanyId()) || UtilHelper.isEmpty(userContext.getUserCode())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		
+		ShopBiz shopBiz = new ShopBiz();
+		shopBiz.setBrandCode(brandCode);
+		shopBiz.setShopType(shopType);
+		shopBiz.setIsInactive(1);
+		return shopBizMapper.listByProperty(shopBiz);
 	}
 }

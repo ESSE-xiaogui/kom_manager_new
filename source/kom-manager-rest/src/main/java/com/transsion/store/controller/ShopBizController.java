@@ -112,4 +112,18 @@ public class ShopBizController extends AbstractController{
 		String token=this.getAuthorization();
 		shopBizFacade.update(shopBiz,token);
 	}
+	
+	/**
+	 * 根据BrandCode查询门店类型列表(app)
+	 * @param shopBiz
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/getShopBizList")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<ShopBiz> getShopBizListByBrandCode(@QueryParam("brandCode") String brandCode,@QueryParam("shopType") Integer shopType)throws ServiceException{
+		String token=this.getAuthorization();
+		return shopBizFacade.getShopBizListByBrandCode(brandCode,shopType,token);
+	}
 }

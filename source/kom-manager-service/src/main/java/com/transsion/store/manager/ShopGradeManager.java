@@ -28,7 +28,7 @@ public class ShopGradeManager {
 	@Autowired
 	SystemDateService systemDateService;
 
-	public List<ShopGrade> getShopGradeList(String brandCode, Integer isInactive, String token) throws ServiceException {
+	public List<ShopGrade> getShopGradeList(String brandCode, String token) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
 		}
@@ -41,7 +41,7 @@ public class ShopGradeManager {
 		}
 		ShopGrade sg = new ShopGrade();
 		sg.setBrandCode(brandCode);
-		sg.setIsInactive(isInactive);
+		sg.setIsInactive(1);
 		return shopGradeMapper.listByProperty(sg);
 	}
 	
@@ -152,7 +152,6 @@ public class ShopGradeManager {
 			shopGradeMapper.deleteByPK(primaryKey);
 		}
 	}
-	
 	
 
 }

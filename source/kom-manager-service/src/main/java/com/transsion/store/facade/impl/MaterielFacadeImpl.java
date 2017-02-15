@@ -25,12 +25,16 @@ import com.transsion.store.bo.Materiel;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.MaterielFacade;
+import com.transsion.store.manager.MaterielManager;
 import com.transsion.store.service.MaterielService;
 
 @Component("materielFacade")
 public class MaterielFacadeImpl implements MaterielFacade {
 
 	private MaterielService materielService;
+	
+	@Autowired
+	private MaterielManager materielManager;
 	
 	@Autowired
 	public void setMaterielService(MaterielService materielService)
@@ -144,5 +148,27 @@ public class MaterielFacadeImpl implements MaterielFacade {
 	public int findByCount(Materiel materiel) throws ServiceException
 	{
 		return materielService.findByCount(materiel);
+	}
+
+	/**
+	 * 新增道具
+	 */
+	public void save(Materiel materiel, String token) throws ServiceException {
+		materielManager.save(materiel,token);
+	}
+
+	/**
+	 * 修改道具
+	 */
+	public int update(Materiel materiel, String token) throws ServiceException {
+		return materielManager.update(materiel, token);
+	}
+
+	/**
+	 * 根据品牌查询道具列表(app) 
+	 * @throws ServiceException 
+	 */
+	public List<Materiel> getMaterielListByBrandCode(String brandCode, String token) throws ServiceException {
+		return materielManager.getMaterielListByBrandCode(brandCode,token);
 	}
 }

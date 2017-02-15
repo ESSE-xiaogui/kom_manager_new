@@ -37,6 +37,8 @@ public class ShopGrade extends Model{
 	
 	private java.lang.String brandCode;
 	
+	private java.lang.String saleQTY;
+	
 	private java.lang.Integer isInactive;
 
 	/**
@@ -234,13 +236,22 @@ public class ShopGrade extends Model{
 		this.isInactive = isInactive;
 	}
 
+	public java.lang.String getSaleQTY() {
+		return saleQTY;
+	}
+
+	public void setSaleQTY(java.lang.String saleQTY) {
+		this.saleQTY = saleQTY;
+	}
+
 	@Override
 	public String toString() {
-		return "ShopGrade [id=" + id + ", gradeName=" + gradeName + ", brandCode=" + brandCode + ", isInactive="
-						+ isInactive + ", companyId=" + companyId + ", remark=" + remark + ", createBy=" + createBy
-						+ ", createDate=" + createDate + ", updateBy=" + updateBy + ", updateDate=" + updateDate
-						+ ", version=" + version + "]";
+		return "ShopGrade [id=" + id + ", gradeName=" + gradeName + ", brandCode=" + brandCode + ", saleQTY=" + saleQTY
+						+ ", isInactive=" + isInactive + ", companyId=" + companyId + ", remark=" + remark
+						+ ", createBy=" + createBy + ", createDate=" + createDate + ", updateBy=" + updateBy
+						+ ", updateDate=" + updateDate + ", version=" + version + "]";
 	}
+
 
 }
 

@@ -23,6 +23,7 @@
 		<result column="ID" property="id"/>
 		<result column="GRADE_NAME" property="gradeName"/>
 		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="SALE_QTY" property="saleQTY"/>
 		<result column="COMPANY_ID" property="companyId"/>
 		<result column="IS_INACTIVE" property="isInactive"/>
 		<result column="REMARK" property="remark"/>
@@ -37,6 +38,7 @@
 		 ID
 		, GRADE_NAME
 		, BRAND_CODE
+		, SALE_QTY
 		, COMPANY_ID
 		, IS_INACTIVE
 		, REMARK
@@ -50,6 +52,7 @@
 	<sql id="commonColumnsNotPK">
 		 GRADE_NAME
 		, BRAND_CODE
+		, SALE_QTY
 		, COMPANY_ID
 		, IS_INACTIVE
 		, REMARK
@@ -64,6 +67,7 @@
 		 ID
 		, GRADE_NAME
 		, BRAND_CODE
+		, SALE_QTY
 		, COMPANY_ID
 		, IS_INACTIVE
 		, REMARK
@@ -83,6 +87,9 @@
 		</if>
 		<if test="brandCode!= null and brandCode!= ''"> 
 			AND BRAND_CODE=#{brandCode}
+		</if>
+		<if test="saleQTY!= null and saleQTY!= ''"> 
+			AND SALE_QTY=#{saleQTY}
 		</if>
 		<if test="companyId!= null and companyId!= ''"> 
 			AND COMPANY_ID=#{companyId}
@@ -120,6 +127,9 @@
             </if>
             <if test="shopGrade.brandCode!= null and shopGrade.brandCode!= ''">
 				AND BRAND_CODE=#{shopGrade.brandCode}
+            </if>
+            <if test="shopGrade.saleQTY!= null and shopGrade.saleQTY!= ''">
+				AND SALE_QTY=#{shopGrade.saleQTY}
             </if>
             <if test="shopGrade.companyId!= null and shopGrade.companyId!= ''">
 				AND COMPANY_ID=#{shopGrade.companyId}
@@ -168,6 +178,9 @@
             <when test="key == 'brandCode'">
 				BRAND_CODE ${value}
             </when>
+            <when test="key == 'saleQTY'">
+				SALE_QTY ${value}
+            </when>
         	<when test="key == 'companyId'">
 				COMPANY_ID ${value}
             </when>
@@ -202,6 +215,7 @@
 			) VALUES ( 
 			 #{gradeName}
 			, #{brandCode}
+			, #{saleQTY}
 			, #{companyId}
 			, #{isInactive}
 			, #{remark}
@@ -215,7 +229,8 @@
 	<update id="update" parameterType="ShopGrade">
 		<![CDATA[ UPDATE T_SHOP_GRADE SET 
 			 ID=#{id} 
-			, GRADE_NAME=#{gradeName} 
+			, GRADE_NAME=#{gradeName}
+			, SALE_QTY=#{saleQTY} 
 			, COMPANY_ID=#{companyId} 
 			, REMARK=#{remark} 
 			, IS_INACTIVE=#{isInactive}

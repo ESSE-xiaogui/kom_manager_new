@@ -73,18 +73,20 @@ public interface MaterielFacade {
 	/**
 	 * 保存记录
 	 * @param materiel
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(Materiel materiel) throws ServiceException;
+	public void save(Materiel materiel, String token) throws ServiceException;
 
 	/**
 	 * 更新记录
 	 * @param materiel
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(Materiel materiel) throws ServiceException;
+	public int update(Materiel materiel, String token) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数
@@ -101,5 +103,13 @@ public interface MaterielFacade {
 	 */
 	public Pagination<Materiel> listPaginationByProperty(Pagination<Materiel> pagination, Materiel materiel)
 			throws ServiceException;
+
+	/**
+	 * 根据品牌查询道具列表(app)
+	 * @param brandCode
+	 * @param token
+	 * @return
+	 */
+	public List<Materiel> getMaterielListByBrandCode(String brandCode, String token)throws ServiceException;
 
 }

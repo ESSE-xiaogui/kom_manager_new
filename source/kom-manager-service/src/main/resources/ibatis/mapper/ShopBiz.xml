@@ -21,6 +21,7 @@
 <mapper namespace="com.transsion.store.mapper.ShopBizMapper">
 	<resultMap id="ShopBizResultMapper" type="ShopBiz">
 		<result column="ID" property="id"/>
+		<result column="SHOP_TYPE" property="shopType"/>
 		<result column="BIZ_NAME" property="bizName"/>
 		<result column="COMPANY_ID" property="companyId"/>
 		<result column="BRAND_CODE" property="brandCode"/>
@@ -37,6 +38,7 @@
 	
 	<sql id="commonColumns">
 		 ID
+		, SHOP_TYPE
 		, BIZ_NAME
 		, COMPANY_ID
 		, BRAND_CODE
@@ -52,7 +54,8 @@
 	</sql>
 
 	<sql id="commonColumnsNotPK">
-		 BIZ_NAME
+		 SHOP_TYPE
+		, BIZ_NAME
 		, COMPANY_ID
 		, BRAND_CODE
 		, CN_NAME
@@ -68,6 +71,7 @@
 	
 	<sql id="commonProcessDateColumns">
 		 ID
+		, SHOP_TYPE
 		, BIZ_NAME
 		, COMPANY_ID
 		, BRAND_CODE
@@ -85,6 +89,9 @@
 	<sql id="commonCondition">
 		<if test="id!= null and id!= ''"> 
 			AND ID=#{id}
+		</if>
+		<if test="shopType!= null and shopType!= ''"> 
+			AND SHOP_TYPE=#{shopType}
 		</if>
 		<if test="bizName!= null and bizName!= ''"> 
 			AND BIZ_NAME=#{bizName}
@@ -128,6 +135,9 @@
 		<if test="shopBiz != null">
             <if test="shopBiz.id!= null and shopBiz.id!= ''">
 				AND ID=#{shopBiz.id}
+            </if>
+             <if test="shopBiz.shopType!= null and shopBiz.shopType!= ''">
+				AND SHOP_TYPE=#{shopBiz.shopType}
             </if>
             <if test="shopBiz.bizName!= null and shopBiz.bizName!= ''">
 				AND BIZ_NAME=#{shopBiz.bizName}
@@ -182,6 +192,9 @@
         	<when test="key == 'id'">
 				ID ${value}
             </when>
+            <when test="key == 'shopType'">
+				SHOP_TYPE ${value}
+            </when>
         	<when test="key == 'bizName'">
 				BIZ_NAME ${value}
             </when>
@@ -225,8 +238,9 @@
 		<![CDATA[ INSERT INTO T_SHOP_BIZ ( ]]>
 		<include refid="commonColumnsNotPK"/>
 		<![CDATA[
-			) VALUES ( 
-			 #{bizName}
+			) VALUES (
+			#{shopType} 
+			, #{bizName}
 			, #{companyId}
 			, #{brandCode}
 			, #{chinaName}
@@ -243,6 +257,7 @@
 	<update id="update" parameterType="ShopBiz">
 		<![CDATA[ UPDATE T_SHOP_BIZ SET 
 			 ID=#{id} 
+			, SHOP_TYPE=#{shopType} 
 			, BIZ_NAME=#{bizName} 
 			, COMPANY_ID=#{companyId} 
 			, BRAND_CODE=#{brandCode} 

@@ -21,8 +21,12 @@
 <mapper namespace="com.transsion.store.mapper.MaterielMapper">
 	<resultMap id="MaterielResultMapper" type="Materiel">
 		<result column="ID" property="id"/>
-		<result column="MATERIEL_NAME" property="materielName"/>
+		<result column="NAME" property="name"/>
+		<result column="NAME_CN" property="nameCN"/>
+		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="TYPE" property="type"/>
 		<result column="COMPANY_ID" property="companyId"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
 		<result column="REMARK" property="remark"/>
 		<result column="CREATE_BY" property="createBy"/>
 		<result column="CREATE_DATE" property="createDate"/>
@@ -33,8 +37,12 @@
 	
 	<sql id="commonColumns">
 		 ID
-		, MATERIEL_NAME
+		, NAME
+		, NAME_CN
+		, BRAND_CODE
+		, TYPE
 		, COMPANY_ID
+		, IS_INACTIVE
 		, REMARK
 		, CREATE_BY
 		, CREATE_DATE
@@ -44,8 +52,12 @@
 	</sql>
 
 	<sql id="commonColumnsNotPK">
-		 MATERIEL_NAME
+		 , NAME
+		, NAME_CN
+		, BRAND_CODE
+		, TYPE
 		, COMPANY_ID
+		, IS_INACTIVE
 		, REMARK
 		, CREATE_BY
 		, CREATE_DATE
@@ -56,8 +68,12 @@
 	
 	<sql id="commonProcessDateColumns">
 		 ID
-		, MATERIEL_NAME
+		, NAME
+		, NAME_CN
+		, BRAND_CODE
+		, TYPE
 		, COMPANY_ID
+		, IS_INACTIVE
 		, REMARK
 		, CREATE_BY
 		, date_format(CREATE_DATE, '%Y-%m-%d %H:%i:%s') CREATE_DATE
@@ -70,11 +86,23 @@
 		<if test="id!= null and id!= ''"> 
 			AND ID=#{id}
 		</if>
-		<if test="materielName!= null and materielName!= ''"> 
-			AND MATERIEL_NAME=#{materielName}
+		<if test="name!= null and name!= ''"> 
+			AND NAME=#{name}
+		</if>
+		<if test="nameCN!= null and nameCN!= ''"> 
+			AND NAME_CN=#{nameCN}
+		</if>
+		<if test="brandCode!= null and brandCode!= ''"> 
+			AND BRAND_CODE=#{brandCode}
+		</if>
+		<if test="type!= null and type!= ''"> 
+			AND TYPE=#{type}
 		</if>
 		<if test="companyId!= null and companyId!= ''"> 
 			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="isInactive!= null and isInactive!= ''"> 
+			AND IS_INACTIVE=#{isInactive}
 		</if>
 		<if test="remark!= null and remark!= ''"> 
 			AND REMARK=#{remark}
@@ -101,11 +129,23 @@
             <if test="materiel.id!= null and materiel.id!= ''">
 				AND ID=#{materiel.id}
             </if>
-            <if test="materiel.materielName!= null and materiel.materielName!= ''">
-				AND MATERIEL_NAME=#{materiel.materielName}
+            <if test="materiel.name!= null and materiel.name!= ''">
+				AND NAME=#{materiel.name}
+            </if>
+            <if test="materiel.nameCN!= null and materiel.nameCN!= ''">
+				AND NAME_CN=#{materiel.nameCN}
+            </if>
+            <if test="materiel.brandCode!= null and materiel.brandCode!= ''">
+				AND BRAND_CODE=#{materiel.brandCode}
+            </if>
+            <if test="materiel.type!= null and materiel.type!= ''">
+				AND TYPE=#{materiel.type}
             </if>
             <if test="materiel.companyId!= null and materiel.companyId!= ''">
 				AND COMPANY_ID=#{materiel.companyId}
+            </if>
+            <if test="materiel.isInactive!= null and materiel.isInactive!= ''">
+				AND IS_INACTIVE=#{materiel.isInactive}
             </if>
             <if test="materiel.remark!= null and materiel.remark!= ''">
 				AND REMARK=#{materiel.remark}
@@ -142,11 +182,23 @@
         	<when test="key == 'id'">
 				ID ${value}
             </when>
-        	<when test="key == 'materielName'">
-				MATERIEL_NAME ${value}
+        	<when test="key == 'name'">
+				NAME ${value}
+            </when>
+            <when test="key == 'nameCN'">
+				NAME_CN ${value}
+            </when>
+              <when test="key == 'brandCode'">
+				BRAND_CODE ${value}
+            </when>
+            <when test="key == 'type'">
+				TYPE ${value}
             </when>
         	<when test="key == 'companyId'">
 				COMPANY_ID ${value}
+            </when>
+            <when test="key == 'isInactive'">
+				IS_INACTIVE ${value}
             </when>
         	<when test="key == 'remark'">
 				REMARK ${value}
@@ -174,8 +226,12 @@
 		<include refid="commonColumnsNotPK"/>
 		<![CDATA[
 			) VALUES ( 
-			 #{materielName}
+			 #{name}
+			, #{nameCN}
+			, #{brandCode}
+			, #{type}
 			, #{companyId}
+			, #{isInactive}
 			, #{remark}
 			, #{createBy}
 			, str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
@@ -187,8 +243,12 @@
 	<update id="update" parameterType="Materiel">
 		<![CDATA[ UPDATE T_MATERIEL SET 
 			 ID=#{id} 
-			, MATERIEL_NAME=#{materielName} 
+			, NAME=#{name} 
+			, NAME_CN=#{nameCN} 
+			, BRAND_CODE=#{brandCode}
+			, TYPE=#{type} 
 			, COMPANY_ID=#{companyId} 
+			, IS_INACTIVE=#{isInactive}
 			, REMARK=#{remark} 
 			, CREATE_BY=#{createBy} 
 			, CREATE_DATE=str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')

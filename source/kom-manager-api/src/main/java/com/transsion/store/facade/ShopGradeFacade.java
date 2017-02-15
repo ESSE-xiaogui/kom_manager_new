@@ -107,11 +107,10 @@ public interface ShopGradeFacade {
 	/**
 	 * 查询门店等级列表
 	 * @param brandCode
-	 * @param isInactive
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<ShopGrade> getShopGradeList(String brandCode, Integer isInactive, String token)throws ServiceException;
+	public List<ShopGrade> getShopGradeList(String brandCode, String token)throws ServiceException;
 
 	/**
 	 * 查询已启用的门店等级

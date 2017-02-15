@@ -82,7 +82,8 @@ public class MaterielController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void add(Materiel materiel) throws ServiceException
 	{
-		materielFacade.save(materiel);
+		String token = this.getAuthorization();
+		materielFacade.save(materiel,token);
 	}
 
 	/**
@@ -108,6 +109,22 @@ public class MaterielController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void update(Materiel materiel) throws ServiceException
 	{
-		materielFacade.update(materiel);
+		String token = this.getAuthorization();
+		materielFacade.update(materiel,token);
+	}
+	
+	/**
+	 * 根据品牌查询道具列表(app)
+	 * @param brandCode
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("getMaterielList")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<Materiel> getMaterielListByBrandCode(@QueryParam("brandCode") String brandCode)
+					throws ServiceException{
+		String token = this.getAuthorization();
+		return materielFacade.getMaterielListByBrandCode(brandCode,token);
 	}
 }
