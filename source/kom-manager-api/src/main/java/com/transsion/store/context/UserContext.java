@@ -3,6 +3,7 @@ package com.transsion.store.context;
 import java.util.List;
 import com.transsion.store.IUserContext;
 import com.transsion.store.bo.Shop;
+import com.transsion.store.bo.SystemRole;
 import com.transsion.store.bo.User;
 
 /**
@@ -33,6 +34,12 @@ public class UserContext implements IUserContext {
      * 品牌
      * */
     private String brandCode;
+    
+    /**
+     * 角色
+     * */
+    private List<SystemRole> role;
+
     
     /**
      * 地址
@@ -69,10 +76,6 @@ public class UserContext implements IUserContext {
      * */
     private Long companyId;
     
-    /**
-     * 店铺名称
-     * */
-   
 
 	public String getToken() {
         return token;
@@ -160,13 +163,20 @@ public class UserContext implements IUserContext {
 		this.companyId = companyId;
 	}
 
+	public List<SystemRole> getRole() {
+		return role;
+	}
+
+	public void setRole(List<SystemRole> role) {
+		this.role = role;
+	}
+
 	@Override
 	public String toString() {
 		return "UserContext [token=" + token + ", userCode=" + userCode + ", password=" + password + ", brandCode="
-						+ brandCode + ", cityName=" + cityName + ", shop=" + shop + ", dutyName=" + dutyName
-						+ ", shopList=" + shopList + ", shopName=" + shopName + ", user=" + user + ", companyId="
-						+ companyId + "]";
+						+ brandCode + ", role=" + role + ", cityName=" + cityName + ", shop=" + shop + ", dutyName="
+						+ dutyName + ", shopList=" + shopList + ", shopName=" + shopName + ", user=" + user
+						+ ", companyId=" + companyId + "]";
 	}
-
 
 }
