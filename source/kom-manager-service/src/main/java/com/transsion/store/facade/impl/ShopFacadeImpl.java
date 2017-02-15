@@ -21,6 +21,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.transsion.store.bo.Shop;
+import com.transsion.store.dto.ShopDefinitionDto;
+import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
@@ -174,5 +176,23 @@ public class ShopFacadeImpl implements ShopFacade {
 	@Override
 	public List<Shop> queryPromoterShop(String token) throws ServiceException {
 		return shopManager.queryPromoterShop(token);
+	}
+
+	@Override
+	public void addShop(String token, ShopInfoDto shopInfoDto) throws ServiceException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<ShopInfoDto> queryManagedShopList(String token) throws ServiceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ShopDefinitionDto queryShopDefitionDto(String token) throws ServiceException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
