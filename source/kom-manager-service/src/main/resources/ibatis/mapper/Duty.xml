@@ -32,6 +32,20 @@
 		<result column="UPDATED_TIME" property="updatedTime"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
+	<resultMap id="DutyDtoResultMapper" type="DutyDto">
+		<result column="ID" property="id"/>
+		<result column="DUTY_CODE" property="dutyCode"/>
+		<result column="DUTY_NAME" property="dutyName"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="COMPANY_NAME" property="companyName"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
 	
 	<resultMap id="DutyResponseDtoMapper" type="DutyResponseDto">
 		<result column="ID" property="id"/>
@@ -116,39 +130,42 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="duty != null">
-            <if test="duty.id!= null and duty.id!= ''">
-				AND ID=#{duty.id}
+		<if test="dutyDto != null">
+            <if test="dutyDto.id!= null and dutyDto.id!= ''">
+				AND d.ID=#{dutyDto.id}
             </if>
-            <if test="duty.dutyCode!= null and duty.dutyCode!= ''">
-				AND DUTY_CODE=#{duty.dutyCode}
+            <if test="dutyDto.dutyCode!= null and dutyDto.dutyCode!= ''">
+				AND d.DUTY_CODE=#{dutyDto.dutyCode}
             </if>
-            <if test="duty.dutyName!= null and duty.dutyName!= ''">
-				AND DUTY_NAME=#{duty.dutyName}
+            <if test="dutyDto.dutyName!= null and dutyDto.dutyName!= ''">
+				AND d.DUTY_NAME=#{dutyDto.dutyName}
             </if>
-            <if test="duty.companyId!= null and duty.companyId!= ''">
-				AND COMPANY_ID=#{duty.companyId}
+            <if test="dutyDto.companyId!= null and dutyDto.companyId!= ''">
+				AND d.COMPANY_ID=#{dutyDto.companyId}
             </if>
-            <if test="duty.isInactive!= null and duty.isInactive!= ''">
-				AND IS_INACTIVE=#{duty.isInactive}
+            <if test="dutyDto.companyName!= null and dutyDto.companyName!= ''">
+				AND c.COMPANY_CODE=#{dutyDto.companyName}
             </if>
-            <if test="duty.remark!= null and duty.remark!= ''">
-				AND REMARK=#{duty.remark}
+            <if test="dutyDto.isInactive!= null and dutyDto.isInactive!= ''">
+				AND d.IS_INACTIVE=#{dutyDto.isInactive}
             </if>
-            <if test="duty.createdBy!= null and duty.createdBy!= ''">
-				AND CREATED_BY=#{duty.createdBy}
+            <if test="dutyDto.remark!= null and dutyDto.remark!= ''">
+				AND d.REMARK=#{dutyDto.remark}
             </if>
-            <if test="duty.createdTime!= null and duty.createdTime!= ''">
-				AND CREATED_TIME=str_to_date(#{duty.createdTime},'%Y-%m-%d %H:%i:%s')
+            <if test="dutyDto.createdBy!= null and dutyDto.createdBy!= ''">
+				AND d.CREATED_BY=#{dutyDto.createdBy}
             </if>
-            <if test="duty.updatedBy!= null and duty.updatedBy!= ''">
-				AND UPDATED_BY=#{duty.updatedBy}
+            <if test="dutyDto.createdTime!= null and dutyDto.createdTime!= ''">
+				AND d.CREATED_TIME=str_to_date(#{dutyDto.createdTime},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="duty.updatedTime!= null and duty.updatedTime!= ''">
-				AND UPDATED_TIME=str_to_date(#{duty.updatedTime},'%Y-%m-%d %H:%i:%s')
+            <if test="dutyDto.updatedBy!= null and dutyDto.updatedBy!= ''">
+				AND d.UPDATED_BY=#{dutyDto.updatedBy}
             </if>
-            <if test="duty.version!= null and duty.version!= ''">
-				AND VERSION=#{duty.version}
+            <if test="dutyDto.updatedTime!= null and dutyDto.updatedTime!= ''">
+				AND d.UPDATED_TIME=str_to_date(#{dutyDto.updatedTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="dutyDto.version!= null and dutyDto.version!= ''">
+				AND d.VERSION=#{dutyDto.version}
             </if>
         </if>
     </sql>
@@ -165,37 +182,40 @@
 	<sql id="orderBy">
 		<choose>
         	<when test="key == 'id'">
-				ID ${value}
+				d.ID ${value}
             </when>
         	<when test="key == 'dutyCode'">
-				DUTY_CODE ${value}
+				d.DUTY_CODE ${value}
             </when>
         	<when test="key == 'dutyName'">
-				DUTY_NAME ${value}
+				d.DUTY_NAME ${value}
             </when>
         	<when test="key == 'companyId'">
-				COMPANY_ID ${value}
+				d.COMPANY_ID ${value}
+            </when>
+            <when test="key == 'companyName'">
+				c.COMPANY_CODE ${value}
             </when>
         	<when test="key == 'isInactive'">
-				IS_INACTIVE ${value}
+				d.IS_INACTIVE ${value}
             </when>
         	<when test="key == 'remark'">
-				REMARK ${value}
+				d.REMARK ${value}
             </when>
         	<when test="key == 'createdBy'">
-				CREATED_BY ${value}
+				d.CREATED_BY ${value}
             </when>
         	<when test="key == 'createdTime'">
-				CREATED_TIME ${value}
+				d.CREATED_TIME ${value}
             </when>
         	<when test="key == 'updatedBy'">
-				UPDATED_BY ${value}
+				d.UPDATED_BY ${value}
             </when>
         	<when test="key == 'updatedTime'">
-				UPDATED_TIME ${value}
+				d.UPDATED_TIME ${value}
             </when>
         	<when test="key == 'version'">
-				VERSION ${value}
+				d.VERSION ${value}
             </when>
 		</choose>
 	</sql>
@@ -262,10 +282,12 @@
 		FROM T_DUTY WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="Duty" resultMap="DutyResultMapper">
+	<select id="listPaginationByProperty" parameterType="DutyDto" resultMap="DutyDtoResultMapper">
 		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_DUTY WHERE 1=1
+		d.ID,d.COMPANY_ID,c.COMPANY_CODE AS COMPANY_NAME,d.DUTY_CODE,d.DUTY_NAME,d.IS_INACTIVE,d.REMARK,
+		d.CREATED_BY,d.CREATED_TIME,d.UPDATED_BY,d.UPDATED_TIME,d.VERSION 
+		FROM T_DUTY d
+		LEFT JOIN T_COMPANY c ON c.ID = d.COMPANY_ID WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>

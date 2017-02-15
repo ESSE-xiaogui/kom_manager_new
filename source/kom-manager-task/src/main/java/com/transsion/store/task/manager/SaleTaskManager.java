@@ -98,14 +98,17 @@ public class SaleTaskManager {
 		 */
 		ScanValidateDto scan = scanValidateManager.scanValidate(saleTaskDto.getImeiNo(), null);
 		if(UtilHelper.isEmpty(scan)){
+			taskDetail.setStatus(2);
 			taskDetail.setMessage("IMEI illegal");
 		}
 		if (UtilHelper.isEmpty(scan.getImeis())) {
+			taskDetail.setStatus(2);
 			taskDetail.setMessage("IMEI illegal");
 		} else {
 			String imeiNo = saleItemMapper.queryScanDuplicatedIMEI(saleTaskDto.getImeiNo());
 			List<String> imeiLists = Arrays.asList(scan.getImeis());
 			if (imeiLists.contains(imeiNo)) {
+				taskDetail.setStatus(2);
 				taskDetail.setMessage("IMEI code repeated");
 			} else {
 				Sale sale = new Sale();
@@ -114,8 +117,10 @@ public class SaleTaskManager {
 				Shop shop = new Shop();
 				shop = shopMapper.findShopId(saleTaskDto.getShopCode());
 				if(UtilHelper.isEmpty(shop)){
+					taskDetail.setStatus(2);
 					taskDetail.setMessage("shop code is null");
 				}else if(UtilHelper.isEmpty(shop.getCompanyId()) || UtilHelper.isEmpty(shop.getShopId())){
+					taskDetail.setStatus(2);
 					taskDetail.setMessage("shop code is null");
 				}else{
 				sale.setCompanyId(shop.getCompanyId());
@@ -148,6 +153,7 @@ public class SaleTaskManager {
 				saleItem.setImeiList(imeiList);
 				saleItemMapper.save(saleItem);
 				taskDetail.setMessage("ok");
+				taskDetail.setStatus(1);
 				}
 			}
 		}

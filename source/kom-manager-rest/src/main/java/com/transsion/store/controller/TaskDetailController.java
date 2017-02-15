@@ -17,23 +17,25 @@ import com.shangkang.core.dto.RequestModel;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.TaskDetail;
 import com.transsion.store.facade.TaskDetailFacade;
+
 @Controller
 @Path("taskDetail")
-public class TaskDetailController extends AbstractController{
+public class TaskDetailController extends AbstractController {
 
 	@Autowired
 	private TaskDetailFacade taskDetailFacade;
+
 	/**
-	* 分页查询记录
-	* @return
-	* @throws ServiceException
-	*/
+	 * 分页查询记录
+	 * 
+	 * @return
+	 * @throws ServiceException
+	 */
 	@POST
 	@Path("/listPg")
-	@Consumes({MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<TaskDetail> listPgTaskDetail(RequestModel<TaskDetail> requestModel) throws ServiceException
-	{
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Pagination<TaskDetail> listPgTaskDetail(RequestModel<TaskDetail> requestModel) throws ServiceException {
 		Pagination<TaskDetail> pagination = new Pagination<TaskDetail>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
@@ -44,16 +46,16 @@ public class TaskDetailController extends AbstractController{
 
 		return taskDetailFacade.listPaginationByProperty(pagination, requestModel.getParams());
 	}
-	
+
 	/**
 	 * 查询上传信息
-	 * */
+	 */
 	@GET
 	@Path("findTaskDetail")
-	@Consumes({MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_JSON})
-	public List<TaskDetail> findTaskDetail(@QueryParam("taskId") Long taskId) throws ServiceException{
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<TaskDetail> findTaskDetail(@QueryParam("taskId") Long taskId) throws ServiceException {
 		return taskDetailFacade.findTaskDetail(taskId);
 	}
-	
+
 }
