@@ -5,6 +5,8 @@ import com.shangkang.core.bo.Model;
 public class Attribute extends Model {
 
 	private static final long serialVersionUID = 1L;
+	
+	public enum Type{SHOP_RELATIONSHIP,SHOP_CATEGORY,SHOP_PCS};
 
 	private java.lang.Long id;
 
