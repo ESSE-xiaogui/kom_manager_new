@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.ShopBiz;
+import com.transsion.store.dto.ShopBizDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.ShopBizFacade;
@@ -79,10 +80,10 @@ public class ShopBizFacadeImpl implements ShopBizFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<ShopBiz> listPaginationByProperty(Pagination<ShopBiz> pagination, ShopBiz shopBiz)
+	public Pagination<ShopBizDto> listPaginationByProperty(Pagination<ShopBizDto> pagination, ShopBizDto shopBizDto)
 			throws ServiceException
 	{
-		return shopBizService.listPaginationByProperty(pagination, shopBiz);
+		return shopBizService.listPaginationByProperty(pagination, shopBizDto);
 	}
 
 	/**

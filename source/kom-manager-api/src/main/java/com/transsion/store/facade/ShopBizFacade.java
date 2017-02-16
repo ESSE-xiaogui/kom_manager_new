@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.ShopBiz;
+import com.transsion.store.dto.ShopBizDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -99,7 +100,7 @@ public interface ShopBizFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<ShopBiz> listPaginationByProperty(Pagination<ShopBiz> pagination, ShopBiz shopBiz)
+	public Pagination<ShopBizDto> listPaginationByProperty(Pagination<ShopBizDto> pagination, ShopBizDto shopBizDto)
 			throws ServiceException;
 
 	/**

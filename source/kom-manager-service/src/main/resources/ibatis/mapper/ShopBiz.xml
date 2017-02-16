@@ -22,6 +22,7 @@
 	<resultMap id="ShopBizResultMapper" type="ShopBiz">
 		<result column="ID" property="id"/>
 		<result column="SHOP_TYPE" property="shopType"/>
+		<result column="SHOP_AREA" property="shopArea"/>
 		<result column="BIZ_NAME" property="bizName"/>
 		<result column="COMPANY_ID" property="companyId"/>
 		<result column="BRAND_CODE" property="brandCode"/>
@@ -35,10 +36,48 @@
 		<result column="UPDATE_DATE" property="updateDate"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
+	<resultMap id="ShopBizDtoResultMapper" type="ShopBizDto">
+		<result column="ID" property="id"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="SHOP_TYPE" property="shopType"/>
+		<result column="SHOP_AREA" property="shopArea"/>
+		<result column="NAME_CN" property="chTypeName"/>
+		<result column="NAME_EN" property="enTypeName"/>
+		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="CN_NAME" property="chinaName"/>
+		<result column="EN_NAME" property="englishName"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_DATE" property="updateDate"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonProcessDateColumnsDto">
+		b.ID
+		, b.COMPANY_ID
+		, b.SHOP_TYPE
+		, b.SHOP_AREA
+		, a.NAME_CN
+		, a.NAME_EN
+		, b.BRAND_CODE
+		, b.CN_NAME
+		, b.EN_NAME
+		, b.IS_INACTIVE
+		, b.REMARK
+		, b.CREATE_BY
+		, date_format(CREATE_DATE, '%Y-%m-%d %H:%i:%s')CREATE_DATE
+		, b.UPDATE_BY
+		, date_format(UPDATE_DATE, '%Y-%m-%d %H:%i:%s')UPDATE_DATE
+		, b.VERSION
+	</sql>
 	
 	<sql id="commonColumns">
 		 ID
 		, SHOP_TYPE
+		, SHOP_AREA
 		, BIZ_NAME
 		, COMPANY_ID
 		, BRAND_CODE
@@ -55,6 +94,7 @@
 
 	<sql id="commonColumnsNotPK">
 		 SHOP_TYPE
+		, SHOP_AREA
 		, BIZ_NAME
 		, COMPANY_ID
 		, BRAND_CODE
@@ -72,6 +112,7 @@
 	<sql id="commonProcessDateColumns">
 		 ID
 		, SHOP_TYPE
+		, SHOP_AREA
 		, BIZ_NAME
 		, COMPANY_ID
 		, BRAND_CODE
@@ -85,6 +126,8 @@
 		, date_format(UPDATE_DATE, '%Y-%m-%d %H:%i:%s') UPDATE_DATE
 		, VERSION
 	</sql>
+
+
 	
 	<sql id="commonCondition">
 		<if test="id!= null and id!= ''"> 
@@ -92,6 +135,9 @@
 		</if>
 		<if test="shopType!= null and shopType!= ''"> 
 			AND SHOP_TYPE=#{shopType}
+		</if>
+		<if test="shopArea!= null and shopArea!= ''"> 
+			AND SHOP_AREA=#{shopArea}
 		</if>
 		<if test="bizName!= null and bizName!= ''"> 
 			AND BIZ_NAME=#{bizName}
@@ -132,48 +178,54 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="shopBiz != null">
-            <if test="shopBiz.id!= null and shopBiz.id!= ''">
-				AND ID=#{shopBiz.id}
+		<if test="shopBizDto != null">
+            <if test="shopBizDto.id!= null and shopBizDto.id!= ''">
+				AND b.ID=#{shopBizDto.id}
             </if>
-             <if test="shopBiz.shopType!= null and shopBiz.shopType!= ''">
-				AND SHOP_TYPE=#{shopBiz.shopType}
+            <if test="shopBizDto.companyId!= null and shopBizDto.companyId!= ''">
+				AND b.COMPANY_ID=#{shopBizDto.companyId}
             </if>
-            <if test="shopBiz.bizName!= null and shopBiz.bizName!= ''">
-				AND BIZ_NAME=#{shopBiz.bizName}
+             <if test="shopBizDto.shopType!= null and shopBizDto.shopType!= ''">
+				AND b.SHOP_TYPE=#{shopBizDto.shopType}
             </if>
-            <if test="shopBiz.companyId!= null and shopBiz.companyId!= ''">
-				AND COMPANY_ID=#{shopBiz.companyId}
+            <if test="shopBizDto.shopArea!= null and shopBizDto.shopArea!= ''">
+				AND b.SHOP_AREA=#{shopBizDto.shopArea}
             </if>
-            <if test="shopBiz.brandCode!= null and shopBiz.brandCode!= ''">
-				AND BRAND_CODE=#{shopBiz.brandCode}
+            <if test="shopBizDto.chTypeName!= null and shopBizDto.chTypeName!= ''">
+				AND a.NAME_CN=#{shopBizDto.chTypeName}
             </if>
-            <if test="shopBiz.chinaName!= null and shopBiz.chinaName!= ''">
-				AND CN_NAME=#{shopBiz.chinaName}
+            <if test="shopBizDto.enTypeName!= null and shopBizDto.enTypeName!= ''">
+				AND a.NAME_EN=#{shopBizDto.enTypeName}
             </if>
-            <if test="shopBiz.englishName!= null and shopBiz.englishName!= ''">
-				AND EN_NAME=#{shopBiz.englishName}
+            <if test="shopBizDto.brandCode!= null and shopBizDto.brandCode!= ''">
+				AND b.BRAND_CODE=#{shopBizDto.brandCode}
             </if>
-            <if test="shopBiz.isInactive!= null and shopBiz.isInactive!= ''">
-				AND IS_INACTIVE=#{shopBiz.isInactive}
+            <if test="shopBizDto.chinaName!= null and shopBizDto.chinaName!= ''">
+				AND b.CN_NAME=#{shopBizDto.chinaName}
             </if>
-            <if test="shopBiz.remark!= null and shopBiz.remark!= ''">
-				AND REMARK=#{shopBiz.remark}
+            <if test="shopBizDto.englishName!= null and shopBizDto.englishName!= ''">
+				AND b.EN_NAME=#{shopBizDto.englishName}
             </if>
-            <if test="shopBiz.createBy!= null and shopBiz.createBy!= ''">
-				AND CREATE_BY=#{shopBiz.createBy}
+            <if test="shopBizDto.isInactive!= null and shopBizDto.isInactive!= ''">
+				AND b.IS_INACTIVE=#{shopBizDto.isInactive}
             </if>
-            <if test="shopBiz.createDate!= null and shopBiz.createDate!= ''">
-				AND CREATE_DATE=str_to_date(#{shopBiz.createDate},'%Y-%m-%d %H:%i:%s')
+            <if test="shopBizDto.remark!= null and shopBizDto.remark!= ''">
+				AND b.REMARK=#{shopBizDto.remark}
             </if>
-            <if test="shopBiz.updateBy!= null and shopBiz.updateBy!= ''">
-				AND UPDATE_BY=#{shopBiz.updateBy}
+            <if test="shopBizDto.createBy!= null and shopBizDto.createBy!= ''">
+				AND b.CREATE_BY=#{shopBizDto.createBy}
             </if>
-            <if test="shopBiz.updateDate!= null and shopBiz.updateDate!= ''">
-				AND UPDATE_DATE=str_to_date(#{shopBiz.updateDate},'%Y-%m-%d %H:%i:%s')
+            <if test="shopBizDto.createDate!= null and shopBizDto.createDate!= ''">
+				AND b.CREATE_DATE=str_to_date(#{shopBizDto.createDate},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="shopBiz.version!= null and shopBiz.version!= ''">
-				AND VERSION=#{shopBiz.version}
+            <if test="shopBizDto.updateBy!= null and shopBizDto.updateBy!= ''">
+				AND b.UPDATE_BY=#{shopBizDto.updateBy}
+            </if>
+            <if test="shopBizDto.updateDate!= null and shopBizDto.updateDate!= ''">
+				AND b.UPDATE_DATE=str_to_date(#{shopBizDto.updateDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="shopBizDto.version!= null and shopBizDto.version!= ''">
+				AND b.VERSION=#{shopBizDto.version}
             </if>
         </if>
     </sql>
@@ -190,46 +242,52 @@
 	<sql id="orderBy">
 		<choose>
         	<when test="key == 'id'">
-				ID ${value}
+				b.ID ${value}
             </when>
             <when test="key == 'shopType'">
-				SHOP_TYPE ${value}
+				b.SHOP_TYPE ${value}
             </when>
-        	<when test="key == 'bizName'">
-				BIZ_NAME ${value}
+            <when test="key == 'shopArea'">
+				b.SHOP_AREA ${value}
+            </when>
+        	<when test="key == 'chTypeName'">
+				a.NAME_CN ${value}
+            </when>
+            <when test="key == 'enTypeName'">
+				a.NAME_EN ${value}
             </when>
         	<when test="key == 'companyId'">
-				COMPANY_ID ${value}
+				b.COMPANY_ID ${value}
             </when>
             <when test="key == 'brandCode'">
-				BRAND_CODE ${value}
+				b.BRAND_CODE ${value}
             </when>
             <when test="key == 'chinaName'">
-				CN_NAME ${value}
+				b.CN_NAME ${value}
             </when>
             <when test="key == 'englishName'">
-				EN_NAME ${value}
+				b.EN_NAME ${value}
             </when>
             <when test="key == 'isInactive'">
-				IS_INACTIVE ${value}
+				b.IS_INACTIVE ${value}
             </when>
         	<when test="key == 'remark'">
-				REMARK ${value}
+				b.REMARK ${value}
             </when>
         	<when test="key == 'createBy'">
-				CREATE_BY ${value}
+				b.CREATE_BY ${value}
             </when>
         	<when test="key == 'createDate'">
-				CREATE_DATE ${value}
+				b.CREATE_DATE ${value}
             </when>
         	<when test="key == 'updateBy'">
-				UPDATE_BY ${value}
+				b.UPDATE_BY ${value}
             </when>
         	<when test="key == 'updateDate'">
-				UPDATE_DATE ${value}
+				b.UPDATE_DATE ${value}
             </when>
         	<when test="key == 'version'">
-				VERSION ${value}
+				b.VERSION ${value}
             </when>
 		</choose>
 	</sql>
@@ -240,6 +298,7 @@
 		<![CDATA[
 			) VALUES (
 			#{shopType} 
+			, #{shopArea} 
 			, #{bizName}
 			, #{companyId}
 			, #{brandCode}
@@ -258,6 +317,7 @@
 		<![CDATA[ UPDATE T_SHOP_BIZ SET 
 			 ID=#{id} 
 			, SHOP_TYPE=#{shopType} 
+			, SHOP_AREA=#{shopArea} 
 			, BIZ_NAME=#{bizName} 
 			, COMPANY_ID=#{companyId} 
 			, BRAND_CODE=#{brandCode} 
@@ -302,12 +362,15 @@
 		FROM T_SHOP_BIZ WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="ShopBiz" resultMap="ShopBizResultMapper">
-		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_SHOP_BIZ WHERE 1=1
-    	<include refid="commonConditionByPrefix"/>
-    	<include refid="orderByClause" />
+	<select id="listPaginationByProperty" parameterType="ShopBizDto"
+		resultMap="ShopBizDtoResultMapper">
+		SELECT
+		<include refid="commonProcessDateColumnsDto" />
+		FROM T_SHOP_BIZ b
+		LEFT JOIN T_ATTRIBUTE a ON a.ID = b.SHOP_TYPE
+		WHERE 1=1
+		<include refid="commonConditionByPrefix" />
+		<include refid="orderByClause" />
 	</select>
 	<select id="findByCount" parameterType="ShopBiz" resultType="int">
 		SELECT count(1) AS totalcount FROM T_SHOP_BIZ WHERE 1=1 
