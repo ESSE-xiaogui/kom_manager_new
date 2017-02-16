@@ -60,7 +60,7 @@ public class CurrencyDto implements Serializable{
 	/**
 	 * 创建人
 	 * */
-	private Long createdBy;
+	private String createdBy;
 	
 	/**
 	 * 创建时间
@@ -70,7 +70,7 @@ public class CurrencyDto implements Serializable{
 	/**
 	 * 更新人
 	 * */
-	private Long updatedBy;
+	private String updatedBy;
 	
 	/**
 	 * 更新时间
@@ -157,14 +157,6 @@ public class CurrencyDto implements Serializable{
 		this.isInactive = isInactive;
 	}
 
-	public Long getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(Long createdBy) {
-		this.createdBy = createdBy;
-	}
-
 	public String getCreatedTime() {
 		return createdTime;
 	}
@@ -173,11 +165,19 @@ public class CurrencyDto implements Serializable{
 		this.createdTime = createdTime;
 	}
 
-	public Long getUpdatedBy() {
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(Long updatedBy) {
+	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 

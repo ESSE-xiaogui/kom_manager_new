@@ -1,6 +1,5 @@
 package com.transsion.store.facade.impl;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

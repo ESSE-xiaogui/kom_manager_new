@@ -16,6 +16,8 @@
  **/
 package com.transsion.store.bo;
 
+import java.math.BigDecimal;
+
 import com.shangkang.core.bo.Model;
 
 public class Currency extends Model{
@@ -56,12 +58,12 @@ public class Currency extends Model{
 	/**
 	  *	
 	  */
-	private java.math.BigDecimal exchangerate;
+	private BigDecimal exchangerate;
 
 	/**
 	  *	
 	  */
-	private java.math.BigDecimal exchangerate2;
+	private BigDecimal exchangerate2;
 
 	/**
 	  *	
@@ -81,12 +83,12 @@ public class Currency extends Model{
 	/**
 	  *	
 	  */
-	private java.lang.String createdBy;
+	private String createdBy;
 
 	/**
 	  *	
 	  */
-	private java.lang.String createdTime;
+	private String createdTime;
 
 	/**
 	  *	系统保留字段，记录数据最后更新用户，用于审计，无业务含义
@@ -103,38 +105,22 @@ public class Currency extends Model{
 	  */
 	private Integer version;
 
-	/**
-	  *	
-	  */
-	public Long getId()
-	{
+	public Long getId() {
 		return id;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setId(Long id)
-	{
+
+	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	/**
-	  *	指使用系统的公司，即事业部或经销商对应的公司
-	  */
-	public Long getCompanyId()
-	{
+
+	public Long getCompanyId() {
 		return companyId;
 	}
-	
-	/**
-	  *	指使用系统的公司，即事业部或经销商对应的公司
-	  */
-	public void setCompanyId(Long companyId)
-	{
+
+	public void setCompanyId(Long companyId) {
 		this.companyId = companyId;
 	}
-	
+
 	public Long getCountry() {
 		return country;
 	}
@@ -143,87 +129,45 @@ public class Currency extends Model{
 		this.country = country;
 	}
 
-	
-	/**
-	  *	
-	  */
-	public Integer getFindex()
-	{
+	public Integer getFindex() {
 		return findex;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setFindex(Integer findex)
-	{
+
+	public void setFindex(Integer findex) {
 		this.findex = findex;
 	}
-	
-	/**
-	  *	参数的实际值，可能有多种数据类型，但同一按照字符串的方式保存
-	  */
-	public String getWerks()
-	{
+
+	public String getWerks() {
 		return werks;
 	}
-	
-	/**
-	  *	参数的实际值，可能有多种数据类型，但同一按照字符串的方式保存
-	  */
-	public void setWerks(String werks)
-	{
+
+	public void setWerks(String werks) {
 		this.werks = werks;
 	}
-	
-	/**
-	  *	参数的中文名称
-	  */
-	public String getCurrencyName()
-	{
+
+	public String getCurrencyName() {
 		return currencyName;
 	}
-	
-	/**
-	  *	参数的中文名称
-	  */
-	public void setCurrencyName(String currencyName)
-	{
+
+	public void setCurrencyName(String currencyName) {
 		this.currencyName = currencyName;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.math.BigDecimal getExchangerate() 
-	{
+
+	public BigDecimal getExchangerate() {
 		return exchangerate;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setExchangerate(java.math.BigDecimal exchangerate) 
-	{
+
+	public void setExchangerate(BigDecimal exchangerate) {
 		this.exchangerate = exchangerate;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.math.BigDecimal getExchangerate2() 
-	{
+
+	public BigDecimal getExchangerate2() {
 		return exchangerate2;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setExchangerate2(java.math.BigDecimal exchangerate2) 
-	{
+
+	public void setExchangerate2(BigDecimal exchangerate2) {
 		this.exchangerate2 = exchangerate2;
 	}
-	
 
 	public String getBeginTime() {
 		return beginTime;
@@ -241,83 +185,51 @@ public class Currency extends Model{
 		this.endTime = endTime;
 	}
 
-	/**
-	  *	0表示激活状态，被激活有效的数据可以用于新增业务，1表示停用，被停用无效的数据只能用于历史数据查询中
-	  */
-	public Integer getIsInactive()
-	{
+	public Integer getIsInactive() {
 		return isInactive;
 	}
-	
-	/**
-	  *	0表示激活状态，被激活有效的数据可以用于新增业务，1表示停用，被停用无效的数据只能用于历史数据查询中
-	  */
-	public void setIsInactive(Integer isInactive)
-	{
+
+	public void setIsInactive(Integer isInactive) {
 		this.isInactive = isInactive;
 	}
-	
-	public java.lang.String getCreatedBy() {
+
+	public String getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(java.lang.String createdBy) {
+	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public java.lang.String getCreatedTime() {
+	public String getCreatedTime() {
 		return createdTime;
 	}
 
-	public void setCreatedTime(java.lang.String createdTime) {
+	public void setCreatedTime(String createdTime) {
 		this.createdTime = createdTime;
 	}
 
-	/**
-	  *	系统保留字段，记录数据最后更新用户，用于审计，无业务含义
-	  */
-	public String getUpdatedBy()
-	{
+	public String getUpdatedBy() {
 		return updatedBy;
 	}
-	
-	/**
-	  *	系统保留字段，记录数据最后更新用户，用于审计，无业务含义
-	  */
-	public void setUpdatedBy(String updatedBy)
-	{
+
+	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-	
-	/**
-	  *	系统保留字段，记录数据最后时间，用于审计，无业务含义
-	  */
-	public String getUpdatedTime()
-	{
+
+	public String getUpdatedTime() {
 		return updatedTime;
 	}
-	
-	/**
-	  *	系统保留字段，记录数据最后时间，用于审计，无业务含义
-	  */
-	public void setUpdatedTime(String updatedTime)
-	{
+
+	public void setUpdatedTime(String updatedTime) {
 		this.updatedTime = updatedTime;
 	}
-	
-	/**
-	  *	系统保留字段，表示当前数据版本，用于控制业务并发，无其它业务含义
-	  */
-	public Integer getVersion()
-	{
+
+	public Integer getVersion() {
 		return version;
 	}
-	
-	/**
-	  *	系统保留字段，表示当前数据版本，用于控制业务并发，无其它业务含义
-	  */
-	public void setVersion(Integer version)
-	{
+
+	public void setVersion(Integer version) {
 		this.version = version;
 	}
 

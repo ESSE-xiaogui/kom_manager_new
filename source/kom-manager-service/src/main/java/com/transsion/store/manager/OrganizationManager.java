@@ -132,7 +132,7 @@ public class OrganizationManager {
 		Organization org = new Organization();
 		org.setParentId(new Long(orgId));
 		Employee e = new Employee();
-		e.setId(new Long(orgId));
+		e.setOrgId(orgId);
 		int empCount = employeeMapper.findByCount(e);
 		if(empCount>0){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ORG_BINDEMP);
