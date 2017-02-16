@@ -21,7 +21,7 @@
 <mapper namespace="com.transsion.store.mapper.MaterielMapper">
 	<resultMap id="MaterielResultMapper" type="Materiel">
 		<result column="ID" property="id"/>
-		<result column="NAME" property="name"/>
+		<result column="NAME_EN" property="name"/>
 		<result column="NAME_CN" property="nameCN"/>
 		<result column="BRAND_CODE" property="brandCode"/>
 		<result column="TYPE" property="type"/>
@@ -37,7 +37,7 @@
 	
 	<sql id="commonColumns">
 		 ID
-		, NAME
+		, NAME_EN
 		, NAME_CN
 		, BRAND_CODE
 		, TYPE
@@ -52,7 +52,7 @@
 	</sql>
 
 	<sql id="commonColumnsNotPK">
-		 , NAME
+		  NAME_EN
 		, NAME_CN
 		, BRAND_CODE
 		, TYPE
@@ -68,7 +68,7 @@
 	
 	<sql id="commonProcessDateColumns">
 		 ID
-		, NAME
+		, NAME_EN
 		, NAME_CN
 		, BRAND_CODE
 		, TYPE
@@ -87,7 +87,7 @@
 			AND ID=#{id}
 		</if>
 		<if test="name!= null and name!= ''"> 
-			AND NAME=#{name}
+			AND NAME_EN=#{name}
 		</if>
 		<if test="nameCN!= null and nameCN!= ''"> 
 			AND NAME_CN=#{nameCN}
@@ -130,7 +130,7 @@
 				AND ID=#{materiel.id}
             </if>
             <if test="materiel.name!= null and materiel.name!= ''">
-				AND NAME=#{materiel.name}
+				AND NAME_EN=#{materiel.name}
             </if>
             <if test="materiel.nameCN!= null and materiel.nameCN!= ''">
 				AND NAME_CN=#{materiel.nameCN}
@@ -183,7 +183,7 @@
 				ID ${value}
             </when>
         	<when test="key == 'name'">
-				NAME ${value}
+				NAME_EN ${value}
             </when>
             <when test="key == 'nameCN'">
 				NAME_CN ${value}
@@ -243,7 +243,7 @@
 	<update id="update" parameterType="Materiel">
 		<![CDATA[ UPDATE T_MATERIEL SET 
 			 ID=#{id} 
-			, NAME=#{name} 
+			, NAME_EN=#{name} 
 			, NAME_CN=#{nameCN} 
 			, BRAND_CODE=#{brandCode}
 			, TYPE=#{type} 

@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Shop;
+import com.transsion.store.dto.ShopDefinitionDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.ShopFacade;
@@ -160,4 +161,18 @@ public class ShopController extends AbstractController{
 		String token = this.getAuthorization();
 		return shopFacade.queryPromoterShop(token);
 	}	
+	
+	/**
+	 * 查询门店定义
+	 * @param token
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/queryShopDefitionDto")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public ShopDefinitionDto queryShopDefitionDto() throws ServiceException{
+		String token = this.getAuthorization();
+		return shopFacade.queryShopDefitionDto(token);	
+	}
 }

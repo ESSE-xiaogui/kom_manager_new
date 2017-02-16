@@ -193,6 +193,6 @@ public class ShopFacadeImpl implements ShopFacade {
 	@Override
 	public ShopDefinitionDto queryShopDefitionDto(String token) throws ServiceException {
 		// TODO Auto-generated method stub
-		return null;
+		return shopManager.queryShopDefitionDto(token);
 	}
 }

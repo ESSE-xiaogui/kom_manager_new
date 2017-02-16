@@ -408,4 +408,9 @@
 			 <include refid="commonProcessDateColumns"/>
 		FROM T_REGION WHERE PARENT_ID = #{parentId} 
 	</select>
+	<select id="queryRegionByTypeCode" parameterType="int"
+		resultMap="RegionResultMapper">
+		SELECT ID,REGION_NAME,PARENT_ID FROM T_REGION 
+		WHERE TYPE_CODE=#{typeCode}
+	</select>
 </mapper>

@@ -16,9 +16,9 @@ public class Attribute extends Model {
 
 	private java.lang.Integer sqe;
 
-	private java.lang.String engName;
+	private java.lang.String nameEN;
 
-	private java.lang.String cnName;
+	private java.lang.String nameCN;
 
 	private java.lang.String remark;
 
@@ -54,20 +54,20 @@ public class Attribute extends Model {
 		this.sqe = sqe;
 	}
 
-	public java.lang.String getEngName() {
-		return engName;
+	public java.lang.String getNameEN() {
+		return nameEN;
 	}
 
-	public void setEngName(java.lang.String engName) {
-		this.engName = engName;
+	public void setNameEN(java.lang.String nameEN) {
+		this.nameEN = nameEN;
 	}
 
-	public java.lang.String getCnName() {
-		return cnName;
+	public java.lang.String getNameCN() {
+		return nameCN;
 	}
 
-	public void setCnName(java.lang.String cnName) {
-		this.cnName = cnName;
+	public void setNameCN(java.lang.String nameCN) {
+		this.nameCN = nameCN;
 	}
 
 	public java.lang.String getRemark() {
@@ -80,8 +80,8 @@ public class Attribute extends Model {
 
 	@Override
 	public String toString() {
-		return "Attribute [id=" + id + ", companyId=" + companyId + ", type=" + type + ", sqe=" + sqe + ", engName="
-				+ engName + ", cnName=" + cnName + ", remark=" + remark + "]";
+		return "Attribute [id=" + id + ", companyId=" + companyId + ", type=" + type + ", sqe=" + sqe + ", nameEN="
+						+ nameEN + ", nameCN=" + nameCN + ", remark=" + remark + "]";
 	}
 
 }

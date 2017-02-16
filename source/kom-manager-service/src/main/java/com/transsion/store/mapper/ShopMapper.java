@@ -19,8 +19,10 @@ package com.transsion.store.mapper;
 import java.util.List;
 import java.util.Map;
 
+import com.transsion.store.bo.Region;
 import com.transsion.store.bo.Shop;
 import com.transsion.store.dto.ShopChildrenDto;
+import com.transsion.store.dto.ShopDefinitionDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
@@ -37,6 +39,8 @@ public interface ShopMapper extends GenericIBatisMapper<Shop, java.lang.Long> {
     public List<ShopChildrenDto> findShopByRegionId (@Param("regionId")Long regionId,@Param("userName")String userName) throws DataAccessFailureException; 
     public List<Long> findShopIds (@Param("uid")Long uid) throws DataAccessFailureException;
 	public List<Shop> findByPromoters(@Param("userId") Integer userId,@Param("companyId") Integer companyId)throws DataAccessFailureException;
-	public List<Shop> findByPromoter(@Param("userId") Integer userId,@Param("companyId") Integer companyId)throws DataAccessFailureException; 
+	public List<Shop> findByPromoter(@Param("userId") Integer userId,@Param("companyId") Integer companyId)throws DataAccessFailureException;
+	public List<Shop> findShopListByUser(@Param("userId") Integer userId,@Param("companyId") Integer companyId)throws DataAccessFailureException;
+	
 
 }

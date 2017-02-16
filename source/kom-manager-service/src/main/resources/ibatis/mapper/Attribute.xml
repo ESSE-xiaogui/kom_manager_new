@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-11-18 15:56:34
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.AttributeMapper">
+	<resultMap id="AttributeResultMapper" type="Attribute">
+		<result column="ID" property="id"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="TYPE" property="type"/>
+		<result column="SQE" property="sqe"/>
+		<result column="NAME_EN" property="nameEN"/>
+		<result column="NAME_CN" property="nameCN"/>
+		<result column="REMARK" property="remark"/>
+	</resultMap>
+
+	<select id="getAttributeListByType"  parameterType="java.lang.Integer" resultMap="AttributeResultMapper">
+		SELECT ID,TYPE,SQE,NAME_EN FROM T_ATTRIBUTE WHERE TYPE = #{type} AND COMPANY_ID =1
+	</select>
+</mapper>

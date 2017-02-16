@@ -47,5 +47,7 @@ public interface RegionMapper extends GenericIBatisMapper<Region, java.lang.Long
 	public List<ShopRegionChildrenDto> findRegionChildren(@Param("parentId")Long parentId,@Param("userName")String userName) throws DataAccessFailureException;
 	
 	public List<Region> getCityAll(@Param("parentId")Long parentId);
+	
+	public List<Region> queryRegionByTypeCode(@Param("typeCode") int typeCode)throws DataAccessFailureException;
 
 }
