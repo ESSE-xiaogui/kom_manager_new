@@ -141,8 +141,9 @@ public class OrganizationManager {
 		if(count>0){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ORG_CHILDREN);
 		}else{
-			org.setId(new Long(orgId));
-			int counts = organizationMapper.deleteByProperty(org);
+			Organization orgById = new Organization();
+			orgById.setId(new Long(orgId));
+			int counts = organizationMapper.deleteByProperty(orgById);
 			if(counts>0){
 				orDto.setStatus(1);
 			}else{
