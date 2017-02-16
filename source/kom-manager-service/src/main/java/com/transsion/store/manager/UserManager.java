@@ -5,10 +5,8 @@ import com.rest.service.utils.JwtUtils;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Shop;
-import com.transsion.store.bo.SystemRole;
 import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
-import com.transsion.store.dto.SystemRoleResponseDto;
 import com.transsion.store.dto.UserInfoDto;
 import com.transsion.store.dto.UserResponseDto;
 import com.transsion.store.mapper.SystemRoleMapper;
@@ -77,17 +75,9 @@ public class UserManager {
 		/**
 		 * 获取角色名称
 		 * */
-		List<SystemRoleResponseDto> roleList = systemRoleMapper.findSystemRoleByUser(urd.getId().intValue());
+		List<String> roleList = systemRoleMapper.findRoleCode(urd.getId().intValue());
 		if (UtilHelper.isEmpty(roleList)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_LOGIN_FAIL);
-		}
-		List<SystemRole> systemRoleList = new ArrayList<SystemRole>();
-		for(SystemRoleResponseDto role:roleList){
-			SystemRole systemRole = new SystemRole();
-			systemRole.setRoleId(role.getRoleId());
-			systemRole.setRoleName(role.getRoleName());
-			systemRole.setIsInactive(role.getIsInactive());
-			systemRoleList.add(systemRole);
 		}
 		/**
 		 * 多店铺
@@ -105,7 +95,7 @@ public class UserManager {
 			userContext.setToken(token);
 			user.setId(urd.getId());
 			userContext.setBrandCode(urd.getBrandCode());
-			userContext.setRole(systemRoleList);
+			userContext.setRole(roleList);
 			if(!UtilHelper.isEmpty(urd.getUserId())){
 				user.setUserId(urd.getUserId().intValue());
 			}
@@ -128,6 +118,7 @@ public class UserManager {
 			userContext.setShopList(shops);
 		}
 		CacheUtils.getSupporter().set(token, userContext, exp);
+		System.out.println(userContext);
 		return userContext;
 	}
 	

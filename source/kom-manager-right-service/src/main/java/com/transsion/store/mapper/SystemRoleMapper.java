@@ -35,4 +35,5 @@ public interface SystemRoleMapper extends GenericIBatisMapper<SystemRole, java.l
     public List<SystemRoleResponseDto> findSystemRole() throws DataAccessFailureException;
     public SystemRoleResponseDto updateRoleStatus(@Param("userId")Integer userId,@Param("roleId")Long roleId,@QueryParam("isInactive") java.lang.Integer isInactive)throws DataAccessFailureException;
 	public List<SystemRoleResponseDto> findRole(SystemRole systemRole)throws DataAccessFailureException;
+	public List<String> findRoleCode(@Param("userId")Integer userId) throws DataAccessFailureException;
 }

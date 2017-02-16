@@ -3,7 +3,6 @@ package com.transsion.store.context;
 import java.util.List;
 import com.transsion.store.IUserContext;
 import com.transsion.store.bo.Shop;
-import com.transsion.store.bo.SystemRole;
 import com.transsion.store.bo.User;
 
 /**
@@ -38,7 +37,7 @@ public class UserContext implements IUserContext {
     /**
      * 角色
      * */
-    private List<SystemRole> role;
+    private List<String> role;
 
     
     /**
@@ -163,11 +162,11 @@ public class UserContext implements IUserContext {
 		this.companyId = companyId;
 	}
 
-	public List<SystemRole> getRole() {
+	public List<String> getRole() {
 		return role;
 	}
 
-	public void setRole(List<SystemRole> role) {
+	public void setRole(List<String> role) {
 		this.role = role;
 	}
 
