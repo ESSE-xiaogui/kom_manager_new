@@ -6,7 +6,7 @@ public class Attribute extends Model {
 
 	private static final long serialVersionUID = 1L;
 	
-	public enum Type{SHOP_RELATIONSHIP,SHOP_CATEGORY,SHOP_PCS};
+	public enum Type{SHOP_RELATIONSHIP,SHOP_CATEGORY,SHOP_PCS,SHOP_BIZ};
 
 	private java.lang.Long id;
 
