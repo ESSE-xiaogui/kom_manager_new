@@ -79,6 +79,16 @@ public class Shop extends Model{
 	  *	
 	  */
 	private java.lang.String address;
+	
+	/**
+	  *	
+	  */
+	private java.lang.Long gradeId;
+
+	/**
+	  *	
+	  */
+	private java.lang.Long bizId;
 
 	/**
 	  *	
@@ -93,6 +103,55 @@ public class Shop extends Model{
 	/**
 	  *	
 	  */
+	private java.lang.String purchasChannel;
+	
+	/**
+	  *	信息上传当天的北京时间
+	  */
+	private java.lang.String openDate;
+
+	/**
+	  *	审核状态 0:(默认)待审核 1:通过 2:未通过 3:再次申请
+	  */
+	private java.lang.Integer status;
+
+	/**
+	  *	
+	  */
+	private java.lang.String remark;
+
+	/**
+	  *	Table User ID
+	  */
+	private java.lang.String createBy;
+
+	/**
+	  *	
+	  */
+	private java.lang.String createDate;
+
+	/**
+	  *	
+	  */
+	private java.lang.String updateBy;
+
+	/**
+	  *	
+	  */
+	private java.lang.String updateDate;
+
+	/**
+	  *	
+	  */
+	private java.lang.Integer version;
+	
+
+	
+	/*********************************duplicated attributes move to shop extension **********************************/
+	
+	/**
+	  *	
+	  */
 	private java.lang.String promoter;
 
 	/**
@@ -104,16 +163,6 @@ public class Shop extends Model{
 	  *	
 	  */
 	private java.lang.Integer materielId;
-
-	/**
-	  *	
-	  */
-	private java.lang.Long gradeId;
-
-	/**
-	  *	
-	  */
-	private java.lang.Long bizId;
 
 	/**
 	  *	
@@ -155,10 +204,6 @@ public class Shop extends Model{
 	  */
 	private java.lang.String darkPro;
 
-	/**
-	  *	
-	  */
-	private java.lang.String purchasChannel;
 
 	/**
 	  *	
@@ -210,45 +255,7 @@ public class Shop extends Model{
 	  */
 	private java.lang.Long salesNum;
 
-	/**
-	  *	信息上传当天的北京时间
-	  */
-	private java.lang.String openDate;
 
-	/**
-	  *	审核状态 0:(默认)待审核 1:通过 2:未通过 3:再次申请
-	  */
-	private java.lang.Integer status;
-
-	/**
-	  *	
-	  */
-	private java.lang.String remark;
-
-	/**
-	  *	Table User ID
-	  */
-	private java.lang.String createBy;
-
-	/**
-	  *	
-	  */
-	private java.lang.String createDate;
-
-	/**
-	  *	
-	  */
-	private java.lang.String updateBy;
-
-	/**
-	  *	
-	  */
-	private java.lang.String updateDate;
-
-	/**
-	  *	
-	  */
-	private java.lang.Integer version;
 	
 	private String countryName;
 
