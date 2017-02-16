@@ -168,4 +168,10 @@ public class ModelFacadeImpl implements ModelFacade {
 	public List<ModelDto> findModel(ModelDto modelDto) throws ServiceException{
 		return modelManager.findModel( modelDto);
 	}
+	/**
+	 * 查询所有机型名称
+	 * */
+	public List<String> findModelName(String token) throws ServiceException{
+		return modelManager.findModelName(token);
+	}
 }

@@ -128,4 +128,15 @@ public class ModelController extends AbstractController{
 	public List<ModelDto> findModel(ModelDto modelDto) throws ServiceException{
 		return modelFacade.findModel(modelDto);
 	}
+	
+	/**
+	 * 查询所有机型名称
+	 * */
+	@GET
+	@Path("/findModelName")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<String> findModelName() throws ServiceException{
+		String token = this.getAuthorization();
+		return modelFacade.findModelName(token);
+	}
 }

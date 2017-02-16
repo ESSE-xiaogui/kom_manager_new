@@ -118,5 +118,10 @@ public interface ModelFacade {
 	 * @throws ServiceException
 	 * */
 	public List<ModelDto> findModel(ModelDto modelDto) throws ServiceException;
+	
+	/**
+	 * 查询所有机型名称
+	 * */
+	public List<String> findModelName(String token) throws ServiceException;
 
 }

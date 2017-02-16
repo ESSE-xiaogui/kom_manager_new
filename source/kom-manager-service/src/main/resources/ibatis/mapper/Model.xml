@@ -411,4 +411,8 @@
 			AND m.IS_INACTIVE=#{isInactive}
 		</if>
 	</select>
+	<select id="findModelName" parameterType="java.lang.Long"
+		resultType="String">
+		SELECT MODEL_NAME FROM T_MODEL WHERE COMPANY_ID = #{companyId}
+	</select>
 </mapper>

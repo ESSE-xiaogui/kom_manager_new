@@ -115,4 +115,18 @@ public class ModelManager {
 		mrd.setStatus(1);
 		return mrd;
 	}
+	
+	/**
+	 * 查询所有机型名称
+	 * */
+	public List<String> findModelName(String token) throws ServiceException{
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		return modelMapper.findModelName(userContext.getCompanyId());
+	}
 }
