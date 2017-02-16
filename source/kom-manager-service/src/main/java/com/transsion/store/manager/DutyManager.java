@@ -71,6 +71,10 @@ public class DutyManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		if(!UtilHelper.isEmpty(userContext.getUserCode())){
+			duty.setCreatedBy(userContext.getUserCode());
+		}
+		duty.setCreatedTime(systemDateService.getCurrentDate());
+		if(!UtilHelper.isEmpty(userContext.getUserCode())){
 			duty.setUpdatedBy(userContext.getUserCode());
 		}
 		duty.setUpdatedTime(systemDateService.getCurrentDate());
