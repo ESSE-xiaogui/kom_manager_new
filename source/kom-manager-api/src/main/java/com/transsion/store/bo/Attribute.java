@@ -5,8 +5,24 @@ import com.shangkang.core.bo.Model;
 public class Attribute extends Model {
 
 	private static final long serialVersionUID = 1L;
-	
-	public enum Type{SHOP_RELATIONSHIP,SHOP_CATEGORY,SHOP_PCS,SHOP_BIZ};
+
+	public enum Type {
+		
+		SHOP_RELATIONSHIP(1), 
+		SHOP_CATEGORY(2),
+		SHOP_PCS(3), 
+		SHOP_BIZ(4);
+		
+		private final int value;
+
+		private Type(int value) {
+			this.value = value;
+		}
+
+		public int getVal() {
+			return value;
+		}
+	};
 
 	private java.lang.Long id;
 
@@ -81,7 +97,7 @@ public class Attribute extends Model {
 	@Override
 	public String toString() {
 		return "Attribute [id=" + id + ", companyId=" + companyId + ", type=" + type + ", sqe=" + sqe + ", nameEN="
-						+ nameEN + ", nameCN=" + nameCN + ", remark=" + remark + "]";
+				+ nameEN + ", nameCN=" + nameCN + ", remark=" + remark + "]";
 	}
 
 }
