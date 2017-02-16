@@ -9,6 +9,17 @@ public class ShopExtension extends Model{
 	private java.lang.Long id;
 
 	private java.lang.Long shopId;
+	
+	/*********************************TECNO Shop Attributes **********************************/
+	private java.lang.Long shopArea;
+	
+	private java.lang.Integer clerkTotalQty;
+	
+	private java.lang.Integer clerkBrandQty;
+	
+	private java.lang.Long relationship;
+	
+	private java.lang.Long bizCategory;
 
 	private java.lang.String brandOne;
 	
@@ -20,9 +31,7 @@ public class ShopExtension extends Model{
 	
 	private java.lang.String brandFive;
 	
-	private java.lang.Integer clerkTotalQty;
-	
-	private java.lang.Integer clerkTecnoQty;
+	private java.lang.String brandSix;
 	
 	private java.lang.Integer clerkOneQty;
 	
@@ -33,6 +42,22 @@ public class ShopExtension extends Model{
 	private java.lang.Integer clerkFourQty;
 	
 	private java.lang.Integer clerkFiveQty;
+	
+	private java.lang.Integer clerkSixQty;
+	
+	/*********************************ITEL Shop Attributes **********************************/
+	private java.lang.String supervisor ;
+	
+	private java.lang.String promoter;
+	
+	private java.lang.Long saleTotalQty;
+	
+	private java.lang.Long saleSPQty;
+	
+	private java.lang.Long saleBrandQty;
+	
+	private java.lang.Long saleBrandSPQty;
+	
 
 	public java.lang.Long getId() {
 		return id;
