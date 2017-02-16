@@ -16,7 +16,6 @@ import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.ShopDefinitionDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.transsion.store.dto.UserDto;
-import com.transsion.store.mapper.AttributeMapper;
 import com.transsion.store.mapper.MaterielMapper;
 import com.transsion.store.mapper.RegionMapper;
 import com.transsion.store.mapper.ShopBizMapper;
@@ -207,7 +206,7 @@ public class ShopManager {
 		List<Attribute> bizCategoryList = attributeService.getAttributeListByType(type,companyId);
 		sdd.setBizCategoryList(bizCategoryList);
 		
-		type = Integer.valueOf(3);
+		type = Integer.valueOf(4);
 		List<Attribute> bizTypeList = attributeService.getAttributeListByType(type,companyId);
 		sdd.setBizTypeList(bizTypeList);
 		return sdd;

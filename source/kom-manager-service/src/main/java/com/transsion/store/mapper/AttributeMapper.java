@@ -10,6 +10,6 @@ import com.transsion.store.bo.Attribute;
 import org.apache.ibatis.annotations.Param;
 
 public interface AttributeMapper extends GenericIBatisMapper<Attribute, java.lang.Long>{
-	public List<Attribute> getAttributeListByType(@QueryParam("type") Integer type);
+	public List<Attribute> getAttributeListByType(@Param("type") Integer type,@Param("companyId") Integer companyId);
 
 }
