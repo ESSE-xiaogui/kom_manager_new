@@ -261,4 +261,10 @@
 		SELECT ROLE_CODE,ROLE_NAME,IS_INACTIVE FROM T_SYSTEM_ROLE WHERE IS_INACTIVE = 1 
 		<include refid="commonCondition"/>
 	</select>
+	<select id="findRoleCode" parameterType="java.lang.Integer" resultType="String">
+		SELECT r.ROLE_CODE FROM T_SYSTEM_ROLE r
+		LEFT JOIN T_USER_ROLE ur ON ur.ROLE_ID = r.ROLE_ID
+		LEFT JOIN T_USER u ON u.ID = ur.USER_ID
+		WHERE u.ID = #{userId} AND r.IS_INACTIVE = 1
+	</select>
 </mapper>

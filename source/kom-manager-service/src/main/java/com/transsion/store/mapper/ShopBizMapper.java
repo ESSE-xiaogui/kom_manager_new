@@ -22,6 +22,7 @@ import java.util.Map;
 import javax.ws.rs.QueryParam;
 
 import com.transsion.store.bo.ShopBiz;
+import com.transsion.store.dto.ShopBizDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
@@ -29,7 +30,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface ShopBizMapper extends GenericIBatisMapper<ShopBiz, java.lang.Long> {
 
-    public List<ShopBiz> listPaginationByProperty(Pagination<ShopBiz> pagination, @Param("shopBiz")ShopBiz shopBiz, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<ShopBizDto> listPaginationByProperty(Pagination<ShopBizDto> pagination, @Param("shopBizDto")ShopBizDto shopBizDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     public ShopBiz findShopBiz(@QueryParam("saleId") Long saleId);
 
 }

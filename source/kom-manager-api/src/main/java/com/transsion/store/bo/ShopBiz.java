@@ -18,6 +18,9 @@ package com.transsion.store.bo;
 
 import com.shangkang.core.bo.Model;
 
+/**
+ * @author guihua.zhang
+ * */
 public class ShopBiz extends Model{
 
 	/**
@@ -26,191 +29,297 @@ public class ShopBiz extends Model{
 	private static final long	serialVersionUID	= 1L;
 	
 	/**
-	  *	
+	  *	门店类型编码
 	  */
-	private java.lang.Long id;
+	private Long id;
 	
 	/**
-	  *	
+	  *	事业部ID
 	  */
-	private java.lang.Long companyId;
+	private Long companyId;
 	
-	private java.lang.Integer shopType;
+	/**
+	 * 门店类型:专卖点 品牌店
+	 * */
+	private Integer shopType;
+	
+	/**
+	 * 门店面积
+	 * */
+	private String shopArea;
 
 	/**
 	  *	业务类型
 	  */
-	private java.lang.String bizName;
+	private String bizName;
 
 	/**
 	 * 品牌
 	 * */
-	private java.lang.String brandCode;
+	private String brandCode;
 	
 	/**
 	 * 类型名称(CN)
 	 * */
-	private java.lang.String chinaName;
+	private String chinaName;
 	
 	/**
 	 * 类型名称(EN)
 	 * */
-	private java.lang.String englishName;
+	private String englishName;
 	
 	/**
 	 * 是否启用 1启用 2停用
 	 * */
-	private java.lang.Integer isInactive;
+	private Integer isInactive;
 
 	/**
-	  *	
+	  *	备注
 	  */
-	private java.lang.String remark;
+	private String remark;
 
 	/**
-	  *	
+	  *	创建人
 	  */
-	private java.lang.String createBy;
+	private String createBy;
 
 	/**
-	  *	
+	  *	创建时间
 	  */
-	private java.lang.String createDate;
+	private String createDate;
 
 	/**
-	  *	
+	  *	更新人
 	  */
-	private java.lang.String updateBy;
+	private String updateBy;
 
 	/**
-	  *	
+	  *	更新时间
 	  */
-	private java.lang.String updateDate;
+	private String updateDate;
 
 	/**
-	  *	
+	  *	版本
 	  */
-	private java.lang.Integer version;
+	private Integer version;
 
-	public java.lang.Long getId() {
+	/**
+	  *	门店类型编码
+	  */
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(java.lang.Long id) {
+	/**
+	  *	门店类型编码
+	  */
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public java.lang.Long getCompanyId() {
+	/**
+	  *	事业部ID
+	  */
+	public Long getCompanyId() {
 		return companyId;
 	}
 
-	public void setCompanyId(java.lang.Long companyId) {
+	/**
+	  *	事业部ID
+	  */
+	public void setCompanyId(Long companyId) {
 		this.companyId = companyId;
 	}
 
-	public java.lang.Integer getShopType() {
+	/**
+	 * 门店类型:专卖点 品牌店
+	 * */
+	public Integer getShopType() {
 		return shopType;
 	}
 
-	public void setShopType(java.lang.Integer shopType) {
+	/**
+	 * 门店类型:专卖点 品牌店
+	 * */
+	public void setShopType(Integer shopType) {
 		this.shopType = shopType;
 	}
 
-	public java.lang.String getBizName() {
+	/**
+	 * 门店面积
+	 * */
+	public String getShopArea() {
+		return shopArea;
+	}
+
+	/**
+	 * 门店面积
+	 * */
+	public void setShopArea(String shopArea) {
+		this.shopArea = shopArea;
+	}
+
+	/**
+	  *	业务类型
+	  */
+	public String getBizName() {
 		return bizName;
 	}
 
-	public void setBizName(java.lang.String bizName) {
+	/**
+	  *	业务类型
+	  */
+	public void setBizName(String bizName) {
 		this.bizName = bizName;
 	}
 
-	public java.lang.String getBrandCode() {
+	/**
+	 * 品牌
+	 * */
+	public String getBrandCode() {
 		return brandCode;
 	}
 
-	public void setBrandCode(java.lang.String brandCode) {
+	/**
+	 * 品牌
+	 * */
+	public void setBrandCode(String brandCode) {
 		this.brandCode = brandCode;
 	}
 
-	public java.lang.String getChinaName() {
+	/**
+	 * 类型名称(CN)
+	 * */
+	public String getChinaName() {
 		return chinaName;
 	}
 
-	public void setChinaName(java.lang.String chinaName) {
+	/**
+	 * 类型名称(CN)
+	 * */
+	public void setChinaName(String chinaName) {
 		this.chinaName = chinaName;
 	}
 
-	public java.lang.String getEnglishName() {
+	/**
+	 * 类型名称(EN)
+	 * */
+	public String getEnglishName() {
 		return englishName;
 	}
 
-	public void setEnglishName(java.lang.String englishName) {
+	/**
+	 * 类型名称(EN)
+	 * */
+	public void setEnglishName(String englishName) {
 		this.englishName = englishName;
 	}
 
-	public java.lang.Integer getIsInactive() {
+	/**
+	 * 是否启用 1启用 2停用
+	 * */
+	public Integer getIsInactive() {
 		return isInactive;
 	}
 
-	public void setIsInactive(java.lang.Integer isInactive) {
+	/**
+	 * 是否启用 1启用 2停用
+	 * */
+	public void setIsInactive(Integer isInactive) {
 		this.isInactive = isInactive;
 	}
 
-	public java.lang.String getRemark() {
+	/**
+	  *	备注
+	  */
+	public String getRemark() {
 		return remark;
 	}
 
-	public void setRemark(java.lang.String remark) {
+	/**
+	  *	备注
+	  */
+	public void setRemark(String remark) {
 		this.remark = remark;
 	}
 
-	public java.lang.String getCreateBy() {
+	/**
+	  *	创建人
+	  */
+	public String getCreateBy() {
 		return createBy;
 	}
 
-	public void setCreateBy(java.lang.String createBy) {
+	/**
+	  *	创建人
+	  */
+	public void setCreateBy(String createBy) {
 		this.createBy = createBy;
 	}
 
-	public java.lang.String getCreateDate() {
+	/**
+	  *	创建时间
+	  */
+	public String getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(java.lang.String createDate) {
+	/**
+	  *	创建时间
+	  */
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 
-	public java.lang.String getUpdateBy() {
+	/**
+	  *	更新人
+	  */
+	public String getUpdateBy() {
 		return updateBy;
 	}
 
-	public void setUpdateBy(java.lang.String updateBy) {
+	/**
+	  *	更新人
+	  */
+	public void setUpdateBy(String updateBy) {
 		this.updateBy = updateBy;
 	}
 
-	public java.lang.String getUpdateDate() {
+	/**
+	  *	更新时间
+	  */
+	public String getUpdateDate() {
 		return updateDate;
 	}
 
-	public void setUpdateDate(java.lang.String updateDate) {
+	/**
+	  *	更新时间
+	  */
+	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
 
-	public java.lang.Integer getVersion() {
+	/**
+	  *	版本
+	  */
+	public Integer getVersion() {
 		return version;
 	}
 
-	public void setVersion(java.lang.Integer version) {
+	/**
+	  *	版本
+	  */
+	public void setVersion(Integer version) {
 		this.version = version;
 	}
 
 	@Override
 	public String toString() {
-		return "ShopBiz [id=" + id + ", companyId=" + companyId + ", shopType=" + shopType + ", bizName=" + bizName
-						+ ", brandCode=" + brandCode + ", chinaName=" + chinaName + ", englishName=" + englishName
-						+ ", isInactive=" + isInactive + ", remark=" + remark + ", createBy=" + createBy
-						+ ", createDate=" + createDate + ", updateBy=" + updateBy + ", updateDate=" + updateDate
-						+ ", version=" + version + "]";
+		return "ShopBiz [id=" + id + ", companyId=" + companyId + ", shopType=" + shopType + ", shopArea=" + shopArea
+						+ ", bizName=" + bizName + ", brandCode=" + brandCode + ", chinaName=" + chinaName
+						+ ", englishName=" + englishName + ", isInactive=" + isInactive + ", remark=" + remark
+						+ ", createBy=" + createBy + ", createDate=" + createDate + ", updateBy=" + updateBy
+						+ ", updateDate=" + updateDate + ", version=" + version + "]";
 	}
 
 }

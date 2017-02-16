@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.ShopBiz;
+import com.transsion.store.dto.ShopBizDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.ShopBizFacade;
 import com.shangkang.core.bo.Pagination;
@@ -59,9 +60,9 @@ public class ShopBizController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<ShopBiz> listPgShopBiz(RequestModel<ShopBiz> requestModel) throws ServiceException
+	public Pagination<ShopBizDto> listPgShopBiz(RequestModel<ShopBizDto> requestModel) throws ServiceException
 	{
-		Pagination<ShopBiz> pagination = new Pagination<ShopBiz>();
+		Pagination<ShopBizDto> pagination = new Pagination<ShopBizDto>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());
@@ -74,6 +75,8 @@ public class ShopBizController extends AbstractController{
 
 	/**
 	* 新增记录
+	* @see 门店类型新增
+	* @author guihua.zhang
 	* @return
 	* @throws ServiceException
 	*/

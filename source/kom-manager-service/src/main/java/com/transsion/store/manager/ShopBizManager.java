@@ -42,6 +42,7 @@ public class ShopBizManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		shopBiz.setCompanyId(userContext.getCompanyId());
+		shopBiz.setBrandCode(userContext.getBrandCode());
 		shopBiz.setCreateBy(userContext.getUserCode());
 		shopBiz.setCreateDate(systemDateService.getCurrentDate());
 		shopBizMapper.save(shopBiz);
@@ -65,6 +66,7 @@ public class ShopBizManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		shopBiz.setCompanyId(userContext.getCompanyId());
+		shopBiz.setBrandCode(userContext.getBrandCode());
 		shopBiz.setCreateBy(userContext.getUserCode());
 		shopBiz.setCreateDate(systemDateService.getCurrentDate());
 		shopBiz.setUpdateBy(userContext.getUserCode());
