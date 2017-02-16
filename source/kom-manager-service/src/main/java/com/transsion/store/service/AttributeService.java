@@ -19,7 +19,7 @@ public class AttributeService {
 	}
 
 	public List<Attribute> getAttributeListByType(Integer type,Integer companyId) {
-		return attributeMapper.getAttributeListByType(type);
+		return attributeMapper.getAttributeListByType(type,companyId);
 	}
 
 }

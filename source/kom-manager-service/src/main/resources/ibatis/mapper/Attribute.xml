@@ -29,7 +29,7 @@
 		<result column="REMARK" property="remark"/>
 	</resultMap>
 
-	<select id="getAttributeListByType"  parameterType="java.lang.Integer" resultMap="AttributeResultMapper">
-		SELECT ID,TYPE,SQE,NAME_EN FROM T_ATTRIBUTE WHERE TYPE = #{type} AND COMPANY_ID =1
+	<select id="getAttributeListByType"   resultMap="AttributeResultMapper">
+		SELECT ID,TYPE,SQE,NAME_EN FROM T_ATTRIBUTE WHERE TYPE = #{type} AND COMPANY_ID =#{companyId}
 	</select>
 </mapper>
