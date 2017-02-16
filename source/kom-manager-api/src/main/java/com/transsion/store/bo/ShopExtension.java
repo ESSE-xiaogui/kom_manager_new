@@ -123,13 +123,6 @@ public class ShopExtension extends Model{
 		this.clerkTotalQty = clerkTotalQty;
 	}
 
-	public java.lang.Integer getClerkTecnoQty() {
-		return clerkTecnoQty;
-	}
-
-	public void setClerkTecnoQty(java.lang.Integer clerkTecnoQty) {
-		this.clerkTecnoQty = clerkTecnoQty;
-	}
 
 	public java.lang.Integer getClerkOneQty() {
 		return clerkOneQty;
@@ -169,6 +162,102 @@ public class ShopExtension extends Model{
 
 	public void setClerkFiveQty(java.lang.Integer clerkFiveQty) {
 		this.clerkFiveQty = clerkFiveQty;
+	}
+
+	public java.lang.Long getShopArea() {
+		return shopArea;
+	}
+
+	public void setShopArea(java.lang.Long shopArea) {
+		this.shopArea = shopArea;
+	}
+
+	public java.lang.Integer getClerkBrandQty() {
+		return clerkBrandQty;
+	}
+
+	public void setClerkBrandQty(java.lang.Integer clerkBrandQty) {
+		this.clerkBrandQty = clerkBrandQty;
+	}
+
+	public java.lang.Long getRelationship() {
+		return relationship;
+	}
+
+	public void setRelationship(java.lang.Long relationship) {
+		this.relationship = relationship;
+	}
+
+	public java.lang.Long getBizCategory() {
+		return bizCategory;
+	}
+
+	public void setBizCategory(java.lang.Long bizCategory) {
+		this.bizCategory = bizCategory;
+	}
+
+	public java.lang.String getBrandSix() {
+		return brandSix;
+	}
+
+	public void setBrandSix(java.lang.String brandSix) {
+		this.brandSix = brandSix;
+	}
+
+	public java.lang.Integer getClerkSixQty() {
+		return clerkSixQty;
+	}
+
+	public void setClerkSixQty(java.lang.Integer clerkSixQty) {
+		this.clerkSixQty = clerkSixQty;
+	}
+
+	public java.lang.String getSupervisor() {
+		return supervisor;
+	}
+
+	public void setSupervisor(java.lang.String supervisor) {
+		this.supervisor = supervisor;
+	}
+
+	public java.lang.String getPromoter() {
+		return promoter;
+	}
+
+	public void setPromoter(java.lang.String promoter) {
+		this.promoter = promoter;
+	}
+
+	public java.lang.Long getSaleTotalQty() {
+		return saleTotalQty;
+	}
+
+	public void setSaleTotalQty(java.lang.Long saleTotalQty) {
+		this.saleTotalQty = saleTotalQty;
+	}
+
+	public java.lang.Long getSaleSPQty() {
+		return saleSPQty;
+	}
+
+	public void setSaleSPQty(java.lang.Long saleSPQty) {
+		this.saleSPQty = saleSPQty;
+	}
+
+	public java.lang.Long getSaleBrandQty() {
+		return saleBrandQty;
+	}
+
+	public void setSaleBrandQty(java.lang.Long saleBrandQty) {
+		this.saleBrandQty = saleBrandQty;
+	}
+
+	public java.lang.Long getSaleBrandSPQty() {
+		return saleBrandSPQty;
+	}
+
+	public void setSaleBrandSPQty(java.lang.Long saleBrandSPQty) {
+		this.saleBrandSPQty = saleBrandSPQty;
 	}
 	
 	
