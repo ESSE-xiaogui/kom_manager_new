@@ -855,4 +855,8 @@
 		GROUP BY p.ID,p.SHOP_NAME,	c.REGION_NAME,cc.WERKS
 		ORDER BY p.SHOP_NAME	
 	</select>
+	
+	<select id="queryShopByShopId" parameterType="java.lang.Integer" resultMap="ShopResultMapper">
+		SELECT * FROM T_SHOP WHERE SHOP_ID = #{userId}
+	</select>
 </mapper>

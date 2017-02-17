@@ -152,4 +152,8 @@ public class ShopMaterielService {
 	public void saveShopMateriel(List<ShopMateriel> shopMateriel) throws ServiceException {
 		shopMaterielMapper.saveShopMateriel(shopMateriel);
 	}
+	
+	 public List<ShopMateriel> queryShopMaterielListByShopId(Integer shopId) throws ServiceException {
+		return shopMaterielMapper.queryShopMaterielListByShopId(shopId);
+	 }
 }

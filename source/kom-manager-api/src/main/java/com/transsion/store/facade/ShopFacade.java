@@ -18,13 +18,12 @@ package com.transsion.store.facade;
 
 import java.util.List;
 
+import com.shangkang.core.bo.Pagination;
+import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Shop;
 import com.transsion.store.dto.ShopDefinitionDto;
 import com.transsion.store.dto.ShopDetailDto;
-import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.ShopUserDto;
-import com.shangkang.core.bo.Pagination;
-import com.shangkang.core.exception.ServiceException;
 
 public interface ShopFacade {
 
@@ -142,4 +141,9 @@ public interface ShopFacade {
 	 */
 	public ShopDefinitionDto queryShopDefitionDto(String token) throws ServiceException;
 	
+	
+	/*
+	 * app update shop api 
+	 */
+	public void updateShop(String token, ShopDetailDto shopDetailDto) throws ServiceException;
 }
