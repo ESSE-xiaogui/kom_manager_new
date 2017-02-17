@@ -2,10 +2,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.codec.response.StandardResult;
 import com.rest.service.controller.AbstractController;
-import net.mikesu.fastdfs.FastdfsClient;
-import net.mikesu.fastdfs.FastdfsClientFactory;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
+import com.transsion.store.support.FastdfsClientSingleton;
 import org.apache.commons.io.IOUtils;
 import org.apache.james.mime4j.field.FieldName;
 import org.apache.james.mime4j.message.BodyPart;
@@ -24,8 +21,6 @@ import java.util.Map;
 @Controller
 @Path("/fastdfs")
 public class UploadController extends AbstractController{
-	private static FastdfsClient fastdfsClient = FastdfsClientFactory.getFastdfsClient();
-    private static final String configFile = "FastdfsClient.properties";
 	private static final String SERVER_UPLOAD_LOCATION_FOLDER = "tmp";
 
     @POST
@@ -73,8 +68,9 @@ public class UploadController extends AbstractController{
 
                 files.setFileId(fileId);
                 files.setName(fileName);
+                files.setFileSuffix(fileName.substring(fileName.lastIndexOf(".")));
                 files.setSize(tmp.length());
-                files.setUrl(PropertiesConfigurationHelper.getInstance().getDownloadServer() + fileId);
+                files.setUrl(FastdfsClientSingleton.getSingleton().getDownloadServer() + fileId);
                 files.setThumbnailUrl(files.getUrl());
                 files.setFileIdEncode(encode.encode(fileId.getBytes()));
 
@@ -129,7 +125,7 @@ public class UploadController extends AbstractController{
 
 	private static String uploadFile(InputStream uploadedInputStream, File uploadFile) throws Exception {
 		saveFile(uploadedInputStream, uploadFile);
-		String fileId = fastdfsClient.upload(uploadFile);
+		String fileId = FastdfsClientSingleton.getSingleton().getFastdfsClient().upload(uploadFile);
 		return fileId;
 	}
 
@@ -152,6 +148,7 @@ public class UploadController extends AbstractController{
         private String fileId;
         private String url;
         private String name;
+        private String fileSuffix;
         private String thumbnailUrl;
         private long size;
         private String fileIdEncode;
@@ -188,6 +185,14 @@ public class UploadController extends AbstractController{
             this.name = name;
         }
 
+        public String getFileSuffix() {
+            return fileSuffix;
+        }
+
+        public void setFileSuffix(String fileSuffix) {
+            this.fileSuffix = fileSuffix;
+        }
+
         public String getThumbnailUrl() {
             return thumbnailUrl;
         }
@@ -205,31 +210,6 @@ public class UploadController extends AbstractController{
         }
     }
 	
-    private final static class PropertiesConfigurationHelper {
-        private String downloadServer;
-
-        private static PropertiesConfigurationHelper getInstance(){
-            return new PropertiesConfigurationHelper();
-        }
-        private PropertiesConfigurationHelper(){
-            try {
-                PropertiesConfiguration config = new PropertiesConfiguration(configFile);
-
-                this.downloadServer = config.getString("download_server");
-            } catch (ConfigurationException e) {
-                e.printStackTrace();
-            }
-        }
-
-        public String getDownloadServer() {
-            return downloadServer;
-        }
-
-        public void setDownloadServer(String downloadServer) {
-            this.downloadServer = downloadServer;
-        }
-    }
-
     class BigFileOutputStream implements javax.ws.rs.core.StreamingOutput {
         private InputStream inputStream;
         public BigFileOutputStream(){}
