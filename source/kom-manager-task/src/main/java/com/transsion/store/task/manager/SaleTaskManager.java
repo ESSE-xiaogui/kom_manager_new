@@ -259,7 +259,7 @@ public class SaleTaskManager {
 								&& !UtilHelper.isEmpty(endTime) && UtilHelper.isEmpty(isInactive)){
 				currency.setCompanyId(1L);
 				currency.setFindex(1);
-				currency.setCountry(country);
+				currency.setRegionId(country);
 				currency.setWerks(werks);
 				currency.setCurrencyName(currencyName);
 				currency.setExchangerate(exchangerate);

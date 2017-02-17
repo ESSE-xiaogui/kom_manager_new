@@ -22,7 +22,7 @@
 	<resultMap id="CurrencyResultMapper" type="Currency">
 		<result column="ID" property="id"/>
 		<result column="COMPANY_ID" property="companyId"/>
-		<result column="REGION_ID" property="country"/>
+		<result column="REGION_ID" property="regionId"/>
 		<result column="FINDEX" property="findex"/>
 		<result column="WERKS" property="werks"/>
 		<result column="CURRENCY_NAME" property="currencyName"/>
@@ -39,7 +39,7 @@
 	</resultMap>
 	<resultMap id="CurrencyDtoResultMapper" type="CurrencyDto">
 		<result column="ID" property="id"/>
-		<result column="COUNTRY" property="country"/>
+		<result column="REGION_ID" property="regionId"/>
 		<result column="COUNTRY_NAME" property="countryName"/>
 		<result column="WERKS" property="werks"/>
 		<result column="CURRENCY_NAME" property="currencyName"/>
@@ -75,8 +75,8 @@
 
 	<sql id="commonColumnsNotPK">
 		 COMPANY_ID
-		 , REGION_ID
 		, FINDEX
+		, REGION_ID
 		, WERKS
 		, CURRENCY_NAME
 		, EXCHANGERATE
@@ -117,8 +117,8 @@
 		<if test="companyId!= null and companyId!= ''"> 
 			AND COMPANY_ID=#{companyId}
 		</if>
-		<if test="country!= null and country!= ''"> 
-			AND REGION_ID=#{country}
+		<if test="regionId!= null and regionId!= ''"> 
+			AND REGION_ID=#{regionId}
 		</if>
 		<if test="findex!= null and findex!= ''"> 
 			AND FINDEX=#{findex}
@@ -165,8 +165,8 @@
 			<if test="currencyDto.id!= null and currencyDto.id!= ''">
 				AND c.ID=#{currencyDto.id}
 			</if>
-			<if test="currencyDto.country!= null and currencyDto.country!= ''">
-				AND r.ID=#{currencyDto.country}
+			<if test="currencyDto.regionId!= null and currencyDto.regionId!= ''">
+				AND r.ID=#{currencyDto.regionId}
 			</if>
 			<if test="currencyDto.countryName!= null and currencyDto.countryName!= ''">
 				AND r.REGION_NAME=#{currencyDto.countryName}
@@ -184,10 +184,16 @@
 				AND c.EXCHANGERATE2=#{currencyDto.exchangerate2}
 			</if>
 			<if test="currencyDto.beginTime!= null and currencyDto.beginTime!= ''">
-				AND c.BEGINDATE=str_to_date(#{currencyDto.beginTime},'%Y-%m-%d %H:%i:%s')
+				AND c.BEGINDATE &gt;=str_to_date(#{currencyDto.beginTime},'%Y-%m-%d %H:%i:%s')
 			</if>
 			<if test="currencyDto.endTime!= null and currencyDto.endTime!= ''">
-				AND c.ENDDATE=str_to_date(#{currencyDto.endTime},'%Y-%m-%d %H:%i:%s')
+				AND c.BEGINDATE &lt;=str_to_date(#{currencyDto.endTime},'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="currencyDto.expiryDate!= null and currencyDto.expiryDate!= ''">
+				AND c.ENDDATE &gt;=str_to_date(#{currencyDto.expiryDate},'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="currencyDto.expiryEndDate!= null and currencyDto.expiryEndDate!= ''">
+				AND c.ENDDATE &lt;=str_to_date(#{currencyDto.expiryEndDate},'%Y-%m-%d %H:%i:%s')
 			</if>
 			<if test="currencyDto.isInactive!= null and currencyDto.isInactive!= ''">
 				AND c.IS_INACTIVE=#{currencyDto.isInactive}
@@ -219,7 +225,7 @@
 			<when test="key == 'id'">
 				c.ID ${value}
 			</when>
-			<when test="key == 'country'">
+			<when test="key == 'regionId'">
 				r.ID ${value}
 			</when>
 			<when test="key == 'countryName'">
@@ -267,7 +273,7 @@
 			) VALUES ( 
 			 #{companyId}
 			 ,#{findex}
-			, #{country}
+			, #{regionId}
 			, #{werks}
 			, #{currencyName}
 			, #{exchangerate}
@@ -286,7 +292,7 @@
 		<![CDATA[ UPDATE T_CURRENCY SET 
 			 ID=#{id} 
 			, COMPANY_ID=#{companyId} 
-			, REGION_ID=#{country} 
+			, REGION_ID=#{regionId} 
 			, FINDEX=#{findex} 
 			, WERKS=#{werks} 
 			, CURRENCY_NAME=#{currencyName} 
@@ -308,7 +314,7 @@
 	BEGINDATE=str_to_date(#{beginTime},'%Y-%m-%d %H:%i:%s'),
 	ENDDATE=str_to_date(#{endTime},'%Y-%m-%d %H:%i:%s')
 	WHERE 1=1 AND
-	REGION_ID=#{country} AND BEGINDATE=str_to_date(#{beginTime},'%Y-%m-%d')
+	REGION_ID=#{regionId} AND BEGINDATE=str_to_date(#{beginTime},'%Y-%m-%d')
 	</update>
 	<delete id="deleteByPK" parameterType="java.lang.Long">
 		<![CDATA[ DELETE FROM T_CURRENCY WHERE ID = #{id}  ]]>
@@ -341,7 +347,7 @@
 		<include refid="commonCondition"/>
 	</select>
 	<select id="listPaginationByProperty" parameterType="CurrencyDto" resultMap="CurrencyDtoResultMapper">
-		SELECT c.ID,r.ID AS COUNTRY,r.REGION_NAME AS COUNTRY_NAME,c.WERKS,c.CURRENCY_NAME,c.EXCHANGERATE,c.EXCHANGERATE2,
+		SELECT c.ID,r.ID AS REGION_ID,r.REGION_NAME AS COUNTRY_NAME,c.WERKS,c.CURRENCY_NAME,c.EXCHANGERATE,c.EXCHANGERATE2,
 		c.BEGINDATE,c.ENDDATE,c.IS_INACTIVE,c.CREATED_BY,c.CREATED_TIME,c.UPDATED_BY,c.UPDATED_TIME FROM T_CURRENCY c
 		LEFT JOIN T_REGION r ON r.ID = c.REGION_ID
 		WHERE 1=1 

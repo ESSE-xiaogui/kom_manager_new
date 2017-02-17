@@ -37,7 +37,7 @@ public class Currency extends Model{
 	  */
 	private Long companyId;
 	
-	private Long country;
+	private Long regionId;
 
 
 	/**
@@ -121,12 +121,12 @@ public class Currency extends Model{
 		this.companyId = companyId;
 	}
 
-	public Long getCountry() {
-		return country;
+	public Long getRegionId() {
+		return regionId;
 	}
 
-	public void setCountry(Long country) {
-		this.country = country;
+	public void setRegionId(Long regionId) {
+		this.regionId = regionId;
 	}
 
 	public Integer getFindex() {
@@ -235,12 +235,14 @@ public class Currency extends Model{
 
 	@Override
 	public String toString() {
-		return "Currency [id=" + id + ", companyId=" + companyId + ", country=" + country + ", findex=" + findex
+		return "Currency [id=" + id + ", companyId=" + companyId + ", regionId=" + regionId + ", findex=" + findex
 						+ ", werks=" + werks + ", currencyName=" + currencyName + ", exchangerate=" + exchangerate
 						+ ", exchangerate2=" + exchangerate2 + ", beginTime=" + beginTime + ", endTime=" + endTime
 						+ ", isInactive=" + isInactive + ", createdBy=" + createdBy + ", createdTime=" + createdTime
 						+ ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime + ", version=" + version + "]";
 	}
+
+
 
 	
 }

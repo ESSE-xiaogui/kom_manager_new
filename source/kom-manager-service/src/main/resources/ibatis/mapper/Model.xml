@@ -46,7 +46,8 @@
 		<result column="MODEL_NAME" property="modelName"/>
 		<result column="COMPANY_ID" property="companyId"/>
 		<result column="SALE_TIME" property="saleTime"/>
-		<result column="P_PRICE_SCALE" property="priceScale"/>
+		<result column="PRICE_SCALE_CN" property="nameCN"/>
+		<result column="PRICE_SCALE_EN" property="nameEN"/>
 		<result column="ELEMENT_TYPE" property="elementType"/>
 		<result column="ELEMENT_CODE" property="elementCode"/>
 		<result column="IS_INACTIVE" property="isInactive"/>
@@ -381,11 +382,11 @@
 	<select id="listPaginationByProperty" parameterType="ModelListDto"
 		resultMap="ModelListDtoResultMapper">
 		SELECT m.ID, m.BRAND_CODE, m.SERIES_CODE, m.MODEL_CODE, m.MODEL_NAME,
-		m.COMPANY_ID, m.SALE_TIME, p.PRICE_SCALE AS P_PRICE_SCALE,
+		m.COMPANY_ID, m.SALE_TIME, p.NAME_CN AS PRICE_SCALE_CN,p.NAME_EN AS PRICE_SCALE_EN,
 		m.ELEMENT_TYPE, m.ELEMENT_CODE, m.IS_INACTIVE,
 		m.REMARK, m.CREATED_BY,m.CREATED_TIME, m.UPDATED_BY , m.UPDATED_TIME, m.VERSION
 		FROM T_MODEL m
-		LEFT JOIN T_MODEL_PRICE p ON p.ID = m.PRICE_SCALE WHERE 1=1
+		LEFT JOIN T_ATTRIBUTE p ON p.ID = m.PRICE_SCALE WHERE 1=1
 		<include refid="commonConditionByPrefix" />
 		<include refid="orderByClause" />
 	</select>

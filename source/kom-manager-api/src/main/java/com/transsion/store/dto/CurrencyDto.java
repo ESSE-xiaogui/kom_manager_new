@@ -15,7 +15,7 @@ public class CurrencyDto implements Serializable{
 	/**
 	 * 国家ID
 	 * */
-	private Long country;
+	private Long regionId;
 	
 	/**
 	 * 国家名称
@@ -47,10 +47,14 @@ public class CurrencyDto implements Serializable{
 	 * */
 	private String beginTime;
 	
+	private String expiryDate;
+	
 	/**
 	 * 失效日期
 	 * */
 	private String endTime;
+	
+	private String expiryEndDate;
 	
 	/**
 	 * 是否停用 1启用 2停用
@@ -85,12 +89,12 @@ public class CurrencyDto implements Serializable{
 		this.id = id;
 	}
 
-	public Long getCountry() {
-		return country;
+	public Long getRegionId() {
+		return regionId;
 	}
 
-	public void setCountry(Long country) {
-		this.country = country;
+	public void setRegionId(Long regionId) {
+		this.regionId = regionId;
 	}
 
 	public String getCountryName() {
@@ -188,14 +192,33 @@ public class CurrencyDto implements Serializable{
 	public void setUpdatedTime(String updatedTime) {
 		this.updatedTime = updatedTime;
 	}
+	
+
+	public String getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(String expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
+	public String getExpiryEndDate() {
+		return expiryEndDate;
+	}
+
+	public void setExpiryEndDate(String expiryEndDate) {
+		this.expiryEndDate = expiryEndDate;
+	}
 
 	@Override
 	public String toString() {
-		return "CurrencyDto [id=" + id + ", country=" + country + ", countryName=" + countryName + ", werks=" + werks
+		return "CurrencyDto [id=" + id + ", regionId=" + regionId + ", countryName=" + countryName + ", werks=" + werks
 						+ ", currencyName=" + currencyName + ", exchangerate=" + exchangerate + ", exchangerate2="
-						+ exchangerate2 + ", beginTime=" + beginTime + ", endTime=" + endTime + ", isInactive="
-						+ isInactive + ", createdBy=" + createdBy + ", createdTime=" + createdTime + ", updatedBy="
-						+ updatedBy + ", updatedTime=" + updatedTime + "]";
+						+ exchangerate2 + ", beginTime=" + beginTime + ", expiryDate=" + expiryDate + ", endTime="
+						+ endTime + ", expiryEndDate=" + expiryEndDate + ", isInactive=" + isInactive + ", createdBy="
+						+ createdBy + ", createdTime=" + createdTime + ", updatedBy=" + updatedBy + ", updatedTime="
+						+ updatedTime + "]";
 	}
+
 
 }
