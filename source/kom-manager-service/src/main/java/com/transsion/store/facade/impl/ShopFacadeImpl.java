@@ -181,8 +181,7 @@ public class ShopFacadeImpl implements ShopFacade {
 
 	@Override
 	public void createShop(String token, ShopDetailDto shopDetailDto) throws ServiceException {
-		// TODO Auto-generated method stub
-		
+		shopManager.createShop(token, shopDetailDto);
 	}
 
 	@Override

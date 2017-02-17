@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2017-2-17 11:25:38
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.ShopExtensionMapper">
+	<resultMap id="ShopExtensionResultMapper" type="ShopExtension">
+		<result column="ID" property="id"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="SHOP_AREA" property="shopArea"/>
+		<result column="CLERK_TOTAL_QTY" property="clerkTotalQty"/>
+		<result column="CLERK_BRAND_QTY" property="clerkBrandQty"/>
+		<result column="RELATIONSHIP" property="relationship"/>
+		<result column="BIZ_CATEGORY" property="bizCategory"/>
+		<result column="BRAND_ONE" property="brandOne"/>
+		<result column="BRAND_TWO" property="brandTwo"/>
+		<result column="BRAND_THREE" property="brandThree"/>
+		<result column="BRAND_FOUR" property="brandFour"/>
+		<result column="BRAND_FIVE" property="brandFive"/>
+		<result column="BRAND_SIX" property="brandSix"/>
+		<result column="CLERK_ONE_QTY" property="clerkOneQty"/>
+		<result column="CLERK_TWO_QTY" property="clerkTwoQty"/>
+		<result column="CLERK_THREE_QTY" property="clerkThreeQty"/>
+		<result column="CLERK_FOUR_QTY" property="clerkFourQty"/>
+		<result column="CLERK_FIVE_QTY" property="clerkFiveQty"/>
+		<result column="CLERK_SIX_QTY" property="clerkSixQty"/>
+		<result column="SUPERVISOR" property="supervisor"/>
+		<result column="PROMOTER" property="promoter"/>
+		<result column="SALE_TOTAL_QTY" property="saleTotalQty"/>
+		<result column="SALE_SP_QTY" property="saleSpQty"/>
+		<result column="SALE_BRAND_QTY" property="saleBrandQty"/>
+		<result column="SALE_BRANDSP_QTY" property="saleBrandspQty"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, SHOP_ID
+		, SHOP_AREA
+		, CLERK_TOTAL_QTY
+		, CLERK_BRAND_QTY
+		, RELATIONSHIP
+		, BIZ_CATEGORY
+		, BRAND_ONE
+		, BRAND_TWO
+		, BRAND_THREE
+		, BRAND_FOUR
+		, BRAND_FIVE
+		, BRAND_SIX
+		, CLERK_ONE_QTY
+		, CLERK_TWO_QTY
+		, CLERK_THREE_QTY
+		, CLERK_FOUR_QTY
+		, CLERK_FIVE_QTY
+		, CLERK_SIX_QTY
+		, SUPERVISOR
+		, PROMOTER
+		, SALE_TOTAL_QTY
+		, SALE_SP_QTY
+		, SALE_BRAND_QTY
+		, SALE_BRANDSP_QTY
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 SHOP_ID
+		, SHOP_AREA
+		, CLERK_TOTAL_QTY
+		, CLERK_BRAND_QTY
+		, RELATIONSHIP
+		, BIZ_CATEGORY
+		, BRAND_ONE
+		, BRAND_TWO
+		, BRAND_THREE
+		, BRAND_FOUR
+		, BRAND_FIVE
+		, BRAND_SIX
+		, CLERK_ONE_QTY
+		, CLERK_TWO_QTY
+		, CLERK_THREE_QTY
+		, CLERK_FOUR_QTY
+		, CLERK_FIVE_QTY
+		, CLERK_SIX_QTY
+		, SUPERVISOR
+		, PROMOTER
+		, SALE_TOTAL_QTY
+		, SALE_SP_QTY
+		, SALE_BRAND_QTY
+		, SALE_BRANDSP_QTY
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, SHOP_ID
+		, SHOP_AREA
+		, CLERK_TOTAL_QTY
+		, CLERK_BRAND_QTY
+		, RELATIONSHIP
+		, BIZ_CATEGORY
+		, BRAND_ONE
+		, BRAND_TWO
+		, BRAND_THREE
+		, BRAND_FOUR
+		, BRAND_FIVE
+		, BRAND_SIX
+		, CLERK_ONE_QTY
+		, CLERK_TWO_QTY
+		, CLERK_THREE_QTY
+		, CLERK_FOUR_QTY
+		, CLERK_FIVE_QTY
+		, CLERK_SIX_QTY
+		, SUPERVISOR
+		, PROMOTER
+		, SALE_TOTAL_QTY
+		, SALE_SP_QTY
+		, SALE_BRAND_QTY
+		, SALE_BRANDSP_QTY
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="shopId!= null and shopId!= ''"> 
+			AND SHOP_ID=#{shopId}
+		</if>
+		<if test="shopArea!= null and shopArea!= ''"> 
+			AND SHOP_AREA=#{shopArea}
+		</if>
+		<if test="clerkTotalQty!= null and clerkTotalQty!= ''"> 
+			AND CLERK_TOTAL_QTY=#{clerkTotalQty}
+		</if>
+		<if test="clerkBrandQty!= null and clerkBrandQty!= ''"> 
+			AND CLERK_BRAND_QTY=#{clerkBrandQty}
+		</if>
+		<if test="relationship!= null and relationship!= ''"> 
+			AND RELATIONSHIP=#{relationship}
+		</if>
+		<if test="bizCategory!= null and bizCategory!= ''"> 
+			AND BIZ_CATEGORY=#{bizCategory}
+		</if>
+		<if test="brandOne!= null and brandOne!= ''"> 
+			AND BRAND_ONE=#{brandOne}
+		</if>
+		<if test="brandTwo!= null and brandTwo!= ''"> 
+			AND BRAND_TWO=#{brandTwo}
+		</if>
+		<if test="brandThree!= null and brandThree!= ''"> 
+			AND BRAND_THREE=#{brandThree}
+		</if>
+		<if test="brandFour!= null and brandFour!= ''"> 
+			AND BRAND_FOUR=#{brandFour}
+		</if>
+		<if test="brandFive!= null and brandFive!= ''"> 
+			AND BRAND_FIVE=#{brandFive}
+		</if>
+		<if test="brandSix!= null and brandSix!= ''"> 
+			AND BRAND_SIX=#{brandSix}
+		</if>
+		<if test="clerkOneQty!= null and clerkOneQty!= ''"> 
+			AND CLERK_ONE_QTY=#{clerkOneQty}
+		</if>
+		<if test="clerkTwoQty!= null and clerkTwoQty!= ''"> 
+			AND CLERK_TWO_QTY=#{clerkTwoQty}
+		</if>
+		<if test="clerkThreeQty!= null and clerkThreeQty!= ''"> 
+			AND CLERK_THREE_QTY=#{clerkThreeQty}
+		</if>
+		<if test="clerkFourQty!= null and clerkFourQty!= ''"> 
+			AND CLERK_FOUR_QTY=#{clerkFourQty}
+		</if>
+		<if test="clerkFiveQty!= null and clerkFiveQty!= ''"> 
+			AND CLERK_FIVE_QTY=#{clerkFiveQty}
+		</if>
+		<if test="clerkSixQty!= null and clerkSixQty!= ''"> 
+			AND CLERK_SIX_QTY=#{clerkSixQty}
+		</if>
+		<if test="supervisor!= null and supervisor!= ''"> 
+			AND SUPERVISOR=#{supervisor}
+		</if>
+		<if test="promoter!= null and promoter!= ''"> 
+			AND PROMOTER=#{promoter}
+		</if>
+		<if test="saleTotalQty!= null and saleTotalQty!= ''"> 
+			AND SALE_TOTAL_QTY=#{saleTotalQty}
+		</if>
+		<if test="saleSpQty!= null and saleSpQty!= ''"> 
+			AND SALE_SP_QTY=#{saleSpQty}
+		</if>
+		<if test="saleBrandQty!= null and saleBrandQty!= ''"> 
+			AND SALE_BRAND_QTY=#{saleBrandQty}
+		</if>
+		<if test="saleBrandspQty!= null and saleBrandspQty!= ''"> 
+			AND SALE_BRANDSP_QTY=#{saleBrandspQty}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="shopExtension != null">
+            <if test="shopExtension.id!= null and shopExtension.id!= ''">
+				AND ID=#{shopExtension.id}
+            </if>
+            <if test="shopExtension.shopId!= null and shopExtension.shopId!= ''">
+				AND SHOP_ID=#{shopExtension.shopId}
+            </if>
+            <if test="shopExtension.shopArea!= null and shopExtension.shopArea!= ''">
+				AND SHOP_AREA=#{shopExtension.shopArea}
+            </if>
+            <if test="shopExtension.clerkTotalQty!= null and shopExtension.clerkTotalQty!= ''">
+				AND CLERK_TOTAL_QTY=#{shopExtension.clerkTotalQty}
+            </if>
+            <if test="shopExtension.clerkBrandQty!= null and shopExtension.clerkBrandQty!= ''">
+				AND CLERK_BRAND_QTY=#{shopExtension.clerkBrandQty}
+            </if>
+            <if test="shopExtension.relationship!= null and shopExtension.relationship!= ''">
+				AND RELATIONSHIP=#{shopExtension.relationship}
+            </if>
+            <if test="shopExtension.bizCategory!= null and shopExtension.bizCategory!= ''">
+				AND BIZ_CATEGORY=#{shopExtension.bizCategory}
+            </if>
+            <if test="shopExtension.brandOne!= null and shopExtension.brandOne!= ''">
+				AND BRAND_ONE=#{shopExtension.brandOne}
+            </if>
+            <if test="shopExtension.brandTwo!= null and shopExtension.brandTwo!= ''">
+				AND BRAND_TWO=#{shopExtension.brandTwo}
+            </if>
+            <if test="shopExtension.brandThree!= null and shopExtension.brandThree!= ''">
+				AND BRAND_THREE=#{shopExtension.brandThree}
+            </if>
+            <if test="shopExtension.brandFour!= null and shopExtension.brandFour!= ''">
+				AND BRAND_FOUR=#{shopExtension.brandFour}
+            </if>
+            <if test="shopExtension.brandFive!= null and shopExtension.brandFive!= ''">
+				AND BRAND_FIVE=#{shopExtension.brandFive}
+            </if>
+            <if test="shopExtension.brandSix!= null and shopExtension.brandSix!= ''">
+				AND BRAND_SIX=#{shopExtension.brandSix}
+            </if>
+            <if test="shopExtension.clerkOneQty!= null and shopExtension.clerkOneQty!= ''">
+				AND CLERK_ONE_QTY=#{shopExtension.clerkOneQty}
+            </if>
+            <if test="shopExtension.clerkTwoQty!= null and shopExtension.clerkTwoQty!= ''">
+				AND CLERK_TWO_QTY=#{shopExtension.clerkTwoQty}
+            </if>
+            <if test="shopExtension.clerkThreeQty!= null and shopExtension.clerkThreeQty!= ''">
+				AND CLERK_THREE_QTY=#{shopExtension.clerkThreeQty}
+            </if>
+            <if test="shopExtension.clerkFourQty!= null and shopExtension.clerkFourQty!= ''">
+				AND CLERK_FOUR_QTY=#{shopExtension.clerkFourQty}
+            </if>
+            <if test="shopExtension.clerkFiveQty!= null and shopExtension.clerkFiveQty!= ''">
+				AND CLERK_FIVE_QTY=#{shopExtension.clerkFiveQty}
+            </if>
+            <if test="shopExtension.clerkSixQty!= null and shopExtension.clerkSixQty!= ''">
+				AND CLERK_SIX_QTY=#{shopExtension.clerkSixQty}
+            </if>
+            <if test="shopExtension.supervisor!= null and shopExtension.supervisor!= ''">
+				AND SUPERVISOR=#{shopExtension.supervisor}
+            </if>
+            <if test="shopExtension.promoter!= null and shopExtension.promoter!= ''">
+				AND PROMOTER=#{shopExtension.promoter}
+            </if>
+            <if test="shopExtension.saleTotalQty!= null and shopExtension.saleTotalQty!= ''">
+				AND SALE_TOTAL_QTY=#{shopExtension.saleTotalQty}
+            </if>
+            <if test="shopExtension.saleSpQty!= null and shopExtension.saleSpQty!= ''">
+				AND SALE_SP_QTY=#{shopExtension.saleSpQty}
+            </if>
+            <if test="shopExtension.saleBrandQty!= null and shopExtension.saleBrandQty!= ''">
+				AND SALE_BRAND_QTY=#{shopExtension.saleBrandQty}
+            </if>
+            <if test="shopExtension.saleBrandspQty!= null and shopExtension.saleBrandspQty!= ''">
+				AND SALE_BRANDSP_QTY=#{shopExtension.saleBrandspQty}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'shopId'">
+				SHOP_ID ${value}
+            </when>
+        	<when test="key == 'shopArea'">
+				SHOP_AREA ${value}
+            </when>
+        	<when test="key == 'clerkTotalQty'">
+				CLERK_TOTAL_QTY ${value}
+            </when>
+        	<when test="key == 'clerkBrandQty'">
+				CLERK_BRAND_QTY ${value}
+            </when>
+        	<when test="key == 'relationship'">
+				RELATIONSHIP ${value}
+            </when>
+        	<when test="key == 'bizCategory'">
+				BIZ_CATEGORY ${value}
+            </when>
+        	<when test="key == 'brandOne'">
+				BRAND_ONE ${value}
+            </when>
+        	<when test="key == 'brandTwo'">
+				BRAND_TWO ${value}
+            </when>
+        	<when test="key == 'brandThree'">
+				BRAND_THREE ${value}
+            </when>
+        	<when test="key == 'brandFour'">
+				BRAND_FOUR ${value}
+            </when>
+        	<when test="key == 'brandFive'">
+				BRAND_FIVE ${value}
+            </when>
+        	<when test="key == 'brandSix'">
+				BRAND_SIX ${value}
+            </when>
+        	<when test="key == 'clerkOneQty'">
+				CLERK_ONE_QTY ${value}
+            </when>
+        	<when test="key == 'clerkTwoQty'">
+				CLERK_TWO_QTY ${value}
+            </when>
+        	<when test="key == 'clerkThreeQty'">
+				CLERK_THREE_QTY ${value}
+            </when>
+        	<when test="key == 'clerkFourQty'">
+				CLERK_FOUR_QTY ${value}
+            </when>
+        	<when test="key == 'clerkFiveQty'">
+				CLERK_FIVE_QTY ${value}
+            </when>
+        	<when test="key == 'clerkSixQty'">
+				CLERK_SIX_QTY ${value}
+            </when>
+        	<when test="key == 'supervisor'">
+				SUPERVISOR ${value}
+            </when>
+        	<when test="key == 'promoter'">
+				PROMOTER ${value}
+            </when>
+        	<when test="key == 'saleTotalQty'">
+				SALE_TOTAL_QTY ${value}
+            </when>
+        	<when test="key == 'saleSpQty'">
+				SALE_SP_QTY ${value}
+            </when>
+        	<when test="key == 'saleBrandQty'">
+				SALE_BRAND_QTY ${value}
+            </when>
+        	<when test="key == 'saleBrandspQty'">
+				SALE_BRANDSP_QTY ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="ShopExtension">
+		<![CDATA[ INSERT INTO T_SHOP_EXTENSION ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{shopId}
+			, #{shopArea}
+			, #{clerkTotalQty}
+			, #{clerkBrandQty}
+			, #{relationship}
+			, #{bizCategory}
+			, #{brandOne}
+			, #{brandTwo}
+			, #{brandThree}
+			, #{brandFour}
+			, #{brandFive}
+			, #{brandSix}
+			, #{clerkOneQty}
+			, #{clerkTwoQty}
+			, #{clerkThreeQty}
+			, #{clerkFourQty}
+			, #{clerkFiveQty}
+			, #{clerkSixQty}
+			, #{supervisor}
+			, #{promoter}
+			, #{saleTotalQty}
+			, #{saleSpQty}
+			, #{saleBrandQty}
+			, #{saleBrandspQty}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="ShopExtension">
+		<![CDATA[ UPDATE T_SHOP_EXTENSION SET 
+			 ID=#{id} 
+			, SHOP_ID=#{shopId} 
+			, SHOP_AREA=#{shopArea} 
+			, CLERK_TOTAL_QTY=#{clerkTotalQty} 
+			, CLERK_BRAND_QTY=#{clerkBrandQty} 
+			, RELATIONSHIP=#{relationship} 
+			, BIZ_CATEGORY=#{bizCategory} 
+			, BRAND_ONE=#{brandOne} 
+			, BRAND_TWO=#{brandTwo} 
+			, BRAND_THREE=#{brandThree} 
+			, BRAND_FOUR=#{brandFour} 
+			, BRAND_FIVE=#{brandFive} 
+			, BRAND_SIX=#{brandSix} 
+			, CLERK_ONE_QTY=#{clerkOneQty} 
+			, CLERK_TWO_QTY=#{clerkTwoQty} 
+			, CLERK_THREE_QTY=#{clerkThreeQty} 
+			, CLERK_FOUR_QTY=#{clerkFourQty} 
+			, CLERK_FIVE_QTY=#{clerkFiveQty} 
+			, CLERK_SIX_QTY=#{clerkSixQty} 
+			, SUPERVISOR=#{supervisor} 
+			, PROMOTER=#{promoter} 
+			, SALE_TOTAL_QTY=#{saleTotalQty} 
+			, SALE_SP_QTY=#{saleSpQty} 
+			, SALE_BRAND_QTY=#{saleBrandQty} 
+			, SALE_BRANDSP_QTY=#{saleBrandspQty} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_SHOP_EXTENSION WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_SHOP_EXTENSION WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			#{id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="ShopExtension">
+		DELETE FROM T_SHOP_EXTENSION WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="ShopExtensionResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_SHOP_EXTENSION WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="ShopExtensionResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_SHOP_EXTENSION
+	</select>
+	<select id="listByProperty" parameterType="ShopExtension" resultMap="ShopExtensionResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_SHOP_EXTENSION WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="ShopExtension" resultMap="ShopExtensionResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_SHOP_EXTENSION WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="ShopExtension" resultType="int">
+		SELECT count(1) AS totalcount FROM T_SHOP_EXTENSION WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

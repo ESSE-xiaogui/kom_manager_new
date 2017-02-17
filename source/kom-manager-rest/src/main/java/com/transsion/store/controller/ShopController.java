@@ -19,6 +19,7 @@ package com.transsion.store.controller;
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Shop;
 import com.transsion.store.dto.ShopDefinitionDto;
+import com.transsion.store.dto.ShopDetailDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.ShopFacade;
@@ -174,5 +175,30 @@ public class ShopController extends AbstractController{
 	public ShopDefinitionDto queryShopDefitionDto() throws ServiceException{
 		String token = this.getAuthorization();
 		return shopFacade.queryShopDefitionDto(token);	
+	}
+	
+	/**
+	 * app create shop
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/createShop")
+	@Consumes({MediaType.APPLICATION_JSON})
+	public void createShop(ShopDetailDto shopDetailDto) throws ServiceException{
+		String token = this.getAuthorization();
+		shopFacade.createShop(token, shopDetailDto);
+	}
+	
+	/**
+	 * app shop list
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/queryManagedShopList")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<ShopDetailDto> queryManagedShopList() throws ServiceException {
+		String token = this.getAuthorization();
+		return shopFacade.queryManagedShopList(token);
 	}
 }

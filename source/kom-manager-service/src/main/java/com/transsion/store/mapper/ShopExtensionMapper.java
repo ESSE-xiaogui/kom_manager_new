@@ -6,7 +6,7 @@
  * recording, or otherwise, without the prior written permission of Liuzh.
  *
  * Created By: Liuzh
- * Created On: 2016-11-18 17:33:08
+ * Created On: 2017-2-17 11:25:38
  *
  * Amendment History:
  * 
@@ -19,14 +19,13 @@ package com.transsion.store.mapper;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
-
+import com.transsion.store.bo.ShopExtension;
+import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
-import com.shangkang.core.mapper.GenericIBatisMapper;
-import com.transsion.store.bo.Materiel;
+import org.apache.ibatis.annotations.Param;
 
-public interface MaterielMapper extends GenericIBatisMapper<Materiel, java.lang.Long> {
+public interface ShopExtensionMapper extends GenericIBatisMapper<ShopExtension, java.lang.Long> {
 
-    public List<Materiel> listPaginationByProperty(Pagination<Materiel> pagination, @Param("materiel")Materiel materiel, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<ShopExtension> listPaginationByProperty(Pagination<ShopExtension> pagination, @Param("shopExtension")ShopExtension shopExtension, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
 }

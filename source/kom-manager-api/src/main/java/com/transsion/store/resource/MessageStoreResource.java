@@ -6,6 +6,11 @@ public class MessageStoreResource {
      * token失效
      */
     public static final String ERROR_MESSAGE_TOKEN_INVALID = "error_message_tokenInvalid";
+
+    /**
+     * 记录不存在
+     */
+    public static final String ERROR_MESSAGE_RECORD_NOT_EXIST = "error_message_recordNotExist";
     
     /**
      * 入参为空

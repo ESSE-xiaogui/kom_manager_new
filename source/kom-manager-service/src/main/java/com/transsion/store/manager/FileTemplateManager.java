@@ -77,7 +77,11 @@ public class FileTemplateManager {
     public FileTemplateDto getFileTemplateDto(String bizType) throws ServiceException {
         FileTemplate fileTemplate = new FileTemplate();
 
-        fileTemplate.setBizType(bizType);
+        if(UtilHelper.isEmpty(bizType)) {
+            throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+        }
+
+        fileTemplate.setBizType(bizType.toUpperCase());
 
         List<FileTemplate> list = fileTemplateService.listByProperty(fileTemplate);
 
@@ -99,6 +103,7 @@ public class FileTemplateManager {
             return fileTemplateDto;
         }
 
-        return null;
+        throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_RECORD_NOT_EXIST);
+
     }
 }

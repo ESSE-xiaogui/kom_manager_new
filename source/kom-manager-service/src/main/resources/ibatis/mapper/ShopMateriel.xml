@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2017-2-17 11:25:38
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.ShopMaterielMapper">
+	<resultMap id="ShopMaterielResultMapper" type="ShopMateriel">
+		<result column="ID" property="id"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="MATERIEL_ID" property="materielId"/>
+		<result column="MATERIEL_QTY" property="materielQty"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_DATE" property="updateDate"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, SHOP_ID
+		, MATERIEL_ID
+		, MATERIEL_QTY
+		, REMARK
+		, CREATE_BY
+		, CREATE_DATE
+		, UPDATE_BY
+		, UPDATE_DATE
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 SHOP_ID
+		, MATERIEL_ID
+		, MATERIEL_QTY
+		, REMARK
+		, CREATE_BY
+		, CREATE_DATE
+		, UPDATE_BY
+		, UPDATE_DATE
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, SHOP_ID
+		, MATERIEL_ID
+		, MATERIEL_QTY
+		, REMARK
+		, CREATE_BY
+		, date_format(CREATE_DATE, '%Y-%m-%d %H:%i:%s') CREATE_DATE
+		, UPDATE_BY
+		, date_format(UPDATE_DATE, '%Y-%m-%d %H:%i:%s') UPDATE_DATE
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="shopId!= null and shopId!= ''"> 
+			AND SHOP_ID=#{shopId}
+		</if>
+		<if test="materielId!= null and materielId!= ''"> 
+			AND MATERIEL_ID=#{materielId}
+		</if>
+		<if test="materielQty!= null and materielQty!= ''"> 
+			AND MATERIEL_QTY=#{materielQty}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createBy!= null and createBy!= ''"> 
+			AND CREATE_BY=#{createBy}
+		</if>
+		<if test="createDate!= null and createDate!= ''"> 
+			AND CREATE_DATE=str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updateBy!= null and updateBy!= ''"> 
+			AND UPDATE_BY=#{updateBy}
+		</if>
+		<if test="updateDate!= null and updateDate!= ''"> 
+			AND UPDATE_DATE=str_to_date(#{updateDate},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="shopMateriel != null">
+            <if test="shopMateriel.id!= null and shopMateriel.id!= ''">
+				AND ID=#{shopMateriel.id}
+            </if>
+            <if test="shopMateriel.shopId!= null and shopMateriel.shopId!= ''">
+				AND SHOP_ID=#{shopMateriel.shopId}
+            </if>
+            <if test="shopMateriel.materielId!= null and shopMateriel.materielId!= ''">
+				AND MATERIEL_ID=#{shopMateriel.materielId}
+            </if>
+            <if test="shopMateriel.materielQty!= null and shopMateriel.materielQty!= ''">
+				AND MATERIEL_QTY=#{shopMateriel.materielQty}
+            </if>
+            <if test="shopMateriel.remark!= null and shopMateriel.remark!= ''">
+				AND REMARK=#{shopMateriel.remark}
+            </if>
+            <if test="shopMateriel.createBy!= null and shopMateriel.createBy!= ''">
+				AND CREATE_BY=#{shopMateriel.createBy}
+            </if>
+            <if test="shopMateriel.createDate!= null and shopMateriel.createDate!= ''">
+				AND CREATE_DATE=str_to_date(#{shopMateriel.createDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="shopMateriel.updateBy!= null and shopMateriel.updateBy!= ''">
+				AND UPDATE_BY=#{shopMateriel.updateBy}
+            </if>
+            <if test="shopMateriel.updateDate!= null and shopMateriel.updateDate!= ''">
+				AND UPDATE_DATE=str_to_date(#{shopMateriel.updateDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="shopMateriel.version!= null and shopMateriel.version!= ''">
+				AND VERSION=#{shopMateriel.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'shopId'">
+				SHOP_ID ${value}
+            </when>
+        	<when test="key == 'materielId'">
+				MATERIEL_ID ${value}
+            </when>
+        	<when test="key == 'materielQty'">
+				MATERIEL_QTY ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createBy'">
+				CREATE_BY ${value}
+            </when>
+        	<when test="key == 'createDate'">
+				CREATE_DATE ${value}
+            </when>
+        	<when test="key == 'updateBy'">
+				UPDATE_BY ${value}
+            </when>
+        	<when test="key == 'updateDate'">
+				UPDATE_DATE ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="ShopMateriel">
+		<![CDATA[ INSERT INTO T_SHOP_MATERIEL ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{shopId}
+			, #{materielId}
+			, #{materielQty}
+			, #{remark}
+			, #{createBy}
+			, str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
+			, #{updateBy}
+			, str_to_date(#{updateDate},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="ShopMateriel">
+		<![CDATA[ UPDATE T_SHOP_MATERIEL SET 
+			 ID=#{id} 
+			, SHOP_ID=#{shopId} 
+			, MATERIEL_ID=#{materielId} 
+			, MATERIEL_QTY=#{materielQty} 
+			, REMARK=#{remark} 
+			, CREATE_BY=#{createBy} 
+			, CREATE_DATE=str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
+			, UPDATE_BY=#{updateBy} 
+			, UPDATE_DATE=str_to_date(#{updateDate},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_SHOP_MATERIEL WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_SHOP_MATERIEL WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			#{id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="ShopMateriel">
+		DELETE FROM T_SHOP_MATERIEL WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="ShopMaterielResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_SHOP_MATERIEL WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="ShopMaterielResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_SHOP_MATERIEL
+	</select>
+	<select id="listByProperty" parameterType="ShopMateriel" resultMap="ShopMaterielResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_SHOP_MATERIEL WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="ShopMateriel" resultMap="ShopMaterielResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_SHOP_MATERIEL WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="ShopMateriel" resultType="int">
+		SELECT count(1) AS totalcount FROM T_SHOP_MATERIEL WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	
+	<insert id="saveShopMateriel" parameterType="java.util.List">
+		INSERT INTO T_SHOP_MATERIEL (
+		<include refid="commonColumnsNotPK" />
+		) VALUES
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(
+			  #{item.shopId}
+			, #{item.materielId}
+			, #{item.materielQty}
+			, #{item.remark}
+			, #{item.createBy}
+			, str_to_date(#{item.createDate},'%Y-%m-%d %H:%i:%s')
+			, #{item.updateBy}
+			, str_to_date(#{item.updateDate},'%Y-%m-%d %H:%i:%s')
+			, #{item.version}
+			)
+		</foreach>
+	</insert>
+</mapper>
