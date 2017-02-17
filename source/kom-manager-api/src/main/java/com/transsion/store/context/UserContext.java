@@ -3,6 +3,7 @@ package com.transsion.store.context;
 import java.util.List;
 import com.transsion.store.IUserContext;
 import com.transsion.store.bo.Shop;
+import com.transsion.store.bo.SystemRole.Role;
 import com.transsion.store.bo.User;
 
 /**
@@ -170,6 +171,17 @@ public class UserContext implements IUserContext {
 		this.role = role;
 	}
 
+	public boolean isAdmin() {
+		if (this.role != null) {
+			for (String roleCode : role) {
+				if (Role.ADMIN.getVal().equals(roleCode)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	@Override
 	public String toString() {
 		return "UserContext [token=" + token + ", userCode=" + userCode + ", password=" + password + ", brandCode="

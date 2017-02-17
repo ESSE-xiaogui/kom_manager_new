@@ -25,6 +25,24 @@ public class SystemRole extends Model{
 	 */
 	private static final long	serialVersionUID	= 1L;
 	
+	public enum Role {
+
+		Promoter("promoter"),
+		Supervisor("supervisor"),
+		MANAGER("manager"),
+		ADMIN("admin");
+
+		private final String value;
+
+		private Role(String value) {
+			this.value = value;
+		}
+
+		public String getVal() {
+			return value;
+		}
+	};
+	
 	/**
 	  *	角色ID
 	  */
