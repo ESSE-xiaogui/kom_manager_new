@@ -1,5 +1,6 @@
 package com.transsion.store.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import com.transsion.store.mapper.ShopBizMapper;
 import com.transsion.store.mapper.ShopGradeMapper;
 import com.transsion.store.mapper.ShopMapper;
 import com.transsion.store.mapper.UserMapper;
+import com.transsion.store.mapper.UserShopMapper;
 import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.AttributeService;
 import com.transsion.store.service.ShopExtensionService;
@@ -63,6 +65,9 @@ public class ShopManager {
 	
 	@Autowired
 	private ShopMaterielService shopMaterielService;
+	
+	@Autowired
+	private UserShopMapper userShopMapper;
  
 	/**
 	 * 用户已绑定的店铺
@@ -250,5 +255,68 @@ public class ShopManager {
 		
 		List<ShopMateriel> list = shopDetailDto.getShopMaterielDtoList();
 		shopMaterielService.saveShopMateriel(list);
+	}
+	
+	public List<ShopDetailDto> queryManagedShopList(String token) throws ServiceException {
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		if(UtilHelper.isEmpty(userContext.getUser())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+		}
+		if(UtilHelper.isEmpty(userContext.getUser().getCompanyId())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERID_IS_NULL);
+		}
+		
+		Integer userId = userContext.getUser().getUserId();
+		List<Integer> shopIdList = userShopMapper.queryShopIdByUserId(userId);
+		
+		List<ShopDetailDto> list = new ArrayList<ShopDetailDto>();
+		for (int i = 0; i < shopIdList.size(); i++) {
+			ShopDetailDto shopDetailDto = new ShopDetailDto();
+			
+			Shop shop = shopMapper.queryShopByShopId(shopIdList.get(i));
+			
+			ShopExtension shopExtension = shopExtensionService.queryShopExtensionByShopId(shopIdList.get(i));
+			
+			List<ShopMateriel> shopMaterielList = shopMaterielService.queryShopMaterielListByShopId(shopIdList.get(i));
+			
+			shopDetailDto.setShop(shop);
+			shopDetailDto.setShopExtension(shopExtension);
+			shopDetailDto.setShopMaterielDtoList(shopMaterielList);
+			list.add(shopDetailDto);
+		}
+		return list;
+	}
+	
+	public void updateShop(String token, ShopDetailDto shopDetailDto) throws ServiceException {
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		if(UtilHelper.isEmpty(userContext.getUser())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+		}
+		if(UtilHelper.isEmpty(userContext.getUser().getCompanyId())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERID_IS_NULL);
+		}
+		
+		Shop shop = shopDetailDto.getShop();
+		shopMapper.update(shop);
+		
+		ShopExtension shopExtension = shopDetailDto.getShopExtension();
+		shopExtensionService.update(shopExtension);
+		
+		List<ShopMateriel> list = shopDetailDto.getShopMaterielDtoList();
+		for (int i = 0; i < list.size(); i++) {
+			shopMaterielService.update(list.get(i));
+		}
 	}
 }

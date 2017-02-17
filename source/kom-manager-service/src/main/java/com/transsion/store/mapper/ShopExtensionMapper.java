@@ -28,4 +28,6 @@ import org.apache.ibatis.annotations.Param;
 public interface ShopExtensionMapper extends GenericIBatisMapper<ShopExtension, java.lang.Long> {
 
     public List<ShopExtension> listPaginationByProperty(Pagination<ShopExtension> pagination, @Param("shopExtension")ShopExtension shopExtension, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    
+    public ShopExtension queryShopExtensionByShopId(Integer shopId) throws DataAccessFailureException;
 }

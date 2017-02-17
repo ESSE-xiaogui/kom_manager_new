@@ -24,4 +24,8 @@
 		, #{remark}
 		)
 	</insert>
+	
+	<select id="queryShopIdByUserId" parameterType="java.lang.Integer" resultMap="UserShopResultMapper">
+		SELECT SHOP_ID FROM T_USER_SHOP WHERE USER_ID = #{userId}
+	</select>
 </mapper>

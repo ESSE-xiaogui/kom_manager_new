@@ -38,6 +38,6 @@ public interface UserMapper extends GenericIBatisMapper<User, java.lang.Long> {
 	
 	public UserResponseDto getUser(User user) throws DataAccessFailureException;
 	
-	public void updateLastLogin(User user)throws DataAccessFailureException;;
+	public void updateLastLogin(User user)throws DataAccessFailureException;
 
 }

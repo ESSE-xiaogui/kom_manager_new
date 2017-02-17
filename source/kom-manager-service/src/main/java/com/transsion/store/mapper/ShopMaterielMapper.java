@@ -31,4 +31,6 @@ public interface ShopMaterielMapper extends GenericIBatisMapper<ShopMateriel, ja
     public List<ShopMateriel> listPaginationByProperty(Pagination<ShopMateriel> pagination, @Param("shopMateriel")ShopMateriel shopMateriel, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     
     public void saveShopMateriel(List<ShopMateriel> shopMateriel);
+    
+    public List<ShopMateriel> queryShopMaterielListByShopId(Integer shopId) throws DataAccessFailureException;
 }

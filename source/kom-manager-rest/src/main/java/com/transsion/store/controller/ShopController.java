@@ -181,7 +181,7 @@ public class ShopController extends AbstractController{
 	 * app create shop
 	 * @throws ServiceException
 	 */
-	@GET
+	@POST
 	@Path("/createShop")
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void createShop(ShopDetailDto shopDetailDto) throws ServiceException{
@@ -200,5 +200,13 @@ public class ShopController extends AbstractController{
 	public List<ShopDetailDto> queryManagedShopList() throws ServiceException {
 		String token = this.getAuthorization();
 		return shopFacade.queryManagedShopList(token);
+	}
+	
+	@PUT
+	@Path("/updateShop")
+	@Consumes({MediaType.APPLICATION_JSON})
+	public void updateShop(ShopDetailDto shopDetailDto) throws ServiceException {
+		String token = this.getAuthorization();
+		shopFacade.updateShop(token, shopDetailDto);
 	}
 }

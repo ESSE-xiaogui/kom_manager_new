@@ -148,4 +148,8 @@ public class ShopExtensionService {
 	{
 		return shopExtensionMapper.findByCount(shopExtension);
 	}
+	
+	 public ShopExtension queryShopExtensionByShopId(Integer shopId) throws ServiceException {
+		 return shopExtensionMapper.queryShopExtensionByShopId(shopId);
+	 }
 }
