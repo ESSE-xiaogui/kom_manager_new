@@ -29,10 +29,23 @@ public class FileTemplate extends Model{
 
 	public enum BizType {
 		//Sale
-		S("S", "销量"),
+		S("S", "销量模板"),
 
-		//Stock
-		T("T", "库存");
+		//汇率
+		C("C", "汇率模板"),
+
+		//帐号
+		A("A", "帐号模板"),
+
+		//门店目标销量
+		G("G", "门店销量目标"),
+
+		//促销员销量目标
+		P("P", "促销员销量目标"),
+
+		//门店
+		T("T", "门店模板");
+
 		private String key;
 		private String value;
 
