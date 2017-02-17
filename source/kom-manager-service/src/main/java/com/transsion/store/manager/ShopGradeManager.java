@@ -73,6 +73,7 @@ public class ShopGradeManager {
 		shopGrade.setCompanyId(userContext.getUser().getCompanyId());
 		shopGrade.setCreateBy(userContext.getUser().getUserCode());
 		shopGrade.setCreateDate(systemDateService.getCurrentDate());
+		shopGrade.setBrandCode(userContext.getBrandCode());
 		shopGradeMapper.save(shopGrade);
 		
 	}
