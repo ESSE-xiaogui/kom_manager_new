@@ -130,7 +130,7 @@ public interface ShopFacade {
 	/*
 	 * app add shop api
 	 */
-	public void addShop(String token, ShopDetailDto shopDetailDto) throws ServiceException;
+	public void createShop(String token, ShopDetailDto shopDetailDto) throws ServiceException;
 
 	/*
 	 * app shop list api
