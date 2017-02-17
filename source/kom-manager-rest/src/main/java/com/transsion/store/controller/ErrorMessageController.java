@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.rest.service.controller.AbstractController;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.facade.ErrorMessageFacade;
 @Controller
 @Path("errorMessage")
@@ -21,10 +22,10 @@ public class ErrorMessageController extends AbstractController{
 	private ErrorMessageFacade errorMessageFacade;
 	
 	@GET
-	@Path("findErrorMessageAll")
+	@Path("queryAllErrorMessage")
 	@Produces({MediaType.APPLICATION_JSON})
-	public List<String> findErrorMessageAll(){
-		return errorMessageFacade.findErrorMessageAll();
+	public List<ExceptionDef> queryAllErrorMessage(){
+		return errorMessageFacade.queryAllErrorMessage();
 	}
 
 }

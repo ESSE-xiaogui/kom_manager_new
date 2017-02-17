@@ -1,4 +1,4 @@
-package com.transsion.store.resource;
+package com.transsion.store.exception;
 
 public enum ExceptionDef {
 
