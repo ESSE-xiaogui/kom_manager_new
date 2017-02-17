@@ -180,7 +180,7 @@ public class ShopFacadeImpl implements ShopFacade {
 	}
 
 	@Override
-	public void addShop(String token, ShopDetailDto shopDetailDto) throws ServiceException {
+	public void createShop(String token, ShopDetailDto shopDetailDto) throws ServiceException {
 		// TODO Auto-generated method stub
 		
 	}
