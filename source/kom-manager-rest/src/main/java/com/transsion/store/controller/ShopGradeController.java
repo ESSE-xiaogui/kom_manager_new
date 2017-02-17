@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.ShopGrade;
+import com.transsion.store.dto.ShopGradeDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.ShopGradeFacade;
 import com.shangkang.core.bo.Pagination;
@@ -59,9 +60,10 @@ public class ShopGradeController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<ShopGrade> listPgShopGrade(RequestModel<ShopGrade> requestModel) throws ServiceException
+	public Pagination<ShopGradeDto> listPgShopGrade(RequestModel<ShopGradeDto> requestModel) throws ServiceException
 	{
-		Pagination<ShopGrade> pagination = new Pagination<ShopGrade>();
+		String token = this.getAuthorization();
+		Pagination<ShopGradeDto> pagination = new Pagination<ShopGradeDto>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());
@@ -69,7 +71,7 @@ public class ShopGradeController extends AbstractController{
 		pagination.setParams(requestModel.getParams());
 		pagination.setOrderBy(requestModel.getOrderBy());
 
-		return shopGradeFacade.listPaginationByProperty(pagination, requestModel.getParams());
+		return shopGradeFacade.listPaginationByProperty(pagination, token,requestModel.getParams());
 	}
 
 	/**

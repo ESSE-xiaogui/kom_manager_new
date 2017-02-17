@@ -47,7 +47,9 @@ public class ModelListDto implements Serializable{
 	/**
 	 * 价格档位 注：枚举
 	 * */
-	private java.lang.String priceScale;
+	private java.lang.String nameCN;
+	
+	private java.lang.String nameEN;
 
 	/**
 	  *	字典编号：1403 (颜色、软件版本、T卡容量等)
@@ -150,12 +152,20 @@ public class ModelListDto implements Serializable{
 		this.saleTime = saleTime;
 	}
 
-	public java.lang.String getPriceScale() {
-		return priceScale;
+	public java.lang.String getNameCN() {
+		return nameCN;
 	}
 
-	public void setPriceScale(java.lang.String priceScale) {
-		this.priceScale = priceScale;
+	public void setNameCN(java.lang.String nameCN) {
+		this.nameCN = nameCN;
+	}
+
+	public java.lang.String getNameEN() {
+		return nameEN;
+	}
+
+	public void setNameEN(java.lang.String nameEN) {
+		this.nameEN = nameEN;
 	}
 
 	public java.lang.Integer getElementType() {
@@ -234,10 +244,11 @@ public class ModelListDto implements Serializable{
 	public String toString() {
 		return "ModelListDto [id=" + id + ", brandCode=" + brandCode + ", seriesCode=" + seriesCode + ", modelCode="
 						+ modelCode + ", modelName=" + modelName + ", companyId=" + companyId + ", saleTime=" + saleTime
-						+ ", priceScale=" + priceScale + ", elementType=" + elementType + ", elementCode=" + elementCode
-						+ ", isInactive=" + isInactive + ", remark=" + remark + ", createdBy=" + createdBy
-						+ ", createdTime=" + createdTime + ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime
-						+ ", version=" + version + "]";
+						+ ", nameCN=" + nameCN + ", nameEN=" + nameEN + ", elementType=" + elementType
+						+ ", elementCode=" + elementCode + ", isInactive=" + isInactive + ", remark=" + remark
+						+ ", createdBy=" + createdBy + ", createdTime=" + createdTime + ", updatedBy=" + updatedBy
+						+ ", updatedTime=" + updatedTime + ", version=" + version + "]";
 	}
+
 
 }

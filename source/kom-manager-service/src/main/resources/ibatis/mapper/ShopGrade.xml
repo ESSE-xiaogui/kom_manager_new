@@ -33,6 +33,22 @@
 		<result column="UPDATE_DATE" property="updateDate"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
+	<resultMap id="ShopGradeDtoResultMapper" type="ShopGradeDto">
+		<result column="ID" property="id"/>
+		<result column="GRADE_NAME" property="gradeName"/>
+		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="SALE_QTY" property="saleQTY"/>
+		<result column="SALE_QTY_CN" property="cnSaleQTY"/>
+		<result column="SALE_QTY_EN" property="enSaleQTY"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_DATE" property="updateDate"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
 	
 	<sql id="commonColumns">
 		 ID
@@ -118,42 +134,42 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="shopGrade != null">
-            <if test="shopGrade.id!= null and shopGrade.id!= ''">
-				AND ID=#{shopGrade.id}
+		<if test="shopGradeDto!= null">
+            <if test="shopGradeDto.id!= null and shopGradeDto.id!= ''">
+				AND s.ID=#{shopGradeDto.id}
             </if>
-            <if test="shopGrade.gradeName!= null and shopGrade.gradeName!= ''">
-				AND GRADE_NAME=#{shopGrade.gradeName}
+            <if test="shopGradeDto.gradeName!= null and shopGradeDto.gradeName!= ''">
+				AND GRADE_NAME=#{shopGradeDto.gradeName}
             </if>
-            <if test="shopGrade.brandCode!= null and shopGrade.brandCode!= ''">
-				AND BRAND_CODE=#{shopGrade.brandCode}
+            <if test="shopGradeDto.brandCode!= null and shopGradeDto.brandCode!= ''">
+				AND BRAND_CODE=#{shopGradeDto.brandCode}
             </if>
-            <if test="shopGrade.saleQTY!= null and shopGrade.saleQTY!= ''">
-				AND SALE_QTY=#{shopGrade.saleQTY}
+            <if test="shopGradeDto.saleQTY!= null and shopGradeDto.saleQTY!= ''">
+				AND SALE_QTY=#{shopGradeDto.saleQTY}
             </if>
-            <if test="shopGrade.companyId!= null and shopGrade.companyId!= ''">
-				AND COMPANY_ID=#{shopGrade.companyId}
+            <if test="shopGradeDto.companyId!= null and shopGradeDto.companyId!= ''">
+				AND s.COMPANY_ID=#{shopGradeDto.companyId}
             </if>
-            <if test="shopGrade.isInactive!= null and shopGrade.isInactive!= ''">
-				AND IS_INACTIVE=#{shopGrade.isInactive}
+            <if test="shopGradeDto.isInactive!= null and shopGradeDto.isInactive!= ''">
+				AND IS_INACTIVE=#{shopGradeDto.isInactive}
             </if>
-            <if test="shopGrade.remark!= null and shopGrade.remark!= ''">
-				AND REMARK=#{shopGrade.remark}
+            <if test="shopGradeDto.remark!= null and shopGradeDto.remark!= ''">
+				AND s.REMARK=#{shopGradeDto.remark}
             </if>
-            <if test="shopGrade.createBy!= null and shopGrade.createBy!= ''">
-				AND CREATE_BY=#{shopGrade.createBy}
+            <if test="shopGradeDto.createBy!= null and shopGradeDto.createBy!= ''">
+				AND s.CREATE_BY=#{shopGradeDto.createBy}
             </if>
-            <if test="shopGrade.createDate!= null and shopGrade.createDate!= ''">
-				AND CREATE_DATE=str_to_date(#{shopGrade.createDate},'%Y-%m-%d %H:%i:%s')
+            <if test="shopGradeDto.createDate!= null and shopGradeDto.createDate!= ''">
+				AND s.CREATE_DATE=str_to_date(#{shopGradeDto.createDate},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="shopGrade.updateBy!= null and shopGrade.updateBy!= ''">
-				AND UPDATE_BY=#{shopGrade.updateBy}
+            <if test="shopGradeDto.updateBy!= null and shopGradeDto.updateBy!= ''">
+				AND s.UPDATE_BY=#{shopGradeDto.updateBy}
             </if>
-            <if test="shopGrade.updateDate!= null and shopGrade.updateDate!= ''">
-				AND UPDATE_DATE=str_to_date(#{shopGrade.updateDate},'%Y-%m-%d %H:%i:%s')
+            <if test="shopGradeDto.updateDate!= null and shopGradeDto.updateDate!= ''">
+				AND s.UPDATE_DATE=str_to_date(#{shopGradeDto.updateDate},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="shopGrade.version!= null and shopGrade.version!= ''">
-				AND VERSION=#{shopGrade.version}
+            <if test="shopGradeDto.version!= null and shopGradeDto.version!= ''">
+				AND s.VERSION=#{shopGradeDto.version}
             </if>
         </if>
     </sql>
@@ -271,10 +287,13 @@
 		FROM T_SHOP_GRADE WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="ShopGrade" resultMap="ShopGradeResultMapper">
-		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_SHOP_GRADE WHERE 1=1
+	<select id="listPaginationByProperty" parameterType="ShopGradeDto" resultMap="ShopGradeDtoResultMapper">
+		SELECT s.ID, GRADE_NAME, BRAND_CODE, a.NAME_CN AS SALE_QTY_CN, 
+		a.NAME_EN AS SALE_QTY_EN,s.COMPANY_ID, IS_INACTIVE, s.REMARK
+		, s.CREATE_BY, s.CREATE_DATE, s.UPDATE_BY, s.UPDATE_DATE,s.VERSION
+		FROM T_SHOP_GRADE s
+		LEFT JOIN T_ATTRIBUTE a ON a.ID = s.SALE_QTY
+		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>

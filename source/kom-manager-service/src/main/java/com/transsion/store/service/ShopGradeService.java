@@ -22,9 +22,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.ShopGrade;
+import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.ShopGradeDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
 import com.transsion.store.mapper.ShopGradeMapper;
+import com.transsion.store.utils.CacheUtils;
 
 @Service("shopGradeService")
 public class ShopGradeService {
@@ -71,13 +75,23 @@ public class ShopGradeService {
 	
 	/**
 	 * 根据查询条件查询分页记录
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<ShopGrade> listPaginationByProperty(Pagination<ShopGrade> pagination, ShopGrade shopGrade)
+	public Pagination<ShopGradeDto> listPaginationByProperty(Pagination<ShopGradeDto> pagination, String token, ShopGradeDto shopGradeDto)
 			throws ServiceException
 	{
-		List<ShopGrade> list = shopGradeMapper.listPaginationByProperty(pagination, shopGrade, pagination.getOrderBy());
+		
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		
+		String brandCode = userContext.getBrandCode();
+		
+		if(!UtilHelper.isEmpty(shopGradeDto)&&!UtilHelper.isEmpty(brandCode)){
+			shopGradeDto.setBrandCode(brandCode);
+		}
+		
+		List<ShopGradeDto> list = shopGradeMapper.listPaginationByProperty(pagination, shopGradeDto, pagination.getOrderBy());
 		
 		pagination.setResultList(list);
 		
