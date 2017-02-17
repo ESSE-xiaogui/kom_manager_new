@@ -11,9 +11,12 @@ import com.transsion.store.bo.Materiel;
 import com.transsion.store.bo.Region;
 import com.transsion.store.bo.Shop;
 import com.transsion.store.bo.ShopBiz;
+import com.transsion.store.bo.ShopExtension;
 import com.transsion.store.bo.ShopGrade;
+import com.transsion.store.bo.ShopMateriel;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.ShopDefinitionDto;
+import com.transsion.store.dto.ShopDetailDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.transsion.store.dto.UserDto;
 import com.transsion.store.mapper.MaterielMapper;
@@ -24,6 +27,9 @@ import com.transsion.store.mapper.ShopMapper;
 import com.transsion.store.mapper.UserMapper;
 import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.AttributeService;
+import com.transsion.store.service.ShopExtensionService;
+import com.transsion.store.service.ShopMaterielService;
+import com.transsion.store.service.ShopService;
 import com.transsion.store.utils.CacheUtils;
 
 @Service("shopManager")
@@ -48,6 +54,15 @@ public class ShopManager {
 	
 	@Autowired
 	private AttributeService attributeService;
+	
+	@Autowired
+	private ShopService shopService;
+	
+	@Autowired
+	private ShopExtensionService shopExtensionService;
+	
+	@Autowired
+	private ShopMaterielService shopMaterielService;
  
 	/**
 	 * 用户已绑定的店铺
@@ -211,5 +226,29 @@ public class ShopManager {
 		sdd.setBizTypeList(bizTypeList);
 		return sdd;
 	}
-
+	
+	public void createShop(String token, ShopDetailDto shopDetailDto) throws ServiceException {
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		if(UtilHelper.isEmpty(userContext.getUser())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+		}
+		if(UtilHelper.isEmpty(userContext.getUser().getCompanyId())){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERID_IS_NULL);
+		}
+		
+		Shop shop = shopDetailDto.getShop();
+		shopService.save(shop);
+		
+		ShopExtension shopExtension = shopDetailDto.getShopExtension();
+		shopExtensionService.save(shopExtension);
+		
+		List<ShopMateriel> list = shopDetailDto.getShopMaterielDtoList();
+		shopMaterielService.saveShopMateriel(list);
+	}
 }
