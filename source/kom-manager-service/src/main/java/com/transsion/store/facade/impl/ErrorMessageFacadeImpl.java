@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.facade.ErrorMessageFacade;
 import com.transsion.store.manager.ErrorMessageManager;
 
@@ -14,7 +15,7 @@ public class ErrorMessageFacadeImpl implements ErrorMessageFacade{
 	@Autowired
 	private ErrorMessageManager errorMessageManager;
 	
-	public List<String> findErrorMessageAll(){
-		return errorMessageManager.findErrorMessageAll();
+	public List<ExceptionDef> queryAllErrorMessage(){
+		return errorMessageManager.queryAllErrorMessage();
 	}
 }
