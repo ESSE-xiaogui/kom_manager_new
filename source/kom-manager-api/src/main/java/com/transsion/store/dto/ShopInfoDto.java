@@ -1,14 +1,12 @@
 package com.transsion.store.dto;
 
 import java.io.Serializable;
-import java.util.List;
 
 import com.transsion.store.bo.Shop;
 import com.transsion.store.bo.ShopExtension;
-import com.transsion.store.bo.ShopMateriel;
 
 /*
-	  *	dto use for creating shop by app 
+	  *	dto use for creating shop by web 
  */
 public class ShopInfoDto implements Serializable{
 	
@@ -18,8 +16,6 @@ public class ShopInfoDto implements Serializable{
 	
 	private ShopExtension shopExtension;
 	
-	private List<ShopMateriel> shopMaterielDtoList;
-
 	public Shop getShop() {
 		return shop;
 	}
@@ -34,14 +30,6 @@ public class ShopInfoDto implements Serializable{
 
 	public void setShopExtension(ShopExtension shopExtension) {
 		this.shopExtension = shopExtension;
-	}
-
-	public List<ShopMateriel> getShopMaterielDtoList() {
-		return shopMaterielDtoList;
-	}
-
-	public void setShopMaterielDtoList(List<ShopMateriel> shopMaterielDtoList) {
-		this.shopMaterielDtoList = shopMaterielDtoList;
 	}
 	
 	

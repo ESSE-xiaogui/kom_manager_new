@@ -20,6 +20,7 @@ import java.util.List;
 
 import com.transsion.store.bo.Shop;
 import com.transsion.store.dto.ShopDefinitionDto;
+import com.transsion.store.dto.ShopDetailDto;
 import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.shangkang.core.bo.Pagination;
@@ -129,12 +130,12 @@ public interface ShopFacade {
 	/*
 	 * app add shop api
 	 */
-	public void addShop(String token, ShopInfoDto shopInfoDto) throws ServiceException;
+	public void addShop(String token, ShopDetailDto shopDetailDto) throws ServiceException;
 
 	/*
 	 * app shop list api
 	 */
-	public List<ShopInfoDto> queryManagedShopList(String token) throws ServiceException;
+	public List<ShopDetailDto> queryManagedShopList(String token) throws ServiceException;
 
 	/*
 	 * app shop definition info api
