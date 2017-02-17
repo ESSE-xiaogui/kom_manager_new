@@ -67,6 +67,7 @@ public class MaterielManager {
 		materiel.setCompanyId(userContext.getUser().getCompanyId());
 		materiel.setCreateBy(userContext.getUser().getUserCode());
 		materiel.setCreateDate(systemDateService.getCurrentDate());
+		materiel.setBrandCode(userContext.getBrandCode());
 		materielMapper.save(materiel);
 		
 	}

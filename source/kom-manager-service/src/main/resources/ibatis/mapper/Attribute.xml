@@ -30,6 +30,6 @@
 	</resultMap>
 
 	<select id="getAttributeListByType"   resultMap="AttributeResultMapper">
-		SELECT ID,TYPE,SQE,NAME_EN FROM T_ATTRIBUTE WHERE TYPE = #{type} AND COMPANY_ID =#{companyId}
+		SELECT ID,TYPE,SQE,NAME_EN,NAME_CN FROM T_ATTRIBUTE WHERE TYPE = #{type} AND COMPANY_ID =#{companyId}
 	</select>
 </mapper>
