@@ -170,7 +170,17 @@ public class UserContext implements IUserContext {
 	public void setRole(List<String> role) {
 		this.role = role;
 	}
-
+	
+	public boolean isManager() {
+		if (this.role != null) {
+			for (String roleCode : role) {
+				if (Role.MANAGER.getVal().equals(roleCode)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	public boolean isAdmin() {
 		if (this.role != null) {
 			for (String roleCode : role) {
