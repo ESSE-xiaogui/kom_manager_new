@@ -13,7 +13,7 @@ public class UserShopFacadeImpl implements UserShopFacade{
 	/**
 	 * 门店授权管理:用户绑定门店
 	 * */
-	public void saveUserShop(UserShopDto userShopDto) throws ServiceException{
-		userShopManager.saveUserShop(userShopDto);
+	public void saveUserShop(String token, UserShopDto userShopDto) throws ServiceException{
+		userShopManager.saveUserShop(token, userShopDto);
 	}
 }

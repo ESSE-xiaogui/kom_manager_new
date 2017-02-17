@@ -23,7 +23,8 @@ public class UserShopController extends AbstractController{
 	@Path("/saveUserShop")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	public void saveUserShop(UserShopDto userShopDto) throws ServiceException{
-		userShopFacade.saveUserShop(userShopDto);
+		
+		userShopFacade.saveUserShop(this.getAuthorization(), userShopDto);
 	}
 
 }

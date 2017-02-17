@@ -33,6 +33,8 @@ public class ModelListDto implements Serializable{
 	  *	
 	  */
 	private java.lang.String modelName;
+	
+	private java.lang.Integer priceScale;
 
 	/**
 	  *	指使用系统的公司，即事业部或经销商对应的公司
@@ -239,16 +241,23 @@ public class ModelListDto implements Serializable{
 	public void setVersion(java.lang.Integer version) {
 		this.version = version;
 	}
+	
+	public java.lang.Integer getPriceScale() {
+		return priceScale;
+	}
+
+	public void setPriceScale(java.lang.Integer priceScale) {
+		this.priceScale = priceScale;
+	}
 
 	@Override
 	public String toString() {
 		return "ModelListDto [id=" + id + ", brandCode=" + brandCode + ", seriesCode=" + seriesCode + ", modelCode="
-						+ modelCode + ", modelName=" + modelName + ", companyId=" + companyId + ", saleTime=" + saleTime
-						+ ", nameCN=" + nameCN + ", nameEN=" + nameEN + ", elementType=" + elementType
-						+ ", elementCode=" + elementCode + ", isInactive=" + isInactive + ", remark=" + remark
-						+ ", createdBy=" + createdBy + ", createdTime=" + createdTime + ", updatedBy=" + updatedBy
-						+ ", updatedTime=" + updatedTime + ", version=" + version + "]";
+						+ modelCode + ", modelName=" + modelName + ", priceScale=" + priceScale + ", companyId="
+						+ companyId + ", saleTime=" + saleTime + ", nameCN=" + nameCN + ", nameEN=" + nameEN
+						+ ", elementType=" + elementType + ", elementCode=" + elementCode + ", isInactive=" + isInactive
+						+ ", remark=" + remark + ", createdBy=" + createdBy + ", createdTime=" + createdTime
+						+ ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime + ", version=" + version + "]";
 	}
-
 
 }

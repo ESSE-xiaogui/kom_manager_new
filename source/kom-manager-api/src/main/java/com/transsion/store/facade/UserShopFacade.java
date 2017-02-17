@@ -9,5 +9,5 @@ public interface UserShopFacade {
 	/**
 	 * 门店授权管理:用户绑定门店
 	 * */
-	public void saveUserShop(UserShopDto userShopDto) throws ServiceException;
+	public void saveUserShop(String token, UserShopDto userShopDto) throws ServiceException;
 }
