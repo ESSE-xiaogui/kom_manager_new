@@ -17,12 +17,10 @@ import com.transsion.store.service.SystemDateService;
 import com.transsion.store.service.UserService;
 import com.transsion.store.utils.CacheUtils;
 import com.transsion.store.utils.MD5Utils;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by tony on 2016/9/20.
@@ -65,8 +63,7 @@ public class UserManager {
 		user.setLastLogin(systemDateService.getCurrentDate());
 		userMapper.updateLastLogin(user);
 		UserResponseDto urd = userMapper.getUser(user);
-		if (UtilHelper.isEmpty(urd) ||UtilHelper.isEmpty(urd.getId()) || UtilHelper.isEmpty(urd.getCompanyId())
-						|| UtilHelper.isEmpty(urd.getBrandCode())){
+		if (UtilHelper.isEmpty(urd) ||UtilHelper.isEmpty(urd.getId()) ){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_LOGIN_FAIL);
 		}
 		if(urd.getIsInactive().intValue() == 2){
@@ -79,10 +76,7 @@ public class UserManager {
 		if (UtilHelper.isEmpty(roleList)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_LOGIN_FAIL);
 		}
-		/**
-		 * 多店铺
-		 * */
-		List<Shop> shops = shopService.queryPromoterShop(urd.getId().intValue(), urd.getCompanyId().intValue());
+
 		UserContext userContext = new UserContext();
 		long exp = 3600 * 24;
 	    String token = JwtUtils.tokenBuilder(authKeyGenerator.generateAuthKey(), userCode, 3600 * 24);
@@ -100,23 +94,29 @@ public class UserManager {
 				user.setUserId(urd.getUserId().intValue());
 			}
 			user.setLastLogin(urd.getLastLogin());
-			user.setCompanyId(urd.getCompanyId().intValue());
+			user.setCompanyId(urd.getCompanyId() == null ? null : urd.getCompanyId().intValue());
 			user.setUserName(urd.getUserName());
 			userContext.setUser(user);
 	    } else {
 	    	throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 	    }
-		if(!UtilHelper.isEmpty(shops)){
-			userContext.setCityName(shops.get(0).getCityName());
-			userContext.setShopName(shops.get(0).getShopName());
-			Shop shop = new Shop();
-			shop.setShopId(shops.get(0).getShopId());
-			shop.setWerks(shops.get(0).getWerks());
-			shop.setCityName(shops.get(0).getCityName());
-			shop.setShopName(shops.get(0).getShopName());
-			userContext.setShop(shop);
-			userContext.setShopList(shops);
-		}
+		if(!UtilHelper.isEmpty(urd.getCompanyId())) {
+			/**
+			 * 多店铺
+			 * */
+			List<Shop> shops = shopService.queryPromoterShop(urd.getId().intValue(), urd.getCompanyId().intValue());
+			if(!UtilHelper.isEmpty(shops)){
+				userContext.setCityName(shops.get(0).getCityName());
+				userContext.setShopName(shops.get(0).getShopName());
+				Shop shop = new Shop();
+				shop.setShopId(shops.get(0).getShopId());
+				shop.setWerks(shops.get(0).getWerks());
+				shop.setCityName(shops.get(0).getCityName());
+				shop.setShopName(shops.get(0).getShopName());
+				userContext.setShop(shop);
+				userContext.setShopList(shops);
+			}
+	    }
 		CacheUtils.getSupporter().set(token, userContext, exp);
 		System.out.println(userContext);
 		return userContext;
