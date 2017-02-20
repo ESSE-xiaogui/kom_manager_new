@@ -877,17 +877,17 @@
 		JOIN T_USER_SHOP us ON us.SHOP_ID = p.ID
 		JOIN T_USER u ON u.ID = us.USER_ID 
 		</if>
-		WHERE p.COMPANY_ID = 1 AND p.REGION_ID IS NOT NULL
+		WHERE p.COMPANY_ID = #{companyId} AND p.REGION_ID IS NOT NULL
 		AND p.REGION_ID = #{regionId}
 		<if test="userName!= null and userName!= ''">
 		AND u.USER_CODE = #{userName} 
 		</if> 		
 	</select>
-	<select id="findShopIds" parameterType="java.lang.Long" resultType = "Long">
+	<select id="findShopIds" resultType = "Long">
 		SELECT p.ID FROM T_SHOP p
 		JOIN T_USER_SHOP us ON us.SHOP_ID = p.ID
 		JOIN T_USER u ON u.ID = us.USER_ID  
-		WHERE p.COMPANY_ID = 1 AND p.REGION_ID IS NOT NULL
+		WHERE p.COMPANY_ID = #{companyId} AND p.REGION_ID IS NOT NULL
 		AND u.ID = #{uid}				
 	</select>
 	<select id="findByPromoter" parameterType="java.lang.Integer" resultMap="ShopResultMapper">

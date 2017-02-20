@@ -119,7 +119,8 @@ public class ShopManager {
 		if(UtilHelper.isEmpty(userDto)){
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
 		}
-		return shopMapper.findShopIds(userDto.getId());
+
+		return shopMapper.findShopIds(userDto.getId(), userDto.getCompanyId());
 	}
 	
 	/**

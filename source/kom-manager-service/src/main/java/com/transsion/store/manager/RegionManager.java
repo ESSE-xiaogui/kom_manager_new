@@ -262,10 +262,10 @@ public class RegionManager {
 			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
 		}
 		//List<ShopBindRegionDto> list = new ArrayList<ShopBindRegionDto>();
-		List<ShopBindRegionDto> childrenList = regionMapper.findRegion(userName);
+		List<ShopBindRegionDto> childrenList = regionMapper.findRegion(userName, userContext.getCompanyId());
 		if (!UtilHelper.isEmpty(childrenList)) {
 			for (ShopBindRegionDto shopBindRegion : childrenList) {
-				List<ShopRegionChildrenDto> childrenRegion = childrenRegion(shopBindRegion.getId(), userName);
+				List<ShopRegionChildrenDto> childrenRegion = childrenRegion(shopBindRegion.getId(), userName, userContext.getCompanyId());
 				shopBindRegion.setRegionChildren(childrenRegion);
 				//list.add(shopBindRegion);
 			}
@@ -273,13 +273,13 @@ public class RegionManager {
 		return childrenList;
 	}
 
-	public List<ShopRegionChildrenDto> childrenRegion(Long parentId, String userName)
+	public List<ShopRegionChildrenDto> childrenRegion(Long parentId, String userName, Long companyId)
 					throws DataAccessFailureException {
 		//List<ShopRegionChildrenDto> list = new ArrayList<ShopRegionChildrenDto>();
-		List<ShopRegionChildrenDto> srcList = regionMapper.findRegionChildren(parentId, userName);
+		List<ShopRegionChildrenDto> srcList = regionMapper.findRegionChildren(parentId, userName, companyId);
 		if (!UtilHelper.isEmpty(srcList)) {
 			for (ShopRegionChildrenDto src : srcList) {
-				List<ShopChildrenDto> scDtoList = shopMapper.findShopByRegionId(src.getId(), userName);
+				List<ShopChildrenDto> scDtoList = shopMapper.findShopByRegionId(src.getId(), userName, companyId);
 				src.setChildrenShop(scDtoList);
 				//list.add(src);
 			}

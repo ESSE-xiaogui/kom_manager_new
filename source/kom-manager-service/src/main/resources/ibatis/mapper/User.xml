@@ -49,6 +49,7 @@
 		<result column="USER_CODE" property="userCode"/>
 		<result column="PASSWORD" property="password"/>
 		<result column="EMP_NAME" property="empName"/>
+		<result column="COMPANY_ID" property="companyId" />
 		<result column="IS_INACTIVE" property="isInactive"/>
 		<result column="IN_SERVICE" property="inService"/>
 		<result column="DUTY_NAME" property="dutyName"/>
@@ -499,7 +500,7 @@
 	</select>
 	
 	<select id="findByName" parameterType="java.lang.String" resultMap="UserDtoResultMapper">
-		SELECT u.ID,u.USER_CODE,u.USER_NAME,e.EMP_NAME,o.ORG_NAME,u.IS_INACTIVE,e.IN_SERVICE FROM T_USER u		
+		SELECT u.ID,u.USER_CODE,u.USER_NAME, e.COMPANY_ID, e.EMP_NAME,o.ORG_NAME,u.IS_INACTIVE,e.IN_SERVICE FROM T_USER u
 		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID
 		LEFT JOIN T_ORGANIZATION o ON o.ID = e.ORG_ID
 		WHERE u.USER_CODE = #{userCode}

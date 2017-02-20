@@ -42,9 +42,9 @@ public interface RegionMapper extends GenericIBatisMapper<Region, java.lang.Long
 
 	public RegionDto getByPKs(Long primaryKey) throws DataAccessFailureException;
 	
-	public List<ShopBindRegionDto> findRegion(@Param("userName")String userName) throws DataAccessFailureException;
+	public List<ShopBindRegionDto> findRegion(@Param("userName")String userName, @Param("companyId")Long companyId) throws DataAccessFailureException;
 	
-	public List<ShopRegionChildrenDto> findRegionChildren(@Param("parentId")Long parentId,@Param("userName")String userName) throws DataAccessFailureException;
+	public List<ShopRegionChildrenDto> findRegionChildren(@Param("parentId")Long parentId,@Param("userName")String userName, @Param("companyId")Long companyId) throws DataAccessFailureException;
 	
 	public List<Region> getCityAll(@Param("parentId")Long parentId);
 	

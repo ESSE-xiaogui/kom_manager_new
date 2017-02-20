@@ -384,7 +384,7 @@
 		JOIN T_USER_SHOP us ON us.SHOP_ID = p.ID
 		JOIN T_USER u ON u.ID = us.USER_ID  
         </if>
-		WHERE p.COMPANY_ID = 1  AND p.REGION_ID IS NOT NULL
+		WHERE p.COMPANY_ID = #{companyId}  AND p.REGION_ID IS NOT NULL
 		<if test="userName!= null and userName!= ''">
 		AND u.USER_CODE = #{userName}
 		</if>  
@@ -397,7 +397,7 @@
 		JOIN T_USER_SHOP us ON us.SHOP_ID = p.ID
 		JOIN T_USER u ON u.ID = us.USER_ID  
 		</if>
-		WHERE c.PARENT_ID = #{parentId}  AND p.COMPANY_ID = 1 AND p.REGION_ID IS NOT NULL
+		WHERE c.PARENT_ID = #{parentId}  AND p.COMPANY_ID = #{companyId} AND p.REGION_ID IS NOT NULL
 		<if test="userName!= null and userName!= ''">
 		AND u.USER_CODE = #{userName}
 		</if> 
