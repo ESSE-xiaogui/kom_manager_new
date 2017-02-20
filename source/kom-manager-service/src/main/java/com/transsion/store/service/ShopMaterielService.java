@@ -153,7 +153,7 @@ public class ShopMaterielService {
 		shopMaterielMapper.saveShopMateriel(shopMateriel);
 	}
 	
-	 public List<ShopMateriel> queryShopMaterielListByShopId(Integer shopId) throws ServiceException {
+	 public List<ShopMateriel> queryShopMaterielListByShopId(Long shopId) throws ServiceException {
 		return shopMaterielMapper.queryShopMaterielListByShopId(shopId);
 	 }
 }

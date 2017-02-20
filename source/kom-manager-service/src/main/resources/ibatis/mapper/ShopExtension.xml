@@ -479,7 +479,7 @@
 		<include refid="commonCondition"/>
 	</select>
 	
-	<select id="queryShopExtensionByShopId" parameterType="java.lang.Integer" resultMap="ShopExtensionResultMapper">
+	<select id="queryShopExtensionByShopId" parameterType="java.lang.Long" resultMap="ShopExtensionResultMapper">
 		SELECT * FROM T_SHOP_EXTENSION WHERE SHOP_ID = #{shopId}
 	</select>
 </mapper>

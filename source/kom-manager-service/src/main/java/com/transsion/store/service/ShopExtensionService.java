@@ -149,7 +149,7 @@ public class ShopExtensionService {
 		return shopExtensionMapper.findByCount(shopExtension);
 	}
 	
-	 public ShopExtension queryShopExtensionByShopId(Integer shopId) throws ServiceException {
+	 public ShopExtension queryShopExtensionByShopId(Long shopId) throws ServiceException {
 		 return shopExtensionMapper.queryShopExtensionByShopId(shopId);
 	 }
 }

@@ -10,5 +10,5 @@ public interface UserShopMapper extends GenericIBatisMapper<UserShop, java.lang.
 	public void deleteByUserId(@Param("userId")Long userId) throws DataAccessFailureException;
 	public void saveUserShop(UserShop userShop) throws DataAccessFailureException;
 	
-	public List<Integer> queryShopIdByUserId(Integer userId) throws DataAccessFailureException;
+	public List<UserShop> queryShopIdByUserId(Integer userId) throws DataAccessFailureException;
 }

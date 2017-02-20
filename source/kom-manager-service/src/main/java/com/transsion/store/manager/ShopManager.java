@@ -15,6 +15,7 @@ import com.transsion.store.bo.ShopBiz;
 import com.transsion.store.bo.ShopExtension;
 import com.transsion.store.bo.ShopGrade;
 import com.transsion.store.bo.ShopMateriel;
+import com.transsion.store.bo.UserShop;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.ShopDefinitionDto;
 import com.transsion.store.dto.ShopDetailDto;
@@ -274,17 +275,15 @@ public class ShopManager {
 		}
 		
 		Integer userId = userContext.getUser().getUserId();
-		List<Integer> shopIdList = userShopMapper.queryShopIdByUserId(userId);
+		List<UserShop> shopIdList = userShopMapper.queryShopIdByUserId(userId);
 		
 		List<ShopDetailDto> list = new ArrayList<ShopDetailDto>();
 		for (int i = 0; i < shopIdList.size(); i++) {
 			ShopDetailDto shopDetailDto = new ShopDetailDto();
 			
-			Shop shop = shopMapper.queryShopByShopId(shopIdList.get(i));
-			
-			ShopExtension shopExtension = shopExtensionService.queryShopExtensionByShopId(shopIdList.get(i));
-			
-			List<ShopMateriel> shopMaterielList = shopMaterielService.queryShopMaterielListByShopId(shopIdList.get(i));
+			Shop shop = shopMapper.queryShopByShopId(shopIdList.get(i).getShopId());
+			ShopExtension shopExtension = shopExtensionService.queryShopExtensionByShopId(shopIdList.get(i).getShopId());
+			List<ShopMateriel> shopMaterielList = shopMaterielService.queryShopMaterielListByShopId(shopIdList.get(i).getShopId());
 			
 			shopDetailDto.setShop(shop);
 			shopDetailDto.setShopExtension(shopExtension);

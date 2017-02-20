@@ -29,5 +29,5 @@ public interface ShopExtensionMapper extends GenericIBatisMapper<ShopExtension, 
 
     public List<ShopExtension> listPaginationByProperty(Pagination<ShopExtension> pagination, @Param("shopExtension")ShopExtension shopExtension, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     
-    public ShopExtension queryShopExtensionByShopId(Integer shopId) throws DataAccessFailureException;
+    public ShopExtension queryShopExtensionByShopId(Long shopId) throws DataAccessFailureException;
 }

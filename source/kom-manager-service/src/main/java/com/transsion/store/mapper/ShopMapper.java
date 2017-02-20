@@ -42,5 +42,5 @@ public interface ShopMapper extends GenericIBatisMapper<Shop, java.lang.Long> {
 	public List<Shop> findByPromoter(@Param("userId") Integer userId,@Param("companyId") Integer companyId)throws DataAccessFailureException;
 	public List<Shop> findShopListByUser(@Param("userId") Integer userId,@Param("companyId") Integer companyId)throws DataAccessFailureException;
 	
-	public Shop queryShopByShopId(Integer shopId) throws DataAccessFailureException;
+	public Shop queryShopByShopId(long shopId) throws DataAccessFailureException;
 }
