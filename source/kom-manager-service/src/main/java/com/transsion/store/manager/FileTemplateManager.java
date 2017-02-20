@@ -10,6 +10,8 @@ import com.transsion.store.service.FileTemplateService;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.support.FastdfsClientSingleton;
 import com.transsion.store.utils.CacheUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ import java.util.List;
 
 @Service("fileTemplateManager")
 public class FileTemplateManager {
+
+    private Logger logger = LoggerFactory.getLogger(FileTemplateManager.class);
 
     @Autowired
     private FileTemplateService fileTemplateService;
@@ -95,9 +99,10 @@ public class FileTemplateManager {
             fileTemplateDto.setFileSuffix(fileTemplate.getFileSuffix());
 
             try {
+                logger.debug("FileId = [{}]", fileTemplate.getFileId());
                 fileTemplateDto.setInputStream(FastdfsClientSingleton.getSingleton().getFastdfsClient().download(fileTemplate.getFileId()));
             } catch (Exception e) {
-                throw new ServiceException(e.getMessage());
+                throw new ServiceException(e.getMessage(), e);
             }
 
             return fileTemplateDto;
