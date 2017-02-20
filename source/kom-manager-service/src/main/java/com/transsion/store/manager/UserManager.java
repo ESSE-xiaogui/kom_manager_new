@@ -72,13 +72,12 @@ public class UserManager {
 			throw new ServiceException(ExceptionDef.ERROR_USER_INACTIVE.getName());
 		}
 		/**
-		 * 获取角色名称
+		 * 获取角色名称,分配角色后的用户可以登录
 		 * */
 		List<String> roleList = systemRoleMapper.findRoleCode(urd.getId().intValue());
 		if (UtilHelper.isEmpty(roleList)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_LOGIN_FAILED.getName());
 		}
-
 		UserContext userContext = new UserContext();
 		long exp = 3600 * 24;
 	    String token = JwtUtils.tokenBuilder(authKeyGenerator.generateAuthKey(), userCode, 3600 * 24);

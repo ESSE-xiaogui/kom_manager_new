@@ -76,7 +76,7 @@ public interface CompanyFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(Company company) throws ServiceException;
+	public void save(Company company,String token) throws ServiceException;
 
 	/**
 	 * 更新记录
@@ -84,7 +84,7 @@ public interface CompanyFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(Company company) throws ServiceException;
+	public int update(Company company,String token) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数
