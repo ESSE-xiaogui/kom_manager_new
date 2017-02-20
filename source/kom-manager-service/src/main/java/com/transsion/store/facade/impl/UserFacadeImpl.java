@@ -195,7 +195,7 @@ public class UserFacadeImpl implements UserFacade {
 	}
 	
 	/**
-	 * @see 登出
+	 * 登出
 	 * @author guihua.zhang
 	 * @param token
 	 * @return

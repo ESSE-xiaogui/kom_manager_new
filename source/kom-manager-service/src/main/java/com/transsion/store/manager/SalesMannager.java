@@ -66,7 +66,7 @@ public class SalesMannager {
 	@Autowired
 	private EmployeeMapper employeeMapper;
 	/**
-	 * @see 销量上报记录
+	 *  销量上报记录
 	 * @author guihua.zhang
 	 * @return list
 	 * @throws ServiceException
@@ -336,7 +336,7 @@ public class SalesMannager {
 	}
 	
 	/**
-	 * @see 用户销量数
+	 *  用户销量数
 	 * @author guihua.zhang
 	 * @return
 	 * @throws ServiceException

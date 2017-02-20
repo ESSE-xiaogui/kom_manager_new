@@ -111,7 +111,7 @@ public class SaleGoalController extends AbstractController{
 		saleGoalFacade.update(saleGoal);
 	}
 	/**
-	 * @see 用户查看绩效
+	 *  用户查看绩效
 	 * @author guihua.zhang
 	 * @return
 	 * @throws ServiceException

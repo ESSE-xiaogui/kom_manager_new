@@ -268,7 +268,7 @@ public class UserManager {
 
 
 	/**
-	 * @see 通过token退出登录
+	 *  通过token退出登录
 	 * @author guihua.zhang
 	 * @param token
 	 * @return
