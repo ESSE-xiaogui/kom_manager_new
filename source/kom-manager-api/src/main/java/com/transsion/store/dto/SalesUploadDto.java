@@ -13,7 +13,7 @@ public class SalesUploadDto implements java.io.Serializable{
 	private String day;
 	/**
 	 * 状态
-	 * @see 0：imei未处理 1：imei成功 2：imei重复 3：imei非法 4:品牌为空5:品牌为TECNO时候，IMEI为空6:前端传入重复IMEI 7:cache imei处理中
+	 * 0：imei未处理 1：imei成功 2：imei重复 3：imei非法 4:品牌为空5:品牌为TECNO时候，IMEI为空6:前端传入重复IMEI 7:cache imei处理中
 	 * */
 	private Integer status = 0;
 	
@@ -37,14 +37,14 @@ public class SalesUploadDto implements java.io.Serializable{
 	}
 	/**
 	 * 状态
-	 * @see 0：imei未处理 1：imei成功 2：imei重复 3：imei非法 4:品牌为空 5:品牌为TECNO时候，IMEI为空6:前端传入重复IMEI
+	 * 0：imei未处理 1：imei成功 2：imei重复 3：imei非法 4:品牌为空 5:品牌为TECNO时候，IMEI为空6:前端传入重复IMEI
 	 * */
 	public Integer getStatus() {
 		return status;
 	}
 	/**
 	 * 状态
-	 * @see 0：imei未处理 1：imei成功 2：imei重复 3：imei非法 4:品牌为空 5:品牌为TECNO时候，IMEI为空6:前端传入重复IMEI
+	 * 0：imei未处理 1：imei成功 2：imei重复 3：imei非法 4:品牌为空 5:品牌为TECNO时候，IMEI为空6:前端传入重复IMEI
 	 * */
 	public void setStatus(Integer status) {
 		this.status = status;

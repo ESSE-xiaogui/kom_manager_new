@@ -89,7 +89,7 @@ public class SaleFacadeImpl implements SaleFacade {
 	}
 	
 	/**
-	 * @see 查询销量日报的记录
+	 *  查询销量日报的记录
 	 * */
 	public Pagination<SaleDailyDto> listPaginationByPropertys(Pagination<SaleDailyDto> pagination, SaleDailyDto saleDailyDto)
 					throws ServiceException{
@@ -165,7 +165,7 @@ public class SaleFacadeImpl implements SaleFacade {
 		return saleService.findByCount(sale);
 	}
 	/**
-	 * @see 销量上报记录
+	 *  销量上报记录
 	 * @return list
 	 * @throws ServiceException
 	 */
@@ -188,7 +188,7 @@ public class SaleFacadeImpl implements SaleFacade {
 		return salesMannager.findPromoterSales(token, startDate, endDate, model);
 	}
 	/**
-	 * @see 用户销量数
+	 *  用户销量数
 	 * @author guihua.zhang
 	 * @return
 	 * @throws ServiceException

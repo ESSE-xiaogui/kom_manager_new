@@ -106,7 +106,7 @@ public interface SaleFacade {
 	public Pagination<Sale> listPaginationByProperty(Pagination<Sale> pagination, Sale sale)
 			throws ServiceException;
 	/**
-	 * @see 查询销量日报的记录
+	 *  查询销量日报的记录
 	 * */
 	public Pagination<SaleDailyDto> listPaginationByPropertys(Pagination<SaleDailyDto> pagination, SaleDailyDto saleDailyDto)
 					throws ServiceException;
@@ -115,7 +115,7 @@ public interface SaleFacade {
 	
 	
 	/**
-	 * @see 销量上报记录
+	 *  销量上报记录
 	 * @author guihua.zhang
 	 * @return list
 	 * @throws ServiceException
@@ -128,7 +128,7 @@ public interface SaleFacade {
      */
     public List<SalesDto> findPromoterSales(String token, String startDate, String endDate, String model)throws ServiceException;
     /**
-	 * @see 用户销量数
+	 *  用户销量数
 	 * @author guihua.zhang
 	 * @return
 	 * @throws ServiceException

@@ -75,7 +75,7 @@ public class ShopBizController extends AbstractController{
 
 	/**
 	* 新增记录
-	* @see 门店类型新增
+	*  门店类型新增
 	* @author guihua.zhang
 	* @return
 	* @throws ServiceException

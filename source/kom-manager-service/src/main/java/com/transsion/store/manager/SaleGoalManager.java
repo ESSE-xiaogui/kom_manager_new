@@ -25,7 +25,7 @@ public class SaleGoalManager {
 	
 	
 	/**
-	 * @see 用户查看绩效
+	 *  用户查看绩效
 	 * @author guihua.zhang
 	 * @return
 	 * @throws ServiceException

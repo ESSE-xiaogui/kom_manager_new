@@ -192,7 +192,7 @@ public class UserController extends AbstractController{
 	}
 	
 	/**
-	 * @see 登出
+	 * 登出
 	 * @author guihua.zhang
 	 * @return
 	 * @throws ServiceException

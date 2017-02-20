@@ -93,7 +93,7 @@ public class SaleController extends AbstractController {
 	}
 
 	/**
-	 * @see 查询销量日报的记录
+	 *  查询销量日报的记录
 	 */
 	@POST
 	@Path("listSale")
@@ -172,7 +172,7 @@ public class SaleController extends AbstractController {
 	}
 
 	/**
-	 * @see 销量上报记录
+	 *  销量上报记录
 	 * @author guihua.zhang
 	 * @return list
 	 * @throws ServiceException
@@ -206,7 +206,7 @@ public class SaleController extends AbstractController {
 	}
 
 	/**
-	 * @see 用户销量数
+	 *  用户销量数
 	 * @author guihua.zhang
 	 * @return
 	 * @throws ServiceException

@@ -102,7 +102,7 @@ public interface SaleGoalFacade {
 	public Pagination<SaleGoal> listPaginationByProperty(Pagination<SaleGoal> pagination, SaleGoal saleGoal)
 			throws ServiceException;
 	/**
-	 * @see 用户查看绩效
+	 *  用户查看绩效
 	 * @author guihua.zhang
 	 * @return
 	 * @throws ServiceException
