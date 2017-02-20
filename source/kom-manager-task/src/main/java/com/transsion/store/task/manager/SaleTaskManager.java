@@ -19,6 +19,7 @@ import com.transsion.store.bo.Task;
 import com.transsion.store.bo.TaskDetail;
 import com.transsion.store.dto.SaleTaskDto;
 import com.transsion.store.dto.ScanValidateDto;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.manager.ScanValidateManager;
 import com.transsion.store.mapper.CurrencyMapper;
 import com.transsion.store.mapper.SaleItemMapper;
@@ -27,7 +28,6 @@ import com.transsion.store.mapper.ShopMapper;
 import com.transsion.store.mapper.TaskDetailMapper;
 import com.transsion.store.mapper.TaskMapper;
 import com.transsion.store.message.Message.Type;
-import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.ExcelUtil;
 
@@ -65,11 +65,11 @@ public class SaleTaskManager {
 	 */
 	public void getSaleTaskDto(Long taskId) throws ServiceException {
 		if(UtilHelper.isEmpty(taskId)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		Task task = taskMapper.findTaskById(taskId);
 		if(UtilHelper.isEmpty(task)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_TASK_NONEXIST.getName());
 		}
 		FastdfsClient fastdfsClient = FastdfsClientFactory.getFastdfsClient();
 		InputStream input;
@@ -164,7 +164,7 @@ public class SaleTaskManager {
 		List<Map<String, Object>> list = TaskUtil.formatArr(dataArr,
 						new String[] { "Sales date", "Shop ID", "User ID", "IMEI code", "Price" });
 		if (UtilHelper.isEmpty(list)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EXCEL_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_TASK_FILE_FORMATERROR.getName());
 		} else {
 			for (Map<String, Object> map : list) {
 				SaleTaskDto saleTaskDto = new SaleTaskDto();
@@ -217,7 +217,7 @@ public class SaleTaskManager {
 		List<Map<String, Object>> list = TaskUtil.formatArr(dataArr,
 						new String[] { "国家", "币别编码", "币别名称", "美元兑外币汇率","人民币兑外币汇率","生效日期","失效日期","是否停用" });
 		if (UtilHelper.isEmpty(list)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EXCEL_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_TASK_FILE_FORMATERROR.getName());
 		}else{
 			for (Map<String, Object> map : list) {
 				Currency currency = new Currency();

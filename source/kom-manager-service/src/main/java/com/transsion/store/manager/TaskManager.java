@@ -14,12 +14,12 @@ import com.transsion.store.bo.User;
 import com.transsion.store.common.Constants;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.TaskDto;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.TaskDetailMapper;
 import com.transsion.store.mapper.TaskMapper;
 import com.transsion.store.mapper.UserMapper;
 import com.transsion.store.message.Message.Group;
 import com.transsion.store.message.Message.Type;
-import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 
@@ -46,7 +46,7 @@ public class TaskManager {
 	 * */
 	public void delete(List<Long> primaryKeys) throws ServiceException{
 		if(UtilHelper.isEmpty(primaryKeys)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		taskDetailMapper.deleteByTaskIds(primaryKeys);
 		taskMapper.deleteByPKeys(primaryKeys);
@@ -54,21 +54,21 @@ public class TaskManager {
 	
 	public void saveTask(TaskDto taskDto,String token) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(taskDto)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(taskDto.getTaskType()) || UtilHelper.isEmpty(taskDto.getFileName()) || UtilHelper.isEmpty(taskDto.getUploadPath())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		User u = userMapper.getByPK(userContext.getUser().getId());
 		if(UtilHelper.isEmpty(u)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		Task task = new Task();
 		task.setTaskType(taskDto.getTaskType());
@@ -95,11 +95,11 @@ public class TaskManager {
 	}
 	public List<Task> findTask(String token, Task task) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		User u = userMapper.getByPK(userContext.getUser().getId());
 		task.setUserName(u.getUserName());

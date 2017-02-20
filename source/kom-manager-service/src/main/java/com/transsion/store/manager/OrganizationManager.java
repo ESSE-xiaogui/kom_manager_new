@@ -13,9 +13,9 @@ import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.OrganizationDto;
 import com.transsion.store.dto.OrganizationResponseDto;
 import com.transsion.store.dto.OrganizationTreeDto;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.EmployeeMapper;
 import com.transsion.store.mapper.OrganizationMapper;
-import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 
@@ -38,7 +38,7 @@ public class OrganizationManager {
 	 * */
 	public OrganizationResponseDto saveOrg(String token,OrganizationDto organizationDto) throws ServiceException{
 		if(UtilHelper.isEmpty(organizationDto) || UtilHelper.isEmpty(organizationDto.getOrgName())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		Organization tempOrg = new Organization();
@@ -46,7 +46,7 @@ public class OrganizationManager {
 		tempOrg.setParentId(organizationDto.getParentId());
 		int count = organizationMapper.findByCount(tempOrg);
 		if(count>0){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ORGANIZATION_ALREADY_EXISTS);
+			throw new ServiceException(ExceptionDef.ERROR_ORGANIZATION_ALREADY_EXIST.getName());
 		}
 		Organization organization = new Organization();
 		BeanUtils.copyProperties(organizationDto, organization);
@@ -74,11 +74,11 @@ public class OrganizationManager {
 	 * */
 	public OrganizationResponseDto findOrgName(Integer orgId) throws ServiceException{
 		if(UtilHelper.isEmpty(orgId)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		OrganizationResponseDto orgName = organizationMapper.getOrgName(orgId);
 		if(UtilHelper.isEmpty(orgName)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		OrganizationResponseDto ord = new OrganizationResponseDto();
 		ord.setParentName(orgName.getParentName());
@@ -126,7 +126,7 @@ public class OrganizationManager {
 	 * */
 	public OrganizationResponseDto deleteOrg(Integer orgId) throws ServiceException{
 		if(UtilHelper.isEmpty(orgId)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		OrganizationResponseDto orDto = new OrganizationResponseDto();
 		Organization org = new Organization();
@@ -135,11 +135,11 @@ public class OrganizationManager {
 		e.setOrgId(orgId);
 		int empCount = employeeMapper.findByCount(e);
 		if(empCount>0){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ORG_BINDEMP);
+			throw new ServiceException(ExceptionDef.ERROR_ORGANIZATION_EMP_BIND.getName());
 		}
 		int count = organizationMapper.findByCount(org);
 		if(count>0){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ORG_CHILDREN);
+			throw new ServiceException(ExceptionDef.ERROR_ORGANIZATION_CHILDREN_EXIST.getName());
 		}else{
 			Organization orgById = new Organization();
 			orgById.setId(new Long(orgId));
@@ -160,7 +160,7 @@ public class OrganizationManager {
 	 * */
 	public OrganizationResponseDto update(String token, Organization organization) throws ServiceException {
 		if(UtilHelper.isEmpty(organization) || UtilHelper.isEmpty(organization.getOrgName())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		Organization tempOrg = new Organization();
@@ -170,7 +170,7 @@ public class OrganizationManager {
 		tempOrg.setId(organization.getId());
 		int count2 = organizationMapper.findByCount(tempOrg);
 		if(count1>0 && count2<1){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ORGANIZATION_ALREADY_EXISTS);
+			throw new ServiceException(ExceptionDef.ERROR_ORGANIZATION_ALREADY_EXIST.getName());
 		}
 		Organization formerOrg = organizationMapper.getByPK(organization.getId());
 		formerOrg.setOrgName(organization.getOrgName());

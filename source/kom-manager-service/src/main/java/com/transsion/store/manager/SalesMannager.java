@@ -27,13 +27,13 @@ import com.transsion.store.dto.SalesDto;
 import com.transsion.store.dto.SalesUploadDto;
 import com.transsion.store.dto.ScanValidateDto;
 import com.transsion.store.dto.TShopSaleDto;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.CurrencyMapper;
 import com.transsion.store.mapper.EmployeeMapper;
 import com.transsion.store.mapper.SaleItemMapper;
 import com.transsion.store.mapper.SaleMapper;
 import com.transsion.store.mapper.ShopBizMapper;
 import com.transsion.store.mapper.ShopGradeMapper;
-import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 import com.transsion.store.utils.ExcelUtils;
@@ -74,23 +74,23 @@ public class SalesMannager {
 	public List<SalesUploadDto> saveSalesUpload(TShopSaleDto tshopSaleDto, String token, long imeiCacheTimeOut) throws ServiceException {
 		logger.info(Thread.currentThread().getName()+"*销量上报记录start*："+tshopSaleDto+token);
 		if (UtilHelper.isEmpty(token)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if (UtilHelper.isEmpty(tshopSaleDto) || UtilHelper.isEmpty(tshopSaleDto.getSaleDate()) 
 				|| UtilHelper.isEmpty(tshopSaleDto.gettShopSaleitems())) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		String saleDate = tshopSaleDto.getSaleDate();
 		List<SaleItem> tShopSaleitem = tshopSaleDto.gettShopSaleitems();
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getShop())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		Integer dealerId = userContext.getShop().getShopId().intValue();
 		Integer companyId = userContext.getUser().getCompanyId();
@@ -98,7 +98,7 @@ public class SalesMannager {
 		String werks = userContext.getShop().getWerks();
 		if(UtilHelper.isEmpty(userId) || UtilHelper.isEmpty(companyId) 
 				|| UtilHelper.isEmpty(dealerId) || UtilHelper.isEmpty(werks)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		List<SalesUploadDto> listSalesUploadDto = new ArrayList<SalesUploadDto>();
 		List<SaleItem> listTShopSaleitem = new ArrayList<SaleItem>();
@@ -290,13 +290,13 @@ public class SalesMannager {
 				saleItemMapper.saveSaleItem(listTShopSaleitem);
 			} catch (DuplicateKeyException e) {
 				logger.error("imei repeat...", e);
-				throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+				throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 			} catch (DeadlockLoserDataAccessException e) {
 				logger.error("imei repeatrollback...", e);
-				throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+				throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 			}catch (Exception e) {
 				logger.error("fail reason...", e);
-				throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+				throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 			}
 		
 		}
@@ -313,18 +313,18 @@ public class SalesMannager {
 	public void deleteByBillNo(String billNo,String token) throws ServiceException
 	{
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if (UtilHelper.isEmpty(billNo))
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if (UtilHelper.isEmpty(userContext))
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getUser().getUserId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		SaleItem tShopSaleitem = new SaleItem();
 		tShopSaleitem.setBillno(billNo);
@@ -344,20 +344,20 @@ public class SalesMannager {
 	public int findSaleQty(String token,String startDate,String endDate) throws ServiceException
 	{
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(startDate)||UtilHelper.isEmpty(endDate)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if (UtilHelper.isEmpty(userContext))
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		Integer userId = userContext.getUser().getId().intValue();
 		if(UtilHelper.isEmpty(userId)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		SalesDto salesDto = saleMapper.findSaleQty(userId,startDate,endDate);
 		int saleQty= 0;
@@ -381,40 +381,40 @@ public class SalesMannager {
 	public List<SalesDto> findPromoterSales(String token, String startDate, String endDate, String model)
 			throws ServiceException {
 		if(UtilHelper.isEmpty(startDate)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		// 获取token里的用户信息
 		Integer userId = userContext.getUser().getId().intValue();
 		if(UtilHelper.isEmpty(userId)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		return saleMapper.findPromoterSales(startDate, endDate, model, userId);
 	}
 	public SaleDailyDto findSaleItem(Long saleId) throws ServiceException{
 		if(UtilHelper.isEmpty(saleId)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		SaleDailyDto sdDto = new SaleDailyDto();
 		ShopBiz shopBiz = shopBizMapper.findShopBiz(saleId);
 		if(UtilHelper.isEmpty(shopBiz)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		sdDto.setBizName(shopBiz.getBizName());
 		ShopGrade shopGrade = shopGradeMapper.findShopGrade(saleId);
 		if(UtilHelper.isEmpty(shopGrade)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		sdDto.setGradeName(shopGrade.getGradeName());
 		Employee employee = employeeMapper.findEmployee(saleId);
 		if(UtilHelper.isEmpty(employee)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		sdDto.setEmpName(employee.getEmpName());
 		sdDto.setNation(employee.getNation());

@@ -12,8 +12,8 @@ import com.transsion.store.bo.Model;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.ModelDto;
 import com.transsion.store.dto.ModelResponseDto;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.ModelMapper;
-import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 
@@ -32,14 +32,14 @@ public class ModelManager {
 	 * */
 	public ModelResponseDto saveModel(String token,Model model) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(model)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		//同一品牌下的机型不能重复，不同品牌下的机型可以重复
 		Model tempMo = new Model();
@@ -47,7 +47,7 @@ public class ModelManager {
 		tempMo.setBrandCode(model.getBrandCode());
 		int count = modelMapper.findByCount(tempMo);
 		if(count>0){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_MODEL_ALREADY_EXISTS);
+			throw new ServiceException(ExceptionDef.ERROR_MODEL_ALREADY_EXIST.getName());
 		}
 		model.setSaleTime(model.getSaleTime().equals("") ? null : model.getSaleTime());
 		model.setCompanyId(userContext.getCompanyId().intValue());
@@ -67,7 +67,7 @@ public class ModelManager {
 	 * */
 	public List<ModelDto> findModel(ModelDto modelDto) throws ServiceException{
 		if(UtilHelper.isEmpty(modelDto)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		Model model = new Model();
 		BeanUtils.copyProperties(modelDto, model);
@@ -81,14 +81,14 @@ public class ModelManager {
 	 * */
 	public ModelResponseDto update(String token, Model model) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(model)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		//同一品牌下的机型不能重复，不同品牌下的机型可以重复
 		Model tempMo = new Model();
@@ -98,7 +98,7 @@ public class ModelManager {
 		tempMo.setId(model.getId());
 		int count2 = modelMapper.findByCount(tempMo);
 		if(count1>0 && count2<1){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_MODEL_ALREADY_EXISTS);
+			throw new ServiceException(ExceptionDef.ERROR_MODEL_ALREADY_EXIST.getName());
 		}
 		Model formerMo = modelMapper.getByPK(model.getId());
 		formerMo.setBrandCode(model.getBrandCode());
@@ -121,11 +121,11 @@ public class ModelManager {
 	 * */
 	public List<String> findModelName(String token) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		return modelMapper.findModelName(userContext.getCompanyId());
 	}

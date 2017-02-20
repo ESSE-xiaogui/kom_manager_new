@@ -11,10 +11,10 @@ import com.transsion.store.bo.StockItem;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.StockDto;
 import com.transsion.store.dto.StockResponseDto;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.CurrencyMapper;
 import com.transsion.store.mapper.StockItemMapper;
 import com.transsion.store.mapper.StockMapper;
-import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 
@@ -40,26 +40,26 @@ public class StockManager {
 	 */
 	public StockResponseDto saveStockUpload(List<StockDto> stockDtoList, String token) throws ServiceException {
 		if (UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if (UtilHelper.isEmpty(stockDtoList)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getShop())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		Integer companyId = userContext.getCompanyId().intValue();
 		Long dealerId = userContext.getShop().getShopId();
 		Long userId = userContext.getUser().getId();
 		if(UtilHelper.isEmpty(companyId) || UtilHelper.isEmpty(dealerId) || UtilHelper.isEmpty(userId)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		StockResponseDto stockResponseDto = new StockResponseDto();
 		Stock tshopMain = new Stock();
@@ -133,19 +133,19 @@ public class StockManager {
 	public List<StockDto> findPromoterStock(String token, String startDate, String endDate, String model)
 			throws ServiceException {
 		if(UtilHelper.isEmpty(startDate)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		// 获取token里的用户信息
 		Integer userId = userContext.getUser().getId().intValue();
 		if(UtilHelper.isEmpty(userId)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		return stockMapper.findPromoterStock(startDate, endDate, model, userId);
 	}
@@ -153,15 +153,15 @@ public class StockManager {
 	public List<StockDto> findPromoterCurrentStock(String token) throws ServiceException {
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		// 获取token里的用户信息
 		Integer userId = userContext.getUser().getId().intValue();
 		if(UtilHelper.isEmpty(userId)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		return stockMapper.findPromoterCurrentStock(userId);
 	}
@@ -170,19 +170,19 @@ public class StockManager {
 					String model) throws ServiceException {
 				validateToken(token);
 				if (UtilHelper.isEmpty(startDate)) {
-					throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+					throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 				}
 				UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 				if (UtilHelper.isEmpty(userContext)) {
-					throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+					throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 				}
 				if (UtilHelper.isEmpty(userContext.getUser())) {
-					throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+					throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 				}
 				// 获取token里的用户信息
 				Integer userId = userContext.getUser().getId().intValue();
 				if (UtilHelper.isEmpty(userId)) {
-					throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+					throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 				}
 				return stockMapper.findStocksByProp(shopId, startDate, endDate, model, userId);
 			}
@@ -191,22 +191,22 @@ public class StockManager {
 		validateToken(token);
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if (UtilHelper.isEmpty(userContext)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if (UtilHelper.isEmpty(userContext.getUser())) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		// 获取token里的用户信息
 		Integer userId = userContext.getUser().getId().intValue();
 		if (UtilHelper.isEmpty(userId)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		return stockMapper.findCurrentStockByProp(userId, shopId);
 	}
 	
 	public void validateToken(String token) throws ServiceException {
 		if (UtilHelper.isEmpty(token)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 	}
 

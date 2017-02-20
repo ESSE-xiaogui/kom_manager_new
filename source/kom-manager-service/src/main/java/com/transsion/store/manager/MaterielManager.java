@@ -9,8 +9,8 @@ import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Materiel;
 import com.transsion.store.context.UserContext;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.MaterielMapper;
-import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 
@@ -24,14 +24,14 @@ public class MaterielManager {
 	
 	public List<Materiel> getMaterielListByBrandCode(String brandCode, String token) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getCompanyId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		Materiel materiel = new Materiel();
 		materiel.setBrandCode(brandCode);
@@ -47,14 +47,14 @@ public class MaterielManager {
 	 */
 	public void save(Materiel materiel, String token) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getCompanyId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		
 		Materiel tempMateriel = new Materiel();
@@ -62,7 +62,7 @@ public class MaterielManager {
 		tempMateriel.setBrandCode(materiel.getBrandCode());
 		int count = materielMapper.findByCount(tempMateriel);
 		if(count>0){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_MATERIEL_ALREADY_EXISTS);
+			throw new ServiceException(ExceptionDef.ERROR_MODEL_ALREADY_EXIST.getName());
 		}
 		materiel.setCompanyId(userContext.getUser().getCompanyId());
 		materiel.setCreateBy(userContext.getUser().getUserCode());
@@ -80,14 +80,14 @@ public class MaterielManager {
 	 */
 	public int update(Materiel materiel, String token) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getCompanyId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		
 		Materiel tempMateriel = new Materiel();
@@ -97,7 +97,7 @@ public class MaterielManager {
 		tempMateriel.setId(materiel.getId());
 		int count2 = materielMapper.findByCount(tempMateriel);
 		if(count1>0&&count2<1){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_MATERIEL_ALREADY_EXISTS);
+			throw new ServiceException(ExceptionDef.ERROR_MODEL_ALREADY_EXIST.getName());
 		}
 		Materiel m = materielMapper.getByPK(materiel.getId());
 		m.setBrandCode(materiel.getBrandCode());

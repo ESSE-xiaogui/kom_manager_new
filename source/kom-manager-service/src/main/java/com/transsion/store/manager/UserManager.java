@@ -9,18 +9,20 @@ import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.UserInfoDto;
 import com.transsion.store.dto.UserResponseDto;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.SystemRoleMapper;
 import com.transsion.store.mapper.UserMapper;
-import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.ShopService;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.service.UserService;
 import com.transsion.store.utils.CacheUtils;
 import com.transsion.store.utils.MD5Utils;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * Created by tony on 2016/9/20.
@@ -56,25 +58,26 @@ public class UserManager {
 	 */
 	public UserContext executeLogin(String userCode, String password) throws ServiceException {
 		if(UtilHelper.isEmpty(userCode)||UtilHelper.isEmpty(password))
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		User user = new User();
 		user.setUserCode(userCode);
 		user.setPassword(password);
 		user.setLastLogin(systemDateService.getCurrentDate());
 		userMapper.updateLastLogin(user);
 		UserResponseDto urd = userMapper.getUser(user);
-		if (UtilHelper.isEmpty(urd) ||UtilHelper.isEmpty(urd.getId()) ){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_LOGIN_FAIL);
+		if (UtilHelper.isEmpty(urd) ||UtilHelper.isEmpty(urd.getId()) || UtilHelper.isEmpty(urd.getCompanyId())
+						|| UtilHelper.isEmpty(urd.getBrandCode())){
+			throw new ServiceException(ExceptionDef.ERROR_USER_LOGIN_FAILED.getName());
 		}
 		if(urd.getIsInactive().intValue() == 2){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_INACTIVE_USER);
+			throw new ServiceException(ExceptionDef.ERROR_USER_INACTIVE.getName());
 		}
 		/**
 		 * 获取角色名称
 		 * */
 		List<String> roleList = systemRoleMapper.findRoleCode(urd.getId().intValue());
 		if (UtilHelper.isEmpty(roleList)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_LOGIN_FAIL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_LOGIN_FAILED.getName());
 		}
 
 		UserContext userContext = new UserContext();
@@ -98,7 +101,7 @@ public class UserManager {
 			user.setUserName(urd.getUserName());
 			userContext.setUser(user);
 	    } else {
-	    	throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+	    	throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 	    }
 		if(!UtilHelper.isEmpty(urd.getCompanyId())) {
 			/**
@@ -130,14 +133,14 @@ public class UserManager {
 	 */
 	public UserResponseDto updateUserStatus(String token, Long id, Integer isInactive) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(id)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		User formerUser = userMapper.getByPK(id);
 		formerUser.setIsInactive(isInactive);
@@ -156,14 +159,14 @@ public class UserManager {
 	 */
 	public UserResponseDto modifyPassword(String token, Long id, String password) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(id)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		User formerUser = userMapper.getByPK(id);
 		formerUser.setPassword(password);
@@ -183,11 +186,11 @@ public class UserManager {
 	 * */
 	public UserInfoDto getUserInfo(String token, UserInfoDto userInfoDto) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		userInfoDto.setCompanyId(userContext.getCompanyId().intValue());
 		return userMapper.getUserInfo(userInfoDto);
@@ -200,11 +203,11 @@ public class UserManager {
 	 * */
 	public UserResponseDto update(String token, User user) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		User tempUser = new User();
 		tempUser.setUserCode(user.getUserCode());
@@ -212,7 +215,7 @@ public class UserManager {
 		tempUser.setId(user.getId());
 		int count2 = userService.findByCount(tempUser);
 		if(count1>0 && count2<1){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_ALREADY_EXISTS);			
+			throw new ServiceException(ExceptionDef.ERROR_USER_ALREADY_EXIST.getName());			
 		}else{
 			User formerUser = userMapper.getByPK(user.getId());
 			formerUser.setUserCode(user.getUserCode());
@@ -234,25 +237,25 @@ public class UserManager {
 	 * */
 	public void save(String token, User user) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		String userCode = user.getUserCode();
 		String password = user.getPassword();
 		if(UtilHelper.isEmpty(userCode)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERCODE_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(password)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PASSWORD_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		User u = new User();
 		u.setUserCode(userCode);
 		int countUser = userService.findByCount(u);
 		if(countUser>0){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_ALREADY_EXISTS);
+			throw new ServiceException(ExceptionDef.ERROR_USER_ALREADY_EXIST.getName());
 		}
 		
 		user.setCompanyId(userContext.getUser().getCompanyId());
@@ -273,7 +276,7 @@ public class UserManager {
 	 */
 	public Boolean logOut(String token) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		CacheUtils.getSupporter().remove(token);
 		return Boolean.TRUE;

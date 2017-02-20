@@ -13,8 +13,8 @@ import com.transsion.store.bo.Brand;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.BrandDto;
 import com.transsion.store.dto.BrandResponseDto;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.BrandMapper;
-import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 
@@ -33,23 +33,23 @@ public class BrandManager {
 	 * */
 	public BrandResponseDto saveBrand(String token,BrandDto brandDto) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(brandDto)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getCompanyId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		Brand tempBr = new Brand();
 		tempBr.setBrandName(brandDto.getBrandName());
 		int count = brandMapper.findByCount(tempBr);
 		if(count>0){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_BRAND_ALREADY_EXISTS);
+			throw new ServiceException(ExceptionDef.ERROR_BRAND_ALREADY_EXIST.getName());
 		}
 		Brand brand = new Brand();
 		BeanUtils.copyProperties(brandDto, brand);
@@ -70,20 +70,20 @@ public class BrandManager {
 	 * */
 	public List<BrandDto> findBrand(String token) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getCompanyId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		Brand brand = new Brand();
 		brand.setCompanyId(userContext.getCompanyId().intValue());
 		List<Brand> brandList = brandMapper.listByProperty(brand);
 		if(UtilHelper.isEmpty(brandList)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		List<BrandDto> brandDtoList = new ArrayList<BrandDto>();
 		for(Brand b:brandList){
@@ -103,11 +103,11 @@ public class BrandManager {
 	 * */
 	public BrandResponseDto update(String token, Brand brand) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		Brand tempBr = new Brand();
 		tempBr.setBrandName(brand.getBrandName());
@@ -115,7 +115,7 @@ public class BrandManager {
 		tempBr.setId(brand.getId());
 		int count2 = brandMapper.findByCount(tempBr);
 		if(count1>0 && count2<1){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_BRAND_ALREADY_EXISTS);
+			throw new ServiceException(ExceptionDef.ERROR_BRAND_ALREADY_EXIST.getName());
 		}
 		Brand formerBr = brandMapper.getByPK(brand.getId());
 		formerBr.setBrandName(brand.getBrandName());

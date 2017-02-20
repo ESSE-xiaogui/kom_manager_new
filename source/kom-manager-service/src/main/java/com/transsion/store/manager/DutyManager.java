@@ -9,8 +9,8 @@ import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Duty;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.DutyResponseDto;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.DutyMapper;
-import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.DutyService;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
@@ -40,14 +40,14 @@ public class DutyManager {
 	 * */
 	public void save(Duty duty,String token) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if (UtilHelper.isEmpty(duty)) {
-					throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+					throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(!UtilHelper.isEmpty(userContext.getUserCode())){
 			duty.setCreatedBy(userContext.getUserCode());
@@ -61,14 +61,14 @@ public class DutyManager {
 	 * */
 	public int update(Duty duty,String token) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if (UtilHelper.isEmpty(duty)) {
-					throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+					throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(!UtilHelper.isEmpty(userContext.getUserCode())){
 			duty.setCreatedBy(userContext.getUserCode());

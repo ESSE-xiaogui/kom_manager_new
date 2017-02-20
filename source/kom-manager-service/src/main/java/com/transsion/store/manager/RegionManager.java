@@ -19,9 +19,9 @@ import com.transsion.store.dto.ShopBindRegionDto;
 import com.transsion.store.dto.ShopChildrenDto;
 import com.transsion.store.dto.ShopDto;
 import com.transsion.store.dto.ShopRegionChildrenDto;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.RegionMapper;
 import com.transsion.store.mapper.ShopMapper;
-import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.RegionService;
 import com.transsion.store.service.ShopService;
 import com.transsion.store.service.SystemDateService;
@@ -52,14 +52,14 @@ public class RegionManager {
 	 */
 	public List<RegionDto> findRegionsList(String token) throws ServiceException {
 		if (UtilHelper.isEmpty(token)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext usercontext = (UserContext) CacheUtils.getSupporter().get(token);
 		if (UtilHelper.isEmpty(usercontext)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if (UtilHelper.isEmpty(usercontext.getUser())) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 
 		Integer companyId = usercontext.getUser().getCompanyId();
@@ -94,11 +94,11 @@ public class RegionManager {
 	 */
 	public Region findRegionName(java.lang.Long id) throws ServiceException {
 		if (UtilHelper.isEmpty(id)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		String regionName = regionService.getRegionName(id);
 		if (UtilHelper.isEmpty(regionName)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		Region region = new Region();
 		region.setRegionName(regionName);
@@ -113,21 +113,21 @@ public class RegionManager {
 	 */
 	public RegionResponseDto saveRegion(String token, Region region) throws ServiceException {
 		if (UtilHelper.isEmpty(token)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if (UtilHelper.isEmpty(region)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if (UtilHelper.isEmpty(userContext)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		Region tempReg = new Region();
 		tempReg.setRegionName(region.getRegionName());
 		tempReg.setParentId(region.getParentId());
 		int count = regionMapper.findByCount(tempReg);
 		if (count > 0) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_REGION_ALREADY_EXISTS);
+			throw new ServiceException(ExceptionDef.ERROR_REGION_ALREADY_EXIST.getName());
 		}
 		if (UtilHelper.isEmpty(region.getParentId())) {
 			region.setParentId(0l);
@@ -149,14 +149,14 @@ public class RegionManager {
 	 */
 	public RegionResponseDto update(String token, Region region) throws ServiceException {
 		if (UtilHelper.isEmpty(token)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if (UtilHelper.isEmpty(region)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if (UtilHelper.isEmpty(userContext)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		Region tempReg = new Region();
 		tempReg.setRegionName(region.getRegionName());
@@ -165,7 +165,7 @@ public class RegionManager {
 		tempReg.setId(region.getId());
 		int count2 = regionMapper.findByCount(tempReg);
 		if (count1 > 0 && count2 < 1) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_REGION_ALREADY_EXISTS);
+			throw new ServiceException(ExceptionDef.ERROR_REGION_ALREADY_EXIST.getName());
 		}
 		Region formerReg = regionMapper.getByPK(region.getId());
 		formerReg.setRegionName(region.getRegionName());
@@ -198,9 +198,9 @@ public class RegionManager {
 			shop.setRegionId(primaryKey);
 			int countShop = shopService.findByCount(shop);
 			if (countChildren > 0) {
-				throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EXIST_CHILD_NODE);
+				throw new ServiceException(ExceptionDef.ERROR_REGION_CHILDREN_EXIST.getName());
 			} else if (countShop > 0) {
-				throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_BUNDLED_WITH_SHOP);
+				throw new ServiceException(ExceptionDef.ERROR_REGION_SHOP_BIND.getName());
 			} else {
 				regionService.deleteByPK(primaryKey);
 			}
@@ -215,17 +215,17 @@ public class RegionManager {
 	 */
 	public List<RegionShopDto> findRegionShop(String token) throws ServiceException {
 		if (UtilHelper.isEmpty(token)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if (UtilHelper.isEmpty(userContext)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if (UtilHelper.isEmpty(userContext.getUser())) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if (UtilHelper.isEmpty(userContext.getUser().getCompanyId())) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		List<RegionShopDto> rsdList = new ArrayList<RegionShopDto>();
 		Integer companyId = userContext.getUser().getCompanyId();
@@ -255,11 +255,11 @@ public class RegionManager {
 	 */
 	public List<ShopBindRegionDto> findShopBindRegion(String token, String userName) throws ServiceException {
 		if (UtilHelper.isEmpty(token) && UtilHelper.isEmpty(userName)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if (UtilHelper.isEmpty(userContext)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		//List<ShopBindRegionDto> list = new ArrayList<ShopBindRegionDto>();
 		List<ShopBindRegionDto> childrenList = regionMapper.findRegion(userName, userContext.getCompanyId());

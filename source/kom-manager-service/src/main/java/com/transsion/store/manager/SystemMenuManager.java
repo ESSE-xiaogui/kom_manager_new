@@ -8,7 +8,7 @@ import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.SystemMenu;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.MenuDto;
-import com.transsion.store.resource.MessageStoreResource;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.service.SystemMenuService;
 import com.transsion.store.utils.CacheUtils;
@@ -120,7 +120,7 @@ public class SystemMenuManager {
 		tempMenu.setMenuCode(systemMenu.getMenuCode());
 		int count = systemMenuService.findByCount(tempMenu);
 		if(count>0){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_MENUCODE_IS_DUPLICATE);
+			throw new ServiceException(ExceptionDef.ERROR_SYSTEM_MENU_ALREADY_EXIST.getName());
 		}else{
 			UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 			systemMenu.setCreatedBy(userContext.getUser().getUserCode());
@@ -141,7 +141,7 @@ public class SystemMenuManager {
 		tempMenu.setMenuId(systemMenu.getMenuId());
 		int count2 = systemMenuService.findByCount(tempMenu);
 		if(count1>0 && count2<1){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_MENUCODE_IS_DUPLICATE);			
+			throw new ServiceException(ExceptionDef.ERROR_SYSTEM_MENU_ALREADY_EXIST.getName());			
 		}
 		SystemMenu formerMenu = systemMenuService.getByPK(systemMenu.getMenuId());
 		formerMenu.setMenuCode(systemMenu.getMenuCode());

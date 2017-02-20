@@ -5,7 +5,7 @@ import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.FileTemplate;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.FileTemplateDto;
-import com.transsion.store.resource.MessageStoreResource;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.service.FileTemplateService;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.support.FastdfsClientSingleton;
@@ -34,13 +34,13 @@ public class FileTemplateManager {
 
     public void save(String token, FileTemplate fileTemplate) throws ServiceException {
         if(UtilHelper.isEmpty(token)){
-            throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+            throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
         }
 
         UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 
         if(UtilHelper.isEmpty(userContext)){
-            throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+            throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
         }
         if(UtilHelper.isEmpty(fileTemplate.getTemplateName())) {
             fileTemplate.setTemplateName(FileTemplate.BizType.valueOf(fileTemplate.getBizType()).getValue());
@@ -82,7 +82,7 @@ public class FileTemplateManager {
         FileTemplate fileTemplate = new FileTemplate();
 
         if(UtilHelper.isEmpty(bizType)) {
-            throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+            throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
         }
 
         fileTemplate.setBizType(bizType.toUpperCase());
@@ -108,7 +108,7 @@ public class FileTemplateManager {
             return fileTemplateDto;
         }
 
-        throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_RECORD_NOT_EXIST);
+        throw new ServiceException(ExceptionDef.ERROR_TASK_TEMPLATE_EXIST.getName());
 
     }
 }

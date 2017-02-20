@@ -7,8 +7,8 @@ import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.UserRole;
 import com.transsion.store.dto.UserRoleDto;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.UserRoleMapper;
-import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 
 @Service("userRoleManager")
@@ -26,7 +26,7 @@ public class UserRoleManager {
 	 */
 	public void addUserRole(UserRoleDto userRoleDto) throws ServiceException {
 		if (UtilHelper.isEmpty(userRoleDto) || UtilHelper.isEmpty(userRoleDto.getUserId())) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserRole userR = new UserRole();
 		userR.setUserId(userRoleDto.getUserId());

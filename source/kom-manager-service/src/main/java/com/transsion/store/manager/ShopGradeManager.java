@@ -11,9 +11,9 @@ import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Shop;
 import com.transsion.store.bo.ShopGrade;
 import com.transsion.store.context.UserContext;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.ShopGradeMapper;
 import com.transsion.store.mapper.ShopMapper;
-import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 
@@ -30,14 +30,14 @@ public class ShopGradeManager {
 
 	public List<ShopGrade> getShopGradeList(String brandCode, String token) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getCompanyId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		ShopGrade sg = new ShopGrade();
 		sg.setBrandCode(brandCode);
@@ -53,14 +53,14 @@ public class ShopGradeManager {
 	 */
 	public void save(ShopGrade shopGrade, String token) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getCompanyId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		
 		ShopGrade tempSg = new ShopGrade();
@@ -68,7 +68,7 @@ public class ShopGradeManager {
 		tempSg.setBrandCode(shopGrade.getBrandCode());
 		int count = shopGradeMapper.findByCount(tempSg);
 		if(count>0){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_SHOP_GRADE_ALREADY_EXISTS);
+			throw new ServiceException(ExceptionDef.ERROR_SHOP_GRADE_EXIST.getName());
 		}
 		shopGrade.setCompanyId(userContext.getUser().getCompanyId());
 		shopGrade.setCreateBy(userContext.getUser().getUserCode());
@@ -86,14 +86,14 @@ public class ShopGradeManager {
 	 */
 	public int update(ShopGrade shopGrade, String token) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getCompanyId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		
 		ShopGrade tempSg = new ShopGrade();
@@ -103,7 +103,7 @@ public class ShopGradeManager {
 		tempSg.setId(shopGrade.getId());
 		int count2 = shopGradeMapper.findByCount(tempSg);
 		if(count1>0&&count2<1){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_SHOP_GRADE_ALREADY_EXISTS);
+			throw new ServiceException(ExceptionDef.ERROR_SHOP_GRADE_EXIST.getName());
 		}
 		ShopGrade sg = shopGradeMapper.getByPK(shopGrade.getId());
 		sg.setBrandCode(shopGrade.getBrandCode());
@@ -122,14 +122,14 @@ public class ShopGradeManager {
 	 */
 	public List<ShopGrade> findActiveShopGrade(String token) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getCompanyId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		ShopGrade sg = new ShopGrade();
 		sg.setIsInactive(1);
@@ -148,7 +148,7 @@ public class ShopGradeManager {
 			shop.setGradeId(primaryKey);
 			List<Shop> list = shopMapper.listByProperty(shop);
 			if(!UtilHelper.isEmpty(list)){
-				throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_GRADE_IN_USE);
+				throw new ServiceException(ExceptionDef.ERROR_SHOP_GRADE_INUSE.getName());
 			}
 			shopGradeMapper.deleteByPK(primaryKey);
 		}

@@ -20,6 +20,7 @@ import com.transsion.store.dto.ShopDefinitionDto;
 import com.transsion.store.dto.ShopDetailDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.transsion.store.dto.UserDto;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.MaterielMapper;
 import com.transsion.store.mapper.RegionMapper;
 import com.transsion.store.mapper.ShopBizMapper;
@@ -27,7 +28,6 @@ import com.transsion.store.mapper.ShopGradeMapper;
 import com.transsion.store.mapper.ShopMapper;
 import com.transsion.store.mapper.UserMapper;
 import com.transsion.store.mapper.UserShopMapper;
-import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.AttributeService;
 import com.transsion.store.service.ShopExtensionService;
 import com.transsion.store.service.ShopMaterielService;
@@ -74,17 +74,17 @@ public class ShopManager {
 	 * */
 	public List<ShopUserDto> findShopUser(String token) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getUser().getUserId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERID_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		return shopMapper.findShopUser(userContext.getUser().getUserId());
 	}
@@ -93,17 +93,17 @@ public class ShopManager {
 	 * */
 	public List<ShopUserDto> findShop(String token) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getUser().getCompanyId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERID_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		return shopMapper.findShop(userContext.getUser().getCompanyId());
 	}
@@ -112,12 +112,12 @@ public class ShopManager {
 	 * */
 	public List<Long> findShopIds(String userName) throws ServiceException{
 		if(UtilHelper.isEmpty(userName)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserDto userDto = new UserDto();
 		userDto =  userMapper.findByName(userName);
 		if(UtilHelper.isEmpty(userDto)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_NONEXIST.getName());
 		}
 
 		return shopMapper.findShopIds(userDto.getId(), userDto.getCompanyId());
@@ -130,23 +130,23 @@ public class ShopManager {
 		validateToken(token);
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if (UtilHelper.isEmpty(userContext)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_QUERY_ISNULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if (UtilHelper.isEmpty(userContext.getUser())) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_QUERY_USER_ISNULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		// 获取token里的用户信息
 		Integer userId = userContext.getUser().getId().intValue();
 		Integer companyId = userContext.getUser().getCompanyId();
 		if (UtilHelper.isEmpty(userId) || UtilHelper.isEmpty(companyId)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_SALESPARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		return shopMapper.findByPromoter(userId, companyId);
 	}
 	
 	public void validateToken(String token) throws ServiceException {
 		if (UtilHelper.isEmpty(token)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 	}
 	
@@ -159,16 +159,16 @@ public class ShopManager {
 		validateToken(token);
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if (UtilHelper.isEmpty(userContext)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_QUERY_ISNULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if (UtilHelper.isEmpty(userContext.getUser())) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_QUERY_USER_ISNULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		// 获取token里的用户信息
 		Integer userId = userContext.getUser().getId().intValue();
 		Integer companyId = userContext.getUser().getCompanyId();
 		if (UtilHelper.isEmpty(userId) || UtilHelper.isEmpty(companyId)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		return shopMapper.findShopListByUser(userId,companyId);
 	}
@@ -181,17 +181,17 @@ public class ShopManager {
 	 */
 	public ShopDefinitionDto queryShopDefitionDto(String token) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getUser().getCompanyId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERID_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		String brandCode = userContext.getBrandCode();
 		Integer companyId = userContext.getCompanyId().intValue();
@@ -235,17 +235,17 @@ public class ShopManager {
 	
 	public void createShop(String token, ShopDetailDto shopDetailDto) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getUser().getCompanyId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERID_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		
 		Shop shop = shopDetailDto.getShop();
@@ -260,17 +260,17 @@ public class ShopManager {
 	
 	public List<ShopDetailDto> queryManagedShopList(String token) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getUser().getCompanyId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERID_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		
 		Integer userId = userContext.getUser().getUserId();
@@ -296,17 +296,17 @@ public class ShopManager {
 	
 	public void updateShop(String token, ShopDetailDto shopDetailDto) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getUser().getCompanyId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERID_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		
 		Shop shop = shopDetailDto.getShop();

@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.SystemResource;
 import com.transsion.store.context.UserContext;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.SystemResourceMapper;
-import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 
@@ -41,7 +41,7 @@ public class SystemResourceManager {
 		tempRes.setResCode(systemResource.getResCode());
 		int count = systemResourceMapper.findByCount(tempRes);
 		if(count>0){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_RESCODE_IS_DUPLICATE);
+			throw new ServiceException(ExceptionDef.ERROR_SYSTEM_RESOURCE_ALREADY_EXIST.getName());
 		}else{
 			UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 			systemResource.setCreatedBy(userContext.getUser().getUserCode());
@@ -71,7 +71,7 @@ public class SystemResourceManager {
 		tempRes.setResId(systemResource.getResId());
 		int count2 = systemResourceMapper.findByCount(tempRes);
 		if(count1>0 && count2<1){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_RESCODE_IS_DUPLICATE);			
+			throw new ServiceException(ExceptionDef.ERROR_SYSTEM_RESOURCE_ALREADY_EXIST.getName());			
 		}
 		
 		SystemResource formerRes = systemResourceMapper.getByPK(systemResource.getResId());

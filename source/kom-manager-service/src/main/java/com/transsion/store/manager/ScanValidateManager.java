@@ -3,7 +3,7 @@ package com.transsion.store.manager;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.dto.ScanValidateDto;
-import com.transsion.store.resource.MessageStoreResource;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.service.ScanValidateService;
 
 import org.slf4j.Logger;
@@ -41,7 +41,7 @@ public class ScanValidateManager {
         }else if(!UtilHelper.isEmpty(qrCode)) {
             scanValidateDto=scanValidateService.scanIMEI(qrCode);
         }else{
-            throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_SCAN_IS_NULL);
+            throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
         }
         logger.debug(Thread.currentThread().getName()+"**********************调用验证iemi接口end："+scanValidateDto);
         return scanValidateDto;
@@ -52,7 +52,7 @@ public class ScanValidateManager {
         if(!UtilHelper.isEmpty(imeis)) {
             return   scanValidateService.scanIMEIs(imeis);
         }else{
-            throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_IMEI_IS_NULL);
+            throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
         }
     }
 }

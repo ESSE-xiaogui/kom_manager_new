@@ -6,8 +6,8 @@ import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.UserShop;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.UserShopDto;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.UserShopMapper;
-import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 @Service("userShopManager")
@@ -23,7 +23,7 @@ public class UserShopManager {
 	 * */
 	public void saveUserShop(String token, UserShopDto userShopDto) throws ServiceException{
 		if(UtilHelper.isEmpty(userShopDto) && UtilHelper.isEmpty(userShopDto.getUserId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		userShopMapper.deleteByUserId(userShopDto.getUserId());

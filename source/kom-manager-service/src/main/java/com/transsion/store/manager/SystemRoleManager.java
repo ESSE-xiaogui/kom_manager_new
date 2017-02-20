@@ -10,8 +10,8 @@ import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.SystemRole;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.SystemRoleResponseDto;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.SystemRoleMapper;
-import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 
@@ -27,7 +27,7 @@ public class SystemRoleManager {
 	 * */
 	public List<SystemRoleResponseDto> findSystemRoleByUser(Integer userId) throws ServiceException{
 		if(UtilHelper.isEmpty(userId)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		return systemRoleMapper.findSystemRoleByUser(userId);
 	}
@@ -43,17 +43,17 @@ public class SystemRoleManager {
 	public SystemRoleResponseDto updateRoleStatus(String token,Long roleId,Integer isInactive) 
 			throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(roleId)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		
 		SystemRole formerRole = systemRoleMapper.getByPK(roleId);
@@ -82,21 +82,21 @@ public class SystemRoleManager {
 	public SystemRoleResponseDto save(String token,SystemRole systemRole) throws ServiceException
 	{
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		
 		SystemRole tempRole = new SystemRole();
 		tempRole.setRoleCode(systemRole.getRoleCode());
 		int count = systemRoleMapper.findByCount(tempRole);
 		if(count>0){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ROLECODE_IS_DUPLICATE);
+			throw new ServiceException(ExceptionDef.ERROR_SYSTEM_ROLE_ALREADY_EXIST.getName());
 		}else{
 			systemRole.setCreatedBy(userContext.getUser().getUserCode());
 			systemRole.setCreateTime(systemDateService.getCurrentDate());
@@ -116,14 +116,14 @@ public class SystemRoleManager {
 	public SystemRoleResponseDto update(String token,SystemRole systemRole) throws ServiceException
 	{
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		
 		SystemRole tempRole = new SystemRole();
@@ -132,7 +132,7 @@ public class SystemRoleManager {
 		tempRole.setRoleId(systemRole.getRoleId());
 		int count2 = systemRoleMapper.findByCount(tempRole);
 		if(count1>0 && count2<1){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ROLECODE_IS_DUPLICATE);			
+			throw new ServiceException(ExceptionDef.ERROR_SYSTEM_ROLE_ALREADY_EXIST.getName());			
 		}
 		
 		SystemRole formerRole = systemRoleMapper.getByPK(systemRole.getRoleId());

@@ -15,10 +15,10 @@ import com.transsion.store.dto.EmpResponseDto;
 import com.transsion.store.dto.EmpUserDto;
 import com.transsion.store.dto.OrganizationDto;
 import com.transsion.store.dto.UserDto;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.DutyMapper;
 import com.transsion.store.mapper.EmployeeMapper;
 import com.transsion.store.mapper.OrganizationMapper;
-import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.EmployeeService;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.service.UserService;
@@ -52,30 +52,30 @@ public class EmployeeManager {
 	public EmpResponseDto saveEmp(String token,Employee employee) throws ServiceException
 	{
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(employee)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		/**
 		 * 新建员工必须绑定组织机构,组织机构ID不能为空
 		 * */
 		if(UtilHelper.isEmpty(employee.getOrgId())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		Organization org = organizationMapper.getByPK(new Long(employee.getOrgId()));
 		if(UtilHelper.isEmpty(org)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ORG_ISEXIST);
+			throw new ServiceException(ExceptionDef.ERROR_ORGANIZATION_ALREADY_EXIST.getName());
 		}
 		/**
 		 * 组织机构停用 不能绑定员工
 		 * */
 		if(org.getIsInactive().equals(ConstantUtil.STATUS_TWO)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_ORG_ISINACTIVE);
+			throw new ServiceException(ExceptionDef.ERROR_ORGANIZATION_INACTIVE.getName());
 		}
 		employee.setIsHistory(2);
 		employee.setCreatedBy(userContext.getUserCode());
@@ -97,26 +97,16 @@ public class EmployeeManager {
 	public EmpResponseDto updateEmp(String token,Employee employee) throws ServiceException
 	{	
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(employee)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
-		if(UtilHelper.isEmpty(userContext.getUser())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
-		}
-		/*Employee tempEmp = new Employee();
-		tempEmp.setEmpCode(employee.getEmpCode());
-		int count1 = employeeService.findByCount(tempEmp);
-		tempEmp.setId(employee.getId());
-		int count2 = employeeService.findByCount(tempEmp);
-		if(count1>0 && count2<1){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMPCODE_IS_DUPLICATE);
-		}*/
+
 		Employee formerEmp = employeeMapper.getByPK(employee.getId());
 		formerEmp.setEmpName(employee.getEmpName());
 		formerEmp.setGender( employee.getGender());
@@ -146,41 +136,41 @@ public class EmployeeManager {
 	 */
 	public EmpResponseDto createUser(String token,EmpUserDto empUserDto) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}	
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		Long empId = empUserDto.getId();
 		String userCode = empUserDto.getUserCode();
 		String password = empUserDto.getPassword();
 		if(UtilHelper.isEmpty(empId)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMPID_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(userCode)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERCODE_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(password)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PASSWORD_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		
 		User user = new User();
 		user.setUserCode(userCode);
 		if(userService.findByCount(user)>0){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_ALREADY_EXISTS);
+			throw new ServiceException(ExceptionDef.ERROR_USER_ALREADY_EXIST.getName());
 		}
 		Employee employee = employeeService.getByPK(empId);
 		if(UtilHelper.isEmpty(employee)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PASSWORD_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		Integer inService = employee.getInService();
 		if(!UtilHelper.isEmpty(inService) && 1 == employee.getInService().intValue() ){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_NOT_IN_SERVICE);
+			throw new ServiceException(ExceptionDef.ERROR_EMPLOYEE_OUTOFSERVICE.getName());
 		}
 		Long uId =employee.getuId();
 		if(!UtilHelper.isEmpty(uId)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_ALREADY_DISTRIBUTED);
+			throw new ServiceException(ExceptionDef.ERROR_EMPLOYEE_USER_BIND.getName());
 		}
 		user.setCompanyId(userContext.getCompanyId().intValue());
 		user.setPassword(MD5Utils.encrypt(PASSWORD));
@@ -203,14 +193,14 @@ public class EmployeeManager {
 	 */
 	public EmpResponseDto editUser(String token,EmpUserDto empUserDto) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}	
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		if(UtilHelper.isEmpty(empUserDto.getUserCode())){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USERCODE_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		String userCode = empUserDto.getUserCode();
 		User tempUser = new User();
@@ -218,13 +208,13 @@ public class EmployeeManager {
 		List<User> userList = userService.listByProperty(tempUser);
 		Integer userStatus = userList.get(0).getIsInactive();
 		if(IS_INACTIVE.equals(userStatus)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_INACTIVE_USER);
+			throw new ServiceException(ExceptionDef.ERROR_EMPLOYEE_OUTOFSERVICE.getName());
 		}
 		Long empId = empUserDto.getId();
 		
 		Employee employee = employeeMapper.getByPK(empId);
 		if(UtilHelper.isEmpty(employee)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_DOESNOT_EXIST);
+			throw new ServiceException(ExceptionDef.ERROR_EMPLOYEE_NONEXIST.getName());
 		}
 		Long uId = employee.getuId();
 		Employee tempEmp = new Employee();
@@ -232,7 +222,7 @@ public class EmployeeManager {
 		tempEmp.setuId(uId);
 		List<Employee> list = employeeMapper.listByProperty(tempEmp);
 		if(!UtilHelper.isEmpty(uId)&&UtilHelper.isEmpty(list)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_ALREADY_DISTRIBUTED);
+			throw new ServiceException(ExceptionDef.ERROR_EMPLOYEE_USER_BIND.getName());
 		}
 		
 		Employee formerEmp = new Employee();
@@ -262,7 +252,7 @@ public class EmployeeManager {
 	 */
 	public EmpResponseDto getByPKey(Long primaryKey) throws ServiceException {
 		if(UtilHelper.isEmpty(primaryKey)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		Employee emp = employeeService.getByPK(primaryKey);
 		EmpResponseDto erd = new EmpResponseDto();
@@ -286,7 +276,7 @@ public class EmployeeManager {
 	public List<EmpResponseDto> listByProperty(Employee employee) throws ServiceException {
 		List<EmpResponseDto> erdList = employeeMapper.listByProp(employee);
 		if(UtilHelper.isEmpty(erdList)){
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_EMP_DOESNOT_EXIST);
+			throw new ServiceException(ExceptionDef.ERROR_EMPLOYEE_NONEXIST.getName());
 		}
 		return erdList;
 	}

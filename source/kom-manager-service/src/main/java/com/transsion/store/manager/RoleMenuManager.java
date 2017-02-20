@@ -10,8 +10,8 @@ import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.RoleMenu;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.RoleMenuDto;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.RoleMenuMapper;
-import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 
@@ -25,14 +25,14 @@ public class RoleMenuManager {
 
 	public void addMenuRole(String token, RoleMenuDto roleMenuDto) throws ServiceException {
 		if (UtilHelper.isEmpty(token)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if (UtilHelper.isEmpty(userContext)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if (UtilHelper.isEmpty(userContext.getUser())) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		RoleMenu roleMenu = new RoleMenu();
 		Long roleId = roleMenuDto.getRoleId();

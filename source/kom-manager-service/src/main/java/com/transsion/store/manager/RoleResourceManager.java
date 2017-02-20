@@ -10,8 +10,8 @@ import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.RoleResource;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.RoleResourceDto;
+import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.RoleResourceMapper;
-import com.transsion.store.resource.MessageStoreResource;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 
@@ -26,14 +26,14 @@ public class RoleResourceManager {
 
 	public void addResRole(String token, RoleResourceDto roleResourceDto) throws ServiceException {
 		if (UtilHelper.isEmpty(token)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_TOKEN_INVALID);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if (UtilHelper.isEmpty(userContext)) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if (UtilHelper.isEmpty(userContext.getUser())) {
-			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_USER_IS_NULL);
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		RoleResource roleResource = new RoleResource();
 		Long roleId = roleResourceDto.getRoleId();
