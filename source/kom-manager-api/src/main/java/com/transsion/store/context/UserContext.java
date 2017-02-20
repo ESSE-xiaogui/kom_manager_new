@@ -5,6 +5,7 @@ import com.transsion.store.IUserContext;
 import com.transsion.store.bo.Shop;
 import com.transsion.store.bo.SystemRole.Role;
 import com.transsion.store.bo.User;
+import com.transsion.store.dto.ShopLoginDto;
 
 /**
  * Created by liuzh on 16-5-31.
@@ -59,7 +60,7 @@ public class UserContext implements IUserContext {
     /**
      * 店铺信息
      */
-    private List<Shop> shopList;
+    private List<ShopLoginDto> shopList;
 
     /**
      * 店铺名称
@@ -89,11 +90,11 @@ public class UserContext implements IUserContext {
 		this.dutyName = dutyName;
 	}
 
-	public List<Shop> getShopList() {
+	public List<ShopLoginDto> getShopList() {
 		return shopList;
 	}
 
-	public void setShopList(List<Shop> shopList) {
+	public void setShopList(List<ShopLoginDto> shopList) {
 		this.shopList = shopList;
 	}
 

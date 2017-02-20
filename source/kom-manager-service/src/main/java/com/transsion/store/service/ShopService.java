@@ -21,6 +21,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.transsion.store.bo.Shop;
+import com.transsion.store.dto.ShopLoginDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
@@ -158,7 +159,7 @@ public class ShopService {
 	 * @throws DataAccessFailureException 
 	 * @throws ServiceException
      */
-	public List<Shop> queryPromoterShop(Integer userId, Integer companyId) throws ServiceException {
+	public List<ShopLoginDto> queryPromoterShop(Long userId, Long companyId) throws ServiceException {
 		if(UtilHelper.isEmpty(userId))
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 

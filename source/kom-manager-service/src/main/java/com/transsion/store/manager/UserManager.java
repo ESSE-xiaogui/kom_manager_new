@@ -7,6 +7,7 @@ import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Shop;
 import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.ShopLoginDto;
 import com.transsion.store.dto.UserInfoDto;
 import com.transsion.store.dto.UserResponseDto;
 import com.transsion.store.exception.ExceptionDef;
@@ -18,7 +19,6 @@ import com.transsion.store.service.UserService;
 import com.transsion.store.utils.CacheUtils;
 import com.transsion.store.utils.MD5Utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,8 +65,7 @@ public class UserManager {
 		user.setLastLogin(systemDateService.getCurrentDate());
 		userMapper.updateLastLogin(user);
 		UserResponseDto urd = userMapper.getUser(user);
-		if (UtilHelper.isEmpty(urd) ||UtilHelper.isEmpty(urd.getId()) || UtilHelper.isEmpty(urd.getCompanyId())
-						|| UtilHelper.isEmpty(urd.getBrandCode())){
+		if (UtilHelper.isEmpty(urd) ||UtilHelper.isEmpty(urd.getId())){
 			throw new ServiceException(ExceptionDef.ERROR_USER_LOGIN_FAILED.getName());
 		}
 		if(urd.getIsInactive().intValue() == 2){
@@ -93,8 +92,8 @@ public class UserManager {
 			user.setId(urd.getId());
 			userContext.setBrandCode(urd.getBrandCode());
 			userContext.setRole(roleList);
-			if(!UtilHelper.isEmpty(urd.getUserId())){
-				user.setUserId(urd.getUserId().intValue());
+			if(!UtilHelper.isEmpty(urd.getId())){
+				user.setId(urd.getId());
 			}
 			user.setLastLogin(urd.getLastLogin());
 			user.setCompanyId(urd.getCompanyId() == null ? null : urd.getCompanyId().intValue());
@@ -107,12 +106,12 @@ public class UserManager {
 			/**
 			 * 多店铺
 			 * */
-			List<Shop> shops = shopService.queryPromoterShop(urd.getId().intValue(), urd.getCompanyId().intValue());
+			List<ShopLoginDto> shops = shopService.queryPromoterShop(urd.getId(), urd.getCompanyId());
 			if(!UtilHelper.isEmpty(shops)){
 				userContext.setCityName(shops.get(0).getCityName());
 				userContext.setShopName(shops.get(0).getShopName());
 				Shop shop = new Shop();
-				shop.setShopId(shops.get(0).getShopId());
+				shop.setId(shops.get(0).getShopId());
 				shop.setWerks(shops.get(0).getWerks());
 				shop.setCityName(shops.get(0).getCityName());
 				shop.setShopName(shops.get(0).getShopName());
@@ -121,7 +120,6 @@ public class UserManager {
 			}
 	    }
 		CacheUtils.getSupporter().set(token, userContext, exp);
-		System.out.println(userContext);
 		return userContext;
 	}
 	

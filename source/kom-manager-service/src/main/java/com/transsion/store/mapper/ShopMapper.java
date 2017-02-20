@@ -26,6 +26,7 @@ import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.transsion.store.bo.Shop;
 import com.transsion.store.dto.ShopChildrenDto;
+import com.transsion.store.dto.ShopLoginDto;
 import com.transsion.store.dto.ShopUserDto;
 
 public interface ShopMapper extends GenericIBatisMapper<Shop, java.lang.Long> {
@@ -37,7 +38,7 @@ public interface ShopMapper extends GenericIBatisMapper<Shop, java.lang.Long> {
     public Shop findShopId(@Param("shopCode")String shopCode)throws DataAccessFailureException;
     public List<ShopChildrenDto> findShopByRegionId (@Param("regionId")Long regionId,@Param("userName")String userName, @Param("companyId") Long companyId) throws DataAccessFailureException;
     public List<Long> findShopIds (@Param("uid")Long uid, @Param("companyId")Long companyId) throws DataAccessFailureException;
-	public List<Shop> findByPromoters(@Param("userId") Integer userId,@Param("companyId") Integer companyId)throws DataAccessFailureException;
+	public List<ShopLoginDto> findByPromoters(@Param("userId") Long userId,@Param("companyId") Long companyId)throws DataAccessFailureException;
 	public List<Shop> findByPromoter(@Param("userId") Integer userId,@Param("companyId") Integer companyId)throws DataAccessFailureException;
 	public List<Shop> findShopListByUser(@Param("userId") Integer userId,@Param("companyId") Integer companyId)throws DataAccessFailureException;
 	
