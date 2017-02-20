@@ -25,6 +25,7 @@ import com.transsion.store.bo.Company;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.CompanyFacade;
+import com.transsion.store.manager.CompanyManager;
 import com.transsion.store.service.CompanyService;
 
 @Component("companyFacade")
@@ -37,6 +38,9 @@ public class CompanyFacadeImpl implements CompanyFacade {
 	{
 		this.companyService = companyService;
 	}
+	
+	@Autowired
+	private CompanyManager companyManager;
 	
 	/**
 	 * 通过主键查询实体对象
@@ -119,9 +123,9 @@ public class CompanyFacadeImpl implements CompanyFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(Company company) throws ServiceException
+	public void save(Company company,String token) throws ServiceException
 	{
-		companyService.save(company);
+		companyManager.save(company,token);
 	}
 
 	/**
@@ -130,9 +134,9 @@ public class CompanyFacadeImpl implements CompanyFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(Company company) throws ServiceException
+	public int update(Company company,String token) throws ServiceException
 	{
-		return companyService.update(company);
+		return companyManager.update(company,token);
 	}
 
 	/**
