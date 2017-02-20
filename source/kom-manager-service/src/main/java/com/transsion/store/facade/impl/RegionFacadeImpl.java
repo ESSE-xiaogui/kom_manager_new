@@ -19,7 +19,6 @@ package com.transsion.store.facade.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.transsion.store.bo.Region;
 import com.transsion.store.dto.RegionDto;
 import com.transsion.store.dto.RegionListDto;
@@ -200,5 +199,13 @@ public class RegionFacadeImpl implements RegionFacade {
 	 * */
 	public List<ShopBindRegionDto> findShopBindRegion(String token, String userName) throws ServiceException{
 		return regionManager.findShopBindRegion(token,userName);
+	}
+	
+	public List<RegionDto> findCountryList(String token) throws ServiceException {
+		return regionManager.findCountryList(token);
+	}
+	
+	public List<RegionDto> findCityListByParentRegionId(int regionId,String token) throws ServiceException {
+		return regionManager.findCityListByParentRegionId(regionId,token);
 	}
 }

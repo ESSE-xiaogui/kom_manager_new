@@ -143,4 +143,12 @@ public interface RegionFacade {
 	 * 门店授权管理:门店绑定区域查询
 	 * */
 	public List<ShopBindRegionDto> findShopBindRegion(String token,String userName) throws ServiceException;
+
+	/**
+	* 查询国家区域
+	 * @param token 
+	*/
+	public List<RegionDto> findCountryList(String token)throws ServiceException;
+
+	public List<RegionDto> findCityListByParentRegionId(int parentId,String token)throws ServiceException;
 }

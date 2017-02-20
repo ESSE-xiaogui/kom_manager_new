@@ -170,4 +170,12 @@ public class RegionService {
 		return regionMapper.getRegionName(id);
 	}
 
+	public List<Region> findCountryList() {
+		return regionMapper.findCountryList();
+	}
+
+	public List<Region> findCityListByParentRegionId(int parentId) {
+		return regionMapper.findCityListByParentRegionId(parentId);
+	}
+
 }

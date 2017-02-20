@@ -414,4 +414,11 @@
 		SELECT ID,REGION_NAME,PARENT_ID FROM T_REGION 
 		WHERE REGION_TYPE=#{regionType}
 	</select>
+	<select id="findCountryList" resultMap="RegionResultMapper">
+		SELECT ID, REGION_NAME,REGION_CODE FROM T_REGION WHERE REGION_TYPE = '2'
+	</select>
+	
+	<select id="findCityListByParentRegionId" parameterType="java.lang.Integer" resultMap="RegionResultMapper">
+		SELECT ID, REGION_NAME FROM T_REGION WHERE REGION_TYPE = '4' AND PARENT_ID = #{parentId}
+	</select>
 </mapper>
