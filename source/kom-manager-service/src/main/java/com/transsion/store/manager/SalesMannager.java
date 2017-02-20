@@ -404,21 +404,24 @@ public class SalesMannager {
 		SaleDailyDto sdDto = new SaleDailyDto();
 		ShopBiz shopBiz = shopBizMapper.findShopBiz(saleId);
 		if(UtilHelper.isEmpty(shopBiz)){
-			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
-		}
+			sdDto.setBizName(null);
+		}else{
 		sdDto.setBizName(shopBiz.getBizName());
+		}
 		ShopGrade shopGrade = shopGradeMapper.findShopGrade(saleId);
 		if(UtilHelper.isEmpty(shopGrade)){
-			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
-		}
+			sdDto.setGradeName(null);
+		}else{
 		sdDto.setGradeName(shopGrade.getGradeName());
+		}
 		Employee employee = employeeMapper.findEmployee(saleId);
 		if(UtilHelper.isEmpty(employee)){
-			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
-		}
+			sdDto.setEmpName(null);
+			sdDto.setNation(null);
+		}else{
 		sdDto.setEmpName(employee.getEmpName());
 		sdDto.setNation(employee.getNation());
-		System.out.println(sdDto);
+		}
 		return sdDto;
 	}
 	/**
