@@ -69,6 +69,56 @@
 		<result column="CITY_NAME" property="cityName"/>
 		<result column="WERKS" property="werks"/>
 	</resultMap>
+	<resultMap id="ShopInfoDtoResultMapper" type="ShopInfoDto">
+		<result column="ID" property="id"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="SHOP_CODE" property="shopCode"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="PARENT_ID" property="parentId"/>
+		<result column="REGION_ID" property="regionId"/>
+		<result column="COUNTRY" property="country"/>
+		<result column="CITY" property="city"/>
+		<result column="SHOP_ICON" property="shopIcon"/>
+		<result column="ADDRESS" property="address"/>
+		<result column="OWNER_NAME" property="ownerName"/>
+		<result column="OWNER_PHONE" property="ownerPhone"/>
+		<result column="PROMOTER" property="promoter"/>
+		<result column="ASSISTANT" property="assistant"/>
+		<result column="MATERIEL_ID" property="materielId"/>
+		<result column="GRADE_ID" property="gradeId"/>
+		<result column="BIZ_ID" property="bizId"/>
+		<result column="TOTAL_NUM" property="totalNum"/>
+		<result column="CURRENT_NUM" property="currentNum"/>
+		<result column="CLERK_NUM" property="clerkNum"/>
+		<result column="BRANDS_FIRST" property="brandsFirst"/>
+		<result column="BRANDS_TWO" property="brandsTwo"/>
+		<result column="BRANDS_THREE" property="brandsThree"/>
+		<result column="COUNTER_NUM" property="counterNum"/>
+		<result column="DARK_PRO" property="darkPro"/>
+		<result column="PURCHAS_CHANNEL" property="purchasChannel"/>
+		<result column="IS_KOM" property="isKom"/>
+		<result column="RELATIONSHIP" property="relationship"/>
+		<result column="INCORPORATOR" property="incorporator"/>
+		<result column="INCORPORATOR_TEL" property="incorporatorTel"/>
+		<result column="FWIDTH" property="fwidth"/>
+		<result column="FDEPTH" property="fdepth"/>
+		<result column="SHOP_AREA" property="shopArea"/>
+		<result column="SHOW_NUM" property="showNum"/>
+		<result column="STAFF_NUM" property="staffNum"/>
+		<result column="SALES_NUM" property="salesNum"/>
+		<result column="OPEN_DATE" property="openDate"/>
+		<result column="STATUS" property="status"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_DATE" property="updateDate"/>
+		<result column="VERSION" property="version"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="WERKS" property="werks"/>
+	</resultMap>
 	<resultMap id="ShopDtoResultMapper" type="ShopUserDto">
 		<result column="ID" property="id"/>
 		<result column="SHOP_ID" property="shopId"/>
@@ -178,6 +228,7 @@
 	
 	<sql id="commonProcessDateColumns">
 		 ID
+		, BRAND_CODE
 		, SHOP_ID
 		, SHOP_CODE
 		, SHOP_NAME
@@ -194,13 +245,27 @@
 		, ASSISTANT
 		, MATERIEL_ID
 		, GRADE_ID
+		, GRADE_NAME
 		, BIZ_ID
+		, BIZ_NAME
+		, COUNTRY_NAME
+		, CITY_NAME
+		, CLERK_BRAND_QTY
 		, TOTAL_NUM
 		, CURRENT_NUM
 		, CLERK_NUM
-		, BRANDS_FIRST
+		, BRANDS_ONE
 		, BRANDS_TWO
 		, BRANDS_THREE
+		, BRANDS_FOUR
+		, BRANDS_FIVE
+		, BRANDS_SIX
+		, CLERK_ONE_QTY
+		, CLERK_TWO_QTY
+		, CLERK_THREE_QTY
+		, CLERK_FOUR_QTY
+		, CLERK_FIVE_QTY
+		, CLERK_SIX_QTY
 		, COUNTER_NUM
 		, DARK_PRO
 		, PURCHAS_CHANNEL
@@ -781,7 +846,7 @@
 		FROM T_SHOP WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="Shop" resultMap="ShopResultMapper">
+	<select id="listPaginationByProperty" parameterType="ShopInfoDto" resultMap="ShopInfoDtoResultMapper">
 		SELECT 
 		<include refid="commonProcessDateColumns"/>
 		FROM T_SHOP WHERE 1=1
@@ -812,7 +877,7 @@
 		JOIN T_USER_SHOP us ON us.SHOP_ID = p.ID
 		JOIN T_USER u ON u.ID = us.USER_ID 
 		</if>
-		WHERE p.COMPANY_ID = 1000 AND p.REGION_ID IS NOT NULL
+		WHERE p.COMPANY_ID = 1 AND p.REGION_ID IS NOT NULL
 		AND p.REGION_ID = #{regionId}
 		<if test="userName!= null and userName!= ''">
 		AND u.USER_CODE = #{userName} 
@@ -822,7 +887,7 @@
 		SELECT p.ID FROM T_SHOP p
 		JOIN T_USER_SHOP us ON us.SHOP_ID = p.ID
 		JOIN T_USER u ON u.ID = us.USER_ID  
-		WHERE p.COMPANY_ID = 1000 AND p.REGION_ID IS NOT NULL
+		WHERE p.COMPANY_ID = 1 AND p.REGION_ID IS NOT NULL
 		AND u.ID = #{uid}				
 	</select>
 	<select id="findByPromoter" parameterType="java.lang.Integer" resultMap="ShopResultMapper">
