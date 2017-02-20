@@ -61,29 +61,22 @@ public class RegionManager {
 		if (UtilHelper.isEmpty(usercontext.getUser())) {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
-
 		Integer companyId = usercontext.getUser().getCompanyId();
-		List<RegionDto> regionList = regionService.findRegionsList(companyId);
-		return getChildrenRegion(regionList, Long.valueOf(0));
+		List<RegionDto> regionList = regionService.findRegionsList(companyId,0l);
+		return getChildrenRegion(regionList,companyId);
 	}
 
 	/**
 	 * 获取树形子菜单
 	 */
-	public List<RegionDto> getChildrenRegion(List<RegionDto> regionList, Long parentId) throws ServiceException {
-		List<RegionDto> regionTreeDto = new ArrayList<>();
+	public List<RegionDto> getChildrenRegion(List<RegionDto> regionList, Integer companyId) throws ServiceException {
 		for (RegionDto region : regionList) {
-			Long regionId = region.getId();
-			Long pid = region.getParentId();
-			if (parentId != null) {
-				if (parentId.equals(pid)) {
-					List<RegionDto> children = getChildrenRegion(regionList, regionId);
-					region.setChildren(children);
-					regionTreeDto.add(region);
-				}
-			}
+			Long pid = region.getId();
+			List<RegionDto> list = regionService.findRegionsList(companyId,pid);
+			List<RegionDto> children = getChildrenRegion(list, companyId);
+			region.setChildren(children);
 		}
-		return regionTreeDto;
+		return regionList;
 	}
 
 	/**

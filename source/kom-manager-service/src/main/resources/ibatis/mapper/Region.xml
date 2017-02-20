@@ -352,6 +352,7 @@
 	</select>
 	<select id="findRegionsList"  parameterType="java.lang.Integer" resultMap = "RegionDtoResultMapper">
 		SELECT ID, PARENT_ID, REGION_CODE, REGION_NAME FROM T_REGION WHERE COMPANY_ID = #{companyId}
+		AND PARENT_ID=#{parentId}
 	</select>
 	<select id="getRegionName"  parameterType="java.lang.Long" resultType = "String">
 		SELECT REGION_NAME FROM T_REGION WHERE ID = #{id} 
@@ -408,9 +409,9 @@
 			 <include refid="commonProcessDateColumns"/>
 		FROM T_REGION WHERE PARENT_ID = #{parentId} 
 	</select>
-	<select id="queryRegionByTypeCode" parameterType="int"
+	<select id="queryRegionByRegionType" parameterType="int"
 		resultMap="RegionResultMapper">
 		SELECT ID,REGION_NAME,PARENT_ID FROM T_REGION 
-		WHERE TYPE_CODE=#{typeCode}
+		WHERE REGION_TYPE=#{regionType}
 	</select>
 </mapper>

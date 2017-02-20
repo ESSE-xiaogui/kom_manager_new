@@ -196,9 +196,9 @@ public class ShopManager {
 		String brandCode = userContext.getBrandCode();
 		Integer companyId = userContext.getCompanyId().intValue();
 		ShopDefinitionDto sdd = new ShopDefinitionDto();
-		List<Region> countryList = regionMapper.queryRegionByTypeCode(1);
+		List<Region> countryList = regionMapper.queryRegionByRegionType(2);
 		sdd.setCountryList(countryList);
-		List<Region> cityList = regionMapper.queryRegionByTypeCode(2);
+		List<Region> cityList = regionMapper.queryRegionByRegionType(4);
 		sdd.setCityList(cityList);
 		
 		Materiel materiel = new Materiel();

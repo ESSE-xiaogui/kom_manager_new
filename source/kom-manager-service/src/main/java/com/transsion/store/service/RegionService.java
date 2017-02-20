@@ -157,8 +157,8 @@ public class RegionService {
 		return regionMapper.findByCount(region);
 	}
 
-	public List<RegionDto> findRegionsList(Integer companyId) throws ServiceException {
-		return regionMapper.findRegionsList(companyId);
+	public List<RegionDto> findRegionsList(Integer companyId, long parentId) throws ServiceException {
+		return regionMapper.findRegionsList(companyId,parentId);
 	}
 
 	/**
