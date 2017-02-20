@@ -7,10 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
+import com.transsion.store.bo.Shop;
 import com.transsion.store.bo.ShopBiz;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.ShopBizMapper;
+import com.transsion.store.mapper.ShopMapper;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 
@@ -22,6 +24,9 @@ public class ShopBizManager {
 	
 	@Autowired
 	private SystemDateService systemDateService;
+	
+	@Autowired
+	private ShopMapper shopMapper;
 	
 	/**
 	 * 保存记录
@@ -100,4 +105,22 @@ public class ShopBizManager {
 		shopBiz.setIsInactive(1);
 		return shopBizMapper.listByProperty(shopBiz);
 	}
+	/**
+	 * 根据多个主键删除记录
+	 * @param primaryKeys
+	 * @throws ServiceException
+	 */
+	public void deleteByPKeys(List<java.lang.Long> primaryKeys) throws ServiceException
+	{
+		for(long primaryKey:primaryKeys){
+		Shop shop = new Shop();
+		shop.setBizId(primaryKey);
+		List<Shop> list = shopMapper.listByProperty(shop);
+		if(!UtilHelper.isEmpty(list)){
+			throw new ServiceException(ExceptionDef.ERROR_SHOP_BIZ_INUSE.getName());
+		}
+		shopBizMapper.deleteByPK(primaryKey);
+	}
+	}
+	
 }

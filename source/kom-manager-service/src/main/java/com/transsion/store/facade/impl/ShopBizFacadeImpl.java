@@ -104,7 +104,7 @@ public class ShopBizFacadeImpl implements ShopBizFacade {
 	 */
 	public void deleteByPKeys(List<java.lang.Long> primaryKeys) throws ServiceException
 	{
-		shopBizService.deleteByPKeys(primaryKeys);
+		shopBizManager.deleteByPKeys(primaryKeys);
 	}
 	
 	/**
