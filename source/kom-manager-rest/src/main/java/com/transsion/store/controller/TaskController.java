@@ -26,7 +26,19 @@ public class TaskController extends AbstractController{
 	private TaskFacade taskFacade;
 	
 	/**
-	 * 批量导入
+	 * @author guihua.zhang
+	 * @see 删除任务
+	 * CREATE TIME 2017-2-20
+	 * */
+	@POST
+	@Path("delete")
+	public void delete(List<Long> primaryKeys) throws ServiceException{
+		taskFacade.delete(primaryKeys);
+	}
+	
+	/**
+	 * @author guihua.zhang
+	 * @see 批量导入
 	 * */
 	@POST
 	@Path("/saveTask")
@@ -37,7 +49,8 @@ public class TaskController extends AbstractController{
 	}
 	
 	/**
-	* 分页查询记录
+	 * @author guihua.zhang
+	* @see分页查询记录
 	* @return
 	* @throws ServiceException
 	*/
@@ -59,7 +72,8 @@ public class TaskController extends AbstractController{
 	}
 	
 	/**
-	 * 查询上传信息
+	 * @author guihua.zhang
+	 * @see 查询上传信息
 	 * */
 	@POST
 	@Path("findTask")

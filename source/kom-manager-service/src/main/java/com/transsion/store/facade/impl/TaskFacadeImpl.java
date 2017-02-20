@@ -23,6 +23,12 @@ public class TaskFacadeImpl implements TaskFacade{
 	@Autowired
 	private TaskService taskService;
 	
+	/**
+	 * 删除任务
+	 * */
+	public void delete(List<Long> primaryKeys) throws ServiceException{
+		taskManager.delete(primaryKeys);
+	}
 	
 	public void saveTask(TaskDto taskDto,String token) throws ServiceException {
 		taskManager.saveTask(taskDto,token);

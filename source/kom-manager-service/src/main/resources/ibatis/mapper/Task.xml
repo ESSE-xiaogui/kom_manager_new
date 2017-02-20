@@ -146,10 +146,18 @@
 			AND REMARK=#{remark}
 		</if>
 	</sql>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_TASK WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			#{id}
+		</foreach>
+	</delete>
 	<insert id="saveTask" useGeneratedKeys="true" keyProperty="id" parameterType="Task">
 		<![CDATA[ INSERT INTO T_TASK ( ]]>
 		<include refid="commonColumnsNotPK"/>
 		<![CDATA[
+		
 			) VALUES ( 
 			 #{taskType}
 			, #{fileName}

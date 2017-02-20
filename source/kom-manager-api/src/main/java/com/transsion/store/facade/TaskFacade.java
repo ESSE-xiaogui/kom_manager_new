@@ -9,6 +9,11 @@ import com.transsion.store.bo.Task;
 import com.transsion.store.dto.TaskDto;
 
 public interface TaskFacade {
+	
+	/**
+	 * 删除任务
+	 * */
+	public void delete(List<Long> primaryKeys) throws ServiceException;
 
 	/**
 	 *  批量导入

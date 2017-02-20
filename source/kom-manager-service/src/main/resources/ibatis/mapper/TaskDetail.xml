@@ -104,6 +104,20 @@
 			, #{context}
   ) ]]>
 	</insert>
+	<delete id="deleteByTaskIds" parameterType="java.util.List">
+		DELETE FROM T_TASK_DETAIL WHERE
+		 <foreach collection="list" index="index" item="taskIds"
+			open=" TASK_ID IN(" separator="," close=") ">
+			#{taskIds}
+		</foreach> 
+	<!-- 	<where>
+			TASK_ID IN
+			<foreach item="taskIdList" collection="list" separator="," open="("
+				close=")" index="">
+				#{taskIdList}
+			</foreach>
+		</where> -->
+	</delete>
 	<select id="findTaskDetail" parameterType="Long"
 		resultMap="TaskDetailResultMapper">
 		SELECT ID,TASK_ID,MESSAGE,STATUS,CREATE_TIME,CONTEXT FROM T_TASK_DETAIL

@@ -14,6 +14,7 @@ import com.transsion.store.bo.User;
 import com.transsion.store.common.Constants;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.TaskDto;
+import com.transsion.store.mapper.TaskDetailMapper;
 import com.transsion.store.mapper.TaskMapper;
 import com.transsion.store.mapper.UserMapper;
 import com.transsion.store.message.Message.Group;
@@ -29,6 +30,9 @@ public class TaskManager {
 	private TaskMapper taskMapper;
 	
 	@Autowired
+	private TaskDetailMapper taskDetailMapper;
+	
+	@Autowired
 	private SystemDateService systemDateService;
 	
 	@Autowired
@@ -36,6 +40,17 @@ public class TaskManager {
 	
 	@Autowired
 	private UserMapper userMapper;
+	
+	/**
+	 * 删除任务
+	 * */
+	public void delete(List<Long> primaryKeys) throws ServiceException{
+		if(UtilHelper.isEmpty(primaryKeys)){
+			throw new ServiceException(MessageStoreResource.ERROR_MESSAGE_PARAM_IS_NULL);
+		}
+		taskDetailMapper.deleteByTaskIds(primaryKeys);
+		taskMapper.deleteByPKeys(primaryKeys);
+	}
 	
 	public void saveTask(TaskDto taskDto,String token) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
