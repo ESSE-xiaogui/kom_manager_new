@@ -62,7 +62,7 @@ public class RegionManager {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		Integer companyId = usercontext.getUser().getCompanyId();
-		List<RegionDto> regionList = regionService.findRegionsList(companyId,0l);
+		List<RegionDto> regionList = regionService.findRegionsList(companyId,0);
 		return getChildrenRegion(regionList,companyId);
 	}
 
@@ -71,7 +71,7 @@ public class RegionManager {
 	 */
 	public List<RegionDto> getChildrenRegion(List<RegionDto> regionList, Integer companyId) throws ServiceException {
 		for (RegionDto region : regionList) {
-			Long pid = region.getId();
+			Integer pid = region.getId().intValue();
 			List<RegionDto> list = regionService.findRegionsList(companyId,pid);
 			List<RegionDto> children = getChildrenRegion(list, companyId);
 			region.setChildren(children);
