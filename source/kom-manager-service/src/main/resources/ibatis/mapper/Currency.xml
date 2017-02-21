@@ -372,4 +372,9 @@
 		WHERE 1=1 
 		<include refid="commonConditionByPrefix"/>
 	</select>
+	<select id="findCurrencyName" parameterType="java.lang.Long" resultMap="CurrencyResultMapper">
+		SELECT
+		<include refid="commonProcessDateColumns"/>
+		 FROM T_CURRENCY WHERE COMPANY_ID = #{companyId}
+	</select>
 </mapper>

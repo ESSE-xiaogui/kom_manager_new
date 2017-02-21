@@ -147,4 +147,17 @@ public class CurrencyController extends AbstractController{
             this.inputStream = inputStream;
         }
     }
+	
+	/**
+	 * @author guihua.zhang on 2017-2-21
+	 * @return
+	 * @throws ServiceException
+	 * */
+	@GET
+	@Path("/findCurrencyName")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<Currency> findCurrencyName() throws ServiceException{
+		String token = this.getAuthorization();
+		return currencyFacade.findCurrencyName(token);
+	}
 }

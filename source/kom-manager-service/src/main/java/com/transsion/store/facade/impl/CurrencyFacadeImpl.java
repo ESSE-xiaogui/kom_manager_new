@@ -72,4 +72,12 @@ public class CurrencyFacadeImpl implements CurrencyFacade{
 	public byte[] getCurrencyByExcel(CurrencyDto currencyDto)throws ServiceException{
 		return currencyManager.getCurrencyByExcel(currencyDto);
 	}
+	/**
+	 * @author guihua.zhang on 2017-2-21
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public List<Currency> findCurrencyName(String token) throws ServiceException{
+		return currencyManager.findCurrencyName(token);
+	}
 }
