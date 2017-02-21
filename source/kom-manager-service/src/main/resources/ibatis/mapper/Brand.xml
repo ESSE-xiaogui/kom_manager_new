@@ -243,8 +243,6 @@
 			, IS_SELF=#{isSelf} 
 			, IS_INACTIVE=#{isInactive} 
 			, REMARK=#{remark} 
-			, CREATED_BY=#{createdBy} 
-			, CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
 			, UPDATED_BY=#{updatedBy} 
 			, UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
 			, VERSION=#{version} 

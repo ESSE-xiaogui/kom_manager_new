@@ -162,7 +162,8 @@ public class OrganizationManager {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())){
+		if(UtilHelper.isEmpty(userContext) ||UtilHelper.isEmpty(userContext.getCompanyId())
+						|| UtilHelper.isEmpty(userContext.getUserCode())){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if(UtilHelper.isEmpty(organization) || UtilHelper.isEmpty(organization.getOrgName())){
@@ -178,6 +179,7 @@ public class OrganizationManager {
 			throw new ServiceException(ExceptionDef.ERROR_ORGANIZATION_ALREADY_EXIST.getName());
 		}
 		Organization findOrg = organizationMapper.getByPK(organization.getId());
+		findOrg.setCompanyId(userContext.getCompanyId().intValue());
 		findOrg.setOrgName(organization.getOrgName());
 		findOrg.setBizId(organization.getBizId());
 		findOrg.setIsInactive(organization.getIsInactive());

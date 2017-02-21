@@ -20,7 +20,6 @@ import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Brand;
 import com.transsion.store.dto.BrandDto;
 import com.transsion.store.dto.BrandModelListDto;
-import com.transsion.store.dto.BrandResponseDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.BrandFacade;
 import com.shangkang.core.bo.Pagination;
@@ -96,10 +95,10 @@ public class BrandController extends AbstractController{
 	@PUT
 	@Path("/update")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public BrandResponseDto update(Brand brand) throws ServiceException
+	public void update(Brand brand) throws ServiceException
 	{
 		String token = this.getAuthorization();
-		return brandFacade.update(token,brand);
+		brandFacade.update(token,brand);
 	}
 	/**
 	 * 新增品牌
@@ -110,9 +109,9 @@ public class BrandController extends AbstractController{
 	@Path("/add")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public BrandResponseDto saveBrand(BrandDto brandDto) throws ServiceException{
+	public void saveBrand(BrandDto brandDto) throws ServiceException{
 		String token = this.getAuthorization();
-		return brandFacade.saveBrand(token,brandDto);
+		brandFacade.saveBrand(token,brandDto);
 	}
 	/**
 	 * 查询品牌
