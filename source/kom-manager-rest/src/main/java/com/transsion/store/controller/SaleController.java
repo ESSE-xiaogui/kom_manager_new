@@ -243,6 +243,7 @@ public class SaleController extends AbstractController {
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.TEXT_PLAIN})  
 	public Response getSaleByExcel(@QueryParam("saleDate") String saleDate,@QueryParam("saleEndDate") String saleEndDate,
+					@QueryParam("createdTime") String createdTime,@QueryParam("createdEndTime")String createdEndTime,
 					@QueryParam("countryName") String countryName,@QueryParam("cityName") String cityName,
 					@QueryParam("shopId") String shopId,@QueryParam("shopName") String shopName,
 					@QueryParam("brandCode") String brandCode,@QueryParam("modelCode") String modelCode,
@@ -250,6 +251,8 @@ public class SaleController extends AbstractController {
 		SaleDailyDto saleDailyDto = new SaleDailyDto();
 		saleDailyDto.setSaleDate(saleDate);
 		saleDailyDto.setSaleEndDate(saleEndDate);
+		saleDailyDto.setCreatedTime(createdTime);
+		saleDailyDto.setCreatedEndTime(createdEndTime);
 		saleDailyDto.setCountryName(countryName);
 		saleDailyDto.setCityName(cityName);
 		if(!UtilHelper.isEmpty(shopId)){
