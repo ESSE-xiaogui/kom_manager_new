@@ -18,7 +18,11 @@ package com.transsion.store.facade;
 
 import java.util.List;
 
+
 import com.transsion.store.bo.VisitPlan;
+import com.transsion.store.dto.ShopVisitPlanDto;
+import com.transsion.store.dto.VisitPlanDto;
+import com.transsion.store.dto.VisitPlanSummaryDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -102,4 +106,23 @@ public interface VisitPlanFacade {
 	public Pagination<VisitPlan> listPaginationByProperty(Pagination<VisitPlan> pagination, VisitPlan visitPlan)
 			throws ServiceException;
 
+	
+	/********************************* app api **********************************/
+
+	
+	/*
+	 * update if plan exist or create 
+	 */
+	public void updatePlan(String token, List<VisitPlanDto> visitPlanDtoList) throws ServiceException;
+
+	/*
+	 * 
+	 */
+	public List<VisitPlanSummaryDto> queryPlanSummary(String token, String startDate, String endDate)
+			throws ServiceException;
+
+	/*
+	 * 
+	 */
+	public List<ShopVisitPlanDto> queryShopPlan(String token, String startDate, String endDate) throws ServiceException;
 }

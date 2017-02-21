@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2017-2-21 14:48:56
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.VisitScoreItemMapper">
+	<resultMap id="VisitScoreItemResultMapper" type="VisitScoreItem">
+		<result column="ID" property="id"/>
+		<result column="VISIT_ID" property="visitId"/>
+		<result column="SCORE_SETTING_ID" property="scoreSettingId"/>
+		<result column="SCORE" property="score"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, VISIT_ID
+		, SCORE_SETTING_ID
+		, SCORE
+		, REMARK
+		, CREATE_BY
+		, CREATE_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 VISIT_ID
+		, SCORE_SETTING_ID
+		, SCORE
+		, REMARK
+		, CREATE_BY
+		, CREATE_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, VISIT_ID
+		, SCORE_SETTING_ID
+		, SCORE
+		, REMARK
+		, CREATE_BY
+		, date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+		, UPDATE_BY
+		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="visitId!= null and visitId!= ''"> 
+			AND VISIT_ID=#{visitId}
+		</if>
+		<if test="scoreSettingId!= null and scoreSettingId!= ''"> 
+			AND SCORE_SETTING_ID=#{scoreSettingId}
+		</if>
+		<if test="score!= null and score!= ''"> 
+			AND SCORE=#{score}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createBy!= null and createBy!= ''"> 
+			AND CREATE_BY=#{createBy}
+		</if>
+		<if test="createTime!= null and createTime!= ''"> 
+			AND CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updateBy!= null and updateBy!= ''"> 
+			AND UPDATE_BY=#{updateBy}
+		</if>
+		<if test="updateTime!= null and updateTime!= ''"> 
+			AND UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="visitScoreItem != null">
+            <if test="visitScoreItem.id!= null and visitScoreItem.id!= ''">
+				AND ID=#{visitScoreItem.id}
+            </if>
+            <if test="visitScoreItem.visitId!= null and visitScoreItem.visitId!= ''">
+				AND VISIT_ID=#{visitScoreItem.visitId}
+            </if>
+            <if test="visitScoreItem.scoreSettingId!= null and visitScoreItem.scoreSettingId!= ''">
+				AND SCORE_SETTING_ID=#{visitScoreItem.scoreSettingId}
+            </if>
+            <if test="visitScoreItem.score!= null and visitScoreItem.score!= ''">
+				AND SCORE=#{visitScoreItem.score}
+            </if>
+            <if test="visitScoreItem.remark!= null and visitScoreItem.remark!= ''">
+				AND REMARK=#{visitScoreItem.remark}
+            </if>
+            <if test="visitScoreItem.createBy!= null and visitScoreItem.createBy!= ''">
+				AND CREATE_BY=#{visitScoreItem.createBy}
+            </if>
+            <if test="visitScoreItem.createTime!= null and visitScoreItem.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{visitScoreItem.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitScoreItem.updateBy!= null and visitScoreItem.updateBy!= ''">
+				AND UPDATE_BY=#{visitScoreItem.updateBy}
+            </if>
+            <if test="visitScoreItem.updateTime!= null and visitScoreItem.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{visitScoreItem.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitScoreItem.version!= null and visitScoreItem.version!= ''">
+				AND VERSION=#{visitScoreItem.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'visitId'">
+				VISIT_ID ${value}
+            </when>
+        	<when test="key == 'scoreSettingId'">
+				SCORE_SETTING_ID ${value}
+            </when>
+        	<when test="key == 'score'">
+				SCORE ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createBy'">
+				CREATE_BY ${value}
+            </when>
+        	<when test="key == 'createTime'">
+				CREATE_TIME ${value}
+            </when>
+        	<when test="key == 'updateBy'">
+				UPDATE_BY ${value}
+            </when>
+        	<when test="key == 'updateTime'">
+				UPDATE_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="VisitScoreItem">
+		<![CDATA[ INSERT INTO T_VISIT_SCORE_ITEM ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{visitId}
+			, #{scoreSettingId}
+			, #{score}
+			, #{remark}
+			, #{createBy}
+			, str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, #{updateBy}
+			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="VisitScoreItem">
+		<![CDATA[ UPDATE T_VISIT_SCORE_ITEM SET 
+			 ID=#{id} 
+			, VISIT_ID=#{visitId} 
+			, SCORE_SETTING_ID=#{scoreSettingId} 
+			, SCORE=#{score} 
+			, REMARK=#{remark} 
+			, CREATE_BY=#{createBy} 
+			, CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATE_BY=#{updateBy} 
+			, UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_VISIT_SCORE_ITEM WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_VISIT_SCORE_ITEM WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			#{id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="VisitScoreItem">
+		DELETE FROM T_VISIT_SCORE_ITEM WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="VisitScoreItemResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_VISIT_SCORE_ITEM WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="VisitScoreItemResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_VISIT_SCORE_ITEM
+	</select>
+	<select id="listByProperty" parameterType="VisitScoreItem" resultMap="VisitScoreItemResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_VISIT_SCORE_ITEM WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="VisitScoreItem" resultMap="VisitScoreItemResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_VISIT_SCORE_ITEM WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="VisitScoreItem" resultType="int">
+		SELECT count(1) AS totalcount FROM T_VISIT_SCORE_ITEM WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

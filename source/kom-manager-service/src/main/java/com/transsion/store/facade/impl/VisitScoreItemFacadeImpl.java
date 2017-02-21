@@ -6,7 +6,7 @@
 * recording, or otherwise, without the prior written permission of Liuzh.
 *
 * Created By: Liuzh
-* Created On: 2017-2-21 10:24:47
+* Created On: 2017-2-21 14:48:56
 *
 * Amendment History:
 *
@@ -21,23 +21,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.transsion.store.bo.Visit;
-import com.transsion.store.dto.VisitInfoDto;
-import com.transsion.store.dto.VisitSettingDto;
+import com.transsion.store.bo.VisitScoreItem;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
-import com.transsion.store.facade.VisitFacade;
-import com.transsion.store.service.VisitService;
+import com.transsion.store.facade.VisitScoreItemFacade;
+import com.transsion.store.service.VisitScoreItemService;
 
-@Component("visitFacade")
-public class VisitFacadeImpl implements VisitFacade {
+@Component("visitScoreItemFacade")
+public class VisitScoreItemFacadeImpl implements VisitScoreItemFacade {
 
-	private VisitService visitService;
+	private VisitScoreItemService visitScoreItemService;
 	
 	@Autowired
-	public void setVisitService(VisitService visitService)
+	public void setVisitScoreItemService(VisitScoreItemService visitScoreItemService)
 	{
-		this.visitService = visitService;
+		this.visitScoreItemService = visitScoreItemService;
 	}
 	
 	/**
@@ -46,9 +44,9 @@ public class VisitFacadeImpl implements VisitFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Visit getByPK(java.lang.Long primaryKey) throws ServiceException
+	public VisitScoreItem getByPK(java.lang.Long primaryKey) throws ServiceException
 	{
-		return visitService.getByPK(primaryKey);
+		return visitScoreItemService.getByPK(primaryKey);
 	}
 
 	/**
@@ -56,9 +54,9 @@ public class VisitFacadeImpl implements VisitFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<Visit> list() throws ServiceException
+	public List<VisitScoreItem> list() throws ServiceException
 	{
-		return visitService.list();
+		return visitScoreItemService.list();
 	}
 
 	/**
@@ -66,10 +64,10 @@ public class VisitFacadeImpl implements VisitFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<Visit> listByProperty(Visit visit)
+	public List<VisitScoreItem> listByProperty(VisitScoreItem visitScoreItem)
 			throws ServiceException
 	{
-		return visitService.listByProperty(visit);
+		return visitScoreItemService.listByProperty(visitScoreItem);
 	}
 	
 	/**
@@ -77,10 +75,10 @@ public class VisitFacadeImpl implements VisitFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Visit> listPaginationByProperty(Pagination<Visit> pagination, Visit visit)
+	public Pagination<VisitScoreItem> listPaginationByProperty(Pagination<VisitScoreItem> pagination, VisitScoreItem visitScoreItem)
 			throws ServiceException
 	{
-		return visitService.listPaginationByProperty(pagination, visit);
+		return visitScoreItemService.listPaginationByProperty(pagination, visitScoreItem);
 	}
 
 	/**
@@ -91,7 +89,7 @@ public class VisitFacadeImpl implements VisitFacade {
 	 */
 	public int deleteByPK(java.lang.Long primaryKey) throws ServiceException
 	{
-		return visitService.deleteByPK(primaryKey);
+		return visitScoreItemService.deleteByPK(primaryKey);
 	}
 	
 	/**
@@ -101,68 +99,50 @@ public class VisitFacadeImpl implements VisitFacade {
 	 */
 	public void deleteByPKeys(List<java.lang.Long> primaryKeys) throws ServiceException
 	{
-		visitService.deleteByPKeys(primaryKeys);
+		visitScoreItemService.deleteByPKeys(primaryKeys);
 	}
 	
 	/**
 	 * 根据传入参数删除记录
-	 * @param visit
+	 * @param visitScoreItem
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int deleteByProperty(Visit visit) throws ServiceException
+	public int deleteByProperty(VisitScoreItem visitScoreItem) throws ServiceException
 	{
-		return visitService.deleteByProperty(visit);
+		return visitScoreItemService.deleteByProperty(visitScoreItem);
 	}
 
 	/**
 	 * 保存记录
-	 * @param visit
+	 * @param visitScoreItem
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(Visit visit) throws ServiceException
+	public void save(VisitScoreItem visitScoreItem) throws ServiceException
 	{
-		visitService.save(visit);
+		visitScoreItemService.save(visitScoreItem);
 	}
 
 	/**
 	 * 更新记录
-	 * @param visit
+	 * @param visitScoreItem
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(Visit visit) throws ServiceException
+	public int update(VisitScoreItem visitScoreItem) throws ServiceException
 	{
-		return visitService.update(visit);
+		return visitScoreItemService.update(visitScoreItem);
 	}
 
 	/**
 	 * 根据条件查询记录条数
-	 * @param visit
+	 * @param visitScoreItem
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int findByCount(Visit visit) throws ServiceException
+	public int findByCount(VisitScoreItem visitScoreItem) throws ServiceException
 	{
-		return visitService.findByCount(visit);
-	}
-
-	@Override
-	public VisitSettingDto queryVisitSetting(String token) throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void updateVisit(String token, VisitInfoDto visitInfoDto) throws ServiceException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public List<VisitInfoDto> queryVisit(String token, String startDate, String endDate) throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
+		return visitScoreItemService.findByCount(visitScoreItem);
 	}
 }

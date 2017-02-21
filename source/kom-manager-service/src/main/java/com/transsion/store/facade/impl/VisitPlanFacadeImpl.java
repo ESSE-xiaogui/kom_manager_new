@@ -22,6 +22,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.VisitPlan;
+import com.transsion.store.dto.ShopVisitPlanDto;
+import com.transsion.store.dto.VisitPlanDto;
+import com.transsion.store.dto.VisitPlanSummaryDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.VisitPlanFacade;
@@ -144,5 +147,25 @@ public class VisitPlanFacadeImpl implements VisitPlanFacade {
 	public int findByCount(VisitPlan visitPlan) throws ServiceException
 	{
 		return visitPlanService.findByCount(visitPlan);
+	}
+
+	@Override
+	public void updatePlan(String token, List<VisitPlanDto> visitPlanDtoList) throws ServiceException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<VisitPlanSummaryDto> queryPlanSummary(String token, String startDate, String endDate)
+			throws ServiceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ShopVisitPlanDto> queryShopPlan(String token, String startDate, String endDate)
+			throws ServiceException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
