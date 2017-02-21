@@ -275,6 +275,8 @@
 	</insert>
 	
 	<select id="queryShopMaterielListByShopId" parameterType="java.lang.Long" resultMap="ShopMaterielResultMapper">
-		SELECT * FROM T_SHOP_MATERIEL WHERE SHOP_ID = #{shopId}
+		SELECT * FROM T_SHOP_MATERIEL WHERE SHOP_ID = #{shopId} AND CREATE_DATE = (
+			SELECT MAX(CREATE_DATE) FROM T_SHOP_MATERIEL WHERE SHOP_ID = #{shopId}
+		)
 	</select>
 </mapper>
