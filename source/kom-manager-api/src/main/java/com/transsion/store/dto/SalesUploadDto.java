@@ -17,6 +17,8 @@ public class SalesUploadDto implements java.io.Serializable{
 	 * */
 	private Integer status = 0;
 	
+	private Integer dealerId;
+	
 	public Long getId() {
 		return id;
 	}
@@ -49,10 +51,16 @@ public class SalesUploadDto implements java.io.Serializable{
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	public Integer getDealerId() {
+		return dealerId;
+	}
+	public void setDealerId(Integer dealerId) {
+		this.dealerId = dealerId;
+	}
 	
 	@Override
 	public String toString() {
-		return "SalesUploadDto [id=" + id + ", imei=" + imei + ", day=" + day + ", status=" + status + "]";
+		return "SalesUploadDto [id=" + id + ", imei=" + imei + ", day=" + day + ", status=" + status + ", dealerId="
+				+ dealerId + "]";
 	}
-
 }

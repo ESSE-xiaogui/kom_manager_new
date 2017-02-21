@@ -12,6 +12,7 @@ import com.transsion.store.bo.SaleItem;
 public class TShopSaleDto implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private String saleDate;
+	private Integer dealerId;
     private List<SaleItem> tShopSaleitems;
     
     public String getSaleDate() {
@@ -29,9 +30,16 @@ public class TShopSaleDto implements java.io.Serializable {
 	public void setSaleDate(String saleDate) {
 		this.saleDate = saleDate;
 	}
-	@Override
-	public String toString() {
-		return "TShopSaleDto [saleDate=" + saleDate + ", tShopSaleitems=" + tShopSaleitems + "]";
+	public Integer getDealerId() {
+		return dealerId;
+	}
+	public void setDealerId(Integer dealerId) {
+		this.dealerId = dealerId;
 	}
 	
+	@Override
+	public String toString() {
+		return "TShopSaleDto [saleDate=" + saleDate + ", dealerId=" + dealerId + ", tShopSaleitems=" + tShopSaleitems
+				+ "]";
+	}
 }

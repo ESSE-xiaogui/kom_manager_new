@@ -169,8 +169,8 @@ public class SaleFacadeImpl implements SaleFacade {
 	 * @return list
 	 * @throws ServiceException
 	 */
-	public List<SalesUploadDto> saveSalesUpload(TShopSaleDto tshopSaleDto, String token, long imeiCacheTimeOut) throws ServiceException {
-		return salesMannager.saveSalesUpload(tshopSaleDto, token, imeiCacheTimeOut);
+	public List<SalesUploadDto> saveSalesUpload(TShopSaleDto tshopSaleDto, String token) throws ServiceException {
+		return salesMannager.saveSalesUpload(tshopSaleDto, token);
 	}
 	/**
 	 * 查询促销员的销售记录

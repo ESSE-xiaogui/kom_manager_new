@@ -30,5 +30,7 @@ public interface SaleItemMapper extends GenericIBatisMapper<SaleItem, java.lang.
     public List<SaleItem> listPaginationByProperty(Pagination<SaleItem> pagination, @Param("saleItem")SaleItem saleItem, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     public String queryScanDuplicatedIMEI(@Param("imei") String imei);
     public void saveSaleItem(List<SaleItem> tShopSaleitem);
+    
+    public List<String> queryImeiNoList(List<String> imeiList);
 
 }
