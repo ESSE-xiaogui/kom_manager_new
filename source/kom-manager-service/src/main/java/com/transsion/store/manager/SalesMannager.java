@@ -751,9 +751,9 @@ public class SalesMannager {
 		String[] headers = {"序号","单号","销售日期","国家","城市","门店名称","品牌", "机型",
 		"IMEI号","IMEI List","数量","价格","当前汇率","用户名","上传时间"};
 		List<SaleDailyDto> list = saleMapper.listSaleByProperty(saleDailyDto);
-		if(list.size()>65536){
-			throw new ServiceException(ExceptionDef.ERROR_SALE_TOO_MANY_RESULTS.getName());
-		}
+//		if(list.size()>65536){
+//			throw new ServiceException(ExceptionDef.ERROR_SALE_TOO_MANY_RESULTS.getName());
+//		}
 		List<Object[]> dataset = new ArrayList<Object[]>();
 		int i=1;
 		for(SaleDailyDto saleDailyDto1 :list){
