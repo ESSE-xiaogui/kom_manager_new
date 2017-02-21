@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Brand;
+import com.transsion.store.bo.Model;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.BrandDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.BrandMapper;
+import com.transsion.store.mapper.ModelMapper;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 
@@ -22,8 +24,12 @@ public class BrandManager {
 	
 	@Autowired
 	private BrandMapper brandMapper;
+	
 	@Autowired
 	private SystemDateService systemDateService;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	/**
 	 * 新增品牌
@@ -117,5 +123,35 @@ public class BrandManager {
 		brandResult.setUpdatedBy(userContext.getUserCode());
 		brandResult.setUpdatedTime(systemDateService.getCurrentDate());
 		brandMapper.update(brandResult);
+	}
+	
+	/**
+	 * @author guihua.zhang on 2017-02-21
+	 * 
+	 * 删除品牌
+	 * */
+	public void deleteByPKeys(List<Long> primaryKeys) throws ServiceException
+	{
+		if(UtilHelper.isEmpty(primaryKeys)){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		for(long primaryKey:primaryKeys){
+			Brand brand = new Brand();
+			brand.setId(primaryKey);
+			List<Brand> list = brandMapper.listByProperty(brand);
+			if(!UtilHelper.isEmpty(list)){
+				for(Brand brandResult:list){
+					Model model = new Model();
+					model.setBrandCode(brandResult.getBrandCode());
+					int count = modelMapper.findByCount(model);
+					if(count>0){
+						throw new ServiceException(ExceptionDef.ERROR_MODEL_BIND_BRAND.getName());
+					}else{
+						brandMapper.deleteByPK(primaryKey);
+					}
+				}
+			}
+		}
+		
 	}
 }
