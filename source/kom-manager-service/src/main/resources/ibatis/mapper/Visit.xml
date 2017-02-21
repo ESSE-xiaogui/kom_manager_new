@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2017-2-21 10:24:47
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.VisitMapper">
+	<resultMap id="VisitResultMapper" type="Visit">
+		<result column="ID" property="id"/>
+		<result column="VISIT_DATE" property="visitDate"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="PLAN_TYPE" property="planType"/>
+		<result column="SALE_TOTAL_QTY" property="saleTotalQty"/>
+		<result column="SALE_PB_QTY" property="salePbQty"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, VISIT_DATE
+		, COMPANY_ID
+		, SHOP_ID
+		, PLAN_TYPE
+		, SALE_TOTAL_QTY
+		, SALE_PB_QTY
+		, REMARK
+		, CREATE_BY
+		, CREATE_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 VISIT_DATE
+		, COMPANY_ID
+		, SHOP_ID
+		, PLAN_TYPE
+		, SALE_TOTAL_QTY
+		, SALE_PB_QTY
+		, REMARK
+		, CREATE_BY
+		, CREATE_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, date_format(VISIT_DATE, '%Y-%m-%d %H:%i:%s') VISIT_DATE
+		, COMPANY_ID
+		, SHOP_ID
+		, PLAN_TYPE
+		, SALE_TOTAL_QTY
+		, SALE_PB_QTY
+		, REMARK
+		, CREATE_BY
+		, date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+		, UPDATE_BY
+		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="visitDate!= null and visitDate!= ''"> 
+			AND VISIT_DATE=str_to_date(#{visitDate},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="shopId!= null and shopId!= ''"> 
+			AND SHOP_ID=#{shopId}
+		</if>
+		<if test="planType!= null and planType!= ''"> 
+			AND PLAN_TYPE=#{planType}
+		</if>
+		<if test="saleTotalQty!= null and saleTotalQty!= ''"> 
+			AND SALE_TOTAL_QTY=#{saleTotalQty}
+		</if>
+		<if test="salePbQty!= null and salePbQty!= ''"> 
+			AND SALE_PB_QTY=#{salePbQty}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createBy!= null and createBy!= ''"> 
+			AND CREATE_BY=#{createBy}
+		</if>
+		<if test="createTime!= null and createTime!= ''"> 
+			AND CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updateBy!= null and updateBy!= ''"> 
+			AND UPDATE_BY=#{updateBy}
+		</if>
+		<if test="updateTime!= null and updateTime!= ''"> 
+			AND UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="visit != null">
+            <if test="visit.id!= null and visit.id!= ''">
+				AND ID=#{visit.id}
+            </if>
+            <if test="visit.visitDate!= null and visit.visitDate!= ''">
+				AND VISIT_DATE=str_to_date(#{visit.visitDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visit.companyId!= null and visit.companyId!= ''">
+				AND COMPANY_ID=#{visit.companyId}
+            </if>
+            <if test="visit.shopId!= null and visit.shopId!= ''">
+				AND SHOP_ID=#{visit.shopId}
+            </if>
+            <if test="visit.planType!= null and visit.planType!= ''">
+				AND PLAN_TYPE=#{visit.planType}
+            </if>
+            <if test="visit.saleTotalQty!= null and visit.saleTotalQty!= ''">
+				AND SALE_TOTAL_QTY=#{visit.saleTotalQty}
+            </if>
+            <if test="visit.salePbQty!= null and visit.salePbQty!= ''">
+				AND SALE_PB_QTY=#{visit.salePbQty}
+            </if>
+            <if test="visit.remark!= null and visit.remark!= ''">
+				AND REMARK=#{visit.remark}
+            </if>
+            <if test="visit.createBy!= null and visit.createBy!= ''">
+				AND CREATE_BY=#{visit.createBy}
+            </if>
+            <if test="visit.createTime!= null and visit.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{visit.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visit.updateBy!= null and visit.updateBy!= ''">
+				AND UPDATE_BY=#{visit.updateBy}
+            </if>
+            <if test="visit.updateTime!= null and visit.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{visit.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visit.version!= null and visit.version!= ''">
+				AND VERSION=#{visit.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'visitDate'">
+				VISIT_DATE ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'shopId'">
+				SHOP_ID ${value}
+            </when>
+        	<when test="key == 'planType'">
+				PLAN_TYPE ${value}
+            </when>
+        	<when test="key == 'saleTotalQty'">
+				SALE_TOTAL_QTY ${value}
+            </when>
+        	<when test="key == 'salePbQty'">
+				SALE_PB_QTY ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createBy'">
+				CREATE_BY ${value}
+            </when>
+        	<when test="key == 'createTime'">
+				CREATE_TIME ${value}
+            </when>
+        	<when test="key == 'updateBy'">
+				UPDATE_BY ${value}
+            </when>
+        	<when test="key == 'updateTime'">
+				UPDATE_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Visit">
+		<![CDATA[ INSERT INTO T_VISIT ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 str_to_date(#{visitDate},'%Y-%m-%d %H:%i:%s')
+			, #{companyId}
+			, #{shopId}
+			, #{planType}
+			, #{saleTotalQty}
+			, #{salePbQty}
+			, #{remark}
+			, #{createBy}
+			, str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, #{updateBy}
+			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="Visit">
+		<![CDATA[ UPDATE T_VISIT SET 
+			 ID=#{id} 
+			, VISIT_DATE=str_to_date(#{visitDate},'%Y-%m-%d %H:%i:%s')
+			, COMPANY_ID=#{companyId} 
+			, SHOP_ID=#{shopId} 
+			, PLAN_TYPE=#{planType} 
+			, SALE_TOTAL_QTY=#{saleTotalQty} 
+			, SALE_PB_QTY=#{salePbQty} 
+			, REMARK=#{remark} 
+			, CREATE_BY=#{createBy} 
+			, CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATE_BY=#{updateBy} 
+			, UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_VISIT WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_VISIT WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			#{id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="Visit">
+		DELETE FROM T_VISIT WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="VisitResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_VISIT WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="VisitResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_VISIT
+	</select>
+	<select id="listByProperty" parameterType="Visit" resultMap="VisitResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_VISIT WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="Visit" resultMap="VisitResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_VISIT WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="Visit" resultType="int">
+		SELECT count(1) AS totalcount FROM T_VISIT WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

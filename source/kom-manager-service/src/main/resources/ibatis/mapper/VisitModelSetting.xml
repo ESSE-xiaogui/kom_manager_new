@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2017-2-21 10:24:48
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.VisitModelSettingMapper">
+	<resultMap id="VisitModelSettingResultMapper" type="VisitModelSetting">
+		<result column="ID" property="id"/>
+		<result column="ACTION_DATE" property="actionDate"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="BRAND_ID" property="brandId"/>
+		<result column="MODEL_ID" property="modelId"/>
+		<result column="REGION_ID" property="regionId"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, ACTION_DATE
+		, COMPANY_ID
+		, BRAND_ID
+		, MODEL_ID
+		, REGION_ID
+		, REMARK
+		, CREATE_BY
+		, CREATE_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 ACTION_DATE
+		, COMPANY_ID
+		, BRAND_ID
+		, MODEL_ID
+		, REGION_ID
+		, REMARK
+		, CREATE_BY
+		, CREATE_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, date_format(ACTION_DATE, '%Y-%m-%d %H:%i:%s') ACTION_DATE
+		, COMPANY_ID
+		, BRAND_ID
+		, MODEL_ID
+		, REGION_ID
+		, REMARK
+		, CREATE_BY
+		, date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+		, UPDATE_BY
+		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="actionDate!= null and actionDate!= ''"> 
+			AND ACTION_DATE=str_to_date(#{actionDate},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="brandId!= null and brandId!= ''"> 
+			AND BRAND_ID=#{brandId}
+		</if>
+		<if test="modelId!= null and modelId!= ''"> 
+			AND MODEL_ID=#{modelId}
+		</if>
+		<if test="regionId!= null and regionId!= ''"> 
+			AND REGION_ID=#{regionId}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createBy!= null and createBy!= ''"> 
+			AND CREATE_BY=#{createBy}
+		</if>
+		<if test="createTime!= null and createTime!= ''"> 
+			AND CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updateBy!= null and updateBy!= ''"> 
+			AND UPDATE_BY=#{updateBy}
+		</if>
+		<if test="updateTime!= null and updateTime!= ''"> 
+			AND UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="visitModelSetting != null">
+            <if test="visitModelSetting.id!= null and visitModelSetting.id!= ''">
+				AND ID=#{visitModelSetting.id}
+            </if>
+            <if test="visitModelSetting.actionDate!= null and visitModelSetting.actionDate!= ''">
+				AND ACTION_DATE=str_to_date(#{visitModelSetting.actionDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitModelSetting.companyId!= null and visitModelSetting.companyId!= ''">
+				AND COMPANY_ID=#{visitModelSetting.companyId}
+            </if>
+            <if test="visitModelSetting.brandId!= null and visitModelSetting.brandId!= ''">
+				AND BRAND_ID=#{visitModelSetting.brandId}
+            </if>
+            <if test="visitModelSetting.modelId!= null and visitModelSetting.modelId!= ''">
+				AND MODEL_ID=#{visitModelSetting.modelId}
+            </if>
+            <if test="visitModelSetting.regionId!= null and visitModelSetting.regionId!= ''">
+				AND REGION_ID=#{visitModelSetting.regionId}
+            </if>
+            <if test="visitModelSetting.remark!= null and visitModelSetting.remark!= ''">
+				AND REMARK=#{visitModelSetting.remark}
+            </if>
+            <if test="visitModelSetting.createBy!= null and visitModelSetting.createBy!= ''">
+				AND CREATE_BY=#{visitModelSetting.createBy}
+            </if>
+            <if test="visitModelSetting.createTime!= null and visitModelSetting.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{visitModelSetting.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitModelSetting.updateBy!= null and visitModelSetting.updateBy!= ''">
+				AND UPDATE_BY=#{visitModelSetting.updateBy}
+            </if>
+            <if test="visitModelSetting.updateTime!= null and visitModelSetting.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{visitModelSetting.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitModelSetting.version!= null and visitModelSetting.version!= ''">
+				AND VERSION=#{visitModelSetting.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'actionDate'">
+				ACTION_DATE ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'brandId'">
+				BRAND_ID ${value}
+            </when>
+        	<when test="key == 'modelId'">
+				MODEL_ID ${value}
+            </when>
+        	<when test="key == 'regionId'">
+				REGION_ID ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createBy'">
+				CREATE_BY ${value}
+            </when>
+        	<when test="key == 'createTime'">
+				CREATE_TIME ${value}
+            </when>
+        	<when test="key == 'updateBy'">
+				UPDATE_BY ${value}
+            </when>
+        	<when test="key == 'updateTime'">
+				UPDATE_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="VisitModelSetting">
+		<![CDATA[ INSERT INTO T_VISIT_MODEL_SETTING ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 str_to_date(#{actionDate},'%Y-%m-%d %H:%i:%s')
+			, #{companyId}
+			, #{brandId}
+			, #{modelId}
+			, #{regionId}
+			, #{remark}
+			, #{createBy}
+			, str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, #{updateBy}
+			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="VisitModelSetting">
+		<![CDATA[ UPDATE T_VISIT_MODEL_SETTING SET 
+			 ID=#{id} 
+			, ACTION_DATE=str_to_date(#{actionDate},'%Y-%m-%d %H:%i:%s')
+			, COMPANY_ID=#{companyId} 
+			, BRAND_ID=#{brandId} 
+			, MODEL_ID=#{modelId} 
+			, REGION_ID=#{regionId} 
+			, REMARK=#{remark} 
+			, CREATE_BY=#{createBy} 
+			, CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATE_BY=#{updateBy} 
+			, UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_VISIT_MODEL_SETTING WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_VISIT_MODEL_SETTING WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			#{id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="VisitModelSetting">
+		DELETE FROM T_VISIT_MODEL_SETTING WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="VisitModelSettingResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_VISIT_MODEL_SETTING WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="VisitModelSettingResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_VISIT_MODEL_SETTING
+	</select>
+	<select id="listByProperty" parameterType="VisitModelSetting" resultMap="VisitModelSettingResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_VISIT_MODEL_SETTING WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="VisitModelSetting" resultMap="VisitModelSettingResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_VISIT_MODEL_SETTING WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="VisitModelSetting" resultType="int">
+		SELECT count(1) AS totalcount FROM T_VISIT_MODEL_SETTING WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>
