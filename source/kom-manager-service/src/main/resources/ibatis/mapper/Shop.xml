@@ -34,29 +34,12 @@
 		<result column="OWNER_NAME" property="ownerName"/>
 		<result column="OWNER_PHONE" property="ownerPhone"/>
 		<result column="PROMOTER" property="promoter"/>
-		<result column="ASSISTANT" property="assistant"/>
 		<result column="MATERIEL_ID" property="materielId"/>
 		<result column="GRADE_ID" property="gradeId"/>
 		<result column="BIZ_ID" property="bizId"/>
-		<result column="TOTAL_NUM" property="totalNum"/>
-		<result column="CURRENT_NUM" property="currentNum"/>
-		<result column="CLERK_NUM" property="clerkNum"/>
-		<result column="BRANDS_FIRST" property="brandsFirst"/>
-		<result column="BRANDS_TWO" property="brandsTwo"/>
-		<result column="BRANDS_THREE" property="brandsThree"/>
-		<result column="COUNTER_NUM" property="counterNum"/>
-		<result column="DARK_PRO" property="darkPro"/>
 		<result column="PURCHAS_CHANNEL" property="purchasChannel"/>
-		<result column="IS_KOM" property="isKom"/>
 		<result column="RELATIONSHIP" property="relationship"/>
-		<result column="INCORPORATOR" property="incorporator"/>
-		<result column="INCORPORATOR_TEL" property="incorporatorTel"/>
-		<result column="FWIDTH" property="fwidth"/>
-		<result column="FDEPTH" property="fdepth"/>
 		<result column="SHOP_AREA" property="shopArea"/>
-		<result column="SHOW_NUM" property="showNum"/>
-		<result column="STAFF_NUM" property="staffNum"/>
-		<result column="SALES_NUM" property="salesNum"/>
 		<result column="OPEN_DATE" property="openDate"/>
 		<result column="STATUS" property="status"/>
 		<result column="REMARK" property="remark"/>
@@ -72,6 +55,7 @@
 	<resultMap id="ShopInfoDtoResultMapper" type="ShopInfoDto">
 		<result column="ID" property="id"/>
 		<result column="SHOP_ID" property="shopId"/>
+		<result column="COMPANY_CODE" property="companyCode"/>
 		<result column="SHOP_CODE" property="shopCode"/>
 		<result column="SHOP_NAME" property="shopName"/>
 		<result column="COMPANY_ID" property="companyId"/>
@@ -83,30 +67,27 @@
 		<result column="ADDRESS" property="address"/>
 		<result column="OWNER_NAME" property="ownerName"/>
 		<result column="OWNER_PHONE" property="ownerPhone"/>
-		<result column="PROMOTER" property="promoter"/>
-		<result column="ASSISTANT" property="assistant"/>
-		<result column="MATERIEL_ID" property="materielId"/>
 		<result column="GRADE_ID" property="gradeId"/>
+		<result column="GRADE_NAME" property="gradeName"/>
 		<result column="BIZ_ID" property="bizId"/>
-		<result column="TOTAL_NUM" property="totalNum"/>
-		<result column="CURRENT_NUM" property="currentNum"/>
-		<result column="CLERK_NUM" property="clerkNum"/>
-		<result column="BRANDS_FIRST" property="brandsFirst"/>
+		<result column="BIZ_NAME" property="bizName"/>
+	    <result column="CLERK_BRAND_QTY" property="clerkBrandQty"/>
+		<result column="BRANDS_ONE" property="brandsOne"/>
 		<result column="BRANDS_TWO" property="brandsTwo"/>
 		<result column="BRANDS_THREE" property="brandsThree"/>
-		<result column="COUNTER_NUM" property="counterNum"/>
-		<result column="DARK_PRO" property="darkPro"/>
+		<result column="BRANDS_FOUR" property="brandsFour"/>
+		<result column="BRANDS_FIVE" property="brandsFive"/>
+		<result column="BRANDS_SIX" property="brandsSix"/>
+		<result column="CLERK_ONE_QTY" property="clerkOneQty"/> 
+		<result column="CLERK_TWO_QTY" property="clerkTwoQty"/> 
+		<result column="CLERK_THREE_QTY" property="clerkThreeQty"/>
+		<result column="CLERK_FOUR_QTY" property="clerkFourQty"/>  
+		<result column="CLERK_FIVE_QTY" property="clerkFiveQty"/> 
+		<result column="CLERK_SIX_QTY" property="clerkSixQty"/>
+		<result column="PROMOTER" property="promoter"/>
 		<result column="PURCHAS_CHANNEL" property="purchasChannel"/>
-		<result column="IS_KOM" property="isKom"/>
 		<result column="RELATIONSHIP" property="relationship"/>
-		<result column="INCORPORATOR" property="incorporator"/>
-		<result column="INCORPORATOR_TEL" property="incorporatorTel"/>
-		<result column="FWIDTH" property="fwidth"/>
-		<result column="FDEPTH" property="fdepth"/>
 		<result column="SHOP_AREA" property="shopArea"/>
-		<result column="SHOW_NUM" property="showNum"/>
-		<result column="STAFF_NUM" property="staffNum"/>
-		<result column="SALES_NUM" property="salesNum"/>
 		<result column="OPEN_DATE" property="openDate"/>
 		<result column="STATUS" property="status"/>
 		<result column="REMARK" property="remark"/>
@@ -234,7 +215,6 @@
 	
 	<sql id="commonProcessDateColumns">
 		 ID
-		, BRAND_CODE
 		, SHOP_ID
 		, SHOP_CODE
 		, SHOP_NAME
@@ -248,43 +228,12 @@
 		, OWNER_NAME
 		, OWNER_PHONE
 		, PROMOTER
-		, ASSISTANT
 		, MATERIEL_ID
 		, GRADE_ID
-		, GRADE_NAME
 		, BIZ_ID
-		, BIZ_NAME
-		, COUNTRY_NAME
-		, CITY_NAME
-		, CLERK_BRAND_QTY
-		, TOTAL_NUM
-		, CURRENT_NUM
-		, CLERK_NUM
-		, BRANDS_ONE
-		, BRANDS_TWO
-		, BRANDS_THREE
-		, BRANDS_FOUR
-		, BRANDS_FIVE
-		, BRANDS_SIX
-		, CLERK_ONE_QTY
-		, CLERK_TWO_QTY
-		, CLERK_THREE_QTY
-		, CLERK_FOUR_QTY
-		, CLERK_FIVE_QTY
-		, CLERK_SIX_QTY
-		, COUNTER_NUM
-		, DARK_PRO
 		, PURCHAS_CHANNEL
-		, IS_KOM
 		, RELATIONSHIP
-		, INCORPORATOR
-		, INCORPORATOR_TEL
-		, FWIDTH
-		, FDEPTH
 		, SHOP_AREA
-		, SHOW_NUM
-		, STAFF_NUM
-		, SALES_NUM
 		, date_format(OPEN_DATE, '%Y-%m-%d %H:%i:%s') OPEN_DATE
 		, STATUS
 		, REMARK
@@ -293,6 +242,53 @@
 		, UPDATE_BY
 		, date_format(UPDATE_DATE, '%Y-%m-%d %H:%i:%s') UPDATE_DATE
 		, VERSION
+	</sql>
+	<sql id="commonProcessDateColumn">
+		 s.ID
+		, s.SHOP_ID
+		, SHOP_CODE
+		, COMPANY_CODE
+		, SHOP_NAME
+		, s.COMPANY_ID
+		, s.PARENT_ID
+		, REGION_ID
+		, COUNTRY
+		, CITY
+		, SHOP_ICON
+		, ADDRESS
+		, OWNER_NAME
+		, OWNER_PHONE
+		, GRADE_ID
+		, GRADE_NAME
+		, BIZ_ID
+		, BIZ_NAME
+		, r1.REGION_NAME AS COUNTRY_NAME
+		, r2.REGION_NAME AS CITY_NAME
+		, CLERK_BRAND_QTY
+		, e.PROMOTER
+		, BRAND_ONE
+		, BRAND_TWO
+		, BRAND_THREE
+		, BRAND_FOUR
+		, BRAND_FIVE
+		, BRAND_SIX
+		, CLERK_ONE_QTY
+		, CLERK_TWO_QTY
+		, CLERK_THREE_QTY
+		, CLERK_FOUR_QTY
+		, CLERK_FIVE_QTY
+		, CLERK_SIX_QTY
+		, PURCHAS_CHANNEL
+		, e.RELATIONSHIP
+		, e.SHOP_AREA
+		, date_format(OPEN_DATE, '%Y-%m-%d %H:%i:%s') OPEN_DATE
+		, STATUS
+		, s.REMARK
+		, s.CREATE_BY
+		, s.CREATE_DATE
+		, s.UPDATE_BY
+		, s.UPDATE_DATE
+		, s.VERSION
 	</sql>
 	
 	<sql id="commonCondition">
@@ -434,141 +430,141 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="shop != null">
-            <if test="shop.id!= null and shop.id!= ''">
-				AND ID=#{shop.id}
+		<if test="shopInfoDto != null">
+            <if test="shopInfoDto.id!= null and shopInfoDto.id!= ''">
+				AND ID=#{shopInfoDto.id}
             </if>
-            <if test="shop.shopId!= null and shop.shopId!= ''">
-				AND SHOP_ID=#{shop.shopId}
+            <if test="shopInfoDto.shopId!= null and shopInfoDto.shopId!= ''">
+				AND SHOP_ID=#{shopInfoDto.shopId}
             </if>
-            <if test="shop.shopCode!= null and shop.shopCode!= ''">
-				AND SHOP_CODE=#{shop.shopCode}
+            <if test="shopInfoDto.shopCode!= null and shopInfoDto.shopCode!= ''">
+				AND SHOP_CODE=#{shopInfoDto.shopCode}
             </if>
-            <if test="shop.shopName!= null and shop.shopName!= ''">
-				AND SHOP_NAME=#{shop.shopName}
+            <if test="shopInfoDto.shopName!= null and shopInfoDto.shopName!= ''">
+				AND SHOP_NAME=#{shopInfoDto.shopName}
             </if>
-            <if test="shop.companyId!= null and shop.companyId!= ''">
-				AND COMPANY_ID=#{shop.companyId}
+            <if test="shopInfoDto.companyId!= null and shopInfoDto.companyId!= ''">
+				AND COMPANY_ID=#{shopInfoDto.companyId}
             </if>
-            <if test="shop.parentId!= null and shop.parentId!= ''">
-				AND PARENT_ID=#{shop.parentId}
+            <if test="shopInfoDto.parentId!= null and shopInfoDto.parentId!= ''">
+				AND PARENT_ID=#{shopInfoDto.parentId}
             </if>
-            <if test="shop.regionId!= null and shop.regionId!= ''">
-				AND REGION_ID=#{shop.regionId}
+            <if test="shopInfoDto.regionId!= null and shopInfoDto.regionId!= ''">
+				AND REGION_ID=#{shopInfoDto.regionId}
             </if>
-            <if test="shop.country!= null and shop.country!= ''">
-				AND COUNTRY=#{shop.country}
+            <if test="shopInfoDto.country!= null and shopInfoDto.country!= ''">
+				AND COUNTRY=#{shopInfoDto.country}
             </if>
-            <if test="shop.city!= null and shop.city!= ''">
-				AND CITY=#{shop.city}
+            <if test="shopInfoDto.city!= null and shopInfoDto.city!= ''">
+				AND CITY=#{shopInfoDto.city}
             </if>
-            <if test="shop.shopIcon!= null and shop.shopIcon!= ''">
-				AND SHOP_ICON=#{shop.shopIcon}
+            <if test="shopInfoDto.shopIcon!= null and shopInfoDto.shopIcon!= ''">
+				AND SHOP_ICON=#{shopInfoDto.shopIcon}
             </if>
-            <if test="shop.address!= null and shop.address!= ''">
-				AND ADDRESS=#{shop.address}
+            <if test="shopInfoDto.address!= null and shopInfoDto.address!= ''">
+				AND ADDRESS=#{shopInfoDto.address}
             </if>
-            <if test="shop.ownerName!= null and shop.ownerName!= ''">
-				AND OWNER_NAME=#{shop.ownerName}
+            <if test="shopInfoDto.ownerName!= null and shopInfoDto.ownerName!= ''">
+				AND OWNER_NAME=#{shopInfoDto.ownerName}
             </if>
-            <if test="shop.ownerPhone!= null and shop.ownerPhone!= ''">
-				AND OWNER_PHONE=#{shop.ownerPhone}
+            <if test="shopInfoDto.ownerPhone!= null and shopInfoDto.ownerPhone!= ''">
+				AND OWNER_PHONE=#{shopInfoDto.ownerPhone}
             </if>
-            <if test="shop.promoter!= null and shop.promoter!= ''">
-				AND PROMOTER=#{shop.promoter}
+            <if test="shopInfoDto.promoter!= null and shopInfoDto.promoter!= ''">
+				AND PROMOTER=#{shopInfoDto.promoter}
             </if>
-            <if test="shop.assistant!= null and shop.assistant!= ''">
-				AND ASSISTANT=#{shop.assistant}
+            <if test="shopInfoDto.assistant!= null and shopInfoDto.assistant!= ''">
+				AND ASSISTANT=#{shopInfoDto.assistant}
             </if>
-            <if test="shop.materielId!= null and shop.materielId!= ''">
-				AND MATERIEL_ID=#{shop.materielId}
+            <if test="shopInfoDto.materielId!= null and shopInfoDto.materielId!= ''">
+				AND MATERIEL_ID=#{shopInfoDto.materielId}
             </if>
-            <if test="shop.gradeId!= null and shop.gradeId!= ''">
-				AND GRADE_ID=#{shop.gradeId}
+            <if test="shopInfoDto.gradeId!= null and shopInfoDto.gradeId!= ''">
+				AND GRADE_ID=#{shopInfoDto.gradeId}
             </if>
-            <if test="shop.bizId!= null and shop.bizId!= ''">
-				AND BIZ_ID=#{shop.bizId}
+            <if test="shopInfoDto.bizId!= null and shopInfoDto.bizId!= ''">
+				AND BIZ_ID=#{shopInfoDto.bizId}
             </if>
-            <if test="shop.totalNum!= null and shop.totalNum!= ''">
-				AND TOTAL_NUM=#{shop.totalNum}
+            <if test="shopInfoDto.totalNum!= null and shopInfoDto.totalNum!= ''">
+				AND TOTAL_NUM=#{shopInfoDto.totalNum}
             </if>
-            <if test="shop.currentNum!= null and shop.currentNum!= ''">
-				AND CURRENT_NUM=#{shop.currentNum}
+            <if test="shopInfoDto.currentNum!= null and shopInfoDto.currentNum!= ''">
+				AND CURRENT_NUM=#{shopInfoDto.currentNum}
             </if>
-            <if test="shop.clerkNum!= null and shop.clerkNum!= ''">
-				AND CLERK_NUM=#{shop.clerkNum}
+            <if test="shopInfoDto.clerkNum!= null and shopInfoDto.clerkNum!= ''">
+				AND CLERK_NUM=#{shopInfoDto.clerkNum}
             </if>
-            <if test="shop.brandsFirst!= null and shop.brandsFirst!= ''">
-				AND BRANDS_FIRST=#{shop.brandsFirst}
+            <if test="shopInfoDto.brandsFirst!= null and shopInfoDto.brandsFirst!= ''">
+				AND BRANDS_FIRST=#{shopInfoDto.brandsFirst}
             </if>
-            <if test="shop.brandsTwo!= null and shop.brandsTwo!= ''">
-				AND BRANDS_TWO=#{shop.brandsTwo}
+            <if test="shopInfoDto.brandsTwo!= null and shopInfoDto.brandsTwo!= ''">
+				AND BRANDS_TWO=#{shopInfoDto.brandsTwo}
             </if>
-            <if test="shop.brandsThree!= null and shop.brandsThree!= ''">
-				AND BRANDS_THREE=#{shop.brandsThree}
+            <if test="shopInfoDto.brandsThree!= null and shopInfoDto.brandsThree!= ''">
+				AND BRANDS_THREE=#{shopInfoDto.brandsThree}
             </if>
-            <if test="shop.counterNum!= null and shop.counterNum!= ''">
-				AND COUNTER_NUM=#{shop.counterNum}
+            <if test="shopInfoDto.counterNum!= null and shopInfoDto.counterNum!= ''">
+				AND COUNTER_NUM=#{shopInfoDto.counterNum}
             </if>
-            <if test="shop.darkPro!= null and shop.darkPro!= ''">
-				AND DARK_PRO=#{shop.darkPro}
+            <if test="shopInfoDto.darkPro!= null and shopInfoDto.darkPro!= ''">
+				AND DARK_PRO=#{shopInfoDto.darkPro}
             </if>
-            <if test="shop.purchasChannel!= null and shop.purchasChannel!= ''">
-				AND PURCHAS_CHANNEL=#{shop.purchasChannel}
+            <if test="shopInfoDto.purchasChannel!= null and shopInfoDto.purchasChannel!= ''">
+				AND PURCHAS_CHANNEL=#{shopInfoDto.purchasChannel}
             </if>
-            <if test="shop.isKom!= null and shop.isKom!= ''">
-				AND IS_KOM=#{shop.isKom}
+            <if test="shopInfoDto.isKom!= null and shopInfoDto.isKom!= ''">
+				AND IS_KOM=#{shopInfoDto.isKom}
             </if>
-            <if test="shop.relationship!= null and shop.relationship!= ''">
-				AND RELATIONSHIP=#{shop.relationship}
+            <if test="shopInfoDto.relationship!= null and shopInfoDto.relationship!= ''">
+				AND RELATIONSHIP=#{shopInfoDto.relationship}
             </if>
-            <if test="shop.incorporator!= null and shop.incorporator!= ''">
-				AND INCORPORATOR=#{shop.incorporator}
+            <if test="shopInfoDto.incorporator!= null and shopInfoDto.incorporator!= ''">
+				AND INCORPORATOR=#{shopInfoDto.incorporator}
             </if>
-            <if test="shop.incorporatorTel!= null and shop.incorporatorTel!= ''">
-				AND INCORPORATOR_TEL=#{shop.incorporatorTel}
+            <if test="shopInfoDto.incorporatorTel!= null and shopInfoDto.incorporatorTel!= ''">
+				AND INCORPORATOR_TEL=#{shopInfoDto.incorporatorTel}
             </if>
-            <if test="shop.fwidth!= null and shop.fwidth!= ''">
-				AND FWIDTH=#{shop.fwidth}
+            <if test="shopInfoDto.fwidth!= null and shopInfoDto.fwidth!= ''">
+				AND FWIDTH=#{shopInfoDto.fwidth}
             </if>
-            <if test="shop.fdepth!= null and shop.fdepth!= ''">
-				AND FDEPTH=#{shop.fdepth}
+            <if test="shopInfoDto.fdepth!= null and shopInfoDto.fdepth!= ''">
+				AND FDEPTH=#{shopInfoDto.fdepth}
             </if>
-            <if test="shop.shopArea!= null and shop.shopArea!= ''">
-				AND SHOP_AREA=#{shop.shopArea}
+            <if test="shopInfoDto.shopArea!= null and shopInfoDto.shopArea!= ''">
+				AND SHOP_AREA=#{shopInfoDto.shopArea}
             </if>
-            <if test="shop.showNum!= null and shop.showNum!= ''">
-				AND SHOW_NUM=#{shop.showNum}
+            <if test="shopInfoDto.showNum!= null and shopInfoDto.showNum!= ''">
+				AND SHOW_NUM=#{shopInfoDto.showNum}
             </if>
-            <if test="shop.staffNum!= null and shop.staffNum!= ''">
-				AND STAFF_NUM=#{shop.staffNum}
+            <if test="shopInfoDto.staffNum!= null and shopInfoDto.staffNum!= ''">
+				AND STAFF_NUM=#{shopInfoDto.staffNum}
             </if>
-            <if test="shop.salesNum!= null and shop.salesNum!= ''">
-				AND SALES_NUM=#{shop.salesNum}
+            <if test="shopInfoDto.salesNum!= null and shopInfoDto.salesNum!= ''">
+				AND SALES_NUM=#{shopInfoDto.salesNum}
             </if>
-            <if test="shop.openDate!= null and shop.openDate!= ''">
-				AND OPEN_DATE=str_to_date(#{shop.openDate},'%Y-%m-%d %H:%i:%s')
+            <if test="shopInfoDto.openDate!= null and shopInfoDto.openDate!= ''">
+				AND OPEN_DATE=str_to_date(#{shopInfoDto.openDate},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="shop.status!= null and shop.status!= ''">
-				AND STATUS=#{shop.status}
+            <if test="shopInfoDto.status!= null and shopInfoDto.status!= ''">
+				AND STATUS=#{shopInfoDto.status}
             </if>
-            <if test="shop.remark!= null and shop.remark!= ''">
-				AND REMARK=#{shop.remark}
+            <if test="shopInfoDto.remark!= null and shopInfoDto.remark!= ''">
+				AND REMARK=#{shopInfoDto.remark}
             </if>
-            <if test="shop.createBy!= null and shop.createBy!= ''">
-				AND CREATE_BY=#{shop.createBy}
+            <if test="shopInfoDto.createBy!= null and shopInfoDto.createBy!= ''">
+				AND CREATE_BY=#{shopInfoDto.createBy}
             </if>
-            <if test="shop.createDate!= null and shop.createDate!= ''">
-				AND CREATE_DATE=str_to_date(#{shop.createDate},'%Y-%m-%d %H:%i:%s')
+            <if test="shopInfoDto.createDate!= null and shopInfoDto.createDate!= ''">
+				AND CREATE_DATE=str_to_date(#{shopInfoDto.createDate},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="shop.updateBy!= null and shop.updateBy!= ''">
-				AND UPDATE_BY=#{shop.updateBy}
+            <if test="shopInfoDto.updateBy!= null and shopInfoDto.updateBy!= ''">
+				AND UPDATE_BY=#{shopInfoDto.updateBy}
             </if>
-            <if test="shop.updateDate!= null and shop.updateDate!= ''">
-				AND UPDATE_DATE=str_to_date(#{shop.updateDate},'%Y-%m-%d %H:%i:%s')
+            <if test="shopInfoDto.updateDate!= null and shopInfoDto.updateDate!= ''">
+				AND UPDATE_DATE=str_to_date(#{shopInfoDto.updateDate},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="shop.version!= null and shop.version!= ''">
-				AND VERSION=#{shop.version}
+            <if test="shopInfoDto.version!= null and shopInfoDto.version!= ''">
+				AND VERSION=#{shopInfoDto.version}
             </if>
         </if>
     </sql>
@@ -854,8 +850,15 @@
 	</select>
 	<select id="listPaginationByProperty" parameterType="ShopInfoDto" resultMap="ShopInfoDtoResultMapper">
 		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_SHOP WHERE 1=1
+		<include refid="commonProcessDateColumn"/>
+		FROM T_SHOP s 
+		LEFT JOIN T_COMPANY c ON c.ID = s.COMPANY_ID
+		LEFT JOIN T_REGION r1 ON r1.ID = s.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = s.CITY
+		LEFT JOIN T_SHOP_EXTENSION e ON s.ID = e.ID
+		LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID
+		LEFT JOIN T_SHOP_BIZ b ON s.BIZ_ID = b.ID
+		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>

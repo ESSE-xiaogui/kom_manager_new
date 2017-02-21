@@ -76,9 +76,9 @@ public class RegionController extends AbstractController{
 	@Path("/findCityListByParentRegionId")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON}) 
-	public List<RegionDto> findCityListByParentRegionId(@QueryParam("parentId") int parentId) throws ServiceException {
+	public List<RegionDto> findCityListByParentRegionId(@QueryParam("countryId") int countryId) throws ServiceException {
 		String token = this.getAuthorization();
-		return regionFacade.findCityListByParentRegionId(parentId,token);
+		return regionFacade.findCityListByParentRegionId(countryId,token);
 	}
 
 	/**

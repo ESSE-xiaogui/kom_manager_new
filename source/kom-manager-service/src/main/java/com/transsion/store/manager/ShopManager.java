@@ -319,4 +319,32 @@ public class ShopManager {
 			shopMaterielService.update(list.get(i));
 		}
 	}
+	
+	/**
+	 * 门店审核
+	 * @param shop
+	 * @param token
+	 * @throws ServiceException 
+	 */
+	public void updateShopStatus(Shop shop, String token) throws ServiceException {
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		if(UtilHelper.isEmpty(userContext.getUser())){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		if(UtilHelper.isEmpty(userContext.getUser().getCompanyId())){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		
+		Shop formerShop = shopService.getByPK(shop.getId());
+		formerShop.setStatus(shop.getStatus());
+		
+		shopService.update(formerShop);
+		
+	}
 }

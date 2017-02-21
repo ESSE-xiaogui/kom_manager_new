@@ -20,6 +20,7 @@ import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Shop;
 import com.transsion.store.dto.ShopDefinitionDto;
 import com.transsion.store.dto.ShopDetailDto;
+import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.ShopFacade;
@@ -62,9 +63,9 @@ public class ShopController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<Shop> listPgShop(RequestModel<Shop> requestModel) throws ServiceException
+	public Pagination<ShopInfoDto> listPgShop(RequestModel<ShopInfoDto> requestModel) throws ServiceException
 	{
-		Pagination<Shop> pagination = new Pagination<Shop>();
+		Pagination<ShopInfoDto> pagination = new Pagination<ShopInfoDto>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());
@@ -208,5 +209,18 @@ public class ShopController extends AbstractController{
 	public void updateShop(ShopDetailDto shopDetailDto) throws ServiceException {
 		String token = this.getAuthorization();
 		shopFacade.updateShop(token, shopDetailDto);
+	}
+	
+	/**
+	 * 门店审核
+	 * @param shop
+	 * @throws ServiceException
+	 */
+	@PUT
+	@Path("/updateShopStatus")
+	@Consumes({MediaType.APPLICATION_JSON})
+	public void updateShopStatus(Shop shop)throws ServiceException{
+		String token = this.getAuthorization();
+		shopFacade.updateShopStatus(shop,token);
 	}
 }
