@@ -273,8 +273,7 @@ public class ShopManager {
 		if(UtilHelper.isEmpty(userContext.getUser().getCompanyId())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
-		
-		Integer userId = userContext.getUser().getUserId();
+		Integer userId = userContext.getUser().getId().intValue();
 		List<UserShop> shopIdList = userShopMapper.queryShopIdByUserId(userId);
 		
 		List<ShopDetailDto> list = new ArrayList<ShopDetailDto>();
