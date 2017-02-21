@@ -119,7 +119,7 @@ public class CurrencyController extends AbstractController{
 		byte[] bytes = currencyFacade.getCurrencyByExcel(currencyDto);       
 		InputStream inputStream = new ByteArrayInputStream(bytes);          
 		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));          
-		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"汇率报表.xls";         
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"汇率报表.xlsx";
 		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));         
 		//根据自己文件类型修改         
 		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");          
