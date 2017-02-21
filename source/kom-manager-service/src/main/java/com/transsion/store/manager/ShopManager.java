@@ -289,7 +289,12 @@ public class ShopManager {
 			shopDetailDto.setShopMaterielDtoList(shopMaterielList);
 			list.add(shopDetailDto);
 		}
-		return list;
+		if(list != null && list.size() > 0) {
+			return list;
+		} else {
+			return null;
+		}
+		
 	}
 	
 	public void updateShop(String token, ShopDetailDto shopDetailDto) throws ServiceException {
