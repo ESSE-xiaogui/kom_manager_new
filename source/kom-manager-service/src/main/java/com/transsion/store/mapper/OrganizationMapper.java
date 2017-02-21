@@ -33,6 +33,6 @@ public interface OrganizationMapper extends GenericIBatisMapper<Organization, ja
 
     public List<OrgInfoDto> listPaginationByProperty(Pagination<OrgInfoDto> pagination, @Param("orgInfoDto")OrgInfoDto orgInfoDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     public OrganizationResponseDto getOrgName(@Param("orgId") Integer orgId);
-    public List<OrganizationTreeDto> findOrg();
+    public List<OrganizationTreeDto> findOrg(@Param("companyId") Long companyId);
     public OrganizationDto getByPKs(@Param("id") Long id) throws DataAccessFailureException;
 }

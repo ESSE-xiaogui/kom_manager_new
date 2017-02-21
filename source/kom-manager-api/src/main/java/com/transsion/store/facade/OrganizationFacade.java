@@ -87,7 +87,7 @@ public interface OrganizationFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public OrganizationResponseDto update(String token,Organization organization) throws ServiceException;
+	public void update(String token,Organization organization) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数
@@ -110,7 +110,7 @@ public interface OrganizationFacade {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public OrganizationResponseDto saveOrg(String token,OrganizationDto organizationDto) throws ServiceException;
+	public void saveOrg(String token,OrganizationDto organizationDto) throws ServiceException;
 	
 	/**
 	 * 查询组织机构名称
@@ -124,11 +124,11 @@ public interface OrganizationFacade {
 	 * @return
 	 * @throws serviceException
 	 * */
-	public List<OrganizationTreeDto> findOrg() throws ServiceException;
+	public List<OrganizationTreeDto> findOrg(String token) throws ServiceException;
 	
 	/**
 	 * 删除组织机构
 	 * */
-	public OrganizationResponseDto deleteOrg(Integer orgId) throws ServiceException;
+	public void deleteOrg(Long orgId) throws ServiceException;
 
 }

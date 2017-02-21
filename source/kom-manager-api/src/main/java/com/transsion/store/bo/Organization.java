@@ -17,7 +17,9 @@
 package com.transsion.store.bo;
 
 import com.shangkang.core.bo.Model;
-
+/**
+ * updateBy guihua.zhang on 2017-2-21
+ * */
 public class Organization extends Model{
 
 	/**
@@ -26,80 +28,83 @@ public class Organization extends Model{
 	private static final long	serialVersionUID	= 1L;
 	
 	/**
-	  *	
+	  *	组织机构Id
 	  */
-	private java.lang.Long id;
+	private Long id;
 
 	/**
 	  *	
 	  */
-	private java.lang.Integer orgId;
+	private Integer orgId;
 
 	/**
-	  *	
+	  *	组织机构名称
 	  */
-	private java.lang.String orgName;
+	private String orgName;
 	
 
 	/**
-	  *	
+	  *	公司Id
 	  */
-	private java.lang.Integer companyId;
+	private Integer companyId;
 
 	/**
-	  *	
+	  *	父级Id
 	  */
-	private java.lang.Long parentId;
-
-	private java.lang.Long bizId;
+	private Long parentId;
 
 	/**
-	  *	1表示激活状态，被激活有效的数据可以用于新增业务，2表示停用，被停用无效的数据只能用于历史数据查询中
-	  */
-	private java.lang.Integer isInactive;
+	 * 业务类型Id
+	 * */
+	private Long bizId;
 
 	/**
-	  *	
-	  */
-	private java.lang.String remark;
+	 * 1：启用 2：禁用
+	 * */
+	private Integer isInactive;
 
 	/**
-	  *	
+	  *	备注
 	  */
-	private java.lang.String createdBy;
+	private String remark;
 
 	/**
-	  *	
+	  *	创建人
 	  */
-	private java.lang.String createdTime;
+	private String createdBy;
 
 	/**
-	  *	
+	  *	创建时间
 	  */
-	private java.lang.String updatedBy;
+	private String createdTime;
 
 	/**
-	  *	
+	  *	更新人
 	  */
-	private java.lang.String updatedTime;
+	private String updatedBy;
 
 	/**
-	  *	
+	  *	更新时间
 	  */
-	private java.lang.Integer version;
+	private String updatedTime;
 
 	/**
-	  *	
+	  *	版本
 	  */
-	public java.lang.Long getId() 
+	private Integer version;
+
+	/**
+	  *	组织机构Id
+	  */
+	public Long getId() 
 	{
 		return id;
 	}
 	
 	/**
-	  *	
+	  *	组织机构Id
 	  */
-	public void setId(java.lang.Long id) 
+	public void setId(Long id) 
 	{
 		this.id = id;
 	}
@@ -107,7 +112,7 @@ public class Organization extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.Integer getOrgId() 
+	public Integer getOrgId() 
 	{
 		return orgId;
 	}
@@ -115,176 +120,182 @@ public class Organization extends Model{
 	/**
 	  *	
 	  */
-	public void setOrgId(java.lang.Integer orgId) 
+	public void setOrgId(Integer orgId) 
 	{
 		this.orgId = orgId;
 	}
 	
 	/**
-	  *	
+	  *	组织机构名称
 	  */
-	public java.lang.String getOrgName() 
+	public String getOrgName() 
 	{
 		return orgName;
 	}
 	
 	/**
-	  *	
+	  *	组织机构名称
 	  */
-	public void setOrgName(java.lang.String orgName) 
+	public void setOrgName(String orgName) 
 	{
 		this.orgName = orgName;
 	}
 	
 	/**
-	  *	
+	  *	公司Id
 	  */
-	public java.lang.Integer getCompanyId() 
+	public Integer getCompanyId() 
 	{
 		return companyId;
 	}
 	
 	/**
-	  *	
+	  *	公司Id
 	  */
-	public void setCompanyId(java.lang.Integer companyId) 
+	public void setCompanyId(Integer companyId) 
 	{
 		this.companyId = companyId;
 	}
 	
 	/**
-	  *	
+	  *	父级Id
 	  */
-	public java.lang.Long getParentId() 
+	public Long getParentId() 
 	{
 		return parentId;
 	}
 	
 	/**
-	  *	
+	  *	父级Id
 	  */
-	public void setParentId(java.lang.Long parentId) 
+	public void setParentId(Long parentId) 
 	{
 		this.parentId = parentId;
 	}
 	
 	/**
-	  *	0表示激活状态，被激活有效的数据可以用于新增业务，1表示停用，被停用无效的数据只能用于历史数据查询中
-	  */
-	public java.lang.Integer getIsInactive() 
+	 * 1：启用 2：禁用
+	 * */
+	public Integer getIsInactive() 
 	{
 		return isInactive;
 	}
 	
 	/**
-	  *	0表示激活状态，被激活有效的数据可以用于新增业务，1表示停用，被停用无效的数据只能用于历史数据查询中
-	  */
-	public void setIsInactive(java.lang.Integer isInactive) 
+	 * 1：启用 2：禁用
+	 * */
+	public void setIsInactive(Integer isInactive) 
 	{
 		this.isInactive = isInactive;
 	}
 	
 	/**
-	  *	
+	  *	备注
 	  */
-	public java.lang.String getRemark() 
+	public String getRemark() 
 	{
 		return remark;
 	}
 	
 	/**
-	  *	
+	  *	备注
 	  */
-	public void setRemark(java.lang.String remark) 
+	public void setRemark(String remark) 
 	{
 		this.remark = remark;
 	}
 	
 	/**
-	  *	
+	  *	创建人
 	  */
-	public java.lang.String getCreatedBy() 
+	public String getCreatedBy() 
 	{
 		return createdBy;
 	}
 	
 	/**
-	  *	
+	  *	创建人
 	  */
-	public void setCreatedBy(java.lang.String createdBy) 
+	public void setCreatedBy(String createdBy) 
 	{
 		this.createdBy = createdBy;
 	}
 	
 	/**
-	  *	
+	  *	创建时间
 	  */
-	public java.lang.String getCreatedTime() 
+	public String getCreatedTime() 
 	{
 		return createdTime;
 	}
 	
 	/**
-	  *	
+	  *	创建时间
 	  */
-	public void setCreatedTime(java.lang.String createdTime) 
+	public void setCreatedTime(String createdTime) 
 	{
 		this.createdTime = createdTime;
 	}
 	
 	/**
-	  *	
+	  *	更新人
 	  */
-	public java.lang.String getUpdatedBy() 
+	public String getUpdatedBy() 
 	{
 		return updatedBy;
 	}
 	
 	/**
-	  *	
+	  * 更新人	
 	  */
-	public void setUpdatedBy(java.lang.String updatedBy) 
+	public void setUpdatedBy(String updatedBy) 
 	{
 		this.updatedBy = updatedBy;
 	}
 	
 	/**
-	  *	
+	  *	更新时间
 	  */
-	public java.lang.String getUpdatedTime() 
+	public String getUpdatedTime() 
 	{
 		return updatedTime;
 	}
 	
 	/**
-	  *	
+	  *	更新时间
 	  */
-	public void setUpdatedTime(java.lang.String updatedTime) 
+	public void setUpdatedTime(String updatedTime) 
 	{
 		this.updatedTime = updatedTime;
 	}
 	
 	/**
-	  *	
+	  *	版本
 	  */
-	public java.lang.Integer getVersion() 
+	public Integer getVersion() 
 	{
 		return version;
 	}
 	
 	/**
-	  *	
+	  *	版本
 	  */
-	public void setVersion(java.lang.Integer version) 
+	public void setVersion(Integer version) 
 	{
 		this.version = version;
 	}
 
-	public java.lang.Long getBizId() {
+	/**
+	 * 业务类型
+	 * */
+	public Long getBizId() {
 		return bizId;
 	}
 
-	public void setBizId(java.lang.Long bizId) {
+	/**
+	 * 业务类型
+	 * */
+	public void setBizId(Long bizId) {
 		this.bizId = bizId;
 	}
 

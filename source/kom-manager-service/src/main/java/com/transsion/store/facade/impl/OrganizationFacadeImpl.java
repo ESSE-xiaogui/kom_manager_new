@@ -136,9 +136,9 @@ public class OrganizationFacadeImpl implements OrganizationFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public OrganizationResponseDto update(String token,Organization organization) throws ServiceException
+	public void update(String token,Organization organization) throws ServiceException
 	{
-		 return organizationManager.update(token,organization);
+		organizationManager.update(token,organization);
 	}
 
 	/**
@@ -157,8 +157,8 @@ public class OrganizationFacadeImpl implements OrganizationFacade {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public OrganizationResponseDto saveOrg(String token,OrganizationDto organizationDto) throws ServiceException{
-		return organizationManager.saveOrg(token, organizationDto);
+	public void saveOrg(String token,OrganizationDto organizationDto) throws ServiceException{
+		 organizationManager.saveOrg(token, organizationDto);
 	}
 	
 	/**
@@ -175,13 +175,13 @@ public class OrganizationFacadeImpl implements OrganizationFacade {
 	 * @return
 	 * @throws serviceException
 	 * */
-	public List<OrganizationTreeDto> findOrg() throws ServiceException{
-		return organizationManager.findOrg();
+	public List<OrganizationTreeDto> findOrg(String token) throws ServiceException{
+		return organizationManager.findOrg(token);
 	}
 	/**
 	 * 删除组织机构
 	 * */
-	public OrganizationResponseDto deleteOrg(Integer orgId) throws ServiceException{
-		return organizationManager.deleteOrg(orgId);
+	public void deleteOrg(Long orgId) throws ServiceException{
+		organizationManager.deleteOrg(orgId);
 	}
 }
