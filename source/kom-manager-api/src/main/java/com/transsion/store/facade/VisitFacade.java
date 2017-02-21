@@ -114,11 +114,11 @@ public interface VisitFacade {
 	/*
 	 * update if visit exist or create 
 	 */
-	public void updateVisit(String token, VisitInfoDto visitInfoDto) throws ServiceException;
+	public void updateVisitRecord(String token, VisitInfoDto visitInfoDto) throws ServiceException;
 
 	/*
 	 * 
 	 */
-	public List<VisitInfoDto> queryVisit(String token, String startDate, String endDate) throws ServiceException;
+	public List<VisitInfoDto> queryVisitRecords(String token, String startDate, String endDate) throws ServiceException;
 	
 }

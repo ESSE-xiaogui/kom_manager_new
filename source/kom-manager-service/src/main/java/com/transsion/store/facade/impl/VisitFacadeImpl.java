@@ -155,13 +155,13 @@ public class VisitFacadeImpl implements VisitFacade {
 	}
 
 	@Override
-	public void updateVisit(String token, VisitInfoDto visitInfoDto) throws ServiceException {
+	public void updateVisitRecord(String token, VisitInfoDto visitInfoDto) throws ServiceException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public List<VisitInfoDto> queryVisit(String token, String startDate, String endDate) throws ServiceException {
+	public List<VisitInfoDto> queryVisitRecords(String token, String startDate, String endDate) throws ServiceException {
 		// TODO Auto-generated method stub
 		return null;
 	}
