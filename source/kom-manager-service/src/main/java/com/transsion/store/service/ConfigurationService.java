@@ -13,9 +13,10 @@ import com.transsion.store.mapper.ConfigurationMapper;
 @Service("configurationService")
 public class ConfigurationService {
 	
+	@Autowired
 	private ConfigurationMapper	configurationMapper;
 
-	@Autowired
+	
 	public void setAttributeMapper(ConfigurationMapper	configurationMapper)
 	{
 		this.configurationMapper = configurationMapper;

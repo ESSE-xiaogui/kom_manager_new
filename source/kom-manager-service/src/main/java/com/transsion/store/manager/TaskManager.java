@@ -11,7 +11,6 @@ import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Task;
 import com.transsion.store.bo.User;
-import com.transsion.store.common.Constants;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.TaskDto;
 import com.transsion.store.exception.ExceptionDef;
@@ -20,12 +19,13 @@ import com.transsion.store.mapper.TaskMapper;
 import com.transsion.store.mapper.UserMapper;
 import com.transsion.store.message.Message.Group;
 import com.transsion.store.message.Message.Type;
+import com.transsion.store.service.ConfigurationService;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 
 @Service("taskManager")
 public class TaskManager {
-	
+	public static final String IMPORT_TASK_URL = "import.task.url";
 	@Autowired
 	private TaskMapper taskMapper;
 	
@@ -40,6 +40,9 @@ public class TaskManager {
 	
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private ConfigurationService configurationService;
 	
 	/**
 	 * 删除任务
@@ -88,7 +91,10 @@ public class TaskManager {
 		}
 		msg.setInvokerType(TaskInvokerInfo.Type.REST);
 		msg.setKey(task.getId());
-		msg.setBeanName(Constants.IMPORTTASK + task.getId());
+//		msg.setBeanName(Constants.IMPORTTASK + task.getId());
+		// 从数据库中读取导入文件的地址
+		String importTask = configurationService.getValueByName(IMPORT_TASK_URL);
+		msg.setBeanName(importTask + task.getId());
 		msg.setMethod(TaskInvokerInfo.RestMethod.PUT.toString());
 		msg.setParams(task.getId());
 		producerService.sendMessage(msg);
