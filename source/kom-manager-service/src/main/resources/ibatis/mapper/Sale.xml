@@ -600,7 +600,7 @@
 	<select id="listPaginationByProperty" parameterType="Sale" resultMap="SaleResultMapper">
 		SELECT 
 		<include refid="commonProcessDateColumns"/>
-		FROM SALE_LIST_VIEW WHERE 1=1
+		FROM T_SALE WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>
