@@ -28,6 +28,7 @@ import com.shangkang.core.dto.RequestModel;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Currency;
 import com.transsion.store.dto.CurrencyDto;
+import com.transsion.store.dto.CurrencyResultDto;
 import com.transsion.store.facade.CurrencyFacade;
 @Controller
 @Path("currency")
@@ -119,7 +120,7 @@ public class CurrencyController extends AbstractController{
 		byte[] bytes = currencyFacade.getCurrencyByExcel(currencyDto);       
 		InputStream inputStream = new ByteArrayInputStream(bytes);          
 		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));          
-		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"汇率报表.xls";         
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"汇率报表.xlsx";
 		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));         
 		//根据自己文件类型修改         
 		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");          
@@ -147,4 +148,17 @@ public class CurrencyController extends AbstractController{
             this.inputStream = inputStream;
         }
     }
+	
+	/**
+	 * @author guihua.zhang on 2017-2-21
+	 * @return
+	 * @throws ServiceException
+	 * */
+	@GET
+	@Path("/findCurrencyName")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<CurrencyResultDto> findCurrencyName() throws ServiceException{
+		String token = this.getAuthorization();
+		return currencyFacade.findCurrencyName(token);
+	}
 }

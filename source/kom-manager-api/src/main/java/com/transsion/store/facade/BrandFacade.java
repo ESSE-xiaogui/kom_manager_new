@@ -21,7 +21,6 @@ import java.util.List;
 import com.transsion.store.bo.Brand;
 import com.transsion.store.dto.BrandDto;
 import com.transsion.store.dto.BrandModelListDto;
-import com.transsion.store.dto.BrandResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -87,7 +86,7 @@ public interface BrandFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public BrandResponseDto update(String token,Brand brand) throws ServiceException;
+	public void update(String token,Brand brand) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数
@@ -110,7 +109,7 @@ public interface BrandFacade {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public BrandResponseDto saveBrand(String token,BrandDto brandDto) throws ServiceException;
+	public void saveBrand(String token,BrandDto brandDto) throws ServiceException;
 	
 	/**
 	 * 查询品牌

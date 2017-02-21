@@ -120,7 +120,7 @@ public interface SaleFacade {
 	 * @return list
 	 * @throws ServiceException
 	 * */
-	public List<SalesUploadDto> saveSalesUpload (TShopSaleDto tshopSaleDto,String token, long imeiCacheTimeOut) throws ServiceException;
+	public List<SalesUploadDto> saveSalesUpload (TShopSaleDto tshopSaleDto,String token) throws ServiceException;
 	 /**
      * 销量上报记录查询
      * @return

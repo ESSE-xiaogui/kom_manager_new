@@ -11,6 +11,7 @@ import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Currency;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.CurrencyDto;
+import com.transsion.store.dto.CurrencyResultDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.CurrencyMapper;
 import com.transsion.store.service.SystemDateService;
@@ -97,6 +98,25 @@ public class CurrencyManager {
 		}
 		String title = "汇率报表";
 		return ExcelUtils.exportExcel(title, headers, dataset);
+	}
+	
+	/**
+	 * @author guihua.zhang on 2017-2-21
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public List<CurrencyResultDto> findCurrencyName(String token) throws ServiceException{
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		if(UtilHelper.isEmpty(userContext.getCompanyId())){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		return currencyMapper.findCurrencyName(userContext.getCompanyId());
 	}
 
 }

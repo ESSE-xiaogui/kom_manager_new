@@ -16,6 +16,7 @@ import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.dto.RequestModel;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.TaskDetail;
+import com.transsion.store.dto.TaskItemDto;
 import com.transsion.store.facade.TaskDetailFacade;
 
 @Controller
@@ -57,5 +58,18 @@ public class TaskDetailController extends AbstractController {
 	public List<TaskDetail> findTaskDetail(@QueryParam("taskId") Long taskId) throws ServiceException {
 		return taskDetailFacade.findTaskDetail(taskId);
 	}
-
+	
+	/**
+	 * @author guihua.zhang on 2017-2-21
+	 * 
+	 * 统计成功条数,失败条数
+	 * @return
+	 * @throws ServiceException
+	 * */
+	@GET
+	@Path("/findTaskItemNum")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public TaskItemDto findTaskItemNum(@QueryParam("taskId") Long taskId) throws ServiceException{
+		return taskDetailFacade.findTaskItemNum(taskId);
+	}
 }

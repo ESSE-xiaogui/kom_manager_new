@@ -54,6 +54,10 @@
 		<result column="UPDATED_TIME" property="updatedTime"/>
 	</resultMap>
 	
+	<resultMap id="CurrencyResultDtoResultMapper" type="CurrencyResultDto">
+		<result column="CURRENCY_NAME" property="currencyName"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, COMPANY_ID
@@ -371,5 +375,10 @@
 		LEFT JOIN T_REGION r ON r.ID = c.REGION_ID
 		WHERE 1=1 
 		<include refid="commonConditionByPrefix"/>
+	</select>
+	<select id="findCurrencyName" parameterType="java.lang.Long"
+		resultMap="CurrencyResultDtoResultMapper">
+		SELECT CURRENCY_NAME
+		FROM T_CURRENCY WHERE COMPANY_ID = #{companyId}
 	</select>
 </mapper>

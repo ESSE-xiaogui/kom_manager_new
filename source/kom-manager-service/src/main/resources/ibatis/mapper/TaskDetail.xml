@@ -25,6 +25,12 @@
 		<result column="CREATE_TIME" property="createTime"/>
 		<result column="CONTEXT" property="context"/>
 	</resultMap>
+	
+	<resultMap id="TaskItemDtoResultMapper" type="TaskItemDto">
+		<result column="SUCCESS_NUM" property="successNum"/>
+		<result column="FAIL_NUM" property="failNum"/>
+	</resultMap>
+	
 	<sql id="commonColumnsNotPK">
 		TASK_ID
 		, MESSAGE
@@ -129,5 +135,12 @@
 		FROM T_TASK_DETAIL WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
+	</select>
+	<select id="findTaskItemNum" parameterType="java.lang.Long" resultMap="TaskItemDtoResultMapper">
+		SELECT
+		COUNT(CASE WHEN `STATUS` = 1 THEN `STATUS` END) AS SUCCESS_NUM,
+		COUNT(CASE WHEN `STATUS` = 2 THEN `STATUS` END) AS FAIL_NUM
+		FROM
+		T_TASK_DETAIL WHERE TASK_ID = #{taskId}
 	</select>
 </mapper>

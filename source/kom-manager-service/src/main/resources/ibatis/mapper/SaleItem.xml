@@ -519,4 +519,15 @@
 			)
 		</foreach>
 	</insert>
+	
+	<select id="queryImeiNoList" parameterType="java.util.List" resultType="String">
+		SELECT IMEI_NO FROM T_SALE_ITEM
+		<where>
+			IMEI_NO IN
+			<foreach item="imeiList" collection="list" separator="," open="("
+				close=")" index="">
+				#{imeiList}
+			</foreach>
+		</where>
+	</select>
 </mapper>

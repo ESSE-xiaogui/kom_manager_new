@@ -21,6 +21,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.transsion.store.bo.Shop;
+import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.ShopLoginDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.shangkang.core.bo.Pagination;
@@ -77,10 +78,10 @@ public class ShopService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Shop> listPaginationByProperty(Pagination<Shop> pagination, Shop shop)
+	public Pagination<ShopInfoDto> listPaginationByProperty(Pagination<ShopInfoDto> pagination, ShopInfoDto shopInfoDto)
 			throws ServiceException
 	{
-		List<Shop> list = shopMapper.listPaginationByProperty(pagination, shop, pagination.getOrderBy());
+		List<ShopInfoDto> list = shopMapper.listPaginationByProperty(pagination, shopInfoDto, pagination.getOrderBy());
 		
 		pagination.setResultList(list);
 		

@@ -23,6 +23,7 @@ import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Shop;
 import com.transsion.store.dto.ShopDefinitionDto;
 import com.transsion.store.dto.ShopDetailDto;
+import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.ShopUserDto;
 
 public interface ShopFacade {
@@ -102,7 +103,7 @@ public interface ShopFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Shop> listPaginationByProperty(Pagination<Shop> pagination, Shop shop)
+	public Pagination<ShopInfoDto> listPaginationByProperty(Pagination<ShopInfoDto> pagination, ShopInfoDto shopInfoDto)
 			throws ServiceException;
 	
 	/**
@@ -146,4 +147,11 @@ public interface ShopFacade {
 	 * app update shop api 
 	 */
 	public void updateShop(String token, ShopDetailDto shopDetailDto) throws ServiceException;
+
+	/**
+	 * 门店审核
+	 * @param shop
+	 * @param token
+	 */
+	public void updateShopStatus(Shop shop, String token)throws ServiceException;
 }

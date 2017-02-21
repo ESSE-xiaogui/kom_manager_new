@@ -10,11 +10,12 @@ import org.springframework.stereotype.Service;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Brand;
+import com.transsion.store.bo.Model;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.BrandDto;
-import com.transsion.store.dto.BrandResponseDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.BrandMapper;
+import com.transsion.store.mapper.ModelMapper;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 
@@ -23,15 +24,19 @@ public class BrandManager {
 	
 	@Autowired
 	private BrandMapper brandMapper;
+	
 	@Autowired
 	private SystemDateService systemDateService;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	/**
 	 * 新增品牌
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public BrandResponseDto saveBrand(String token,BrandDto brandDto) throws ServiceException{
+	public void saveBrand(String token,BrandDto brandDto) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
@@ -39,15 +44,13 @@ public class BrandManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		if(UtilHelper.isEmpty(userContext) ||UtilHelper.isEmpty(userContext.getCompanyId())
+						|| UtilHelper.isEmpty(userContext.getUserCode())){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
-		if(UtilHelper.isEmpty(userContext.getCompanyId())){
-			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
-		}
-		Brand tempBr = new Brand();
-		tempBr.setBrandName(brandDto.getBrandName());
-		int count = brandMapper.findByCount(tempBr);
+		Brand brandName = new Brand();
+		brandName.setBrandName(brandDto.getBrandName());
+		int count = brandMapper.findByCount(brandName);
 		if(count>0){
 			throw new ServiceException(ExceptionDef.ERROR_BRAND_ALREADY_EXIST.getName());
 		}
@@ -58,9 +61,6 @@ public class BrandManager {
 		brand.setCreatedTime(systemDateService.getCurrentDate());
 		brand.setVersion(0);
 		brandMapper.save(brand);
-		BrandResponseDto brd = new BrandResponseDto();
-		brd.setStatus(1);
-		return brd;
 	}
 	
 	/**
@@ -73,11 +73,8 @@ public class BrandManager {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
-		}
-		if(UtilHelper.isEmpty(userContext.getCompanyId())){
-			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getCompanyId())){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		Brand brand = new Brand();
 		brand.setCompanyId(userContext.getCompanyId().intValue());
@@ -101,31 +98,60 @@ public class BrandManager {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public BrandResponseDto update(String token, Brand brand) throws ServiceException {
+	public void update(String token, Brand brand) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		if(UtilHelper.isEmpty(userContext) ||UtilHelper.isEmpty(userContext.getCompanyId())
+						|| UtilHelper.isEmpty(userContext.getUserCode())){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
-		Brand tempBr = new Brand();
-		tempBr.setBrandName(brand.getBrandName());
-		int count1 = brandMapper.findByCount(tempBr);
-		tempBr.setId(brand.getId());
-		int count2 = brandMapper.findByCount(tempBr);
+		Brand brandParam = new Brand();
+		brandParam.setBrandName(brand.getBrandName());
+		int count1 = brandMapper.findByCount(brandParam);
+		brandParam.setId(brand.getId());
+		int count2 = brandMapper.findByCount(brandParam);
 		if(count1>0 && count2<1){
 			throw new ServiceException(ExceptionDef.ERROR_BRAND_ALREADY_EXIST.getName());
 		}
-		Brand formerBr = brandMapper.getByPK(brand.getId());
-		formerBr.setBrandName(brand.getBrandName());
-		formerBr.setIsSelf(brand.getIsSelf());
-		formerBr.setIsInactive(brand.getIsInactive());
-		formerBr.setUpdatedBy(userContext.getUser().getUserCode());
-		formerBr.setUpdatedTime(systemDateService.getCurrentDate());
-		brandMapper.update(formerBr);
-		BrandResponseDto brd = new BrandResponseDto();
-		brd.setStatus(1);
-		return brd;
+		Brand brandResult = brandMapper.getByPK(brand.getId());
+		brandResult.setCompanyId(userContext.getCompanyId().intValue());
+		brandResult.setBrandName(brand.getBrandName());
+		brandResult.setIsSelf(brand.getIsSelf());
+		brandResult.setIsInactive(brand.getIsInactive());
+		brandResult.setUpdatedBy(userContext.getUserCode());
+		brandResult.setUpdatedTime(systemDateService.getCurrentDate());
+		brandMapper.update(brandResult);
+	}
+	
+	/**
+	 * @author guihua.zhang on 2017-02-21
+	 * 
+	 * 删除品牌
+	 * */
+	public void deleteByPKeys(List<Long> primaryKeys) throws ServiceException
+	{
+		if(UtilHelper.isEmpty(primaryKeys)){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		for(long primaryKey:primaryKeys){
+			Brand brand = new Brand();
+			brand.setId(primaryKey);
+			List<Brand> list = brandMapper.listByProperty(brand);
+			if(!UtilHelper.isEmpty(list)){
+				for(Brand brandResult:list){
+					Model model = new Model();
+					model.setBrandCode(brandResult.getBrandCode());
+					int count = modelMapper.findByCount(model);
+					if(count>0){
+						throw new ServiceException(ExceptionDef.ERROR_MODEL_BIND_BRAND.getName());
+					}else{
+						brandMapper.deleteByPK(primaryKey);
+					}
+				}
+			}
+		}
+		
 	}
 }

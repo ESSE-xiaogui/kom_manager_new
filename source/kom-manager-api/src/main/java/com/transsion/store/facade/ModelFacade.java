@@ -21,7 +21,6 @@ import java.util.List;
 import com.transsion.store.bo.Model;
 import com.transsion.store.dto.ModelDto;
 import com.transsion.store.dto.ModelListDto;
-import com.transsion.store.dto.ModelResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -87,7 +86,7 @@ public interface ModelFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public ModelResponseDto update(String token,Model model) throws ServiceException;
+	public void update(String token,Model model) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数
@@ -110,7 +109,7 @@ public interface ModelFacade {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public ModelResponseDto saveModel(String token,Model model) throws ServiceException;
+	public void saveModel(String token,Model model) throws ServiceException;
 	
 	/**
 	 * 查询品牌产品系列机型

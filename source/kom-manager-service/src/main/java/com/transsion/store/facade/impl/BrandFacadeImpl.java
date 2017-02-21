@@ -24,7 +24,6 @@ import org.springframework.stereotype.Component;
 import com.transsion.store.bo.Brand;
 import com.transsion.store.dto.BrandDto;
 import com.transsion.store.dto.BrandModelListDto;
-import com.transsion.store.dto.BrandResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.BrandFacade;
@@ -137,9 +136,9 @@ public class BrandFacadeImpl implements BrandFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public BrandResponseDto update(String token,Brand brand) throws ServiceException
+	public void update(String token,Brand brand) throws ServiceException
 	{
-		return brandManager.update(token,brand);
+		brandManager.update(token,brand);
 	}
 
 	/**
@@ -158,8 +157,8 @@ public class BrandFacadeImpl implements BrandFacade {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public BrandResponseDto saveBrand(String token,BrandDto brandDto) throws ServiceException{
-		return brandManager.saveBrand(token, brandDto);
+	public void saveBrand(String token,BrandDto brandDto) throws ServiceException{
+		brandManager.saveBrand(token, brandDto);
 	}
 	/**
 	 * 查询品牌

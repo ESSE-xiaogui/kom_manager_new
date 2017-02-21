@@ -17,34 +17,41 @@
 package com.transsion.store.controller;
 
 
-import com.rest.service.controller.AbstractController;
-import com.transsion.store.bo.Sale;
-import com.transsion.store.dto.SaleDailyDto;
-import com.transsion.store.dto.SalesDto;
-import com.transsion.store.dto.SalesUploadDto;
-import com.transsion.store.dto.TShopSaleDto;
-import com.shangkang.core.dto.RequestModel;
-import com.transsion.store.facade.SaleFacade;
-import com.transsion.store.task.facade.SaleTaskFacade;
-import com.transsion.store.utils.PropertiesUtils;
-import com.shangkang.core.bo.Pagination;
-import com.shangkang.core.exception.ServiceException;
-import com.shangkang.tools.UtilHelper;
-
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import com.rest.service.controller.AbstractController;
+import com.shangkang.core.bo.Pagination;
+import com.shangkang.core.dto.RequestModel;
+import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
+import com.transsion.store.bo.Sale;
+import com.transsion.store.dto.SaleDailyDto;
+import com.transsion.store.dto.SalesDto;
+import com.transsion.store.dto.SalesUploadDto;
+import com.transsion.store.dto.TShopSaleDto;
+import com.transsion.store.facade.SaleFacade;
+import com.transsion.store.task.facade.SaleTaskFacade;
 
 @Controller
 @Path("sale")
@@ -183,10 +190,7 @@ public class SaleController extends AbstractController {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public List<SalesUploadDto> saveSalesUpload(TShopSaleDto tshopSaleDto) throws ServiceException {
 		String token = this.getAuthorization();
-		long imeiCacheTimeOut = Long
-						.valueOf(PropertiesUtils.rtReadProperties("imei.cache.timeout", "cache.properties"));
-		logger.info("cache time out is:" + imeiCacheTimeOut);
-		return saleFacade.saveSalesUpload(tshopSaleDto, token, imeiCacheTimeOut);
+		return saleFacade.saveSalesUpload(tshopSaleDto, token);
 	}
 
 	/**
@@ -243,6 +247,7 @@ public class SaleController extends AbstractController {
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.TEXT_PLAIN})  
 	public Response getSaleByExcel(@QueryParam("saleDate") String saleDate,@QueryParam("saleEndDate") String saleEndDate,
+					@QueryParam("createdTime") String createdTime,@QueryParam("createdEndTime")String createdEndTime,
 					@QueryParam("countryName") String countryName,@QueryParam("cityName") String cityName,
 					@QueryParam("shopId") String shopId,@QueryParam("shopName") String shopName,
 					@QueryParam("brandCode") String brandCode,@QueryParam("modelCode") String modelCode,
@@ -250,6 +255,8 @@ public class SaleController extends AbstractController {
 		SaleDailyDto saleDailyDto = new SaleDailyDto();
 		saleDailyDto.setSaleDate(saleDate);
 		saleDailyDto.setSaleEndDate(saleEndDate);
+		saleDailyDto.setCreatedTime(createdTime);
+		saleDailyDto.setCreatedEndTime(createdEndTime);
 		saleDailyDto.setCountryName(countryName);
 		saleDailyDto.setCityName(cityName);
 		if(!UtilHelper.isEmpty(shopId)){
@@ -263,7 +270,7 @@ public class SaleController extends AbstractController {
 		byte[] bytes = saleFacade.getSaleByExcel(saleDailyDto, null);       
 		InputStream inputStream = new ByteArrayInputStream(bytes);          
 		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));          
-		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"销量报表.xls";         
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"销量报表.xlsx";
 		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));         
 		//根据自己文件类型修改         
 		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");          

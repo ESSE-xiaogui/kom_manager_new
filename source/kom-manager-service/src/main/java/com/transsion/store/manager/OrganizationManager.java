@@ -36,15 +36,22 @@ public class OrganizationManager {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public OrganizationResponseDto saveOrg(String token,OrganizationDto organizationDto) throws ServiceException{
+	public void saveOrg(String token,OrganizationDto organizationDto) throws ServiceException{
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
 		if(UtilHelper.isEmpty(organizationDto) || UtilHelper.isEmpty(organizationDto.getOrgName())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		Organization tempOrg = new Organization();
-		tempOrg.setOrgName(organizationDto.getOrgName());
-		tempOrg.setParentId(organizationDto.getParentId());
-		int count = organizationMapper.findByCount(tempOrg);
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode()) 
+						|| UtilHelper.isEmpty(userContext.getCompanyId())){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		Organization orgParams = new Organization();
+		orgParams.setOrgName(organizationDto.getOrgName());
+		orgParams.setParentId(organizationDto.getParentId());
+		int count = organizationMapper.findByCount(orgParams);
 		if(count>0){
 			throw new ServiceException(ExceptionDef.ERROR_ORGANIZATION_ALREADY_EXIST.getName());
 		}
@@ -55,16 +62,11 @@ public class OrganizationManager {
 		}else{
 		organization.setParentId(new Long(organizationDto.getParentId()));
 		}
-		if(!UtilHelper.isEmpty(userContext)&&!UtilHelper.isEmpty(userContext.getUser())){
-			organization.setCompanyId(userContext.getCompanyId().intValue());
-			organization.setCreatedBy(userContext.getUser().getUserCode());
-		}
+		organization.setCompanyId(userContext.getCompanyId().intValue());
+		organization.setCreatedBy(userContext.getUserCode());
 		organization.setCreatedTime(systemDateService.getCurrentDate());
 		organization.setVersion(0);
 		organizationMapper.save(organization);
-		OrganizationResponseDto ozrd = new OrganizationResponseDto();
-		ozrd.setStatus(1);
-		return ozrd;
 	}
 	
 	/**
@@ -91,8 +93,15 @@ public class OrganizationManager {
 	 * @return
 	 * @throws serviceException
 	 * */
-	public List<OrganizationTreeDto> findOrg() throws ServiceException{
-		List<OrganizationTreeDto> orgList = organizationMapper.findOrg();
+	public List<OrganizationTreeDto> findOrg(String token) throws ServiceException{
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getCompanyId())){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		List<OrganizationTreeDto> orgList = organizationMapper.findOrg(userContext.getCompanyId());
 		if(UtilHelper.isEmpty(orgList)){
 			return orgList;
 		}else{
@@ -124,70 +133,65 @@ public class OrganizationManager {
 	/**
 	 * 删除组织机构
 	 * */
-	public OrganizationResponseDto deleteOrg(Integer orgId) throws ServiceException{
+	public void deleteOrg(Long orgId) throws ServiceException{
 		if(UtilHelper.isEmpty(orgId)){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
-		OrganizationResponseDto orDto = new OrganizationResponseDto();
-		Organization org = new Organization();
-		org.setParentId(new Long(orgId));
-		Employee e = new Employee();
-		e.setOrgId(orgId);
-		int empCount = employeeMapper.findByCount(e);
-		if(empCount>0){
+		Employee employee = new Employee();
+		employee.setOrgId(orgId.intValue());
+		int employeeCount = employeeMapper.findByCount(employee);
+		if(employeeCount>0){
 			throw new ServiceException(ExceptionDef.ERROR_ORGANIZATION_EMP_BIND.getName());
 		}
+		Organization org = new Organization();
+		org.setParentId(orgId);
 		int count = organizationMapper.findByCount(org);
 		if(count>0){
 			throw new ServiceException(ExceptionDef.ERROR_ORGANIZATION_CHILDREN_EXIST.getName());
 		}else{
-			Organization orgById = new Organization();
-			orgById.setId(new Long(orgId));
-			int counts = organizationMapper.deleteByProperty(orgById);
-			if(counts>0){
-				orDto.setStatus(1);
-			}else{
-				orDto.setStatus(2);
-			}
-			
+			organizationMapper.deleteByPK(orgId);
 		}
-		return orDto;
 	}
 
 	/**
 	 * 修改组织机构
 	 * @throws ServiceException 
 	 * */
-	public OrganizationResponseDto update(String token, Organization organization) throws ServiceException {
+	public void update(String token, Organization organization) throws ServiceException {
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext) ||UtilHelper.isEmpty(userContext.getCompanyId())
+						|| UtilHelper.isEmpty(userContext.getUserCode())){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
 		if(UtilHelper.isEmpty(organization) || UtilHelper.isEmpty(organization.getOrgName())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
-		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		Organization tempOrg = new Organization();
-		tempOrg.setOrgName(organization.getOrgName());
-		tempOrg.setParentId(organization.getParentId());
-		int count1 = organizationMapper.findByCount(tempOrg);
-		tempOrg.setId(organization.getId());
-		int count2 = organizationMapper.findByCount(tempOrg);
+		Organization OrgParam = new Organization();
+		OrgParam.setOrgName(organization.getOrgName());
+		OrgParam.setParentId(organization.getParentId());
+		int count1 = organizationMapper.findByCount(OrgParam);
+		OrgParam.setId(organization.getId());
+		int count2 = organizationMapper.findByCount(OrgParam);
 		if(count1>0 && count2<1){
 			throw new ServiceException(ExceptionDef.ERROR_ORGANIZATION_ALREADY_EXIST.getName());
 		}
-		Organization formerOrg = organizationMapper.getByPK(organization.getId());
-		formerOrg.setOrgName(organization.getOrgName());
-		formerOrg.setBizId(organization.getBizId());
-		formerOrg.setIsInactive(organization.getIsInactive());
-		formerOrg.setRemark(organization.getRemark());
+		Organization findOrg = organizationMapper.getByPK(organization.getId());
+		findOrg.setCompanyId(userContext.getCompanyId().intValue());
+		findOrg.setOrgName(organization.getOrgName());
+		findOrg.setBizId(organization.getBizId());
+		findOrg.setIsInactive(organization.getIsInactive());
+		findOrg.setRemark(organization.getRemark());
 		if(UtilHelper.isEmpty(organization.getParentId())){
 			organization.setParentId(0l);
 		}else{
 		organization.setParentId(new Long(organization.getParentId()));
 		}
-		formerOrg.setUpdatedBy(userContext.getUser().getUserCode());
-		formerOrg.setUpdatedTime(systemDateService.getCurrentDate());
-		organizationMapper.update(formerOrg);
-		OrganizationResponseDto ozrd = new OrganizationResponseDto();
-		ozrd.setStatus(1);
-		return ozrd;
+		findOrg.setUpdatedBy(userContext.getUserCode());
+		findOrg.setUpdatedTime(systemDateService.getCurrentDate());
+		organizationMapper.update(findOrg);
 	}
 	
 }

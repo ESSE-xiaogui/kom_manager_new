@@ -33,6 +33,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
+/**
+ * @author guihua.zhang
+ * */
 @Controller
 @Path("organization")
 public class OrganizationController extends AbstractController{
@@ -109,10 +112,10 @@ public class OrganizationController extends AbstractController{
 	@PUT
 	@Path("/update")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public OrganizationResponseDto update(Organization organization) throws ServiceException
+	public void update(Organization organization) throws ServiceException
 	{
 		String token = this.getAuthorization();
-		return organizationFacade.update(token,organization);
+		organizationFacade.update(token,organization);
 	}
 	/**
 	 * 新增组织机构
@@ -122,10 +125,9 @@ public class OrganizationController extends AbstractController{
 	@POST
 	@Path("/saveOrg")
 	@Consumes({MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_JSON})
-	public OrganizationResponseDto saveOrg(OrganizationDto organizationDto) throws ServiceException{
+	public void saveOrg(OrganizationDto organizationDto) throws ServiceException{
 		String token = this.getAuthorization();
-		return organizationFacade.saveOrg(token, organizationDto);
+		organizationFacade.saveOrg(token, organizationDto);
 	}
 	
 	/**
@@ -149,7 +151,8 @@ public class OrganizationController extends AbstractController{
 	@Path("/findOrg")
 	@Produces({MediaType.APPLICATION_JSON})
 	public List<OrganizationTreeDto> findOrg() throws ServiceException{
-		return organizationFacade.findOrg();
+		String token = this.getAuthorization();
+		return organizationFacade.findOrg(token);
 	}
 	
 	/**
@@ -157,9 +160,8 @@ public class OrganizationController extends AbstractController{
 	 * */
 	@POST
 	@Path("/deleteOrg")
-	@Consumes({MediaType.APPLICATION_JSON})
-	public OrganizationResponseDto deleteOrg(@QueryParam("orgId") java.lang.Integer orgId) throws ServiceException{
-		return organizationFacade.deleteOrg(orgId);
+	public void deleteOrg(@QueryParam("orgId") Long orgId) throws ServiceException{
+		organizationFacade.deleteOrg(orgId);
 	}
 	
 }

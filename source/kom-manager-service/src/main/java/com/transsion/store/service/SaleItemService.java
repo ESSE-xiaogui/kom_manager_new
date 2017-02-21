@@ -148,4 +148,8 @@ public class SaleItemService {
 	{
 		return saleItemMapper.findByCount(saleItem);
 	}
+	
+	public List<String> queryImeiNoList(List<String> imeiList) {
+		return saleItemMapper.queryImeiNoList(imeiList);
+	}
 }

@@ -24,7 +24,6 @@ import org.springframework.stereotype.Component;
 import com.transsion.store.bo.Model;
 import com.transsion.store.dto.ModelDto;
 import com.transsion.store.dto.ModelListDto;
-import com.transsion.store.dto.ModelResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.ModelFacade;
@@ -137,9 +136,9 @@ public class ModelFacadeImpl implements ModelFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public ModelResponseDto update(String token,Model model) throws ServiceException
+	public void update(String token,Model model) throws ServiceException
 	{
-		return modelManager.update(token,model);
+		modelManager.update(token,model);
 	}
 
 	/**
@@ -157,8 +156,8 @@ public class ModelFacadeImpl implements ModelFacade {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public ModelResponseDto saveModel(String token,Model model) throws ServiceException{
-		return modelManager.saveModel(token, model);
+	public void saveModel(String token,Model model) throws ServiceException{
+		modelManager.saveModel(token, model);
 	}
 	/**
 	 * 查询品牌产品系列机型

@@ -1,12 +1,12 @@
 package com.transsion.store.facade;
 
-import java.io.IOException;
 import java.util.List;
 
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Currency;
 import com.transsion.store.dto.CurrencyDto;
+import com.transsion.store.dto.CurrencyResultDto;
 
 public interface CurrencyFacade {
 	
@@ -50,5 +50,12 @@ public interface CurrencyFacade {
 	 * @throws ServiceException
 	 */
 	public byte[] getCurrencyByExcel(CurrencyDto currencyDto)throws ServiceException;
+	
+	/**
+	 * @author guihua.zhang on 2017-2-21
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public List<CurrencyResultDto> findCurrencyName(String token) throws ServiceException;
 	
 }

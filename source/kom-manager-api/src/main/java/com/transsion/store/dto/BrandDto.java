@@ -2,6 +2,9 @@ package com.transsion.store.dto;
 
 import java.io.Serializable;
 
+/**
+ * @author guihua.zhang
+ * */
 public class BrandDto implements Serializable{
 
 	/**
@@ -20,30 +23,48 @@ public class BrandDto implements Serializable{
 	private Integer isSelf;
 	
 	/**
-	  *	1表示激活状态，被激活有效的数据可以用于新增业务，2表示停用，被停用无效的数据只能用于历史数据查询中
+	  *	1启用 2禁用
 	  */
 	private Integer isInactive;
 
+	/**
+	  *	品牌名称
+	  */
 	public String getBrandName() {
 		return brandName;
 	}
 
+	/**
+	  *	品牌名称
+	  */
 	public void setBrandName(String brandName) {
 		this.brandName = brandName;
 	}
 
+	/**
+	 * 是否自有品牌  注：1不是 2是
+	 * */
 	public Integer getIsSelf() {
 		return isSelf;
 	}
 
+	/**
+	 * 是否自有品牌  注：1不是 2是
+	 * */
 	public void setIsSelf(Integer isSelf) {
 		this.isSelf = isSelf;
 	}
 
+	/**
+	  *	1启用 2禁用
+	  */
 	public Integer getIsInactive() {
 		return isInactive;
 	}
 
+	/**
+	  *	1启用 2禁用
+	  */
 	public void setIsInactive(Integer isInactive) {
 		this.isInactive = isInactive;
 	}

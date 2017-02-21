@@ -355,83 +355,71 @@
     <sql id="commonConditionByPrefix1">
 		<if test="saleDailyDto != null">
 			<if test="saleDailyDto.id!= null and saleDailyDto.id!= ''">
-				AND ID=#{saleDailyDto.id}
+				AND i.ID=#{saleDailyDto.id}
             </if> 
             <if test="saleDailyDto.companyId!= null and saleDailyDto.companyId!= ''">
-				AND COMPANY_ID=#{saleDailyDto.companyId}
+				AND s.COMPANY_ID=#{saleDailyDto.companyId}
             </if>  
 			<if test="saleDailyDto.billNo!= null and saleDailyDto.billNo!= ''">
-				AND BILLNO=#{saleDailyDto.billNo}
+				AND s.BILLNO=#{saleDailyDto.billNo}
             </if>            
             <if test="saleDailyDto.saleDate!= null and saleDailyDto.saleDate!= ''">
-				AND SALE_DATE &gt;= date_format(#{saleDailyDto.saleDate},'%Y-%m-%d %H:%i:%s')
+				AND s.SALE_DATE &gt;= date_format(#{saleDailyDto.saleDate},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="saleDailyDto.saleEndDate!= null and saleDailyDto.saleEndDate!= ''">
-				AND SALE_DATE &lt;= date_format(#{saleDailyDto.saleEndDate},'%Y-%m-%d %H:%i:%s')
+				AND s.SALE_DATE &lt;= date_format(#{saleDailyDto.saleEndDate},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="saleDailyDto.country!= null and saleDailyDto.country!= ''">
-				AND COUNTRY=#{saleDailyDto.country}
+				AND c.ID=#{saleDailyDto.country}
             </if>
             <if test="saleDailyDto.countryName!= null and saleDailyDto.countryName!= ''">
-				AND COUNTRY_NAME=#{saleDailyDto.countryName}
+				AND c.REGION_NAME=#{saleDailyDto.countryName}
             </if>      
             <if test="saleDailyDto.city!= null and saleDailyDto.city!= ''">
-				AND CITY=#{saleDailyDto.city}
+				AND r.ID=#{saleDailyDto.city}
             </if>
             <if test="saleDailyDto.cityName!= null and saleDailyDto.cityName!= ''">
-				AND CITY_NAME=#{saleDailyDto.cityName}
+				AND r.REGION_NAME=#{saleDailyDto.cityName}
             </if>
             <if test="saleDailyDto.shopId!= null and saleDailyDto.shopId!= ''">
-				AND SHOP_ID=#{saleDailyDto.shopId}
+				AND p.ID=#{saleDailyDto.shopId}
             </if>
             <if test="saleDailyDto.shopName!= null and saleDailyDto.shopName!= ''">
-				AND SHOP_NAME=#{saleDailyDto.shopName}
-            </if>
-            <if test="saleDailyDto.gradeName!= null and saleDailyDto.gradeName!= ''">
-				AND GRADE_NAME=#{saleDailyDto.gradeName}
-            </if>
-            <if test="saleDailyDto.bizName!= null and saleDailyDto.bizName!= ''">
-				AND BIZ_NAME=#{saleDailyDto.bizName}
+				AND p.SHOP_NAME=#{saleDailyDto.shopName}
             </if>
             <if test="saleDailyDto.brandCode!= null and saleDailyDto.brandCode!= ''">
-				AND BRAND_CODE=#{saleDailyDto.brandCode}
+				AND i.BRAND_CODE=#{saleDailyDto.brandCode}
             </if>
             <if test="saleDailyDto.modelCode!= null and saleDailyDto.modelCode!= ''">
-				AND MODEL_CODE=#{saleDailyDto.modelCode}
+				AND i.MODEL_CODE=#{saleDailyDto.modelCode}
             </if>
             <if test="saleDailyDto.imeiNo!= null and saleDailyDto.imeiNo!= ''">
-				AND IMEI_NO=#{saleDailyDto.imeiNo}
+				AND i.IMEI_NO=#{saleDailyDto.imeiNo}
             </if>
             <if test="saleDailyDto.imeiList!= null and saleDailyDto.imeiList!= ''">
-				AND IMEI_LIST=#{saleDailyDto.imeiList}
+				AND i.IMEI_LIST=#{saleDailyDto.imeiList}
             </if>
             <if test="saleDailyDto.saleQty!= null and saleDailyDto.saleQty!= ''">
-				AND SALE_QTY=#{saleDailyDto.saleQty}
+				AND i.SALE_QTY=#{saleDailyDto.saleQty}
             </if>
             <if test="saleDailyDto.salePrice!= null and saleDailyDto.salePrice!= ''">
-				AND SALE_PRICE=#{saleDailyDto.salePrice}
+				AND i.SALE_PRICE=#{saleDailyDto.salePrice}
             </if>
             <if test="saleDailyDto.saleAmount!= null and saleDailyDto.saleAmount!= ''">
-				AND SALE_AMOUNT=#{saleDailyDto.saleAmount}
+				AND i.SALE_AMOUNT=#{saleDailyDto.saleAmount}
             </if>
             <if test="saleDailyDto.currencyRatio!= null and saleDailyDto.currencyRatio!= ''">
-				AND EXCHANGERATE=#{saleDailyDto.currencyRatio}
+				AND s.CURRENCY_RATIO=#{saleDailyDto.currencyRatio}
             </if>
             <if test="saleDailyDto.createdTime!= null and saleDailyDto.createdTime!= ''">
-				AND CREATED_TIME &gt;= date_format(#{saleDailyDto.createdTime},'%Y-%m-%d %H:%i:%s')
+				AND s.CREATED_TIME &gt;= date_format(#{saleDailyDto.createdTime},'%Y-%m-%d %H:%i:%s')
             </if>          
             <if test="saleDailyDto.createdEndTime!= null and saleDailyDto.createdEndTime!= ''">
-				AND CREATED_TIME &lt;= date_format(#{saleDailyDto.createdEndTime},'%Y-%m-%d %H:%i:%s')
+				AND s.CREATED_TIME &lt;= date_format(#{saleDailyDto.createdEndTime},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="saleDailyDto.userName!= null and saleDailyDto.userName!= ''">
-				AND USER_CODE=#{saleDailyDto.userName}
+				AND u.USER_CODE=#{saleDailyDto.userName}
             </if>
-            <if test="saleDailyDto.empName!= null and saleDailyDto.empName!= ''">
-				AND EMP_NAME=#{saleDailyDto.empName}
-            </if>
-            <if test="saleDailyDto.nation!= null and saleDailyDto.nation!= ''">
-				AND NATION=#{saleDailyDto.nation}
-            </if>  
         </if>
     </sql>
 	<sql id="orderByClause1">
@@ -445,76 +433,64 @@
 	<sql id="orderBy1">
 		<choose>
 			<when test="key == 'id'">
-				ID ${value}
+				i.ID ${value}
             </when>
             <when test="key == 'companyId'">
-				COMPANY_ID ${value}
+				s.COMPANY_ID ${value}
             </when>
         	<when test="key == 'billNo'">
-				BILLNO ${value}
+				s.BILLNO ${value}
             </when>
         	<when test="key == 'saleDate'">
-				SALE_DATE ${value}
+				s.SALE_DATE ${value}
             </when>
             <when test="key == 'country'">
-				COUNTRY ${value}
+				c.ID ${value}
             </when>
             <when test="key == 'countryName'">
-				COUNTRY_NAME ${value}
+				c.REGION_NAME ${value}
             </when>
         	<when test="key == 'city'">
-				CITY ${value}
+				r.ID ${value}
             </when>
             <when test="key == 'cityName'">
-				CITY_NAME ${value}
+				r.REGION_NAME ${value}
             </when>
         	<when test="key == 'shopId'">
-				SHOP_ID ${value}
+				p.ID ${value}
             </when>
             <when test="key == 'shopName'">
-				SHOP_NAME ${value}
-            </when>
-            <when test="key == 'gradeName'">
-				GRADE_NAME ${value}
-            </when>
-            <when test="key == 'bizName'">
-				BIZ_NAME ${value}
+				p.SHOP_NAME ${value}
             </when>
         	<when test="key == 'brandCode'">
-				BRAND_CODE ${value}
+				i.BRAND_CODE ${value}
             </when>
         	<when test="key == 'modelCode'">
-				MODEL_CODE ${value}
+				i.MODEL_CODE ${value}
             </when>
         	<when test="key == 'imeiNo'">
-				IMEI_NO ${value}
+				i.IMEI_NO ${value}
             </when>
         	<when test="key == 'imeiList'">
-				IMEI_LIST ${value}
+				i.IMEI_LIST ${value}
             </when>
         	<when test="key == 'saleQty'">
-				SALE_QTY ${value}
+				i.SALE_QTY ${value}
             </when>
             <when test="key == 'salePrice'">
-				SALE_PRICE ${value}
+				i.SALE_PRICE ${value}
             </when>
         	<when test="key == 'saleAmount'">
-				SALE_AMOUNT ${value}
+				i.SALE_AMOUNT ${value}
             </when>
             <when test="key == 'currencyRatio'">
-				EXCHANGERATE ${value}
+				s.CURRENCY_RATIO ${value}
             </when>
         	<when test="key == 'createdTime'">
-				CREATED_TIME ${value}
+				s.CREATED_TIME ${value}
             </when>
         	<when test="key == 'userName'">
-				USER_CODE ${value}
-            </when>
-            <when test="key == 'empName'">
-				EMP_NAME ${value}
-            </when>
-            <when test="key == 'nation'">
-				NATION ${value}
+				u.USER_CODE ${value}
             </when>
 		</choose>
 	</sql>
@@ -600,16 +576,28 @@
 	<select id="listPaginationByProperty" parameterType="Sale" resultMap="SaleResultMapper">
 		SELECT 
 		<include refid="commonProcessDateColumns"/>
-		FROM SALE_LIST_VIEW WHERE 1=1
+		FROM T_SALE WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>
 	<select id="listPaginationByPropertys" parameterType="SaleDailyDto"
 		resultMap="SaleDailyDtoResultMapper">
-		SELECT 
-		<include refid="commonProcessDateColumns1"/>
-		 FROM SALE_LIST_VIEW 
-		 WHERE 1=1
+		SELECT i.ID, s.COMPANY_ID as COMPANY_ID, s.BILLNO AS BILLNO,s.SALE_DATE AS
+		SALE_DATE,c.ID AS COUNTRY,c.REGION_NAME AS COUNTRY_NAME,r.ID AS
+		CITY,r.REGION_NAME AS CITY_NAME,
+		p.ID AS SHOP_ID,p.SHOP_NAME AS
+		SHOP_NAME,i.BRAND_CODE AS BRAND_CODE,
+		i.MODEL_CODE AS MODEL_CODE,i.IMEI_NO AS IMEI_NO,i.IMEI_LIST AS
+		IMEI_LIST,i.SALE_QTY AS SALE_QTY,i.SALE_PRICE AS SALE_PRICE,
+		i.SALE_AMOUNT AS SALE_AMOUNT,s.CURRENCY_RATIO AS
+		EXCHANGERATE,u.USER_CODE AS USER_CODE,
+		s.CREATED_TIME FROM T_SALE s
+		LEFT JOIN T_SALE_ITEM i ON i.SALE_ID = s.ID
+		LEFT JOIN T_SHOP p ON p.ID = s.SHOP_ID
+		LEFT JOIN T_REGION r ON r.ID = p.REGION_ID
+		LEFT JOIN T_REGION c ON c.ID = r.PARENT_ID
+		LEFT JOIN T_USER u ON u.ID = s.USER_ID
+		WHERE 1=1 AND i.ID IS NOT null
 		<include refid="commonConditionByPrefix1" />
 		<include refid="orderByClause1" />
 	</select>
