@@ -125,7 +125,6 @@ public class OrganizationController extends AbstractController{
 	@POST
 	@Path("/saveOrg")
 	@Consumes({MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_JSON})
 	public void saveOrg(OrganizationDto organizationDto) throws ServiceException{
 		String token = this.getAuthorization();
 		organizationFacade.saveOrg(token, organizationDto);
@@ -161,7 +160,6 @@ public class OrganizationController extends AbstractController{
 	 * */
 	@POST
 	@Path("/deleteOrg")
-	@Consumes({MediaType.APPLICATION_JSON})
 	public void deleteOrg(@QueryParam("orgId") Long orgId) throws ServiceException{
 		organizationFacade.deleteOrg(orgId);
 	}

@@ -11,7 +11,6 @@ import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Model;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.ModelDto;
-import com.transsion.store.dto.ModelResponseDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.ModelMapper;
 import com.transsion.store.service.SystemDateService;
@@ -30,7 +29,7 @@ public class ModelManager {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public ModelResponseDto saveModel(String token,Model model) throws ServiceException{
+	public void saveModel(String token,Model model) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
@@ -38,14 +37,15 @@ public class ModelManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getCompanyId())
+						|| UtilHelper.isEmpty(userContext.getUserCode())){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		//同一品牌下的机型不能重复，不同品牌下的机型可以重复
-		Model tempMo = new Model();
-		tempMo.setModelName(model.getModelName());
-		tempMo.setBrandCode(model.getBrandCode());
-		int count = modelMapper.findByCount(tempMo);
+		Model modelParam = new Model();
+		modelParam.setModelName(model.getModelName());
+		modelParam.setBrandCode(model.getBrandCode());
+		int count = modelMapper.findByCount(modelParam);
 		if(count>0){
 			throw new ServiceException(ExceptionDef.ERROR_MODEL_ALREADY_EXIST.getName());
 		}
@@ -55,9 +55,6 @@ public class ModelManager {
 		model.setCreatedTime(systemDateService.getCurrentDate());
 		model.setVersion(0);
 		modelMapper.save(model);
-		ModelResponseDto mrd = new ModelResponseDto();
-		mrd.setStatus(1);
-		return mrd;
 	}
 	
 	/**
@@ -79,7 +76,7 @@ public class ModelManager {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public ModelResponseDto update(String token, Model model) throws ServiceException {
+	public void update(String token, Model model) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
@@ -87,33 +84,32 @@ public class ModelManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		if((UtilHelper.isEmpty(userContext)) || UtilHelper.isEmpty(userContext.getCompanyId())
+						|| UtilHelper.isEmpty(userContext.getUserCode())){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		//同一品牌下的机型不能重复，不同品牌下的机型可以重复
-		Model tempMo = new Model();
-		tempMo.setModelName(model.getModelName());
-		tempMo.setBrandCode(model.getBrandCode());
-		int count1 = modelMapper.findByCount(tempMo);
-		tempMo.setId(model.getId());
-		int count2 = modelMapper.findByCount(tempMo);
+		Model modelParam = new Model();
+		modelParam.setModelName(model.getModelName());
+		modelParam.setBrandCode(model.getBrandCode());
+		int count1 = modelMapper.findByCount(modelParam);
+		modelParam.setId(model.getId());
+		int count2 = modelMapper.findByCount(modelParam);
 		if(count1>0 && count2<1){
 			throw new ServiceException(ExceptionDef.ERROR_MODEL_ALREADY_EXIST.getName());
 		}
-		Model formerMo = modelMapper.getByPK(model.getId());
-		formerMo.setBrandCode(model.getBrandCode());
-		formerMo.setSeriesCode(model.getSeriesCode());
-		formerMo.setSaleTime(model.getSaleTime().equals("")?null:model.getSaleTime());
-		formerMo.setModelCode(model.getModelCode());
-		formerMo.setModelName(model.getModelName());
-		formerMo.setPriceScale(model.getPriceScale());
-		formerMo.setIsInactive(model.getIsInactive());
-		formerMo.setUpdatedBy(userContext.getUserCode());
-		formerMo.setUpdatedTime(systemDateService.getCurrentDate());
-		modelMapper.update(formerMo);
-		ModelResponseDto mrd = new ModelResponseDto();
-		mrd.setStatus(1);
-		return mrd;
+		Model modelResult = modelMapper.getByPK(model.getId());
+		modelResult.setCompanyId(userContext.getCompanyId().intValue());
+		modelResult.setBrandCode(model.getBrandCode());
+		modelResult.setSeriesCode(model.getSeriesCode());
+		modelResult.setSaleTime(model.getSaleTime().equals("")?null:model.getSaleTime());
+		modelResult.setModelCode(model.getModelCode());
+		modelResult.setModelName(model.getModelName());
+		modelResult.setPriceScale(model.getPriceScale());
+		modelResult.setIsInactive(model.getIsInactive());
+		modelResult.setUpdatedBy(userContext.getUserCode());
+		modelResult.setUpdatedTime(systemDateService.getCurrentDate());
+		modelMapper.update(modelResult);
 	}
 	
 	/**
@@ -124,8 +120,8 @@ public class ModelManager {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getCompanyId())){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		return modelMapper.findModelName(userContext.getCompanyId());
 	}

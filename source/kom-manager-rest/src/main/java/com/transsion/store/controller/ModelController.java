@@ -20,7 +20,6 @@ import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Model;
 import com.transsion.store.dto.ModelDto;
 import com.transsion.store.dto.ModelListDto;
-import com.transsion.store.dto.ModelResponseDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.ModelFacade;
 import com.shangkang.core.bo.Pagination;
@@ -96,10 +95,10 @@ public class ModelController extends AbstractController{
 	@PUT
 	@Path("/update")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public ModelResponseDto update(Model model) throws ServiceException
+	public void update(Model model) throws ServiceException
 	{
 		String token = this.getAuthorization();
-		return modelFacade.update(token,model);
+		modelFacade.update(token,model);
 	}
 	
 	/**
@@ -110,10 +109,9 @@ public class ModelController extends AbstractController{
 	@POST
 	@Path("/add")
 	@Consumes({MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_JSON})
-	public ModelResponseDto saveModel(Model model) throws ServiceException{
+	public void saveModel(Model model) throws ServiceException{
 		String token = this.getAuthorization();
-		return modelFacade.saveModel(token, model);
+		modelFacade.saveModel(token, model);
 	}
 	
 	/**
