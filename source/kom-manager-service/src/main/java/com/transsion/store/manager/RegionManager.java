@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
@@ -62,7 +61,7 @@ public class RegionManager {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		Integer companyId = usercontext.getUser().getCompanyId();
-		List<RegionDto> regionList = regionService.findRegionsList(companyId,0l);
+		List<RegionDto> regionList = regionService.findRegionsList(companyId,0);
 		return getChildrenRegion(regionList,companyId);
 	}
 
@@ -71,7 +70,7 @@ public class RegionManager {
 	 */
 	public List<RegionDto> getChildrenRegion(List<RegionDto> regionList, Integer companyId) throws ServiceException {
 		for (RegionDto region : regionList) {
-			Long pid = region.getId();
+			Integer pid = region.getId().intValue();
 			List<RegionDto> list = regionService.findRegionsList(companyId,pid);
 			List<RegionDto> children = getChildrenRegion(list, companyId);
 			region.setChildren(children);
@@ -279,5 +278,48 @@ public class RegionManager {
 		}
 		return srcList;
 		//return srcList;
+	}
+	
+	/**
+	 * 查询国家销售区域
+	 * @param token 
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<RegionDto> findCountryList(String token) throws ServiceException {
+		List<RegionDto> countryList = null;
+		List<Region> list = regionService.findCountryList();
+		if (list != null && list.size() > 0) {
+			countryList = new ArrayList<RegionDto>();
+			for (Region region : list) {
+				RegionDto findRegionsDto = new RegionDto();
+				findRegionsDto.setId(region.getId());
+				findRegionsDto.setRegionName(region.getRegionName());
+				countryList.add(findRegionsDto);
+			}
+		} 
+		return countryList;
+	}
+	
+	/**
+	 * 查询城市销售区域
+	 * @param token 
+	 * @param parentRegionId
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<RegionDto> findCityListByParentRegionId(int parentId, String token) throws ServiceException {
+		List<RegionDto> cityList = null; 
+		List<Region> list = regionService.findCityListByParentRegionId(parentId);
+		if (list != null && list.size() > 0) {
+			cityList = new ArrayList<RegionDto>();
+			for (Region region : list) {
+				RegionDto findRegionsDto = new RegionDto();
+				findRegionsDto.setId(region.getId());
+				findRegionsDto.setRegionName(region.getRegionName());
+				cityList.add(findRegionsDto);
+			}
+		}
+		return cityList;
 	}
 }

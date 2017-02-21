@@ -175,18 +175,23 @@ public class SaleTaskManager {
 				String price = (String) map.get("Price");
 				if (UtilHelper.isEmpty(saleDate)) {
 					taskDetail.setMessage("Sales date is null");
+					taskDetail.setStatus(2);
 				}
 				if (UtilHelper.isEmpty(shopCode)) {
 					taskDetail.setMessage("Shop ID is null");
+					taskDetail.setStatus(2);
 				}
 				if (UtilHelper.isEmpty(userCode)) {
 					taskDetail.setMessage("User ID is null");
+					taskDetail.setStatus(2);
 				}
 				if (UtilHelper.isEmpty(imeiNo)) {
 					taskDetail.setMessage("IMEI code is null");
+					taskDetail.setStatus(2);
 				}
 				if (UtilHelper.isEmpty(price)) {
 					taskDetail.setMessage("Price is null");
+					taskDetail.setStatus(2);
 				}
 
 				if (!UtilHelper.isEmpty(saleDate) && !UtilHelper.isEmpty(shopCode) && !UtilHelper.isEmpty(userCode)

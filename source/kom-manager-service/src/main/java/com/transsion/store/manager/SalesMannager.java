@@ -404,21 +404,24 @@ public class SalesMannager {
 		SaleDailyDto sdDto = new SaleDailyDto();
 		ShopBiz shopBiz = shopBizMapper.findShopBiz(saleId);
 		if(UtilHelper.isEmpty(shopBiz)){
-			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
-		}
+			sdDto.setBizName(null);
+		}else{
 		sdDto.setBizName(shopBiz.getBizName());
+		}
 		ShopGrade shopGrade = shopGradeMapper.findShopGrade(saleId);
 		if(UtilHelper.isEmpty(shopGrade)){
-			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
-		}
+			sdDto.setGradeName(null);
+		}else{
 		sdDto.setGradeName(shopGrade.getGradeName());
+		}
 		Employee employee = employeeMapper.findEmployee(saleId);
 		if(UtilHelper.isEmpty(employee)){
-			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
-		}
+			sdDto.setEmpName(null);
+			sdDto.setNation(null);
+		}else{
 		sdDto.setEmpName(employee.getEmpName());
 		sdDto.setNation(employee.getNation());
-		System.out.println(sdDto);
+		}
 		return sdDto;
 	}
 	/**
@@ -431,6 +434,9 @@ public class SalesMannager {
 		String[] headers = {"序号","单号","销售日期","国家","城市","门店名称","品牌", "机型",
 		"IMEI号","IMEI List","数量","价格","当前汇率","用户名","上传时间"};
 		List<SaleDailyDto> list = saleMapper.listSaleByProperty(saleDailyDto);
+		if(list.size()>65536){
+			throw new ServiceException(ExceptionDef.ERROR_SALE_TOO_MANY_RESULTS.getName());
+		}
 		List<Object[]> dataset = new ArrayList<Object[]>();
 		int i=1;
 		for(SaleDailyDto saleDailyDto1 :list){

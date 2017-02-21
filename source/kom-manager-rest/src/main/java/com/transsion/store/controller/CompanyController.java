@@ -82,7 +82,8 @@ public class CompanyController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void add(Company company) throws ServiceException
 	{
-		companyFacade.save(company);
+		String token = this.getAuthorization();
+		companyFacade.save(company,token);
 	}
 
 	/**
@@ -108,7 +109,8 @@ public class CompanyController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void update(Company company) throws ServiceException
 	{
-		companyFacade.update(company);
+		String token = this.getAuthorization();
+		companyFacade.update(company,token);
 	}
 	
 	/**

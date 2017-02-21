@@ -18,6 +18,10 @@ package com.transsion.store.bo;
 
 import com.shangkang.core.bo.Model;
 
+/**
+ * @author guihua.zhang
+ * update time 2017-0-20
+ * */
 public class Company extends Model{
 
 	/**
@@ -26,64 +30,64 @@ public class Company extends Model{
 	private static final long	serialVersionUID	= 1L;
 	
 	/**
-	  *	
+	  *	事业部ID
 	  */
-	private java.lang.Long id;
+	private Long id;
+
+	/**
+	  *	事业部品牌
+	  */
+	private String companyCode;
+
+	/**
+	  *	事业部名称
+	  */
+	private String companyName;
+
+	/**
+	  *	事业部父级ID
+	  */
+	private Long parentId;
+
+	/**
+	  *	1：启用 2：禁用
+	  */
+	private Integer isInactive;
 
 	/**
 	  *	
 	  */
-	private java.lang.String companyCode;
+	private String remark;
 
 	/**
 	  *	
 	  */
-	private java.lang.String companyName;
+	private String createdBy;
 
 	/**
 	  *	
 	  */
-	private java.lang.Long parentId;
-
-	/**
-	  *	1表示激活状态，被激活有效的数据可以用于新增业务，2表示停用，被停用无效的数据只能用于历史数据查询中
-	  */
-	private java.lang.Integer isInactive;
+	private String createdTime;
 
 	/**
 	  *	
 	  */
-	private java.lang.String remark;
+	private String updatedBy;
 
 	/**
 	  *	
 	  */
-	private java.lang.Integer createdBy;
+	private String updatedTime;
 
 	/**
 	  *	
 	  */
-	private java.lang.String createdTime;
+	private Integer version;
 
 	/**
 	  *	
 	  */
-	private java.lang.Integer updatedBy;
-
-	/**
-	  *	
-	  */
-	private java.lang.String updatedTime;
-
-	/**
-	  *	
-	  */
-	private java.lang.Integer version;
-
-	/**
-	  *	
-	  */
-	public java.lang.Long getId() 
+	public Long getId() 
 	{
 		return id;
 	}
@@ -91,7 +95,7 @@ public class Company extends Model{
 	/**
 	  *	
 	  */
-	public void setId(java.lang.Long id) 
+	public void setId(Long id) 
 	{
 		this.id = id;
 	}
@@ -99,7 +103,7 @@ public class Company extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.String getCompanyCode() 
+	public String getCompanyCode() 
 	{
 		return companyCode;
 	}
@@ -107,7 +111,7 @@ public class Company extends Model{
 	/**
 	  *	
 	  */
-	public void setCompanyCode(java.lang.String companyCode) 
+	public void setCompanyCode(String companyCode) 
 	{
 		this.companyCode = companyCode;
 	}
@@ -115,7 +119,7 @@ public class Company extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.String getCompanyName() 
+	public String getCompanyName() 
 	{
 		return companyName;
 	}
@@ -123,7 +127,7 @@ public class Company extends Model{
 	/**
 	  *	
 	  */
-	public void setCompanyName(java.lang.String companyName) 
+	public void setCompanyName(String companyName) 
 	{
 		this.companyName = companyName;
 	}
@@ -131,7 +135,7 @@ public class Company extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.Long getParentId() 
+	public Long getParentId() 
 	{
 		return parentId;
 	}
@@ -139,7 +143,7 @@ public class Company extends Model{
 	/**
 	  *	
 	  */
-	public void setParentId(java.lang.Long parentId) 
+	public void setParentId(Long parentId) 
 	{
 		this.parentId = parentId;
 	}
@@ -147,7 +151,7 @@ public class Company extends Model{
 	/**
 	  *	0表示激活状态，被激活有效的数据可以用于新增业务，1表示停用，被停用无效的数据只能用于历史数据查询中
 	  */
-	public java.lang.Integer getIsInactive() 
+	public Integer getIsInactive() 
 	{
 		return isInactive;
 	}
@@ -155,7 +159,7 @@ public class Company extends Model{
 	/**
 	  *	0表示激活状态，被激活有效的数据可以用于新增业务，1表示停用，被停用无效的数据只能用于历史数据查询中
 	  */
-	public void setIsInactive(java.lang.Integer isInactive) 
+	public void setIsInactive(Integer isInactive) 
 	{
 		this.isInactive = isInactive;
 	}
@@ -163,7 +167,7 @@ public class Company extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.String getRemark() 
+	public String getRemark() 
 	{
 		return remark;
 	}
@@ -171,31 +175,24 @@ public class Company extends Model{
 	/**
 	  *	
 	  */
-	public void setRemark(java.lang.String remark) 
+	public void setRemark(String remark) 
 	{
 		this.remark = remark;
 	}
 	
-	/**
-	  *	
-	  */
-	public java.lang.Integer getCreatedBy() 
-	{
+	
+	public String getCreatedBy() {
 		return createdBy;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setCreatedBy(java.lang.Integer createdBy) 
-	{
+
+	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
-	
+
 	/**
 	  *	
 	  */
-	public java.lang.String getCreatedTime() 
+	public String getCreatedTime() 
 	{
 		return createdTime;
 	}
@@ -203,31 +200,24 @@ public class Company extends Model{
 	/**
 	  *	
 	  */
-	public void setCreatedTime(java.lang.String createdTime) 
+	public void setCreatedTime(String createdTime) 
 	{
 		this.createdTime = createdTime;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.Integer getUpdatedBy() 
-	{
+
+
+	public String getUpdatedBy() {
 		return updatedBy;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setUpdatedBy(java.lang.Integer updatedBy) 
-	{
+
+	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-	
+
 	/**
 	  *	
 	  */
-	public java.lang.String getUpdatedTime() 
+	public String getUpdatedTime() 
 	{
 		return updatedTime;
 	}
@@ -235,7 +225,7 @@ public class Company extends Model{
 	/**
 	  *	
 	  */
-	public void setUpdatedTime(java.lang.String updatedTime) 
+	public void setUpdatedTime(String updatedTime) 
 	{
 		this.updatedTime = updatedTime;
 	}
@@ -243,7 +233,7 @@ public class Company extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.Integer getVersion() 
+	public Integer getVersion() 
 	{
 		return version;
 	}
@@ -251,7 +241,7 @@ public class Company extends Model{
 	/**
 	  *	
 	  */
-	public void setVersion(java.lang.Integer version) 
+	public void setVersion(Integer version) 
 	{
 		this.version = version;
 	}

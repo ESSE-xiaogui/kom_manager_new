@@ -56,13 +56,29 @@ public class RegionController extends AbstractController{
 	}
 	
 	/**
-	 * 根据国家ID查询所有城市
-	 * */
+	* 查询国家区域
+	*/
 	@GET
-	@Path("getCityAll")
-	@Produces({MediaType.APPLICATION_JSON})
-	public List<Region> getCityAll(@QueryParam("parentId") java.lang.Long parentId) throws ServiceException{
-		return regionFacade.getCityAll(parentId);
+	@Path("/findCountryList")
+	@Produces({MediaType.APPLICATION_JSON}) 
+	public List<RegionDto> findCountryList() throws ServiceException {
+		String token = this.getAuthorization();
+		return regionFacade.findCountryList(token);
+	}
+	
+	/**
+	 * 根据parentId查询国家下面的所有城市
+	 * @param parentId
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/findCityListByParentRegionId")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON}) 
+	public List<RegionDto> findCityListByParentRegionId(@QueryParam("parentId") int parentId) throws ServiceException {
+		String token = this.getAuthorization();
+		return regionFacade.findCityListByParentRegionId(parentId,token);
 	}
 
 	/**

@@ -42,6 +42,7 @@
 	</resultMap>
 	<resultMap id="SaleDailyDtoResultMapper" type="SaleDailyDto">
 		<result column="ID" property="id"/>
+		<result column="COMPANY_ID" property="companyId"/>
 		<result column="BILLNO" property="billNo"/>
 		<result column="SALE_DATE" property="saleDate"/>
 		<result column="COUNTRY" property="country"/>
@@ -137,10 +138,11 @@
 		, date_format(UPDATED_TIME, '%Y-%m-%d %H:%i:%s') UPDATED_TIME
 		, VERSION
 	</sql>
-	<sql id="commonProcessDateColumns1">
+ 	<sql id="commonProcessDateColumns1">
 		 ID
+		 ,COMPANY_ID
 		 ,BILLNO
-		 , date_format(SALE_DATE, '%Y-%m-%d %H:%i:%s') SALE_DATE
+		 ,date_format(SALE_DATE, '%Y-%m-%d %H:%i:%s') SALE_DATE
 		 ,COUNTRY
 		 ,COUNTRY_NAME
 		 ,CITY
@@ -157,7 +159,7 @@
 		 ,EXCHANGERATE
 		 ,USER_CODE
 		, date_format(CREATED_TIME, '%Y-%m-%d %H:%i:%s') CREATED_TIME
-	</sql>
+	</sql> 
 	
 	<sql id="commonCondition">
 		<if test="id!= null and id!= ''"> 
@@ -355,6 +357,9 @@
 			<if test="saleDailyDto.id!= null and saleDailyDto.id!= ''">
 				AND ID=#{saleDailyDto.id}
             </if> 
+            <if test="saleDailyDto.companyId!= null and saleDailyDto.companyId!= ''">
+				AND COMPANY_ID=#{saleDailyDto.companyId}
+            </if>  
 			<if test="saleDailyDto.billNo!= null and saleDailyDto.billNo!= ''">
 				AND BILLNO=#{saleDailyDto.billNo}
             </if>            
@@ -441,6 +446,9 @@
 		<choose>
 			<when test="key == 'id'">
 				ID ${value}
+            </when>
+            <when test="key == 'companyId'">
+				COMPANY_ID ${value}
             </when>
         	<when test="key == 'billNo'">
 				BILLNO ${value}
@@ -600,7 +608,8 @@
 		resultMap="SaleDailyDtoResultMapper">
 		SELECT 
 		<include refid="commonProcessDateColumns1"/>
-		FROM SALE_LIST_VIEW WHERE 1=1
+		 FROM SALE_LIST_VIEW 
+		 WHERE 1=1
 		<include refid="commonConditionByPrefix1" />
 		<include refid="orderByClause1" />
 	</select>

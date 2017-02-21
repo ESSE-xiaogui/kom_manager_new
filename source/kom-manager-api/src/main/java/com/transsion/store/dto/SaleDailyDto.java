@@ -16,6 +16,11 @@ public class SaleDailyDto implements Serializable{
 	private Long id;
 	
 	/**
+	 *  公司Id
+	 * */
+	private Long companyId;
+	
+	/**
 	 * 单号
 	 * */
 	private String billNo;
@@ -156,6 +161,14 @@ public class SaleDailyDto implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
 	}
 
 	public String getBillNo() {
@@ -376,15 +389,15 @@ public class SaleDailyDto implements Serializable{
 
 	@Override
 	public String toString() {
-		return "SaleDailyDto [id=" + id + ",billNo=" + billNo + ", saleDate=" + saleDate + ", saleEndDate=" + saleEndDate
-						+ ", country=" + country + ", countryName=" + countryName + ", city=" + city + ", cityName="
-						+ cityName + ", shopId=" + shopId + ", shopName=" + shopName + ", gradeId=" + gradeId
-						+ ", gradeName=" + gradeName + ", bizId=" + bizId + ", bizName=" + bizName + ", brandCode="
-						+ brandCode + ", modelCode=" + modelCode + ", imeiNo=" + imeiNo + ", imeiList=" + imeiList
-						+ ", saleQty=" + saleQty + ", salePrice=" + salePrice + ", saleAmount=" + saleAmount
-						+ ", currencyRatio=" + currencyRatio + ", userId=" + userId + ", userName=" + userName
-						+ ", empName=" + empName + ", nation=" + nation + ", createdTime=" + createdTime
-						+ ", createdEndTime=" + createdEndTime + "]";
+		return "SaleDailyDto [id=" + id + ", companyId=" + companyId + ", billNo=" + billNo + ", saleDate=" + saleDate
+						+ ", saleEndDate=" + saleEndDate + ", country=" + country + ", countryName=" + countryName
+						+ ", city=" + city + ", cityName=" + cityName + ", shopId=" + shopId + ", shopName=" + shopName
+						+ ", gradeId=" + gradeId + ", gradeName=" + gradeName + ", bizId=" + bizId + ", bizName="
+						+ bizName + ", brandCode=" + brandCode + ", modelCode=" + modelCode + ", imeiNo=" + imeiNo
+						+ ", imeiList=" + imeiList + ", saleQty=" + saleQty + ", salePrice=" + salePrice
+						+ ", saleAmount=" + saleAmount + ", currencyRatio=" + currencyRatio + ", userId=" + userId
+						+ ", userName=" + userName + ", empName=" + empName + ", nation=" + nation + ", createdTime="
+						+ createdTime + ", createdEndTime=" + createdEndTime + "]";
 	}
 	
 }
