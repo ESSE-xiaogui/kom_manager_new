@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.TaskDetail;
+import com.transsion.store.dto.TaskItemDto;
 import com.transsion.store.mapper.TaskDetailMapper;
 
 @Service("taskDetailService")
@@ -26,5 +27,14 @@ public class TaskDetailService {
 		pagination.setResultList(list);
 		
 		return pagination;
+	}
+	
+	/**
+	 * 统计成功条数,失败条数
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public TaskItemDto findTaskItemNum(Long taskId) throws ServiceException{
+		return taskDetailMapper.findTaskItemNum(taskId);
 	}
 }

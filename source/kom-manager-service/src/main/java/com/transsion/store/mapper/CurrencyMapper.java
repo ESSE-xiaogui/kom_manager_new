@@ -23,6 +23,7 @@ import java.util.Map;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.transsion.store.bo.Currency;
 import com.transsion.store.dto.CurrencyDto;
+import com.transsion.store.dto.CurrencyResultDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
 import org.apache.ibatis.annotations.Param;
@@ -41,5 +42,5 @@ public interface CurrencyMapper extends GenericIBatisMapper<Currency, java.lang.
 	
 	public void updateCurrency(@Param("country") Integer country,@Param("beginTime")String beginTime);
 	
-	public List<Currency> findCurrencyName(@Param("companyId") Long companyId);
+	public List<CurrencyResultDto> findCurrencyName(@Param("companyId") Long companyId);
 }

@@ -9,6 +9,7 @@ import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Currency;
 import com.transsion.store.dto.CurrencyDto;
+import com.transsion.store.dto.CurrencyResultDto;
 import com.transsion.store.facade.CurrencyFacade;
 import com.transsion.store.manager.CurrencyManager;
 import com.transsion.store.service.CurrencyService;
@@ -77,7 +78,7 @@ public class CurrencyFacadeImpl implements CurrencyFacade{
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public List<Currency> findCurrencyName(String token) throws ServiceException{
+	public List<CurrencyResultDto> findCurrencyName(String token) throws ServiceException{
 		return currencyManager.findCurrencyName(token);
 	}
 }

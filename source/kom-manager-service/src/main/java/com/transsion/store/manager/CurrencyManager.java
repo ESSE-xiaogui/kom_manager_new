@@ -11,6 +11,7 @@ import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Currency;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.CurrencyDto;
+import com.transsion.store.dto.CurrencyResultDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.CurrencyMapper;
 import com.transsion.store.service.SystemDateService;
@@ -104,7 +105,7 @@ public class CurrencyManager {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public List<Currency> findCurrencyName(String token) throws ServiceException{
+	public List<CurrencyResultDto> findCurrencyName(String token) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}

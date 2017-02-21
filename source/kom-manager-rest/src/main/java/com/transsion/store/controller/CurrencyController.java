@@ -28,6 +28,7 @@ import com.shangkang.core.dto.RequestModel;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Currency;
 import com.transsion.store.dto.CurrencyDto;
+import com.transsion.store.dto.CurrencyResultDto;
 import com.transsion.store.facade.CurrencyFacade;
 @Controller
 @Path("currency")
@@ -156,7 +157,7 @@ public class CurrencyController extends AbstractController{
 	@GET
 	@Path("/findCurrencyName")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public List<Currency> findCurrencyName() throws ServiceException{
+	public List<CurrencyResultDto> findCurrencyName() throws ServiceException{
 		String token = this.getAuthorization();
 		return currencyFacade.findCurrencyName(token);
 	}
