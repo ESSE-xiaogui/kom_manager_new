@@ -95,6 +95,7 @@ public class SaleService {
 	{
 		List<SaleDailyDto> list = saleMapper.listPaginationByPropertys(pagination, saleDailyDto, pagination.getOrderBy());
 		pagination.setResultList(list);
+		System.out.println(list);
 		return pagination;
 	}
 
