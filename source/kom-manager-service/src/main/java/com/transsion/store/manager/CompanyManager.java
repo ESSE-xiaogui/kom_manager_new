@@ -1,6 +1,8 @@
 package com.transsion.store.manager;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -78,6 +80,7 @@ public class CompanyManager {
 	
 	/**
 	 * 更新记录
+	 * @author guihua.zhang on 2017-2-22
 	 * @param company
 	 * @return
 	 * @throws ServiceException
@@ -131,5 +134,30 @@ public class CompanyManager {
 		company.setUpdatedBy(userContext.getUserCode());
 		company.setUpdatedTime(systemDateService.getCurrentDate());
 		return companyMapper.update(company);
+	}
+	
+	/**
+	 * 根据当前登录人角色查询所有事业部名称
+	 * @author guihua.zhang on 2017-2-22
+	 * @return
+	 * */
+	public List<Company> findCompanyAll(String token) throws ServiceException{
+		
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		Company company = new Company();
+		if(userContext.isAdmin()){
+			company.setId(null);
+		}else{
+			company.setId(userContext.getCompanyId());
+		}
+		return companyMapper.listByProperty(company);
 	}
 }

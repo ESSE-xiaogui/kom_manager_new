@@ -122,4 +122,17 @@ public class CompanyController extends AbstractController{
 	public List<Company> findAll() throws ServiceException{
 		return companyFacade.findAll();
 	}
+	
+	/**
+	 * 根据当前登录人角色查询所有事业部名称
+	 * @author guihua.zhang on 2017-2-22
+	 * @return
+	 * */
+	@GET
+	@Path("findCompanyAll")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<Company> findCompanyAll() throws ServiceException{
+		String token = this.getAuthorization();
+		return companyFacade.findCompanyAll(token);
+	}
 }
