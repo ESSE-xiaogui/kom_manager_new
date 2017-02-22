@@ -33,7 +33,7 @@ public interface SystemResourceMapper extends GenericIBatisMapper<SystemResource
 
 	public List<SystemResource> findResByRoleId(Long roleId)throws DataAccessFailureException;
 
-	public List<String> getResourcesByUser(Long id)throws DataAccessFailureException;
+	public List<String> getResourcesByUser(@Param("resourceType") String resourceType, @Param("userId") Long id)throws DataAccessFailureException;
 
-	public List<String> getAnonResources()throws DataAccessFailureException;
+	public List<String> getAnonResources(@Param("resourceType") String resourceType)throws DataAccessFailureException;
 }

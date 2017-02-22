@@ -1,7 +1,10 @@
 package com.transsion.store.manager;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.shangkang.tools.UtilHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +49,8 @@ public class SystemResourceManager {
 			UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 			systemResource.setCreatedBy(userContext.getUser().getUserCode());
 			systemResource.setCreateTime(systemDateService.getCurrentDate());
+			systemResource.setUpdatedBy(userContext.getUserCode());
+			systemResource.setUpdateTime(systemDateService.getCurrentDate());
 			systemResourceMapper.save(systemResource);
 		}
 	}
@@ -75,6 +80,7 @@ public class SystemResourceManager {
 		}
 		
 		SystemResource formerRes = systemResourceMapper.getByPK(systemResource.getResId());
+		formerRes.setResType(systemResource.getResType());
 		formerRes.setResCode(systemResource.getResCode());
 		formerRes.setResName(systemResource.getResName());
 		formerRes.setResUrl(systemResource.getResUrl());
@@ -87,4 +93,22 @@ public class SystemResourceManager {
 		formerRes.setUpdateTime(systemDateService.getCurrentDate());
 		return systemResourceMapper.update(formerRes);
 	}
+
+	/**
+	 * 根据资源类型及用户token获取用户拥有的资源列表
+	 * @param type
+	 * @param token
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<String> getResourcesByUser(String type, String token) throws ServiceException {
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+
+		if(UtilHelper.isEmpty(userContext)) {
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+
+		return systemResourceMapper.getResourcesByUser(type, userContext.getUser().getId());
+	}
+
 }

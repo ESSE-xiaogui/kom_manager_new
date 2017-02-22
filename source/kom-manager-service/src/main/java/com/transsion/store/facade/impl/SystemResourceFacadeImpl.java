@@ -166,4 +166,16 @@ public class SystemResourceFacadeImpl implements SystemResourceFacade {
 	public List<SystemResource> findResByRoleId(Long roleId) throws ServiceException {
 		return systemResourceManager.findResByRoleId(roleId);
 	}
+
+	/**
+	 * 根据资源类型及用户token获取用户拥有的资源列表
+	 * @param type
+	 * @param token
+	 * @return
+	 * @throws ServiceException
+	 */
+	@Override
+	public List<String> getResourcesByUser(String type, String token) throws ServiceException {
+		return systemResourceManager.getResourcesByUser(type, token);
+	}
 }
