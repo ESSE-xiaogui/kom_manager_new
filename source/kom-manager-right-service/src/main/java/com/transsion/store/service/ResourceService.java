@@ -2,6 +2,7 @@ package com.transsion.store.service;
 
 import java.util.List;
 
+import com.transsion.store.bo.SystemResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,6 @@ public class ResourceService {
     public List<String> getResources(String token) throws ServiceException {
     	UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
     	Long id = userContext.getUser().getId();
-        return systemResourceMapper.getResourcesByUser(id);
+        return systemResourceMapper.getResourcesByUser(SystemResource.RESOURCE_TYPE_BACKEND, id);
     }
 }

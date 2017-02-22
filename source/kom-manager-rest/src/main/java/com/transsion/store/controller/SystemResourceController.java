@@ -27,7 +27,9 @@ import org.springframework.stereotype.Controller;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Path("systemResource")
@@ -133,5 +135,33 @@ public class SystemResourceController extends AbstractController{
 	@Produces({MediaType.APPLICATION_JSON}) 
 	public List<SystemResource> findResByRoleId(@QueryParam("roleId") java.lang.Long roleId) throws ServiceException {
 		return systemResourceFacade.findResByRoleId(roleId);
+	}
+
+	/**
+	 * 根据资源类型及用户token获取用户拥有的资源列表
+	 * @param type
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/resourcesByType/{type}")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<String> getResourcesByType(@PathParam("type") String type) throws ServiceException {
+		return systemResourceFacade.getResourcesByUser(type, getAuthorization());
+	}
+	/**
+	 * 取得资源类型字典
+	 * @return
+	 */
+	@GET
+	@Path("/resourceType")
+	@Produces({MediaType.APPLICATION_JSON})
+	public Map<String, String> getResourceType() {
+		final Map<String, String> map = new HashMap<String, String>();
+
+		map.put(SystemResource.RESOURCE_TYPE_FRONT, SystemResource.RESOURCE_TYPE_DESCRIPTION_FRONT);
+		map.put(SystemResource.RESOURCE_TYPE_BACKEND, SystemResource.RESOURCE_TYPE_DESCRIPTION_BACKEND);
+
+		return map;
 	}
 }

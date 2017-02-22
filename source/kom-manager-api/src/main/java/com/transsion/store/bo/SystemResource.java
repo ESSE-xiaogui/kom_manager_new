@@ -24,11 +24,35 @@ public class SystemResource extends Model{
 	 * 
 	 */
 	private static final long	serialVersionUID	= 1L;
-	
+
+	/**
+	 * 资源类型-web前端
+	 */
+	public static final String RESOURCE_TYPE_FRONT = "F";
+
+	/**
+	 * 资源类型-web前端
+	 */
+	public static final String RESOURCE_TYPE_DESCRIPTION_FRONT = "WEB前端资源";
+
+	/**
+	 * 资源类型-后台
+	 */
+	public static final String RESOURCE_TYPE_BACKEND = "B";
+
+	/**
+	 * 资源类型-后台
+	 */
+	public static final String RESOURCE_TYPE_DESCRIPTION_BACKEND = "后端资源";
 	/**
 	  *	资源ID
 	  */
 	private java.lang.Long resId;
+
+	/**
+	  *	资源类型(F:前端web资源，B:后台资源）
+	  */
+	private java.lang.String resType;
 
 	/**
 	  *	资源CODE
@@ -49,7 +73,10 @@ public class SystemResource extends Model{
 	  *	显示顺序
 	  */
 	private java.lang.Long showIndex;
-	
+
+	/**
+	  *	N：不可匿名访问 Y：可匿名访问
+	  */
 	private java.lang.String isAnonAccess;
 
 	/**
@@ -96,6 +123,22 @@ public class SystemResource extends Model{
 	public void setResId(java.lang.Long resId) 
 	{
 		this.resId = resId;
+	}
+	
+	/**
+	  *	资源类型(F:前端web资源，B:后台资源）
+	  */
+	public java.lang.String getResType() 
+	{
+		return resType;
+	}
+	
+	/**
+	  *	资源类型(F:前端web资源，B:后台资源）
+	  */
+	public void setResType(java.lang.String resType) 
+	{
+		this.resType = resType;
 	}
 	
 	/**
@@ -162,14 +205,22 @@ public class SystemResource extends Model{
 		this.showIndex = showIndex;
 	}
 	
-	public java.lang.String getIsAnonAccess() {
+	/**
+	  *	N：不可匿名访问 Y：可匿名访问
+	  */
+	public java.lang.String getIsAnonAccess() 
+	{
 		return isAnonAccess;
 	}
-
-	public void setIsAnonAccess(java.lang.String isAnonAccess) {
+	
+	/**
+	  *	N：不可匿名访问 Y：可匿名访问
+	  */
+	public void setIsAnonAccess(java.lang.String isAnonAccess) 
+	{
 		this.isAnonAccess = isAnonAccess;
 	}
-
+	
 	/**
 	  *	
 	  */
@@ -265,13 +316,24 @@ public class SystemResource extends Model{
 	{
 		this.version = version;
 	}
-
-	@Override
-	public String toString() {
-		return "SystemResource [resId=" + resId + ", resCode=" + resCode + ", resName=" + resName + ", resUrl=" + resUrl
-				+ ", showIndex=" + showIndex + ", isAnonAccess=" + isAnonAccess + ", remark=" + remark + ", createdBy="
-				+ createdBy + ", createTime=" + createTime + ", updatedBy=" + updatedBy + ", updateTime=" + updateTime
-				+ ", version=" + version + "]";
+	
+	public String toString()
+	{
+		return "SystemResource [" + 
+					"resId=" + resId + 
+					", resType=" + resType + 
+					", resCode=" + resCode + 
+					", resName=" + resName + 
+					", resUrl=" + resUrl + 
+					", showIndex=" + showIndex + 
+					", isAnonAccess=" + isAnonAccess + 
+					", remark=" + remark + 
+					", createdBy=" + createdBy + 
+					", createTime=" + createTime + 
+					", updatedBy=" + updatedBy + 
+					", updateTime=" + updateTime + 
+					", version=" + version + 
+				"]";
 	}
 
 }
