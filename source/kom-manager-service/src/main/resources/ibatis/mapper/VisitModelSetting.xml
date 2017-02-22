@@ -34,6 +34,18 @@
 		<result column="VERSION" property="version"/>
 	</resultMap>
 	
+	<resultMap id="VisitModelSettingInfoDtoResultMapper" type="VisitModelSettingInfoDto">
+		<result column="ID" property="id"/>
+		<result column="ACTION_DATE" property="actionDate"/>
+		<result column="BRAND_ID" property="brandId"/>
+		<result column="MODEL_ID" property="modelId"/>
+		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="MODEL_CODE" property="modelCode"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, ACTION_DATE
@@ -118,42 +130,15 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="visitModelSetting != null">
-            <if test="visitModelSetting.id!= null and visitModelSetting.id!= ''">
-				AND ID=#{visitModelSetting.id}
+		<if test="visitModelSettingInfoDto != null">
+            <if test="visitModelSettingInfoDto.actionDate!= null and visitModelSettingInfoDto.actionDate!= ''">
+				AND t.ACTION_DATE=str_to_date(#{visitModelSettingInfoDto.actionDate},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="visitModelSetting.actionDate!= null and visitModelSetting.actionDate!= ''">
-				AND ACTION_DATE=str_to_date(#{visitModelSetting.actionDate},'%Y-%m-%d %H:%i:%s')
+            <if test="visitModelSettingInfoDto.brandId!= null and visitModelSettingInfoDto.brandId!= ''">
+				AND t.BRAND_ID=#{visitModelSettingInfoDto.brandId}
             </if>
-            <if test="visitModelSetting.companyId!= null and visitModelSetting.companyId!= ''">
-				AND COMPANY_ID=#{visitModelSetting.companyId}
-            </if>
-            <if test="visitModelSetting.brandId!= null and visitModelSetting.brandId!= ''">
-				AND BRAND_ID=#{visitModelSetting.brandId}
-            </if>
-            <if test="visitModelSetting.modelId!= null and visitModelSetting.modelId!= ''">
-				AND MODEL_ID=#{visitModelSetting.modelId}
-            </if>
-            <if test="visitModelSetting.regionId!= null and visitModelSetting.regionId!= ''">
-				AND REGION_ID=#{visitModelSetting.regionId}
-            </if>
-            <if test="visitModelSetting.remark!= null and visitModelSetting.remark!= ''">
-				AND REMARK=#{visitModelSetting.remark}
-            </if>
-            <if test="visitModelSetting.createBy!= null and visitModelSetting.createBy!= ''">
-				AND CREATE_BY=#{visitModelSetting.createBy}
-            </if>
-            <if test="visitModelSetting.createTime!= null and visitModelSetting.createTime!= ''">
-				AND CREATE_TIME=str_to_date(#{visitModelSetting.createTime},'%Y-%m-%d %H:%i:%s')
-            </if>
-            <if test="visitModelSetting.updateBy!= null and visitModelSetting.updateBy!= ''">
-				AND UPDATE_BY=#{visitModelSetting.updateBy}
-            </if>
-            <if test="visitModelSetting.updateTime!= null and visitModelSetting.updateTime!= ''">
-				AND UPDATE_TIME=str_to_date(#{visitModelSetting.updateTime},'%Y-%m-%d %H:%i:%s')
-            </if>
-            <if test="visitModelSetting.version!= null and visitModelSetting.version!= ''">
-				AND VERSION=#{visitModelSetting.version}
+            <if test="visitModelSettingInfoDto.modelId!= null and visitModelSettingInfoDto.modelId!= ''">
+				AND t.MODEL_ID=#{visitModelSettingInfoDto.modelId}
             </if>
         </if>
     </sql>
@@ -272,10 +257,16 @@
 		FROM T_VISIT_MODEL_SETTING WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="VisitModelSetting" resultMap="VisitModelSettingResultMapper">
+	<select id="listPaginationByProperty" parameterType="VisitModelSettingInfoDto" resultMap="VisitModelSettingInfoDtoResultMapper">
 		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_VISIT_MODEL_SETTING WHERE 1=1
+			t.ID, 
+			t.ACTION_DATE, 
+			m.BRAND_CODE, 
+			m.MODEL_CODE, 
+			t.CREATE_BY, 
+			t.CREATE_TIME 
+		FROM T_VISIT_MODEL_SETTING t LEFT JOIN T_MODEL m ON t.MODEL_ID = m.ID 
+		WHERE 1=1 
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>

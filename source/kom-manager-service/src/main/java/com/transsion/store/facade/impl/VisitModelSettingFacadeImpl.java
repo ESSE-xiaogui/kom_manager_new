@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.VisitModelSetting;
+import com.transsion.store.dto.VisitModelSettingInfoDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.VisitModelSettingFacade;
@@ -75,10 +76,10 @@ public class VisitModelSettingFacadeImpl implements VisitModelSettingFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<VisitModelSetting> listPaginationByProperty(Pagination<VisitModelSetting> pagination, VisitModelSetting visitModelSetting)
+	public Pagination<VisitModelSettingInfoDto> listPaginationByProperty(Pagination<VisitModelSettingInfoDto> pagination, VisitModelSettingInfoDto visitModelSettingInfoDto)
 			throws ServiceException
 	{
-		return visitModelSettingService.listPaginationByProperty(pagination, visitModelSetting);
+		return visitModelSettingService.listPaginationByProperty(pagination, visitModelSettingInfoDto);
 	}
 
 	/**
