@@ -157,8 +157,8 @@ public class ShopGradeFacadeImpl implements ShopGradeFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<ShopGrade> getShopGradeList(String brandCode,String token)throws ServiceException {
-		return shopGradeManager.getShopGradeList(brandCode,token);
+	public List<ShopGrade> getShopGradeList(String token)throws ServiceException {
+		return shopGradeManager.getShopGradeList(token);
 	}
 
 	/**

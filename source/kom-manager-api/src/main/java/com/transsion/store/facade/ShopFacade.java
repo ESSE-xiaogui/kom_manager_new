@@ -85,10 +85,11 @@ public interface ShopFacade {
 	/**
 	 * 更新记录
 	 * @param shop
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(Shop shop) throws ServiceException;
+	public int updateShopInfo(ShopInfoDto shopInfoDto, String token) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数
@@ -100,10 +101,11 @@ public interface ShopFacade {
 	
 	/**
 	 * 根据查询条件查询分页记录
+	 * @param string 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<ShopInfoDto> listPaginationByProperty(Pagination<ShopInfoDto> pagination, ShopInfoDto shopInfoDto)
+	public Pagination<ShopInfoDto> listPaginationByProperty(Pagination<ShopInfoDto> pagination, ShopInfoDto shopInfoDto, String string)
 			throws ServiceException;
 	
 	/**

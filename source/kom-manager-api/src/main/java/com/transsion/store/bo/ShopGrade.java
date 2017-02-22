@@ -37,7 +37,7 @@ public class ShopGrade extends Model{
 	
 	private java.lang.String brandCode;
 	
-	private java.lang.Integer saleQTY;
+	private java.lang.String saleQTY;
 	
 	private java.lang.Integer isInactive;
 
@@ -236,11 +236,11 @@ public class ShopGrade extends Model{
 		this.isInactive = isInactive;
 	}
 
-	public java.lang.Integer getSaleQTY() {
+	public java.lang.String getSaleQTY() {
 		return saleQTY;
 	}
 
-	public void setSaleQTY(java.lang.Integer saleQTY) {
+	public void setSaleQTY(java.lang.String saleQTY) {
 		this.saleQTY = saleQTY;
 	}
 

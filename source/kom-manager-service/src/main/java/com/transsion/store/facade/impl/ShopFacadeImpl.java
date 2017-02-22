@@ -83,10 +83,10 @@ public class ShopFacadeImpl implements ShopFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<ShopInfoDto> listPaginationByProperty(Pagination<ShopInfoDto> pagination, ShopInfoDto shopInfoDto)
+	public Pagination<ShopInfoDto> listPaginationByProperty(Pagination<ShopInfoDto> pagination, ShopInfoDto shopInfoDto,String token)
 			throws ServiceException
 	{
-		return shopService.listPaginationByProperty(pagination, shopInfoDto);
+		return shopService.listPaginationByProperty(pagination, shopInfoDto,token);
 	}
 
 	/**
@@ -138,9 +138,9 @@ public class ShopFacadeImpl implements ShopFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(Shop shop) throws ServiceException
+	public int updateShopInfo(ShopInfoDto shopInfoDto,String token) throws ServiceException
 	{
-		return shopService.update(shop);
+		return shopManager.updateShopInfo(shopInfoDto,token);
 	}
 
 	/**

@@ -21,6 +21,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.transsion.store.bo.Shop;
+import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.ShopLoginDto;
 import com.transsion.store.exception.ExceptionDef;
@@ -29,6 +30,7 @@ import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.mapper.ShopMapper;
+import com.transsion.store.utils.CacheUtils;
 
 @Service("shopService")
 public class ShopService {
@@ -75,12 +77,14 @@ public class ShopService {
 	
 	/**
 	 * 根据查询条件查询分页记录
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<ShopInfoDto> listPaginationByProperty(Pagination<ShopInfoDto> pagination, ShopInfoDto shopInfoDto)
+	public Pagination<ShopInfoDto> listPaginationByProperty(Pagination<ShopInfoDto> pagination, ShopInfoDto shopInfoDto, String token)
 			throws ServiceException
 	{
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		List<ShopInfoDto> list = shopMapper.listPaginationByProperty(pagination, shopInfoDto, pagination.getOrderBy());
 		
 		pagination.setResultList(list);
@@ -134,10 +138,11 @@ public class ShopService {
 	/**
 	 * 更新记录
 	 * @param shop
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(Shop shop) throws ServiceException
+	public int update(Shop shop, String token) throws ServiceException
 	{
 		return shopMapper.update(shop);
 	}

@@ -71,6 +71,7 @@
 		<result column="GRADE_NAME" property="gradeName"/>
 		<result column="BIZ_ID" property="bizId"/>
 		<result column="BIZ_NAME" property="bizName"/>
+		<result column="CLERK_TOTAL_QTY" property="clerkTotalQty"/>
 	    <result column="CLERK_BRAND_QTY" property="clerkBrandQty"/>
 		<result column="BRANDS_ONE" property="brandsOne"/>
 		<result column="BRANDS_TWO" property="brandsTwo"/>
@@ -264,6 +265,7 @@
 		, BIZ_NAME
 		, r1.REGION_NAME AS COUNTRY_NAME
 		, r2.REGION_NAME AS CITY_NAME
+		, CLERK_TOTAL_QTY
 		, CLERK_BRAND_QTY
 		, e.PROMOTER
 		, BRAND_ONE

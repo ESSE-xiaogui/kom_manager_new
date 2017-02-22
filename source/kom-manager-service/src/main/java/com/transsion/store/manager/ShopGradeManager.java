@@ -28,7 +28,7 @@ public class ShopGradeManager {
 	@Autowired
 	SystemDateService systemDateService;
 
-	public List<ShopGrade> getShopGradeList(String brandCode, String token) throws ServiceException {
+	public List<ShopGrade> getShopGradeList(String token) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
@@ -36,6 +36,7 @@ public class ShopGradeManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
+		String brandCode = userContext.getBrandCode();
 		if(UtilHelper.isEmpty(userContext.getCompanyId())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}

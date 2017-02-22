@@ -112,7 +112,7 @@ public interface ShopGradeFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<ShopGrade> getShopGradeList(String brandCode, String token)throws ServiceException;
+	public List<ShopGrade> getShopGradeList(String brandCode)throws ServiceException;
 
 	/**
 	 * 查询已启用的门店等级

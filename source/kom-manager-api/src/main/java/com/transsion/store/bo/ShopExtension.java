@@ -182,22 +182,15 @@ public class ShopExtension extends Model{
 		this.shopId = shopId;
 	}
 	
-	/**
-	  *	
-	  */
-	public java.lang.Long getShopArea() 
-	{
+
+	public java.lang.Long getShopArea() {
 		return shopArea;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setShopArea(java.lang.Long shopArea) 
-	{
+
+	public void setShopArea(java.lang.Long shopArea) {
 		this.shopArea = shopArea;
 	}
-	
+
 	/**
 	  *	
 	  */

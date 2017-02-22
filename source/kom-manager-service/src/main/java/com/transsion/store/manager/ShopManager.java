@@ -19,6 +19,7 @@ import com.transsion.store.bo.UserShop;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.ShopDefinitionDto;
 import com.transsion.store.dto.ShopDetailDto;
+import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.transsion.store.dto.UserDto;
 import com.transsion.store.exception.ExceptionDef;
@@ -344,11 +345,77 @@ public class ShopManager {
 		if(UtilHelper.isEmpty(userContext.getUser().getCompanyId())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
-		
 		Shop formerShop = shopService.getByPK(shop.getId());
 		formerShop.setStatus(shop.getStatus());
 		
-		shopService.update(formerShop);
+		shopMapper.update(formerShop);
 		
+	}
+	
+
+	public int updateShopInfo(ShopInfoDto shopInfoDto, String token) throws ServiceException {
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		if(UtilHelper.isEmpty(userContext.getUser())){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		if(UtilHelper.isEmpty(userContext.getUser().getCompanyId())){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		
+		Shop tempShop = new Shop();
+		tempShop.setShopName(shopInfoDto.getShopName());
+		int count1 = shopService.findByCount(tempShop);
+		tempShop.setId(shopInfoDto.getId());
+		int count2 = shopService.findByCount(tempShop);
+		if(count1>0&&count2<1){
+			throw new ServiceException(ExceptionDef.ERROR_SHOP_ALREADY_EXIST.getName());
+		}
+		Long regionId = shopInfoDto.getRegionId();
+		
+		Shop shop = shopService.getByPK(shopInfoDto.getId());
+		shop.setShopName(shopInfoDto.getShopName());
+		shop.setRegionId(regionId);
+		Region region = regionMapper.getByPK(regionId);
+		if(region.getRegionType()==2){
+			shop.setCountry(regionId.intValue());
+		}else if(region.getRegionType()==4){
+			shop.setCity(regionId.intValue());
+			shop.setCountry(region.getParentId().intValue());
+		}
+		shop.setAddress(shopInfoDto.getAddress());
+		shop.setGradeId(shopInfoDto.getGradeId());
+		shop.setBizId(shopInfoDto.getBizId());
+		shop.setOwnerName(shopInfoDto.getOwnerName());
+		shop.setOwnerPhone(shopInfoDto.getOwnerPhone());
+		shop.setPurchasChannel(shopInfoDto.getPurchasChannel());
+		shop.setRemark(shopInfoDto.getRemark());
+		shop.setStatus(1);
+		shopMapper.update(shop);
+		
+		ShopExtension shopExt = shopExtensionService.getByPK(shopInfoDto.getId());
+		shopExt.setShopArea(shopInfoDto.getShopArea());
+		shopExt.setClerkTotalQty(shopInfoDto.getClerkTotalQty());
+		shopExt.setClerkBrandQty(shopInfoDto.getClerkBrandQty());
+		shopExt.setRelationship(shopInfoDto.getRelationship());
+		shopExt.setBizCategory(shopInfoDto.getBizCategory());
+		shopExt.setBrandOne(shopInfoDto.getBrandOne());
+		shopExt.setBrandTwo(shopInfoDto.getBrandTwo());
+		shopExt.setBrandThree(shopInfoDto.getBrandThree());
+		shopExt.setBrandFour(shopInfoDto.getBrandFour());
+		shopExt.setBrandFive(shopInfoDto.getBrandFive());
+		shopExt.setClerkOneQty(shopInfoDto.getClerkOneQty());
+		shopExt.setClerkTwoQty(shopInfoDto.getClerkTwoQty());
+		shopExt.setClerkThreeQty(shopInfoDto.getClerkThreeQty());
+		shopExt.setClerkFourQty(shopInfoDto.getClerkFourQty());
+		shopExt.setClerkFiveQty(shopInfoDto.getClerkFiveQty());
+		shopExt.setClerkSixQty(shopInfoDto.getClerkSixQty());
+		shopExtensionService.update(shopExt);
+		return 1;
 	}
 }

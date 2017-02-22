@@ -73,7 +73,7 @@ public class ShopController extends AbstractController{
 		pagination.setParams(requestModel.getParams());
 		pagination.setOrderBy(requestModel.getOrderBy());
 
-		return shopFacade.listPaginationByProperty(pagination, requestModel.getParams());
+		return shopFacade.listPaginationByProperty(pagination, requestModel.getParams(),this.getAuthorization());
 	}
 
 	/**
@@ -110,9 +110,9 @@ public class ShopController extends AbstractController{
 	@PUT
 	@Path("/update")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void update(Shop shop) throws ServiceException
+	public void updateShopInfo(ShopInfoDto shopInfoDto) throws ServiceException
 	{
-		shopFacade.update(shop);
+		shopFacade.updateShopInfo(shopInfoDto,this.getAuthorization());
 	}
 	
 	/**

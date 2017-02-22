@@ -125,9 +125,9 @@ public class ShopGradeController extends AbstractController{
 	@GET
 	@Path("getShopGradeList")
 	@Produces({MediaType.APPLICATION_JSON})
-	public List<ShopGrade> getShopGradeList(@QueryParam("brandCode") java.lang.String brandCode ) throws ServiceException{
+	public List<ShopGrade> getShopGradeList( ) throws ServiceException{
 		String token = this.getAuthorization();
-		return shopGradeFacade.getShopGradeList(brandCode,token);	
+		return shopGradeFacade.getShopGradeList(token);	
 	}
 	
 	/**
