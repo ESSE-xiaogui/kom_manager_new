@@ -56,7 +56,7 @@ public class RegionController extends AbstractController{
 	}
 	
 	/**
-	* 查询国家区域
+	* 查询用户关联的门店的国家区域
 	*/
 	@GET
 	@Path("/findCountryList")
@@ -67,7 +67,7 @@ public class RegionController extends AbstractController{
 	}
 	
 	/**
-	 * 根据parentId查询国家下面的所有城市
+	 * 根据parentId查询用户关联门店的国家下面的所有城市
 	 * @param parentId
 	 * @return
 	 * @throws ServiceException

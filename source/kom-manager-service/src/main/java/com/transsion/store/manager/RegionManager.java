@@ -287,8 +287,16 @@ public class RegionManager {
 	 * @throws ServiceException
 	 */
 	public List<RegionDto> findCountryList(String token) throws ServiceException {
+		if (UtilHelper.isEmpty(token)) {
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext)) {
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		Long userId = userContext.getUser().getId();
 		List<RegionDto> countryList = null;
-		List<Region> list = regionService.findCountryList();
+		List<Region> list = regionService.findCountryList(userId);
 		if (list != null && list.size() > 0) {
 			countryList = new ArrayList<RegionDto>();
 			for (Region region : list) {
@@ -309,8 +317,16 @@ public class RegionManager {
 	 * @throws ServiceException
 	 */
 	public List<RegionDto> findCityListByParentRegionId(int parentId, String token) throws ServiceException {
+		if (UtilHelper.isEmpty(token)) {
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext)) {
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		Long userId = userContext.getUser().getId();
 		List<RegionDto> cityList = null; 
-		List<Region> list = regionService.findCityListByParentRegionId(parentId);
+		List<Region> list = regionService.findCityListByParentRegionId(parentId,userId);
 		if (list != null && list.size() > 0) {
 			cityList = new ArrayList<RegionDto>();
 			for (Region region : list) {
