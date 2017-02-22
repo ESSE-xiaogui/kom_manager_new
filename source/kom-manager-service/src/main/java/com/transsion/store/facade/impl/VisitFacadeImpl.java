@@ -165,4 +165,10 @@ public class VisitFacadeImpl implements VisitFacade {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public VisitInfoDto queryShopLatestVisit(String token, String ShopId) throws ServiceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -121,4 +121,10 @@ public interface VisitFacade {
 	 */
 	public List<VisitInfoDto> queryVisitRecords(String token, String startDate, String endDate) throws ServiceException;
 	
+	
+	/*
+	 * update if visit exist or create 
+	 */
+	public VisitInfoDto queryShopLatestVisit(String token, String ShopId) throws ServiceException;
+	
 }

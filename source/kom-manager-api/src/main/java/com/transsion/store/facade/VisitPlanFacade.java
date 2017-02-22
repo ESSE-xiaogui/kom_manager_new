@@ -21,6 +21,7 @@ import java.util.List;
 
 import com.transsion.store.bo.VisitPlan;
 import com.transsion.store.dto.ShopVisitPlanDto;
+import com.transsion.store.dto.VisitPlanDetailDto;
 import com.transsion.store.dto.VisitPlanDto;
 import com.transsion.store.dto.VisitPlanSummaryDto;
 import com.shangkang.core.bo.Pagination;
@@ -108,8 +109,6 @@ public interface VisitPlanFacade {
 
 	
 	/********************************* app api **********************************/
-
-	
 	/*
 	 * update if plan exist or create 
 	 */
@@ -125,4 +124,14 @@ public interface VisitPlanFacade {
 	 * 
 	 */
 	public List<ShopVisitPlanDto> queryShopPlan(String token, String startDate, String endDate) throws ServiceException;
+	
+	/********************************* web api **********************************/
+	/**
+	 * 根据查询条件查询分页记录
+	 * @return
+	 * @throws ServiceException
+	 */
+	public Pagination<VisitPlanDetailDto> listPaginationByProperty(Pagination<VisitPlanDetailDto> pagination, VisitPlanDetailDto visitPlan)
+			throws ServiceException;
+	
 }

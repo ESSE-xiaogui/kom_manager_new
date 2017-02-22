@@ -22,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.VisitScoreSetting;
+import com.transsion.store.dto.VisitScoreSettingDetailDto;
+import com.transsion.store.dto.VisitScoreSettingDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.VisitScoreSettingFacade;
@@ -144,5 +146,27 @@ public class VisitScoreSettingFacadeImpl implements VisitScoreSettingFacade {
 	public int findByCount(VisitScoreSetting visitScoreSetting) throws ServiceException
 	{
 		return visitScoreSettingService.findByCount(visitScoreSetting);
+	}
+
+	@Override
+	public void createScoreSettingRecord(String token, VisitScoreSettingDto visitScoreSettingDto)
+			throws ServiceException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateScoreSettingRecord(String token, VisitScoreSettingDto visitScoreSettingDto)
+			throws ServiceException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Pagination<VisitScoreSettingDetailDto> listPaginationByProperty(
+			Pagination<VisitScoreSettingDetailDto> pagination, VisitScoreSettingDetailDto visitScoreSetting)
+			throws ServiceException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

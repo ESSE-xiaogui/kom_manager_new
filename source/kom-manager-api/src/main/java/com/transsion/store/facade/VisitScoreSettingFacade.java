@@ -19,6 +19,8 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.VisitScoreSetting;
+import com.transsion.store.dto.VisitScoreSettingDetailDto;
+import com.transsion.store.dto.VisitScoreSettingDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -101,5 +103,23 @@ public interface VisitScoreSettingFacade {
 	 */
 	public Pagination<VisitScoreSetting> listPaginationByProperty(Pagination<VisitScoreSetting> pagination, VisitScoreSetting visitScoreSetting)
 			throws ServiceException;
+	
+	/********************************* web api **********************************/
+	/*
+	 * update if visit exist or create 
+	 */
+	public void createScoreSettingRecord(String token, VisitScoreSettingDto visitScoreSettingDto) throws ServiceException;
+	
+	/*
+	 * update if visit exist or create 
+	 */
+	public void updateScoreSettingRecord(String token, VisitScoreSettingDto visitScoreSettingDto) throws ServiceException;
 
+	/**
+	 * 根据查询条件查询分页记录
+	 * @return
+	 * @throws ServiceException
+	 */
+	public Pagination<VisitScoreSettingDetailDto> listPaginationByProperty(Pagination<VisitScoreSettingDetailDto> pagination, VisitScoreSettingDetailDto visitScoreSetting)
+			throws ServiceException;
 }

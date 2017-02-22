@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.VisitPlan;
 import com.transsion.store.dto.ShopVisitPlanDto;
+import com.transsion.store.dto.VisitPlanDetailDto;
 import com.transsion.store.dto.VisitPlanDto;
 import com.transsion.store.dto.VisitPlanSummaryDto;
 import com.shangkang.core.bo.Pagination;
@@ -165,6 +166,13 @@ public class VisitPlanFacadeImpl implements VisitPlanFacade {
 	@Override
 	public List<ShopVisitPlanDto> queryShopPlan(String token, String startDate, String endDate)
 			throws ServiceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Pagination<VisitPlanDetailDto> listPaginationByProperty(Pagination<VisitPlanDetailDto> pagination,
+			VisitPlanDetailDto visitPlan) throws ServiceException {
 		// TODO Auto-generated method stub
 		return null;
 	}
