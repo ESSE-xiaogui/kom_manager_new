@@ -127,4 +127,7 @@ public interface VisitFacade {
 	 */
 	public VisitInfoDto queryShopLatestVisit(String token, String ShopId) throws ServiceException;
 	
+	
+	/********************************* web api **********************************/
+	
 }
