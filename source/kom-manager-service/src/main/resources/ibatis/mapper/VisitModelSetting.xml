@@ -261,11 +261,15 @@
 		SELECT 
 			t.ID, 
 			t.ACTION_DATE, 
+			c.COMPANY_CODE,
 			m.BRAND_CODE, 
 			m.MODEL_CODE, 
 			t.CREATE_BY, 
-			t.CREATE_TIME 
-		FROM T_VISIT_MODEL_SETTING t LEFT JOIN T_MODEL m ON t.MODEL_ID = m.ID 
+			t.CREATE_TIME,
+			t.UPDATE_BY,
+			t.UPDATE_TIME,
+			t.REMARK
+		FROM T_VISIT_MODEL_SETTING t LEFT JOIN T_MODEL m ON t.MODEL_ID = m.ID LEFT JOIN T_COMPANY c ON t.COMPANY_ID = c.ID 
 		WHERE 1=1 
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
