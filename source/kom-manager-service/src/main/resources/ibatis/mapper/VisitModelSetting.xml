@@ -37,6 +37,7 @@
 	<resultMap id="VisitModelSettingInfoDtoResultMapper" type="VisitModelSettingInfoDto">
 		<result column="ID" property="id"/>
 		<result column="ACTION_DATE" property="actionDate"/>
+		<result column="COMPANY_CODE" property="companyCode"/>
 		<result column="BRAND_ID" property="brandId"/>
 		<result column="MODEL_ID" property="modelId"/>
 		<result column="BRAND_CODE" property="brandCode"/>
@@ -44,6 +45,8 @@
 		<result column="REMARK" property="remark"/>
 		<result column="CREATE_BY" property="createBy"/>
 		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
 	</resultMap>
 	
 	<sql id="commonColumns">
