@@ -10,13 +10,11 @@ import com.batch.task.msg.api.TaskMessage;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Task;
-import com.transsion.store.bo.User;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.TaskDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.TaskDetailMapper;
 import com.transsion.store.mapper.TaskMapper;
-import com.transsion.store.mapper.UserMapper;
 import com.transsion.store.message.Message.Group;
 import com.transsion.store.message.Message.Type;
 import com.transsion.store.service.ConfigurationService;
@@ -37,9 +35,6 @@ public class TaskManager {
 	
 	@Autowired
 	private ProducerService producerService;
-	
-	@Autowired
-	private UserMapper userMapper;
 	
 	@Autowired
 	private ConfigurationService configurationService;
@@ -66,12 +61,8 @@ public class TaskManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext)){
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
-		}
-		User u = userMapper.getByPK(userContext.getUser().getId());
-		if(UtilHelper.isEmpty(u)){
-			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		Task task = new Task();
 		task.setTaskType(taskDto.getTaskType());
@@ -79,7 +70,7 @@ public class TaskManager {
 		task.setUploadPath(taskDto.getUploadPath());
 		task.setStage(1);
 		task.setUploadTime(systemDateService.getCurrentDate());
-		task.setUserName(u.getUserName());
+		task.setUserName(userContext.getUserCode());
 		task.setRemark(taskDto.getRemark());
 		taskMapper.saveTask(task);
 		TaskMessage msg = new TaskMessage();
@@ -104,11 +95,10 @@ public class TaskManager {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext)){
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
-		User u = userMapper.getByPK(userContext.getUser().getId());
-		task.setUserName(u.getUserName());
+		task.setUserName(userContext.getUserCode());
 		return  taskMapper.findTask(task);
 	}
 }

@@ -27,5 +27,5 @@ public class Constants {
     //TAC查询
     public static final String TACAPI = "http://113.98.254.45:8080/FakeMidServer/configTable/newindex";
     
-    public static final String IMPORTTASK = "http://10.151.170.149:9101/sale/saveSaleTask/";//zgh 本地IP
+    //public static final String IMPORTTASK = "http://10.151.170.172:9101/sale/saveSaleTask/";//zgh 本地IP
 }
