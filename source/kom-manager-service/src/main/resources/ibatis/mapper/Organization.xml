@@ -379,6 +379,15 @@
 	<select id="findOrg" resultMap="OrganizationDtoResultMapper">
 		SELECT ID,PARENT_ID,ORG_NAME FROM
 		T_ORGANIZATION
-		WHERE COMPANY_ID=#{companyId}
+		WHERE 1=1
+		<if test="companyId!= null and companyId!= ''">
+			AND COMPANY_ID=#{companyId}
+		</if>
+	</select>
+	<select id="findOrgId" parameterType="java.lang.Long" resultMap="OrgDtoResultMapper">
+		SELECT ID,PARENT_ID,ORG_NAME FROM
+		T_ORGANIZATION
+		WHERE 1=1 
+		AND COMPANY_ID=#{companyId}
 	</select>
 </mapper>

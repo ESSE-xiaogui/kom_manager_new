@@ -35,4 +35,5 @@ public interface OrganizationMapper extends GenericIBatisMapper<Organization, ja
     public OrganizationResponseDto getOrgName(@Param("orgId") Integer orgId);
     public List<OrganizationTreeDto> findOrg(@Param("companyId") Long companyId);
     public OrganizationDto getByPKs(@Param("id") Long id) throws DataAccessFailureException;
+    public OrganizationDto findOrgId(@Param("companyId") Long companyId) throws DataAccessFailureException;
 }
