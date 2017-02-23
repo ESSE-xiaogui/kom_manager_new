@@ -8,6 +8,6 @@ import com.transsion.store.bo.Attribute.Type;
 
 public interface AttributeFacade {
 
-	List<Attribute> getAttributeListByType(Type type, String token)throws ServiceException;
+	List<Attribute> getAttributeListByType(int type, String token)throws ServiceException;
 
 }

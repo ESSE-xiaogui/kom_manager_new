@@ -26,6 +26,7 @@ import com.rest.service.controller.AbstractController;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.dto.RequestModel;
 import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Currency;
 import com.transsion.store.dto.CurrencyDto;
 import com.transsion.store.dto.CurrencyResultDto;
@@ -112,11 +113,26 @@ public class CurrencyController extends AbstractController{
 	 * @throws ServiceException
 	 * @throws IOException
 	 */
-	@POST
+	@GET
 	@Path("/exportExcel")
-	@Consumes({MediaType.APPLICATION_JSON}) 
 	@Produces({MediaType.TEXT_PLAIN})  
-	public Response getCurrencyByExcel(CurrencyDto currencyDto) throws ServiceException,IOException {
+	public Response getCurrencyByExcel(@QueryParam("beginTime")String beginTime,@QueryParam("endTime")String endTime,
+		@QueryParam("expiryDate")String expiryDate,@QueryParam("expiryEndDate") String expiryEndDate,
+		@QueryParam("regionId")String regionId,@QueryParam("currencyName")String currencyName,
+		@QueryParam("isInactive")String isInactive
+		) throws ServiceException,IOException {
+		CurrencyDto currencyDto = new CurrencyDto();
+		currencyDto.setBeginTime(beginTime);
+		currencyDto.setEndTime(endTime);
+		currencyDto.setExpiryDate(expiryDate);
+		currencyDto.setExpiryEndDate(expiryEndDate);
+		currencyDto.setCurrencyName(currencyName);
+		if(!UtilHelper.isEmpty(regionId)){
+			currencyDto.setRegionId(Long.parseLong(regionId));
+		}
+		if(!UtilHelper.isEmpty(isInactive)){
+			currencyDto.setIsInactive(Integer.getInteger(isInactive));
+		}
 		byte[] bytes = currencyFacade.getCurrencyByExcel(currencyDto);       
 		InputStream inputStream = new ByteArrayInputStream(bytes);          
 		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));          

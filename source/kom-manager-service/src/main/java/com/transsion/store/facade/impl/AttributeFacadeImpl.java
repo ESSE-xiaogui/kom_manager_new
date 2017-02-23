@@ -29,8 +29,22 @@ public class AttributeFacadeImpl implements AttributeFacade{
 	 * 根据类型获取属性列表
 	 * @throws ServiceException 
 	 */
-	public List<Attribute> getAttributeListByType(Type type, String token)throws ServiceException {
-		return attributeManager.getAttributeListByType(type,token);
+	public List<Attribute> getAttributeListByType(int type, String token)throws ServiceException {
+		Type newType = this.getTypeByValue(type);
+		return attributeManager.getAttributeListByType(newType,token);
+	}
+	
+	private Type getTypeByValue(int value)
+	{
+		Type[] types = Type.values();
+		for( Type type :types)
+		{
+			if(type.getVal() == value)
+			{
+				return type;
+			}
+		}
+		return null;
 	}
 	
 	

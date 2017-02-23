@@ -1,9 +1,7 @@
 package com.transsion.store.controller;
 
 import java.util.List;
-
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -23,15 +21,16 @@ import com.transsion.store.facade.AttributeFacade;
 public class AttributeController extends AbstractController{
 	@Autowired
 	private AttributeFacade attributeFacade;
+	
 	/**
 	 * 根据类型获取属性列表
 	 * @param type
 	 * @return
 	 */
-	@POST
+	@GET
 	@Path("/getAttributeListByType")
 	@Produces({MediaType.APPLICATION_JSON})
-	public List<Attribute> getAttributeListByType(Type type)throws ServiceException{
+	public List<Attribute> getAttributeListByType(@QueryParam("type") Integer type)throws ServiceException{
 		String token = this.getAuthorization();
 		return attributeFacade.getAttributeListByType(type,token);
 	}
