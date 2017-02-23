@@ -179,4 +179,9 @@ public class BrandFacadeImpl implements BrandFacade {
 		return brandService.queryBrandList();
 	}
 
+	@Override
+	public List<Brand> queryBrandListByRole(String token) throws ServiceException {
+		return brandManager.queryBrandListByRole(token);
+	}
+
 }

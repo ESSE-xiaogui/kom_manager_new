@@ -10,8 +10,9 @@ public class Attribute extends Model {
 		
 		SHOP_RELATIONSHIP(1), 
 		SHOP_CATEGORY(2),
-		SHOP_PCS(3), 
-		SHOP_BIZ(4);
+		MODEL_PRICE(3), 
+		SHOP_BIZ(4),
+		SHOP_PCS(5);
 		
 		private final int value;
 
@@ -23,6 +24,8 @@ public class Attribute extends Model {
 			return value;
 		}
 	};
+	
+	
 
 	private java.lang.Long id;
 

@@ -77,7 +77,7 @@ public interface VisitModelSettingFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(VisitModelSetting visitModelSetting) throws ServiceException;
+	public void save(VisitModelSetting visitModelSetting, String token) throws ServiceException;
 
 	/**
 	 * 更新记录

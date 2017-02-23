@@ -137,4 +137,12 @@ public class ModelController extends AbstractController{
 		String token = this.getAuthorization();
 		return modelFacade.findModelName(token);
 	}
+	
+	@GET
+	@Path("/queryModelListByBrandId")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<Model> queryModelListByBrandId(@QueryParam("brandId")Long brandId) throws ServiceException{
+		return modelFacade.queryModelListByBrandId(brandId);
+	}
 }

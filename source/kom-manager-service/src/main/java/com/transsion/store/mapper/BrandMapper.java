@@ -30,4 +30,6 @@ public interface BrandMapper extends GenericIBatisMapper<Brand, java.lang.Long> 
 
     public List<Brand> listPaginationByProperty(Pagination<Brand> pagination, @Param("brand")Brand brand, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     public List<BrandModelListDto> queryBrandList() throws DataAccessFailureException;
+    
+    public List<Brand> queryBrandListByRole(Integer companyId) throws DataAccessFailureException;
 }

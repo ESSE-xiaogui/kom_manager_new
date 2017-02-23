@@ -102,5 +102,7 @@ public interface CompanyFacade {
 	public Pagination<Company> listPaginationByProperty(Pagination<Company> pagination, Company company)
 			throws ServiceException;
 	public List<Company> findAll() throws ServiceException;
+	
+	public List<Company> findCompanyAll(String token) throws ServiceException;
 
 }

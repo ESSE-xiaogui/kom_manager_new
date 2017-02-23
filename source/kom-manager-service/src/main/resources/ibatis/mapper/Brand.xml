@@ -295,4 +295,12 @@
 		WHERE b.IS_INACTIVE = 1 AND  m.IS_INACTIVE = 1
 		AND b.BRAND_CODE = 'TECNO' ORDER BY m.MODEL_CODE
 	</select>
+	
+	<select id="queryBrandListByRole" parameterType="java.lang.Integer" resultMap="BrandResultMapper">
+		SELECT ID, BRAND_NAME FROM T_BRAND WHERE 1 = 1
+		<if test="companyId != null and companyId != ''">
+			AND COMPANY_ID = #{companyId}
+		</if>
+		ORDER BY BRAND_NAME
+	</select>
 </mapper>

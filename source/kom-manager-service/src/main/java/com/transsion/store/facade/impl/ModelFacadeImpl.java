@@ -173,4 +173,9 @@ public class ModelFacadeImpl implements ModelFacade {
 	public List<String> findModelName(String token) throws ServiceException{
 		return modelManager.findModelName(token);
 	}
+
+	@Override
+	public List<Model> queryModelListByBrandId(Long brandId) throws ServiceException {
+		return modelService.queryModelListByBrandId(brandId);
+	}
 }

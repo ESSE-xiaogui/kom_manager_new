@@ -152,4 +152,7 @@ public class CompanyFacadeImpl implements CompanyFacade {
 	public List<Company> findAll() throws ServiceException{
 		return companyService.findAll();
 	}
+	public List<Company> findCompanyAll(String token) throws ServiceException{
+		return companyManager.findCompanyAll(token);
+	}
 }

@@ -152,6 +152,26 @@ public class BrandManager {
 				}
 			}
 		}
+	}
+	
+	public List<Brand> queryBrandListByRole(String token) throws ServiceException {
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext) ||UtilHelper.isEmpty(userContext.getCompanyId())
+						|| UtilHelper.isEmpty(userContext.getUserCode())){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
 		
+		Integer companyId = null;
+		List<Brand> brandList = new ArrayList<Brand>();
+		if (userContext.isAdmin()) {
+			brandList = brandMapper.queryBrandListByRole(companyId);
+		} else {
+			companyId = userContext.getCompanyId().intValue();
+			brandList = brandMapper.queryBrandListByRole(companyId);
+		}
+		return brandList;
 	}
 }

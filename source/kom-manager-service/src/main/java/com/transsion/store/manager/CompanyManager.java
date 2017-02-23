@@ -1,6 +1,8 @@
 package com.transsion.store.manager;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,7 +59,10 @@ public class CompanyManager {
 		company.setCreatedBy(userContext.getUserCode());
 		company.setCreatedTime(systemDateService.getCurrentDate());
 		companyMapper.save(company);
-		OrganizationDto orgResult = organizationMapper.findOrgId(company.getParentId());
+		
+		Organization organization = new Organization();
+		organization.setCompanyId(company.getParentId().intValue());
+		OrganizationDto orgResult = organizationMapper.findOrgId(organization);
 		
 		Organization saveOrg = new Organization();	
 		saveOrg.setCompanyId(company.getId().intValue());
@@ -75,6 +80,7 @@ public class CompanyManager {
 	
 	/**
 	 * 更新记录
+	 * @author guihua.zhang on 2017-2-22
 	 * @param company
 	 * @return
 	 * @throws ServiceException
@@ -91,10 +97,67 @@ public class CompanyManager {
 		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
-		company.setCreatedBy(userContext.getUserCode());
-		company.setCreatedTime(systemDateService.getCurrentDate());
+		
+		Organization organization = new Organization();
+		Organization orgParam = new Organization();
+		orgParam.setCompanyId(company.getParentId().intValue());
+		OrganizationDto organizationDtoResult = organizationMapper.findOrgId(orgParam);
+		if(UtilHelper.isEmpty(organizationDtoResult)){
+			organization.setParentId(company.getParentId());
+		}else{
+			organization.setParentId(organizationDtoResult.getId());
+		}
+		organization.setOrgName(company.getCompanyName());
+		OrganizationDto orgResult = organizationMapper.findOrgId(organization);
+		int count1 = organizationMapper.findByCount(organization);
+		if(!UtilHelper.isEmpty(orgResult)){
+			organization.setId(organizationDtoResult.getId());
+			int count2 = organizationMapper.findByCount(organization);
+			if(count1>0 && count2<1){
+				throw new ServiceException(ExceptionDef.ERROR_ORGANIZATION_ALREADY_EXIST.getName());
+			}
+		}
+		organization.setIsInactive(isInactive);
+		organization.setUpdatedBy(userContext.getUserCode());
+		organization.setUpdatedTime(systemDateService.getCurrentDate());
+		organizationMapper.update(organization);
+		
+		Company companyParam = new Company();
+		companyParam.setParentId(company.getParentId());
+		companyParam.setCompanyName(company.getCompanyName());
+		int count = companyMapper.findByCount(companyParam);
+		companyParam.setId(company.getId());
+		int count2 = companyMapper.findByCount(companyParam);
+		if(count>0 && count2<1){
+			throw new ServiceException(ExceptionDef.ERROR_COMPANY_ISEXIST.getName());
+		}
 		company.setUpdatedBy(userContext.getUserCode());
 		company.setUpdatedTime(systemDateService.getCurrentDate());
 		return companyMapper.update(company);
+	}
+	
+	/**
+	 * 根据当前登录人角色查询所有事业部名称
+	 * @author guihua.zhang on 2017-2-22
+	 * @return
+	 * */
+	public List<Company> findCompanyAll(String token) throws ServiceException{
+		
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		Company company = new Company();
+		if(userContext.isAdmin()){
+			company.setId(null);
+		}else{
+			company.setId(userContext.getCompanyId());
+		}
+		return companyMapper.listByProperty(company);
 	}
 }
