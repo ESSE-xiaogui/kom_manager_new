@@ -153,7 +153,7 @@ public class BrandService {
 		return brandMapper.queryBrandList();
 	}
 	
-	public List<Brand> queryBrandListByRole(Integer companyId) throws ServiceException {
-		return brandMapper.queryBrandListByRole(companyId);
+	public List<Brand> queryBrandListByCompanyId(Long companyId) throws ServiceException {
+		return brandMapper.queryBrandListByCompanyId(companyId);
 	}
 }

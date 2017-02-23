@@ -296,11 +296,7 @@
 		AND b.BRAND_CODE = 'TECNO' ORDER BY m.MODEL_CODE
 	</select>
 	
-	<select id="queryBrandListByRole" parameterType="java.lang.Integer" resultMap="BrandResultMapper">
-		SELECT ID, BRAND_NAME FROM T_BRAND WHERE 1 = 1
-		<if test="companyId != null and companyId != ''">
-			AND COMPANY_ID = #{companyId}
-		</if>
-		ORDER BY BRAND_NAME
+	<select id="queryBrandListByCompanyId" parameterType="java.lang.Long" resultMap="BrandResultMapper">
+		SELECT ID, BRAND_NAME FROM T_BRAND WHERE COMPANY_ID = #{companyId} ORDER BY BRAND_NAME
 	</select>
 </mapper>

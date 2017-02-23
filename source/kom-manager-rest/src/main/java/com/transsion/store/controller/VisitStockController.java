@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.VisitStock;
+import com.transsion.store.dto.VisitStockDetailDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.VisitStockFacade;
 import com.shangkang.core.bo.Pagination;
@@ -59,9 +60,9 @@ public class VisitStockController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<VisitStock> listPgVisitStock(RequestModel<VisitStock> requestModel) throws ServiceException
+	public Pagination<VisitStockDetailDto> listPgVisitStock(RequestModel<VisitStockDetailDto> requestModel) throws ServiceException
 	{
-		Pagination<VisitStock> pagination = new Pagination<VisitStock>();
+		Pagination<VisitStockDetailDto> pagination = new Pagination<VisitStockDetailDto>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());
@@ -109,5 +110,12 @@ public class VisitStockController extends AbstractController{
 	public void update(VisitStock visitStock) throws ServiceException
 	{
 		visitStockFacade.update(visitStock);
+	}
+	
+	@GET
+	@Path("/queryVisitStockList")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<VisitStockDetailDto> queryVisitStockList() throws ServiceException {
+		return visitStockFacade.queryVisitStockList();
 	}
 }

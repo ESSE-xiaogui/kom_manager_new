@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.VisitStock;
+import com.transsion.store.dto.VisitStockDetailDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.VisitStockMapper;
@@ -74,10 +75,10 @@ public class VisitStockService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<VisitStock> listPaginationByProperty(Pagination<VisitStock> pagination, VisitStock visitStock)
+	public Pagination<VisitStockDetailDto> listPaginationByProperty(Pagination<VisitStockDetailDto> pagination, VisitStockDetailDto visitStockDetailDto)
 			throws ServiceException
 	{
-		List<VisitStock> list = visitStockMapper.listPaginationByProperty(pagination, visitStock, pagination.getOrderBy());
+		List<VisitStockDetailDto> list = visitStockMapper.listPaginationByProperty(pagination, visitStockDetailDto, pagination.getOrderBy());
 		
 		pagination.setResultList(list);
 		
@@ -147,5 +148,9 @@ public class VisitStockService {
 	public int findByCount(VisitStock visitStock) throws ServiceException
 	{
 		return visitStockMapper.findByCount(visitStock);
+	}
+	
+	public List<VisitStockDetailDto> queryVisitStockList() throws ServiceException{
+		return visitStockMapper.queryVisitStockList();
 	}
 }

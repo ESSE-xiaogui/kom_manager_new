@@ -148,10 +148,10 @@ public class BrandController extends AbstractController{
 	}
 	
 	@GET
-	@Path("/queryBrandListByRole")
+	@Path("/queryBrandListByCompanyId")
+	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({ MediaType.APPLICATION_JSON })
-	public List<Brand> queryBrandListByRole() throws ServiceException {
-		String token = this.getAuthorization();
-		return brandFacade.queryBrandListByRole(token);
+	public List<Brand> queryBrandListByCompanyId(@QueryParam("companyId") Long companyId) throws ServiceException {
+		return brandFacade.queryBrandListByCompanyId(companyId);
 	}
 }

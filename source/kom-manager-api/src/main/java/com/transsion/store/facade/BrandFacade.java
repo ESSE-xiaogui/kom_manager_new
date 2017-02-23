@@ -125,5 +125,5 @@ public interface BrandFacade {
      */
     public List<BrandModelListDto> queryBrandList()throws ServiceException;
     
-    public List<Brand> queryBrandListByRole(String token) throws ServiceException;
+    public List<Brand> queryBrandListByCompanyId(Long companyId) throws ServiceException;
 }

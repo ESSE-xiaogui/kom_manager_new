@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.VisitStock;
+import com.transsion.store.dto.VisitStockDetailDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.VisitStockFacade;
@@ -75,10 +76,10 @@ public class VisitStockFacadeImpl implements VisitStockFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<VisitStock> listPaginationByProperty(Pagination<VisitStock> pagination, VisitStock visitStock)
+	public Pagination<VisitStockDetailDto> listPaginationByProperty(Pagination<VisitStockDetailDto> pagination, VisitStockDetailDto visitStockDetailDto)
 			throws ServiceException
 	{
-		return visitStockService.listPaginationByProperty(pagination, visitStock);
+		return visitStockService.listPaginationByProperty(pagination, visitStockDetailDto);
 	}
 
 	/**
@@ -144,5 +145,10 @@ public class VisitStockFacadeImpl implements VisitStockFacade {
 	public int findByCount(VisitStock visitStock) throws ServiceException
 	{
 		return visitStockService.findByCount(visitStock);
+	}
+
+	@Override
+	public List<VisitStockDetailDto> queryVisitStockList() throws ServiceException {
+		return visitStockService.queryVisitStockList();
 	}
 }

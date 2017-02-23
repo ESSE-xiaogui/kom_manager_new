@@ -35,6 +35,33 @@
 		<result column="VERSION" property="version"/>
 	</resultMap>
 	
+	<resultMap id="VisitStockDetailDtoMapper" type="VisitStockDetailDto">
+		<result column="ID" property="id"/>
+		<result column="VISIT_ID" property="visitId"/>
+		<result column="BRAND_ID" property="brandId"/>
+		<result column="MODEL_ID" property="modelId"/>
+		<result column="STOCK_QTY" property="stockQty"/>
+		<result column="SALE_AVG" property="saleAvg"/>
+		<result column="STOCK_ITO" property="stockIto"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+		
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="COMPANY_CODE" property="companyCode"/>
+		<!-- <result column="" property="countryId"/>
+		<result column="" property="countryName"/>
+		<result column="" property="cityId"/>
+		<result column="" property="cityName"/> -->
+		<result column="SHOP_CODE" property="shopCode"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="EMP_NAME" property="empName"/>
+		
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, VISIT_ID
@@ -287,15 +314,55 @@
 		FROM T_VISIT_STOCK WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="VisitStock" resultMap="VisitStockResultMapper">
-		SELECT 
+	<select id="listPaginationByProperty" parameterType="VisitStockDetailDto" resultMap="VisitStockDetailDtoMapper">
+		<!-- SELECT 
 		<include refid="commonProcessDateColumns"/>
-		FROM T_VISIT_STOCK WHERE 1=1
-    	<include refid="commonConditionByPrefix"/>
+		FROM T_VISIT_STOCK WHERE 1=1 -->
+		SELECT 
+			s.ID,
+			c.COMPANY_CODE,
+			p.COUNTRY,
+			p.CITY,
+			p.SHOP_CODE,
+			p.SHOP_NAME,
+			s.CREATE_BY,
+			e.EMP_NAME,
+			m.MODEL_NAME,
+			s.STOCK_QTY,
+			s.SALE_AVG,
+			s.STOCK_ITO,
+			s.UPDATE_TIME
+		FROM T_VISIT_STOCK s LEFT JOIN T_VISIT v ON s.VISIT_ID = v.ID 
+		LEFT JOIN T_COMPANY c ON v.COMPANY_ID = c.ID 
+		LEFT JOIN T_SHOP p ON p.SHOP_ID = v.SHOP_ID AND p.COMPANY_ID = v.COMPANY_ID 
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = s.CREATE_BY LEFT JOIN T_MODEL m ON m.BRAND_ID = s.BRAND_ID
+    	<!-- <include refid="commonConditionByPrefix"/> -->
     	<include refid="orderByClause" />
 	</select>
 	<select id="findByCount" parameterType="VisitStock" resultType="int">
 		SELECT count(1) AS totalcount FROM T_VISIT_STOCK WHERE 1=1 
 		<include refid="commonCondition"/>
+	</select>
+	
+	<!-- 重点机型库存查询 -->
+	<select id="queryVisitStockList" parameterType="VisitStockDetailDto" resultMap="VisitStockDetailDtoMapper">
+		SELECT 
+			s.ID,
+			c.COMPANY_CODE,
+			p.COUNTRY,
+			p.CITY,
+			p.SHOP_CODE,
+			p.SHOP_NAME,
+			s.CREATE_BY,
+			e.EMP_NAME,
+			m.MODEL_NAME,
+			s.STOCK_QTY,
+			s.SALE_AVG,
+			s.STOCK_ITO,
+			s.UPDATE_TIME
+		FROM T_VISIT_STOCK s LEFT JOIN T_VISIT v ON s.VISIT_ID = v.ID 
+		LEFT JOIN T_COMPANY c ON v.COMPANY_ID = c.ID 
+		LEFT JOIN T_SHOP p ON p.SHOP_ID = v.SHOP_ID AND p.COMPANY_ID = v.COMPANY_ID 
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = s.CREATE_BY LEFT JOIN T_MODEL m ON m.BRAND_ID = s.BRAND_ID
 	</select>
 </mapper>
