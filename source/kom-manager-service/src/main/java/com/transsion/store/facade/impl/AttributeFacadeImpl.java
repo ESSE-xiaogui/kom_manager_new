@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Attribute;
+import com.transsion.store.bo.Attribute.Type;
 import com.transsion.store.facade.AttributeFacade;
 import com.transsion.store.manager.AttributeManager;
 import com.transsion.store.service.AttributeService;
@@ -28,7 +29,7 @@ public class AttributeFacadeImpl implements AttributeFacade{
 	 * 根据类型获取属性列表
 	 * @throws ServiceException 
 	 */
-	public List<Attribute> getAttributeListByType(Integer type, String token)throws ServiceException {
+	public List<Attribute> getAttributeListByType(Type type, String token)throws ServiceException {
 		return attributeManager.getAttributeListByType(type,token);
 	}
 	

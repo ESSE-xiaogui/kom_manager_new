@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Attribute;
+import com.transsion.store.bo.Attribute.Type;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.service.AttributeService;
@@ -18,7 +19,7 @@ public class AttributeManager {
 	@Autowired
 	private AttributeService attributeService;
 
-	public List<Attribute> getAttributeListByType(Integer type, String token) throws ServiceException {
+	public List<Attribute> getAttributeListByType(Type type, String token) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}

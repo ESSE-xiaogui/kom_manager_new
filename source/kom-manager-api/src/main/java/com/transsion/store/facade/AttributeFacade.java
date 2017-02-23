@@ -4,9 +4,10 @@ import java.util.List;
 
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Attribute;
+import com.transsion.store.bo.Attribute.Type;
 
 public interface AttributeFacade {
 
-	List<Attribute> getAttributeListByType(Integer type, String token)throws ServiceException;
+	List<Attribute> getAttributeListByType(Type type, String token)throws ServiceException;
 
 }

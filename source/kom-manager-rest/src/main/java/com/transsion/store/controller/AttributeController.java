@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import com.rest.service.controller.AbstractController;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Attribute;
+import com.transsion.store.bo.Attribute.Type;
 import com.transsion.store.facade.AttributeFacade;
 
 @Controller
@@ -29,7 +30,7 @@ public class AttributeController extends AbstractController{
 	@GET
 	@Path("/getAttributeListByType")
 	@Produces({MediaType.APPLICATION_JSON})
-	public List<Attribute> getAttributeListByType(@QueryParam("type") Integer type)throws ServiceException{
+	public List<Attribute> getAttributeListByType(Type type)throws ServiceException{
 		String token = this.getAuthorization();
 		return attributeFacade.getAttributeListByType(type,token);
 	}

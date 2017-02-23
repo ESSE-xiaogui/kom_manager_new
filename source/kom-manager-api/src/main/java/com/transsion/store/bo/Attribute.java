@@ -11,7 +11,8 @@ public class Attribute extends Model {
 		SHOP_RELATIONSHIP(1), 
 		SHOP_CATEGORY(2),
 		MODEL_PRICE(3), 
-		SHOP_BIZ(4),
+		BIZ_TYPE(4),
+		SHOP_BIZ(6),
 		SHOP_PCS(5);
 		
 		private final int value;
