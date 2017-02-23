@@ -1,5 +1,8 @@
 package com.transsion.store.manager;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +32,9 @@ public class VisitModeSettingManager {
 		if(UtilHelper.isEmpty(userContext.getCompanyId()) || UtilHelper.isEmpty(userContext.getUserCode())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
-		visitModelSetting.setCreateBy(userContext.getUser().getId().toString());
-		visitModelSetting.setCreateTime(visitModelSetting.getActionDate());
+		visitModelSetting.setCreateBy(userContext.getUser().getUserCode());
+		visitModelSetting.setCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+		visitModelSetting.setUpdateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 		visitModelSettingService.save(visitModelSetting);
 	}
 }
