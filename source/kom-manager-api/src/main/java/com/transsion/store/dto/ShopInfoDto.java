@@ -18,11 +18,21 @@ public class ShopInfoDto implements Serializable{
 	
 	private java.lang.String cityName;
 	
+	private java.lang.String regionName;
+	
 	private String companyCode;
 	
 	private String gradeName;
 	
 	private String bizName;
+	
+	private java.lang.String createDateStart;
+	
+	private java.lang.String createDateEnd;
+	
+	private java.lang.String updateDateStart;
+	
+	private java.lang.String updateDateEnd;
 	
 	/**
 	  *	keep for align with kom pc
@@ -162,11 +172,15 @@ public class ShopInfoDto implements Serializable{
 	  *	
 	  */
 	private java.lang.Long relationship;
+	
+	private java.lang.String relationshipName;
 
 	/**
 	  *	
 	  */
 	private java.lang.Long bizCategory;
+	
+	private java.lang.String bizCategoryName;
 
 	/**
 	  *	
@@ -682,11 +696,69 @@ public class ShopInfoDto implements Serializable{
 		this.cityName = cityName;
 	}
 
+	public java.lang.String getRelationshipName() {
+		return relationshipName;
+	}
+
+	public void setRelationshipName(java.lang.String relationshipName) {
+		this.relationshipName = relationshipName;
+	}
+
+	public java.lang.String getBizCategoryName() {
+		return bizCategoryName;
+	}
+
+	public void setBizCategoryName(java.lang.String bizCategoryName) {
+		this.bizCategoryName = bizCategoryName;
+	}
+
+	public java.lang.String getRegionName() {
+		return regionName;
+	}
+
+	public void setRegionName(java.lang.String regionName) {
+		this.regionName = regionName;
+	}
+
+	public java.lang.String getCreateDateStart() {
+		return createDateStart;
+	}
+
+	public void setCreateDateStart(java.lang.String createDateStart) {
+		this.createDateStart = createDateStart;
+	}
+
+	public java.lang.String getCreateDateEnd() {
+		return createDateEnd;
+	}
+
+	public void setCreateDateEnd(java.lang.String createDateEnd) {
+		this.createDateEnd = createDateEnd;
+	}
+
+	public java.lang.String getUpdateDateStart() {
+		return updateDateStart;
+	}
+
+	public void setUpdateDateStart(java.lang.String updateDateStart) {
+		this.updateDateStart = updateDateStart;
+	}
+
+	public java.lang.String getUpdateDateEnd() {
+		return updateDateEnd;
+	}
+
+	public void setUpdateDateEnd(java.lang.String updateDateEnd) {
+		this.updateDateEnd = updateDateEnd;
+	}
+
 	@Override
 	public String toString() {
-		return "ShopInfoDto [id=" + id + ", countryName=" + countryName + ", cityName=" + cityName + ", companyCode="
-						+ companyCode + ", gradeName=" + gradeName + ", bizName=" + bizName + ", shopId=" + shopId
-						+ ", shopCode=" + shopCode + ", shopName=" + shopName + ", companyId=" + companyId
+		return "ShopInfoDto [id=" + id + ", countryName=" + countryName + ", cityName=" + cityName + ", regionName="
+						+ regionName + ", companyCode=" + companyCode + ", gradeName=" + gradeName + ", bizName="
+						+ bizName + ", createDateStart=" + createDateStart + ", createDateEnd=" + createDateEnd
+						+ ", updateDateStart=" + updateDateStart + ", updateDateEnd=" + updateDateEnd + ", shopId="
+						+ shopId + ", shopCode=" + shopCode + ", shopName=" + shopName + ", companyId=" + companyId
 						+ ", parentId=" + parentId + ", regionId=" + regionId + ", country=" + country + ", city="
 						+ city + ", shopIcon=" + shopIcon + ", address=" + address + ", gradeId=" + gradeId + ", bizId="
 						+ bizId + ", ownerName=" + ownerName + ", ownerPhone=" + ownerPhone + ", purchasChannel="
@@ -694,14 +766,15 @@ public class ShopInfoDto implements Serializable{
 						+ ", createBy=" + createBy + ", createDate=" + createDate + ", updateBy=" + updateBy
 						+ ", updateDate=" + updateDate + ", version=" + version + ", shopExtension=" + shopExtension
 						+ ", shopArea=" + shopArea + ", clerkTotalQty=" + clerkTotalQty + ", clerkBrandQty="
-						+ clerkBrandQty + ", relationship=" + relationship + ", bizCategory=" + bizCategory
-						+ ", brandOne=" + brandOne + ", brandTwo=" + brandTwo + ", brandThree=" + brandThree
-						+ ", brandFour=" + brandFour + ", brandFive=" + brandFive + ", brandSix=" + brandSix
-						+ ", clerkOneQty=" + clerkOneQty + ", clerkTwoQty=" + clerkTwoQty + ", clerkThreeQty="
-						+ clerkThreeQty + ", clerkFourQty=" + clerkFourQty + ", clerkFiveQty=" + clerkFiveQty
-						+ ", clerkSixQty=" + clerkSixQty + ", supervisor=" + supervisor + ", promoter=" + promoter
-						+ ", saleTotalQty=" + saleTotalQty + ", saleSpQty=" + saleSpQty + ", saleBrandQty="
-						+ saleBrandQty + ", saleBrandspQty=" + saleBrandspQty + "]";
+						+ clerkBrandQty + ", relationship=" + relationship + ", relationshipName=" + relationshipName
+						+ ", bizCategory=" + bizCategory + ", bizCategoryName=" + bizCategoryName + ", brandOne="
+						+ brandOne + ", brandTwo=" + brandTwo + ", brandThree=" + brandThree + ", brandFour="
+						+ brandFour + ", brandFive=" + brandFive + ", brandSix=" + brandSix + ", clerkOneQty="
+						+ clerkOneQty + ", clerkTwoQty=" + clerkTwoQty + ", clerkThreeQty=" + clerkThreeQty
+						+ ", clerkFourQty=" + clerkFourQty + ", clerkFiveQty=" + clerkFiveQty + ", clerkSixQty="
+						+ clerkSixQty + ", supervisor=" + supervisor + ", promoter=" + promoter + ", saleTotalQty="
+						+ saleTotalQty + ", saleSpQty=" + saleSpQty + ", saleBrandQty=" + saleBrandQty
+						+ ", saleBrandspQty=" + saleBrandspQty + "]";
 	}
 
 }
