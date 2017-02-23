@@ -123,4 +123,5 @@ public interface ModelFacade {
 	 * */
 	public List<String> findModelName(String token) throws ServiceException;
 
+	public List<Model> queryModelListByBrandId(Long brandId) throws ServiceException;
 }

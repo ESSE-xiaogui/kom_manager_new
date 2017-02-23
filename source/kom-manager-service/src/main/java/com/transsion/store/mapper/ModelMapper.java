@@ -34,4 +34,6 @@ public interface ModelMapper extends GenericIBatisMapper<Model, java.lang.Long> 
     public List<ModelListDto> listPaginationByProperty(Pagination<ModelListDto> pagination, @Param("modelListDto")ModelListDto modelListDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     public List<ModelDto> findModel (Model model) throws DataAccessFailureException;
     public List<String> findModelName(@Param("companyId") Long companyId) throws ServiceException;
+    
+    public List<Model> queryModelListByBrandId(Long brandId) throws DataAccessFailureException;
 }

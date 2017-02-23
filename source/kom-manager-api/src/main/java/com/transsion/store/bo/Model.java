@@ -28,6 +28,8 @@ public class Model extends com.shangkang.core.bo.Model{
 	  *	
 	  */
 	private java.lang.Long id;
+	
+	private java.lang.Long brandId;
 
 	/**
 	  *	
@@ -285,6 +287,14 @@ public class Model extends com.shangkang.core.bo.Model{
 		this.remark = remark;
 	}
 	
+	public java.lang.Long getBrandId() {
+		return brandId;
+	}
+
+	public void setBrandId(java.lang.Long brandId) {
+		this.brandId = brandId;
+	}
+
 	/**
 	  *	
 	  */
@@ -367,13 +377,13 @@ public class Model extends com.shangkang.core.bo.Model{
 
 	@Override
 	public String toString() {
-		return "Model [id=" + id + ", brandCode=" + brandCode + ", seriesCode=" + seriesCode + ", modelCode="
-				+ modelCode + ", modelName=" + modelName + ", companyId=" + companyId + ", saleTime=" + saleTime
-				+ ", priceScale=" + priceScale + ", elementType=" + elementType + ", elementCode=" + elementCode
-				+ ", isInactive=" + isInactive + ", remark=" + remark + ", createdBy=" + createdBy + ", createdTime="
-				+ createdTime + ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime + ", version=" + version
-				+ "]";
+		return "Model [id=" + id + ", brandId=" + brandId + ", brandCode=" + brandCode + ", seriesCode=" + seriesCode
+				+ ", modelCode=" + modelCode + ", modelName=" + modelName + ", companyId=" + companyId + ", saleTime="
+				+ saleTime + ", priceScale=" + priceScale + ", elementType=" + elementType + ", elementCode="
+				+ elementCode + ", isInactive=" + isInactive + ", remark=" + remark + ", createdBy=" + createdBy
+				+ ", createdTime=" + createdTime + ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime
+				+ ", version=" + version + "]";
 	}
-
+	
 }
 

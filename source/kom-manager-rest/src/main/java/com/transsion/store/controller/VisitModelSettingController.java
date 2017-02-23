@@ -83,7 +83,8 @@ public class VisitModelSettingController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void add(VisitModelSetting visitModelSetting) throws ServiceException
 	{
-		visitModelSettingFacade.save(visitModelSetting);
+		String token=this.getAuthorization();
+		visitModelSettingFacade.save(visitModelSetting, token);
 	}
 
 	/**

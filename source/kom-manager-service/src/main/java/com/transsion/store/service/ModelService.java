@@ -159,5 +159,8 @@ public class ModelService {
 	{
 		return modelMapper.findByCount(model);
 	}
-
+	
+	public List<Model> queryModelListByBrandId(Long brandId) throws ServiceException {
+		return modelMapper.queryModelListByBrandId(brandId);
+	}
 }

@@ -152,4 +152,8 @@ public class BrandService {
 	public List<BrandModelListDto> queryBrandList() throws ServiceException {
 		return brandMapper.queryBrandList();
 	}
+	
+	public List<Brand> queryBrandListByRole(Integer companyId) throws ServiceException {
+		return brandMapper.queryBrandListByRole(companyId);
+	}
 }

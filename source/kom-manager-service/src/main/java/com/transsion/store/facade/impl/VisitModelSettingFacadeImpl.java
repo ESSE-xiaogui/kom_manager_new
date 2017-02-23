@@ -21,17 +21,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.transsion.store.bo.VisitModelSetting;
-import com.transsion.store.dto.VisitModelSettingInfoDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.transsion.store.bo.VisitModelSetting;
+import com.transsion.store.dto.VisitModelSettingInfoDto;
 import com.transsion.store.facade.VisitModelSettingFacade;
+import com.transsion.store.manager.VisitModeSettingManager;
 import com.transsion.store.service.VisitModelSettingService;
 
 @Component("visitModelSettingFacade")
 public class VisitModelSettingFacadeImpl implements VisitModelSettingFacade {
 
 	private VisitModelSettingService visitModelSettingService;
+	
+	@Autowired
+	private VisitModeSettingManager visitModeSettingManager;
 	
 	@Autowired
 	public void setVisitModelSettingService(VisitModelSettingService visitModelSettingService)
@@ -120,9 +124,9 @@ public class VisitModelSettingFacadeImpl implements VisitModelSettingFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(VisitModelSetting visitModelSetting) throws ServiceException
+	public void save(VisitModelSetting visitModelSetting, String token) throws ServiceException
 	{
-		visitModelSettingService.save(visitModelSetting);
+		visitModeSettingManager.save(visitModelSetting, token);
 	}
 
 	/**
