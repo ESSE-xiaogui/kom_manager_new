@@ -29,6 +29,8 @@ public class VisitModeSettingManager {
 		if(UtilHelper.isEmpty(userContext.getCompanyId()) || UtilHelper.isEmpty(userContext.getUserCode())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
+		visitModelSetting.setCreateBy(userContext.getUser().getId().toString());
+		visitModelSetting.setCreateTime(visitModelSetting.getActionDate());
 		visitModelSettingService.save(visitModelSetting);
 	}
 }
