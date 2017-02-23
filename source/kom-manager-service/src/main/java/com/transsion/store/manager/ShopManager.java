@@ -2,14 +2,12 @@ package com.transsion.store.manager;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Attribute;
+import com.transsion.store.bo.Attribute.Type;
 import com.transsion.store.bo.Materiel;
 import com.transsion.store.bo.Region;
 import com.transsion.store.bo.Shop;
@@ -19,7 +17,6 @@ import com.transsion.store.bo.ShopGrade;
 import com.transsion.store.bo.ShopMateriel;
 import com.transsion.store.bo.UserShop;
 import com.transsion.store.context.UserContext;
-import com.transsion.store.dto.SaleDailyDto;
 import com.transsion.store.dto.ShopDefinitionDto;
 import com.transsion.store.dto.ShopDetailDto;
 import com.transsion.store.dto.ShopInfoDto;
@@ -196,11 +193,8 @@ public class ShopManager {
 		if(UtilHelper.isEmpty(userContext.getUser())){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
-		if(UtilHelper.isEmpty(userContext.getUser().getCompanyId())){
-			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
-		}
-		String brandCode = userContext.getBrandCode();
-		Integer companyId = userContext.getCompanyId().intValue();
+		
+		Integer companyId = userContext.isAdmin()?null:userContext.getUser().getCompanyId().intValue();
 		ShopDefinitionDto sdd = new ShopDefinitionDto();
 		List<Region> countryList = regionMapper.queryRegionByRegionType(2);
 		sdd.setCountryList(countryList);
@@ -208,33 +202,32 @@ public class ShopManager {
 		sdd.setCityList(cityList);
 		
 		Materiel materiel = new Materiel();
-		materiel.setBrandCode(brandCode);
+		materiel.setCompanyId(companyId);
 		materiel.setIsInactive(1);
 		List<Materiel> materielList = materielMapper.listByProperty(materiel);
 		sdd.setMaterielList(materielList);
 		
 		ShopBiz shopBiz = new ShopBiz();
-		shopBiz.setBrandCode(brandCode);
+		if(!UtilHelper.isEmpty(companyId)){
+			shopBiz.setCompanyId(Long.valueOf(companyId));
+		}
 		shopBiz.setIsInactive(1);
 	    List<ShopBiz> shopBizList = shopBizMapper.listByProperty(shopBiz);
 	    sdd.setShopBizList(shopBizList);
 	    
 		ShopGrade sg = new ShopGrade();
-		sg.setBrandCode(brandCode);
+		sg.setCompanyId(companyId);
 		sg.setIsInactive(1);
 		List<ShopGrade> shopGradeList = shopGradeMapper.listByProperty(sg);
 		sdd.setShopGradeList(shopGradeList);
 		
-		Integer type = Integer.valueOf(1);
-		List<Attribute> relationshipList = attributeService.getAttributeListByType(type,companyId);
+		List<Attribute> relationshipList = attributeService.getAttributeListByType(Type.SHOP_RELATIONSHIP,companyId);
 		sdd.setRelationshipList(relationshipList);
 		
-		type = Integer.valueOf(2);
-		List<Attribute> bizCategoryList = attributeService.getAttributeListByType(type,companyId);
+		List<Attribute> bizCategoryList = attributeService.getAttributeListByType(Type.SHOP_CATEGORY,companyId);
 		sdd.setBizCategoryList(bizCategoryList);
 		
-		type = Integer.valueOf(4);
-		List<Attribute> bizTypeList = attributeService.getAttributeListByType(type,companyId);
+		List<Attribute> bizTypeList = attributeService.getAttributeListByType(Type.BIZ_TYPE,companyId);
 		sdd.setBizTypeList(bizTypeList);
 		return sdd;
 	}
