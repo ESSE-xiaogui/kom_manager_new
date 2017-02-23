@@ -34,6 +34,7 @@ public class ConfigurationService {
 	
 	public String getValueByName(String name) throws ServiceException {
 		Configuration configuration = new Configuration();
+		configuration.setName(name);
 		List<Configuration> configurationList = configurationMapper.listByProperty(configuration);
 		if (configurationList != null && configurationList.size() > 0) {
 			return configurationList.get(0).getValue();
