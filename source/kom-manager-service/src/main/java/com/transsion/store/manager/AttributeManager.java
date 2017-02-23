@@ -26,10 +26,9 @@ public class AttributeManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
-		Integer companyId = userContext.getCompanyId().intValue();
-		if(UtilHelper.isEmpty(companyId)){
-			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
-		}
+		
+		Integer companyId = userContext.isAdmin()?null:userContext.getCompanyId().intValue();
+		
 		return attributeService.getAttributeListByType(type, companyId);
 	}
 

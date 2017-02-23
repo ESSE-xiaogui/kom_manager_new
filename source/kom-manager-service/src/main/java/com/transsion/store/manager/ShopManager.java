@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Attribute;
@@ -17,6 +19,7 @@ import com.transsion.store.bo.ShopGrade;
 import com.transsion.store.bo.ShopMateriel;
 import com.transsion.store.bo.UserShop;
 import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.SaleDailyDto;
 import com.transsion.store.dto.ShopDefinitionDto;
 import com.transsion.store.dto.ShopDetailDto;
 import com.transsion.store.dto.ShopInfoDto;
@@ -35,6 +38,7 @@ import com.transsion.store.service.ShopExtensionService;
 import com.transsion.store.service.ShopMaterielService;
 import com.transsion.store.service.ShopService;
 import com.transsion.store.utils.CacheUtils;
+import com.transsion.store.utils.ExcelUtils;
 
 @Service("shopManager")
 public class ShopManager {
@@ -332,7 +336,7 @@ public class ShopManager {
 	 * @throws ServiceException 
 	 */
 	public void updateShopStatus(Shop shop, String token) throws ServiceException {
-		if(UtilHelper.isEmpty(token)){
+	/*	if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
@@ -348,7 +352,7 @@ public class ShopManager {
 		Shop formerShop = shopService.getByPK(shop.getId());
 		formerShop.setStatus(shop.getStatus());
 		
-		shopMapper.update(formerShop);
+		shopMapper.update(formerShop);*/
 		
 	}
 	
@@ -378,7 +382,7 @@ public class ShopManager {
 		}
 		Long regionId = shopInfoDto.getRegionId();
 		
-		Shop shop = shopService.getByPK(shopInfoDto.getId());
+		Shop shop = shopMapper.getByPK(shopInfoDto.getId());
 		shop.setShopName(shopInfoDto.getShopName());
 		shop.setRegionId(regionId);
 		Region region = regionMapper.getByPK(regionId);
@@ -417,5 +421,37 @@ public class ShopManager {
 		shopExt.setClerkSixQty(shopInfoDto.getClerkSixQty());
 		shopExtensionService.update(shopExt);
 		return 1;
+	}
+	
+	/**
+	 * 门店导出Excel
+	 * @param shopInfoDto
+	 * @return
+	 * @throws ServiceException 
+	 */
+	public byte[] getShopByExcel(ShopInfoDto shopInfoDto) throws ServiceException {
+		String[] headers = {"序号","状态","事业部","门店编码","门店名称","门店等级","门店类型", "国家",
+		"城市","详细地址","店主姓名","店主联系方式","供货渠道","门店面积","店员总数","TECNO店员数","与TECNO关系",
+		"业务类型","竞品品牌1","促销员数量1","竞品品牌2","促销员数量2","竞品品牌3","促销员数量3","竞品品牌4","促销员数量4"
+		,"竞品品牌5","促销员数量5","竞品品牌6","促销员数量6","备注","创建人","创建时间","更新人","更新时间"};
+		List<ShopInfoDto> list = shopMapper.listShopByProperty(shopInfoDto);
+		List<Object[]> dataset = new ArrayList<Object[]>();
+		int i=1;
+		for(ShopInfoDto shopInfoDto1 :list){
+			dataset.add(new Object[]{i++,shopInfoDto1.getStatus()==1?"已生效":"新申请",
+		shopInfoDto1.getCompanyCode(),shopInfoDto1.getShopId(),shopInfoDto1.getShopName(),
+		shopInfoDto1.getGradeName(),shopInfoDto1.getBizName(),shopInfoDto1.getCountryName(),
+		shopInfoDto1.getCityName(),shopInfoDto1.getAddress(),shopInfoDto1.getOwnerName(),
+		shopInfoDto1.getOwnerPhone(),shopInfoDto1.getPurchasChannel(),shopInfoDto1.getShopArea(),
+		shopInfoDto1.getClerkThreeQty(),shopInfoDto1.getClerkBrandQty(),shopInfoDto1.getRelationship(),
+		shopInfoDto1.getBizCategoryName(),shopInfoDto1.getBrandOne(),shopInfoDto1.getClerkOneQty(),
+		shopInfoDto1.getBrandTwo(),shopInfoDto1.getClerkTwoQty(),shopInfoDto1.getBrandThree(),
+		shopInfoDto1.getClerkThreeQty(),shopInfoDto1.getBrandFour(),shopInfoDto1.getClerkFourQty(),
+		shopInfoDto1.getBrandFive(),shopInfoDto1.getBrandFive(),shopInfoDto1.getBrandSix(),
+		shopInfoDto1.getClerkSixQty(),shopInfoDto1.getRemark(),shopInfoDto1.getCreateBy(),
+		shopInfoDto1.getCreateDate(),shopInfoDto1.getUpdateBy(),shopInfoDto1.getUpdateDate()});
+		}
+		String title = "门店报表";
+		return ExcelUtils.exportExcel(title, headers, dataset);
 	}
 }

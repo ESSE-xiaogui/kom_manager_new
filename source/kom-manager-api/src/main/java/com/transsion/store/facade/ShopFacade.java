@@ -34,7 +34,7 @@ public interface ShopFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Shop getByPK(java.lang.Long primaryKey) throws ServiceException;
+	public ShopInfoDto getByPKey(java.lang.Long primaryKey) throws ServiceException;
 
 	/**
 	 * 查询所有记录
@@ -156,4 +156,12 @@ public interface ShopFacade {
 	 * @param token
 	 */
 	public void updateShopStatus(Shop shop, String token)throws ServiceException;
+
+	/**
+	 * 门店导出Excel
+	 * @param shopInfoDto
+	 * @return
+	 * @throws ServiceException
+	 */
+	public byte[] getShopByExcel(ShopInfoDto shopInfoDto)throws ServiceException;
 }

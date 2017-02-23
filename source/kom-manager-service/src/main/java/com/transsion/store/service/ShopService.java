@@ -49,9 +49,9 @@ public class ShopService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Shop getByPK(java.lang.Long primaryKey) throws ServiceException
+	public ShopInfoDto getByPKey(java.lang.Long primaryKey) throws ServiceException
 	{
-		return shopMapper.getByPK(primaryKey);
+		return shopMapper.getByPKey(primaryKey);
 	}
 
 	/**

@@ -52,9 +52,9 @@ public class ShopFacadeImpl implements ShopFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Shop getByPK(java.lang.Long primaryKey) throws ServiceException
+	public ShopInfoDto getByPKey(java.lang.Long primaryKey) throws ServiceException
 	{
-		return shopService.getByPK(primaryKey);
+		return shopService.getByPKey(primaryKey);
 	}
 
 	/**
@@ -206,5 +206,12 @@ public class ShopFacadeImpl implements ShopFacade {
 	 */
 	public void updateShopStatus(Shop shop, String token) throws ServiceException {
 		shopManager.updateShopStatus(shop,token);
+	}
+
+	/**
+	 * 门店导出Excel
+	 */
+	public byte[] getShopByExcel(ShopInfoDto shopInfoDto) throws ServiceException {
+		return shopManager.getShopByExcel(shopInfoDto);
 	}
 }
