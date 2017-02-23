@@ -87,7 +87,7 @@ public enum ExceptionDef {
 		return code;
 	}
 	public String getName() {
-		return name;
+		return name.toLowerCase();
 	}
 
 }
