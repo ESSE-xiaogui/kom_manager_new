@@ -24,6 +24,7 @@ import com.transsion.store.bo.Shop;
 import com.transsion.store.dto.ShopDefinitionDto;
 import com.transsion.store.dto.ShopDetailDto;
 import com.transsion.store.dto.ShopInfoDto;
+import com.transsion.store.dto.ShopUploadDto;
 import com.transsion.store.dto.ShopUserDto;
 
 public interface ShopFacade {
@@ -132,7 +133,7 @@ public interface ShopFacade {
 	/*
 	 * app add shop api
 	 */
-	public void createShop(String token, ShopDetailDto shopDetailDto) throws ServiceException;
+	public ShopUploadDto createShop(String token, ShopDetailDto shopDetailDto) throws ServiceException;
 
 	/*
 	 * app shop list api

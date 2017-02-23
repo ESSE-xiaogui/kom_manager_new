@@ -21,6 +21,7 @@ import com.transsion.store.bo.Shop;
 import com.transsion.store.dto.ShopDefinitionDto;
 import com.transsion.store.dto.ShopDetailDto;
 import com.transsion.store.dto.ShopInfoDto;
+import com.transsion.store.dto.ShopUploadDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.ShopFacade;
@@ -198,9 +199,10 @@ public class ShopController extends AbstractController {
 	@POST
 	@Path("/createShop")
 	@Consumes({ MediaType.APPLICATION_JSON })
-	public void createShop(ShopDetailDto shopDetailDto) throws ServiceException {
+	@Produces({ MediaType.APPLICATION_JSON })
+	public ShopUploadDto createShop(ShopDetailDto shopDetailDto) throws ServiceException {
 		String token = this.getAuthorization();
-		shopFacade.createShop(token, shopDetailDto);
+		return shopFacade.createShop(token, shopDetailDto);
 	}
 
 	/**

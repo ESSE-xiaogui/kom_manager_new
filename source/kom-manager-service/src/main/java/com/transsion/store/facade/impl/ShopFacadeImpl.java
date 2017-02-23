@@ -27,6 +27,7 @@ import com.transsion.store.bo.Shop;
 import com.transsion.store.dto.ShopDefinitionDto;
 import com.transsion.store.dto.ShopDetailDto;
 import com.transsion.store.dto.ShopInfoDto;
+import com.transsion.store.dto.ShopUploadDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.transsion.store.facade.ShopFacade;
 import com.transsion.store.manager.ShopManager;
@@ -181,8 +182,8 @@ public class ShopFacadeImpl implements ShopFacade {
 	}
 
 	@Override
-	public void createShop(String token, ShopDetailDto shopDetailDto) throws ServiceException {
-		shopManager.createShop(token, shopDetailDto);
+	public ShopUploadDto createShop(String token, ShopDetailDto shopDetailDto) throws ServiceException {
+		return shopManager.createShop(token, shopDetailDto);
 	}
 
 	@Override

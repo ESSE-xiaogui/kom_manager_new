@@ -20,6 +20,7 @@ import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.ShopDefinitionDto;
 import com.transsion.store.dto.ShopDetailDto;
 import com.transsion.store.dto.ShopInfoDto;
+import com.transsion.store.dto.ShopUploadDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.transsion.store.dto.UserDto;
 import com.transsion.store.exception.ExceptionDef;
@@ -232,7 +233,7 @@ public class ShopManager {
 		return sdd;
 	}
 	
-	public void createShop(String token, ShopDetailDto shopDetailDto) throws ServiceException {
+	public ShopUploadDto createShop(String token, ShopDetailDto shopDetailDto) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
@@ -255,6 +256,10 @@ public class ShopManager {
 		
 		List<ShopMateriel> list = shopDetailDto.getShopMaterielDtoList();
 		shopMaterielService.saveShopMateriel(list);
+		
+		ShopUploadDto shopUploadDto = new ShopUploadDto();
+		shopUploadDto.setStatus(1);
+		return shopUploadDto;
 	}
 	
 	public List<ShopDetailDto> queryManagedShopList(String token) throws ServiceException {
