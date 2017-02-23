@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.VisitScoreSetting;
+import com.transsion.store.dto.VisitScoreSettingDetailDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.VisitScoreSettingFacade;
 import com.shangkang.core.bo.Pagination;
@@ -59,20 +60,21 @@ public class VisitScoreSettingController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<VisitScoreSetting> listPgVisitScoreSetting(RequestModel<VisitScoreSetting> requestModel) throws ServiceException
+	public Pagination<VisitScoreSettingDetailDto> listPgVisitScoreSetting(RequestModel<VisitScoreSettingDetailDto> requestModel) throws ServiceException
 	{
-		Pagination<VisitScoreSetting> pagination = new Pagination<VisitScoreSetting>();
+		Pagination<VisitScoreSettingDetailDto> pagination = new Pagination<VisitScoreSettingDetailDto>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());
 		pagination.setPageSize(requestModel.getPageSize());
 		pagination.setParams(requestModel.getParams());
 		pagination.setOrderBy(requestModel.getOrderBy());
-
-		return visitScoreSettingFacade.listPaginationByProperty(pagination, requestModel.getParams());
+		String token = this.getAuthorization();
+		return visitScoreSettingFacade.listPaginationByProperty(pagination, requestModel.getParams(),token);
 	}
 
 	/**
+	 * @author guihua.zhang on 2017-2-23
 	* 新增记录
 	* @return
 	* @throws ServiceException
@@ -82,7 +84,8 @@ public class VisitScoreSettingController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void add(VisitScoreSetting visitScoreSetting) throws ServiceException
 	{
-		visitScoreSettingFacade.save(visitScoreSetting);
+		String token = this.getAuthorization();
+		visitScoreSettingFacade.save(visitScoreSetting,token);
 	}
 
 	/**
@@ -108,6 +111,7 @@ public class VisitScoreSettingController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void update(VisitScoreSetting visitScoreSetting) throws ServiceException
 	{
-		visitScoreSettingFacade.update(visitScoreSetting);
+		String token = this.getAuthorization();
+		visitScoreSettingFacade.update(visitScoreSetting,token);
 	}
 }

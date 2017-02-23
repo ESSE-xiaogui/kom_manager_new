@@ -32,6 +32,20 @@
 		<result column="UPDATE_TIME" property="updateTime"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
+	<resultMap id="VisitScoreSettingDetailDtoResultMapper" type="VisitScoreSettingDetailDto">
+		<result column="ID" property="id"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="TYPE" property="type"/>
+		<result column="NAME_CN" property="typeName"/>
+		<result column="DESC_EN" property="descEn"/>
+		<result column="DESC_CN" property="descCn"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
 	
 	<sql id="commonColumns">
 		 ID
@@ -111,39 +125,42 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="visitScoreSetting != null">
-            <if test="visitScoreSetting.id!= null and visitScoreSetting.id!= ''">
-				AND ID=#{visitScoreSetting.id}
+		<if test="visitScoreSettingDetailDto != null">
+            <if test="visitScoreSettingDetailDto.id!= null and visitScoreSettingDetailDto.id!= ''">
+				AND s.ID=#{visitScoreSettingDetailDto.id}
             </if>
-            <if test="visitScoreSetting.companyId!= null and visitScoreSetting.companyId!= ''">
-				AND COMPANY_ID=#{visitScoreSetting.companyId}
+            <if test="visitScoreSettingDetailDto.companyId!= null and visitScoreSettingDetailDto.companyId!= ''">
+				AND s.COMPANY_ID=#{visitScoreSettingDetailDto.companyId}
             </if>
-            <if test="visitScoreSetting.type!= null and visitScoreSetting.type!= ''">
-				AND TYPE=#{visitScoreSetting.type}
+            <if test="visitScoreSettingDetailDto.type!= null and visitScoreSettingDetailDto.type!= ''">
+				AND s.TYPE=#{visitScoreSettingDetailDto.type}
             </if>
-            <if test="visitScoreSetting.descEn!= null and visitScoreSetting.descEn!= ''">
-				AND DESC_EN=#{visitScoreSetting.descEn}
+            <if test="visitScoreSettingDetailDto.typeName!= null and visitScoreSettingDetailDto.typeName!= ''">
+				AND a.NAME_CN=#{visitScoreSettingDetailDto.typeName}
             </if>
-            <if test="visitScoreSetting.descCn!= null and visitScoreSetting.descCn!= ''">
-				AND DESC_CN=#{visitScoreSetting.descCn}
+            <if test="visitScoreSettingDetailDto.descEn!= null and visitScoreSettingDetailDto.descEn!= ''">
+				AND s.DESC_EN=#{visitScoreSettingDetailDto.descEn}
             </if>
-            <if test="visitScoreSetting.remark!= null and visitScoreSetting.remark!= ''">
-				AND REMARK=#{visitScoreSetting.remark}
+            <if test="visitScoreSettingDetailDto.descCn!= null and visitScoreSettingDetailDto.descCn!= ''">
+				AND s.DESC_CN=#{visitScoreSettingDetailDto.descCn}
             </if>
-            <if test="visitScoreSetting.createBy!= null and visitScoreSetting.createBy!= ''">
-				AND CREATE_BY=#{visitScoreSetting.createBy}
+            <if test="visitScoreSettingDetailDto.remark!= null and visitScoreSettingDetailDto.remark!= ''">
+				AND s.REMARK=#{visitScoreSettingDetailDto.remark}
             </if>
-            <if test="visitScoreSetting.createTime!= null and visitScoreSetting.createTime!= ''">
-				AND CREATE_TIME=str_to_date(#{visitScoreSetting.createTime},'%Y-%m-%d %H:%i:%s')
+            <if test="visitScoreSettingDetailDto.createBy!= null and visitScoreSettingDetailDto.createBy!= ''">
+				AND s.CREATE_BY=#{visitScoreSettingDetailDto.createBy}
             </if>
-            <if test="visitScoreSetting.updateBy!= null and visitScoreSetting.updateBy!= ''">
-				AND UPDATE_BY=#{visitScoreSetting.updateBy}
+            <if test="visitScoreSettingDetailDto.createTime!= null and visitScoreSettingDetailDto.createTime!= ''">
+				AND s.CREATE_TIME=str_to_date(#{visitScoreSettingDetailDto.createTime},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="visitScoreSetting.updateTime!= null and visitScoreSetting.updateTime!= ''">
-				AND UPDATE_TIME=str_to_date(#{visitScoreSetting.updateTime},'%Y-%m-%d %H:%i:%s')
+            <if test="visitScoreSettingDetailDto.updateBy!= null and visitScoreSettingDetailDto.updateBy!= ''">
+				AND s.UPDATE_BY=#{visitScoreSettingDetailDto.updateBy}
             </if>
-            <if test="visitScoreSetting.version!= null and visitScoreSetting.version!= ''">
-				AND VERSION=#{visitScoreSetting.version}
+            <if test="visitScoreSettingDetailDto.updateTime!= null and visitScoreSettingDetailDto.updateTime!= ''">
+				AND s.UPDATE_TIME=str_to_date(#{visitScoreSettingDetailDto.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitScoreSettingDetailDto.version!= null and visitScoreSettingDetailDto.version!= ''">
+				AND s.VERSION=#{visitScoreSettingDetailDto.version}
             </if>
         </if>
     </sql>
@@ -160,37 +177,40 @@
 	<sql id="orderBy">
 		<choose>
         	<when test="key == 'id'">
-				ID ${value}
+				s.ID ${value}
             </when>
         	<when test="key == 'companyId'">
-				COMPANY_ID ${value}
+				s.COMPANY_ID ${value}
             </when>
         	<when test="key == 'type'">
-				TYPE ${value}
+				s.TYPE ${value}
+            </when>
+            <when test="key == 'typeName'">
+				a.NAME_CN ${value}
             </when>
         	<when test="key == 'descEn'">
-				DESC_EN ${value}
+				s.DESC_EN ${value}
             </when>
         	<when test="key == 'descCn'">
-				DESC_CN ${value}
+				s.DESC_CN ${value}
             </when>
         	<when test="key == 'remark'">
-				REMARK ${value}
+				s.REMARK ${value}
             </when>
         	<when test="key == 'createBy'">
-				CREATE_BY ${value}
+				s.CREATE_BY ${value}
             </when>
         	<when test="key == 'createTime'">
-				CREATE_TIME ${value}
+				s.CREATE_TIME ${value}
             </when>
         	<when test="key == 'updateBy'">
-				UPDATE_BY ${value}
+				s.UPDATE_BY ${value}
             </when>
         	<when test="key == 'updateTime'">
-				UPDATE_TIME ${value}
+				s.UPDATE_TIME ${value}
             </when>
         	<when test="key == 'version'">
-				VERSION ${value}
+				s.VERSION ${value}
             </when>
 		</choose>
 	</sql>
@@ -220,8 +240,6 @@
 			, DESC_EN=#{descEn} 
 			, DESC_CN=#{descCn} 
 			, REMARK=#{remark} 
-			, CREATE_BY=#{createBy} 
-			, CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
 			, UPDATE_BY=#{updateBy} 
 			, UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
 			, VERSION=#{version} 
@@ -257,12 +275,15 @@
 		FROM T_VISIT_SCORE_SETTING WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="VisitScoreSetting" resultMap="VisitScoreSettingResultMapper">
-		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_VISIT_SCORE_SETTING WHERE 1=1
-    	<include refid="commonConditionByPrefix"/>
-    	<include refid="orderByClause" />
+	<select id="listPaginationByProperty" parameterType="VisitScoreSettingDetailDto"
+		resultMap="VisitScoreSettingDetailDtoResultMapper">
+		SELECT
+		s.ID,s.COMPANY_ID,s.TYPE,a.NAME_CN,s.DESC_CN,s.DESC_EN,s.REMARK,s.CREATE_BY,s.CREATE_TIME,
+		s.UPDATE_BY,s.UPDATE_TIME,s.VERSION FROM T_VISIT_SCORE_SETTING s
+		LEFT JOIN T_ATTRIBUTE a ON a.ID = s.TYPE
+		WHERE 1=1
+		<include refid="commonConditionByPrefix" />
+		<include refid="orderByClause" />
 	</select>
 	<select id="findByCount" parameterType="VisitScoreSetting" resultType="int">
 		SELECT count(1) AS totalcount FROM T_VISIT_SCORE_SETTING WHERE 1=1 

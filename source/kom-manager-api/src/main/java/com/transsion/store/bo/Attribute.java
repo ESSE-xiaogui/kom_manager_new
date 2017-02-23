@@ -13,7 +13,8 @@ public class Attribute extends Model {
 		MODEL_PRICE(3), 
 		BIZ_TYPE(4),
 		SHOP_BIZ(6),
-		SHOP_PCS(5);
+		SHOP_PCS(5),
+		SOCRE_TYPE(7);
 		
 		private final int value;
 

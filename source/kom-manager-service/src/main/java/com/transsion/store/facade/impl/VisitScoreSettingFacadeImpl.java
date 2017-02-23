@@ -27,6 +27,7 @@ import com.transsion.store.dto.VisitScoreSettingDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.VisitScoreSettingFacade;
+import com.transsion.store.manager.VisitScoreSettingManager;
 import com.transsion.store.service.VisitScoreSettingService;
 
 @Component("visitScoreSettingFacade")
@@ -39,6 +40,9 @@ public class VisitScoreSettingFacadeImpl implements VisitScoreSettingFacade {
 	{
 		this.visitScoreSettingService = visitScoreSettingService;
 	}
+	
+	@Autowired
+	private VisitScoreSettingManager visitScoreSettingManager;
 	
 	/**
 	 * 通过主键查询实体对象
@@ -80,7 +84,7 @@ public class VisitScoreSettingFacadeImpl implements VisitScoreSettingFacade {
 	public Pagination<VisitScoreSetting> listPaginationByProperty(Pagination<VisitScoreSetting> pagination, VisitScoreSetting visitScoreSetting)
 			throws ServiceException
 	{
-		return visitScoreSettingService.listPaginationByProperty(pagination, visitScoreSetting);
+		return null;
 	}
 
 	/**
@@ -121,9 +125,9 @@ public class VisitScoreSettingFacadeImpl implements VisitScoreSettingFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(VisitScoreSetting visitScoreSetting) throws ServiceException
+	public void save(VisitScoreSetting visitScoreSetting,String token) throws ServiceException
 	{
-		visitScoreSettingService.save(visitScoreSetting);
+		visitScoreSettingManager.save(visitScoreSetting,token);
 	}
 
 	/**
@@ -132,9 +136,9 @@ public class VisitScoreSettingFacadeImpl implements VisitScoreSettingFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(VisitScoreSetting visitScoreSetting) throws ServiceException
+	public int update(VisitScoreSetting visitScoreSetting,String token) throws ServiceException
 	{
-		return visitScoreSettingService.update(visitScoreSetting);
+		return visitScoreSettingManager.update(visitScoreSetting,token);
 	}
 
 	/**
@@ -148,25 +152,19 @@ public class VisitScoreSettingFacadeImpl implements VisitScoreSettingFacade {
 		return visitScoreSettingService.findByCount(visitScoreSetting);
 	}
 
-	@Override
 	public void createScoreSettingRecord(String token, VisitScoreSettingDto visitScoreSettingDto)
 			throws ServiceException {
-		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void updateScoreSettingRecord(String token, VisitScoreSettingDto visitScoreSettingDto)
 			throws ServiceException {
-		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public Pagination<VisitScoreSettingDetailDto> listPaginationByProperty(
-			Pagination<VisitScoreSettingDetailDto> pagination, VisitScoreSettingDetailDto visitScoreSetting)
+			Pagination<VisitScoreSettingDetailDto> pagination, VisitScoreSettingDetailDto visitScoreSettingDetailDto,String token)
 			throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
+		return visitScoreSettingManager.listPaginationByProperty(pagination, visitScoreSettingDetailDto,token);
 	}
 }

@@ -18,6 +18,10 @@ package com.transsion.store.dto;
 
 import java.io.Serializable;
 
+/**
+ * @author guihua.zhang 
+ * update time on 2017-2-23
+ * */
 public class VisitScoreSettingDetailDto implements Serializable {
 
 	/**
@@ -26,232 +30,270 @@ public class VisitScoreSettingDetailDto implements Serializable {
 	private static final long	serialVersionUID	= 1L;
 	
 	/**
-	  *	
+	  *	打分项设置ID
 	  */
-	private java.lang.Long id;
+	private Long id;
 
 	/**
-	  *	
+	  *	事业部ID
 	  */
-	private java.lang.Long companyId;
+	private Long companyId;
+	
+	/**
+	 * 事业部品牌
+	 * */
+	private String companyName;
 
 	/**
-	  *	
+	  *	类型ID
 	  */
-	private java.lang.Long type;
+	private Long type;
+	
+	/**
+	 * 类型名称
+	 * */
+	private String typeName;
 
 	/**
-	  *	
+	  *	英文描述
 	  */
-	private java.lang.String descEn;
+	private String descEn;
 
 	/**
-	  *	
+	  *	中文描述
 	  */
-	private java.lang.String descCn;
+	private String descCn;
 
 	/**
-	  *	
+	  *	备注
 	  */
-	private java.lang.String remark;
+	private String remark;
 
 	/**
-	  *	
+	  *	创建人
 	  */
-	private java.lang.String createBy;
+	private String createBy;
 
 	/**
-	  *	
+	  *	创建时间
 	  */
-	private java.lang.String createTime;
+	private String createTime;
 
 	/**
-	  *	
+	  *	修改人
 	  */
-	private java.lang.String updateBy;
+	private String updateBy;
 
 	/**
-	  *	
+	  *	修改时间
 	  */
-	private java.lang.String updateTime;
+	private String updateTime;
 
 	/**
-	  *	
+	  *	版本
 	  */
-	private java.lang.Integer version;
+	private Integer version;
 
 	/**
-	  *	
+	  *	打分项设置ID
 	  */
-	public java.lang.Long getId() 
+	public Long getId() 
 	{
 		return id;
 	}
 	
 	/**
-	  *	
+	  *	打分项设置ID
 	  */
-	public void setId(java.lang.Long id) 
+	public void setId(Long id) 
 	{
 		this.id = id;
 	}
 	
 	/**
-	  *	
+	  *	事业部ID
 	  */
-	public java.lang.Long getCompanyId() 
+	public Long getCompanyId() 
 	{
 		return companyId;
 	}
 	
 	/**
-	  *	
+	  *	事业部ID
 	  */
-	public void setCompanyId(java.lang.Long companyId) 
+	public void setCompanyId(Long companyId) 
 	{
 		this.companyId = companyId;
 	}
-	
+		
 	/**
-	  *	
+	 * 事业部品牌名称
+	 * */
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	/**
+	 * 事业部品牌名称
+	 * */
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	/**
+	 * 业务类型名称
+	 * */
+	public String getTypeName() {
+		return typeName;
+	}
+
+	/**
+	 * 业务类型名称
+	 * */
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+
+	/**
+	  *	类型ID
 	  */
-	public java.lang.Long getType() 
+	public Long getType() 
 	{
 		return type;
 	}
 	
 	/**
-	  *	
+	  *	类型ID
 	  */
-	public void setType(java.lang.Long type) 
+	public void setType(Long type) 
 	{
 		this.type = type;
 	}
 	
 	/**
-	  *	
+	  *	英文描述
 	  */
-	public java.lang.String getDescEn() 
+	public String getDescEn() 
 	{
 		return descEn;
 	}
 	
 	/**
-	  *	
+	  *	英文描述
 	  */
-	public void setDescEn(java.lang.String descEn) 
+	public void setDescEn(String descEn) 
 	{
 		this.descEn = descEn;
 	}
 	
 	/**
-	  *	
+	  *	中文描述
 	  */
-	public java.lang.String getDescCn() 
+	public String getDescCn() 
 	{
 		return descCn;
 	}
 	
 	/**
-	  *	
+	  *	中文描述
 	  */
-	public void setDescCn(java.lang.String descCn) 
+	public void setDescCn(String descCn) 
 	{
 		this.descCn = descCn;
 	}
 	
 	/**
-	  *	
+	  *	备注
 	  */
-	public java.lang.String getRemark() 
+	public String getRemark() 
 	{
 		return remark;
 	}
 	
 	/**
-	  *	
+	  *	备注
 	  */
-	public void setRemark(java.lang.String remark) 
+	public void setRemark(String remark) 
 	{
 		this.remark = remark;
 	}
 	
 	/**
-	  *	
+	  *	创建人
 	  */
-	public java.lang.String getCreateBy() 
+	public String getCreateBy() 
 	{
 		return createBy;
 	}
 	
 	/**
-	  *	
+	  *	创建人
 	  */
-	public void setCreateBy(java.lang.String createBy) 
+	public void setCreateBy(String createBy) 
 	{
 		this.createBy = createBy;
 	}
 	
 	/**
-	  *	
+	  *	创建时间
 	  */
-	public java.lang.String getCreateTime() 
+	public String getCreateTime() 
 	{
 		return createTime;
 	}
 	
 	/**
-	  *	
+	  *	创建时间
 	  */
-	public void setCreateTime(java.lang.String createTime) 
+	public void setCreateTime(String createTime) 
 	{
 		this.createTime = createTime;
 	}
 	
 	/**
-	  *	
+	  *	修改人
 	  */
-	public java.lang.String getUpdateBy() 
+	public String getUpdateBy() 
 	{
 		return updateBy;
 	}
 	
 	/**
-	  *	
+	  *	修改人
 	  */
-	public void setUpdateBy(java.lang.String updateBy) 
+	public void setUpdateBy(String updateBy) 
 	{
 		this.updateBy = updateBy;
 	}
 	
 	/**
-	  *	
+	  *	修改时间
 	  */
-	public java.lang.String getUpdateTime() 
+	public String getUpdateTime() 
 	{
 		return updateTime;
 	}
 	
 	/**
-	  *	
+	  *	修改时间
 	  */
-	public void setUpdateTime(java.lang.String updateTime) 
+	public void setUpdateTime(String updateTime) 
 	{
 		this.updateTime = updateTime;
 	}
 	
 	/**
-	  *	
+	  *	版本
 	  */
-	public java.lang.Integer getVersion() 
+	public Integer getVersion() 
 	{
 		return version;
 	}
 	
 	/**
-	  *	
+	  *	版本
 	  */
-	public void setVersion(java.lang.Integer version) 
+	public void setVersion(Integer version) 
 	{
 		this.version = version;
 	}
