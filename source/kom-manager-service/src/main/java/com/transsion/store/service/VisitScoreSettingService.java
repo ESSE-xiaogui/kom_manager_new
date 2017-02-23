@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.VisitScoreSetting;
-import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.VisitScoreSettingMapper;
 
@@ -74,7 +73,7 @@ public class VisitScoreSettingService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<VisitScoreSetting> listPaginationByProperty(Pagination<VisitScoreSetting> pagination, VisitScoreSetting visitScoreSetting)
+/*	public Pagination<VisitScoreSetting> listPaginationByProperty(Pagination<VisitScoreSetting> pagination, VisitScoreSetting visitScoreSetting)
 			throws ServiceException
 	{
 		List<VisitScoreSetting> list = visitScoreSettingMapper.listPaginationByProperty(pagination, visitScoreSetting, pagination.getOrderBy());
@@ -82,7 +81,7 @@ public class VisitScoreSettingService {
 		pagination.setResultList(list);
 		
 		return pagination;
-	}
+	}*/
 
 	/**
 	 * 根据主键删除记录

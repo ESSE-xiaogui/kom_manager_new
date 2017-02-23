@@ -78,7 +78,7 @@ public interface VisitScoreSettingFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(VisitScoreSetting visitScoreSetting) throws ServiceException;
+	public void save(VisitScoreSetting visitScoreSetting,String token) throws ServiceException;
 
 	/**
 	 * 更新记录
@@ -86,7 +86,7 @@ public interface VisitScoreSettingFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(VisitScoreSetting visitScoreSetting) throws ServiceException;
+	public int update(VisitScoreSetting visitScoreSetting,String token) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数
@@ -120,6 +120,6 @@ public interface VisitScoreSettingFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<VisitScoreSettingDetailDto> listPaginationByProperty(Pagination<VisitScoreSettingDetailDto> pagination, VisitScoreSettingDetailDto visitScoreSetting)
+	public Pagination<VisitScoreSettingDetailDto> listPaginationByProperty(Pagination<VisitScoreSettingDetailDto> pagination, VisitScoreSettingDetailDto visitScoreSetting,String token)
 			throws ServiceException;
 }
