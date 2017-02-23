@@ -94,7 +94,7 @@ public class EmployeeManager {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public EmpResponseDto updateEmp(String token,Employee employee) throws ServiceException
+	public void updateEmp(String token,Employee employee) throws ServiceException
 	{	
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
@@ -108,6 +108,7 @@ public class EmployeeManager {
 		}
 
 		Employee formerEmp = employeeMapper.getByPK(employee.getId());
+		formerEmp.setRegionId(employee.getRegionId());
 		formerEmp.setEmpName(employee.getEmpName());
 		formerEmp.setGender( employee.getGender());
 		formerEmp.setNation(employee.getNation());
@@ -124,9 +125,6 @@ public class EmployeeManager {
 		formerEmp.setUpdatedBy(userContext.getUserCode());
 		formerEmp.setUpdatedTime(systemDateService.getCurrentDate());
 		employeeService.update(formerEmp);
-		EmpResponseDto emp = new EmpResponseDto();
-		emp.setStatus(1);
-		return emp;
 	}
 	
 	/**
@@ -134,7 +132,7 @@ public class EmployeeManager {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public EmpResponseDto createUser(String token,EmpUserDto empUserDto) throws ServiceException{
+	public void createUser(String token,EmpUserDto empUserDto) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}	
@@ -181,9 +179,6 @@ public class EmployeeManager {
 		UserDto u= userService.findByName(userCode);
 		employee.setuId(u.getId());
 		employeeService.update(employee);
-		EmpResponseDto erd = new EmpResponseDto();
-		erd.setStatus(1);
-		return erd;
 	}
 	
 	/**
@@ -191,7 +186,7 @@ public class EmployeeManager {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public EmpResponseDto editUser(String token,EmpUserDto empUserDto) throws ServiceException{
+	public void editUser(String token,EmpUserDto empUserDto) throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}	
@@ -238,10 +233,6 @@ public class EmployeeManager {
 		//账号绑定新员工
 		employee.setuId(formerUID);
 		employeeService.update(employee);
-		
-		EmpResponseDto erd = new EmpResponseDto();
-		erd.setStatus(1);
-		return erd;
 		
 	}
 

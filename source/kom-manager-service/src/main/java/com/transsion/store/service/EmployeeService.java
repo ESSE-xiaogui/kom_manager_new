@@ -80,7 +80,6 @@ public class EmployeeService {
 			throws ServiceException
 	{
 		List<EmpInfoDto> list = employeeMapper.listPaginationByProperty(pagination, empInfoDto, pagination.getOrderBy());
-		
 		pagination.setResultList(list);
 		
 		return pagination;

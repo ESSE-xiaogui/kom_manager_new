@@ -13,6 +13,10 @@ public class EmpInfoDto extends Model{
 	private String userName;
 
 	private Integer companyId;
+	
+	private Integer regionId;
+	
+	private String countryName;
 
 	private String orgName;
 
@@ -92,6 +96,22 @@ public class EmpInfoDto extends Model{
 
 	public void setCompanyId(Integer companyId) {
 		this.companyId = companyId;
+	}
+
+	public Integer getRegionId() {
+		return regionId;
+	}
+
+	public void setRegionId(Integer regionId) {
+		this.regionId = regionId;
+	}
+
+	public String getCountryName() {
+		return countryName;
+	}
+
+	public void setCountryName(String countryName) {
+		this.countryName = countryName;
 	}
 
 	public String getOrgName() {
@@ -249,12 +269,13 @@ public class EmpInfoDto extends Model{
 	@Override
 	public String toString() {
 		return "EmpInfoDto [id=" + id + ", empName=" + empName + ", userName=" + userName + ", companyId=" + companyId
-						+ ", orgName=" + orgName + ", dutyName=" + dutyName + ", idNo=" + idNo + ", upperId=" + upperId
-						+ ", upperName=" + upperName + ", gender=" + gender + ", birthday=" + birthday + ", nation="
-						+ nation + ", married=" + married + ", mobileNo=" + mobileNo + ", email=" + email
-						+ ", nativePlace=" + nativePlace + ", zipCode=" + zipCode + ", inService=" + inService
-						+ ", remark=" + remark + ", createdBy=" + createdBy + ", createdTime=" + createdTime
-						+ ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime + ", version=" + version + "]";
+						+ ", regionId=" + regionId + ", countryName=" + countryName + ", orgName=" + orgName
+						+ ", dutyName=" + dutyName + ", idNo=" + idNo + ", upperId=" + upperId + ", upperName="
+						+ upperName + ", gender=" + gender + ", birthday=" + birthday + ", nation=" + nation
+						+ ", married=" + married + ", mobileNo=" + mobileNo + ", email=" + email + ", nativePlace="
+						+ nativePlace + ", zipCode=" + zipCode + ", inService=" + inService + ", remark=" + remark
+						+ ", createdBy=" + createdBy + ", createdTime=" + createdTime + ", updatedBy=" + updatedBy
+						+ ", updatedTime=" + updatedTime + ", version=" + version + "]";
 	}
 
 }

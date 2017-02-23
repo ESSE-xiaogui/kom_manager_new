@@ -22,6 +22,7 @@
 	<resultMap id="EmployeeResultMapper" type="Employee">
 		<result column="ID" property="id"/>
 		<result column="EMP_ID" property="empId"/>
+		<result column="REGION_ID" property="regionId"/>
 		<result column="EMP_CODE" property="empCode"/>
 		<result column="EMP_NAME" property="empName"/>
 		<result column="U_ID" property="uId"/>
@@ -55,6 +56,8 @@
 		<result column="EMP_NAME" property="empName"/>
 		<result column="USER_CODE" property="userName"/>
 		<result column="COMPANY_ID" property="companyId"/>
+		<result column="REGION_ID" property="regionId"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
 		<result column="ID_NO" property="idNo"/>
 		<result column="ORG_NAME" property="orgName"/>
 		<result column="DUTY_NAME" property="dutyName"/>
@@ -78,6 +81,7 @@
 	</resultMap>
 	<resultMap id="EmpResponseDtoResultMapper" type="EmpResponseDto">
 		<result column="ID" property="id"/>
+		<result column="REGION_ID" property="regionId"/>
 		<result column="EMP_ID" property="empId"/>
 		<result column="EMP_CODE" property="empCode"/>
 		<result column="EMP_NAME" property="empName"/>
@@ -112,6 +116,7 @@
 	
 	<sql id="commonColumns">
 		 ID
+		 , REGION_ID
 		, EMP_ID
 		, EMP_CODE
 		, EMP_NAME
@@ -142,6 +147,7 @@
 
 	<sql id="commonColumnsNotPK">
 		 EMP_ID
+		 , REGION_ID
 		, EMP_CODE
 		, EMP_NAME
 		, U_ID
@@ -171,9 +177,11 @@
 	
 	<sql id="commonProcessDateColumns">
 		 ID
+		 , REGION_ID
 		, EMP_ID
 		, EMP_CODE
 		, EMP_NAME
+		, REGION_ID
 		, U_ID
 		, ID_NO
 		, COMPANY_ID
@@ -201,6 +209,7 @@
 	
 	<sql id="commonProcessDateCols">
 		 ID
+		 , REGION_ID
 		, EMP_ID
 		, EMP_CODE
 		, EMP_NAME
@@ -234,6 +243,9 @@
 	<sql id="commonCondition">
 		<if test="id!= null and id!= ''"> 
 			AND ID=#{id}
+		</if>
+		<if test="regionId!= null and regionId!= ''"> 
+			AND REGION_ID=#{regionId}
 		</if>
 		<if test="empId!= null and empId!= ''"> 
 			AND EMP_ID=#{empId}
@@ -332,6 +344,12 @@
             <if test="empInfoDto.companyId!= null and empInfoDto.companyId!= ''">
 				AND e.COMPANY_ID=#{empInfoDto.companyId}
             </if>
+            <if test="empInfoDto.regionId!= null and empInfoDto.regionId!= ''">
+				AND e.REGION_ID=#{empInfoDto.regionId}
+            </if>
+            <if test="empInfoDto.countryName!= null and empInfoDto.countryName!= ''">
+				AND r.REGION_NAME=#{empInfoDto.countryName}
+            </if>
             <if test="empInfoDto.orgName!= null and empInfoDto.orgName!= ''">
 				AND o.ORG_NAME=#{empInfoDto.orgName}
             </if>
@@ -418,6 +436,12 @@
         	<when test="key == 'companyId'">
 				e.COMPANY_ID ${value}
             </when>
+            <when test="key == 'regionId'">
+				e.REGION_ID ${value}
+            </when>
+            <when test="key == 'countryName'">
+				r.REGION_NAME ${value}
+            </when>
         	<when test="key == 'orgName'">
 				o.ORG_NAME ${value}
             </when>
@@ -484,6 +508,7 @@
 		<![CDATA[
 			) VALUES ( 
 			 #{empId}
+			 , #{regionId}
 			, #{empCode}
 			, #{empName}
 			, #{uId}
@@ -514,6 +539,7 @@
 	<update id="update" parameterType="Employee">
 		<![CDATA[ UPDATE T_EMPLOYEE SET 
 			 ID=#{id} 
+			 , REGION_ID=#{regionId} 
 			, EMP_ID=#{empId} 
 			, EMP_CODE=#{empCode} 
 			, EMP_NAME=#{empName} 
@@ -535,8 +561,6 @@
 			, ZIP_CODE=#{zipCode} 
 			, IN_SERVICE=#{inService} 
 			, REMARK=#{remark} 
-			, CREATED_BY=#{createdBy} 
-			, CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
 			, UPDATED_BY=#{updatedBy} 
 			, UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
 			, VERSION=#{version} 
@@ -573,16 +597,17 @@
 		<include refid="commonCondition"/>
 	</select>
 	<select id="listByProp" parameterType="Employee" resultMap="EmpResponseDtoResultMapper">
-		 SELECT e.ID,EMP_CODE, EMP_NAME, ID_NO,ORG_NAME,d.DUTY_NAME, UPPER_ID, UPPER_NAME,
+		 SELECT e.ID,e.REGION_ID,EMP_CODE, EMP_NAME, ID_NO,ORG_NAME,d.DUTY_NAME, UPPER_ID, UPPER_NAME,
 		 GENDER, BIRTHDAY, NATION, MARRIED, PHONE_NO,EMAIL, IN_SERVICE FROM T_EMPLOYEE e 
 		 LEFT JOIN T_DUTY d ON d.ID = e.DUTY_ID
 		 LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ID
 		 WHERE e.ID = #{id} AND IS_HISTORY = 2
 	</select>
 	<select id="listPaginationByProperty" parameterType="EmpInfoDto" resultMap="EmpInfoDtoResultMapper">
-		 SELECT e.ID,EMP_CODE, e.EMP_NAME, e.ID_NO,o.ORG_NAME,u.USER_CODE,d.DUTY_NAME,UPPER_ID, e.UPPER_NAME,
+		 SELECT e.ID,e.REGION_ID,r.REGION_NAME AS COUNTRY_NAME,EMP_CODE, e.EMP_NAME, e.ID_NO,o.ORG_NAME,u.USER_CODE,d.DUTY_NAME,UPPER_ID, e.UPPER_NAME,
 		 e.GENDER, e.BIRTHDAY, e.NATION, e.MARRIED, e.MOBILE_NO,e.EMAIL, e.IN_SERVICE,e.CREATED_BY,
 		 e.CREATED_TIME, e.UPDATED_BY,e.UPDATED_TIME FROM T_EMPLOYEE e 
+		 LEFT JOIN T_REGION r ON r.ID = e.REGION_ID
 		 LEFT JOIN T_DUTY d ON d.ID = e.DUTY_ID
 		 LEFT JOIN T_ORGANIZATION o ON e.ORG_ID = o.ID
 		 LEFT JOIN T_USER u ON u.ID = e.U_ID

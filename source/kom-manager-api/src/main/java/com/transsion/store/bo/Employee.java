@@ -31,6 +31,11 @@ public class Employee extends Model{
 	private java.lang.Long id;
 	
 	/**
+	 * 
+	 * */
+	private Integer regionId;
+	
+	/**
 	  *	
 	  */
 	private java.lang.Long uId;
@@ -161,6 +166,16 @@ public class Employee extends Model{
 	  *	
 	  */
 	private java.lang.Integer version;
+	
+	
+
+	public Integer getRegionId() {
+		return regionId;
+	}
+
+	public void setRegionId(Integer regionId) {
+		this.regionId = regionId;
+	}
 
 	public java.lang.Long getId() {
 		return id;
@@ -388,14 +403,15 @@ public class Employee extends Model{
 
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", uId=" + uId + ", empId=" + empId + ", empCode=" + empCode + ", empName="
-						+ empName + ", idNo=" + idNo + ", companyId=" + companyId + ", orgId=" + orgId + ", dutyId="
-						+ dutyId + ", upperId=" + upperId + ", upperName=" + upperName + ", gender=" + gender
-						+ ", birthday=" + birthday + ", nation=" + nation + ", married=" + married + ", phoneNo="
-						+ phoneNo + ", mobileNo=" + mobileNo + ", email=" + email + ", nativePlace=" + nativePlace
-						+ ", zipCode=" + zipCode + ", inService=" + inService + ", isHistory=" + isHistory + ", remark="
-						+ remark + ", createdBy=" + createdBy + ", createdTime=" + createdTime + ", updatedBy="
-						+ updatedBy + ", updatedTime=" + updatedTime + ", version=" + version + "]";
+		return "Employee [id=" + id + ", regionId=" + regionId + ", uId=" + uId + ", empId=" + empId + ", empCode="
+						+ empCode + ", empName=" + empName + ", idNo=" + idNo + ", companyId=" + companyId + ", orgId="
+						+ orgId + ", dutyId=" + dutyId + ", upperId=" + upperId + ", upperName=" + upperName
+						+ ", gender=" + gender + ", birthday=" + birthday + ", nation=" + nation + ", married="
+						+ married + ", phoneNo=" + phoneNo + ", mobileNo=" + mobileNo + ", email=" + email
+						+ ", nativePlace=" + nativePlace + ", zipCode=" + zipCode + ", inService=" + inService
+						+ ", isHistory=" + isHistory + ", remark=" + remark + ", createdBy=" + createdBy
+						+ ", createdTime=" + createdTime + ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime
+						+ ", version=" + version + "]";
 	}
 
 }

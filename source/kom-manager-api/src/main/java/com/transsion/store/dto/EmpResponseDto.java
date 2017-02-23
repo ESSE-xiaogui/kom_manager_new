@@ -18,6 +18,8 @@ public class EmpResponseDto implements Serializable{
 	  */
 	private java.lang.Long id;
 	
+	private Integer regionId;
+	
 	/**
 	  *	
 	  */
@@ -145,6 +147,14 @@ public class EmpResponseDto implements Serializable{
 		this.empName = empName;
 	}
 	
+
+	public Integer getRegionId() {
+		return regionId;
+	}
+
+	public void setRegionId(Integer regionId) {
+		this.regionId = regionId;
+	}
 
 	public java.lang.Long getId() {
 		return id;
@@ -340,14 +350,14 @@ public class EmpResponseDto implements Serializable{
 
 	@Override
 	public String toString() {
-		return "EmpResponseDto [status=" + status + ", id=" + id + ", uId=" + uId + ", empId=" + empId + ", empCode="
-						+ empCode + ", empName=" + empName + ", idNo=" + idNo + ", companyId=" + companyId + ", orgId="
-						+ orgId + ", orgName=" + orgName + ", dutyId=" + dutyId + ", dutyName=" + dutyName
-						+ ", upperId=" + upperId + ", upperName=" + upperName + ", gender=" + gender + ", birthday="
-						+ birthday + ", nation=" + nation + ", married=" + married + ", phoneNo=" + phoneNo
-						+ ", mobileNo=" + mobileNo + ", email=" + email + ", nativePlace=" + nativePlace + ", zipCode="
-						+ zipCode + ", inService=" + inService + ", remark=" + remark + ", version=" + version + "]";
+		return "EmpResponseDto [status=" + status + ", id=" + id + ", regionId=" + regionId + ", uId=" + uId
+						+ ", empId=" + empId + ", empCode=" + empCode + ", empName=" + empName + ", idNo=" + idNo
+						+ ", companyId=" + companyId + ", orgId=" + orgId + ", orgName=" + orgName + ", dutyId="
+						+ dutyId + ", dutyName=" + dutyName + ", upperId=" + upperId + ", upperName=" + upperName
+						+ ", gender=" + gender + ", birthday=" + birthday + ", nation=" + nation + ", married="
+						+ married + ", phoneNo=" + phoneNo + ", mobileNo=" + mobileNo + ", email=" + email
+						+ ", nativePlace=" + nativePlace + ", zipCode=" + zipCode + ", inService=" + inService
+						+ ", remark=" + remark + ", version=" + version + "]";
 	}
-
 	
 }

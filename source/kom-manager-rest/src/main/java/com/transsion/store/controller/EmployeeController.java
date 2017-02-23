@@ -126,10 +126,10 @@ public class EmployeeController extends AbstractController{
 	@Path("/update")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public EmpResponseDto updateEmp(Employee employee) throws ServiceException
+	public void updateEmp(Employee employee) throws ServiceException
 	{
 		String token = this.getAuthorization();
-		return employeeFacade.updateEmp(token,employee);
+		employeeFacade.updateEmp(token,employee);
 	}
 	
 	/**
@@ -141,9 +141,9 @@ public class EmployeeController extends AbstractController{
 	@Path("/createUser")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public EmpResponseDto createUser(EmpUserDto empUserDto) throws ServiceException{
+	public void createUser(EmpUserDto empUserDto) throws ServiceException{
 		String token = this.getAuthorization();
-		return employeeFacade.createUser(token,empUserDto);
+		employeeFacade.createUser(token,empUserDto);
 	}
 	
 	/**
@@ -155,9 +155,9 @@ public class EmployeeController extends AbstractController{
 	@Path("/editUser")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public EmpResponseDto editUser(EmpUserDto empUserDto) throws ServiceException{
+	public void editUser(EmpUserDto empUserDto) throws ServiceException{
 		String token = this.getAuthorization();
-		return employeeFacade.editUser(token,empUserDto);
+		employeeFacade.editUser(token,empUserDto);
 	}
 	
 	/**

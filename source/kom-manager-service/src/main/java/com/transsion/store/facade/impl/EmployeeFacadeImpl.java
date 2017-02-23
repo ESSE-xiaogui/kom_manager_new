@@ -166,9 +166,9 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public EmpResponseDto updateEmp(String token,Employee employee) throws ServiceException
+	public void updateEmp(String token,Employee employee) throws ServiceException
 	{
-		return employeeManager.updateEmp(token,employee);
+		employeeManager.updateEmp(token,employee);
 	}
 	
 	/**
@@ -176,8 +176,8 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public EmpResponseDto createUser(String token,EmpUserDto empUserDto) throws ServiceException{
-		return employeeManager.createUser(token,empUserDto);
+	public void createUser(String token,EmpUserDto empUserDto) throws ServiceException{
+		employeeManager.createUser(token,empUserDto);
 	}
 	
 	/**
@@ -185,8 +185,8 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public EmpResponseDto editUser(String token,EmpUserDto empUserDto) throws ServiceException{
-		return employeeManager.editUser(token,empUserDto);
+	public void editUser(String token,EmpUserDto empUserDto) throws ServiceException{
+		employeeManager.editUser(token,empUserDto);
 	}
 	
 	/**

@@ -117,21 +117,21 @@ public interface EmployeeFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public EmpResponseDto updateEmp(String token, Employee employee) throws ServiceException;
+	public void updateEmp(String token, Employee employee) throws ServiceException;
 
 	/**
 	 * 为员工分配账号
 	 * @return
 	 * @throws ServiceException
 	 */
-	public EmpResponseDto createUser(String token, EmpUserDto empUserDto) throws ServiceException;
+	public void createUser(String token, EmpUserDto empUserDto) throws ServiceException;
 
 	/**
 	 * 更换账号绑定员工
 	 * @return
 	 * @throws ServiceException
 	 */
-	public EmpResponseDto editUser(String token, EmpUserDto empUserDto) throws ServiceException;
+	public void editUser(String token, EmpUserDto empUserDto) throws ServiceException;
 
 	/**
 	 *  模糊查询员工姓名
