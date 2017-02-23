@@ -3,6 +3,7 @@ package com.transsion.store.controller;
 import java.util.List;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -27,7 +28,7 @@ public class AttributeController extends AbstractController{
 	 * @param type
 	 * @return
 	 */
-	@GET
+	@POST
 	@Path("/getAttributeListByType")
 	@Produces({MediaType.APPLICATION_JSON})
 	public List<Attribute> getAttributeListByType(Type type)throws ServiceException{
