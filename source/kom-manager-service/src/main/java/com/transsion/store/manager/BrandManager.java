@@ -80,8 +80,8 @@ public class BrandManager {
 		brand.setCompanyId(userContext.getCompanyId().intValue());
 		List<Brand> brandList = brandMapper.listByProperty(brand);
 		if(UtilHelper.isEmpty(brandList)){
-			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
-		}
+			return null;
+		}else{
 		List<BrandDto> brandDtoList = new ArrayList<BrandDto>();
 		for(Brand b:brandList){
 			BrandDto bd = new BrandDto();
@@ -91,6 +91,7 @@ public class BrandManager {
 			brandDtoList.add(bd);
 		}
 		return brandDtoList;
+		}
 	}
 
 	/**
