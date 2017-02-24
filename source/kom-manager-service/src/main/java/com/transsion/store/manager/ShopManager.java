@@ -255,10 +255,16 @@ public class ShopManager {
 		Shop shop = shopDetailDto.getShop();
 		shopService.save(shop);
 		
+		Long shopId = shop.getId();
+		
 		ShopExtension shopExtension = shopDetailDto.getShopExtension();
+		shopExtension.setShopId(shopId);
 		shopExtensionService.save(shopExtension);
 		
 		List<ShopMateriel> list = shopDetailDto.getShopMaterielDtoList();
+		for (ShopMateriel shopMateriel : list) {
+			shopMateriel.setShopId(shopId);
+		}
 		shopMaterielService.saveShopMateriel(list);
 		
 		ShopUploadDto shopUploadDto = new ShopUploadDto();
