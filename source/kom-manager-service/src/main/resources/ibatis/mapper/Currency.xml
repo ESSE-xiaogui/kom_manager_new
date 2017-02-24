@@ -376,9 +376,9 @@
 		WHERE 1=1 
 		<include refid="commonConditionByPrefix"/>
 	</select>
-	<select id="findCurrencyName" parameterType="java.lang.Long"
+	<select id="findCurrencyName"
 		resultMap="CurrencyResultDtoResultMapper">
 		SELECT CURRENCY_NAME
-		FROM T_CURRENCY WHERE COMPANY_ID = #{companyId}
+		FROM T_CURRENCY
 	</select>
 </mapper>

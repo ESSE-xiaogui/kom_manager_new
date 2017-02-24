@@ -41,7 +41,6 @@ public class CurrencyManager {
 		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getCompanyId())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
-		currency.setCompanyId(userContext.getCompanyId());
 		if(!UtilHelper.isEmpty(userContext.getUser())){
 			currency.setCreatedBy(userContext.getUserCode());
 		}
@@ -64,7 +63,6 @@ public class CurrencyManager {
 		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getCompanyId())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
-		currency.setCompanyId(userContext.getCompanyId());
 		if(!UtilHelper.isEmpty(userContext.getUser())){
 			if(!UtilHelper.isEmpty(userContext.getUser().getUserId())){
 				currency.setCreatedBy(userContext.getUserCode());
@@ -105,18 +103,8 @@ public class CurrencyManager {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public List<CurrencyResultDto> findCurrencyName(String token) throws ServiceException{
-		if(UtilHelper.isEmpty(token)){
-			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
-		}
-		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext)){
-			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
-		}
-		if(UtilHelper.isEmpty(userContext.getCompanyId())){
-			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
-		}
-		return currencyMapper.findCurrencyName(userContext.getCompanyId());
+	public List<CurrencyResultDto> findCurrencyName() throws ServiceException{
+		return currencyMapper.findCurrencyName();
 	}
 
 }

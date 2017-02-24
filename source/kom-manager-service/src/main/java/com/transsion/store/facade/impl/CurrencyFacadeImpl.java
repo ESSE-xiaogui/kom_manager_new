@@ -78,7 +78,7 @@ public class CurrencyFacadeImpl implements CurrencyFacade{
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public List<CurrencyResultDto> findCurrencyName(String token) throws ServiceException{
-		return currencyManager.findCurrencyName(token);
+	public List<CurrencyResultDto> findCurrencyName() throws ServiceException{
+		return currencyManager.findCurrencyName();
 	}
 }
