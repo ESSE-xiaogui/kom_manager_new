@@ -85,7 +85,10 @@ public class ShopService {
 			throws ServiceException
 	{
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
-		List<ShopInfoDto> list = shopMapper.listPaginationByProperty(pagination, shopInfoDto, pagination.getOrderBy());
+		
+		Integer companyId = userContext.isAdmin()?null:userContext.getCompanyId().intValue();
+		
+		List<ShopInfoDto> list = shopMapper.listPaginationByProperty(pagination, shopInfoDto, pagination.getOrderBy(),companyId);
 		
 		pagination.setResultList(list);
 		

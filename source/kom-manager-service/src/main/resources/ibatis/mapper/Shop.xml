@@ -499,13 +499,13 @@
 				AND s.SHOP_NAME=#{shopInfoDto.shopName}
             </if>
             <if test="shopInfoDto.companyId!= null and shopInfoDto.companyId!= ''">
-				AND COMPANY_ID=#{shopInfoDto.companyId}
+				AND s.COMPANY_ID=#{shopInfoDto.companyId}
             </if>
             <if test="shopInfoDto.parentId!= null and shopInfoDto.parentId!= ''">
 				AND PARENT_ID=#{shopInfoDto.parentId}
             </if>
             <if test="shopInfoDto.regionId!= null and shopInfoDto.regionId!= ''">
-				AND s.REGION_ID=#{shopInfoDto.regionId}
+				AND r1.ID=#{shopInfoDto.regionId}
             </if>
             <if test="shopInfoDto.country!= null and shopInfoDto.country!= ''">
 				AND COUNTRY=#{shopInfoDto.country}
@@ -966,7 +966,7 @@
 	<select id="queryShopByShopId" parameterType="java.lang.Long" resultMap="ShopResultMapper">
 		SELECT * FROM T_SHOP WHERE SHOP_ID = #{shopId}
 	</select>
-	<select id="listShopByProperty" parameterType="ShopInfoDto" resultMap="ShopInfoDtoResultMapper">
+	<select id="listShopByProperty"  resultMap="ShopInfoDtoResultMapper">
 		SELECT 
 		<include refid="commonProcessDateColumn"/>
 		FROM T_SHOP s 

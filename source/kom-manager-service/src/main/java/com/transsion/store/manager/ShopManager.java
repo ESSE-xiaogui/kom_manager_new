@@ -35,6 +35,7 @@ import com.transsion.store.service.AttributeService;
 import com.transsion.store.service.ShopExtensionService;
 import com.transsion.store.service.ShopMaterielService;
 import com.transsion.store.service.ShopService;
+import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 import com.transsion.store.utils.ExcelUtils;
 
@@ -72,6 +73,9 @@ public class ShopManager {
 	
 	@Autowired
 	private UserShopMapper userShopMapper;
+	
+	@Autowired
+	private SystemDateService systemDateService;
  
 	/**
 	 * 用户已绑定的店铺
@@ -370,14 +374,24 @@ public class ShopManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		
-		Shop tempShop = new Shop();
-		tempShop.setShopName(shopInfoDto.getShopName());
-		int count1 = shopService.findByCount(tempShop);
-		tempShop.setId(shopInfoDto.getId());
-		int count2 = shopService.findByCount(tempShop);
-		if(count1>0&&count2<1){
+		Shop tempShop1 = new Shop();
+		tempShop1.setShopName(shopInfoDto.getShopName());
+		int countShopName1 = shopService.findByCount(tempShop1);
+		tempShop1.setId(shopInfoDto.getId());
+		int countShopName2 = shopService.findByCount(tempShop1);
+		if(countShopName1>0&&countShopName2<1){
 			throw new ServiceException(ExceptionDef.ERROR_SHOP_ALREADY_EXIST.getName());
 		}
+		
+		Shop tempShop2 = new Shop();
+		tempShop2.setShopName(shopInfoDto.getShopName());
+		int countShopCode1 = shopService.findByCount(tempShop2);
+		tempShop1.setId(shopInfoDto.getId());
+		int countShopCode2 = shopService.findByCount(tempShop2);
+		if(countShopCode1>0&&countShopCode2<1){
+			throw new ServiceException(ExceptionDef.ERROR_SHOPCODE_ALREADY_EXIST.getName());
+		}
+		
 		Long regionId = shopInfoDto.getRegionId();
 		
 		Shop shop = shopMapper.getByPK(shopInfoDto.getId());
@@ -391,6 +405,7 @@ public class ShopManager {
 			shop.setCountry(region.getParentId().intValue());
 		}
 		shop.setAddress(shopInfoDto.getAddress());
+		shop.setShopCode(shopInfoDto.getShopCode());
 		shop.setGradeId(shopInfoDto.getGradeId());
 		shop.setBizId(shopInfoDto.getBizId());
 		shop.setOwnerName(shopInfoDto.getOwnerName());
@@ -398,6 +413,8 @@ public class ShopManager {
 		shop.setPurchasChannel(shopInfoDto.getPurchasChannel());
 		shop.setRemark(shopInfoDto.getRemark());
 		shop.setStatus(1);
+		shop.setUpdateBy(userContext.getUser().getUserCode());
+		shop.setUpdateDate(systemDateService.getCurrentDate());
 		shopMapper.update(shop);
 		
 		ShopExtension shopExt = shopExtensionService.getByPK(shopInfoDto.getId());
@@ -437,7 +454,7 @@ public class ShopManager {
 		int i=1;
 		for(ShopInfoDto shopInfoDto1 :list){
 			dataset.add(new Object[]{i++,shopInfoDto1.getStatus()==1?"已生效":"新申请",
-		shopInfoDto1.getCompanyCode(),shopInfoDto1.getShopId(),shopInfoDto1.getShopName(),
+		shopInfoDto1.getCompanyCode(),shopInfoDto1.getShopCode(),shopInfoDto1.getShopName(),
 		shopInfoDto1.getGradeName(),shopInfoDto1.getBizName(),shopInfoDto1.getCountryName(),
 		shopInfoDto1.getCityName(),shopInfoDto1.getAddress(),shopInfoDto1.getOwnerName(),
 		shopInfoDto1.getOwnerPhone(),shopInfoDto1.getPurchasChannel(),shopInfoDto1.getShopArea(),

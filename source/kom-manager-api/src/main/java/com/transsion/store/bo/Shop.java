@@ -38,7 +38,7 @@ public class Shop extends Model{
 	/**
 	  *	生成方式：国家简称加六位数的序号。
 	  */
-	private java.lang.Integer shopCode;
+	private java.lang.String shopCode;
 
 	/**
 	  *	
@@ -297,7 +297,7 @@ public class Shop extends Model{
 	/**
 	  *	生成方式：国家简称加六位数的序号。
 	  */
-	public java.lang.Integer getShopCode() 
+	public java.lang.String getShopCode() 
 	{
 		return shopCode;
 	}
@@ -305,7 +305,7 @@ public class Shop extends Model{
 	/**
 	  *	生成方式：国家简称加六位数的序号。
 	  */
-	public void setShopCode(java.lang.Integer shopCode) 
+	public void setShopCode(java.lang.String shopCode) 
 	{
 		this.shopCode = shopCode;
 	}

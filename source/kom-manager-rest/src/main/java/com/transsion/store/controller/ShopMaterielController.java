@@ -18,15 +18,28 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.ShopMateriel;
+import com.transsion.store.controller.SaleController.BigFileOutputStream;
+import com.transsion.store.dto.SaleDailyDto;
+import com.transsion.store.dto.ShopMaterielDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.ShopMaterielFacade;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
@@ -59,9 +72,9 @@ public class ShopMaterielController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<ShopMateriel> listPgShopMateriel(RequestModel<ShopMateriel> requestModel) throws ServiceException
+	public Pagination<ShopMaterielDto> listPgShopMateriel(RequestModel<ShopMaterielDto> requestModel) throws ServiceException
 	{
-		Pagination<ShopMateriel> pagination = new Pagination<ShopMateriel>();
+		Pagination<ShopMaterielDto> pagination = new Pagination<ShopMaterielDto>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());
@@ -69,7 +82,7 @@ public class ShopMaterielController extends AbstractController{
 		pagination.setParams(requestModel.getParams());
 		pagination.setOrderBy(requestModel.getOrderBy());
 
-		return shopMaterielFacade.listPaginationByProperty(pagination, requestModel.getParams());
+		return shopMaterielFacade.listPaginationByProperty(pagination, requestModel.getParams(),this.getAuthorization());
 	}
 
 	/**
@@ -110,4 +123,64 @@ public class ShopMaterielController extends AbstractController{
 	{
 		shopMaterielFacade.update(shopMateriel);
 	}
+	
+	/**
+	 * 物料统计导出Excel
+	 * 
+	 * @return
+	 */
+	@GET
+	@Path("/exportExcel") 
+	@Produces({MediaType.TEXT_PLAIN})  
+	public Response getShopMaterielByExcel(@QueryParam("createDateStart") String createDateStart,
+		@QueryParam("createDateEnd") String createDateEnd,@QueryParam("updateDateStart") String updateDateStart,
+		@QueryParam("updateDateEnd") String updateDateEnd,@QueryParam("companyId") String companyId,
+		@QueryParam("createBy") String createBy,@QueryParam("regionId") String regionId,
+		@QueryParam("shopCode") String shopCode,@QueryParam("shopName") String shopName) throws ServiceException,IOException {
+		ShopMaterielDto shopMaterielDto = new ShopMaterielDto();
+		shopMaterielDto.setCreateDateStart(createDateStart);
+		shopMaterielDto.setCreateDateEnd(createDateEnd);
+		shopMaterielDto.setUpdateDateStart(updateDateStart);
+		shopMaterielDto.setUpdateDateEnd(updateDateEnd);
+		shopMaterielDto.setCreateBy(createBy);
+		shopMaterielDto.setShopName(shopName);
+		shopMaterielDto.setShopCode(shopCode);
+		if(!UtilHelper.isEmpty(companyId)){
+			shopMaterielDto.setCompanyId(Integer.valueOf(companyId));
+		}
+		if(!UtilHelper.isEmpty(regionId)){
+			shopMaterielDto.setRegionId(Integer.valueOf(companyId));
+		}
+		byte[] bytes = shopMaterielFacade.getShopMaterielByExcel(shopMaterielDto);       
+		InputStream inputStream = new ByteArrayInputStream(bytes);          
+		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));          
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"物料统计报表.xlsx";
+		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));         
+		//根据自己文件类型修改         
+		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");          
+		return response.build();      	
+	}
+	class BigFileOutputStream implements javax.ws.rs.core.StreamingOutput {
+        private InputStream inputStream;
+        public BigFileOutputStream(){}
+        public BigFileOutputStream(InputStream inputStream)
+        {
+            this.inputStream = inputStream;
+        }
+
+        @Override
+        public void write(OutputStream output) throws IOException,
+                WebApplicationException {
+            // TODO Auto-generated method stub
+            IOUtils.copy(inputStream, output);
+        }
+
+        public InputStream getInputStream() {
+            return inputStream;
+        }
+        public void setInputStream(InputStream inputStream) {
+            this.inputStream = inputStream;
+        }
+    }
+
 }

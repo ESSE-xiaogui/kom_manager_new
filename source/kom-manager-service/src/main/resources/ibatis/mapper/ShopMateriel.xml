@@ -31,7 +31,25 @@
 		<result column="UPDATE_DATE" property="updateDate"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
-	
+	<resultMap id="ShopMaterielDtoResultMapper" type="ShopMaterielDto">
+		<result column="ID" property="id"/>
+		<result column="SHOP_CODE" property="shopCode"/>
+		<result column="MATERIEL_ID" property="materielId"/>
+		<result column="MATERIEL_QTY" property="materielQty"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_DATE" property="updateDate"/>
+		<result column="VERSION" property="version"/>
+		<result column="COMPANY_CODE" property="companyCode"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="TYPE" property="type"/>
+		<result column="NAME_EN" property="nameEN"/>
+		<result column="NAME_CN" property="nameCN"/>
+	</resultMap>
 	<sql id="commonColumns">
 		 ID
 		, SHOP_ID
@@ -104,36 +122,51 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="shopMateriel != null">
-            <if test="shopMateriel.id!= null and shopMateriel.id!= ''">
-				AND ID=#{shopMateriel.id}
+		<if test="shopMaterielDto != null">
+            <if test="shopMaterielDto.id!= null and shopMaterielDto.id!= ''">
+				AND sm.ID=#{shopMaterielDto.id}
             </if>
-            <if test="shopMateriel.shopId!= null and shopMateriel.shopId!= ''">
-				AND SHOP_ID=#{shopMateriel.shopId}
+            <if test="shopMaterielDto.companyId!= null and shopMaterielDto.companyId!= ''">
+				AND m.COMPANY_ID=#{shopMaterielDto.companyId}
             </if>
-            <if test="shopMateriel.materielId!= null and shopMateriel.materielId!= ''">
-				AND MATERIEL_ID=#{shopMateriel.materielId}
+            <if test="shopMaterielDto.shopCode!= null and shopMaterielDto.shopCode!= ''">
+				AND s.SHOP_CODE=#{shopMaterielDto.shopCode}
             </if>
-            <if test="shopMateriel.materielQty!= null and shopMateriel.materielQty!= ''">
-				AND MATERIEL_QTY=#{shopMateriel.materielQty}
+            <if test="shopMaterielDto.shopName!= null and shopMaterielDto.shopName!= ''">
+				AND s.SHOP_NAME=#{shopMaterielDto.shopName}
             </if>
-            <if test="shopMateriel.remark!= null and shopMateriel.remark!= ''">
-				AND REMARK=#{shopMateriel.remark}
+            <if test="shopMaterielDto.materielId!= null and shopMaterielDto.materielId!= ''">
+				AND MATERIEL_ID=#{shopMaterielDto.materielId}
             </if>
-            <if test="shopMateriel.createBy!= null and shopMateriel.createBy!= ''">
-				AND CREATE_BY=#{shopMateriel.createBy}
+            <if test="shopMaterielDto.materielQty!= null and shopMaterielDto.materielQty!= ''">
+				AND MATERIEL_QTY=#{shopMaterielDto.materielQty}
             </if>
-            <if test="shopMateriel.createDate!= null and shopMateriel.createDate!= ''">
-				AND CREATE_DATE=str_to_date(#{shopMateriel.createDate},'%Y-%m-%d %H:%i:%s')
+            <if test="shopMaterielDto.regionId!= null and shopMaterielDto.regionId!= ''">
+				AND r1.ID=#{shopMaterielDto.regionId}
             </if>
-            <if test="shopMateriel.updateBy!= null and shopMateriel.updateBy!= ''">
-				AND UPDATE_BY=#{shopMateriel.updateBy}
+            <if test="shopMaterielDto.remark!= null and shopMaterielDto.remark!= ''">
+				AND sm.REMARK=#{shopMaterielDto.remark}
             </if>
-            <if test="shopMateriel.updateDate!= null and shopMateriel.updateDate!= ''">
-				AND UPDATE_DATE=str_to_date(#{shopMateriel.updateDate},'%Y-%m-%d %H:%i:%s')
+            <if test="shopMaterielDto.createBy!= null and shopMaterielDto.createBy!= ''">
+				AND sm.CREATE_BY=#{shopMaterielDto.createBy}
             </if>
-            <if test="shopMateriel.version!= null and shopMateriel.version!= ''">
-				AND VERSION=#{shopMateriel.version}
+             <if test="shopMaterielDto.createDateStart!= null and shopMaterielDto.createDateStart!= ''">
+				AND sm.CREATE_DATE &gt;=str_to_date(#{shopMaterielDto.createDateStart},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="shopMaterielDto.createDateEnd!= null and shopMaterielDto.createDateEnd!= ''">
+				AND sm.CREATE_DATE &lt;=str_to_date(#{shopMaterielDto.createDateEnd},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="shopMaterielDto.updateBy!= null and shopMaterielDto.updateBy!= ''">
+				AND UPDATE_BY=#{shopMaterielDto.updateBy}
+            </if>
+            <if test="shopMaterielDto.updateDateStart!= null and shopMaterielDto.updateDateStart!= ''">
+				AND sm.UPDATE_DATE &gt;=str_to_date(#{shopMaterielDto.updateDateStart},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="shopMaterielDto.updateDateEnd!= null and shopMaterielDto.updateDateEnd!= ''">
+				AND sm.UPDATE_DATE &lt;=str_to_date(#{shopMaterielDto.updateDateEnd},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="shopMaterielDto.version!= null and shopMaterielDto.version!= ''">
+				AND sm.VERSION=#{shopMaterielDto.version}
             </if>
         </if>
     </sql>
@@ -242,10 +275,20 @@
 		FROM T_SHOP_MATERIEL WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="ShopMateriel" resultMap="ShopMaterielResultMapper">
-		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_SHOP_MATERIEL WHERE 1=1
+	<select id="listPaginationByProperty"  resultMap="ShopMaterielDtoResultMapper">
+		SELECT sm.ID, s.SHOP_CODE,MATERIEL_QTY,sm.REMARK,sm.CREATE_BY,sm.CREATE_DATE, 
+		sm.UPDATE_BY,sm.UPDATE_DATE,COMPANY_CODE,r1.REGION_NAME AS COUNTRY_NAME,
+		r2.REGION_NAME AS CITY_NAME,SHOP_NAME,m.TYPE,m.NAME_EN,m.NAME_CN
+		FROM T_SHOP_MATERIEL sm
+		LEFT JOIN T_MATERIEL m ON m.ID = sm.MATERIEL_ID
+		LEFT JOIN T_COMPANY c ON c.ID = m.COMPANY_ID
+		LEFT JOIN T_SHOP s ON s.ID = sm.SHOP_ID
+		LEFT JOIN T_REGION r1 ON r1.ID = s.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = s.CITY
+	    WHERE 1=1
+	    <if test="companyId!= null and companyId!= ''"> 
+			AND m.COMPANY_ID =#{companyId}
+		</if>
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>
@@ -278,5 +321,20 @@
 		SELECT * FROM T_SHOP_MATERIEL WHERE SHOP_ID = #{shopId} AND CREATE_DATE = (
 			SELECT MAX(CREATE_DATE) FROM T_SHOP_MATERIEL WHERE SHOP_ID = #{shopId}
 		)
+	</select>
+	<select id="listShopMaterielByProperty"  resultMap="ShopMaterielDtoResultMapper">
+		SELECT sm.ID, s.SHOP_CODE,MATERIEL_QTY,sm.REMARK,sm.CREATE_BY,sm.CREATE_DATE, 
+		sm.UPDATE_BY,sm.UPDATE_DATE,COMPANY_CODE,r1.REGION_NAME AS COUNTRY_NAME,
+		r2.REGION_NAME AS CITY_NAME,SHOP_NAME,m.TYPE,m.NAME_EN,m.NAME_CN
+		FROM T_SHOP_MATERIEL sm
+		LEFT JOIN T_MATERIEL m ON m.ID = sm.MATERIEL_ID
+		LEFT JOIN T_COMPANY c ON c.ID = m.COMPANY_ID
+		LEFT JOIN T_SHOP s ON s.ID = sm.SHOP_ID
+		LEFT JOIN T_REGION r1 ON r1.ID = s.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = s.CITY
+	    WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<!-- <include refid="orderByClause" /> -->
+    	order by sm.CREATE_DATE
 	</select>
 </mapper>
