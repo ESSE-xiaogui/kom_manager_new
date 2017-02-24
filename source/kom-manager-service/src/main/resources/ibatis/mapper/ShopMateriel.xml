@@ -238,8 +238,6 @@
 			, MATERIEL_ID=#{materielId} 
 			, MATERIEL_QTY=#{materielQty} 
 			, REMARK=#{remark} 
-			, CREATE_BY=#{createBy} 
-			, CREATE_DATE=str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
 			, UPDATE_BY=#{updateBy} 
 			, UPDATE_DATE=str_to_date(#{updateDate},'%Y-%m-%d %H:%i:%s')
 			, VERSION=#{version} 
@@ -318,7 +316,8 @@
 	</insert>
 	
 	<select id="queryShopMaterielListByShopId" parameterType="java.lang.Long" resultMap="ShopMaterielResultMapper">
-		SELECT * FROM T_SHOP_MATERIEL WHERE SHOP_ID = #{shopId} AND CREATE_DATE = (
+		SELECT s.*, m.NAME_EN AS materielName FROM T_SHOP_MATERIEL s LEFT JOIN T_MATERIEL m ON s.MATERIEL_ID = m.ID 
+		WHERE s.SHOP_ID = #{shopId} AND s.CREATE_DATE = (
 			SELECT MAX(CREATE_DATE) FROM T_SHOP_MATERIEL WHERE SHOP_ID = #{shopId}
 		)
 	</select>
