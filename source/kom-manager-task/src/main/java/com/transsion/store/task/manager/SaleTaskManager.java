@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Currency;
+import com.transsion.store.bo.Region;
 import com.transsion.store.bo.Sale;
 import com.transsion.store.bo.SaleItem;
 import com.transsion.store.bo.Shop;
@@ -23,6 +24,7 @@ import com.transsion.store.dto.UserDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.manager.ScanValidateManager;
 import com.transsion.store.mapper.CurrencyMapper;
+import com.transsion.store.mapper.RegionMapper;
 import com.transsion.store.mapper.SaleItemMapper;
 import com.transsion.store.mapper.SaleMapper;
 import com.transsion.store.mapper.ShopMapper;
@@ -64,6 +66,9 @@ public class SaleTaskManager {
 
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private RegionMapper regionMapper;
 
 	/**
 	 * excel解析 转成实体
@@ -241,56 +246,87 @@ public class SaleTaskManager {
 		} else {
 			for (Map<String, Object> map : list) {
 				Currency currency = new Currency();
-				Long country = (Long) map.get("国家");
+				String country = (String) map.get("国家");
 				String werks = (String) map.get("币别编码");
 				String currencyName = (String) map.get("币别名称");
-				BigDecimal exchangerate = (BigDecimal) map.get("美元兑外币汇率");
-				BigDecimal exchangerate2 = (BigDecimal) map.get("人民币兑外币汇率");
+				String exchangerate = (String) map.get("美元兑外币汇率");
+				String exchangerate2 = (String) map.get("人民币兑外币汇率");
 				String beginTime = (String) map.get("生效日期");
 				String endTime = (String) map.get("失效日期");
-				Integer isInactive = (Integer) map.get("是否停用");
+				String isInactive = (String) map.get("是否停用");
 				if (UtilHelper.isEmpty(country)) {
 					taskDetail.setMessage("country is null");
+					taskDetail.setStatus(2);
 				}
 				if (UtilHelper.isEmpty(werks)) {
 					taskDetail.setMessage("werks is null");
+					taskDetail.setStatus(2);
 				}
 				if (UtilHelper.isEmpty(currencyName)) {
 					taskDetail.setMessage("currencyName is null");
+					taskDetail.setStatus(2);
 				}
 				if (UtilHelper.isEmpty(exchangerate)) {
 					taskDetail.setMessage("exchangerate is null");
+					taskDetail.setStatus(2);
 				}
 				if (UtilHelper.isEmpty(exchangerate2)) {
 					taskDetail.setMessage("exchangerate2 is null");
+					taskDetail.setStatus(2);
 				}
 				if (UtilHelper.isEmpty(beginTime)) {
 					taskDetail.setMessage("beginTime is null");
+					taskDetail.setStatus(2);
 				}
 				if (UtilHelper.isEmpty(endTime)) {
 					taskDetail.setMessage("endTime is null");
+					taskDetail.setStatus(2);
 				}
 				if (UtilHelper.isEmpty(isInactive)) {
 					taskDetail.setMessage("isInactive is null");
+					taskDetail.setStatus(2);
 				}
 				if (!UtilHelper.isEmpty(country) && !UtilHelper.isEmpty(werks) && !UtilHelper.isEmpty(currencyName)
 								&& !UtilHelper.isEmpty(exchangerate) && !UtilHelper.isEmpty(exchangerate2)
 								&& !UtilHelper.isEmpty(beginTime) && !UtilHelper.isEmpty(endTime)
-								&& UtilHelper.isEmpty(isInactive)) {
-					currency.setCompanyId(1L);
+								&& !UtilHelper.isEmpty(isInactive)) {
 					currency.setFindex(1);
-					currency.setRegionId(country);
-					currency.setWerks(werks);
-					currency.setCurrencyName(currencyName);
-					currency.setExchangerate(exchangerate);
-					currency.setExchangerate2(exchangerate2);
-					currency.setBeginTime(beginTime);
-					currency.setEndTime(endTime);
-					currency.setIsInactive(isInactive);
-					currency.setCreatedBy(task.getUserName());
-					currency.setCreatedTime(systemDateService.getCurrentDate());
-					currencyMapper.save(currency);
-					taskDetail.setMessage("ok");
+					Region region = regionMapper.findRegionByName(country);
+					if(UtilHelper.isEmpty(region)){
+						taskDetail.setMessage("country is null");
+						taskDetail.setStatus(2);
+					}
+					Currency c = new Currency();
+					c.setCurrencyName(currencyName);
+					c.setBeginTime(beginTime);
+					c.setEndTime(endTime);
+					List<Currency> currencyList = currencyMapper.listByProperty(c);
+					if(!UtilHelper.isEmpty(currencyList)){
+						taskDetail.setMessage("currency is repeat");
+						taskDetail.setStatus(2);
+					}else{
+					if(!UtilHelper.isEmpty(region) && !UtilHelper.isEmpty(region.getId())){
+						currency.setRegionId(region.getId());
+						currency.setWerks(werks);
+						currency.setCurrencyName(currencyName);
+						BigDecimal cc = new BigDecimal(exchangerate);
+						currency.setExchangerate(cc);
+						BigDecimal cc2 = new BigDecimal(exchangerate2);
+						currency.setExchangerate2(cc2);
+						currency.setBeginTime(beginTime);
+						currency.setEndTime(endTime);
+						if(isInactive.equals("否")){
+							currency.setIsInactive(1);
+						}else{
+							currency.setIsInactive(2);
+						}
+						currency.setCreatedBy(task.getUserName());
+						currency.setCreatedTime(systemDateService.getCurrentDate());
+						currencyMapper.save(currency);
+						taskDetail.setMessage("ok");
+						taskDetail.setStatus(1);
+					}
+					}
 				}
 				taskDetail.setTaskId(task.getId());
 				String context = "country:" + country + "\r" + "werks:" + werks + "\r" + "currencyName:" + currencyName

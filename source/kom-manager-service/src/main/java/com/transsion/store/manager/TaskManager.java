@@ -85,7 +85,6 @@ public class TaskManager {
 //		msg.setBeanName(Constants.IMPORTTASK + task.getId());
 		// 从数据库中读取导入文件的地址
 		String importTask = configurationService.getValueByName(IMPORT_TASK_URL);
-		System.out.println(importTask);
 		msg.setBeanName(importTask + task.getId());
 		msg.setMethod(TaskInvokerInfo.RestMethod.PUT.toString());
 		msg.setParams(task.getId());

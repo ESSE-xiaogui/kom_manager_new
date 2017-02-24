@@ -54,6 +54,8 @@ public interface RegionMapper extends GenericIBatisMapper<Region, java.lang.Long
 
 	public List<Region> findCityListByParentRegionId(@Param("parentId")int parentId, @Param("userId")Long userId);
 	
+	public Region findRegionByName(@Param("countryName") String countryName);
+	
 	
 
 }
