@@ -297,11 +297,12 @@ public class ShopManager {
 		Integer userId = userContext.getUser().getId().intValue();
 		List<UserShop> shopIdList = userShopMapper.queryShopIdByUserId(userId);
 		
+		Long companyId = userContext.getCompanyId();
 		List<ShopDetailDto> list = new ArrayList<ShopDetailDto>();
 		for (int i = 0; i < shopIdList.size(); i++) {
 			ShopDetailDto shopDetailDto = new ShopDetailDto();
 			
-			Shop shop = shopMapper.queryShopByShopId(shopIdList.get(i).getShopId());
+			Shop shop = shopMapper.queryShopByShopId(shopIdList.get(i).getShopId(), companyId);
 			ShopExtension shopExtension = shopExtensionService.queryShopExtensionByShopId(shopIdList.get(i).getShopId());
 			List<ShopMateriel> shopMaterielList = shopMaterielService.queryShopMaterielListByShopId(shopIdList.get(i).getShopId());
 			
