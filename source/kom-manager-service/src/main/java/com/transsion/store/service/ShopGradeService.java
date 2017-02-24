@@ -85,13 +85,9 @@ public class ShopGradeService {
 		
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		
-		String brandCode = userContext.getBrandCode();
+		Integer companyId = userContext.isAdmin()?null:userContext.getCompanyId().intValue();
 		
-		if(!UtilHelper.isEmpty(shopGradeDto)&&!UtilHelper.isEmpty(brandCode)){
-			shopGradeDto.setBrandCode(brandCode);
-		}
-		
-		List<ShopGradeDto> list = shopGradeMapper.listPaginationByProperty(pagination, shopGradeDto, pagination.getOrderBy());
+		List<ShopGradeDto> list = shopGradeMapper.listPaginationByProperty(pagination, shopGradeDto, pagination.getOrderBy(),companyId);
 		
 		pagination.setResultList(list);
 		

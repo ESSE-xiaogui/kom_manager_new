@@ -294,6 +294,9 @@
 		FROM T_SHOP_GRADE s
 		LEFT JOIN T_ATTRIBUTE a ON a.ID = s.SALE_QTY
 		WHERE 1=1
+		<if test="companyId!= null and companyId!= ''"> 
+			AND s.COMPANY_ID =#{companyId}
+		</if>
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>
