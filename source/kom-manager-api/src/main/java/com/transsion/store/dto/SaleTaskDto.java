@@ -11,7 +11,15 @@ public class SaleTaskDto implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Integer companyId;
 	private String saleDate;
+	/**
+	 * shopId 
+	 * */
+	private Integer shopId;
 	private String shopCode;
+	/**
+	 * 用户Id
+	 * */
+	private Integer userId;
 	private String userCode;
 	private String imeiNo;
 	private BigDecimal price;
@@ -28,8 +36,20 @@ public class SaleTaskDto implements Serializable{
 	public void setSaleDate(String saleDate) {
 		this.saleDate = saleDate;
 	}
+	public Integer getShopId() {
+		return shopId;
+	}
+	public void setShopId(Integer shopId) {
+		this.shopId = shopId;
+	}
 	public String getShopCode() {
 		return shopCode;
+	}
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 	public void setShopCode(String shopCode) {
 		this.shopCode = shopCode;
@@ -60,7 +80,9 @@ public class SaleTaskDto implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "SaleTaskDto [companyId=" + companyId + ", saleDate=" + saleDate + ", shopCode=" + shopCode
-				+ ", userCode=" + userCode + ", imeiNo=" + imeiNo + ", price=" + price + ", remark=" + remark + "]";
+		return "SaleTaskDto [companyId=" + companyId + ", saleDate=" + saleDate + ", shopId=" + shopId + ", shopCode="
+						+ shopCode + ", userId=" + userId + ", userCode=" + userCode + ", imeiNo=" + imeiNo + ", price="
+						+ price + ", remark=" + remark + "]";
 	}
+
 }

@@ -910,7 +910,7 @@
 		WHERE COMPANY_ID = #{companyId}
 	</select>
 	<select id="findShopId" parameterType="java.lang.String" resultMap="ShopResultMapper">
-	SELECT COMPANY_ID,SHOP_ID FROM T_SHOP WHERE SHOP_CODE=#{shopCode}
+	SELECT COMPANY_ID,ID,SHOP_ID FROM T_SHOP WHERE SHOP_CODE=#{shopCode}
 	</select>
 	<select id="findShopByRegionId" resultMap="ShopChildrenDtoMapper">
 		SELECT p.ID,p.REGION_ID,p.SHOP_NAME FROM T_SHOP p
