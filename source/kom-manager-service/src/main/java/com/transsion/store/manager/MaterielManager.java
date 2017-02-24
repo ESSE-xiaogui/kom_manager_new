@@ -56,10 +56,14 @@ public class MaterielManager {
 		if(UtilHelper.isEmpty(userContext.getCompanyId())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
-		
+		Integer companyId = userContext.isAdmin()?null:userContext.getCompanyId().intValue();
 		Materiel tempMateriel = new Materiel();
 		tempMateriel.setName(materiel.getName());
-		tempMateriel.setBrandCode(materiel.getBrandCode());
+		if(UtilHelper.isEmpty(companyId)){
+			tempMateriel.setCompanyId(materiel.getCompanyId());
+		}
+		tempMateriel.setCompanyId(companyId);
+		tempMateriel.setType(materiel.getType());
 		int count = materielMapper.findByCount(tempMateriel);
 		if(count>0){
 			throw new ServiceException(ExceptionDef.ERROR_MATERIEL_ALREADY_EXIST.getName());
@@ -89,10 +93,14 @@ public class MaterielManager {
 		if(UtilHelper.isEmpty(userContext.getCompanyId())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
-		
+		Integer companyId = userContext.isAdmin()?null:userContext.getCompanyId().intValue();
 		Materiel tempMateriel = new Materiel();
 		tempMateriel.setName(materiel.getName());
-		tempMateriel.setBrandCode(materiel.getBrandCode());
+		if(UtilHelper.isEmpty(companyId)){
+			tempMateriel.setCompanyId(materiel.getCompanyId());
+		}
+		tempMateriel.setCompanyId(companyId);
+		tempMateriel.setType(materiel.getType());
 		int count1 = materielMapper.findByCount(tempMateriel);
 		tempMateriel.setId(materiel.getId());
 		int count2 = materielMapper.findByCount(tempMateriel);
