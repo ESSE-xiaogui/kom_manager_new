@@ -891,6 +891,9 @@
 		LEFT JOIN T_ATTRIBUTE a2 ON s.BIZ_CATEGORY = a2.ID 
 		LEFT JOIN T_ATTRIBUTE a3 ON s.BIZ_ID = a3.ID
 		WHERE 1=1
+		<if test="companyId!= null and companyId!= ''"> 
+			AND s.COMPANY_ID =#{companyId}
+		</if>
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>
