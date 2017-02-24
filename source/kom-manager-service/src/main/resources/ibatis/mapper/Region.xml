@@ -432,4 +432,10 @@
 		AND u.ID =#{userId}
 		GROUP BY c.ID,c.REGION_NAME
 	</select>
+	
+	<select id="findRegionByName" parameterType="java.lang.String"  resultMap="RegionResultMapper">
+	<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_REGION WHERE REGION_NAME = #{countryName}
+	</select>
 </mapper>

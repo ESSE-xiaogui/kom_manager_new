@@ -1,6 +1,8 @@
 package com.transsion.store.manager;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -252,7 +254,10 @@ public class ShopManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		
+		String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		Shop shop = shopDetailDto.getShop();
+		shop.setCreateBy(userContext.getUser().getId().toString());
+		shop.setCreateDate(currentDate);
 		shopService.save(shop);
 		
 		Long shopId = shop.getId();
@@ -262,8 +267,11 @@ public class ShopManager {
 		shopExtensionService.save(shopExtension);
 		
 		List<ShopMateriel> list = shopDetailDto.getShopMaterielDtoList();
+		String userCode = userContext.getUserCode();
 		for (ShopMateriel shopMateriel : list) {
 			shopMateriel.setShopId(shopId);
+			shopMateriel.setCreateBy(userCode);
+			shopMateriel.setCreateDate(currentDate);
 		}
 		shopMaterielService.saveShopMateriel(list);
 		
@@ -325,15 +333,20 @@ public class ShopManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		
+		String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		Shop shop = shopDetailDto.getShop();
+		shop.setUpdateBy(userContext.getUser().getId().toString());
+		shop.setUpdateDate(currentDate);
 		shopMapper.update(shop);
 		
 		ShopExtension shopExtension = shopDetailDto.getShopExtension();
 		shopExtensionService.update(shopExtension);
 		
 		List<ShopMateriel> list = shopDetailDto.getShopMaterielDtoList();
-		for (int i = 0; i < list.size(); i++) {
-			shopMaterielService.update(list.get(i));
+		for (ShopMateriel shopMateriel : list) {
+			shopMateriel.setUpdateBy(userContext.getUserCode());
+			shopMateriel.setUpdateDate(currentDate);
+			shopMaterielService.update(shopMateriel);
 		}
 	}
 	

@@ -827,8 +827,6 @@
 			, OPEN_DATE=str_to_date(#{openDate},'%Y-%m-%d %H:%i:%s')
 			, STATUS=#{status} 
 			, REMARK=#{remark} 
-			, CREATE_BY=#{createBy} 
-			, CREATE_DATE=str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
 			, UPDATE_BY=#{updateBy} 
 			, UPDATE_DATE=str_to_date(#{updateDate},'%Y-%m-%d %H:%i:%s')
 			, VERSION=#{version} 
@@ -967,7 +965,7 @@
 	</select>
 	
 	<select id="queryShopByShopId" parameterType="java.lang.Long" resultMap="ShopResultMapper">
-		SELECT * FROM T_SHOP WHERE SHOP_ID = #{shopId}
+		SELECT s.*, g.GRADE_NAME as gradeName FROM T_SHOP s LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID WHERE s.SHOP_ID = #{shopId}
 	</select>
 	<select id="listShopByProperty"  resultMap="ShopInfoDtoResultMapper">
 		SELECT 
