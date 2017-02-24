@@ -32,7 +32,7 @@ import com.transsion.store.dto.ShopUserDto;
 
 public interface ShopMapper extends GenericIBatisMapper<Shop, java.lang.Long> {
 
-    public List<ShopInfoDto> listPaginationByProperty(Pagination<ShopInfoDto> pagination, @Param("shopInfoDto")ShopInfoDto shopInfoDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<ShopInfoDto> listPaginationByProperty(Pagination<ShopInfoDto> pagination, @Param("shopInfoDto")ShopInfoDto shopInfoDto, @Param("orderBy") Map<String, String> orderBy, @Param("companyId")Integer companyId) throws DataAccessFailureException;
 
     public List<ShopUserDto> findShopUser(@Param("userId")Integer userId) throws DataAccessFailureException;
     public List<ShopUserDto> findShop(@Param("companyId")Integer companyId) throws DataAccessFailureException;

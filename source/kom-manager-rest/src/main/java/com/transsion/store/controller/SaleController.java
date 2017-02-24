@@ -260,7 +260,7 @@ public class SaleController extends AbstractController {
 		saleDailyDto.setCountryName(countryName);
 		saleDailyDto.setCityName(cityName);
 		if(!UtilHelper.isEmpty(shopId)){
-			saleDailyDto.setShopId(Integer.getInteger(shopId));
+			saleDailyDto.setShopId(Integer.valueOf(shopId));
 		}
 		saleDailyDto.setShopName(shopName);
 		saleDailyDto.setBrandCode(brandCode);

@@ -56,6 +56,6 @@ public interface CurrencyFacade {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public List<CurrencyResultDto> findCurrencyName(String token) throws ServiceException;
+	public List<CurrencyResultDto> findCurrencyName() throws ServiceException;
 	
 }

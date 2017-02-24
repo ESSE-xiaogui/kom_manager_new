@@ -131,7 +131,7 @@ public class CurrencyController extends AbstractController{
 			currencyDto.setRegionId(Long.parseLong(regionId));
 		}
 		if(!UtilHelper.isEmpty(isInactive)){
-			currencyDto.setIsInactive(Integer.getInteger(isInactive));
+			currencyDto.setIsInactive(Integer.valueOf(isInactive));
 		}
 		byte[] bytes = currencyFacade.getCurrencyByExcel(currencyDto);       
 		InputStream inputStream = new ByteArrayInputStream(bytes);          
@@ -153,7 +153,6 @@ public class CurrencyController extends AbstractController{
         @Override
         public void write(OutputStream output) throws IOException,
                 WebApplicationException {
-            // TODO Auto-generated method stub
             IOUtils.copy(inputStream, output);
         }
 
@@ -174,7 +173,6 @@ public class CurrencyController extends AbstractController{
 	@Path("/findCurrencyName")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public List<CurrencyResultDto> findCurrencyName() throws ServiceException{
-		String token = this.getAuthorization();
-		return currencyFacade.findCurrencyName(token);
+		return currencyFacade.findCurrencyName();
 	}
 }

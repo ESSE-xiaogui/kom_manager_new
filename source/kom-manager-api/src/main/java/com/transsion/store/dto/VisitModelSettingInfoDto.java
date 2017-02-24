@@ -15,6 +15,8 @@ public class VisitModelSettingInfoDto implements Serializable {
 	  */
 	private java.lang.String actionDate;
 	
+	private Long companyId;
+	
 	private java.lang.String companyCode;
 
 	/**
@@ -69,6 +71,14 @@ public class VisitModelSettingInfoDto implements Serializable {
 
 	public java.lang.String getCompanyCode() {
 		return companyCode;
+	}
+
+	public Long getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
 	}
 
 	public void setCompanyCode(java.lang.String companyCode) {
@@ -149,10 +159,11 @@ public class VisitModelSettingInfoDto implements Serializable {
 
 	@Override
 	public String toString() {
-		return "VisitModelSettingInfoDto [id=" + id + ", actionDate=" + actionDate + ", companyCode=" + companyCode
-				+ ", brandId=" + brandId + ", modelId=" + modelId + ", brandCode=" + brandCode + ", modelCode="
-				+ modelCode + ", remark=" + remark + ", createBy=" + createBy + ", createTime=" + createTime
-				+ ", updateBy=" + updateBy + ", updateTime=" + updateTime + "]";
+		return "VisitModelSettingInfoDto [id=" + id + ", actionDate=" + actionDate + ", companyId=" + companyId
+						+ ", companyCode=" + companyCode + ", brandId=" + brandId + ", modelId=" + modelId
+						+ ", brandCode=" + brandCode + ", modelCode=" + modelCode + ", remark=" + remark + ", createBy="
+						+ createBy + ", createTime=" + createTime + ", updateBy=" + updateBy + ", updateTime="
+						+ updateTime + "]";
 	}
 
 }

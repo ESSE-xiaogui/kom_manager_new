@@ -35,6 +35,7 @@
 	<resultMap id="VisitScoreSettingDetailDtoResultMapper" type="VisitScoreSettingDetailDto">
 		<result column="ID" property="id"/>
 		<result column="COMPANY_ID" property="companyId"/>
+		<result column="COMPANY_CODE" property="companyName"/>
 		<result column="TYPE" property="type"/>
 		<result column="NAME_CN" property="typeName"/>
 		<result column="DESC_EN" property="descEn"/>
@@ -132,6 +133,9 @@
             <if test="visitScoreSettingDetailDto.companyId!= null and visitScoreSettingDetailDto.companyId!= ''">
 				AND s.COMPANY_ID=#{visitScoreSettingDetailDto.companyId}
             </if>
+            <if test="visitScoreSettingDetailDto.companyName!= null and visitScoreSettingDetailDto.companyName!= ''">
+				AND c.COMPANY_CODE=#{visitScoreSettingDetailDto.companyName}
+            </if>
             <if test="visitScoreSettingDetailDto.type!= null and visitScoreSettingDetailDto.type!= ''">
 				AND s.TYPE=#{visitScoreSettingDetailDto.type}
             </if>
@@ -181,6 +185,9 @@
             </when>
         	<when test="key == 'companyId'">
 				s.COMPANY_ID ${value}
+            </when>
+            <when test="key == 'companyName'">
+				c.COMPANY_CODE ${value}
             </when>
         	<when test="key == 'type'">
 				s.TYPE ${value}
@@ -278,8 +285,9 @@
 	<select id="listPaginationByProperty" parameterType="VisitScoreSettingDetailDto"
 		resultMap="VisitScoreSettingDetailDtoResultMapper">
 		SELECT
-		s.ID,s.COMPANY_ID,s.TYPE,a.NAME_CN,s.DESC_CN,s.DESC_EN,s.REMARK,s.CREATE_BY,s.CREATE_TIME,
+		s.ID,s.COMPANY_ID,c.COMPANY_CODE,s.TYPE,a.NAME_CN,s.DESC_CN,s.DESC_EN,s.REMARK,s.CREATE_BY,s.CREATE_TIME,
 		s.UPDATE_BY,s.UPDATE_TIME,s.VERSION FROM T_VISIT_SCORE_SETTING s
+		LEFT JOIN T_COMPANY c ON c.ID = s.COMPANY_ID
 		LEFT JOIN T_ATTRIBUTE a ON a.ID = s.TYPE
 		WHERE 1=1
 		<include refid="commonConditionByPrefix" />

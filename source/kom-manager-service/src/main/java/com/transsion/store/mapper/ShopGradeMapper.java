@@ -30,6 +30,6 @@ import org.apache.ibatis.annotations.Param;
 
 public interface ShopGradeMapper extends GenericIBatisMapper<ShopGrade, java.lang.Long> {
 
-    public List<ShopGradeDto> listPaginationByProperty(Pagination<ShopGradeDto> pagination, @Param("shopGradeDto")ShopGradeDto shopGradeDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<ShopGradeDto> listPaginationByProperty(Pagination<ShopGradeDto> pagination, @Param("shopGradeDto")ShopGradeDto shopGradeDto, @Param("orderBy") Map<String, String> orderBy, @Param("companyId")Integer companyId) throws DataAccessFailureException;
     public ShopGrade findShopGrade(@QueryParam("saleId") Long saleId);
 }

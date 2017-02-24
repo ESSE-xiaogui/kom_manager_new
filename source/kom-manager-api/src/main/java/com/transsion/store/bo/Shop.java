@@ -38,7 +38,7 @@ public class Shop extends Model{
 	/**
 	  *	生成方式：国家简称加六位数的序号。
 	  */
-	private java.lang.Integer shopCode;
+	private java.lang.String shopCode;
 
 	/**
 	  *	
@@ -261,6 +261,16 @@ public class Shop extends Model{
 
 	private String cityName;
 	private String werks;
+	
+	private String gradeName;
+
+	public String getGradeName() {
+		return gradeName;
+	}
+
+	public void setGradeName(String gradeName) {
+		this.gradeName = gradeName;
+	}
 
 	/**
 	  *	
@@ -297,7 +307,7 @@ public class Shop extends Model{
 	/**
 	  *	生成方式：国家简称加六位数的序号。
 	  */
-	public java.lang.Integer getShopCode() 
+	public java.lang.String getShopCode() 
 	{
 		return shopCode;
 	}
@@ -305,7 +315,7 @@ public class Shop extends Model{
 	/**
 	  *	生成方式：国家简称加六位数的序号。
 	  */
-	public void setShopCode(java.lang.Integer shopCode) 
+	public void setShopCode(java.lang.String shopCode) 
 	{
 		this.shopCode = shopCode;
 	}
@@ -1010,22 +1020,19 @@ public class Shop extends Model{
 	@Override
 	public String toString() {
 		return "Shop [id=" + id + ", shopId=" + shopId + ", shopCode=" + shopCode + ", shopName=" + shopName
-						+ ", companyId=" + companyId + ", parentId=" + parentId + ", regionId=" + regionId
-						+ ", country=" + country + ", city=" + city + ", shopIcon=" + shopIcon + ", address=" + address
-						+ ", ownerName=" + ownerName + ", ownerPhone=" + ownerPhone + ", promoter=" + promoter
-						+ ", assistant=" + assistant + ", materielId=" + materielId + ", gradeId=" + gradeId
-						+ ", bizId=" + bizId + ", totalNum=" + totalNum + ", currentNum=" + currentNum + ", clerkNum="
-						+ clerkNum + ", brandsFirst=" + brandsFirst + ", brandsTwo=" + brandsTwo + ", brandsThree="
-						+ brandsThree + ", counterNum=" + counterNum + ", darkPro=" + darkPro + ", purchasChannel="
-						+ purchasChannel + ", isKom=" + isKom + ", relationship=" + relationship + ", incorporator="
-						+ incorporator + ", incorporatorTel=" + incorporatorTel + ", fwidth=" + fwidth + ", fdepth="
-						+ fdepth + ", shopArea=" + shopArea + ", showNum=" + showNum + ", staffNum=" + staffNum
-						+ ", salesNum=" + salesNum + ", openDate=" + openDate + ", status=" + status + ", remark="
-						+ remark + ", createBy=" + createBy + ", createDate=" + createDate + ", updateBy=" + updateBy
-						+ ", updateDate=" + updateDate + ", version=" + version + ", countryName=" + countryName
-						+ ", cityName=" + cityName + ", werks=" + werks + "]";
+				+ ", companyId=" + companyId + ", parentId=" + parentId + ", regionId=" + regionId + ", country="
+				+ country + ", city=" + city + ", shopIcon=" + shopIcon + ", address=" + address + ", gradeId="
+				+ gradeId + ", bizId=" + bizId + ", ownerName=" + ownerName + ", ownerPhone=" + ownerPhone
+				+ ", purchasChannel=" + purchasChannel + ", openDate=" + openDate + ", status=" + status + ", remark="
+				+ remark + ", createBy=" + createBy + ", createDate=" + createDate + ", updateBy=" + updateBy
+				+ ", updateDate=" + updateDate + ", version=" + version + ", promoter=" + promoter + ", assistant="
+				+ assistant + ", materielId=" + materielId + ", totalNum=" + totalNum + ", currentNum=" + currentNum
+				+ ", clerkNum=" + clerkNum + ", brandsFirst=" + brandsFirst + ", brandsTwo=" + brandsTwo
+				+ ", brandsThree=" + brandsThree + ", counterNum=" + counterNum + ", darkPro=" + darkPro + ", isKom="
+				+ isKom + ", relationship=" + relationship + ", incorporator=" + incorporator + ", incorporatorTel="
+				+ incorporatorTel + ", fwidth=" + fwidth + ", fdepth=" + fdepth + ", shopArea=" + shopArea
+				+ ", showNum=" + showNum + ", staffNum=" + staffNum + ", salesNum=" + salesNum + ", countryName="
+				+ countryName + ", cityName=" + cityName + ", werks=" + werks + ", gradeName=" + gradeName + "]";
 	}
-
-
 }
 

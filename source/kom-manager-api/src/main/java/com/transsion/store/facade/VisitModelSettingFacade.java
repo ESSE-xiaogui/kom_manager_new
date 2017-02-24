@@ -85,7 +85,7 @@ public interface VisitModelSettingFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(VisitModelSetting visitModelSetting) throws ServiceException;
+	public int update(VisitModelSetting visitModelSetting, String token) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数

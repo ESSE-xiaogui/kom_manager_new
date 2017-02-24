@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.ShopMateriel;
+import com.transsion.store.dto.ShopMaterielDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.ShopMaterielFacade;
@@ -75,10 +76,10 @@ public class ShopMaterielFacadeImpl implements ShopMaterielFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<ShopMateriel> listPaginationByProperty(Pagination<ShopMateriel> pagination, ShopMateriel shopMateriel)
+	public Pagination<ShopMaterielDto> listPaginationByProperty(Pagination<ShopMaterielDto> pagination, ShopMaterielDto shopMaterielDto,String token)
 			throws ServiceException
 	{
-		return shopMaterielService.listPaginationByProperty(pagination, shopMateriel);
+		return shopMaterielService.listPaginationByProperty(pagination, shopMaterielDto,token);
 	}
 
 	/**
@@ -144,5 +145,12 @@ public class ShopMaterielFacadeImpl implements ShopMaterielFacade {
 	public int findByCount(ShopMateriel shopMateriel) throws ServiceException
 	{
 		return shopMaterielService.findByCount(shopMateriel);
+	}
+
+	/**
+	 * 物料统计导出Excel
+	 */
+	public byte[] getShopMaterielByExcel(ShopMaterielDto shopMaterielDto) throws ServiceException {
+		return shopMaterielService.getShopMaterielByExcel(shopMaterielDto);
 	}
 }

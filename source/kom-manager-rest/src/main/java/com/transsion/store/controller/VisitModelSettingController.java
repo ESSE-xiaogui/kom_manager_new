@@ -101,15 +101,15 @@ public class VisitModelSettingController extends AbstractController{
 	}
 
 	/**
-	* 修改记录
-	* @return
-	* @throws ServiceException
-	*/
+	 * @author guihua.zhang on 2017-02-24
+	 * 重点机型修改
+	 * */
 	@PUT
 	@Path("/update")
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void update(VisitModelSetting visitModelSetting) throws ServiceException
 	{
-		visitModelSettingFacade.update(visitModelSetting);
+		String token = this.getAuthorization();
+		visitModelSettingFacade.update(visitModelSetting,token);
 	}
 }

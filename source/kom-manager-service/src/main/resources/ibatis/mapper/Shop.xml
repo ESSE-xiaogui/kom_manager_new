@@ -499,13 +499,13 @@
 				AND s.SHOP_NAME=#{shopInfoDto.shopName}
             </if>
             <if test="shopInfoDto.companyId!= null and shopInfoDto.companyId!= ''">
-				AND COMPANY_ID=#{shopInfoDto.companyId}
+				AND s.COMPANY_ID=#{shopInfoDto.companyId}
             </if>
             <if test="shopInfoDto.parentId!= null and shopInfoDto.parentId!= ''">
 				AND PARENT_ID=#{shopInfoDto.parentId}
             </if>
             <if test="shopInfoDto.regionId!= null and shopInfoDto.regionId!= ''">
-				AND s.REGION_ID=#{shopInfoDto.regionId}
+				AND r1.ID=#{shopInfoDto.regionId}
             </if>
             <if test="shopInfoDto.country!= null and shopInfoDto.country!= ''">
 				AND COUNTRY=#{shopInfoDto.country}
@@ -827,8 +827,6 @@
 			, OPEN_DATE=str_to_date(#{openDate},'%Y-%m-%d %H:%i:%s')
 			, STATUS=#{status} 
 			, REMARK=#{remark} 
-			, CREATE_BY=#{createBy} 
-			, CREATE_DATE=str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
 			, UPDATE_BY=#{updateBy} 
 			, UPDATE_DATE=str_to_date(#{updateDate},'%Y-%m-%d %H:%i:%s')
 			, VERSION=#{version} 
@@ -859,7 +857,7 @@
 		FROM T_SHOP s 
 		LEFT JOIN T_COMPANY c ON c.ID = s.COMPANY_ID
 		LEFT JOIN T_REGION r ON r.ID = s.REGION_ID
-		LEFT JOIN T_SHOP_EXTENSION e ON s.ID = e.ID
+		LEFT JOIN T_SHOP_EXTENSION e ON s.ID = e.SHOP_ID
 		LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID
 		LEFT JOIN T_SHOP_BIZ b ON s.BIZ_ID = b.ID
 		LEFT JOIN T_ATTRIBUTE a1 ON s.RELATIONSHIP = a1.SQE AND a1.TYPE=1
@@ -891,6 +889,9 @@
 		LEFT JOIN T_ATTRIBUTE a2 ON s.BIZ_CATEGORY = a2.ID 
 		LEFT JOIN T_ATTRIBUTE a3 ON s.BIZ_ID = a3.ID
 		WHERE 1=1
+		<if test="companyId!= null and companyId!= ''"> 
+			AND s.COMPANY_ID =#{companyId}
+		</if>
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>
@@ -910,7 +911,7 @@
 		WHERE COMPANY_ID = #{companyId}
 	</select>
 	<select id="findShopId" parameterType="java.lang.String" resultMap="ShopResultMapper">
-	SELECT COMPANY_ID,SHOP_ID FROM T_SHOP WHERE SHOP_CODE=#{shopCode}
+	SELECT COMPANY_ID,ID,SHOP_ID FROM T_SHOP WHERE SHOP_CODE=#{shopCode}
 	</select>
 	<select id="findShopByRegionId" resultMap="ShopChildrenDtoMapper">
 		SELECT p.ID,p.REGION_ID,p.SHOP_NAME FROM T_SHOP p
@@ -964,9 +965,9 @@
 	</select>
 	
 	<select id="queryShopByShopId" parameterType="java.lang.Long" resultMap="ShopResultMapper">
-		SELECT * FROM T_SHOP WHERE SHOP_ID = #{shopId}
+		SELECT s.*, g.GRADE_NAME as gradeName FROM T_SHOP s LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID WHERE s.SHOP_ID = #{shopId}
 	</select>
-	<select id="listShopByProperty" parameterType="ShopInfoDto" resultMap="ShopInfoDtoResultMapper">
+	<select id="listShopByProperty"  resultMap="ShopInfoDtoResultMapper">
 		SELECT 
 		<include refid="commonProcessDateColumn"/>
 		FROM T_SHOP s 

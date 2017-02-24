@@ -16,15 +16,22 @@
 **/
 package com.transsion.store.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.ShopMateriel;
+import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.SaleDailyDto;
+import com.transsion.store.dto.ShopMaterielDto;
 import com.shangkang.core.bo.Pagination;
+import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.ShopMaterielMapper;
+import com.transsion.store.utils.CacheUtils;
+import com.transsion.store.utils.ExcelUtils;
 
 @Service("shopMaterielService")
 public class ShopMaterielService {
@@ -71,13 +78,18 @@ public class ShopMaterielService {
 	
 	/**
 	 * 根据查询条件查询分页记录
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<ShopMateriel> listPaginationByProperty(Pagination<ShopMateriel> pagination, ShopMateriel shopMateriel)
+	public Pagination<ShopMaterielDto> listPaginationByProperty(Pagination<ShopMaterielDto> pagination, ShopMaterielDto shopMaterielDto, String token)
 			throws ServiceException
 	{
-		List<ShopMateriel> list = shopMaterielMapper.listPaginationByProperty(pagination, shopMateriel, pagination.getOrderBy());
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		
+		Integer companyId = userContext.isAdmin()?null:userContext.getCompanyId().intValue();
+		
+		List<ShopMaterielDto> list = shopMaterielMapper.listPaginationByProperty(pagination, shopMaterielDto, pagination.getOrderBy(),companyId);
 		
 		pagination.setResultList(list);
 		
@@ -156,4 +168,27 @@ public class ShopMaterielService {
 	 public List<ShopMateriel> queryShopMaterielListByShopId(Long shopId) throws ServiceException {
 		return shopMaterielMapper.queryShopMaterielListByShopId(shopId);
 	 }
+
+	 /**
+	  * 物料统计导出Excel
+	 * @param shopMaterielDto 
+	  * @return
+	 * @throws DataAccessFailureException 
+	  */
+	public byte[] getShopMaterielByExcel(ShopMaterielDto shopMaterielDto) throws ServiceException {
+		String[] headers = {"序号","事业部","国家","城市","门店代码","门店名称","物料类型", "物料名称(CN)",
+						"物料名称(EN)","物料数量","上传用户","上传日期","更新用户","更新时间"};
+		List<ShopMaterielDto> list = shopMaterielMapper.listShopMaterielByProperty(shopMaterielDto);
+		List<Object[]> dataset = new ArrayList<Object[]>();
+		int i=1;
+		for(ShopMaterielDto shopMaterielDto1 :list){
+			dataset.add(new Object[]{i++,shopMaterielDto1.getCompanyCode(),shopMaterielDto1.getCountryName(),
+			shopMaterielDto1.getCityName(),shopMaterielDto1.getShopId(),shopMaterielDto1.getShopName(),
+			shopMaterielDto1.getType(),shopMaterielDto1.getNameCN(),shopMaterielDto1.getNameEN(),
+			shopMaterielDto1.getMaterielQty(),shopMaterielDto1.getCreateBy(),shopMaterielDto1.getCreateDate(),
+			shopMaterielDto1.getUpdateBy(),shopMaterielDto1.getUpdateDate()});
+		}
+		String title = "物料统计报表";
+		return ExcelUtils.exportExcel(title, headers, dataset);
+	}
 }

@@ -37,6 +37,7 @@
 	<resultMap id="VisitModelSettingInfoDtoResultMapper" type="VisitModelSettingInfoDto">
 		<result column="ID" property="id"/>
 		<result column="ACTION_DATE" property="actionDate"/>
+		<result column="COMPANY_ID" property="companyCode"/>
 		<result column="COMPANY_CODE" property="companyCode"/>
 		<result column="BRAND_ID" property="brandId"/>
 		<result column="MODEL_ID" property="modelId"/>
@@ -134,14 +135,35 @@
 
 	<sql id="commonConditionByPrefix">
 		<if test="visitModelSettingInfoDto != null">
+            <if test="visitModelSettingInfoDto.id!= null and visitModelSettingInfoDto.id!= ''">
+				AND t.ID=#{visitModelSettingInfoDto.id}
+            </if>
             <if test="visitModelSettingInfoDto.actionDate!= null and visitModelSettingInfoDto.actionDate!= ''">
 				AND t.ACTION_DATE=str_to_date(#{visitModelSettingInfoDto.actionDate},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="visitModelSettingInfoDto.brandId!= null and visitModelSettingInfoDto.brandId!= ''">
-				AND t.BRAND_ID=#{visitModelSettingInfoDto.brandId}
+            <if test="visitModelSettingInfoDto.companyCode!= null and visitModelSettingInfoDto.companyCode!= ''">
+				AND c.COMPANY_CODE=str_to_date(#{visitModelSettingInfoDto.companyCode},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="visitModelSettingInfoDto.modelId!= null and visitModelSettingInfoDto.modelId!= ''">
-				AND t.MODEL_ID=#{visitModelSettingInfoDto.modelId}
+            <if test="visitModelSettingInfoDto.brandCode!= null and visitModelSettingInfoDto.brandCode!= ''">
+				AND b.BRAND_CODE=#{visitModelSettingInfoDto.brandCode}
+            </if>
+            <if test="visitModelSettingInfoDto.modelCode!= null and visitModelSettingInfoDto.modelCode!= ''">
+				AND m.MODEL_CODE=#{visitModelSettingInfoDto.modelCode}
+            </if>
+            <if test="visitModelSettingInfoDto.createBy!= null and visitModelSettingInfoDto.createBy!= ''">
+				AND t.CREATE_BY=#{visitModelSettingInfoDto.createBy}
+            </if>
+            <if test="visitModelSettingInfoDto.createTime!= null and visitModelSettingInfoDto.createTime!= ''">
+				AND t.CREATE_TIME=str_to_date(#{visitModelSettingInfoDto.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitModelSettingInfoDto.updateBy!= null and visitModelSettingInfoDto.updateBy!= ''">
+				AND t.UPDATE_BY=#{visitModelSettingInfoDto.updateBy}
+            </if>
+            <if test="visitModelSettingInfoDto.updateTime!= null and visitModelSettingInfoDto.updateTime!= ''">
+				AND t.UPDATE_TIME=#{visitModelSettingInfoDto.updateTime}
+            </if>
+            <if test="visitModelSettingInfoDto.remark!= null and visitModelSettingInfoDto.remark!= ''">
+				AND t.REMARK=#{visitModelSettingInfoDto.remark}
             </if>
         </if>
     </sql>
@@ -158,41 +180,35 @@
 	<sql id="orderBy">
 		<choose>
         	<when test="key == 'id'">
-				ID ${value}
+				t.ID ${value}
             </when>
         	<when test="key == 'actionDate'">
-				ACTION_DATE ${value}
+				t.ACTION_DATE ${value}
             </when>
-        	<when test="key == 'companyId'">
-				COMPANY_ID ${value}
+            <when test="key == 'companyCode'">
+				c.COMPANY_CODE ${value}
+            </when>            
+            <when test="key == 'brandCode'">
+				t.BRAND_CODE ${value}
             </when>
-        	<when test="key == 'brandId'">
-				BRAND_ID ${value}
-            </when>
-        	<when test="key == 'modelId'">
-				MODEL_ID ${value}
-            </when>
-        	<when test="key == 'regionId'">
-				REGION_ID ${value}
-            </when>
+            <when test="key == 'modelCode'">
+				t.MODEL_CODE ${value}
+            </when>        	
         	<when test="key == 'remark'">
-				REMARK ${value}
+				t.REMARK ${value}
             </when>
         	<when test="key == 'createBy'">
-				CREATE_BY ${value}
+				t.CREATE_BY ${value}
             </when>
         	<when test="key == 'createTime'">
-				CREATE_TIME ${value}
+				t.CREATE_TIME ${value}
             </when>
         	<when test="key == 'updateBy'">
-				UPDATE_BY ${value}
+				t.UPDATE_BY ${value}
             </when>
         	<when test="key == 'updateTime'">
-				UPDATE_TIME ${value}
-            </when>
-        	<when test="key == 'version'">
-				VERSION ${value}
-            </when>
+				t.UPDATE_TIME ${value}
+            </when>        	
 		</choose>
 	</sql>
 
@@ -223,8 +239,6 @@
 			, MODEL_ID=#{modelId} 
 			, REGION_ID=#{regionId} 
 			, REMARK=#{remark} 
-			, CREATE_BY=#{createBy} 
-			, CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
 			, UPDATE_BY=#{updateBy} 
 			, UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
 			, VERSION=#{version} 
@@ -260,22 +274,29 @@
 		FROM T_VISIT_MODEL_SETTING WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="VisitModelSettingInfoDto" resultMap="VisitModelSettingInfoDtoResultMapper">
-		SELECT 
-			t.ID, 
-			t.ACTION_DATE, 
-			c.COMPANY_CODE,
-			m.BRAND_CODE, 
-			m.MODEL_CODE, 
-			t.CREATE_BY, 
-			t.CREATE_TIME,
-			t.UPDATE_BY,
-			t.UPDATE_TIME,
-			t.REMARK
-		FROM T_VISIT_MODEL_SETTING t LEFT JOIN T_MODEL m ON t.MODEL_ID = m.ID LEFT JOIN T_COMPANY c ON t.COMPANY_ID = c.ID 
-		WHERE 1=1 
-    	<include refid="commonConditionByPrefix"/>
-    	<include refid="orderByClause" />
+	<select id="listPaginationByProperty" parameterType="VisitModelSettingInfoDto"
+		resultMap="VisitModelSettingInfoDtoResultMapper">
+		SELECT
+		t.ID,
+		t.ACTION_DATE,
+		t.COMPANY_ID,
+		c.COMPANY_CODE,
+		t.BRAND_ID,
+		b.BRAND_CODE,
+		t.MODEL_ID,
+		m.MODEL_CODE,
+		t.CREATE_BY,
+		t.CREATE_TIME,
+		t.UPDATE_BY,
+		t.UPDATE_TIME,
+		t.REMARK
+		FROM T_VISIT_MODEL_SETTING t
+		LEFT JOIN T_BRAND b ON b.ID = t.BRAND_ID
+		LEFT JOIN T_MODEL m ON t.MODEL_ID = m.ID
+		LEFT JOIN T_COMPANY c ON t.COMPANY_ID = c.ID
+		WHERE 1=1
+		<include refid="commonConditionByPrefix" />
+		<include refid="orderByClause" />
 	</select>
 	<select id="findByCount" parameterType="VisitModelSetting" resultType="int">
 		SELECT count(1) AS totalcount FROM T_VISIT_MODEL_SETTING WHERE 1=1 

@@ -1,6 +1,8 @@
 package com.transsion.store.manager;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,7 @@ import com.transsion.store.service.AttributeService;
 import com.transsion.store.service.ShopExtensionService;
 import com.transsion.store.service.ShopMaterielService;
 import com.transsion.store.service.ShopService;
+import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 import com.transsion.store.utils.ExcelUtils;
 
@@ -72,6 +75,9 @@ public class ShopManager {
 	
 	@Autowired
 	private UserShopMapper userShopMapper;
+	
+	@Autowired
+	private SystemDateService systemDateService;
  
 	/**
 	 * 用户已绑定的店铺
@@ -248,13 +254,25 @@ public class ShopManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		
+		String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		Shop shop = shopDetailDto.getShop();
+		shop.setCreateBy(userContext.getUser().getId().toString());
+		shop.setCreateDate(currentDate);
 		shopService.save(shop);
 		
+		Long shopId = shop.getId();
+		
 		ShopExtension shopExtension = shopDetailDto.getShopExtension();
+		shopExtension.setShopId(shopId);
 		shopExtensionService.save(shopExtension);
 		
 		List<ShopMateriel> list = shopDetailDto.getShopMaterielDtoList();
+		String userCode = userContext.getUserCode();
+		for (ShopMateriel shopMateriel : list) {
+			shopMateriel.setShopId(shopId);
+			shopMateriel.setCreateBy(userCode);
+			shopMateriel.setCreateDate(currentDate);
+		}
 		shopMaterielService.saveShopMateriel(list);
 		
 		ShopUploadDto shopUploadDto = new ShopUploadDto();
@@ -315,15 +333,20 @@ public class ShopManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		
+		String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		Shop shop = shopDetailDto.getShop();
+		shop.setUpdateBy(userContext.getUser().getId().toString());
+		shop.setUpdateDate(currentDate);
 		shopMapper.update(shop);
 		
 		ShopExtension shopExtension = shopDetailDto.getShopExtension();
 		shopExtensionService.update(shopExtension);
 		
 		List<ShopMateriel> list = shopDetailDto.getShopMaterielDtoList();
-		for (int i = 0; i < list.size(); i++) {
-			shopMaterielService.update(list.get(i));
+		for (ShopMateriel shopMateriel : list) {
+			shopMateriel.setUpdateBy(userContext.getUserCode());
+			shopMateriel.setUpdateDate(currentDate);
+			shopMaterielService.update(shopMateriel);
 		}
 	}
 	
@@ -370,14 +393,24 @@ public class ShopManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		
-		Shop tempShop = new Shop();
-		tempShop.setShopName(shopInfoDto.getShopName());
-		int count1 = shopService.findByCount(tempShop);
-		tempShop.setId(shopInfoDto.getId());
-		int count2 = shopService.findByCount(tempShop);
-		if(count1>0&&count2<1){
+		Shop tempShop1 = new Shop();
+		tempShop1.setShopName(shopInfoDto.getShopName());
+		int countShopName1 = shopService.findByCount(tempShop1);
+		tempShop1.setId(shopInfoDto.getId());
+		int countShopName2 = shopService.findByCount(tempShop1);
+		if(countShopName1>0&&countShopName2<1){
 			throw new ServiceException(ExceptionDef.ERROR_SHOP_ALREADY_EXIST.getName());
 		}
+		
+		Shop tempShop2 = new Shop();
+		tempShop2.setShopName(shopInfoDto.getShopName());
+		int countShopCode1 = shopService.findByCount(tempShop2);
+		tempShop1.setId(shopInfoDto.getId());
+		int countShopCode2 = shopService.findByCount(tempShop2);
+		if(countShopCode1>0&&countShopCode2<1){
+			throw new ServiceException(ExceptionDef.ERROR_SHOPCODE_ALREADY_EXIST.getName());
+		}
+		
 		Long regionId = shopInfoDto.getRegionId();
 		
 		Shop shop = shopMapper.getByPK(shopInfoDto.getId());
@@ -391,6 +424,7 @@ public class ShopManager {
 			shop.setCountry(region.getParentId().intValue());
 		}
 		shop.setAddress(shopInfoDto.getAddress());
+		shop.setShopCode(shopInfoDto.getShopCode());
 		shop.setGradeId(shopInfoDto.getGradeId());
 		shop.setBizId(shopInfoDto.getBizId());
 		shop.setOwnerName(shopInfoDto.getOwnerName());
@@ -398,26 +432,53 @@ public class ShopManager {
 		shop.setPurchasChannel(shopInfoDto.getPurchasChannel());
 		shop.setRemark(shopInfoDto.getRemark());
 		shop.setStatus(1);
+		shop.setUpdateBy(userContext.getUser().getUserCode());
+		shop.setUpdateDate(systemDateService.getCurrentDate());
 		shopMapper.update(shop);
 		
-		ShopExtension shopExt = shopExtensionService.getByPK(shopInfoDto.getId());
-		shopExt.setShopArea(shopInfoDto.getShopArea());
-		shopExt.setClerkTotalQty(shopInfoDto.getClerkTotalQty());
-		shopExt.setClerkBrandQty(shopInfoDto.getClerkBrandQty());
-		shopExt.setRelationship(shopInfoDto.getRelationship());
-		shopExt.setBizCategory(shopInfoDto.getBizCategory());
-		shopExt.setBrandOne(shopInfoDto.getBrandOne());
-		shopExt.setBrandTwo(shopInfoDto.getBrandTwo());
-		shopExt.setBrandThree(shopInfoDto.getBrandThree());
-		shopExt.setBrandFour(shopInfoDto.getBrandFour());
-		shopExt.setBrandFive(shopInfoDto.getBrandFive());
-		shopExt.setClerkOneQty(shopInfoDto.getClerkOneQty());
-		shopExt.setClerkTwoQty(shopInfoDto.getClerkTwoQty());
-		shopExt.setClerkThreeQty(shopInfoDto.getClerkThreeQty());
-		shopExt.setClerkFourQty(shopInfoDto.getClerkFourQty());
-		shopExt.setClerkFiveQty(shopInfoDto.getClerkFiveQty());
-		shopExt.setClerkSixQty(shopInfoDto.getClerkSixQty());
-		shopExtensionService.update(shopExt);
+		ShopExtension tempShopEx = new ShopExtension();
+		tempShopEx.setShopId(shopInfoDto.getId());
+		List<ShopExtension> shopExtlist = shopExtensionService.listByProperty(tempShopEx);
+		if(!UtilHelper.isEmpty(shopExtlist)){
+			ShopExtension shopExt = shopExtlist.get(0);
+			shopExt.setShopArea(shopInfoDto.getShopArea());
+			shopExt.setClerkTotalQty(shopInfoDto.getClerkTotalQty());
+			shopExt.setClerkBrandQty(shopInfoDto.getClerkBrandQty());
+			shopExt.setRelationship(shopInfoDto.getRelationship());
+			shopExt.setBizCategory(shopInfoDto.getBizCategory());
+			shopExt.setBrandOne(shopInfoDto.getBrandOne());
+			shopExt.setBrandTwo(shopInfoDto.getBrandTwo());
+			shopExt.setBrandThree(shopInfoDto.getBrandThree());
+			shopExt.setBrandFour(shopInfoDto.getBrandFour());
+			shopExt.setBrandFive(shopInfoDto.getBrandFive());
+			shopExt.setClerkOneQty(shopInfoDto.getClerkOneQty());
+			shopExt.setClerkTwoQty(shopInfoDto.getClerkTwoQty());
+			shopExt.setClerkThreeQty(shopInfoDto.getClerkThreeQty());
+			shopExt.setClerkFourQty(shopInfoDto.getClerkFourQty());
+			shopExt.setClerkFiveQty(shopInfoDto.getClerkFiveQty());
+			shopExt.setClerkSixQty(shopInfoDto.getClerkSixQty());
+			shopExtensionService.update(shopExt);
+		}else{
+			ShopExtension newShopExt = new ShopExtension();
+			newShopExt.setShopId(shopInfoDto.getId());
+			newShopExt.setShopArea(shopInfoDto.getShopArea());
+			newShopExt.setClerkTotalQty(shopInfoDto.getClerkTotalQty());
+			newShopExt.setClerkBrandQty(shopInfoDto.getClerkBrandQty());
+			newShopExt.setRelationship(shopInfoDto.getRelationship());
+			newShopExt.setBizCategory(shopInfoDto.getBizCategory());
+			newShopExt.setBrandOne(shopInfoDto.getBrandOne());
+			newShopExt.setBrandTwo(shopInfoDto.getBrandTwo());
+			newShopExt.setBrandThree(shopInfoDto.getBrandThree());
+			newShopExt.setBrandFour(shopInfoDto.getBrandFour());
+			newShopExt.setBrandFive(shopInfoDto.getBrandFive());
+			newShopExt.setClerkOneQty(shopInfoDto.getClerkOneQty());
+			newShopExt.setClerkTwoQty(shopInfoDto.getClerkTwoQty());
+			newShopExt.setClerkThreeQty(shopInfoDto.getClerkThreeQty());
+			newShopExt.setClerkFourQty(shopInfoDto.getClerkFourQty());
+			newShopExt.setClerkFiveQty(shopInfoDto.getClerkFiveQty());
+			newShopExt.setClerkSixQty(shopInfoDto.getClerkSixQty());
+			shopExtensionService.save(newShopExt);
+		}
 		return 1;
 	}
 	
@@ -437,7 +498,7 @@ public class ShopManager {
 		int i=1;
 		for(ShopInfoDto shopInfoDto1 :list){
 			dataset.add(new Object[]{i++,shopInfoDto1.getStatus()==1?"已生效":"新申请",
-		shopInfoDto1.getCompanyCode(),shopInfoDto1.getShopId(),shopInfoDto1.getShopName(),
+		shopInfoDto1.getCompanyCode(),shopInfoDto1.getShopCode(),shopInfoDto1.getShopName(),
 		shopInfoDto1.getGradeName(),shopInfoDto1.getBizName(),shopInfoDto1.getCountryName(),
 		shopInfoDto1.getCityName(),shopInfoDto1.getAddress(),shopInfoDto1.getOwnerName(),
 		shopInfoDto1.getOwnerPhone(),shopInfoDto1.getPurchasChannel(),shopInfoDto1.getShopArea(),

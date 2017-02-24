@@ -34,7 +34,7 @@ public interface RegionMapper extends GenericIBatisMapper<Region, java.lang.Long
 
     public List<RegionListDto> listPaginationByProperty(Pagination<RegionListDto> pagination, @Param("regionListDto")RegionListDto regionListDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
 
-	public List<RegionDto> findRegionsList(@Param("companyId") Integer companyId,@Param("parentId") Integer parentId) throws DataAccessFailureException;
+	public List<RegionDto> findRegionsList(@Param("parentId") Integer parentId) throws DataAccessFailureException;
 
 	public String getRegionName(Long id) throws DataAccessFailureException;
 	
@@ -53,6 +53,8 @@ public interface RegionMapper extends GenericIBatisMapper<Region, java.lang.Long
 	public List<Region> findCountryList(Long userId);
 
 	public List<Region> findCityListByParentRegionId(@Param("parentId")int parentId, @Param("userId")Long userId);
+	
+	public Region findRegionByName(@Param("countryName") String countryName);
 	
 	
 

@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.ShopMateriel;
+import com.transsion.store.dto.ShopMaterielDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -96,10 +97,19 @@ public interface ShopMaterielFacade {
 	
 	/**
 	 * 根据查询条件查询分页记录
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<ShopMateriel> listPaginationByProperty(Pagination<ShopMateriel> pagination, ShopMateriel shopMateriel)
+	public Pagination<ShopMaterielDto> listPaginationByProperty(Pagination<ShopMaterielDto> pagination, ShopMaterielDto shopMaterielDto, String token)
 			throws ServiceException;
+
+	/**
+	 * 物料统计导出Excel
+	 * @param shopMaterielDto
+	 * @return
+	 * @throws ServiceException
+	 */
+	public byte[] getShopMaterielByExcel(ShopMaterielDto shopMaterielDto)throws ServiceException;
 
 }

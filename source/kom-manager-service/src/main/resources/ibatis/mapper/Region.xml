@@ -351,8 +351,7 @@
 		<include refid="commonCondition"/>
 	</select>
 	<select id="findRegionsList"  parameterType="java.lang.Integer" resultMap = "RegionDtoResultMapper">
-		SELECT ID, PARENT_ID, REGION_CODE, REGION_NAME FROM T_REGION WHERE COMPANY_ID = #{companyId}
-		AND PARENT_ID=#{parentId}
+		SELECT ID, PARENT_ID, REGION_CODE, REGION_NAME FROM T_REGION WHERE PARENT_ID=#{parentId}
 	</select>
 	<select id="getRegionName"  parameterType="java.lang.Long" resultType = "String">
 		SELECT REGION_NAME FROM T_REGION WHERE ID = #{id} 
@@ -432,5 +431,11 @@
 		WHERE c.PARENT_ID = #{parentId}  
 		AND u.ID =#{userId}
 		GROUP BY c.ID,c.REGION_NAME
+	</select>
+	
+	<select id="findRegionByName" parameterType="java.lang.String"  resultMap="RegionResultMapper">
+	<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_REGION WHERE REGION_NAME = #{countryName}
 	</select>
 </mapper>

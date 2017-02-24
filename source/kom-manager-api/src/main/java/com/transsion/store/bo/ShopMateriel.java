@@ -74,181 +74,103 @@ public class ShopMateriel extends Model{
 	  *	
 	  */
 	private java.lang.Integer version;
+	
+	private java.lang.String materielName;
 
-	/**
-	  *	
-	  */
-	public java.lang.Long getId() 
-	{
+	public java.lang.Long getId() {
 		return id;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setId(java.lang.Long id) 
-	{
+
+	public void setId(java.lang.Long id) {
 		this.id = id;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.Long getShopId() 
-	{
+
+	public java.lang.Long getShopId() {
 		return shopId;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setShopId(java.lang.Long shopId) 
-	{
+
+	public void setShopId(java.lang.Long shopId) {
 		this.shopId = shopId;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.Long getMaterielId() 
-	{
+
+	public java.lang.Long getMaterielId() {
 		return materielId;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setMaterielId(java.lang.Long materielId) 
-	{
+
+	public void setMaterielId(java.lang.Long materielId) {
 		this.materielId = materielId;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.Integer getMaterielQty() 
-	{
+
+	public java.lang.Integer getMaterielQty() {
 		return materielQty;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setMaterielQty(java.lang.Integer materielQty) 
-	{
+
+	public void setMaterielQty(java.lang.Integer materielQty) {
 		this.materielQty = materielQty;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getRemark() 
-	{
+
+	public java.lang.String getRemark() {
 		return remark;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setRemark(java.lang.String remark) 
-	{
+
+	public void setRemark(java.lang.String remark) {
 		this.remark = remark;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getCreateBy() 
-	{
+
+	public java.lang.String getCreateBy() {
 		return createBy;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setCreateBy(java.lang.String createBy) 
-	{
+
+	public void setCreateBy(java.lang.String createBy) {
 		this.createBy = createBy;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getCreateDate() 
-	{
+
+	public java.lang.String getCreateDate() {
 		return createDate;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setCreateDate(java.lang.String createDate) 
-	{
+
+	public void setCreateDate(java.lang.String createDate) {
 		this.createDate = createDate;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getUpdateBy() 
-	{
+
+	public java.lang.String getUpdateBy() {
 		return updateBy;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setUpdateBy(java.lang.String updateBy) 
-	{
+
+	public void setUpdateBy(java.lang.String updateBy) {
 		this.updateBy = updateBy;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.String getUpdateDate() 
-	{
+
+	public java.lang.String getUpdateDate() {
 		return updateDate;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setUpdateDate(java.lang.String updateDate) 
-	{
+
+	public void setUpdateDate(java.lang.String updateDate) {
 		this.updateDate = updateDate;
 	}
-	
-	/**
-	  *	
-	  */
-	public java.lang.Integer getVersion() 
-	{
+
+	public java.lang.Integer getVersion() {
 		return version;
 	}
-	
-	/**
-	  *	
-	  */
-	public void setVersion(java.lang.Integer version) 
-	{
+
+	public void setVersion(java.lang.Integer version) {
 		this.version = version;
 	}
-	
-	public String toString()
-	{
-		return "ShopMateriel [" + 
-					"id=" + id + 
-					", shopId=" + shopId + 
-					", materielId=" + materielId + 
-					", materielQty=" + materielQty + 
-					", remark=" + remark + 
-					", createBy=" + createBy + 
-					", createDate=" + createDate + 
-					", updateBy=" + updateBy + 
-					", updateDate=" + updateDate + 
-					", version=" + version + 
-				"]";
+
+	public java.lang.String getMaterielName() {
+		return materielName;
+	}
+
+	public void setMaterielName(java.lang.String materielName) {
+		this.materielName = materielName;
+	}
+
+	@Override
+	public String toString() {
+		return "ShopMateriel [id=" + id + ", shopId=" + shopId + ", materielId=" + materielId + ", materielQty="
+				+ materielQty + ", remark=" + remark + ", createBy=" + createBy + ", createDate=" + createDate
+				+ ", updateBy=" + updateBy + ", updateDate=" + updateDate + ", version=" + version + ", materielName="
+				+ materielName + "]";
 	}
 }
 
