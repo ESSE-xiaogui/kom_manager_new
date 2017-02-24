@@ -62,7 +62,7 @@ public class MaterielManager {
 		tempMateriel.setBrandCode(materiel.getBrandCode());
 		int count = materielMapper.findByCount(tempMateriel);
 		if(count>0){
-			throw new ServiceException(ExceptionDef.ERROR_MODEL_ALREADY_EXIST.getName());
+			throw new ServiceException(ExceptionDef.ERROR_MATERIEL_ALREADY_EXIST.getName());
 		}
 		materiel.setCompanyId(userContext.getUser().getCompanyId());
 		materiel.setCreateBy(userContext.getUser().getUserCode());
