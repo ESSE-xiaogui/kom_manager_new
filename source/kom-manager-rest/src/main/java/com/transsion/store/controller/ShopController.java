@@ -284,7 +284,7 @@ public class ShopController extends AbstractController {
 			shopInfoDto.setShopId(Long.parseLong(shopId));
 		}
 		if(!UtilHelper.isEmpty(status)){
-			shopInfoDto.setStatus(Integer.getInteger(shopId));
+			shopInfoDto.setStatus(Integer.valueOf(status));
 		}
 		shopInfoDto.setAddress(address);
 		byte[] bytes = shopFacade.getShopByExcel(shopInfoDto);       

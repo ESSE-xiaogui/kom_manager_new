@@ -131,7 +131,7 @@ public class CurrencyController extends AbstractController{
 			currencyDto.setRegionId(Long.parseLong(regionId));
 		}
 		if(!UtilHelper.isEmpty(isInactive)){
-			currencyDto.setIsInactive(Integer.getInteger(isInactive));
+			currencyDto.setIsInactive(Integer.valueOf(isInactive));
 		}
 		byte[] bytes = currencyFacade.getCurrencyByExcel(currencyDto);       
 		InputStream inputStream = new ByteArrayInputStream(bytes);          
