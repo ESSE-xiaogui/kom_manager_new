@@ -423,24 +423,49 @@ public class ShopManager {
 		shop.setUpdateDate(systemDateService.getCurrentDate());
 		shopMapper.update(shop);
 		
-		ShopExtension shopExt = shopExtensionService.getByPK(shopInfoDto.getId());
-		shopExt.setShopArea(shopInfoDto.getShopArea());
-		shopExt.setClerkTotalQty(shopInfoDto.getClerkTotalQty());
-		shopExt.setClerkBrandQty(shopInfoDto.getClerkBrandQty());
-		shopExt.setRelationship(shopInfoDto.getRelationship());
-		shopExt.setBizCategory(shopInfoDto.getBizCategory());
-		shopExt.setBrandOne(shopInfoDto.getBrandOne());
-		shopExt.setBrandTwo(shopInfoDto.getBrandTwo());
-		shopExt.setBrandThree(shopInfoDto.getBrandThree());
-		shopExt.setBrandFour(shopInfoDto.getBrandFour());
-		shopExt.setBrandFive(shopInfoDto.getBrandFive());
-		shopExt.setClerkOneQty(shopInfoDto.getClerkOneQty());
-		shopExt.setClerkTwoQty(shopInfoDto.getClerkTwoQty());
-		shopExt.setClerkThreeQty(shopInfoDto.getClerkThreeQty());
-		shopExt.setClerkFourQty(shopInfoDto.getClerkFourQty());
-		shopExt.setClerkFiveQty(shopInfoDto.getClerkFiveQty());
-		shopExt.setClerkSixQty(shopInfoDto.getClerkSixQty());
-		shopExtensionService.update(shopExt);
+		ShopExtension tempShopEx = new ShopExtension();
+		tempShopEx.setShopId(shopInfoDto.getId());
+		List<ShopExtension> shopExtlist = shopExtensionService.listByProperty(tempShopEx);
+		if(!UtilHelper.isEmpty(shopExtlist)){
+			ShopExtension shopExt = shopExtlist.get(0);
+			shopExt.setShopArea(shopInfoDto.getShopArea());
+			shopExt.setClerkTotalQty(shopInfoDto.getClerkTotalQty());
+			shopExt.setClerkBrandQty(shopInfoDto.getClerkBrandQty());
+			shopExt.setRelationship(shopInfoDto.getRelationship());
+			shopExt.setBizCategory(shopInfoDto.getBizCategory());
+			shopExt.setBrandOne(shopInfoDto.getBrandOne());
+			shopExt.setBrandTwo(shopInfoDto.getBrandTwo());
+			shopExt.setBrandThree(shopInfoDto.getBrandThree());
+			shopExt.setBrandFour(shopInfoDto.getBrandFour());
+			shopExt.setBrandFive(shopInfoDto.getBrandFive());
+			shopExt.setClerkOneQty(shopInfoDto.getClerkOneQty());
+			shopExt.setClerkTwoQty(shopInfoDto.getClerkTwoQty());
+			shopExt.setClerkThreeQty(shopInfoDto.getClerkThreeQty());
+			shopExt.setClerkFourQty(shopInfoDto.getClerkFourQty());
+			shopExt.setClerkFiveQty(shopInfoDto.getClerkFiveQty());
+			shopExt.setClerkSixQty(shopInfoDto.getClerkSixQty());
+			shopExtensionService.update(shopExt);
+		}else{
+			ShopExtension newShopExt = new ShopExtension();
+			newShopExt.setShopId(shopInfoDto.getId());
+			newShopExt.setShopArea(shopInfoDto.getShopArea());
+			newShopExt.setClerkTotalQty(shopInfoDto.getClerkTotalQty());
+			newShopExt.setClerkBrandQty(shopInfoDto.getClerkBrandQty());
+			newShopExt.setRelationship(shopInfoDto.getRelationship());
+			newShopExt.setBizCategory(shopInfoDto.getBizCategory());
+			newShopExt.setBrandOne(shopInfoDto.getBrandOne());
+			newShopExt.setBrandTwo(shopInfoDto.getBrandTwo());
+			newShopExt.setBrandThree(shopInfoDto.getBrandThree());
+			newShopExt.setBrandFour(shopInfoDto.getBrandFour());
+			newShopExt.setBrandFive(shopInfoDto.getBrandFive());
+			newShopExt.setClerkOneQty(shopInfoDto.getClerkOneQty());
+			newShopExt.setClerkTwoQty(shopInfoDto.getClerkTwoQty());
+			newShopExt.setClerkThreeQty(shopInfoDto.getClerkThreeQty());
+			newShopExt.setClerkFourQty(shopInfoDto.getClerkFourQty());
+			newShopExt.setClerkFiveQty(shopInfoDto.getClerkFiveQty());
+			newShopExt.setClerkSixQty(shopInfoDto.getClerkSixQty());
+			shopExtensionService.save(newShopExt);
+		}
 		return 1;
 	}
 	
