@@ -11,6 +11,7 @@ import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.VisitModelSetting;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.exception.ExceptionDef;
+import com.transsion.store.service.SystemDateService;
 import com.transsion.store.service.VisitModelSettingService;
 import com.transsion.store.utils.CacheUtils;
 
@@ -19,6 +20,9 @@ public class VisitModeSettingManager {
 	
 	@Autowired
 	private VisitModelSettingService visitModelSettingService;
+	
+	@Autowired
+	private SystemDateService systemDateService;
 	
 	public void save(VisitModelSetting visitModelSetting, String token) throws ServiceException
 	{
@@ -29,12 +33,30 @@ public class VisitModeSettingManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext.getCompanyId()) || UtilHelper.isEmpty(userContext.getUserCode())){
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		visitModelSetting.setCreateBy(userContext.getUser().getUserCode());
 		visitModelSetting.setCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-		visitModelSetting.setUpdateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 		visitModelSettingService.save(visitModelSetting);
+	}
+	/**
+	 * @author guihua.zhang on 2017-02-24
+	 * 重点机型修改
+	 * */
+	public int update(VisitModelSetting visitModelSetting, String token) throws ServiceException{
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		if(UtilHelper.isEmpty(visitModelSetting)){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		visitModelSetting.setUpdateBy(userContext.getUser().getUserCode());
+		visitModelSetting.setUpdateTime(systemDateService.getCurrentDate());
+		return visitModelSettingService.update(visitModelSetting);
 	}
 }

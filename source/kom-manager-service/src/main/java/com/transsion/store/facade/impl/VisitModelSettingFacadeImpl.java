@@ -135,9 +135,9 @@ public class VisitModelSettingFacadeImpl implements VisitModelSettingFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(VisitModelSetting visitModelSetting) throws ServiceException
+	public int update(VisitModelSetting visitModelSetting, String token) throws ServiceException
 	{
-		return visitModelSettingService.update(visitModelSetting);
+		return visitModeSettingManager.update(visitModelSetting,token);
 	}
 
 	/**
