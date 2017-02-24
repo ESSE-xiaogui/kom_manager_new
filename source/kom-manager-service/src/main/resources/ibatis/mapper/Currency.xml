@@ -305,8 +305,6 @@
 			, BEGINDATE=str_to_date(#{beginTime},'%Y-%m-%d %H:%i:%s')
 			, ENDDATE=str_to_date(#{endTime},'%Y-%m-%d %H:%i:%s')
 			, IS_INACTIVE=#{isInactive} 
-			, CREATED_BY=#{createdBy} 
-			, CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
 			, UPDATED_BY=#{updatedBy} 
 			, UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
 			, VERSION=#{version} 

@@ -95,7 +95,7 @@ public class VisitModelSettingController extends AbstractController{
 	@POST
 	@Path("/delete")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void delete(@QueryParam("primaryKeys")List<java.lang.Long> primaryKeys) throws ServiceException
+	public void delete(List<java.lang.Long> primaryKeys) throws ServiceException
 	{
 		visitModelSettingFacade.deleteByPKeys(primaryKeys);
 	}

@@ -38,12 +38,10 @@ public class CurrencyManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getCompanyId())){
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUser())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
-		if(!UtilHelper.isEmpty(userContext.getUser())){
-			currency.setCreatedBy(userContext.getUserCode());
-		}
+		currency.setCreatedBy(userContext.getUserCode());
 		currency.setFindex(1);
 		currency.setCreatedTime(systemDateService.getCurrentDate());
 		currencyMapper.save(currency);
@@ -60,20 +58,10 @@ public class CurrencyManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getCompanyId())){
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
-		if(!UtilHelper.isEmpty(userContext.getUser())){
-			if(!UtilHelper.isEmpty(userContext.getUser().getUserId())){
-				currency.setCreatedBy(userContext.getUserCode());
-			}
-		}
-		currency.setCreatedTime(systemDateService.getCurrentDate());
-		if(!UtilHelper.isEmpty(userContext.getUser())){
-			if(!UtilHelper.isEmpty(userContext.getUser().getUserId())){
-				currency.setUpdatedBy(userContext.getUserCode());
-			}
-		}
+		currency.setUpdatedBy(userContext.getUserCode());
 		currency.setUpdatedTime(systemDateService.getCurrentDate());
 		currencyMapper.update(currency);
 	}
