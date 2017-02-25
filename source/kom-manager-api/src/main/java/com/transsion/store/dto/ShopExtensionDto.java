@@ -17,8 +17,11 @@
 package com.transsion.store.dto;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.transsion.store.bo.ShopExtension;
 
 public class ShopExtensionDto implements Serializable {
 
@@ -92,7 +95,38 @@ public class ShopExtensionDto implements Serializable {
 	  */
 	private java.lang.Long saleBrandspQty;
 
-	private List<Map<String, String>> brandClerkList;
+	private List<Map<String, Integer>> brandClerkList;
+	
+	
+	public ShopExtensionDto()
+	{
+		
+	}
+	
+	public ShopExtensionDto(ShopExtension model)
+	{
+		this.id = model.getId();
+		this.shopId = model.getShopId();
+		this.shopArea = model.getShopArea();
+		this.clerkTotalQty = model.getClerkTotalQty();
+		this.clerkBrandQty = model.getClerkBrandQty();
+		this.relationship = model.getRelationship();
+		this.bizCategory = model.getBizCategory();
+		this.supervisor = model.getSupervisor();
+		this.promoter = model.getPromoter();
+		this.saleTotalQty = model.getSaleTotalQty();
+		this.saleSpQty = model.getSaleSpQty();
+		this.saleBrandQty = model.getSaleBrandQty();
+		this.saleBrandspQty = model.getSaleBrandspQty();
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put(model.getBrandOne(), model.getClerkOneQty());
+		map.put(model.getBrandTwo(), model.getClerkTwoQty());
+		map.put(model.getBrandThree(), model.getClerkThreeQty());
+		map.put(model.getBrandFour(), model.getClerkFourQty());
+		map.put(model.getBrandFive(), model.getClerkFiveQty());
+		map.put(model.getBrandSix(), model.getClerkSixQty());
+		this.brandClerkList.add(map);
+	}
 
 	/**
 	  *	
@@ -187,11 +221,11 @@ public class ShopExtensionDto implements Serializable {
 	}
 
 	
-	public List<Map<String, String>> getBrandClerkList() {
+	public List<Map<String, Integer>> getBrandClerkList() {
 		return brandClerkList;
 	}
 
-	public void setBrandClerkList(List<Map<String, String>> brandClerkList) {
+	public void setBrandClerkList(List<Map<String, Integer>> brandClerkList) {
 		this.brandClerkList = brandClerkList;
 	}
 
@@ -279,6 +313,11 @@ public class ShopExtensionDto implements Serializable {
 		this.saleBrandspQty = saleBrandspQty;
 	}
 
+	public ShopExtension toModel()
+	{
+		return null;
+	}
+	
 	@Override
 	public String toString() {
 		return "ShopExtensionDto [id=" + id + ", shopId=" + shopId + ", shopArea=" + shopArea + ", clerkTotalQty="

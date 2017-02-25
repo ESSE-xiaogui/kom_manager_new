@@ -17,6 +17,7 @@
 package com.transsion.store.bo;
 
 import com.shangkang.core.bo.Model;
+import com.transsion.store.dto.ShopExtensionDto;
 
 public class ShopExtension extends Model{
 
@@ -542,6 +543,12 @@ public class ShopExtension extends Model{
 	{
 		this.saleBrandspQty = saleBrandspQty;
 	}
+	
+	public ShopExtensionDto toModel()
+	{
+		return null;
+	}
+	
 	
 	public String toString()
 	{

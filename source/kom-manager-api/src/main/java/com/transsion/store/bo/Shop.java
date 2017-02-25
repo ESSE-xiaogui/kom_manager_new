@@ -263,6 +263,16 @@ public class Shop extends Model{
 	private String werks;
 	
 	private String gradeName;
+	
+	private String bizName;
+
+	public String getBizName() {
+		return bizName;
+	}
+
+	public void setBizName(String bizName) {
+		this.bizName = bizName;
+	}
 
 	public String getGradeName() {
 		return gradeName;
@@ -1032,7 +1042,9 @@ public class Shop extends Model{
 				+ isKom + ", relationship=" + relationship + ", incorporator=" + incorporator + ", incorporatorTel="
 				+ incorporatorTel + ", fwidth=" + fwidth + ", fdepth=" + fdepth + ", shopArea=" + shopArea
 				+ ", showNum=" + showNum + ", staffNum=" + staffNum + ", salesNum=" + salesNum + ", countryName="
-				+ countryName + ", cityName=" + cityName + ", werks=" + werks + ", gradeName=" + gradeName + "]";
+				+ countryName + ", cityName=" + cityName + ", werks=" + werks + ", gradeName=" + gradeName
+				+ ", bizName=" + bizName + "]";
 	}
+
 }
 
