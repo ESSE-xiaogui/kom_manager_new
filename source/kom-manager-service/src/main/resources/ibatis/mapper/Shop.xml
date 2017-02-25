@@ -965,7 +965,7 @@
 	</select>
 	
 	<select id="queryShopByShopId" parameterType="java.lang.Long" resultMap="ShopResultMapper">
-		SELECT s.*, g.GRADE_NAME as gradeName FROM T_SHOP s LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID WHERE s.SHOP_ID = #{shopId} AND s.COMPANY_ID = #{companyId}
+		SELECT s.*, g.GRADE_NAME as gradeName FROM T_SHOP s LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID WHERE s.ID = #{shopId} AND s.COMPANY_ID = #{companyId}
 	</select>
 	<select id="listShopByProperty"  resultMap="ShopInfoDtoResultMapper">
 		SELECT 

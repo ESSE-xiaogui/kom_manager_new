@@ -298,7 +298,8 @@ public class ShopManager {
 		List<UserShop> shopIdList = userShopMapper.queryShopIdByUserId(userId);
 		
 		Long companyId = userContext.getCompanyId();
-		List<ShopDetailDto> list = new ArrayList<ShopDetailDto>();
+		List<ShopDetailDto> list = null;
+		list = new ArrayList<ShopDetailDto>();
 		for (int i = 0; i < shopIdList.size(); i++) {
 			ShopDetailDto shopDetailDto = new ShopDetailDto();
 			
@@ -311,12 +312,7 @@ public class ShopManager {
 			shopDetailDto.setShopMaterielDtoList(shopMaterielList);
 			list.add(shopDetailDto);
 		}
-		if(list != null && list.size() > 0) {
-			return list;
-		} else {
-			return null;
-		}
-		
+		return list;
 	}
 	
 	public void updateShop(String token, ShopDetailDto shopDetailDto) throws ServiceException {
