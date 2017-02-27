@@ -443,6 +443,7 @@ public class ShopManager {
 		shop.setPurchasChannel(shopInfoDto.getPurchasChannel());
 		shop.setRemark(shopInfoDto.getRemark());
 		shop.setStatus(1);
+		shop.setIsInactive(shopInfoDto.getIsInactive());
 		shop.setUpdateBy(userContext.getUser().getUserCode());
 		shop.setUpdateDate(systemDateService.getCurrentDate());
 		shopMapper.update(shop);
@@ -468,6 +469,12 @@ public class ShopManager {
 			shopExt.setClerkFourQty(shopInfoDto.getClerkFourQty());
 			shopExt.setClerkFiveQty(shopInfoDto.getClerkFiveQty());
 			shopExt.setClerkSixQty(shopInfoDto.getClerkSixQty());
+			shopExt.setPromoter(shopInfoDto.getPromoter());
+			shopExt.setSupervisor(shopInfoDto.getSupervisor());
+			shopExt.setSaleBrandQty(shopInfoDto.getSaleBrandQty());
+			shopExt.setSaleBrandspQty(shopInfoDto.getSaleBrandspQty());
+			shopExt.setSaleTotalQty(shopInfoDto.getSaleTotalQty());
+			shopExt.setSaleSpQty(shopInfoDto.getSaleSpQty());
 			shopExtensionService.update(shopExt);
 		}else{
 			ShopExtension newShopExt = new ShopExtension();
@@ -488,6 +495,12 @@ public class ShopManager {
 			newShopExt.setClerkFourQty(shopInfoDto.getClerkFourQty());
 			newShopExt.setClerkFiveQty(shopInfoDto.getClerkFiveQty());
 			newShopExt.setClerkSixQty(shopInfoDto.getClerkSixQty());
+			newShopExt.setPromoter(shopInfoDto.getPromoter());
+			newShopExt.setSupervisor(shopInfoDto.getSupervisor());
+			newShopExt.setSaleBrandQty(shopInfoDto.getSaleBrandQty());
+			newShopExt.setSaleBrandspQty(shopInfoDto.getSaleBrandspQty());
+			newShopExt.setSaleTotalQty(shopInfoDto.getSaleTotalQty());
+			newShopExt.setSaleSpQty(shopInfoDto.getSaleSpQty());
 			shopExtensionService.save(newShopExt);
 		}
 		return 1;
@@ -500,15 +513,16 @@ public class ShopManager {
 	 * @throws ServiceException 
 	 */
 	public byte[] getShopByExcel(ShopInfoDto shopInfoDto) throws ServiceException {
-		String[] headers = {"序号","状态","事业部","门店编码","门店名称","门店等级","门店类型", "国家",
+		String[] headers = {"序号","状态","是否停用","事业部","门店编码","门店名称","门店等级","门店类型", "国家",
 		"城市","详细地址","店主姓名","店主联系方式","供货渠道","门店面积","店员总数","TECNO店员数","与TECNO关系",
 		"业务类型","竞品品牌1","促销员数量1","竞品品牌2","促销员数量2","竞品品牌3","促销员数量3","竞品品牌4","促销员数量4"
-		,"竞品品牌5","促销员数量5","竞品品牌6","促销员数量6","备注","创建人","创建时间","更新人","更新时间"};
+		,"竞品品牌5","促销员数量5","竞品品牌6","促销员数量6","销售代表","促销员","门店月总销量","门店智能机月总销量",
+		"品牌月总销量","品牌智能机月总销量","备注","创建人","创建时间","更新人","更新时间"};
 		List<ShopInfoDto> list = shopMapper.listShopByProperty(shopInfoDto);
 		List<Object[]> dataset = new ArrayList<Object[]>();
 		int i=1;
 		for(ShopInfoDto shopInfoDto1 :list){
-			dataset.add(new Object[]{i++,shopInfoDto1.getStatus()==1?"已生效":"新申请",
+			dataset.add(new Object[]{i++,shopInfoDto1.getStatus()==1?"已生效":"新申请",shopInfoDto1.getIsInactive(),
 		shopInfoDto1.getCompanyCode(),shopInfoDto1.getShopCode(),shopInfoDto1.getShopName(),
 		shopInfoDto1.getGradeName(),shopInfoDto1.getBizName(),shopInfoDto1.getCountryName(),
 		shopInfoDto1.getCityName(),shopInfoDto1.getAddress(),shopInfoDto1.getOwnerName(),
@@ -518,7 +532,9 @@ public class ShopManager {
 		shopInfoDto1.getBrandTwo(),shopInfoDto1.getClerkTwoQty(),shopInfoDto1.getBrandThree(),
 		shopInfoDto1.getClerkThreeQty(),shopInfoDto1.getBrandFour(),shopInfoDto1.getClerkFourQty(),
 		shopInfoDto1.getBrandFive(),shopInfoDto1.getBrandFive(),shopInfoDto1.getBrandSix(),
-		shopInfoDto1.getClerkSixQty(),shopInfoDto1.getRemark(),shopInfoDto1.getCreateBy(),
+		shopInfoDto1.getClerkSixQty(),shopInfoDto1.getSupervisor(),shopInfoDto1.getPromoter(),
+		shopInfoDto1.getSaleTotalQty(),shopInfoDto1.getSaleSpQty(),shopInfoDto1.getSaleBrandQty(),
+		shopInfoDto1.getSaleBrandspQty(),shopInfoDto1.getRemark(),shopInfoDto1.getCreateBy(),
 		shopInfoDto1.getCreateDate(),shopInfoDto1.getUpdateBy(),shopInfoDto1.getUpdateDate()});
 		}
 		String title = "门店报表";

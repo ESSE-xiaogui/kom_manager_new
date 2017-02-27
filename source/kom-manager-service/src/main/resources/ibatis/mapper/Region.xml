@@ -415,22 +415,17 @@
 	</select>
 	<select id="findCountryList" parameterType="java.lang.Long" resultMap="RegionResultMapper">
 		SELECT r.ID, r.REGION_NAME,r.REGION_CODE FROM T_REGION r
-		LEFT JOIN T_REGION c ON c.PARENT_ID = r.ID
-		LEFT JOIN T_SHOP s ON s.REGION_ID = c.ID 
-		LEFT JOIN T_USER_SHOP us ON us.SHOP_ID = s.ID
-		LEFT JOIN T_USER u ON u.ID = us.USER_ID
+		LEFT JOIN T_EMPLOYEE e ON e.REGION_ID = r.ID
+		LEFT JOIN T_USER u ON u.ID = e.U_ID
 		WHERE u.ID=#{userId} AND r.REGION_TYPE = '2'
 		GROUP BY r.ID, r.REGION_NAME,r.REGION_CODE
 	</select>
 	
 	<select id="findCityListByParentRegionId"  resultMap="RegionResultMapper">
-		SELECT c.ID,c.REGION_NAME FROM T_REGION c
-		LEFT JOIN T_SHOP p ON p.REGION_ID = c.ID
-		LEFT JOIN T_USER_SHOP us ON us.SHOP_ID = p.ID
-		LEFT JOIN T_USER u ON u.ID = us.USER_ID  
-		WHERE c.PARENT_ID = #{parentId}  
-		AND u.ID =#{userId}
-		GROUP BY c.ID,c.REGION_NAME
+		SELECT ID,REGION_NAME FROM T_REGION 
+		WHERE PARENT_ID = #{parentId}  
+		AND REGION_TYPE ='4'
+		GROUP BY ID,REGION_NAME
 	</select>
 	
 	<select id="findRegionByName" parameterType="java.lang.String"  resultMap="RegionResultMapper">

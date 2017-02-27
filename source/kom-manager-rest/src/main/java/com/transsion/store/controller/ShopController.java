@@ -265,13 +265,16 @@ public class ShopController extends AbstractController {
 		@QueryParam("createDateEnd") String createDateEnd,@QueryParam("updateDateStart") String updateDateStart,
 		@QueryParam("updateDateEnd") String updateDateEnd,@QueryParam("bizId") String bizId,
 		@QueryParam("gradeId") String gradeId,@QueryParam("regionId")String regionId,
-		@QueryParam("address")String address,@QueryParam("shopId")String shopId,
-		@QueryParam("status") String status) throws ServiceException,IOException {
+		@QueryParam("address")String address,@QueryParam("shopCode")String shopCode,
+		@QueryParam("status") String status,@QueryParam("companyId") String companyId,
+		@QueryParam("shopName") String shopName,@QueryParam("isInactive") String isInactive) throws ServiceException,IOException {
 		ShopInfoDto shopInfoDto = new ShopInfoDto();
 		shopInfoDto.setCreateDateStart(createDateStart);
 		shopInfoDto.setCreateDateEnd(createDateEnd);
 		shopInfoDto.setUpdateDateStart(updateDateStart);
 		shopInfoDto.setUpdateDateEnd(updateDateEnd);
+		shopInfoDto.setShopName(shopName);
+		shopInfoDto.setShopCode(shopCode);
 		if(!UtilHelper.isEmpty(bizId)){
 			shopInfoDto.setBizId(Long.parseLong(bizId));
 		}
@@ -281,11 +284,14 @@ public class ShopController extends AbstractController {
 		if(!UtilHelper.isEmpty(regionId)){
 			shopInfoDto.setRegionId(Long.parseLong(regionId));
 		}
-		if(!UtilHelper.isEmpty(shopId)){
-			shopInfoDto.setShopId(Long.parseLong(shopId));
-		}
 		if(!UtilHelper.isEmpty(status)){
 			shopInfoDto.setStatus(Integer.valueOf(status));
+		}
+		if(!UtilHelper.isEmpty(companyId)){
+			shopInfoDto.setCompanyId(Integer.valueOf(companyId));
+		}
+		if(!UtilHelper.isEmpty(isInactive)){
+			shopInfoDto.setIsInactive(Integer.valueOf(isInactive));
 		}
 		shopInfoDto.setAddress(address);
 		byte[] bytes = shopFacade.getShopByExcel(shopInfoDto);       

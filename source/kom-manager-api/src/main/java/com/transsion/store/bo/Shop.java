@@ -111,9 +111,14 @@ public class Shop extends Model{
 	private java.lang.String openDate;
 
 	/**
-	  *	审核状态 0:(默认)待审核 1:通过 2:未通过 3:再次申请
+	  *	审核状态 :1：已生效 2：待审核
 	  */
 	private java.lang.Integer status;
+	
+	/**
+	 * 是否启用：1：启用  2：停用
+	 */
+	private java.lang.Integer isInactive;
 
 	/**
 	  *	
@@ -892,7 +897,7 @@ public class Shop extends Model{
 	}
 	
 	/**
-	  *	审核状态 0:(默认)待审核 1:通过 2:未通过 3:再次申请
+	  *	审核状态 :1：已生效 2：待审核
 	  */
 	public java.lang.Integer getStatus() 
 	{
@@ -900,13 +905,22 @@ public class Shop extends Model{
 	}
 	
 	/**
-	  *	审核状态 0:(默认)待审核 1:通过 2:未通过 3:再次申请
+	  *	审核状态 :1：已生效 2：待审核
 	  */
 	public void setStatus(java.lang.Integer status) 
 	{
 		this.status = status;
 	}
 	
+	
+	public java.lang.Integer getIsInactive() {
+		return isInactive;
+	}
+
+	public void setIsInactive(java.lang.Integer isInactive) {
+		this.isInactive = isInactive;
+	}
+
 	/**
 	  *	
 	  */
@@ -1030,21 +1044,23 @@ public class Shop extends Model{
 	@Override
 	public String toString() {
 		return "Shop [id=" + id + ", shopId=" + shopId + ", shopCode=" + shopCode + ", shopName=" + shopName
-				+ ", companyId=" + companyId + ", parentId=" + parentId + ", regionId=" + regionId + ", country="
-				+ country + ", city=" + city + ", shopIcon=" + shopIcon + ", address=" + address + ", gradeId="
-				+ gradeId + ", bizId=" + bizId + ", ownerName=" + ownerName + ", ownerPhone=" + ownerPhone
-				+ ", purchasChannel=" + purchasChannel + ", openDate=" + openDate + ", status=" + status + ", remark="
-				+ remark + ", createBy=" + createBy + ", createDate=" + createDate + ", updateBy=" + updateBy
-				+ ", updateDate=" + updateDate + ", version=" + version + ", promoter=" + promoter + ", assistant="
-				+ assistant + ", materielId=" + materielId + ", totalNum=" + totalNum + ", currentNum=" + currentNum
-				+ ", clerkNum=" + clerkNum + ", brandsFirst=" + brandsFirst + ", brandsTwo=" + brandsTwo
-				+ ", brandsThree=" + brandsThree + ", counterNum=" + counterNum + ", darkPro=" + darkPro + ", isKom="
-				+ isKom + ", relationship=" + relationship + ", incorporator=" + incorporator + ", incorporatorTel="
-				+ incorporatorTel + ", fwidth=" + fwidth + ", fdepth=" + fdepth + ", shopArea=" + shopArea
-				+ ", showNum=" + showNum + ", staffNum=" + staffNum + ", salesNum=" + salesNum + ", countryName="
-				+ countryName + ", cityName=" + cityName + ", werks=" + werks + ", gradeName=" + gradeName
-				+ ", bizName=" + bizName + "]";
+						+ ", companyId=" + companyId + ", parentId=" + parentId + ", regionId=" + regionId
+						+ ", country=" + country + ", city=" + city + ", shopIcon=" + shopIcon + ", address=" + address
+						+ ", gradeId=" + gradeId + ", bizId=" + bizId + ", ownerName=" + ownerName + ", ownerPhone="
+						+ ownerPhone + ", purchasChannel=" + purchasChannel + ", openDate=" + openDate + ", status="
+						+ status + ", isInactive=" + isInactive + ", remark=" + remark + ", createBy=" + createBy
+						+ ", createDate=" + createDate + ", updateBy=" + updateBy + ", updateDate=" + updateDate
+						+ ", version=" + version + ", promoter=" + promoter + ", assistant=" + assistant
+						+ ", materielId=" + materielId + ", totalNum=" + totalNum + ", currentNum=" + currentNum
+						+ ", clerkNum=" + clerkNum + ", brandsFirst=" + brandsFirst + ", brandsTwo=" + brandsTwo
+						+ ", brandsThree=" + brandsThree + ", counterNum=" + counterNum + ", darkPro=" + darkPro
+						+ ", isKom=" + isKom + ", relationship=" + relationship + ", incorporator=" + incorporator
+						+ ", incorporatorTel=" + incorporatorTel + ", fwidth=" + fwidth + ", fdepth=" + fdepth
+						+ ", shopArea=" + shopArea + ", showNum=" + showNum + ", staffNum=" + staffNum + ", salesNum="
+						+ salesNum + ", countryName=" + countryName + ", cityName=" + cityName + ", werks=" + werks
+						+ ", gradeName=" + gradeName + ", bizName=" + bizName + "]";
 	}
+
 
 }
 
