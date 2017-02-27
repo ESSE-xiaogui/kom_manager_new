@@ -344,17 +344,27 @@ public class ShopManager {
 		shop.setUpdateDate(currentDate);
 		shopMapper.update(shop);
 		
-		ShopExtension shopExtension = shopDetailDto.getShopExtensionDto().toModel();
-		if (shopExtension != null) {
+		ShopExtensionDto shopExtensionDto = shopDetailDto.getShopExtensionDto();
+		if (shopExtensionDto != null) {
+			ShopExtension shopExtension = shopDetailDto.getShopExtensionDto().toModel();
 			shopExtensionService.update(shopExtension);
 		}
 		
 		List<ShopMateriel> list = shopDetailDto.getShopMaterielDtoList();
+		String userCode = userContext.getUserCode();
 		for (ShopMateriel shopMateriel : list) {
-			shopMateriel.setUpdateBy(userContext.getUserCode());
-			shopMateriel.setUpdateDate(currentDate);
-			shopMaterielService.save(shopMateriel);
+			shopMateriel.setShopId(shop.getId());
+			shopMateriel.setCreateBy(userCode);
+			shopMateriel.setCreateDate(currentDate);
 		}
+		shopMaterielService.saveShopMateriel(list);
+		
+//		List<ShopMateriel> list = shopDetailDto.getShopMaterielDtoList();
+//		for (ShopMateriel shopMateriel : list) {
+//			shopMateriel.setUpdateBy(userContext.getUserCode());
+//			shopMateriel.setUpdateDate(currentDate);
+//			shopMaterielService.save(shopMateriel);
+//		}
 		
 		resultStatus = 1;
 		
