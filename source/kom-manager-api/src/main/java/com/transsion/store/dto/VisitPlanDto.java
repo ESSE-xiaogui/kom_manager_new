@@ -39,7 +39,34 @@ public class VisitPlanDto implements Serializable {
 	  *	
 	  */
 	private java.lang.Long shopId;
+	
+	/**
+	  *	readonly
+	  */
+	private java.lang.Long shopName;
+	
+	
+	/**
+	  *	readonly
+	  */
+	private java.lang.Long gradeId;
+	
+	/**
+	  *	readonly
+	  */
+	private java.lang.Long gradeName;
 
+	/**
+	  *	readonly
+	  */
+	private java.lang.Long weekPlans;
+	
+	/**
+	  *	readonly
+	  */
+	private java.lang.Long finishedPlans;
+
+	
 	/**
 	  *	
 	  */
@@ -85,6 +112,46 @@ public class VisitPlanDto implements Serializable {
 	  */
 	public void setShopId(java.lang.Long shopId) {
 		this.shopId = shopId;
+	}
+
+	public java.lang.Long getShopName() {
+		return shopName;
+	}
+
+	public void setShopName(java.lang.Long shopName) {
+		this.shopName = shopName;
+	}
+
+	public java.lang.Long getGradeId() {
+		return gradeId;
+	}
+
+	public void setGradeId(java.lang.Long gradeId) {
+		this.gradeId = gradeId;
+	}
+
+	public java.lang.Long getGradeName() {
+		return gradeName;
+	}
+
+	public void setGradeName(java.lang.Long gradeName) {
+		this.gradeName = gradeName;
+	}
+
+	public java.lang.Long getWeekPlans() {
+		return weekPlans;
+	}
+
+	public void setWeekPlans(java.lang.Long weekPlans) {
+		this.weekPlans = weekPlans;
+	}
+
+	public java.lang.Long getFinishedPlans() {
+		return finishedPlans;
+	}
+
+	public void setFinishedPlans(java.lang.Long finishedPlans) {
+		this.finishedPlans = finishedPlans;
 	}
 
 	/**
