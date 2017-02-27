@@ -123,7 +123,7 @@ public interface VisitPlanFacade {
 	/*
 	 * 
 	 */
-	public List<ShopVisitPlanDto> queryShopPlan(String token, String startDate, String endDate) throws ServiceException;
+	public List<VisitPlanDto> queryShopPlan(String token, String startDate, String endDate) throws ServiceException;
 	
 	/********************************* web api **********************************/
 	/**
