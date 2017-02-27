@@ -39,6 +39,9 @@ public class VisitPlanDto implements Serializable {
 	  *	
 	  */
 	private java.lang.Long shopId;
+	
+	
+	private boolean isDelete;
 
 	/**
 	  *	
@@ -85,6 +88,14 @@ public class VisitPlanDto implements Serializable {
 	  */
 	public void setShopId(java.lang.Long shopId) {
 		this.shopId = shopId;
+	}
+	
+	public boolean isDelete() {
+		return isDelete;
+	}
+
+	public void setDelete(boolean isDelete) {
+		this.isDelete = isDelete;
 	}
 
 	/**

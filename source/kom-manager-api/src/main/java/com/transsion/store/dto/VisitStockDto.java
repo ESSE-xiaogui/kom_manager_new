@@ -51,6 +51,17 @@ public class VisitStockDto implements Serializable {
 	private java.lang.Long stockQty;
 
 	/**
+	  *	
+	  */
+	private java.lang.Long currentSaleQty;
+	
+	/**
+	  *	
+	  */
+	private java.lang.Long targetSaleQty;
+	
+	
+	/**
 	 * avg sale per four weeks
 	 */
 	private java.math.BigDecimal saleAvg;
@@ -133,6 +144,22 @@ public class VisitStockDto implements Serializable {
 	  */
 	public void setStockQty(java.lang.Long stockQty) {
 		this.stockQty = stockQty;
+	}
+
+	public java.lang.Long getCurrentSaleQty() {
+		return currentSaleQty;
+	}
+
+	public void setCurrentSaleQty(java.lang.Long currentSaleQty) {
+		this.currentSaleQty = currentSaleQty;
+	}
+
+	public java.lang.Long getTargetSaleQty() {
+		return targetSaleQty;
+	}
+
+	public void setTargetSaleQty(java.lang.Long targetSaleQty) {
+		this.targetSaleQty = targetSaleQty;
 	}
 
 	/**

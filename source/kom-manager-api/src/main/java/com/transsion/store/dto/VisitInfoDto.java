@@ -1,127 +1,169 @@
+/**
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2017-2-21 10:24:48
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ------------     -----------     ---------------------------------------------
+ *
+ **/
 package com.transsion.store.dto;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class VisitInfoDto implements Serializable {
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
-	/*
-	 * shop visit basic info(ALL)
-	 */
-	private VisitDto visitDto;
+	/**
+	  *	
+	  */
+	private java.lang.Long id;
 
-	/*
-	 * shop visit model stock info(TECNO)
-	 */
-	private List<VisitStockDto> visitStockDtoList;
+	/**
+	  *	
+	  */
+	private java.lang.String planDate;
+
+	/**
+	  *	
+	  */
+	private java.lang.Long shopId;
+
+	private java.lang.Long shopName;
+
+	private java.lang.Long gradeId;
+
+	private java.lang.Long gradeName;
+
+	private java.lang.Long weekPlanQty;
+
+	private boolean isPlaned;
 	
-	/*
-	 * read only
-	 */
-	private VisitScoreDto visitScoreDto;
+	private boolean isFinished;
 
-	/*
-	 * shop visit score info(TECNO)
-	 */
-	private List<VisitScoreItemDto> visitScoreItemDtoList;
+	/**
+	  *	
+	  */
+	private java.lang.String remark;
 
-	/*
-	 * shop visit feedback info(ALL)
-	 */
-	private VisitFeedbackDto visitFeedbackDto;
-
-	/*
-	 * shop visit sale info(ITEL)
-	 */
-	private List<VisitSaleDto> visitSaleDtoList;
-
-	/*
-	 * shop visit model info(ITEL)
-	 */
-	private List<VisitModelDto> visitModelDtoList;
-
-	/*
-	 * shop visit materiel info(ITEL)
-	 */
-	private List<VisitMaterielDto> visitMaterielDtoList;
-
-	/*
-	 * shop visit competitor info(ITEL)
-	 */
-	private List<VisitCompetitorDto> visitCompetitorDtoList;
-
-	public VisitDto getVisitDto() {
-		return visitDto;
+	/**
+	  *	
+	  */
+	public java.lang.Long getId() {
+		return id;
 	}
 
-	public void setVisitDto(VisitDto visitDto) {
-		this.visitDto = visitDto;
+	/**
+	  *	
+	  */
+	public void setId(java.lang.Long id) {
+		this.id = id;
 	}
 
-	public List<VisitStockDto> getVisitStockDtoList() {
-		return visitStockDtoList;
+	/**
+	  *	
+	  */
+	public java.lang.String getPlanDate() {
+		return planDate;
 	}
 
-	public void setVisitStockDtoList(List<VisitStockDto> visitStockDtoList) {
-		this.visitStockDtoList = visitStockDtoList;
+	/**
+	  *	
+	  */
+	public void setPlanDate(java.lang.String planDate) {
+		this.planDate = planDate;
+	}
+
+	/**
+	  *	
+	  */
+	public java.lang.Long getShopId() {
+		return shopId;
+	}
+
+	/**
+	  *	
+	  */
+	public void setShopId(java.lang.Long shopId) {
+		this.shopId = shopId;
+	}
+
+	public java.lang.Long getShopName() {
+		return shopName;
+	}
+
+	public void setShopName(java.lang.Long shopName) {
+		this.shopName = shopName;
+	}
+
+	public java.lang.Long getGradeId() {
+		return gradeId;
+	}
+
+	public void setGradeId(java.lang.Long gradeId) {
+		this.gradeId = gradeId;
+	}
+
+	public java.lang.Long getGradeName() {
+		return gradeName;
+	}
+
+	public void setGradeName(java.lang.Long gradeName) {
+		this.gradeName = gradeName;
 	}
 	
-	public VisitScoreDto getVisitScoreDto() {
-		return visitScoreDto;
+	public java.lang.Long getWeekPlanQty() {
+		return weekPlanQty;
 	}
 
-	public void setVisitScoreDto(VisitScoreDto visitScoreDto) {
-		this.visitScoreDto = visitScoreDto;
+	public void setWeekPlanQty(java.lang.Long weekPlanQty) {
+		this.weekPlanQty = weekPlanQty;
 	}
 
-	public List<VisitScoreItemDto> getVisitScoreItemDtoList() {
-		return visitScoreItemDtoList;
+	public boolean isPlaned() {
+		return isPlaned;
 	}
 
-	public void setVisitScoreItemDtoList(List<VisitScoreItemDto> visitScoreItemDtoList) {
-		this.visitScoreItemDtoList = visitScoreItemDtoList;
+	public void setPlaned(boolean isPlaned) {
+		this.isPlaned = isPlaned;
 	}
 
-	public VisitFeedbackDto getVisitFeedbackDto() {
-		return visitFeedbackDto;
+	public boolean isFinished() {
+		return isFinished;
 	}
 
-	public void setVisitFeedbackDto(VisitFeedbackDto visitFeedbackDto) {
-		this.visitFeedbackDto = visitFeedbackDto;
+	public void setFinished(boolean isFinished) {
+		this.isFinished = isFinished;
 	}
 
-	public List<VisitSaleDto> getVisitSaleDtoList() {
-		return visitSaleDtoList;
+	/**
+	  *	
+	  */
+	public java.lang.String getRemark() {
+		return remark;
 	}
 
-	public void setVisitSaleDtoList(List<VisitSaleDto> visitSaleDtoList) {
-		this.visitSaleDtoList = visitSaleDtoList;
+	/**
+	  *	
+	  */
+	public void setRemark(java.lang.String remark) {
+		this.remark = remark;
 	}
 
-	public List<VisitModelDto> getVisitModelDtoList() {
-		return visitModelDtoList;
-	}
-
-	public void setVisitModelDtoList(List<VisitModelDto> visitModelDtoList) {
-		this.visitModelDtoList = visitModelDtoList;
-	}
-
-	public List<VisitMaterielDto> getVisitMaterielDtoList() {
-		return visitMaterielDtoList;
-	}
-
-	public void setVisitMaterielDtoList(List<VisitMaterielDto> visitMaterielDtoList) {
-		this.visitMaterielDtoList = visitMaterielDtoList;
-	}
-
-	public List<VisitCompetitorDto> getVisitCompetitorDtoList() {
-		return visitCompetitorDtoList;
-	}
-
-	public void setVisitCompetitorDtoList(List<VisitCompetitorDto> visitCompetitorDtoList) {
-		this.visitCompetitorDtoList = visitCompetitorDtoList;
+	@Override
+	public String toString() {
+		return "VisitInfoDto [id=" + id + ", planDate=" + planDate + ", shopId=" + shopId + ", remark=" + remark + "]";
 	}
 
 }

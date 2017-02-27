@@ -24,7 +24,10 @@ import org.springframework.stereotype.Component;
 import com.transsion.store.bo.Visit;
 import com.transsion.store.dto.VisitHistorySummaryDto;
 import com.transsion.store.dto.VisitInfoDto;
+import com.transsion.store.dto.VisitModelInfoDto;
+import com.transsion.store.dto.VisitRecordDto;
 import com.transsion.store.dto.VisitSettingDto;
+import com.transsion.store.dto.VisitShopInfoDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.VisitFacade;
@@ -156,27 +159,48 @@ public class VisitFacadeImpl implements VisitFacade {
 	}
 
 	@Override
-	public void updateVisitRecord(String token, VisitInfoDto visitInfoDto) throws ServiceException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public List<VisitInfoDto> queryVisitRecords(String token, String startDate, String endDate) throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public VisitInfoDto queryShopLatestVisit(String token, String ShopId) throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<VisitHistorySummaryDto> queryVisitSummaryHistory(String token, String startDate, String endDate)
 			throws ServiceException {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<VisitInfoDto> queryPlanedVisitList(String token, String planDate) throws ServiceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<VisitInfoDto> queryUnplanedVisitList(String token, String planDate) throws ServiceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public VisitShopInfoDto queryVisitShopInfo(String token, String planDate) throws ServiceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<VisitModelInfoDto> queryVisitModelInfo(String token, String planDate) throws ServiceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void saveVisitRecord(String token, VisitRecordDto visitRecordDto) throws ServiceException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public com.transsion.store.dto.VisitRecordInfoDto queryVisitRecordInfo(String token, String visitId)
+			throws ServiceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 }

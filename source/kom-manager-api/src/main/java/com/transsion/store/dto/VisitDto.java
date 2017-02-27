@@ -45,10 +45,26 @@ public class VisitDto implements Serializable {
 	/**
 	  *	
 	  */
+	private java.lang.Long currentSaleQty;
+	
+	/**
+	  *	
+	  */
+	private java.lang.Long targetSaleQty;
+	
+	/**
+	 * avg sale per four weeks
+	 */
+	private java.math.BigDecimal achieved;
+	
+	/**
+	  *itel requirement	
+	  */
 	private java.lang.Long saleTotalQty;
 
 	/**
-	  *	private brand sale qty
+	  *	itel requirement
+	  *private brand sale qty
 	  */
 	private java.lang.Long salePbQty;
 
@@ -108,6 +124,30 @@ public class VisitDto implements Serializable {
 		this.shopId = shopId;
 	}
 	
+	public java.lang.Long getCurrentSaleQty() {
+		return currentSaleQty;
+	}
+
+	public void setCurrentSaleQty(java.lang.Long currentSaleQty) {
+		this.currentSaleQty = currentSaleQty;
+	}
+
+	public java.lang.Long getTargetSaleQty() {
+		return targetSaleQty;
+	}
+
+	public void setTargetSaleQty(java.lang.Long targetSaleQty) {
+		this.targetSaleQty = targetSaleQty;
+	}
+
+	public java.math.BigDecimal getAchieved() {
+		return achieved;
+	}
+
+	public void setAchieved(java.math.BigDecimal achieved) {
+		this.achieved = achieved;
+	}
+
 	/**
 	  *	
 	  */
