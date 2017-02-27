@@ -344,8 +344,9 @@ public class ShopManager {
 		shop.setUpdateDate(currentDate);
 		shopMapper.update(shop);
 		
-		ShopExtension shopExtension = shopDetailDto.getShopExtensionDto().toModel();
-		if (shopExtension != null) {
+		ShopExtensionDto shopExtensionDto = shopDetailDto.getShopExtensionDto();
+		if (shopExtensionDto != null) {
+			ShopExtension shopExtension = shopDetailDto.getShopExtensionDto().toModel();
 			shopExtensionService.update(shopExtension);
 		}
 		
