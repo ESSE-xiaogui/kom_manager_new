@@ -2,7 +2,7 @@ package com.transsion.store.dto;
 
 import java.io.Serializable;
 
-public class VisitPlanSummaryDto  implements Serializable {
+public class VisitPlanDetailSummaryDto  implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

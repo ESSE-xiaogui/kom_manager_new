@@ -18,7 +18,7 @@ package com.transsion.store.dto;
 
 import java.io.Serializable;
 
-public class VisitPlanDto implements Serializable {
+public class VisitPlanInfoDto implements Serializable {
 
 	/**
 	 * 
@@ -39,7 +39,29 @@ public class VisitPlanDto implements Serializable {
 	  *	
 	  */
 	private java.lang.Long shopId;
+	
+	/**
+	  *	readonly
+	  */
+	private java.lang.Long shopName;
+	
+	
+	/**
+	  *	readonly
+	  */
+	private java.lang.Long gradeId;
+	
+	/**
+	  *	readonly
+	  */
+	private java.lang.Long gradeName;
 
+	/**
+	  *	readonly
+	  */
+	private java.lang.Long weekPlans;
+	
+	
 	/**
 	  *	
 	  */
@@ -87,6 +109,37 @@ public class VisitPlanDto implements Serializable {
 		this.shopId = shopId;
 	}
 
+	public java.lang.Long getShopName() {
+		return shopName;
+	}
+
+	public void setShopName(java.lang.Long shopName) {
+		this.shopName = shopName;
+	}
+
+	public java.lang.Long getGradeId() {
+		return gradeId;
+	}
+
+	public void setGradeId(java.lang.Long gradeId) {
+		this.gradeId = gradeId;
+	}
+
+	public java.lang.Long getGradeName() {
+		return gradeName;
+	}
+
+	public void setGradeName(java.lang.Long gradeName) {
+		this.gradeName = gradeName;
+	}
+
+	public java.lang.Long getWeekPlans() {
+		return weekPlans;
+	}
+
+	public void setWeekPlans(java.lang.Long weekPlans) {
+		this.weekPlans = weekPlans;
+	}
 	/**
 	  *	
 	  */
@@ -103,7 +156,7 @@ public class VisitPlanDto implements Serializable {
 
 	@Override
 	public String toString() {
-		return "VisitPlanDto [id=" + id + ", planDate=" + planDate + ", shopId=" + shopId + ", remark=" + remark + "]";
+		return "VisitPlanInfoDto [id=" + id + ", planDate=" + planDate + ", shopId=" + shopId + ", remark=" + remark + "]";
 	}
 
 }
