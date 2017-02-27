@@ -264,7 +264,7 @@ public class ShopManager {
 		
 		Long shopId = shop.getId();
 		
-		ShopExtension shopExtension = shopDetailDto.getShopExtension();
+		ShopExtension shopExtension = shopDetailDto.getShopExtensionDto().toModel();
 		shopExtension.setShopId(shopId);
 		shopExtensionService.save(shopExtension);
 		
@@ -309,7 +309,7 @@ public class ShopManager {
 			ShopExtension shopExtension = shopExtensionService.queryShopExtensionByShopId(shopIdList.get(i).getShopId());
 			List<ShopMateriel> shopMaterielList = shopMaterielService.queryShopMaterielListByShopId(shopIdList.get(i).getShopId());
 			shopDetailDto.setShop(shop);
-			shopDetailDto.setShopExtension(shopExtension);
+			shopDetailDto.setShopExtensionDto(shopExtension.toModel());
 			shopDetailDto.setShopMaterielDtoList(shopMaterielList);
 			list.add(shopDetailDto);
 		}
@@ -338,7 +338,7 @@ public class ShopManager {
 		shop.setUpdateDate(currentDate);
 		shopMapper.update(shop);
 		
-		ShopExtension shopExtension = shopDetailDto.getShopExtension();
+		ShopExtension shopExtension = shopDetailDto.getShopExtensionDto().toModel();
 		if (shopExtension != null) {
 			shopExtensionService.update(shopExtension);
 		}

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.transsion.store.bo.Shop;
-import com.transsion.store.bo.ShopExtension;
 import com.transsion.store.bo.ShopMateriel;
 
 /*
@@ -16,8 +15,16 @@ public class ShopDetailDto implements Serializable{
 	
 	private Shop shop;
 	
-	private ShopExtension shopExtension;
+	private ShopExtensionDto shopExtensionDto;
 	
+	public ShopExtensionDto getShopExtensionDto() {
+		return shopExtensionDto;
+	}
+
+	public void setShopExtensionDto(ShopExtensionDto shopExtensionDto) {
+		this.shopExtensionDto = shopExtensionDto;
+	}
+
 	private List<ShopMateriel> shopMaterielDtoList;
 
 	public Shop getShop() {
@@ -28,13 +35,6 @@ public class ShopDetailDto implements Serializable{
 		this.shop = shop;
 	}
 
-	public ShopExtension getShopExtension() {
-		return shopExtension;
-	}
-
-	public void setShopExtension(ShopExtension shopExtension) {
-		this.shopExtension = shopExtension;
-	}
 
 	public List<ShopMateriel> getShopMaterielDtoList() {
 		return shopMaterielDtoList;
@@ -43,6 +43,4 @@ public class ShopDetailDto implements Serializable{
 	public void setShopMaterielDtoList(List<ShopMateriel> shopMaterielDtoList) {
 		this.shopMaterielDtoList = shopMaterielDtoList;
 	}
-	
-	
 }

@@ -16,7 +16,11 @@
  **/
 package com.transsion.store.bo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.shangkang.core.bo.Model;
+import com.transsion.store.dto.ShopExtBrandDto;
 import com.transsion.store.dto.ShopExtensionDto;
 
 public class ShopExtension extends Model{
@@ -546,7 +550,38 @@ public class ShopExtension extends Model{
 	
 	public ShopExtensionDto toModel()
 	{
-		return null;
+		ShopExtensionDto shopExtensionDto = new ShopExtensionDto();
+		shopExtensionDto.setId(this.getId());
+		shopExtensionDto.setShopId(this.getShopId());
+		shopExtensionDto.setShopArea(this.getShopArea());
+		shopExtensionDto.setClerkTotalQty(this.getClerkTotalQty());
+		shopExtensionDto.setClerkBrandQty(this.getClerkBrandQty());
+		shopExtensionDto.setRelationship(this.getRelationship());
+		shopExtensionDto.setBizCategory(this.getBizCategory());
+		shopExtensionDto.setSupervisor(this.getSupervisor());
+		shopExtensionDto.setPromoter(this.getPromoter());
+		shopExtensionDto.setSaleTotalQty(this.getSaleTotalQty());
+		shopExtensionDto.setSaleSpQty(this.getSaleSpQty());
+		shopExtensionDto.setSaleBrandQty(this.getSaleBrandQty());
+		shopExtensionDto.setSaleBrandspQty(this.getSaleBrandspQty());
+		
+		List<ShopExtBrandDto> list = new ArrayList<ShopExtBrandDto>();
+		ShopExtBrandDto shopExtBrandDto = new ShopExtBrandDto();
+		shopExtBrandDto.setBrandName(this.getBrandOne());
+		shopExtBrandDto.setBrandQty(this.getClerkOneQty());
+		shopExtBrandDto.setBrandName(this.getBrandTwo());
+		shopExtBrandDto.setBrandQty(this.getClerkTwoQty());
+		shopExtBrandDto.setBrandName(this.getBrandThree());
+		shopExtBrandDto.setBrandQty(this.getClerkThreeQty());
+		shopExtBrandDto.setBrandName(this.getBrandFour());
+		shopExtBrandDto.setBrandQty(this.getClerkFourQty());
+		shopExtBrandDto.setBrandName(this.getBrandFive());
+		shopExtBrandDto.setBrandQty(this.getClerkFiveQty());
+		shopExtBrandDto.setBrandName(this.getBrandSix());
+		shopExtBrandDto.setBrandQty(this.getClerkSixQty());
+		list.add(shopExtBrandDto);
+		shopExtensionDto.setBrandClerkList(list);
+		return shopExtensionDto;
 	}
 	
 	
