@@ -123,7 +123,7 @@ public interface VisitFacade {
 	
 	
 	/*
-	 * update if visit exist or create 
+	 * 
 	 */
 	public VisitInfoDto queryShopLatestVisit(String token, String ShopId) throws ServiceException;
 	

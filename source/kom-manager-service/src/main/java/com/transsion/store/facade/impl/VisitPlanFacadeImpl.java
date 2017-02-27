@@ -164,7 +164,7 @@ public class VisitPlanFacadeImpl implements VisitPlanFacade {
 	}
 
 	@Override
-	public List<ShopVisitPlanDto> queryShopPlan(String token, String startDate, String endDate)
+	public List<VisitPlanDto> queryShopPlan(String token, String startDate, String endDate)
 			throws ServiceException {
 		// TODO Auto-generated method stub
 		return null;
