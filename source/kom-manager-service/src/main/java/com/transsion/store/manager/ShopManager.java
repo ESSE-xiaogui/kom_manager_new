@@ -259,6 +259,7 @@ public class ShopManager {
 		
 		String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		Shop shop = shopDetailDto.getShop();
+		shop.setCompanyId(userContext.getCompanyId().intValue());
 		shop.setCreateBy(userContext.getUser().getId().toString());
 		shop.setCreateDate(currentDate);
 		shopService.save(shop);
