@@ -309,7 +309,9 @@ public class ShopManager {
 			ShopExtension shopExtension = shopExtensionService.queryShopExtensionByShopId(shopIdList.get(i).getShopId());
 			List<ShopMateriel> shopMaterielList = shopMaterielService.queryShopMaterielListByShopId(shopIdList.get(i).getShopId());
 			shopDetailDto.setShop(shop);
-			shopDetailDto.setShopExtensionDto(shopExtension.toModel());
+			if (shopExtension != null) {
+				shopDetailDto.setShopExtensionDto(shopExtension.toModel());
+			}
 			shopDetailDto.setShopMaterielDtoList(shopMaterielList);
 			list.add(shopDetailDto);
 		}
