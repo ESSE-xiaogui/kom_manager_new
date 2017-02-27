@@ -148,7 +148,7 @@ public interface RegionFacade {
 	* 查询国家区域
 	 * @param token 
 	*/
-	public List<RegionDto> findCountryList(String token)throws ServiceException;
+	public List<Region> findCountryList(String token)throws ServiceException;
 
 	public List<RegionDto> findCityListByParentRegionId(int parentId,String token)throws ServiceException;
 }

@@ -52,9 +52,11 @@ public interface RegionMapper extends GenericIBatisMapper<Region, java.lang.Long
 
 	public List<Region> findCountryList(Long userId);
 
-	public List<Region> findCityListByParentRegionId(@Param("parentId")int parentId, @Param("userId")Long userId);
+	public List<Region> findCityListByParentRegionId(@Param("parentId")int parentId, @Param("userId")Long userId)throws DataAccessFailureException;
 	
-	public Region findRegionByName(@Param("countryName") String countryName);
+	public Region findRegionByName(@Param("countryName") String countryName)throws DataAccessFailureException;
+
+	public List<Region> findAllCountryList()throws DataAccessFailureException;
 	
 	
 

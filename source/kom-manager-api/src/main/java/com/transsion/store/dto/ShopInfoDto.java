@@ -26,6 +26,8 @@ public class ShopInfoDto implements Serializable{
 	
 	private String bizName;
 	
+	private java.lang.Integer isInactive;
+	
 	private java.lang.String createDateStart;
 	
 	private java.lang.String createDateEnd;
@@ -432,6 +434,14 @@ public class ShopInfoDto implements Serializable{
 		this.openDate = openDate;
 	}
 
+	public java.lang.Integer getIsInactive() {
+		return isInactive;
+	}
+
+	public void setIsInactive(java.lang.Integer isInactive) {
+		this.isInactive = isInactive;
+	}
+
 	public java.lang.Integer getStatus() {
 		return status;
 	}
@@ -756,12 +766,13 @@ public class ShopInfoDto implements Serializable{
 	public String toString() {
 		return "ShopInfoDto [id=" + id + ", countryName=" + countryName + ", cityName=" + cityName + ", regionName="
 						+ regionName + ", companyCode=" + companyCode + ", gradeName=" + gradeName + ", bizName="
-						+ bizName + ", createDateStart=" + createDateStart + ", createDateEnd=" + createDateEnd
-						+ ", updateDateStart=" + updateDateStart + ", updateDateEnd=" + updateDateEnd + ", shopId="
-						+ shopId + ", shopCode=" + shopCode + ", shopName=" + shopName + ", companyId=" + companyId
-						+ ", parentId=" + parentId + ", regionId=" + regionId + ", country=" + country + ", city="
-						+ city + ", shopIcon=" + shopIcon + ", address=" + address + ", gradeId=" + gradeId + ", bizId="
-						+ bizId + ", ownerName=" + ownerName + ", ownerPhone=" + ownerPhone + ", purchasChannel="
+						+ bizName + ", isInactive=" + isInactive + ", createDateStart=" + createDateStart
+						+ ", createDateEnd=" + createDateEnd + ", updateDateStart=" + updateDateStart
+						+ ", updateDateEnd=" + updateDateEnd + ", shopId=" + shopId + ", shopCode=" + shopCode
+						+ ", shopName=" + shopName + ", companyId=" + companyId + ", parentId=" + parentId
+						+ ", regionId=" + regionId + ", country=" + country + ", city=" + city + ", shopIcon="
+						+ shopIcon + ", address=" + address + ", gradeId=" + gradeId + ", bizId=" + bizId
+						+ ", ownerName=" + ownerName + ", ownerPhone=" + ownerPhone + ", purchasChannel="
 						+ purchasChannel + ", openDate=" + openDate + ", status=" + status + ", remark=" + remark
 						+ ", createBy=" + createBy + ", createDate=" + createDate + ", updateBy=" + updateBy
 						+ ", updateDate=" + updateDate + ", version=" + version + ", shopExtension=" + shopExtension

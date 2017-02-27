@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
+import com.transsion.store.bo.Employee;
 import com.transsion.store.bo.Region;
 import com.transsion.store.bo.Shop;
 import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.EmpResponseDto;
 import com.transsion.store.dto.RegionDto;
 import com.transsion.store.dto.RegionResponseDto;
 import com.transsion.store.dto.RegionShopDto;
@@ -19,8 +21,10 @@ import com.transsion.store.dto.ShopChildrenDto;
 import com.transsion.store.dto.ShopDto;
 import com.transsion.store.dto.ShopRegionChildrenDto;
 import com.transsion.store.exception.ExceptionDef;
+import com.transsion.store.mapper.EmployeeMapper;
 import com.transsion.store.mapper.RegionMapper;
 import com.transsion.store.mapper.ShopMapper;
+import com.transsion.store.service.EmployeeService;
 import com.transsion.store.service.RegionService;
 import com.transsion.store.service.ShopService;
 import com.transsion.store.service.SystemDateService;
@@ -42,6 +46,9 @@ public class RegionManager {
 
 	@Autowired
 	private ShopMapper shopMapper;
+	
+	@Autowired
+	private EmployeeMapper employeeMapper;
 
 	/**
 	 * 查询树形销售区域
@@ -285,7 +292,7 @@ public class RegionManager {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<RegionDto> findCountryList(String token) throws ServiceException {
+	public List<Region> findCountryList(String token) throws ServiceException {
 		if (UtilHelper.isEmpty(token)) {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
@@ -294,18 +301,17 @@ public class RegionManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		Long userId = userContext.getUser().getId();
-		List<RegionDto> countryList = null;
-		List<Region> list = regionService.findCountryList(userId);
-		if (list != null && list.size() > 0) {
-			countryList = new ArrayList<RegionDto>();
-			for (Region region : list) {
-				RegionDto findRegionsDto = new RegionDto();
-				findRegionsDto.setId(region.getId());
-				findRegionsDto.setRegionName(region.getRegionName());
-				countryList.add(findRegionsDto);
-			}
-		} 
-		return countryList;
+		Integer regionId = null;
+		Employee emp = new Employee();
+		emp.setuId(userId);
+		List<Employee> empList = employeeMapper.listByProperty(emp);
+	    if(!UtilHelper.isEmpty(empList)){
+	    	regionId = empList.get(0).getRegionId();
+	    	if(!UtilHelper.isEmpty(regionId)){
+	    		return regionService.findCountryList(userId);
+		    }
+	    }
+	    return regionService.findAllCountryList();	
 	}
 	
 	/**

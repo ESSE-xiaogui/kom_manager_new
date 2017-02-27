@@ -201,7 +201,7 @@ public class RegionFacadeImpl implements RegionFacade {
 		return regionManager.findShopBindRegion(token,userName);
 	}
 	
-	public List<RegionDto> findCountryList(String token) throws ServiceException {
+	public List<Region> findCountryList(String token) throws ServiceException {
 		return regionManager.findCountryList(token);
 	}
 	

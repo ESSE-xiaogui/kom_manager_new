@@ -61,7 +61,7 @@ public class RegionController extends AbstractController{
 	@GET
 	@Path("/findCountryList")
 	@Produces({MediaType.APPLICATION_JSON}) 
-	public List<RegionDto> findCountryList() throws ServiceException {
+	public List<Region> findCountryList() throws ServiceException {
 		String token = this.getAuthorization();
 		return regionFacade.findCountryList(token);
 	}

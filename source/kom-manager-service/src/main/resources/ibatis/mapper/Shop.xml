@@ -88,6 +88,12 @@
 		<result column="CLERK_FIVE_QTY" property="clerkFiveQty"/> 
 		<result column="CLERK_SIX_QTY" property="clerkSixQty"/>
 		<result column="PROMOTER" property="promoter"/>
+		<result column="SUPERVISOR" property="supervisor"/> 
+		<result column="SALE_TOTAL_QTY" property="saleTotalQty"/>
+		<result column="SALE_SP_QTY" property="saleSpQty"/>  
+		<result column="SALE_BRAND_QTY" property="saleBrandQty"/> 
+		<result column="SALE_BRANDSP_QTY" property="saleBrandspQty"/>
+		<result column="MATERIEL_TYPE" property="type"/>
 		<result column="PURCHAS_CHANNEL" property="purchasChannel"/>
 		<result column="RELATIONSHIP" property="relationship"/>
 		<result column="RELATIONSHIP_NAME" property="relationshipName"/>
@@ -95,6 +101,7 @@
 		<result column="BIZ_CATEGORY_NAME" property="bizCategoryName"/>
 		<result column="SHOP_AREA" property="shopArea"/>
 		<result column="OPEN_DATE" property="openDate"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
 		<result column="STATUS" property="status"/>
 		<result column="REMARK" property="remark"/>
 		<result column="CREATE_BY" property="createBy"/>
@@ -210,6 +217,7 @@
 		, STAFF_NUM
 		, SALES_NUM
 		, OPEN_DATE
+		, IS_INACTIVE
 		, STATUS
 		, REMARK
 		, CREATE_BY
@@ -290,6 +298,13 @@
 		, a3.NAME_EN AS BIZ_NAME
 		, e.SHOP_AREA
 		, date_format(OPEN_DATE, '%Y-%m-%d %H:%i:%s') OPEN_DATE
+		, SUPERVISOR
+		, SALE_TOTAL_QTY
+		, SALE_SP_QTY
+		, SALE_BRAND_QTY
+		, SALE_BRANDSP_QTY
+		, m.TYPE AS MATERIEL_TYPE
+		, s.IS_INACTIVE
 		, STATUS
 		, s.REMARK
 		, s.CREATE_BY
@@ -332,6 +347,13 @@
 		, CLERK_FOUR_QTY
 		, CLERK_FIVE_QTY
 		, CLERK_SIX_QTY
+		, SUPERVISOR
+		, SALE_TOTAL_QTY
+		, SALE_SP_QTY
+		, SALE_BRAND_QTY
+		, SALE_BRANDSP_QTY
+		, s.IS_INACTIVE
+		, m.TYPE AS MATERIEL_TYPE
 		, PURCHAS_CHANNEL
 		, a1.NAME_CN AS RELATIONSHIP_NAME
 		, a2.NAME_CN AS BIZ_CATEGORY_NAME
@@ -558,6 +580,9 @@
             <if test="shopInfoDto.status!= null and shopInfoDto.status!= ''">
 				AND s.STATUS=#{shopInfoDto.status}
             </if>
+            <if test="shopInfoDto.isInactive!= null and shopInfoDto.isInactive!= ''">
+				AND s.IS_INACTIVE=#{shopInfoDto.isInactive}
+            </if>
             <if test="shopInfoDto.remark!= null and shopInfoDto.remark!= ''">
 				AND REMARK=#{shopInfoDto.remark}
             </if>
@@ -776,6 +801,7 @@
 			, #{staffNum}
 			, #{salesNum}
 			, str_to_date(#{openDate},'%Y-%m-%d %H:%i:%s')
+			, #{isInactive}
 			, #{status}
 			, #{remark}
 			, #{createBy}
@@ -824,6 +850,7 @@
 			, SHOW_NUM=#{showNum} 
 			, STAFF_NUM=#{staffNum} 
 			, SALES_NUM=#{salesNum} 
+			, IS_INACTIVE=#{isInactive}
 			, STATUS=#{status} 
 			, REMARK=#{remark} 
 			, UPDATE_BY=#{updateBy} 
@@ -861,7 +888,8 @@
 		LEFT JOIN T_SHOP_BIZ b ON s.BIZ_ID = b.ID
 		LEFT JOIN T_ATTRIBUTE a1 ON s.RELATIONSHIP = a1.SQE AND a1.TYPE=1
 		LEFT JOIN T_ATTRIBUTE a2 ON s.BIZ_CATEGORY = a2.SQE AND a2.TYPE=2
-		WHERE s.ID = #{id}   
+		LEFT JOIN T_MATERIEL m ON m.ID = s.MATERIEL_ID
+		WHERE s.ID = #{id}    
 	</select>
 	
 	<select id="list" resultMap="ShopResultMapper">
@@ -882,11 +910,12 @@
 		LEFT JOIN T_COMPANY c ON c.ID = s.COMPANY_ID
 		LEFT JOIN T_REGION r1 ON r1.ID = s.COUNTRY
 		LEFT JOIN T_REGION r2 ON r2.ID = s.CITY
-		LEFT JOIN T_SHOP_EXTENSION e ON s.ID = e.ID
+		LEFT JOIN T_SHOP_EXTENSION e ON s.ID = e.SHOP_ID
 		LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID
 		LEFT JOIN T_ATTRIBUTE a1 ON s.RELATIONSHIP = a1.ID 
 		LEFT JOIN T_ATTRIBUTE a2 ON s.BIZ_CATEGORY = a2.ID 
 		LEFT JOIN T_ATTRIBUTE a3 ON s.BIZ_ID = a3.ID
+		LEFT JOIN T_MATERIEL m ON m.ID = s.MATERIEL_ID
 		WHERE 1=1
 		<if test="companyId!= null and companyId!= ''"> 
 			AND s.COMPANY_ID =#{companyId}
@@ -964,8 +993,9 @@
 	</select>
 	
 	<select id="queryShopByShopId" parameterType="java.lang.Long" resultMap="ShopResultMapper">
-		SELECT s.*, g.GRADE_NAME AS gradeName, b.BIZ_NAME AS bizName  FROM T_SHOP s 
+		SELECT s.*, g.GRADE_NAME AS gradeName, b.BIZ_NAME AS bizName, r.REGION_NAME AS countryName, e.REGION_NAME AS cityName  FROM T_SHOP s 
 		LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID LEFT JOIN T_SHOP_BIZ b ON s.BIZ_ID = b.ID 
+		LEFT JOIN T_REGION r ON s.COUNTRY = r.ID LEFT JOIN T_REGION e ON s.CITY = e.ID 
 		WHERE s.ID = #{shopId} AND s.COMPANY_ID = #{companyId}
 	</select>
 	<select id="listShopByProperty"  resultMap="ShopInfoDtoResultMapper">
@@ -975,11 +1005,12 @@
 		LEFT JOIN T_COMPANY c ON c.ID = s.COMPANY_ID
 		LEFT JOIN T_REGION r1 ON r1.ID = s.COUNTRY
 		LEFT JOIN T_REGION r2 ON r2.ID = s.CITY
-		LEFT JOIN T_SHOP_EXTENSION e ON s.ID = e.ID
+		LEFT JOIN T_SHOP_EXTENSION e ON s.ID = e.SHOP_ID
 		LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID
 		LEFT JOIN T_ATTRIBUTE a1 ON s.RELATIONSHIP = a1.ID 
 		LEFT JOIN T_ATTRIBUTE a2 ON s.BIZ_CATEGORY = a2.ID 
 		LEFT JOIN T_ATTRIBUTE a3 ON s.BIZ_ID = a3.ID
+		LEFT JOIN T_MATERIEL m ON m.ID = s.MATERIEL_ID
 		WHERE 1=1 
     	<include refid="commonConditionByPrefix"/>
     	ORDER BY s.CREATE_DATE

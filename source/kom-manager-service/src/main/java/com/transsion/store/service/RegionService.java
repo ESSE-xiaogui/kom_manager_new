@@ -174,8 +174,12 @@ public class RegionService {
 		return regionMapper.findCountryList(userId);
 	}
 
-	public List<Region> findCityListByParentRegionId(int parentId, Long userId) {
+	public List<Region> findCityListByParentRegionId(int parentId, Long userId) throws ServiceException{
 		return regionMapper.findCityListByParentRegionId(parentId,userId);
+	}
+
+	public List<Region> findAllCountryList() throws ServiceException{
+		return regionMapper.findAllCountryList();
 	}
 
 }
