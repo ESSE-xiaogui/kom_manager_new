@@ -222,9 +222,10 @@ public class ShopController extends AbstractController {
 	@PUT
 	@Path("/updateShop")
 	@Consumes({ MediaType.APPLICATION_JSON })
-	public void updateShop(ShopDetailDto shopDetailDto) throws ServiceException {
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Integer updateShop(ShopDetailDto shopDetailDto) throws ServiceException {
 		String token = this.getAuthorization();
-		shopFacade.updateShop(token, shopDetailDto);
+		return shopFacade.updateShop(token, shopDetailDto);
 	}
 
 	/**

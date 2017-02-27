@@ -17,9 +17,7 @@
 package com.transsion.store.dto;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.transsion.store.bo.ShopExtension;
 
@@ -95,8 +93,7 @@ public class ShopExtensionDto implements Serializable {
 	  */
 	private java.lang.Long saleBrandspQty;
 
-	private List<Map<String, Integer>> brandClerkList;
-	
+	private List<ShopExtBrandDto> brandClerkList;
 	
 	public ShopExtensionDto()
 	{
@@ -118,14 +115,21 @@ public class ShopExtensionDto implements Serializable {
 		this.saleSpQty = model.getSaleSpQty();
 		this.saleBrandQty = model.getSaleBrandQty();
 		this.saleBrandspQty = model.getSaleBrandspQty();
-		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put(model.getBrandOne(), model.getClerkOneQty());
-		map.put(model.getBrandTwo(), model.getClerkTwoQty());
-		map.put(model.getBrandThree(), model.getClerkThreeQty());
-		map.put(model.getBrandFour(), model.getClerkFourQty());
-		map.put(model.getBrandFive(), model.getClerkFiveQty());
-		map.put(model.getBrandSix(), model.getClerkSixQty());
-		this.brandClerkList.add(map);
+		
+		ShopExtBrandDto shopExtBrandDto = new ShopExtBrandDto();
+		shopExtBrandDto.setBrandName(model.getBrandOne());
+		shopExtBrandDto.setBrandQty(model.getClerkOneQty());
+		shopExtBrandDto.setBrandName(model.getBrandTwo());
+		shopExtBrandDto.setBrandQty(model.getClerkTwoQty());
+		shopExtBrandDto.setBrandName(model.getBrandThree());
+		shopExtBrandDto.setBrandQty(model.getClerkThreeQty());
+		shopExtBrandDto.setBrandName(model.getBrandFour());
+		shopExtBrandDto.setBrandQty(model.getClerkFourQty());
+		shopExtBrandDto.setBrandName(model.getBrandFive());
+		shopExtBrandDto.setBrandQty(model.getClerkFiveQty());
+		shopExtBrandDto.setBrandName(model.getBrandSix());
+		shopExtBrandDto.setBrandQty(model.getClerkSixQty());
+		this.brandClerkList.add(shopExtBrandDto);
 	}
 
 	/**
@@ -221,11 +225,11 @@ public class ShopExtensionDto implements Serializable {
 	}
 
 	
-	public List<Map<String, Integer>> getBrandClerkList() {
+	public List<ShopExtBrandDto> getBrandClerkList() {
 		return brandClerkList;
 	}
 
-	public void setBrandClerkList(List<Map<String, Integer>> brandClerkList) {
+	public void setBrandClerkList(List<ShopExtBrandDto> brandClerkList) {
 		this.brandClerkList = brandClerkList;
 	}
 
@@ -315,7 +319,51 @@ public class ShopExtensionDto implements Serializable {
 
 	public ShopExtension toModel()
 	{
-		return null;
+		ShopExtension shopExtension = new ShopExtension();
+		shopExtension.setId(this.getId());
+		shopExtension.setShopId(this.getId());
+		shopExtension.setShopArea(this.getShopArea());
+		shopExtension.setClerkTotalQty(this.getClerkTotalQty());
+		shopExtension.setClerkBrandQty(this.getClerkBrandQty());
+		shopExtension.setRelationship(this.getRelationship());
+		shopExtension.setBizCategory(this.getBizCategory());
+		shopExtension.setSupervisor(this.getSupervisor());
+		shopExtension.setPromoter(this.getPromoter());
+		shopExtension.setSaleTotalQty(this.getSaleTotalQty());
+		shopExtension.setSaleSpQty(this.getSaleSpQty());
+		shopExtension.setSaleBrandQty(this.getSaleBrandQty());
+		shopExtension.setSaleBrandspQty(this.getSaleBrandspQty());
+		if(brandClerkList.size()>0)
+		{
+			shopExtension.setBrandOne(brandClerkList.get(0).getBrandName());
+			shopExtension.setClerkOneQty(brandClerkList.get(0).getBrandQty());
+		}
+		if(brandClerkList.size()>1)
+		{
+			shopExtension.setBrandTwo(brandClerkList.get(1).getBrandName());
+			shopExtension.setClerkTwoQty(brandClerkList.get(1).getBrandQty());
+		}
+		if(brandClerkList.size()>2)
+		{
+			shopExtension.setBrandThree(brandClerkList.get(2).getBrandName());
+			shopExtension.setClerkThreeQty(brandClerkList.get(2).getBrandQty());
+		}
+		if(brandClerkList.size()>3)
+		{
+			shopExtension.setBrandFour(brandClerkList.get(3).getBrandName());
+			shopExtension.setClerkFourQty(brandClerkList.get(3).getBrandQty());
+		}
+		if(brandClerkList.size()>4)
+		{
+			shopExtension.setBrandFive(brandClerkList.get(4).getBrandName());
+			shopExtension.setClerkFiveQty(brandClerkList.get(4).getBrandQty());
+		}
+		if(brandClerkList.size()>5)
+		{
+			shopExtension.setBrandSix(brandClerkList.get(5).getBrandName());
+			shopExtension.setClerkSixQty(brandClerkList.get(5).getBrandQty());
+		}
+		return shopExtension;
 	}
 	
 	@Override

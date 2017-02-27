@@ -4,8 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Attribute;
@@ -306,7 +308,6 @@ public class ShopManager {
 			Shop shop = shopMapper.queryShopByShopId(shopIdList.get(i).getShopId(), companyId);
 			ShopExtension shopExtension = shopExtensionService.queryShopExtensionByShopId(shopIdList.get(i).getShopId());
 			List<ShopMateriel> shopMaterielList = shopMaterielService.queryShopMaterielListByShopId(shopIdList.get(i).getShopId());
-			
 			shopDetailDto.setShop(shop);
 			shopDetailDto.setShopExtension(shopExtension);
 			shopDetailDto.setShopMaterielDtoList(shopMaterielList);
@@ -315,7 +316,7 @@ public class ShopManager {
 		return list;
 	}
 	
-	public void updateShop(String token, ShopDetailDto shopDetailDto) throws ServiceException {
+	public Integer updateShop(String token, ShopDetailDto shopDetailDto) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
@@ -330,6 +331,7 @@ public class ShopManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		
+		Integer resultStatus = 0;
 		String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		Shop shop = shopDetailDto.getShop();
 		shop.setUpdateBy(userContext.getUser().getId().toString());
@@ -337,7 +339,9 @@ public class ShopManager {
 		shopMapper.update(shop);
 		
 		ShopExtension shopExtension = shopDetailDto.getShopExtension();
-		shopExtensionService.update(shopExtension);
+		if (shopExtension != null) {
+			shopExtensionService.update(shopExtension);
+		}
 		
 		List<ShopMateriel> list = shopDetailDto.getShopMaterielDtoList();
 		for (ShopMateriel shopMateriel : list) {
@@ -345,6 +349,10 @@ public class ShopManager {
 			shopMateriel.setUpdateDate(currentDate);
 			shopMaterielService.update(shopMateriel);
 		}
+		
+		resultStatus = 1;
+		
+		return resultStatus;
 	}
 	
 	/**

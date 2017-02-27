@@ -198,8 +198,8 @@ public class ShopFacadeImpl implements ShopFacade {
 	}
 
 	@Override
-	public void updateShop(String token, ShopDetailDto shopDetailDto) throws ServiceException {
-		shopManager.updateShop(token, shopDetailDto);
+	public Integer updateShop(String token, ShopDetailDto shopDetailDto) throws ServiceException {
+		return shopManager.updateShop(token, shopDetailDto);
 	}
 	
 	/**

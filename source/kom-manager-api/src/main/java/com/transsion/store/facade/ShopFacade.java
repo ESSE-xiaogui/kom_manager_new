@@ -149,7 +149,7 @@ public interface ShopFacade {
 	/*
 	 * app update shop api 
 	 */
-	public void updateShop(String token, ShopDetailDto shopDetailDto) throws ServiceException;
+	public Integer updateShop(String token, ShopDetailDto shopDetailDto) throws ServiceException;
 
 	/**
 	 * 门店审核

@@ -824,7 +824,6 @@
 			, SHOW_NUM=#{showNum} 
 			, STAFF_NUM=#{staffNum} 
 			, SALES_NUM=#{salesNum} 
-			, OPEN_DATE=str_to_date(#{openDate},'%Y-%m-%d %H:%i:%s')
 			, STATUS=#{status} 
 			, REMARK=#{remark} 
 			, UPDATE_BY=#{updateBy} 
