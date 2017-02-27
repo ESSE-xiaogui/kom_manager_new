@@ -23,6 +23,7 @@ import com.transsion.store.bo.UserShop;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.ShopDefinitionDto;
 import com.transsion.store.dto.ShopDetailDto;
+import com.transsion.store.dto.ShopExtensionDto;
 import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.ShopUploadDto;
 import com.transsion.store.dto.ShopUserDto;
@@ -264,9 +265,12 @@ public class ShopManager {
 		
 		Long shopId = shop.getId();
 		
-		ShopExtension shopExtension = shopDetailDto.getShopExtensionDto().toModel();
-		shopExtension.setShopId(shopId);
-		shopExtensionService.save(shopExtension);
+		ShopExtensionDto shopExtensionDto = shopDetailDto.getShopExtensionDto();
+		if (shopExtensionDto != null) {
+			ShopExtension shopExtension = shopDetailDto.getShopExtensionDto().toModel();
+			shopExtension.setShopId(shopId);
+			shopExtensionService.save(shopExtension);
+		}
 		
 		List<ShopMateriel> list = shopDetailDto.getShopMaterielDtoList();
 		String userCode = userContext.getUserCode();
