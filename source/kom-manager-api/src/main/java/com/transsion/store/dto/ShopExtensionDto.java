@@ -330,35 +330,35 @@ public class ShopExtensionDto implements Serializable {
 		shopExtension.setSupervisor(this.getSupervisor());
 		shopExtension.setPromoter(this.getPromoter());
 		shopExtension.setSaleTotalQty(this.getSaleTotalQty());
-		shopExtension.setSaleSpQty(this.getSaleSpQty());
+		shopExtension.setSaleSpQty(this.getSaleSpQty()); 
 		shopExtension.setSaleBrandQty(this.getSaleBrandQty());
 		shopExtension.setSaleBrandspQty(this.getSaleBrandspQty());
-		if(brandClerkList.size()>0)
+		if(brandClerkList != null &&brandClerkList.size()>0)
 		{
 			shopExtension.setBrandOne(brandClerkList.get(0).getBrandName());
 			shopExtension.setClerkOneQty(brandClerkList.get(0).getBrandQty());
 		}
-		if(brandClerkList.size()>1)
+		if(brandClerkList != null && brandClerkList.size()>1)
 		{
 			shopExtension.setBrandTwo(brandClerkList.get(1).getBrandName());
 			shopExtension.setClerkTwoQty(brandClerkList.get(1).getBrandQty());
 		}
-		if(brandClerkList.size()>2)
+		if(brandClerkList != null && brandClerkList.size()>2)
 		{
 			shopExtension.setBrandThree(brandClerkList.get(2).getBrandName());
 			shopExtension.setClerkThreeQty(brandClerkList.get(2).getBrandQty());
 		}
-		if(brandClerkList.size()>3)
+		if(brandClerkList != null && brandClerkList.size()>3)
 		{
 			shopExtension.setBrandFour(brandClerkList.get(3).getBrandName());
 			shopExtension.setClerkFourQty(brandClerkList.get(3).getBrandQty());
 		}
-		if(brandClerkList.size()>4)
+		if(brandClerkList != null && brandClerkList.size()>4)
 		{
 			shopExtension.setBrandFive(brandClerkList.get(4).getBrandName());
 			shopExtension.setClerkFiveQty(brandClerkList.get(4).getBrandQty());
 		}
-		if(brandClerkList.size()>5)
+		if(brandClerkList != null && brandClerkList.size()>5)
 		{
 			shopExtension.setBrandSix(brandClerkList.get(5).getBrandName());
 			shopExtension.setClerkSixQty(brandClerkList.get(5).getBrandQty());
