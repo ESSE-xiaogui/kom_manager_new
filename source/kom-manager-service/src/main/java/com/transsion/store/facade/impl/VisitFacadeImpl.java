@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.Visit;
+import com.transsion.store.dto.VisitHistorySummaryDto;
 import com.transsion.store.dto.VisitInfoDto;
 import com.transsion.store.dto.VisitSettingDto;
 import com.shangkang.core.bo.Pagination;
@@ -168,6 +169,13 @@ public class VisitFacadeImpl implements VisitFacade {
 
 	@Override
 	public VisitInfoDto queryShopLatestVisit(String token, String ShopId) throws ServiceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<VisitHistorySummaryDto> queryVisitSummaryHistory(String token, String startDate, String endDate)
+			throws ServiceException {
 		// TODO Auto-generated method stub
 		return null;
 	}

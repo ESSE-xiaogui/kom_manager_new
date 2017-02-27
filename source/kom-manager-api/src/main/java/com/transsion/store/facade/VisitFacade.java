@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.Visit;
+import com.transsion.store.dto.VisitHistorySummaryDto;
 import com.transsion.store.dto.VisitInfoDto;
 import com.transsion.store.dto.VisitSettingDto;
 import com.shangkang.core.bo.Pagination;
@@ -104,6 +105,11 @@ public interface VisitFacade {
 	public Pagination<Visit> listPaginationByProperty(Pagination<Visit> pagination, Visit visit)
 			throws ServiceException;
 	
+	
+	/*
+	 * 
+	 */
+	public List<VisitInfoDto> queryVisitRecords(String token, String startDate, String endDate) throws ServiceException;
 	/********************************* app api **********************************/
 
 	/*
@@ -116,11 +122,9 @@ public interface VisitFacade {
 	 */
 	public void updateVisitRecord(String token, VisitInfoDto visitInfoDto) throws ServiceException;
 
-	/*
-	 * 
-	 */
-	public List<VisitInfoDto> queryVisitRecords(String token, String startDate, String endDate) throws ServiceException;
-	
+
+	public List<VisitHistorySummaryDto> queryVisitSummaryHistory(String token, String startDate, String endDate)
+			throws ServiceException;
 	
 	/*
 	 * 
