@@ -420,6 +420,11 @@
 		WHERE u.ID=#{userId} AND r.REGION_TYPE = '2'
 		GROUP BY r.ID, r.REGION_NAME,r.REGION_CODE
 	</select>
+	<select id="findAllCountryList" parameterType="java.lang.Long" resultMap="RegionResultMapper">
+		SELECT ID,REGION_NAME,REGION_CODE FROM T_REGION 
+		WHERE REGION_TYPE = '2'
+		GROUP BY ID,REGION_NAME,REGION_CODE
+	</select>
 	
 	<select id="findCityListByParentRegionId"  resultMap="RegionResultMapper">
 		SELECT ID,REGION_NAME FROM T_REGION 
