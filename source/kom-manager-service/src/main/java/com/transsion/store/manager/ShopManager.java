@@ -353,7 +353,7 @@ public class ShopManager {
 		for (ShopMateriel shopMateriel : list) {
 			shopMateriel.setUpdateBy(userContext.getUserCode());
 			shopMateriel.setUpdateDate(currentDate);
-			shopMaterielService.update(shopMateriel);
+			shopMaterielService.save(shopMateriel);
 		}
 		
 		resultStatus = 1;
