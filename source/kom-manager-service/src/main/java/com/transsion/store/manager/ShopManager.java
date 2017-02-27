@@ -260,6 +260,8 @@ public class ShopManager {
 		String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		Shop shop = shopDetailDto.getShop();
 		shop.setCompanyId(userContext.getCompanyId().intValue());
+		shop.setParentId(shop.getCountry() == null ? null : new Long(shop.getCountry()));
+		shop.setRegionId(shop.getCity() == null ? null : new Long(shop.getCity()));
 		shop.setCreateBy(userContext.getUser().getId().toString());
 		shop.setCreateDate(currentDate);
 		shopService.save(shop);
@@ -341,6 +343,9 @@ public class ShopManager {
 		Integer resultStatus = 0;
 		String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		Shop shop = shopDetailDto.getShop();
+		shop.setCompanyId(userContext.getCompanyId().intValue());
+		shop.setParentId(shop.getCountry() == null ? null : new Long(shop.getCountry()));
+		shop.setRegionId(shop.getCity() == null ? null : new Long(shop.getCity()));
 		shop.setUpdateBy(userContext.getUser().getId().toString());
 		shop.setUpdateDate(currentDate);
 		shopMapper.update(shop);

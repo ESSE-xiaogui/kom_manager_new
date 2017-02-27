@@ -995,7 +995,7 @@
 	<select id="queryShopByShopId" parameterType="java.lang.Long" resultMap="ShopResultMapper">
 		SELECT s.*, g.GRADE_NAME AS gradeName, b.BIZ_NAME AS bizName, r.REGION_NAME AS countryName, e.REGION_NAME AS cityName  FROM T_SHOP s 
 		LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID LEFT JOIN T_SHOP_BIZ b ON s.BIZ_ID = b.ID 
-		LEFT JOIN T_REGION r ON s.COUNTRY = r.ID LEFT JOIN T_REGION e ON s.CITY = e.ID 
+		LEFT JOIN T_REGION r ON s.PARENT_ID = r.ID LEFT JOIN T_REGION e ON s.REGION_ID = e.ID 
 		WHERE s.ID = #{shopId} AND s.COMPANY_ID = #{companyId}
 	</select>
 	<select id="listShopByProperty"  resultMap="ShopInfoDtoResultMapper">
