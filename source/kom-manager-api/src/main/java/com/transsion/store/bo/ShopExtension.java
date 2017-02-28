@@ -154,6 +154,11 @@ public class ShopExtension extends Model{
 	  *	
 	  */
 	private java.lang.Long saleBrandspQty;
+	
+	private java.lang.String relationshipName;
+	
+	private java.lang.String bizCategoryName;
+
 
 	/**
 	  *	
@@ -548,6 +553,22 @@ public class ShopExtension extends Model{
 		this.saleBrandspQty = saleBrandspQty;
 	}
 	
+	public java.lang.String getRelationshipName() {
+		return relationshipName;
+	}
+
+	public void setRelationshipName(java.lang.String relationshipName) {
+		this.relationshipName = relationshipName;
+	}
+
+	public java.lang.String getBizCategoryName() {
+		return bizCategoryName;
+	}
+
+	public void setBizCategoryName(java.lang.String bizCategoryName) {
+		this.bizCategoryName = bizCategoryName;
+	}
+	
 	public ShopExtensionDto toModel()
 	{
 		ShopExtensionDto shopExtensionDto = new ShopExtensionDto();
@@ -564,6 +585,8 @@ public class ShopExtension extends Model{
 		shopExtensionDto.setSaleSpQty(this.getSaleSpQty());
 		shopExtensionDto.setSaleBrandQty(this.getSaleBrandQty());
 		shopExtensionDto.setSaleBrandspQty(this.getSaleBrandspQty());
+		shopExtensionDto.setBizCategoryName(this.getBizCategoryName());
+		shopExtensionDto.setRelationshipName(this.getRelationshipName());
 		
 		List<ShopExtBrandDto> list = new ArrayList<ShopExtBrandDto>();
 		ShopExtBrandDto shopExtBrandDto = new ShopExtBrandDto();
@@ -583,37 +606,19 @@ public class ShopExtension extends Model{
 		shopExtensionDto.setBrandClerkList(list);
 		return shopExtensionDto;
 	}
-	
-	
-	public String toString()
-	{
-		return "ShopExtension [" + 
-					"id=" + id + 
-					", shopId=" + shopId + 
-					", shopArea=" + shopArea + 
-					", clerkTotalQty=" + clerkTotalQty + 
-					", clerkBrandQty=" + clerkBrandQty + 
-					", relationship=" + relationship + 
-					", bizCategory=" + bizCategory + 
-					", brandOne=" + brandOne + 
-					", brandTwo=" + brandTwo + 
-					", brandThree=" + brandThree + 
-					", brandFour=" + brandFour + 
-					", brandFive=" + brandFive + 
-					", brandSix=" + brandSix + 
-					", clerkOneQty=" + clerkOneQty + 
-					", clerkTwoQty=" + clerkTwoQty + 
-					", clerkThreeQty=" + clerkThreeQty + 
-					", clerkFourQty=" + clerkFourQty + 
-					", clerkFiveQty=" + clerkFiveQty + 
-					", clerkSixQty=" + clerkSixQty + 
-					", supervisor=" + supervisor + 
-					", promoter=" + promoter + 
-					", saleTotalQty=" + saleTotalQty + 
-					", saleSpQty=" + saleSpQty + 
-					", saleBrandQty=" + saleBrandQty + 
-					", saleBrandspQty=" + saleBrandspQty + 
-				"]";
+
+	@Override
+	public String toString() {
+		return "ShopExtension [id=" + id + ", shopId=" + shopId + ", shopArea=" + shopArea + ", clerkTotalQty="
+				+ clerkTotalQty + ", clerkBrandQty=" + clerkBrandQty + ", relationship=" + relationship
+				+ ", bizCategory=" + bizCategory + ", brandOne=" + brandOne + ", brandTwo=" + brandTwo + ", brandThree="
+				+ brandThree + ", brandFour=" + brandFour + ", brandFive=" + brandFive + ", brandSix=" + brandSix
+				+ ", clerkOneQty=" + clerkOneQty + ", clerkTwoQty=" + clerkTwoQty + ", clerkThreeQty=" + clerkThreeQty
+				+ ", clerkFourQty=" + clerkFourQty + ", clerkFiveQty=" + clerkFiveQty + ", clerkSixQty=" + clerkSixQty
+				+ ", supervisor=" + supervisor + ", promoter=" + promoter + ", saleTotalQty=" + saleTotalQty
+				+ ", saleSpQty=" + saleSpQty + ", saleBrandQty=" + saleBrandQty + ", saleBrandspQty=" + saleBrandspQty
+				+ ", relationshipName=" + relationshipName + ", bizCategoryName=" + bizCategoryName + "]";
 	}
+	
 }
 
