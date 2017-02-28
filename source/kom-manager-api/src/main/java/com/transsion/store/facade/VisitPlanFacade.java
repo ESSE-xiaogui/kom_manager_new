@@ -20,7 +20,6 @@ import java.util.List;
 
 
 import com.transsion.store.bo.VisitPlan;
-import com.transsion.store.dto.ShopVisitPlanDto;
 import com.transsion.store.dto.VisitPlanBriefSummaryDto;
 import com.transsion.store.dto.VisitPlanDetailDto;
 import com.transsion.store.dto.VisitPlanDto;
