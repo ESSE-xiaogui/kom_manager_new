@@ -180,6 +180,9 @@
             <if test="regionListDto.regionCode!= null and regionListDto.regionCode!= ''">
 				AND r1.REGION_CODE=#{regionListDto.regionCode}
             </if>
+            <if test="regionListDto.regionId!= null and regionListDto.regionId!= ''">
+				AND r1.ID=#{regionListDto.regionId}
+            </if>
             <if test="regionListDto.regionName!= null and regionListDto.regionName!= ''">
 				AND r1.REGION_NAME=#{regionListDto.regionName}
             </if>

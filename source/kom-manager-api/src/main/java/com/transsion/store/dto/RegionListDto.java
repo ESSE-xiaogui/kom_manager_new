@@ -31,6 +31,8 @@ public class RegionListDto implements Serializable{
 	private java.lang.String pRegionName;
 
 	private java.lang.String regionTypeName;
+	
+	private java.lang.Long regionId;
 
 	/**
 	  *	1表示激活状态，被激活有效的数据可以用于新增业务，2表示停用，被停用无效的数据只能用于历史数据查询中
@@ -171,14 +173,21 @@ public class RegionListDto implements Serializable{
 		this.version = version;
 	}
 
+	public java.lang.Long getRegionId() {
+		return regionId;
+	}
+
+	public void setRegionId(java.lang.Long regionId) {
+		this.regionId = regionId;
+	}
+
 	@Override
 	public String toString() {
 		return "RegionListDto [id=" + id + ", companyId=" + companyId + ", regionCode=" + regionCode + ", regionName="
 						+ regionName + ", pRegionName=" + pRegionName + ", regionTypeName=" + regionTypeName
-						+ ", isInactive=" + isInactive + ", remark=" + remark + ", createdBy=" + createdBy
-						+ ", createdTime=" + createdTime + ", updatedBy=" + updatedBy + ", updatedTime=" + updatedTime
-						+ ", version=" + version + "]";
+						+ ", regionId=" + regionId + ", isInactive=" + isInactive + ", remark=" + remark
+						+ ", createdBy=" + createdBy + ", createdTime=" + createdTime + ", updatedBy=" + updatedBy
+						+ ", updatedTime=" + updatedTime + ", version=" + version + "]";
 	}
-	
-	
+
 }
