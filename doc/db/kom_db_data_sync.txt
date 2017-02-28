@@ -38,13 +38,9 @@ SET s.REGION_ID = r.ID
 WHERE s.CITY = r.REGION_CODE
 
 ---------------------------------------------------------------------------
-
-
 UPDATE T_EMPLOYEE e,T_ORGANIZATION o SET e.ORG_ID = o.ID
 WHERE e.ORG_ID = o.ORG_ID;
-
 -----------------------------------------------------------------------------
-
 CREATE PROCEDURE update_org_id()
 BEGIN
 DECLARE finished INTEGER DEFAULT 0;
