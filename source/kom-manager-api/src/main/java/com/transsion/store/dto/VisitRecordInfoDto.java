@@ -10,12 +10,12 @@ public class VisitRecordInfoDto implements Serializable {
 	/*
 	 * shop visit basic info(ALL)
 	 */
-	private VisitDto visitDto;
+	private VisitShopDto visitShopDto;
 
 	/*
 	 * shop visit model stock info(TECNO)
 	 */
-	private List<VisitStockDto> visitStockDtoList;
+	private List<VisitStockInfoDto> VisitStockInfoDtoList;
 	
 	/*
 	 * shop visit score summary(TECNO)
@@ -25,7 +25,7 @@ public class VisitRecordInfoDto implements Serializable {
 	/*
 	 * shop visit score info(TECNO)
 	 */
-	private List<VisitScoreItemDto> visitScoreItemDtoList;
+	private List<VisitScoreItemInfoDto> visitScoreItemInfoDtoList;
 
 	/*
 	 * shop visit feedback info(ALL)
@@ -52,22 +52,24 @@ public class VisitRecordInfoDto implements Serializable {
 	 */
 	private List<VisitCompetitorDto> visitCompetitorDtoList;
 
-	public VisitDto getVisitDto() {
-		return visitDto;
+
+
+	public VisitShopDto getVisitShopDto() {
+		return visitShopDto;
 	}
 
-	public void setVisitDto(VisitDto visitDto) {
-		this.visitDto = visitDto;
-	}
-
-	public List<VisitStockDto> getVisitStockDtoList() {
-		return visitStockDtoList;
-	}
-
-	public void setVisitStockDtoList(List<VisitStockDto> visitStockDtoList) {
-		this.visitStockDtoList = visitStockDtoList;
+	public void setVisitShopDto(VisitShopDto visitShopDto) {
+		this.visitShopDto = visitShopDto;
 	}
 	
+	public List<VisitStockInfoDto> getVisitStockInfoDtoList() {
+		return VisitStockInfoDtoList;
+	}
+
+	public void setVisitStockInfoDtoList(List<VisitStockInfoDto> visitStockInfoDtoList) {
+		VisitStockInfoDtoList = visitStockInfoDtoList;
+	}
+
 	public VisitScoreDto getVisitScoreDto() {
 		return visitScoreDto;
 	}
@@ -76,12 +78,13 @@ public class VisitRecordInfoDto implements Serializable {
 		this.visitScoreDto = visitScoreDto;
 	}
 
-	public List<VisitScoreItemDto> getVisitScoreItemDtoList() {
-		return visitScoreItemDtoList;
+
+	public List<VisitScoreItemInfoDto> getVisitScoreItemInfoDtoList() {
+		return visitScoreItemInfoDtoList;
 	}
 
-	public void setVisitScoreItemDtoList(List<VisitScoreItemDto> visitScoreItemDtoList) {
-		this.visitScoreItemDtoList = visitScoreItemDtoList;
+	public void setVisitScoreItemInfoDtoList(List<VisitScoreItemInfoDto> visitScoreItemInfoDtoList) {
+		this.visitScoreItemInfoDtoList = visitScoreItemInfoDtoList;
 	}
 
 	public VisitFeedbackDto getVisitFeedbackDto() {
