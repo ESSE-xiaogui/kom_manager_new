@@ -25,6 +25,7 @@ import com.transsion.store.dto.ShopDefinitionDto;
 import com.transsion.store.dto.ShopDetailDto;
 import com.transsion.store.dto.ShopExtensionDto;
 import com.transsion.store.dto.ShopInfoDto;
+import com.transsion.store.dto.ShopLoginDto;
 import com.transsion.store.dto.ShopUploadDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.transsion.store.dto.UserDto;
@@ -168,7 +169,7 @@ public class ShopManager {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<Shop> findShopListByUser(String token) throws ServiceException {
+	public List<ShopLoginDto> findShopListByUser(String token) throws ServiceException {
 		validateToken(token);
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if (UtilHelper.isEmpty(userContext)) {
@@ -259,6 +260,9 @@ public class ShopManager {
 		
 		String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		Shop shop = shopDetailDto.getShop();
+		shop.setCompanyId(userContext.getCompanyId().intValue());
+		shop.setParentId(shop.getCountry() == null ? null : new Long(shop.getCountry()));
+		shop.setRegionId(shop.getCity() == null ? null : new Long(shop.getCity()));
 		shop.setCreateBy(userContext.getUser().getId().toString());
 		shop.setCreateDate(currentDate);
 		shopService.save(shop);
@@ -269,6 +273,7 @@ public class ShopManager {
 		if (shopExtensionDto != null) {
 			ShopExtension shopExtension = shopDetailDto.getShopExtensionDto().toModel();
 			shopExtension.setShopId(shopId);
+			shopExtension.setShopArea(new Long(shop.getShopArea()));
 			shopExtensionService.save(shopExtension);
 		}
 		
@@ -340,6 +345,9 @@ public class ShopManager {
 		Integer resultStatus = 0;
 		String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		Shop shop = shopDetailDto.getShop();
+		shop.setCompanyId(userContext.getCompanyId().intValue());
+		shop.setParentId(shop.getCountry() == null ? null : new Long(shop.getCountry()));
+		shop.setRegionId(shop.getCity() == null ? null : new Long(shop.getCity()));
 		shop.setUpdateBy(userContext.getUser().getId().toString());
 		shop.setUpdateDate(currentDate);
 		shopMapper.update(shop);
@@ -347,6 +355,7 @@ public class ShopManager {
 		ShopExtensionDto shopExtensionDto = shopDetailDto.getShopExtensionDto();
 		if (shopExtensionDto != null) {
 			ShopExtension shopExtension = shopDetailDto.getShopExtensionDto().toModel();
+			shopExtension.setShopArea(new Long(shop.getShopArea()));
 			shopExtensionService.update(shopExtension);
 		}
 		

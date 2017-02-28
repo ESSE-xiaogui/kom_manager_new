@@ -126,10 +126,20 @@ public interface VisitFacade {
 	 * app api
 	 **********************************/
 
-	/*
+	/**
 	 * today shop list page
-	 */
+	 * today's visiting 页面
+	 * 查询周计划巡店记录
+	 * app入参 计划时间
+	 * 返回周计划巡店详情
+	 **/
 	public List<VisitInfoDto> queryPlanedVisitList(String token, String planDate) throws ServiceException;
+
+
+	/*
+	 * 
+	 */
+	public List<VisitModelInfoDto> queryVisitModelInfo(String token, String planDate) throws ServiceException;
 
 	public List<VisitInfoDto> queryUnplanedVisitList(String token, String planDate) throws ServiceException;
 
@@ -138,11 +148,7 @@ public interface VisitFacade {
 	 */
 	public VisitShopInfoDto queryVisitShopInfo(String token, String planDate) throws ServiceException;
 
-	/*
-	 * 
-	 */
-	public List<VisitModelInfoDto> queryVisitModelInfo(String token, String planDate) throws ServiceException;
-
+	
 	/*
 	 * score setting...
 	 */
