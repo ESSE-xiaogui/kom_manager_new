@@ -27,6 +27,7 @@ import com.transsion.store.bo.Shop;
 import com.transsion.store.dto.ShopDefinitionDto;
 import com.transsion.store.dto.ShopDetailDto;
 import com.transsion.store.dto.ShopInfoDto;
+import com.transsion.store.dto.ShopLoginDto;
 import com.transsion.store.dto.ShopUploadDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.transsion.store.facade.ShopFacade;
@@ -215,4 +216,13 @@ public class ShopFacadeImpl implements ShopFacade {
 	public byte[] getShopByExcel(ShopInfoDto shopInfoDto) throws ServiceException {
 		return shopManager.getShopByExcel(shopInfoDto);
 	}
+	
+	/**
+	 * 查询用户绑定店铺
+	 */
+	public List<ShopLoginDto> findShopListByUser(String token) throws ServiceException{
+		return shopManager.findShopListByUser(token);
+	}
 }
+
+

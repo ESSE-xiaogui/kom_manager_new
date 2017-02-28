@@ -21,6 +21,7 @@ import com.transsion.store.bo.Shop;
 import com.transsion.store.dto.ShopDefinitionDto;
 import com.transsion.store.dto.ShopDetailDto;
 import com.transsion.store.dto.ShopInfoDto;
+import com.transsion.store.dto.ShopLoginDto;
 import com.transsion.store.dto.ShopUploadDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.shangkang.core.dto.RequestModel;
@@ -240,6 +241,16 @@ public class ShopController extends AbstractController {
 	public void updateShopStatus(Shop shop) throws ServiceException {
 		String token = this.getAuthorization();
 		shopFacade.updateShopStatus(shop, token);
+	}
+	
+	/**
+	 * 查询用户绑定店铺
+	 */
+	@GET
+	@Path("/findShopListByUser")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<ShopLoginDto> findShopListByUser()throws ServiceException{
+		return shopFacade.findShopListByUser(this.getAuthorization());
 	}
 
 	/**

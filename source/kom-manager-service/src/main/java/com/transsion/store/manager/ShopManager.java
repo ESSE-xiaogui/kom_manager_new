@@ -25,6 +25,7 @@ import com.transsion.store.dto.ShopDefinitionDto;
 import com.transsion.store.dto.ShopDetailDto;
 import com.transsion.store.dto.ShopExtensionDto;
 import com.transsion.store.dto.ShopInfoDto;
+import com.transsion.store.dto.ShopLoginDto;
 import com.transsion.store.dto.ShopUploadDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.transsion.store.dto.UserDto;
@@ -168,7 +169,7 @@ public class ShopManager {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<Shop> findShopListByUser(String token) throws ServiceException {
+	public List<ShopLoginDto> findShopListByUser(String token) throws ServiceException {
 		validateToken(token);
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if (UtilHelper.isEmpty(userContext)) {

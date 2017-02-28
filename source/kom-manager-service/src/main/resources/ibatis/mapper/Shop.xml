@@ -912,8 +912,8 @@
 		LEFT JOIN T_REGION r2 ON r2.ID = s.CITY
 		LEFT JOIN T_SHOP_EXTENSION e ON s.ID = e.SHOP_ID
 		LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID
-		LEFT JOIN T_ATTRIBUTE a1 ON s.RELATIONSHIP = a1.ID 
-		LEFT JOIN T_ATTRIBUTE a2 ON s.BIZ_CATEGORY = a2.ID 
+		LEFT JOIN T_ATTRIBUTE a1 ON e.RELATIONSHIP = a1.ID 
+		LEFT JOIN T_ATTRIBUTE a2 ON e.BIZ_CATEGORY = a2.ID 
 		LEFT JOIN T_ATTRIBUTE a3 ON s.BIZ_ID = a3.ID
 		LEFT JOIN T_MATERIEL m ON m.ID = s.MATERIEL_ID
 		WHERE 1=1
@@ -921,6 +921,7 @@
 			AND s.COMPANY_ID =#{companyId}
 		</if>
     	<include refid="commonConditionByPrefix"/>
+    	
     	<include refid="orderByClause" />
 	</select>
 	<select id="findByCount" parameterType="Shop" resultType="int">
