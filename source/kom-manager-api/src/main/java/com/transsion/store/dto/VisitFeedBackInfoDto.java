@@ -294,4 +294,5 @@ public class VisitFeedBackInfoDto implements Serializable{
 						+ visitNo + ", companyId=" + companyId + "]";
 	}
 
+
 }

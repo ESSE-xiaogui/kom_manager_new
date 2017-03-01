@@ -34,7 +34,7 @@
 		<result column="UPDATE_TIME" property="updateTime"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
-	<resultMap id="VisitFeedbackInfoDtoResultMapper" type="VisitFeedbackInfoDto">
+	<resultMap id="VisitFeedBackInfoDtoResultMapper" type="VisitFeedBackInfoDto">
 		<result column="ID" property="id"/>
 		<result column="VISIT_ID" property="visitId"/>
 		<result column="ISSUE" property="issue"/>
@@ -349,7 +349,7 @@
 		FROM T_VISIT_FEEDBACK WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty"  resultMap="VisitFeedbackInfoDtoResultMapper">
+	<select id="listPaginationByProperty"  resultMap="VisitFeedBackInfoDtoResultMapper">
 		SELECT 
 		<include refid="commonProcessDateColumn"/>
 		FROM T_VISIT_FEEDBACK f
@@ -371,7 +371,7 @@
 		SELECT count(1) AS totalcount FROM T_VISIT_FEEDBACK WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listVisitFeedBackByProperty"  resultMap="VisitFeedbackInfoDtoResultMapper">
+	<select id="listVisitFeedBackByProperty"  resultMap="VisitFeedBackInfoDtoResultMapper">
 		SELECT 
 		<include refid="commonProcessDateColumn"/>
 		FROM T_VISIT_FEEDBACK f
