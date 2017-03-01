@@ -72,6 +72,14 @@ public class VisitDto implements Serializable {
 	  *	
 	  */
 	private java.lang.String remark;
+	
+	private java.lang.String createBy;
+	
+	private java.lang.String createTime;
+	
+	private java.lang.String updateBy;
+	
+	private java.lang.String updateTime;
 
 	/**
 	  *	
@@ -195,11 +203,45 @@ public class VisitDto implements Serializable {
 	{
 		this.remark = remark;
 	}
+	
+	public java.lang.String getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(java.lang.String createBy) {
+		this.createBy = createBy;
+	}
+
+	public java.lang.String getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(java.lang.String createTime) {
+		this.createTime = createTime;
+	}
+
+	public java.lang.String getUpdateBy() {
+		return updateBy;
+	}
+
+	public void setUpdateBy(java.lang.String updateBy) {
+		this.updateBy = updateBy;
+	}
+
+	public java.lang.String getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(java.lang.String updateTime) {
+		this.updateTime = updateTime;
+	}
 
 	@Override
 	public String toString() {
-		return "VisitDto [id=" + id + ", visitDate=" + visitDate + ", shopId=" + shopId + ", saleTotalQty="
-				+ saleTotalQty + ", salePbQty=" + salePbQty + ", remark=" + remark + "]";
+		return "VisitDto [id=" + id + ", visitDate=" + visitDate + ", shopId=" + shopId + ", currentSaleQty="
+				+ currentSaleQty + ", targetSaleQty=" + targetSaleQty + ", achieved=" + achieved + ", saleTotalQty="
+				+ saleTotalQty + ", salePbQty=" + salePbQty + ", remark=" + remark + ", createBy=" + createBy
+				+ ", createTime=" + createTime + ", updateBy=" + updateBy + ", updateTime=" + updateTime + "]";
 	}
 
 }

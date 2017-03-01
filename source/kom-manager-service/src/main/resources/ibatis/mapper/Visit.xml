@@ -35,6 +35,31 @@
 		<result column="VERSION" property="version"/>
 	</resultMap>
 	
+	<resultMap id="VisitInfoDtoResultMapper" type="VisitInfoDto">
+		<result column="ID" property="id"/>
+		<result column="VISIT_DATE" property="planDate"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="GRADE_ID" property="gradeId"/>
+		<result column="GRADE_NAME" property="gradeName"/>
+	</resultMap>
+	
+	<resultMap id="VisitDtoResultMapper" type="VisitDto">
+		<result column="ID" property="id"/>
+		<result column="VISIT_DATE" property="visitDate"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="SALE_CURRENT" property="currentSaleQty"/>
+		<result column="SALE_TARGET" property="targetSaleQty"/>
+		<result column="ACHIEVED" property="achieved"/>
+		<result column="SALE_TOTAL_QTY" property="saleTotalQty"/>
+		<result column="SALE_PB_QTY" property="salePbQty"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, VISIT_DATE
@@ -298,4 +323,39 @@
 		SELECT count(1) AS totalcount FROM T_VISIT WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
+	
+	<select id="queryUnplanedVisitList" parameterType="VisitInfoDto" resultMap="VisitInfoDtoResultMapper">
+		SELECT v.*, s.SHOP_NAME, s.GRADE_ID, g.GRADE_NAME FROM T_VISIT v LEFT JOIN T_SHOP s ON v.SHOP_ID = s.ID 
+		LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID WHERE v.SHOP_ID = #{shopId} AND v.VISIT_DATE = #{planDate}
+	</select>
+	
+	<insert id="saveVisitDto" parameterType="VisitDto">
+		INSERT INTO T_VISIT(
+			VISIT_DATE,
+			SHOP_ID,
+			SALE_CURRENT,
+			SALE_TARGET,
+			ACHIEVED,
+			SALE_TOTAL_QTY,
+			SALE_PB_QTY,
+			REMARK,
+			CREATE_BY,
+			CREATE_TIME,
+			UPDATE_BY,
+			UPDATE_TIME
+		) VALUES(
+			#{visitDate},
+			#{shopId},
+			#{currentSaleQty},
+			#{targetSaleQty},
+			#{achieved},
+			#{saleTotalQty},
+			#{salePbQty},
+			#{remark},
+			#{createBy},
+			#{createTime},
+			#{updateBy},
+			#{updateTime}
+		)
+	</insert>
 </mapper>

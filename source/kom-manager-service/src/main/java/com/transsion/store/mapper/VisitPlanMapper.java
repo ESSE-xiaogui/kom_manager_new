@@ -19,13 +19,17 @@ package com.transsion.store.mapper;
 import java.util.List;
 import java.util.Map;
 
-import com.transsion.store.bo.VisitPlan;
-import com.shangkang.core.mapper.GenericIBatisMapper;
+import org.apache.ibatis.annotations.Param;
+
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
-import org.apache.ibatis.annotations.Param;
+import com.shangkang.core.mapper.GenericIBatisMapper;
+import com.transsion.store.bo.VisitPlan;
+import com.transsion.store.dto.VisitInfoDto;
 
 public interface VisitPlanMapper extends GenericIBatisMapper<VisitPlan, java.lang.Long> {
 
     public List<VisitPlan> listPaginationByProperty(Pagination<VisitPlan> pagination, @Param("visitPlan")VisitPlan visitPlan, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    
+	public List<VisitInfoDto> queryPlanedVisitList(VisitInfoDto visitInfoDto) throws DataAccessFailureException;
 }

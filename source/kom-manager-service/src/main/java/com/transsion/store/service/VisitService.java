@@ -22,7 +22,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.Visit;
+import com.transsion.store.dto.VisitDto;
+import com.transsion.store.dto.VisitInfoDto;
 import com.shangkang.core.bo.Pagination;
+import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.VisitMapper;
 
@@ -148,4 +151,12 @@ public class VisitService {
 	{
 		return visitMapper.findByCount(visit);
 	}
+	
+	public List<VisitInfoDto> queryUnplanedVisitList(VisitInfoDto visitInfoDto) throws ServiceException {
+		return visitMapper.queryUnplanedVisitList(visitInfoDto);
+	}
+	
+	 public void saveVisitDto(VisitDto visitDto) throws ServiceException {
+		 visitMapper.saveVisitDto(visitDto);
+	 }
 }

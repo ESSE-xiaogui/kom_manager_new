@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.VisitPlan;
+import com.transsion.store.dto.VisitInfoDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.VisitPlanMapper;
@@ -147,5 +148,9 @@ public class VisitPlanService {
 	public int findByCount(VisitPlan visitPlan) throws ServiceException
 	{
 		return visitPlanMapper.findByCount(visitPlan);
+	}
+	
+	public List<VisitInfoDto> queryPlanedVisitList(VisitInfoDto visitInfoDto) throws ServiceException {
+		return visitPlanMapper.queryPlanedVisitList(visitInfoDto);
 	}
 }

@@ -48,6 +48,15 @@
 		<result column="VERSION" property="version"/>
 	</resultMap>
 	
+	<resultMap id="VisitScoreSettingDtoResultMapper" type="VisitScoreSettingDto">
+		<result column="ID" property="id"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="TYPE" property="type"/>
+		<result column="DESC_EN" property="descEn"/>
+		<result column="DESC_CN" property="descCn"/>
+		<result column="REMARK" property="remark"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, COMPANY_ID
@@ -296,5 +305,9 @@
 	<select id="findByCount" parameterType="VisitScoreSetting" resultType="int">
 		SELECT count(1) AS totalcount FROM T_VISIT_SCORE_SETTING WHERE 1=1 
 		<include refid="commonCondition"/>
+	</select>
+	
+	<select id="queryVisitScoreSettingList" resultMap="VisitScoreSettingDtoResultMapper">
+		SELECT * FROM T_VISIT_SCORE_SETTING
 	</select>
 </mapper>

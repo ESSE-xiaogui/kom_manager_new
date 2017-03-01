@@ -16,18 +16,32 @@
  **/
 package com.transsion.store.controller;
 
-import com.rest.service.controller.AbstractController;
-import com.transsion.store.bo.Visit;
-import com.shangkang.core.dto.RequestModel;
-import com.transsion.store.facade.VisitFacade;
-import com.shangkang.core.bo.Pagination;
-import com.shangkang.core.exception.ServiceException;
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import java.util.List;
+import com.rest.service.controller.AbstractController;
+import com.shangkang.core.bo.Pagination;
+import com.shangkang.core.dto.RequestModel;
+import com.shangkang.core.exception.ServiceException;
+import com.transsion.store.bo.Visit;
+import com.transsion.store.dto.VisitHistorySummaryDto;
+import com.transsion.store.dto.VisitInfoDto;
+import com.transsion.store.dto.VisitRecordDto;
+import com.transsion.store.dto.VisitRecordInfoDto;
+import com.transsion.store.dto.VisitSettingDto;
+import com.transsion.store.dto.VisitShopInfoDto;
+import com.transsion.store.facade.VisitFacade;
 
 @Controller
 @Path("visit")
@@ -109,5 +123,117 @@ public class VisitController extends AbstractController{
 	public void update(Visit visit) throws ServiceException
 	{
 		visitFacade.update(visit);
+	}
+	
+	@GET
+	@Path("/queryPlanedVisitList")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<VisitInfoDto> queryPlanedVisitList(@QueryParam("planDate")String planDate) throws ServiceException {
+		String token = this.getAuthorization();
+		return visitFacade.queryPlanedVisitList(token, planDate);
+	}
+	
+	/**
+	 * app 查询计划之外的巡店列表
+	 * @param token
+	 * @param planDate
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/queryUnplanedVisitList")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<VisitInfoDto> queryUnplanedVisitList(@QueryParam("planDate")String planDate) throws ServiceException{
+		String token = this.getAuthorization();
+		return visitFacade.queryUnplanedVisitList(token, planDate);
+	}
+	
+	/**
+	 * app 重点机型查询列表
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/queryVisitModelSettingList")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public VisitSettingDto queryVisitModelSettingList() throws ServiceException {
+		String token = this.getAuthorization();
+		return visitFacade.queryVisitSetting(token);
+	}
+	
+	/**
+	 * app 查询店铺信息列表
+	 * @param planDate
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/queryVisitShopInfo")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON })
+	public VisitShopInfoDto queryVisitShopInfo(String planDate) throws ServiceException{
+		String token = this.getAuthorization();
+		return visitFacade.queryVisitShopInfo(token, planDate);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/queryVisitSetting")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public VisitSettingDto queryVisitSetting() throws ServiceException {
+		String token = this.getAuthorization();
+		return visitFacade.queryVisitSetting(token);
+	}
+	
+	
+	/**
+	 * app 保存打分项数据
+	 * @param visitRecordDto
+	 * @throws ServiceException
+	 */
+	@POST
+	@Path("/saveVisitRecord")
+	@Consumes({MediaType.APPLICATION_JSON})
+	public void saveVisitRecord(VisitRecordDto visitRecordDto) throws ServiceException {
+		String token = this.getAuthorization();
+		visitFacade.saveVisitRecord(token, visitRecordDto);
+	}
+	
+	/**
+	 * app 历史巡店记录列表查询
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/queryVisitSummaryHistory")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<VisitHistorySummaryDto> queryVisitSummaryHistory(String startDate, String endDate)
+			throws ServiceException {
+		String token = this.getAuthorization();
+		return visitFacade.queryVisitSummaryHistory(token, startDate, endDate);
+	}
+	
+	/**
+	 * app 巡店记录信息查询
+	 * @param visitId
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/queryVisitRecordInfo")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON })
+	public VisitRecordInfoDto queryVisitRecordInfo(String visitId) throws ServiceException {
+		String token = this.getAuthorization();
+		return visitFacade.queryVisitRecordInfo(token, visitId);
 	}
 }

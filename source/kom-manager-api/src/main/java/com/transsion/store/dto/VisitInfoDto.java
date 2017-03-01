@@ -56,7 +56,7 @@ public class VisitInfoDto implements Serializable {
 	/**
 	 * 门店等级名称
 	 * */
-	private Long gradeName;
+	private String gradeName;
 
 	/**
 	 * 周计划巡店数量
@@ -72,6 +72,8 @@ public class VisitInfoDto implements Serializable {
 	 * 是否完成 1未巡店 2 已巡店
 	 * */
 	private boolean isFinished;
+	
+	private String cityName;
 
 	/**
 	  *	备注
@@ -118,11 +120,11 @@ public class VisitInfoDto implements Serializable {
 		this.gradeId = gradeId;
 	}
 
-	public Long getGradeName() {
+	public String getGradeName() {
 		return gradeName;
 	}
 
-	public void setGradeName(Long gradeName) {
+	public void setGradeName(String gradeName) {
 		this.gradeName = gradeName;
 	}
 
@@ -157,12 +159,20 @@ public class VisitInfoDto implements Serializable {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+	
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
 
 	@Override
 	public String toString() {
 		return "VisitInfoDto [id=" + id + ", planDate=" + planDate + ", shopId=" + shopId + ", shopName=" + shopName
-						+ ", gradeId=" + gradeId + ", gradeName=" + gradeName + ", weekPlanQty=" + weekPlanQty
-						+ ", isPlaned=" + isPlaned + ", isFinished=" + isFinished + ", remark=" + remark + "]";
+				+ ", gradeId=" + gradeId + ", gradeName=" + gradeName + ", weekPlanQty=" + weekPlanQty + ", isPlaned="
+				+ isPlaned + ", isFinished=" + isFinished + ", cityName=" + cityName + ", remark=" + remark + "]";
 	}
-
+	
 }

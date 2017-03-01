@@ -50,6 +50,16 @@
 		<result column="UPDATE_TIME" property="updateTime"/>
 	</resultMap>
 	
+	<resultMap id="VisitModelSettingDtoResultMapper" type="VisitModelSettingDto">
+		<result column="ID" property="id"/>
+		<result column="ACTION_DATE" property="actionDate"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="BRAND_ID" property="brandId"/>
+		<result column="MODEL_ID" property="modelId"/>
+		<result column="REGION_ID" property="regionId"/>
+		<result column="REMARK" property="remark"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, ACTION_DATE
@@ -301,5 +311,9 @@
 	<select id="findByCount" parameterType="VisitModelSetting" resultType="int">
 		SELECT count(1) AS totalcount FROM T_VISIT_MODEL_SETTING WHERE 1=1 
 		<include refid="commonCondition"/>
+	</select>
+	
+	<select id="queryVisitModelSettingList" resultMap="VisitModelSettingDtoResultMapper">
+		SELECT * FROM T_VISIT_MODEL_SETTING
 	</select>
 </mapper>
