@@ -18,103 +18,130 @@ package com.transsion.store.dto;
 
 import java.io.Serializable;
 
+/**
+ * @author guihua.zhang on 2017-02-28
+ * */
 public class VisitPlanDto implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	/**
-	  *	
-	  */
-	private java.lang.Long id;
-
-	/**
-	  *	
-	  */
-	private java.lang.String planDate;
-
-	/**
-	  *	
-	  */
-	private java.lang.Long shopId;
 	
+	/***
+	 * 巡店计划ID
+	 * 如果此巡店计划是需要删除的,必输
+	 * */
+	private Long id;
+
+	/**
+	  *	计划巡店日期
+	  * 必输字段
+	  */
+	private String planDate;
 	
-	private boolean isDelete;
-
 	/**
-	  *	
-	  */
-	private java.lang.String remark;
-
+	 * 计划巡店者
+	 * 如果当前登录人需要将此巡店计划分给某人时输入某人登录用户名
+	 * */
+	private String planner;
+	
 	/**
-	  *	
+	  *	店铺Id
+	  * 必输字段
 	  */
-	public java.lang.Long getId() {
+	private Long shopId;
+	
+	/**
+	 * 此店铺是否是删除 1删除
+	 * 如果此巡店计划店铺是删除不巡店 值必须为1 否则为空
+	 * */
+	private Integer isDelete;
+
+	/***
+	 * 巡店计划ID
+	 * 如果此巡店计划是需要删除的,必输
+	 * */
+	public Long getId() {
 		return id;
 	}
 
-	/**
-	  *	
-	  */
-	public void setId(java.lang.Long id) {
+	/***
+	 * 巡店计划ID
+	 * 如果此巡店计划是需要删除的,必输
+	 * */
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	/**
-	  *	
+	  *	计划巡店日期
+	  * 必输字段
 	  */
-	public java.lang.String getPlanDate() {
+	public String getPlanDate() {
 		return planDate;
 	}
 
 	/**
-	  *	
+	  *	计划巡店日期
+	  * 必输字段
 	  */
-	public void setPlanDate(java.lang.String planDate) {
+	public void setPlanDate(String planDate) {
 		this.planDate = planDate;
 	}
 
 	/**
-	  *	
+	 * 计划巡店者
+	 * 如果当前登录人需要将此巡店计划分给某人时输入某人登录用户名
+	 * */
+	public String getPlanner() {
+		return planner;
+	}
+
+	/**
+	 * 计划巡店者
+	 * 如果当前登录人需要将此巡店计划分给某人时输入某人登录用户名
+	 * */
+	public void setPlanner(String planner) {
+		this.planner = planner;
+	}
+
+	/**
+	  *	店铺Id
+	  * 必输字段
 	  */
-	public java.lang.Long getShopId() {
+	public Long getShopId() {
 		return shopId;
 	}
 
 	/**
-	  *	
+	  *	店铺Id
+	  * 必输字段
 	  */
-	public void setShopId(java.lang.Long shopId) {
+	public void setShopId(Long shopId) {
 		this.shopId = shopId;
 	}
-	
-	public boolean isDelete() {
+
+	/**
+	 * 此店铺是否是删除 1删除
+	 * 如果此巡店计划店铺是删除不巡店 值必须为1 否则为空
+	 * */
+	public Integer getIsDelete() {
 		return isDelete;
 	}
 
-	public void setDelete(boolean isDelete) {
+	/**
+	 * 此店铺是否是删除 1删除
+	 * 如果此巡店计划店铺是删除不巡店 值必须为1 否则为空
+	 * */
+	public void setIsDelete(Integer isDelete) {
 		this.isDelete = isDelete;
-	}
-
-	/**
-	  *	
-	  */
-	public java.lang.String getRemark() {
-		return remark;
-	}
-
-	/**
-	  *	
-	  */
-	public void setRemark(java.lang.String remark) {
-		this.remark = remark;
 	}
 
 	@Override
 	public String toString() {
-		return "VisitPlanDto [id=" + id + ", planDate=" + planDate + ", shopId=" + shopId + ", remark=" + remark + "]";
+		return "VisitPlanDto [id=" + id + ", planDate=" + planDate + ", planner=" + planner + ", shopId=" + shopId
+						+ ", isDelete=" + isDelete + "]";
 	}
 
 }

@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.VisitPlan;
-import com.transsion.store.dto.ShopVisitPlanDto;
 import com.transsion.store.dto.VisitPlanBriefSummaryDto;
 import com.transsion.store.dto.VisitPlanDetailDto;
 import com.transsion.store.dto.VisitPlanDto;
@@ -31,6 +30,7 @@ import com.transsion.store.dto.VisitPlanDetailSummaryDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.VisitPlanFacade;
+import com.transsion.store.manager.VisitPlanManager;
 import com.transsion.store.service.VisitPlanService;
 
 @Component("visitPlanFacade")
@@ -43,6 +43,9 @@ public class VisitPlanFacadeImpl implements VisitPlanFacade {
 	{
 		this.visitPlanService = visitPlanService;
 	}
+	
+	@Autowired
+	private VisitPlanManager visitPlanManager;
 	
 	/**
 	 * 通过主键查询实体对象
@@ -152,22 +155,25 @@ public class VisitPlanFacadeImpl implements VisitPlanFacade {
 		return visitPlanService.findByCount(visitPlan);
 	}
 
-	@Override
+	/**
+	 * 巡店计划上传接口
+	 * */
 	public void savePlan(String token, List<VisitPlanDto> visitPlanDtoList) throws ServiceException {
-		// TODO Auto-generated method stub
-		
+		visitPlanManager.savePlan(token, visitPlanDtoList);
 	}
-
-	@Override
+	
+	/**
+	 * 巡店计划查询周计划数和天计划数
+	 * */
 	public VisitPlanBriefSummaryDto queryPlanBriefSummary(String token, String planDate) throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
+		return visitPlanManager.queryPlanBriefSummary(token, planDate);
 	}
 
-	@Override
+	/**
+	 * 查询店铺数和时间
+	 */
 	public List<VisitPlanDetailSummaryDto> queryPlanDetailSummary(String token, String startDate, String endDate)
 			throws ServiceException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

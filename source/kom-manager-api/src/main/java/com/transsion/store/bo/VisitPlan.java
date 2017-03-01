@@ -26,69 +26,80 @@ public class VisitPlan extends Model{
 	private static final long	serialVersionUID	= 1L;
 	
 	/**
-	  *	
+	  *	巡店计划ID
 	  */
-	private java.lang.Long id;
+	private Long id;
+	
+	/**
+	 * 巡店ID
+	 * */
+	private Long visitId;
+
+	/**
+	  *	巡店计划日期
+	  */
+	private String planDate;
+
+	/**
+	  *	实际巡店日期
+	  */
+	private String visitDate;
+	
+	/**
+	 * 巡店者
+	 * */
+	private String planner;
+
+	/**
+	  *	事业部ID
+	  */
+	private Long companyId;
+	
+
+	/**
+	  *	店铺ID
+	  */
+	private Long shopId;
+
+	/**
+	  *	1.未巡 2.已巡 3.过期未巡
+	  */
+	private Integer status;
+
+	/**
+	  *	备注
+	  */
+	private String remark;
+
+	/**
+	  *	创建人
+	  */
+	private String createBy;
+
+	/**
+	  *	创建时间
+	  */
+	private String createTime;
+
+	/**
+	  *	更新人
+	  */
+	private String updateBy;
+
+	/**
+	  *	更新时间
+	  */
+	private String updateTime;
+
+	/**
+	  *	版本
+	  */
+	private Integer version;
 
 	/**
 	  *	
 	  */
-	private java.lang.String planDate;
-
-	/**
-	  *	
-	  */
-	private java.lang.String visitDate;
-
-	/**
-	  *	
-	  */
-	private java.lang.Long companyId;
-
-	/**
-	  *	
-	  */
-	private java.lang.Long shopId;
-
-	/**
-	  *	1,undo; 2,done
-	  */
-	private java.lang.Integer status;
-
-	/**
-	  *	
-	  */
-	private java.lang.String remark;
-
-	/**
-	  *	
-	  */
-	private java.lang.String createBy;
-
-	/**
-	  *	
-	  */
-	private java.lang.String createTime;
-
-	/**
-	  *	
-	  */
-	private java.lang.String updateBy;
-
-	/**
-	  *	
-	  */
-	private java.lang.String updateTime;
-
-	/**
-	  *	
-	  */
-	private java.lang.Integer version;
-
-	/**
-	  *	
-	  */
-	public java.lang.Long getId() 
+	public Long getId() 
 	{
 		return id;
 	}
@@ -96,15 +107,29 @@ public class VisitPlan extends Model{
 	/**
 	  *	
 	  */
-	public void setId(java.lang.Long id) 
+	public void setId(Long id) 
 	{
 		this.id = id;
 	}
 	
 	/**
+	 * 巡店ID
+	 * */
+	public Long getVisitId() {
+		return visitId;
+	}
+
+	/**
+	 * 巡店ID
+	 * */
+	public void setVisitId(Long visitId) {
+		this.visitId = visitId;
+	}
+
+	/**
 	  *	
 	  */
-	public java.lang.String getPlanDate() 
+	public String getPlanDate() 
 	{
 		return planDate;
 	}
@@ -112,7 +137,7 @@ public class VisitPlan extends Model{
 	/**
 	  *	
 	  */
-	public void setPlanDate(java.lang.String planDate) 
+	public void setPlanDate(String planDate) 
 	{
 		this.planDate = planDate;
 	}
@@ -120,7 +145,7 @@ public class VisitPlan extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.String getVisitDate() 
+	public String getVisitDate() 
 	{
 		return visitDate;
 	}
@@ -128,15 +153,23 @@ public class VisitPlan extends Model{
 	/**
 	  *	
 	  */
-	public void setVisitDate(java.lang.String visitDate) 
+	public void setVisitDate(String visitDate) 
 	{
 		this.visitDate = visitDate;
 	}
 	
+	public String getPlanner() {
+		return planner;
+	}
+
+	public void setPlanner(String planner) {
+		this.planner = planner;
+	}
+
 	/**
 	  *	
 	  */
-	public java.lang.Long getCompanyId() 
+	public Long getCompanyId() 
 	{
 		return companyId;
 	}
@@ -144,7 +177,7 @@ public class VisitPlan extends Model{
 	/**
 	  *	
 	  */
-	public void setCompanyId(java.lang.Long companyId) 
+	public void setCompanyId(Long companyId) 
 	{
 		this.companyId = companyId;
 	}
@@ -152,7 +185,7 @@ public class VisitPlan extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.Long getShopId() 
+	public Long getShopId() 
 	{
 		return shopId;
 	}
@@ -160,7 +193,7 @@ public class VisitPlan extends Model{
 	/**
 	  *	
 	  */
-	public void setShopId(java.lang.Long shopId) 
+	public void setShopId(Long shopId) 
 	{
 		this.shopId = shopId;
 	}
@@ -168,7 +201,7 @@ public class VisitPlan extends Model{
 	/**
 	  *	1,undo; 2,done
 	  */
-	public java.lang.Integer getStatus() 
+	public Integer getStatus() 
 	{
 		return status;
 	}
@@ -176,7 +209,7 @@ public class VisitPlan extends Model{
 	/**
 	  *	1,undo; 2,done
 	  */
-	public void setStatus(java.lang.Integer status) 
+	public void setStatus(Integer status) 
 	{
 		this.status = status;
 	}
@@ -184,7 +217,7 @@ public class VisitPlan extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.String getRemark() 
+	public String getRemark() 
 	{
 		return remark;
 	}
@@ -192,7 +225,7 @@ public class VisitPlan extends Model{
 	/**
 	  *	
 	  */
-	public void setRemark(java.lang.String remark) 
+	public void setRemark(String remark) 
 	{
 		this.remark = remark;
 	}
@@ -200,7 +233,7 @@ public class VisitPlan extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.String getCreateBy() 
+	public String getCreateBy() 
 	{
 		return createBy;
 	}
@@ -208,7 +241,7 @@ public class VisitPlan extends Model{
 	/**
 	  *	
 	  */
-	public void setCreateBy(java.lang.String createBy) 
+	public void setCreateBy(String createBy) 
 	{
 		this.createBy = createBy;
 	}
@@ -216,7 +249,7 @@ public class VisitPlan extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.String getCreateTime() 
+	public String getCreateTime() 
 	{
 		return createTime;
 	}
@@ -224,7 +257,7 @@ public class VisitPlan extends Model{
 	/**
 	  *	
 	  */
-	public void setCreateTime(java.lang.String createTime) 
+	public void setCreateTime(String createTime) 
 	{
 		this.createTime = createTime;
 	}
@@ -232,7 +265,7 @@ public class VisitPlan extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.String getUpdateBy() 
+	public String getUpdateBy() 
 	{
 		return updateBy;
 	}
@@ -240,7 +273,7 @@ public class VisitPlan extends Model{
 	/**
 	  *	
 	  */
-	public void setUpdateBy(java.lang.String updateBy) 
+	public void setUpdateBy(String updateBy) 
 	{
 		this.updateBy = updateBy;
 	}
@@ -248,7 +281,7 @@ public class VisitPlan extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.String getUpdateTime() 
+	public String getUpdateTime() 
 	{
 		return updateTime;
 	}
@@ -256,7 +289,7 @@ public class VisitPlan extends Model{
 	/**
 	  *	
 	  */
-	public void setUpdateTime(java.lang.String updateTime) 
+	public void setUpdateTime(String updateTime) 
 	{
 		this.updateTime = updateTime;
 	}
@@ -264,7 +297,7 @@ public class VisitPlan extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.Integer getVersion() 
+	public Integer getVersion() 
 	{
 		return version;
 	}
@@ -272,27 +305,18 @@ public class VisitPlan extends Model{
 	/**
 	  *	
 	  */
-	public void setVersion(java.lang.Integer version) 
+	public void setVersion(Integer version) 
 	{
 		this.version = version;
 	}
-	
-	public String toString()
-	{
-		return "VisitPlan [" + 
-					"id=" + id + 
-					", planDate=" + planDate + 
-					", visitDate=" + visitDate + 
-					", companyId=" + companyId + 
-					", shopId=" + shopId + 
-					", status=" + status + 
-					", remark=" + remark + 
-					", createBy=" + createBy + 
-					", createTime=" + createTime + 
-					", updateBy=" + updateBy + 
-					", updateTime=" + updateTime + 
-					", version=" + version + 
-				"]";
+
+	@Override
+	public String toString() {
+		return "VisitPlan [id=" + id + ", visitId=" + visitId + ", planDate=" + planDate + ", visitDate=" + visitDate
+						+ ", planner=" + planner + ", companyId=" + companyId + ", shopId=" + shopId + ", status="
+						+ status + ", remark=" + remark + ", createBy=" + createBy + ", createTime=" + createTime
+						+ ", updateBy=" + updateBy + ", updateTime=" + updateTime + ", version=" + version + "]";
 	}
+
 }
 

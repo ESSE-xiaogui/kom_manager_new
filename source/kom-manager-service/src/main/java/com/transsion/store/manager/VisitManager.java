@@ -76,12 +76,12 @@ public class VisitManager {
 		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
-		List<VisitModelSettingDto> visitModelSettingDtoList = visitModelSettingMapper.queryVisitModelSettingList();
+		//List<VisitModelSettingDto> visitModelSettingDtoList = visitModelSettingMapper.queryVisitModelSettingList();
 		
 		List<VisitScoreSettingDto> visitScoreSettingDtoList = visitScoreSettingMapper.queryVisitScoreSettingList();
 		
 		VisitSettingDto visitSettingDto = new VisitSettingDto();
-		visitSettingDto.setVisitModelSettingDtoList(visitModelSettingDtoList);
+		//visitSettingDto.setVisitModelSettingDtoList(visitModelSettingDtoList);
 		visitSettingDto.setVisitScoreSettingDtoList(visitScoreSettingDtoList);
 		return visitSettingDto;
 	}

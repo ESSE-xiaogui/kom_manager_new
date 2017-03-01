@@ -24,6 +24,7 @@
 		<result column="PLAN_DATE" property="planDate"/>
 		<result column="VISIT_DATE" property="visitDate"/>
 		<result column="COMPANY_ID" property="companyId"/>
+		<result column="PLANNER" property="planner"/>
 		<result column="SHOP_ID" property="shopId"/>
 		<result column="STATUS" property="status"/>
 		<result column="REMARK" property="remark"/>
@@ -48,6 +49,7 @@
 		 ID
 		, PLAN_DATE
 		, VISIT_DATE
+		, PLANNER
 		, COMPANY_ID
 		, SHOP_ID
 		, STATUS
@@ -62,6 +64,7 @@
 	<sql id="commonColumnsNotPK">
 		 PLAN_DATE
 		, VISIT_DATE
+		, PLANNER
 		, COMPANY_ID
 		, SHOP_ID
 		, STATUS
@@ -77,6 +80,7 @@
 		 ID
 		, date_format(PLAN_DATE, '%Y-%m-%d %H:%i:%s') PLAN_DATE
 		, date_format(VISIT_DATE, '%Y-%m-%d %H:%i:%s') VISIT_DATE
+		, PLANNER
 		, COMPANY_ID
 		, SHOP_ID
 		, STATUS
@@ -93,10 +97,13 @@
 			AND ID=#{id}
 		</if>
 		<if test="planDate!= null and planDate!= ''"> 
-			AND PLAN_DATE=str_to_date(#{planDate},'%Y-%m-%d %H:%i:%s')
+			AND PLAN_DATE=str_to_date(#{planDate},'%Y-%m-%d')
 		</if>
 		<if test="visitDate!= null and visitDate!= ''"> 
-			AND VISIT_DATE=str_to_date(#{visitDate},'%Y-%m-%d %H:%i:%s')
+			AND VISIT_DATE=str_to_date(#{visitDate},'%Y-%m-%d')
+		</if>
+		<if test="planner!= null and planner!= ''"> 
+			AND PLANNER=#{planner}
 		</if>
 		<if test="companyId!= null and companyId!= ''"> 
 			AND COMPANY_ID=#{companyId}
@@ -114,13 +121,13 @@
 			AND CREATE_BY=#{createBy}
 		</if>
 		<if test="createTime!= null and createTime!= ''"> 
-			AND CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			AND CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d')
 		</if>
 		<if test="updateBy!= null and updateBy!= ''"> 
 			AND UPDATE_BY=#{updateBy}
 		</if>
 		<if test="updateTime!= null and updateTime!= ''"> 
-			AND UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			AND UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d')
 		</if>
 		<if test="version!= null and version!= ''"> 
 			AND VERSION=#{version}
@@ -137,6 +144,9 @@
             </if>
             <if test="visitPlan.visitDate!= null and visitPlan.visitDate!= ''">
 				AND VISIT_DATE=str_to_date(#{visitPlan.visitDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitPlan.planner!= null and visitPlan.planner!= ''">
+				AND PLANNER=#{visitPlan.planner}
             </if>
             <if test="visitPlan.companyId!= null and visitPlan.companyId!= ''">
 				AND COMPANY_ID=#{visitPlan.companyId}
@@ -188,6 +198,9 @@
         	<when test="key == 'visitDate'">
 				VISIT_DATE ${value}
             </when>
+            <when test="key == 'planner'">
+				PLANNER ${value}
+            </when>
         	<when test="key == 'companyId'">
 				COMPANY_ID ${value}
             </when>
@@ -225,6 +238,7 @@
 			) VALUES ( 
 			 str_to_date(#{planDate},'%Y-%m-%d %H:%i:%s')
 			, str_to_date(#{visitDate},'%Y-%m-%d %H:%i:%s')
+			, #{planner}
 			, #{companyId}
 			, #{shopId}
 			, #{status}
@@ -241,6 +255,7 @@
 			 ID=#{id} 
 			, PLAN_DATE=str_to_date(#{planDate},'%Y-%m-%d %H:%i:%s')
 			, VISIT_DATE=str_to_date(#{visitDate},'%Y-%m-%d %H:%i:%s')
+			, PLANNER=#{planner}
 			, COMPANY_ID=#{companyId} 
 			, SHOP_ID=#{shopId} 
 			, STATUS=#{status} 

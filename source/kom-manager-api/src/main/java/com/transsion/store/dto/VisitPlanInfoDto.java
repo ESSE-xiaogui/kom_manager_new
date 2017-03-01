@@ -17,7 +17,10 @@
 package com.transsion.store.dto;
 
 import java.io.Serializable;
-
+/**
+ * @author guihua.zhang on 2017-03-01
+ * 巡店计划详情
+ * */
 public class VisitPlanInfoDto implements Serializable {
 
 	/**
@@ -26,137 +29,167 @@ public class VisitPlanInfoDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	  *	
+	  *	巡店计划Id
 	  */
-	private java.lang.Long id;
+	private Long id;
 
 	/**
-	  *	
+	  *	巡店计划日期
 	  */
-	private java.lang.String planDate;
+	private String planDate;
 
 	/**
-	  *	
+	  *	店铺Id
 	  */
-	private java.lang.Long shopId;
+	private Long shopId;
 	
 	/**
-	  *	readonly
+	  *	readonly 店铺名称
 	  */
-	private java.lang.Long shopName;
+	private String shopName;
 	
 	
 	/**
-	  *	readonly
+	  *	readonly 等级Id
 	  */
-	private java.lang.Long gradeId;
+	private Long gradeId;
 	
 	/**
-	  *	readonly
+	  *	readonly 等级名称
 	  */
-	private java.lang.Long gradeName;
+	private String gradeName;
 
 	/**
-	  *	readonly
+	  *	readonly 周计划巡店数
 	  */
-	private java.lang.Long weekPlans;
+	private int weekPlansQty;
 	
 	
 	/**
-	  *	
+	  *	备注
 	  */
-	private java.lang.String remark;
+	private String remark;
+
 
 	/**
-	  *	
+	  *	巡店计划Id
 	  */
-	public java.lang.Long getId() {
+	public Long getId() {
 		return id;
 	}
 
 	/**
-	  *	
+	  *	巡店计划Id
 	  */
-	public void setId(java.lang.Long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	/**
-	  *	
+	  *	巡店计划日期
 	  */
-	public java.lang.String getPlanDate() {
+	public String getPlanDate() {
 		return planDate;
 	}
 
 	/**
-	  *	
+	  *	巡店计划日期
 	  */
-	public void setPlanDate(java.lang.String planDate) {
+	public void setPlanDate(String planDate) {
 		this.planDate = planDate;
 	}
 
 	/**
-	  *	
+	  *	店铺Id
 	  */
-	public java.lang.Long getShopId() {
+	public Long getShopId() {
 		return shopId;
 	}
 
 	/**
-	  *	
+	  *	店铺Id
 	  */
-	public void setShopId(java.lang.Long shopId) {
+	public void setShopId(Long shopId) {
 		this.shopId = shopId;
 	}
 
-	public java.lang.Long getShopName() {
+	/**
+	  *	readonly 店铺名称
+	  */
+	public String getShopName() {
 		return shopName;
 	}
 
-	public void setShopName(java.lang.Long shopName) {
+	/**
+	  *	readonly 店铺名称
+	  */
+	public void setShopName(String shopName) {
 		this.shopName = shopName;
 	}
 
-	public java.lang.Long getGradeId() {
+	/**
+	  *	readonly 等级Id
+	  */
+	public Long getGradeId() {
 		return gradeId;
 	}
 
-	public void setGradeId(java.lang.Long gradeId) {
+	/**
+	  *	readonly 等级Id
+	  */
+	public void setGradeId(Long gradeId) {
 		this.gradeId = gradeId;
 	}
 
-	public java.lang.Long getGradeName() {
+	/**
+	  *	readonly 等级名称
+	  */
+	public String getGradeName() {
 		return gradeName;
 	}
 
-	public void setGradeName(java.lang.Long gradeName) {
+	/**
+	  *	readonly 等级名称
+	  */
+	public void setGradeName(String gradeName) {
 		this.gradeName = gradeName;
 	}
 
-	public java.lang.Long getWeekPlans() {
-		return weekPlans;
+	/**
+	  *	readonly 周计划巡店数
+	  */
+	public int getWeekPlansQty() {
+		return weekPlansQty;
 	}
 
-	public void setWeekPlans(java.lang.Long weekPlans) {
-		this.weekPlans = weekPlans;
-	}
 	/**
-	  *	
+	  *	readonly 周计划巡店数
 	  */
-	public java.lang.String getRemark() {
+	public void setWeekPlansQty(int weekPlansQty) {
+		this.weekPlansQty = weekPlansQty;
+	}
+
+	/**
+	  *	备注
+	  */
+	public String getRemark() {
 		return remark;
 	}
 
 	/**
-	  *	
+	  *	备注
 	  */
-	public void setRemark(java.lang.String remark) {
+	public void setRemark(String remark) {
 		this.remark = remark;
 	}
 
+
 	@Override
 	public String toString() {
-		return "VisitPlanInfoDto [id=" + id + ", planDate=" + planDate + ", shopId=" + shopId + ", remark=" + remark + "]";
+		return "VisitPlanInfoDto [id=" + id + ", planDate=" + planDate + ", shopId=" + shopId + ", shopName=" + shopName
+						+ ", gradeId=" + gradeId + ", gradeName=" + gradeName + ", weekPlansQty=" + weekPlansQty
+						+ ", remark=" + remark + "]";
 	}
+
 
 }

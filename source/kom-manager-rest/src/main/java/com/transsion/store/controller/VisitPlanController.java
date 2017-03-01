@@ -18,6 +18,10 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.VisitPlan;
+import com.transsion.store.dto.VisitPlanBriefSummaryDto;
+import com.transsion.store.dto.VisitPlanDetailSummaryDto;
+import com.transsion.store.dto.VisitPlanDto;
+import com.transsion.store.dto.VisitPlanInfoDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.VisitPlanFacade;
 import com.shangkang.core.bo.Pagination;
@@ -109,5 +113,67 @@ public class VisitPlanController extends AbstractController{
 	public void update(VisitPlan visitPlan) throws ServiceException
 	{
 		visitPlanFacade.update(visitPlan);
+	}
+	
+	/**
+	 * PlanList 页面
+	 * 巡店计划上传接口
+	 * @throws ServiceException
+	 * @author guihua.zhang on 2017-02-28
+	 * */
+	@POST
+	@Path("/savePlan")
+	@Consumes({MediaType.APPLICATION_JSON})
+	public void savePlan(List<VisitPlanDto> visitPlanDtoList) throws ServiceException{
+		String token = this.getAuthorization();
+		visitPlanFacade.savePlan(token, visitPlanDtoList);
+	}
+	
+	/**
+	 * Today's visiting 页面
+	 * 巡店计划查询周计划数和天计划数
+	 * @return
+	 * @throws ServiceException
+	 * @author guihua.zhang on 2017-02-28
+	 * */
+	@GET
+	@Path("queryPlanBriefSummary")
+	@Produces({MediaType.APPLICATION_JSON})
+	public VisitPlanBriefSummaryDto queryPlanBriefSummary(@QueryParam("planDate") String planDate)
+					throws ServiceException{
+		String token = this.getAuthorization();
+		return visitPlanFacade.queryPlanBriefSummary(token, planDate);
+	}
+	
+	/**
+	 * plan List 页面
+	 * 每天多少店铺数 和 时间
+	 * 入参是 第一周第一天和第八周最后一天日期
+	 * @return
+	 * @throws ServiceException
+	 * @author guihua.zhang on 2017-03-01
+	 */
+	@GET
+	@Path("queryPlanDetailSummary")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<VisitPlanDetailSummaryDto> queryPlanDetailSummary(@QueryParam("startDate")String startDate, @QueryParam("endDate")String endDate)
+			throws ServiceException{
+		String token = this.getAuthorization();
+		return visitPlanFacade.queryPlanDetailSummary(token, startDate, endDate);
+	}
+	
+	/**
+	 * plan details页面
+	 * 查询巡店计划详情信息
+	 * @return
+	 * @throws ServiceException
+	 * @author guihua.zhang on 2017-03-01
+	 */
+	@GET
+	@Path("queryPlanInfo")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<VisitPlanInfoDto> queryPlanInfo(@QueryParam("startDate")String startDate, @QueryParam("endDate")String endDate) throws ServiceException{
+		String token = this.getAuthorization();
+		return visitPlanFacade.queryPlanInfo(token, startDate, endDate);
 	}
 }

@@ -1,34 +1,54 @@
 package com.transsion.store.dto;
 
 import java.io.Serializable;
-
+/**
+ * @author guihua.zhang on 2017-03-01
+ * */
 public class VisitPlanDetailSummaryDto  implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String visitDate;
+	/**
+	 * 计划巡店日期
+	 * */
+	private String visitPlanDate;
 	
-	private int visitStoreQty;
+	/**
+	 * 计划巡店日期巡店数
+	 * */
+	private int visitPlanQty;
 
-	public String getVisitDate() {
-		return visitDate;
+	/**
+	 * 计划巡店日期
+	 * */
+	public String getVisitPlanDate() {
+		return visitPlanDate;
 	}
 
-	public void setVisitDate(String visitDate) {
-		this.visitDate = visitDate;
+	/**
+	 * 计划巡店日期
+	 * */
+	public void setVisitPlanDate(String visitPlanDate) {
+		this.visitPlanDate = visitPlanDate;
 	}
 
-	public int getVisitStoreQty() {
-		return visitStoreQty;
+	/**
+	 * 计划巡店日期巡店数
+	 * */
+	public int getVisitPlanQty() {
+		return visitPlanQty;
 	}
 
-	public void setVisitStoreQty(int visitStoreQty) {
-		this.visitStoreQty = visitStoreQty;
+	/**
+	 * 计划巡店日期巡店数
+	 * */
+	public void setVisitPlanQty(int visitPlanQty) {
+		this.visitPlanQty = visitPlanQty;
 	}
 
 	@Override
 	public String toString() {
-		return "VisitPlanSummaryDto [visitDate=" + visitDate + ", visitStoreQty=" + visitStoreQty + "]";
+		return "VisitPlanDetailSummaryDto [visitPlanDate=" + visitPlanDate + ", visitPlanQty=" + visitPlanQty + "]";
 	}
 	
 }

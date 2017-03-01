@@ -119,23 +119,29 @@ public interface VisitPlanFacade {
 	
 	
 	/********************************* app api **********************************/
-	/*
-	 * save plan 
-	 */
+	/**
+	 * PlanList 页面
+	 * 巡店计划上传接口
+	 * */
 	public void savePlan(String token, List<VisitPlanDto> visitPlanDtoList) throws ServiceException;
 
-	
+	/**
+	 * Today's visiting 页面
+	 * 巡店计划查询周计划数和天计划数
+	 * */
 	public VisitPlanBriefSummaryDto queryPlanBriefSummary(String token, String planDate)
 			throws ServiceException;
 	
-	/*
-	 * 
+	/**
+	 * plan List页面
+	 * 每天多少店铺数 和 时间
+	 * 入参是 第一周第一天和第八周最后一天日期
 	 */
 	public List<VisitPlanDetailSummaryDto> queryPlanDetailSummary(String token, String startDate, String endDate)
 			throws ServiceException;
 
-	/*
-	 * 
+	/**
+	 * plan details页面
 	 */
 	public List<VisitPlanInfoDto> queryPlanInfo(String token, String startDate, String endDate) throws ServiceException;
 	

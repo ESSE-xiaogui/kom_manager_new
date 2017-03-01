@@ -1,104 +1,136 @@
 package com.transsion.store.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
+/**
+ * @author guihua.zhang on 2017-03-01
+ * 重点机型详情
+ * */
 public class VisitModelInfoDto  implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
-	  *	
+	  *	重点机型Id
 	  */
-	private java.lang.Long modelId;
-
-	
-	private java.lang.String modelCode;
-	
-	
-	private java.lang.String modelName;
+	private Long modelId;
 
 	/**
-	  *	
-	  */
-	private java.lang.Long currentSaleQty;
+	 * 重点机型编码
+	 * */
+	private String modelCode;
 	
 	/**
-	  *	
+	 * 重点机型名称
+	 * */
+	private String modelName;
+
+	/**
+	  *	当前销量数量
 	  */
-	private java.lang.Long targetSaleQty;
+	private int currentSaleQty;
+	
+	/**
+	  *	目标销售数量
+	  */
+	private int targetSaleQty;
 	
 	
 	/**
-	 * avg sale per four weeks
+	 * avg sale per four weeks/平均每四周销售
 	 */
-	private java.math.BigDecimal saleAvg;
+	private BigDecimal saleAvg;
 
-
-	public java.lang.Long getModelId() {
+	/**
+	  *	重点机型Id
+	  */
+	public Long getModelId() {
 		return modelId;
 	}
 
-
-	public void setModelId(java.lang.Long modelId) {
+	/**
+	  *	重点机型Id
+	  */
+	public void setModelId(Long modelId) {
 		this.modelId = modelId;
 	}
 
-
-	public java.lang.String getModelCode() {
+	/**
+	 * 重点机型编码
+	 * */
+	public String getModelCode() {
 		return modelCode;
 	}
 
-
-	public void setModelCode(java.lang.String modelCode) {
+	/**
+	 * 重点机型编码
+	 * */
+	public void setModelCode(String modelCode) {
 		this.modelCode = modelCode;
 	}
 
-
-	public java.lang.String getModelName() {
+	/**
+	 * 重点机型名称
+	 * */
+	public String getModelName() {
 		return modelName;
 	}
 
-
-	public void setModelName(java.lang.String modelName) {
+	/**
+	 * 重点机型名称
+	 * */
+	public void setModelName(String modelName) {
 		this.modelName = modelName;
 	}
 
-
-	public java.lang.Long getCurrentSaleQty() {
+	/**
+	  *	当前销量数量
+	  */
+	public int getCurrentSaleQty() {
 		return currentSaleQty;
 	}
 
-
-	public void setCurrentSaleQty(java.lang.Long currentSaleQty) {
+	/**
+	  *	当前销量数量
+	  */
+	public void setCurrentSaleQty(int currentSaleQty) {
 		this.currentSaleQty = currentSaleQty;
 	}
 
-
-	public java.lang.Long getTargetSaleQty() {
+	/**
+	  *	目标销售数量
+	  */
+	public int getTargetSaleQty() {
 		return targetSaleQty;
 	}
 
-
-	public void setTargetSaleQty(java.lang.Long targetSaleQty) {
+	/**
+	  *	目标销售数量
+	  */
+	public void setTargetSaleQty(int targetSaleQty) {
 		this.targetSaleQty = targetSaleQty;
 	}
 
-
-	public java.math.BigDecimal getSaleAvg() {
+	/**
+	 * avg sale per four weeks/平均每四周销售
+	 */
+	public BigDecimal getSaleAvg() {
 		return saleAvg;
 	}
 
-
-	public void setSaleAvg(java.math.BigDecimal saleAvg) {
+	/**
+	 * avg sale per four weeks/平均每四周销售
+	 */
+	public void setSaleAvg(BigDecimal saleAvg) {
 		this.saleAvg = saleAvg;
 	}
-
 
 	@Override
 	public String toString() {
 		return "VisitModelInfoDto [modelId=" + modelId + ", modelCode=" + modelCode + ", modelName=" + modelName
-				+ ", currentSaleQty=" + currentSaleQty + ", targetSaleQty=" + targetSaleQty + ", saleAvg=" + saleAvg
-				+ "]";
+						+ ", currentSaleQty=" + currentSaleQty + ", targetSaleQty=" + targetSaleQty + ", saleAvg="
+						+ saleAvg + "]";
 	}
 	
 }
