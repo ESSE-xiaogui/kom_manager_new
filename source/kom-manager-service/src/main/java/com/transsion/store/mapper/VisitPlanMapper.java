@@ -26,10 +26,14 @@ import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.transsion.store.bo.VisitPlan;
 import com.transsion.store.dto.VisitInfoDto;
+import com.transsion.store.dto.VisitPlanParamDto;
 
 public interface VisitPlanMapper extends GenericIBatisMapper<VisitPlan, java.lang.Long> {
 
     public List<VisitPlan> listPaginationByProperty(Pagination<VisitPlan> pagination, @Param("visitPlan")VisitPlan visitPlan, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     
 	public List<VisitInfoDto> queryPlanedVisitList(VisitInfoDto visitInfoDto) throws DataAccessFailureException;
+	
+	//查询一周巡店计划数
+	public int findWeekQtry(VisitPlanParamDto visitPlanParamDto);
 }

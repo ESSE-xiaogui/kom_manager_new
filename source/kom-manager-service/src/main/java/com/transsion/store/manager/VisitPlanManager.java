@@ -11,6 +11,7 @@ import com.transsion.store.bo.VisitPlan;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.VisitPlanBriefSummaryDto;
 import com.transsion.store.dto.VisitPlanDto;
+import com.transsion.store.dto.VisitPlanParamDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.VisitPlanMapper;
 import com.transsion.store.service.SystemDateService;
@@ -99,16 +100,19 @@ public class VisitPlanManager {
 		/**
 		 * 2.根据app传入日期查询一周巡店计划数
 		 * */
-		List<String> dateList = DateConvertUtils.getAllWeekDays(planDate);
-		int sumQty = 0;
-		for(String plansDate:dateList){
-			visitPlan.setCompanyId(userContext.getCompanyId());
-			visitPlan.setPlanner(userContext.getUserCode());
-			visitPlan.setPlanDate(plansDate);
-			int everydayQty = visitPlanMapper.findByCount(visitPlan);
-			sumQty += everydayQty;
+		String dateList = DateConvertUtils.getWeekDays(planDate);
+		if(!UtilHelper.isEmpty(dateList)){
+			String[] splitDate = dateList.split(",");
+			String beginDate = splitDate[1];
+			String endDate = splitDate[0];
+			VisitPlanParamDto visit = new VisitPlanParamDto();
+			visit.setCompanyId(userContext.getCompanyId());
+			visit.setPlanner(userContext.getUserCode());
+			visit.setBeginDate(beginDate);
+			visit.setEndDate(endDate);
+			int weekPlanQty = visitPlanMapper.findWeekQtry(visit);
+			result.setWeekPlanQty(weekPlanQty);
 		}
-		result.setWeekPlanQty(sumQty);
 		return result;
 	}
 

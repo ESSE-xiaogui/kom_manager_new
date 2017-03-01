@@ -10,7 +10,7 @@ import java.util.List;
 public class DateConvertUtils {
 
 	/**
-	 * 根据输入的日期返回当前周所有日期
+	 * 根据输入的日期返回当前周每天的日期
 	 * @author guihua.zhang on 2017-02-28
 	 */
 	public static List<String> getAllWeekDays(String date) {
@@ -25,10 +25,11 @@ public class DateConvertUtils {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(dt);
 		// 判断要计算的日期是否是周日，如果是则减一天计算周六的，否则会出问题，计算到下一周去了
-		int dayWeek = cal.get(Calendar.DAY_OF_WEEK);// 获得当前日期是一个星期的第几天
+		/*int dayWeek = cal.get(Calendar.DAY_OF_WEEK);// 获得当前日期是一个星期的第几天
 		if (1 == dayWeek) {
 			cal.add(Calendar.DAY_OF_MONTH, -1);
-		}
+		}*/
+		//默认周日是第一天
 		cal.setFirstDayOfWeek(Calendar.MONDAY);// 设置一个星期的第一天
 		int day = cal.get(Calendar.DAY_OF_WEEK);// 获得当前日期是一个星期的第几天
 		cal.add(Calendar.DATE, cal.getFirstDayOfWeek() - day);// 根据日历的规则，给当前日期减去星期几与一个星期第一天的差值
@@ -43,10 +44,41 @@ public class DateConvertUtils {
 		return list;
 	}
 	
-	/*public static void main(String[] args) {
-		String date = "2017-03-08";
-		List<String> list = getAllWeekDays(date);
-		System.out.println(list);
+	/**
+	 * 根据输入日期获取当前周 周六和周日的日期
+	 * @author guihua.zhang on 2017-02-28
+	 * */
+	public static String getWeekDays(String date) {
+		StringBuffer result = new StringBuffer();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // 设置时间格式
+		Date dt = new Date();
+		try {
+			dt = sdf.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(dt);
+		cal.setFirstDayOfWeek(Calendar.MONDAY);// 设置一个星期的第一天
+		int day = cal.get(Calendar.DAY_OF_WEEK);// 获得当前日期是一个星期的第几天
+		cal.add(Calendar.DATE, cal.getFirstDayOfWeek() - day);// 根据日历的规则，给当前日期减去星期几与一个星期第一天的差值
+		cal.add(Calendar.DATE, 5);
+		String Saturday = sdf.format(cal.getTime());
+		result.append(Saturday+",");
+		cal.add(Calendar.DATE, -6);
+		String Sunday = sdf.format(cal.getTime());
+		result.append(Sunday);
+		return result.toString();
+	}
+	
+/*	public static void main(String[] args) {
+		String date = "2017-02-26";
+		String list = getWeekDays(date);
+		String[] zz = list.split(",");
+		String Saturday = zz[0];
+		System.out.println(Saturday);
+		String Sunday = zz[1];
+		System.out.println(Sunday);
 	}*/
 /*	public static void main(String[] args) {
 		String planDate = "2017-04-01";

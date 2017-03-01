@@ -44,6 +44,13 @@
 		<result column="GRADE_NAME" property="gradeName"/>
 		<result column="REGION_NAME" property="cityName"/>
 	</resultMap>
+<!-- 	
+	<resultMap id="VisitPlanParamDtoResultMapper" type="VisitPlanParamDto">
+		<result column="ID" property="companyId"/>
+		<result column="PLAN_DATE" property="planner"/>
+		<result column="SHOP_ID" property="beginDate"/>
+		<result column="SHOP_NAME" property="endDate"/>
+	</resultMap> -->
 	
 	<sql id="commonColumns">
 		 ID
@@ -132,6 +139,21 @@
 		<if test="version!= null and version!= ''"> 
 			AND VERSION=#{version}
 		</if>
+	</sql>
+	
+	<sql id="commonConditionByParam">
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="planner!= null and planner!= ''"> 
+			AND PLANNER=#{planner}
+		</if>		
+		<if test="beginDate!= null and beginDate!= ''"> 
+			AND PLAN_DATE&gt;=str_to_date(#{beginDate},'%Y-%m-%d')
+		</if>		
+		<if test="endDate!= null and endDate!= ''"> 
+			AND PLAN_DATE&lt;=str_to_date(#{endDate},'%Y-%m-%d')
+		</if>		
 	</sql>
 
 	<sql id="commonConditionByPrefix">
@@ -313,5 +335,11 @@
 		SELECT v.*, s.SHOP_NAME, g.GRADE_NAME, r.REGION_NAME FROM T_VISIT_PLAN v LEFT JOIN T_SHOP s ON v.SHOP_ID = s.ID 
 		LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID LEFT JOIN T_REGION r ON s.REGION_ID = r.ID 
 		WHERE v.SHOP_ID = #{shopId} AND SUBSTRING(v.PLAN_DATE, 1, 10) = #{planDate}
+	</select>
+	
+	<select id="findWeekQtry" parameterType="VisitPlanParamDto" resultType="int">
+		SELECT COUNT(*) FROM 
+		T_VISIT_PLAN WHERE 1=1
+		<include refid="commonConditionByParam"/>
 	</select>
 </mapper>
