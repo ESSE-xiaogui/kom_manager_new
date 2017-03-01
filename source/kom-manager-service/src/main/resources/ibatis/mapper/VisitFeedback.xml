@@ -34,6 +34,28 @@
 		<result column="UPDATE_TIME" property="updateTime"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
+	<resultMap id="VisitFeedbackInfoDtoResultMapper" type="VisitFeedbackInfoDto">
+		<result column="ID" property="id"/>
+		<result column="VISIT_ID" property="visitId"/>
+		<result column="ISSUE" property="issue"/>
+		<result column="ACTION" property="action"/>
+		<result column="VISIT_NO" property="visitNo"/>
+		<result column="IMG_FIRST_URL" property="imgFirstUrl"/>
+		<result column="IMG_SECOND_URL" property="imgSecondUrl"/>
+		<result column="IMG_THIRD_URL" property="imgThirdUrl"/>
+		<result column="COMPANY_CODE" property="companyCode"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="SHOP_CODE" property="shopCode"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
 	
 	<sql id="commonColumns">
 		 ID
@@ -82,6 +104,28 @@
 		, VERSION
 	</sql>
 	
+	<sql id="commonProcessDateColumn">
+		 f.ID 
+		, VISIT_ID AS VISIT_NO
+		, ISSUE
+		, ACTION
+		, IMG_FIRST_URL
+		, IMG_SECOND_URL
+		, IMG_THIRD_URL
+		, COMPANY_CODE
+		, r1.REGION_NAME AS COUNTRY_NAME
+		, r2.REGION_NAME AS CITY_NAME
+		, SHOP_CODE
+		, SHOP_NAME
+		, EMP_NAME
+		, f.REMARK
+		, f.CREATE_BY
+		, f.CREATE_TIME
+		, f.UPDATE_BY
+		, f.UPDATE_TIME
+		, f.VERSION
+	</sql>
+	
 	<sql id="commonCondition">
 		<if test="id!= null and id!= ''"> 
 			AND ID=#{id}
@@ -125,45 +169,63 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="visitFeedback != null">
-            <if test="visitFeedback.id!= null and visitFeedback.id!= ''">
-				AND ID=#{visitFeedback.id}
+		<if test="visitFeedBackInfoDto != null">
+            <if test="visitFeedBackInfoDto.id!= null and visitFeedBackInfoDto.id!= ''">
+				AND v.ID=#{visitFeedBackInfoDto.id}
             </if>
-            <if test="visitFeedback.visitId!= null and visitFeedback.visitId!= ''">
-				AND VISIT_ID=#{visitFeedback.visitId}
+            <if test="visitFeedBackInfoDto.visitId!= null and visitFeedBackInfoDto.visitId!= ''">
+				AND VISIT_ID=#{visitFeedBackInfoDto.visitId}
             </if>
-            <if test="visitFeedback.issue!= null and visitFeedback.issue!= ''">
-				AND ISSUE=#{visitFeedback.issue}
+            <if test="visitFeedBackInfoDto.companyId!= null and visitFeedBackInfoDto.companyId!= ''">
+				AND v.COMPANY_ID=#{visitFeedBackInfoDto.companyId}
             </if>
-            <if test="visitFeedback.action!= null and visitFeedback.action!= ''">
-				AND ACTION=#{visitFeedback.action}
+            <if test="visitFeedBackInfoDto.issue!= null and visitFeedBackInfoDto.issue!= ''">
+				AND ISSUE=#{visitFeedBackInfoDto.issue}
             </if>
-            <if test="visitFeedback.imgFirstUrl!= null and visitFeedback.imgFirstUrl!= ''">
-				AND IMG_FIRST_URL=#{visitFeedback.imgFirstUrl}
+            <if test="visitFeedBackInfoDto.regionId!= null and visitFeedBackInfoDto.regionId!= ''">
+				AND r1.ID=#{visitFeedBackInfoDto.regionId}
             </if>
-            <if test="visitFeedback.imgSecondUrl!= null and visitFeedback.imgSecondUrl!= ''">
-				AND IMG_SECOND_URL=#{visitFeedback.imgSecondUrl}
+            <if test="visitFeedBackInfoDto.action!= null and visitFeedBackInfoDto.action!= ''">
+				AND ACTION=#{visitFeedBackInfoDto.action}
             </if>
-            <if test="visitFeedback.imgThirdUrl!= null and visitFeedback.imgThirdUrl!= ''">
-				AND IMG_THIRD_URL=#{visitFeedback.imgThirdUrl}
+            <if test="visitFeedBackInfoDto.shopCode!= null and visitFeedBackInfoDto.shopCode!= ''">
+				AND SHOP_CODE=#{visitFeedBackInfoDto.shopCode}
             </if>
-            <if test="visitFeedback.remark!= null and visitFeedback.remark!= ''">
-				AND REMARK=#{visitFeedback.remark}
+            <if test="visitFeedBackInfoDto.shopName!= null and visitFeedBackInfoDto.shopName!= ''">
+				AND SHOP_NAME=#{visitFeedBackInfoDto.shopName}
             </if>
-            <if test="visitFeedback.createBy!= null and visitFeedback.createBy!= ''">
-				AND CREATE_BY=#{visitFeedback.createBy}
+            <if test="visitFeedBackInfoDto.imgFirstUrl!= null and visitFeedBackInfoDto.imgFirstUrl!= ''">
+				AND IMG_FIRST_URL=#{visitFeedBackInfoDto.imgFirstUrl}
             </if>
-            <if test="visitFeedback.createTime!= null and visitFeedback.createTime!= ''">
-				AND CREATE_TIME=str_to_date(#{visitFeedback.createTime},'%Y-%m-%d %H:%i:%s')
+            <if test="visitFeedBackInfoDto.imgSecondUrl!= null and visitFeedBackInfoDto.imgSecondUrl!= ''">
+				AND IMG_SECOND_URL=#{visitFeedBackInfoDto.imgSecondUrl}
             </if>
-            <if test="visitFeedback.updateBy!= null and visitFeedback.updateBy!= ''">
-				AND UPDATE_BY=#{visitFeedback.updateBy}
+            <if test="visitFeedBackInfoDto.imgThirdUrl!= null and visitFeedBackInfoDto.imgThirdUrl!= ''">
+				AND IMG_THIRD_URL=#{visitFeedBackInfoDto.imgThirdUrl}
             </if>
-            <if test="visitFeedback.updateTime!= null and visitFeedback.updateTime!= ''">
-				AND UPDATE_TIME=str_to_date(#{visitFeedback.updateTime},'%Y-%m-%d %H:%i:%s')
+            <if test="visitFeedBackInfoDto.remark!= null and visitFeedBackInfoDto.remark!= ''">
+				AND REMARK=#{visitFeedBackInfoDto.remark}
             </if>
-            <if test="visitFeedback.version!= null and visitFeedback.version!= ''">
-				AND VERSION=#{visitFeedback.version}
+            <if test="visitFeedBackInfoDto.createBy!= null and visitFeedBackInfoDto.createBy!= ''">
+				AND f.CREATE_BY=#{visitFeedBackInfoDto.createBy}
+            </if>
+            <if test="visitFeedBackInfoDto.createTime!= null and visitFeedBackInfoDto.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{visitFeedBackInfoDto.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitFeedBackInfoDto.createTimeStart!= null and visitFeedBackInfoDto.createTimeStart!= ''">
+				AND CREATE_TIME &gt;=str_to_date(#{visitFeedBackInfoDto.createTimeStart},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitFeedBackInfoDto.createTimeEnd!= null and visitFeedBackInfoDto.createTimeEnd!= ''">
+				AND CREATE_TIME &lt;=str_to_date(#{visitFeedBackInfoDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitFeedBackInfoDto.updateBy!= null and visitFeedBackInfoDto.updateBy!= ''">
+				AND UPDATE_BY=#{visitFeedBackInfoDto.updateBy}
+            </if>
+            <if test="visitFeedBackInfoDto.updateTime!= null and visitFeedBackInfoDto.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{visitFeedBackInfoDto.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitFeedBackInfoDto.version!= null and visitFeedBackInfoDto.version!= ''">
+				AND VERSION=#{visitFeedBackInfoDto.version}
             </if>
         </if>
     </sql>
@@ -287,15 +349,41 @@
 		FROM T_VISIT_FEEDBACK WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="VisitFeedback" resultMap="VisitFeedbackResultMapper">
+	<select id="listPaginationByProperty"  resultMap="VisitFeedbackInfoDtoResultMapper">
 		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_VISIT_FEEDBACK WHERE 1=1
+		<include refid="commonProcessDateColumn"/>
+		FROM T_VISIT_FEEDBACK f
+		LEFT JOIN T_VISIT v ON v.ID = f.VISIT_ID
+		LEFT JOIN T_COMPANY c ON c.ID = v.COMPANY_ID
+		LEFT JOIN T_SHOP s ON s.ID = v.SHOP_ID
+		LEFT JOIN T_REGION r1 ON r1.ID = s.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = s.CITY
+		LEFT JOIN T_USER u ON u.USER_CODE = f.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID
+		WHERE 1=1
+		<if test="companyId!= null and companyId!= ''"> 
+			AND s.COMPANY_ID =#{companyId}
+		</if>
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>
 	<select id="findByCount" parameterType="VisitFeedback" resultType="int">
 		SELECT count(1) AS totalcount FROM T_VISIT_FEEDBACK WHERE 1=1 
 		<include refid="commonCondition"/>
+	</select>
+	<select id="listVisitFeedBackByProperty"  resultMap="VisitFeedbackInfoDtoResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumn"/>
+		FROM T_VISIT_FEEDBACK f
+		LEFT JOIN T_VISIT v ON v.ID = f.VISIT_ID
+		LEFT JOIN T_COMPANY c ON c.ID = v.COMPANY_ID
+		LEFT JOIN T_SHOP s ON s.ID = v.SHOP_ID
+		LEFT JOIN T_REGION r1 ON r1.ID = s.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = s.CITY
+		LEFT JOIN T_USER u ON u.USER_CODE = f.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID
+		WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	ORDER BY f.CREATE_TIME
 	</select>
 </mapper>

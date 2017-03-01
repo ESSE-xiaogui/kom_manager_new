@@ -219,6 +219,8 @@ public class Shop extends Model{
 	  *	
 	  */
 	private java.lang.Long relationship;
+	
+	private java.lang.Long bizCategory;
 
 	/**
 	  *	
@@ -1041,6 +1043,14 @@ public class Shop extends Model{
 		this.werks = werks;
 	}
 
+	public java.lang.Long getBizCategory() {
+		return bizCategory;
+	}
+
+	public void setBizCategory(java.lang.Long bizCategory) {
+		this.bizCategory = bizCategory;
+	}
+
 	@Override
 	public String toString() {
 		return "Shop [id=" + id + ", shopId=" + shopId + ", shopCode=" + shopCode + ", shopName=" + shopName
@@ -1054,12 +1064,15 @@ public class Shop extends Model{
 						+ ", materielId=" + materielId + ", totalNum=" + totalNum + ", currentNum=" + currentNum
 						+ ", clerkNum=" + clerkNum + ", brandsFirst=" + brandsFirst + ", brandsTwo=" + brandsTwo
 						+ ", brandsThree=" + brandsThree + ", counterNum=" + counterNum + ", darkPro=" + darkPro
-						+ ", isKom=" + isKom + ", relationship=" + relationship + ", incorporator=" + incorporator
-						+ ", incorporatorTel=" + incorporatorTel + ", fwidth=" + fwidth + ", fdepth=" + fdepth
-						+ ", shopArea=" + shopArea + ", showNum=" + showNum + ", staffNum=" + staffNum + ", salesNum="
-						+ salesNum + ", countryName=" + countryName + ", cityName=" + cityName + ", werks=" + werks
-						+ ", gradeName=" + gradeName + ", bizName=" + bizName + "]";
+						+ ", isKom=" + isKom + ", relationship=" + relationship + ", bizCategory=" + bizCategory
+						+ ", incorporator=" + incorporator + ", incorporatorTel=" + incorporatorTel + ", fwidth="
+						+ fwidth + ", fdepth=" + fdepth + ", shopArea=" + shopArea + ", showNum=" + showNum
+						+ ", staffNum=" + staffNum + ", salesNum=" + salesNum + ", countryName=" + countryName
+						+ ", cityName=" + cityName + ", werks=" + werks + ", gradeName=" + gradeName + ", bizName="
+						+ bizName + "]";
 	}
+
+
 
 
 }

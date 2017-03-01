@@ -258,7 +258,7 @@ public class ShopManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		
-		String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 		Shop shop = shopDetailDto.getShop();
 		shop.setCompanyId(userContext.getCompanyId().intValue());
 		shop.setParentId(shop.getCountry() == null ? null : new Long(shop.getCountry()));
@@ -343,7 +343,7 @@ public class ShopManager {
 		}
 		
 		Integer resultStatus = 0;
-		String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 		Shop shop = shopDetailDto.getShop();
 		shop.setCompanyId(userContext.getCompanyId().intValue());
 		shop.setParentId(shop.getCountry() == null ? null : new Long(shop.getCountry()));
@@ -367,13 +367,6 @@ public class ShopManager {
 			shopMateriel.setCreateDate(currentDate);
 		}
 		shopMaterielService.saveShopMateriel(list);
-		
-//		List<ShopMateriel> list = shopDetailDto.getShopMaterielDtoList();
-//		for (ShopMateriel shopMateriel : list) {
-//			shopMateriel.setUpdateBy(userContext.getUserCode());
-//			shopMateriel.setUpdateDate(currentDate);
-//			shopMaterielService.save(shopMateriel);
-//		}
 		
 		resultStatus = 1;
 		
@@ -460,6 +453,10 @@ public class ShopManager {
 		shop.setOwnerName(shopInfoDto.getOwnerName());
 		shop.setOwnerPhone(shopInfoDto.getOwnerPhone());
 		shop.setPurchasChannel(shopInfoDto.getPurchasChannel());
+		shop.setMaterielId(shopInfoDto.getMaterielId());
+		shop.setPromoter(shopInfoDto.getPromoter());
+		shop.setRelationship(shopInfoDto.getRelationship());
+		shop.setBizCategory(shopInfoDto.getBizCategory());
 		shop.setRemark(shopInfoDto.getRemark());
 		shop.setStatus(1);
 		shop.setIsInactive(shopInfoDto.getIsInactive());

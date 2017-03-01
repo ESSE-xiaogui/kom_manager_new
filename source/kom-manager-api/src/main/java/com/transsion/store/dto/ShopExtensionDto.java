@@ -95,6 +95,10 @@ public class ShopExtensionDto implements Serializable {
 
 	private List<ShopExtBrandDto> brandClerkList;
 	
+	private java.lang.String relationshipName;
+	
+	private java.lang.String bizCategoryName;
+	
 	public ShopExtensionDto()
 	{
 		
@@ -115,6 +119,8 @@ public class ShopExtensionDto implements Serializable {
 		this.saleSpQty = model.getSaleSpQty();
 		this.saleBrandQty = model.getSaleBrandQty();
 		this.saleBrandspQty = model.getSaleBrandspQty();
+		this.relationshipName = model.getRelationshipName();
+		this.bizCategoryName = model.getBizCategoryName();
 		
 		ShopExtBrandDto shopExtBrandDto = new ShopExtBrandDto();
 		shopExtBrandDto.setBrandName(model.getBrandOne());
@@ -316,6 +322,22 @@ public class ShopExtensionDto implements Serializable {
 	public void setSaleBrandspQty(java.lang.Long saleBrandspQty) {
 		this.saleBrandspQty = saleBrandspQty;
 	}
+	
+	public java.lang.String getRelationshipName() {
+		return relationshipName;
+	}
+
+	public void setRelationshipName(java.lang.String relationshipName) {
+		this.relationshipName = relationshipName;
+	}
+
+	public java.lang.String getBizCategoryName() {
+		return bizCategoryName;
+	}
+
+	public void setBizCategoryName(java.lang.String bizCategoryName) {
+		this.bizCategoryName = bizCategoryName;
+	}
 
 	public ShopExtension toModel()
 	{
@@ -333,6 +355,9 @@ public class ShopExtensionDto implements Serializable {
 		shopExtension.setSaleSpQty(this.getSaleSpQty()); 
 		shopExtension.setSaleBrandQty(this.getSaleBrandQty());
 		shopExtension.setSaleBrandspQty(this.getSaleBrandspQty());
+		shopExtension.setRelationshipName(this.relationshipName);
+		shopExtension.setBizCategoryName(this.bizCategoryName);
+		
 		if(brandClerkList != null &&brandClerkList.size()>0)
 		{
 			shopExtension.setBrandOne(brandClerkList.get(0).getBrandName());
@@ -365,14 +390,15 @@ public class ShopExtensionDto implements Serializable {
 		}
 		return shopExtension;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "ShopExtensionDto [id=" + id + ", shopId=" + shopId + ", shopArea=" + shopArea + ", clerkTotalQty="
 				+ clerkTotalQty + ", clerkBrandQty=" + clerkBrandQty + ", relationship=" + relationship
 				+ ", bizCategory=" + bizCategory + ", supervisor=" + supervisor + ", promoter=" + promoter
 				+ ", saleTotalQty=" + saleTotalQty + ", saleSpQty=" + saleSpQty + ", saleBrandQty=" + saleBrandQty
-				+ ", saleBrandspQty=" + saleBrandspQty + ", brandClerkList=" + brandClerkList + "]";
+				+ ", saleBrandspQty=" + saleBrandspQty + ", brandClerkList=" + brandClerkList + ", relationshipName="
+				+ relationshipName + ", bizCategoryName=" + bizCategoryName + "]";
 	}
 
 }

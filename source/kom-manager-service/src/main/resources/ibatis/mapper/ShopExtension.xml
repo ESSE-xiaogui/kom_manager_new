@@ -480,6 +480,6 @@
 	</select>
 	
 	<select id="queryShopExtensionByShopId" parameterType="java.lang.Long" resultMap="ShopExtensionResultMapper">
-		SELECT * FROM T_SHOP_EXTENSION WHERE SHOP_ID = #{shopId}
+		SELECT s.*, a.NAME_EN AS bizCategoryName , t.NAME_EN AS relationshipName FROM T_SHOP_EXTENSION s LEFT JOIN T_ATTRIBUTE a ON s.BIZ_CATEGORY = a.ID LEFT JOIN T_ATTRIBUTE t ON s.RELATIONSHIP = t.ID WHERE s.SHOP_ID = #{shopId}
 	</select>
 </mapper>

@@ -93,7 +93,8 @@
 		<result column="SALE_SP_QTY" property="saleSpQty"/>  
 		<result column="SALE_BRAND_QTY" property="saleBrandQty"/> 
 		<result column="SALE_BRANDSP_QTY" property="saleBrandspQty"/>
-		<result column="MATERIEL_TYPE" property="type"/>
+		<result column="MATERIEL_TYPE" property="materielType"/>
+		<result column="MATERIEL_ID" property="materielId"/>
 		<result column="PURCHAS_CHANNEL" property="purchasChannel"/>
 		<result column="RELATIONSHIP" property="relationship"/>
 		<result column="RELATIONSHIP_NAME" property="relationshipName"/>
@@ -330,8 +331,12 @@
 		, OWNER_PHONE
 		, GRADE_ID
 		, GRADE_NAME
-		, BIZ_ID
-		, BIZ_NAME
+		, a1.NAME_EN AS RELATIONSHIP_NAME
+		, a1.ID AS RELATIONSHIP
+		, a2.NAME_EN AS BIZ_CATEGORY_NAME
+		, a2.ID AS BIZ_CATEGORY
+		, a3.NAME_EN AS BIZ_NAME
+		, a3.ID AS BIZ_ID
 		, CLERK_TOTAL_QTY
 		, CLERK_BRAND_QTY
 		, e.PROMOTER
@@ -354,6 +359,7 @@
 		, SALE_BRANDSP_QTY
 		, s.IS_INACTIVE
 		, m.TYPE AS MATERIEL_TYPE
+		, m.ID AS MATERIEL_ID
 		, PURCHAS_CHANNEL
 		, a1.NAME_CN AS RELATIONSHIP_NAME
 		, a2.NAME_CN AS BIZ_CATEGORY_NAME
@@ -885,9 +891,9 @@
 		LEFT JOIN T_REGION r ON r.ID = s.REGION_ID
 		LEFT JOIN T_SHOP_EXTENSION e ON s.ID = e.SHOP_ID
 		LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID
-		LEFT JOIN T_SHOP_BIZ b ON s.BIZ_ID = b.ID
-		LEFT JOIN T_ATTRIBUTE a1 ON s.RELATIONSHIP = a1.SQE AND a1.TYPE=1
-		LEFT JOIN T_ATTRIBUTE a2 ON s.BIZ_CATEGORY = a2.SQE AND a2.TYPE=2
+		LEFT JOIN T_ATTRIBUTE a1 ON e.RELATIONSHIP = a1.ID 
+		LEFT JOIN T_ATTRIBUTE a2 ON e.BIZ_CATEGORY = a2.ID 
+		LEFT JOIN T_ATTRIBUTE a3 ON s.BIZ_ID = a3.ID
 		LEFT JOIN T_MATERIEL m ON m.ID = s.MATERIEL_ID
 		WHERE s.ID = #{id}    
 	</select>
