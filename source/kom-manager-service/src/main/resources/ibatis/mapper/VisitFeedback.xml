@@ -371,7 +371,7 @@
 		SELECT count(1) AS totalcount FROM T_VISIT_FEEDBACK WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listVisitFeedBackByProperty"  resultMap="VisitFeedBackInfoDtoResultMapper">
+	<select id="listVisitFeedBackByProperty"  parameterType="VisitFeedBackInfoDto" resultMap="VisitFeedBackInfoDtoResultMapper">
 		SELECT 
 		<include refid="commonProcessDateColumn"/>
 		FROM T_VISIT_FEEDBACK f

@@ -16,6 +16,7 @@
 **/
 package com.transsion.store.facade.impl;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Component;
 import com.transsion.store.bo.VisitPlan;
 import com.transsion.store.dto.VisitPlanBriefSummaryDto;
 import com.transsion.store.dto.VisitPlanDetailDto;
+import com.transsion.store.dto.VisitPlanDetailInfoDto;
 import com.transsion.store.dto.VisitPlanDto;
 import com.transsion.store.dto.VisitPlanInfoDto;
 import com.transsion.store.dto.VisitPlanDetailSummaryDto;
@@ -83,11 +85,12 @@ public class VisitPlanFacadeImpl implements VisitPlanFacade {
 	 * 根据查询条件查询分页记录
 	 * @return
 	 * @throws ServiceException
+	 * @throws ParseException 
 	 */
-	public Pagination<VisitPlan> listPaginationByProperty(Pagination<VisitPlan> pagination, VisitPlan visitPlan)
-			throws ServiceException
+	public Pagination<VisitPlanDetailInfoDto> listPaginationByProperty(Pagination<VisitPlanDetailInfoDto> pagination, VisitPlanDetailInfoDto visitPlanDetailInfoDto,String token)
+			throws ServiceException, ParseException
 	{
-		return visitPlanService.listPaginationByProperty(pagination, visitPlan);
+		return visitPlanService.listPaginationByProperty(pagination, visitPlanDetailInfoDto,token);
 	}
 
 	/**
@@ -189,6 +192,11 @@ public class VisitPlanFacadeImpl implements VisitPlanFacade {
 			VisitPlanDetailDto visitPlan) throws ServiceException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public byte[] getVisitPlanByExcel(VisitPlanDetailInfoDto visitPlanDetailInfoDto) throws ServiceException {
+		return visitPlanManager.getVisitPlanByExcel(visitPlanDetailInfoDto);
 	}
 
 

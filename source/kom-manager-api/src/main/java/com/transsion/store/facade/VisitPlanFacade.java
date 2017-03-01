@@ -16,12 +16,14 @@
 **/
 package com.transsion.store.facade;
 
+import java.text.ParseException;
 import java.util.List;
 
 
 import com.transsion.store.bo.VisitPlan;
 import com.transsion.store.dto.VisitPlanBriefSummaryDto;
 import com.transsion.store.dto.VisitPlanDetailDto;
+import com.transsion.store.dto.VisitPlanDetailInfoDto;
 import com.transsion.store.dto.VisitPlanDto;
 import com.transsion.store.dto.VisitPlanInfoDto;
 import com.transsion.store.dto.VisitPlanDetailSummaryDto;
@@ -104,9 +106,10 @@ public interface VisitPlanFacade {
 	 * 根据查询条件查询分页记录
 	 * @return
 	 * @throws ServiceException
+	 * @throws ParseException 
 	 */
-	public Pagination<VisitPlan> listPaginationByProperty(Pagination<VisitPlan> pagination, VisitPlan visitPlan)
-			throws ServiceException;
+	public Pagination<VisitPlanDetailInfoDto> listPaginationByProperty(Pagination<VisitPlanDetailInfoDto> pagination, VisitPlanDetailInfoDto visitPlanDetailInfoDto,String token)
+			throws ServiceException, ParseException;
 
 	/********************************* web api **********************************/
 	/**
@@ -144,6 +147,8 @@ public interface VisitPlanFacade {
 	 * plan details页面
 	 */
 	public List<VisitPlanInfoDto> queryPlanInfo(String token, String startDate, String endDate) throws ServiceException;
+
+	public byte[] getVisitPlanByExcel(VisitPlanDetailInfoDto visitPlanDetailInfoDto) throws ServiceException;
 	
 
 }

@@ -1,15 +1,19 @@
 package com.transsion.store.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.VisitPlan;
 import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.VisitFeedBackInfoDto;
 import com.transsion.store.dto.VisitPlanBriefSummaryDto;
+import com.transsion.store.dto.VisitPlanDetailInfoDto;
 import com.transsion.store.dto.VisitPlanDto;
 import com.transsion.store.dto.VisitPlanParamDto;
 import com.transsion.store.exception.ExceptionDef;
@@ -17,6 +21,7 @@ import com.transsion.store.mapper.VisitPlanMapper;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 import com.transsion.store.utils.DateConvertUtils;
+import com.transsion.store.utils.ExcelUtils;
 
 /**
  * @author guihua.zhang on 2017-02-28 巡店计划功能逻辑实现
@@ -114,6 +119,31 @@ public class VisitPlanManager {
 			result.setWeekPlanQty(weekPlanQty);
 		}
 		return result;
+	}
+
+	/**
+	 * 巡店计划导出Excel
+	 * @param visitPlanDetailInfoDto
+	 * @return
+	 * @throws throws ServiceException  
+	 */
+	public byte[] getVisitPlanByExcel(VisitPlanDetailInfoDto visitPlanDetailInfoDto) throws ServiceException  {
+		String[] headers = {"序号","事业部","周数","计划巡店日期","门店名称","门店等级","门店类型","国家","城市","状态","上传用户", "员工姓名",
+		"巡店计划上传日期","巡店完成日期"};
+		List<VisitPlanDetailInfoDto> list = visitPlanMapper.listVisitPlanByProperty(visitPlanDetailInfoDto);
+		List<Object[]> dataset = new ArrayList<Object[]>();
+		int i=1;
+		for(VisitPlanDetailInfoDto visitPlanDetailInfoDto1 :list){
+			dataset.add(new Object[]{i++,visitPlanDetailInfoDto1.getCompanyCode(),visitPlanDetailInfoDto1.getWeekNo(),
+							visitPlanDetailInfoDto1.getPlanDate(),visitPlanDetailInfoDto1.getShopName(),
+							visitPlanDetailInfoDto1.getGradeName(),visitPlanDetailInfoDto1.getBizName(),
+							visitPlanDetailInfoDto1.getCountryName(),visitPlanDetailInfoDto1.getCityName(),
+							visitPlanDetailInfoDto1.getStatus()==1?"未完成":"已完成",visitPlanDetailInfoDto1.getCreateBy(),
+							visitPlanDetailInfoDto1.getEmpName(),visitPlanDetailInfoDto1.getCreateTime(),
+							visitPlanDetailInfoDto1.getVisitDate()});
+		}
+		String title = "巡店计划报表";
+		return ExcelUtils.exportExcel(title, headers, dataset);
 	}
 
 }

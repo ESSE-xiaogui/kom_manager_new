@@ -46,6 +46,28 @@
 		<result column="PLANNER" property="planner"/>
 		<result column="weekPlanQty" property="weekPlanQty"/>
 	</resultMap>
+	
+	<resultMap id="VisitPlanDetailInfoDtoResultMapper" type="VisitPlanDetailInfoDto">
+		<result column="ID" property="id"/>
+		<result column="PLAN_DATE" property="planDate"/>
+		<result column="VISIT_DATE" property="visitDate"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="COMPANY_CODE" property="companyCode"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="GRADE_NAME" property="gradeName"/>
+		<result column="BIZ_NAME" property="bizName"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="STATUS" property="status"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
 <!-- 	
 	<resultMap id="VisitPlanParamDtoResultMapper" type="VisitPlanParamDto">
 		<result column="ID" property="companyId"/>
@@ -99,6 +121,27 @@
 		, UPDATE_BY
 		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
 		, VERSION
+	</sql>
+	<sql id="commonProcessDateColumn">
+		 p.ID
+		, date_format(PLAN_DATE, '%Y-%m-%d %H:%i:%s') PLAN_DATE
+		, date_format(VISIT_DATE, '%Y-%m-%d %H:%i:%s') VISIT_DATE
+		, p.COMPANY_ID
+		, COMPANY_CODE
+		, p.SHOP_ID
+		, SHOP_NAME
+		, GRADE_NAME
+		, BIZ_NAME
+		, r1.REGION_NAME AS COUNTRY_NAME
+		, r2.REGION_NAME AS CITY_NAME
+		, EMP_NAME
+		, p.STATUS
+		, p.REMARK
+		, p.CREATE_BY
+		, date_format(p.CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+		, p.UPDATE_BY
+		, date_format(p.UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
+		, p.VERSION
 	</sql>
 	
 	<sql id="commonCondition">
@@ -158,46 +201,64 @@
 		</if>		
 	</sql>
 
-	<sql id="commonConditionByPrefix">
-		<if test="visitPlan != null">
-            <if test="visitPlan.id!= null and visitPlan.id!= ''">
-				AND ID=#{visitPlan.id}
+		<sql id="commonConditionByPrefix">
+		<if test="visitPlanDetailInfoDto != null">
+            <if test="visitPlanDetailInfoDto.id!= null and visitPlanDetailInfoDto.id!= ''">
+				AND ID=#{visitPlanDetailInfoDto.id}
             </if>
-            <if test="visitPlan.planDate!= null and visitPlan.planDate!= ''">
-				AND PLAN_DATE=str_to_date(#{visitPlan.planDate},'%Y-%m-%d %H:%i:%s')
+            <if test="visitPlanDetailInfoDto.planDate!= null and visitPlanDetailInfoDto.planDate!= ''">
+				AND PLAN_DATE=str_to_date(#{visitPlanDetailInfoDto.planDate},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="visitPlan.visitDate!= null and visitPlan.visitDate!= ''">
-				AND VISIT_DATE=str_to_date(#{visitPlan.visitDate},'%Y-%m-%d %H:%i:%s')
+            <if test="visitPlanDetailInfoDto.planDateStart!= null and visitPlanDetailInfoDto.planDateStart!= ''">
+				AND PLAN_DATE &gt;=str_to_date(#{visitPlanDetailInfoDto.planDateStart},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="visitPlan.planner!= null and visitPlan.planner!= ''">
-				AND PLANNER=#{visitPlan.planner}
+            <if test="visitPlanDetailInfoDto.planDateEnd!= null and visitPlanDetailInfoDto.planDateEnd!= ''">
+				AND PLAN_DATE &lt;=str_to_date(#{visitPlanDetailInfoDto.planDateEnd},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="visitPlan.companyId!= null and visitPlan.companyId!= ''">
-				AND COMPANY_ID=#{visitPlan.companyId}
+            <if test="visitPlanDetailInfoDto.visitDate!= null and visitPlanDetailInfoDto.visitDate!= ''">
+				AND VISIT_DATE=str_to_date(#{visitPlanDetailInfoDto.visitDate},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="visitPlan.shopId!= null and visitPlan.shopId!= ''">
-				AND SHOP_ID=#{visitPlan.shopId}
+            <if test="visitPlanDetailInfoDto.companyId!= null and visitPlanDetailInfoDto.companyId!= ''">
+				AND p.COMPANY_ID=#{visitPlanDetailInfoDto.companyId}
             </if>
-            <if test="visitPlan.status!= null and visitPlan.status!= ''">
-				AND STATUS=#{visitPlan.status}
+            <if test="visitPlanDetailInfoDto.shopId!= null and visitPlanDetailInfoDto.shopId!= ''">
+				AND SHOP_ID=#{visitPlanDetailInfoDto.shopId}
             </if>
-            <if test="visitPlan.remark!= null and visitPlan.remark!= ''">
-				AND REMARK=#{visitPlan.remark}
+            <if test="visitPlanDetailInfoDto.gradeId!= null and visitPlanDetailInfoDto.gradeId!= ''">
+				AND GRADE_ID=#{visitPlanDetailInfoDto.gradeId}
             </if>
-            <if test="visitPlan.createBy!= null and visitPlan.createBy!= ''">
-				AND CREATE_BY=#{visitPlan.createBy}
+            <if test="visitPlanDetailInfoDto.bizId!= null and visitPlanDetailInfoDto.bizId!= ''">
+				AND BIZ_ID=#{visitPlanDetailInfoDto.bizId}
             </if>
-            <if test="visitPlan.createTime!= null and visitPlan.createTime!= ''">
-				AND CREATE_TIME=str_to_date(#{visitPlan.createTime},'%Y-%m-%d %H:%i:%s')
+            <if test="visitPlanDetailInfoDto.regionId!= null and visitPlanDetailInfoDto.regionId!= ''">
+				AND r1.ID=#{visitPlanDetailInfoDto.regionId}
             </if>
-            <if test="visitPlan.updateBy!= null and visitPlan.updateBy!= ''">
-				AND UPDATE_BY=#{visitPlan.updateBy}
+            <if test="visitPlanDetailInfoDto.status!= null and visitPlanDetailInfoDto.status!= ''">
+				AND STATUS=#{visitPlanDetailInfoDto.status}
             </if>
-            <if test="visitPlan.updateTime!= null and visitPlan.updateTime!= ''">
-				AND UPDATE_TIME=str_to_date(#{visitPlan.updateTime},'%Y-%m-%d %H:%i:%s')
+            <if test="visitPlanDetailInfoDto.remark!= null and visitPlanDetailInfoDto.remark!= ''">
+				AND REMARK=#{visitPlanDetailInfoDto.remark}
             </if>
-            <if test="visitPlan.version!= null and visitPlan.version!= ''">
-				AND VERSION=#{visitPlan.version}
+            <if test="visitPlanDetailInfoDto.createBy!= null and visitPlanDetailInfoDto.createBy!= ''">
+				AND p.CREATE_BY=#{visitPlanDetailInfoDto.createBy}
+            </if>
+            <if test="visitPlanDetailInfoDto.createTime!= null and visitPlanDetailInfoDto.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{visitPlanDetailInfoDto.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitPlanDetailInfoDto.createTimeStart!= null and visitPlanDetailInfoDto.createTimeStart!= ''">
+				AND p.CREATE_TIME &gt;=str_to_date(#{visitPlanDetailInfoDto.createTimeStart},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitPlanDetailInfoDto.createTimeEnd!= null and visitPlanDetailInfoDto.createTimeEnd!= ''">
+				AND p.CREATE_TIME &lt;=str_to_date(#{visitPlanDetailInfoDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitPlanDetailInfoDto.updateBy!= null and visitPlanDetailInfoDto.updateBy!= ''">
+				AND UPDATE_BY=#{visitPlanDetailInfoDto.updateBy}
+            </if>
+            <if test="visitPlanDetailInfoDto.updateTime!= null and visitPlanDetailInfoDto.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{visitPlanDetailInfoDto.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitPlanDetailInfoDto.version!= null and visitPlanDetailInfoDto.version!= ''">
+				AND VERSION=#{visitPlanDetailInfoDto.version}
             </if>
         </if>
     </sql>
@@ -321,10 +382,22 @@
 		FROM T_VISIT_PLAN WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="VisitPlan" resultMap="VisitPlanResultMapper">
+	<select id="listPaginationByProperty" parameterType="VisitPlanDetailInfoDto" resultMap="VisitPlanDetailInfoDtoResultMapper">
 		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_VISIT_PLAN WHERE 1=1
+		<include refid="commonProcessDateColumn"/>
+		FROM T_VISIT_PLAN p
+		LEFT JOIN T_COMPANY c ON c.ID = p.COMPANY_ID
+		LEFT JOIN T_SHOP s ON s.ID = p.SHOP_ID
+		LEFT JOIN T_SHOP_GRADE g ON g.ID = s.GRADE_ID
+		LEFT JOIN T_SHOP_BIZ b ON b.ID = s.BIZ_ID
+		LEFT JOIN T_REGION r1 ON r1.ID = s.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = s.CITY
+		LEFT JOIN T_USER u ON u.USER_CODE = p.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID
+		WHERE 1=1
+		<if test="companyId!= null and companyId!= ''"> 
+			AND p.COMPANY_ID =#{companyId}
+		</if>
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>
@@ -348,5 +421,21 @@
 		SELECT COUNT(*) FROM 
 		T_VISIT_PLAN WHERE 1=1
 		<include refid="commonConditionByParam"/>
+	</select>
+	<select id="listVisitPlanByProperty" parameterType="VisitPlanDetailInfoDto" resultMap="VisitPlanDetailInfoDtoResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumn"/>
+		FROM T_VISIT_PLAN p
+		LEFT JOIN T_COMPANY c ON c.ID = p.COMPANY_ID
+		LEFT JOIN T_SHOP s ON s.ID = p.SHOP_ID
+		LEFT JOIN T_SHOP_GRADE g ON g.ID = s.GRADE_ID
+		LEFT JOIN T_SHOP_BIZ b ON b.ID = s.BIZ_ID
+		LEFT JOIN T_REGION r1 ON r1.ID = s.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = s.CITY
+		LEFT JOIN T_USER u ON u.USER_CODE = p.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID
+		WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	ORDER BY p.CREATE_TIME
 	</select>
 </mapper>

@@ -19,6 +19,7 @@ package com.transsion.store.controller;
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.VisitPlan;
 import com.transsion.store.dto.VisitPlanBriefSummaryDto;
+import com.transsion.store.dto.VisitPlanDetailInfoDto;
 import com.transsion.store.dto.VisitPlanDetailSummaryDto;
 import com.transsion.store.dto.VisitPlanDto;
 import com.transsion.store.dto.VisitPlanInfoDto;
@@ -26,11 +27,22 @@ import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.VisitPlanFacade;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
@@ -58,14 +70,15 @@ public class VisitPlanController extends AbstractController{
 	* 分页查询记录
 	* @return
 	* @throws ServiceException
+	 * @throws ParseException 
 	*/
 	@POST
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<VisitPlan> listPgVisitPlan(RequestModel<VisitPlan> requestModel) throws ServiceException
+	public Pagination<VisitPlanDetailInfoDto> listPgVisitPlan(RequestModel<VisitPlanDetailInfoDto> requestModel) throws ServiceException, ParseException
 	{
-		Pagination<VisitPlan> pagination = new Pagination<VisitPlan>();
+		Pagination<VisitPlanDetailInfoDto> pagination = new Pagination<VisitPlanDetailInfoDto>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());
@@ -73,7 +86,7 @@ public class VisitPlanController extends AbstractController{
 		pagination.setParams(requestModel.getParams());
 		pagination.setOrderBy(requestModel.getOrderBy());
 
-		return visitPlanFacade.listPaginationByProperty(pagination, requestModel.getParams());
+		return visitPlanFacade.listPaginationByProperty(pagination, requestModel.getParams(),this.getAuthorization());
 	}
 
 	/**
@@ -176,4 +189,69 @@ public class VisitPlanController extends AbstractController{
 		String token = this.getAuthorization();
 		return visitPlanFacade.queryPlanInfo(token, startDate, endDate);
 	}
+	
+	@GET
+	@Path("/exportExcel") 
+	@Produces({MediaType.TEXT_PLAIN})  
+	public Response getVisitPlanByExcel(@QueryParam("createTimeStart") String createTimeStart,
+		@QueryParam("createTimeEnd") String createTimeEnd,@QueryParam("planDateStart") String planDateStart,
+		@QueryParam("planDateEnd") String planDateEnd,@QueryParam("gradeId") String gradeId,
+		@QueryParam("regionId")String regionId,@QueryParam("bizId")String bizId,
+		@QueryParam("weekNo")String weekNo,@QueryParam("createBy") String createBy,
+		@QueryParam("companyId") String companyId,@QueryParam("status") String status) throws ServiceException,IOException {
+		VisitPlanDetailInfoDto visitPlanDetailInfoDto = new VisitPlanDetailInfoDto();
+		visitPlanDetailInfoDto.setCreateTimeStart(createTimeStart);
+		visitPlanDetailInfoDto.setCreateTimeEnd(createTimeEnd);
+		visitPlanDetailInfoDto.setPlanDateStart(planDateStart);
+		visitPlanDetailInfoDto.setPlanDateEnd(planDateEnd);
+		visitPlanDetailInfoDto.setCreateBy(createBy);
+		if(!UtilHelper.isEmpty(regionId)){
+			visitPlanDetailInfoDto.setRegionId(Long.parseLong(regionId));
+		}
+		if(!UtilHelper.isEmpty(companyId)){
+			visitPlanDetailInfoDto.setCompanyId(Long.parseLong(companyId));
+		}
+		if(!UtilHelper.isEmpty(bizId)){
+			visitPlanDetailInfoDto.setBizId(Long.parseLong(bizId));
+		}
+		if(!UtilHelper.isEmpty(gradeId)){
+			visitPlanDetailInfoDto.setGradeId(Long.parseLong(gradeId));
+		}
+		if(!UtilHelper.isEmpty(weekNo)){
+			visitPlanDetailInfoDto.setWeekNo(Integer.valueOf(weekNo));
+		}
+		if(!UtilHelper.isEmpty(status)){
+			visitPlanDetailInfoDto.setStatus(Integer.valueOf(status));
+		}
+		byte[] bytes = visitPlanFacade.getVisitPlanByExcel(visitPlanDetailInfoDto);       
+		InputStream inputStream = new ByteArrayInputStream(bytes);          
+		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));          
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"巡店计划报表.xlsx";
+		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));         
+		//根据自己文件类型修改         
+		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");          
+		return response.build();      	
+	}
+	class BigFileOutputStream implements javax.ws.rs.core.StreamingOutput {
+        private InputStream inputStream;
+        public BigFileOutputStream(){}
+        public BigFileOutputStream(InputStream inputStream)
+        {
+            this.inputStream = inputStream;
+        }
+
+        @Override
+        public void write(OutputStream output) throws IOException,
+                WebApplicationException {
+            // TODO Auto-generated method stub
+            IOUtils.copy(inputStream, output);
+        }
+
+        public InputStream getInputStream() {
+            return inputStream;
+        }
+        public void setInputStream(InputStream inputStream) {
+            this.inputStream = inputStream;
+        }
+    }
 }

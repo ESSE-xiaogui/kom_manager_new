@@ -16,16 +16,22 @@
 **/
 package com.transsion.store.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.VisitPlan;
+import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.VisitInfoDto;
+import com.transsion.store.dto.VisitPlanDetailInfoDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.VisitPlanMapper;
+import com.transsion.store.utils.CacheUtils;
+import com.transsion.store.utils.CalendarUtils;
 
 @Service("visitPlanService")
 public class VisitPlanService {
@@ -74,15 +80,27 @@ public class VisitPlanService {
 	 * 根据查询条件查询分页记录
 	 * @return
 	 * @throws ServiceException
+	 * @throws ParseException 
 	 */
-	public Pagination<VisitPlan> listPaginationByProperty(Pagination<VisitPlan> pagination, VisitPlan visitPlan)
-			throws ServiceException
+	public Pagination<VisitPlanDetailInfoDto> listPaginationByProperty(Pagination<VisitPlanDetailInfoDto> pagination, VisitPlanDetailInfoDto visitPlanDetailInfoDto,String token)
+			throws ServiceException, ParseException
 	{
-		List<VisitPlan> list = visitPlanMapper.listPaginationByProperty(pagination, visitPlan, pagination.getOrderBy());
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		
-		pagination.setResultList(list);
+		Integer companyId = userContext.isAdmin()?null:userContext.getCompanyId().intValue();
 		
-		return pagination;
+		List<VisitPlanDetailInfoDto> list = visitPlanMapper.listPaginationByProperty(pagination, visitPlanDetailInfoDto, pagination.getOrderBy(),companyId);
+		
+		for(VisitPlanDetailInfoDto dto : list){   
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");//小写的mm表示的是分钟  
+			String dstr = dto.getPlanDate();
+			java.util.Date date=sdf.parse(dstr);
+			int weekNo= CalendarUtils.getWeekOfYear(date);
+			dto.setWeekNo(weekNo);
+		}
+			pagination.setResultList(list);
+		
+			return pagination;
 	}
 
 	/**
