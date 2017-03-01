@@ -48,9 +48,19 @@ public class VisitManager {
 		}
 		
 		VisitInfoDto visitInfoDto = new VisitInfoDto();
-		visitInfoDto.setShopId(userContext.getShop().getId());
 		visitInfoDto.setPlanDate(planDate);
-		return visitPlanService.queryPlanedVisitList(visitInfoDto);
+		visitInfoDto.setPlanner(userContext.getUserCode());
+		
+		List<VisitInfoDto> list = visitPlanService.queryPlanedVisitList(visitInfoDto);
+		
+		List<VisitInfoDto> weekPlanCountList = visitPlanService.queryWeekPlanCount(visitInfoDto);
+		
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getShopId().equals(weekPlanCountList.get(i).getShopId())) {
+				list.get(i).setWeekPlanQty(weekPlanCountList.get(i).getWeekPlanQty());
+			}
+		}
+		return list;
 	}
 	
 	public List<VisitInfoDto> queryUnplanedVisitList(String token, String planDate) throws ServiceException {
@@ -63,9 +73,20 @@ public class VisitManager {
 		}
 		
 		VisitInfoDto visitInfoDto = new VisitInfoDto();
-		visitInfoDto.setShopId(userContext.getShop().getId());
 		visitInfoDto.setPlanDate(planDate);
-		return visitService.queryUnplanedVisitList(visitInfoDto);
+		visitInfoDto.setPlanner(userContext.getUserCode());
+		
+		
+		List<VisitInfoDto> list = visitService.queryUnplanedVisitList(visitInfoDto);
+		
+		List<VisitInfoDto> weekPlanCountList = visitPlanService.queryWeekPlanCount(visitInfoDto);
+		
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getShopId().equals(weekPlanCountList.get(i).getShopId())) {
+				list.get(i).setWeekPlanQty(weekPlanCountList.get(i).getWeekPlanQty());
+			}
+		}
+		return list;
 	}
 	
 	public VisitSettingDto queryVisitSetting(String token) throws ServiceException {

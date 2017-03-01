@@ -34,6 +34,8 @@ public interface VisitPlanMapper extends GenericIBatisMapper<VisitPlan, java.lan
     
 	public List<VisitInfoDto> queryPlanedVisitList(VisitInfoDto visitInfoDto) throws DataAccessFailureException;
 	
+	public List<VisitInfoDto> queryWeekPlanCount(VisitInfoDto visitInfoDto) throws DataAccessFailureException;
+	
 	//查询一周巡店计划数
 	public int findWeekQtry(VisitPlanParamDto visitPlanParamDto);
 }
