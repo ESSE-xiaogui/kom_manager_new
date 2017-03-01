@@ -22,15 +22,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.VisitFeedback;
+import com.transsion.store.dto.VisitFeedBackInfoDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.VisitFeedbackFacade;
+import com.transsion.store.manager.VisitFeedBackManager;
 import com.transsion.store.service.VisitFeedbackService;
 
 @Component("visitFeedbackFacade")
 public class VisitFeedbackFacadeImpl implements VisitFeedbackFacade {
 
 	private VisitFeedbackService visitFeedbackService;
+	
+	@Autowired
+	private VisitFeedBackManager visitFeedBackManager;
 	
 	@Autowired
 	public void setVisitFeedbackService(VisitFeedbackService visitFeedbackService)
@@ -75,10 +80,10 @@ public class VisitFeedbackFacadeImpl implements VisitFeedbackFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<VisitFeedback> listPaginationByProperty(Pagination<VisitFeedback> pagination, VisitFeedback visitFeedback)
+	public Pagination<VisitFeedBackInfoDto> listPaginationByProperty(Pagination<VisitFeedBackInfoDto> pagination, VisitFeedBackInfoDto visitFeedBackInfoDto,String token)
 			throws ServiceException
 	{
-		return visitFeedbackService.listPaginationByProperty(pagination, visitFeedback);
+		return visitFeedbackService.listPaginationByProperty(pagination, visitFeedBackInfoDto,token);
 	}
 
 	/**
@@ -144,5 +149,12 @@ public class VisitFeedbackFacadeImpl implements VisitFeedbackFacade {
 	public int findByCount(VisitFeedback visitFeedback) throws ServiceException
 	{
 		return visitFeedbackService.findByCount(visitFeedback);
+	}
+
+	/**
+	 * 问题反馈导出Excel
+	 */
+	public byte[] getVisitFeedBackByExcel(VisitFeedBackInfoDto visitFeedBackInfoDto) throws ServiceException {
+		return visitFeedBackManager.getVisitFeedBackByExcel(visitFeedBackInfoDto);
 	}
 }

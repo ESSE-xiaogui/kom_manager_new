@@ -22,9 +22,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.VisitFeedback;
+import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.VisitFeedBackInfoDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.VisitFeedbackMapper;
+import com.transsion.store.utils.CacheUtils;
 
 @Service("visitFeedbackService")
 public class VisitFeedbackService {
@@ -71,13 +74,18 @@ public class VisitFeedbackService {
 	
 	/**
 	 * 根据查询条件查询分页记录
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<VisitFeedback> listPaginationByProperty(Pagination<VisitFeedback> pagination, VisitFeedback visitFeedback)
+	public Pagination<VisitFeedBackInfoDto> listPaginationByProperty(Pagination<VisitFeedBackInfoDto> pagination, VisitFeedBackInfoDto visitFeedBackInfoDto, String token)
 			throws ServiceException
 	{
-		List<VisitFeedback> list = visitFeedbackMapper.listPaginationByProperty(pagination, visitFeedback, pagination.getOrderBy());
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		
+		Integer companyId = userContext.isAdmin()?null:userContext.getCompanyId().intValue();
+		
+		List<VisitFeedBackInfoDto> list = visitFeedbackMapper.listPaginationByProperty(pagination, visitFeedBackInfoDto, pagination.getOrderBy(),companyId);
 		
 		pagination.setResultList(list);
 		

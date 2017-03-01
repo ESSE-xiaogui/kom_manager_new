@@ -36,6 +36,8 @@ public class ShopInfoDto implements Serializable{
 	
 	private java.lang.String updateDateEnd;
 	
+	private java.lang.Integer materielId;
+	
 	/**
 	  *	keep for align with kom pc
 	  */
@@ -761,6 +763,15 @@ public class ShopInfoDto implements Serializable{
 	public void setUpdateDateEnd(java.lang.String updateDateEnd) {
 		this.updateDateEnd = updateDateEnd;
 	}
+	
+
+	public java.lang.Integer getMaterielId() {
+		return materielId;
+	}
+
+	public void setMaterielId(java.lang.Integer materielId) {
+		this.materielId = materielId;
+	}
 
 	@Override
 	public String toString() {
@@ -768,11 +779,11 @@ public class ShopInfoDto implements Serializable{
 						+ regionName + ", companyCode=" + companyCode + ", gradeName=" + gradeName + ", bizName="
 						+ bizName + ", isInactive=" + isInactive + ", createDateStart=" + createDateStart
 						+ ", createDateEnd=" + createDateEnd + ", updateDateStart=" + updateDateStart
-						+ ", updateDateEnd=" + updateDateEnd + ", shopId=" + shopId + ", shopCode=" + shopCode
-						+ ", shopName=" + shopName + ", companyId=" + companyId + ", parentId=" + parentId
-						+ ", regionId=" + regionId + ", country=" + country + ", city=" + city + ", shopIcon="
-						+ shopIcon + ", address=" + address + ", gradeId=" + gradeId + ", bizId=" + bizId
-						+ ", ownerName=" + ownerName + ", ownerPhone=" + ownerPhone + ", purchasChannel="
+						+ ", updateDateEnd=" + updateDateEnd + ", materielId=" + materielId + ", shopId=" + shopId
+						+ ", shopCode=" + shopCode + ", shopName=" + shopName + ", companyId=" + companyId
+						+ ", parentId=" + parentId + ", regionId=" + regionId + ", country=" + country + ", city="
+						+ city + ", shopIcon=" + shopIcon + ", address=" + address + ", gradeId=" + gradeId + ", bizId="
+						+ bizId + ", ownerName=" + ownerName + ", ownerPhone=" + ownerPhone + ", purchasChannel="
 						+ purchasChannel + ", openDate=" + openDate + ", status=" + status + ", remark=" + remark
 						+ ", createBy=" + createBy + ", createDate=" + createDate + ", updateBy=" + updateBy
 						+ ", updateDate=" + updateDate + ", version=" + version + ", shopExtension=" + shopExtension
@@ -787,5 +798,6 @@ public class ShopInfoDto implements Serializable{
 						+ saleTotalQty + ", saleSpQty=" + saleSpQty + ", saleBrandQty=" + saleBrandQty
 						+ ", saleBrandspQty=" + saleBrandspQty + "]";
 	}
+
 
 }

@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.VisitFeedback;
+import com.transsion.store.dto.VisitFeedBackInfoDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -96,10 +97,13 @@ public interface VisitFeedbackFacade {
 	
 	/**
 	 * 根据查询条件查询分页记录
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<VisitFeedback> listPaginationByProperty(Pagination<VisitFeedback> pagination, VisitFeedback visitFeedback)
+	public Pagination<VisitFeedBackInfoDto> listPaginationByProperty(Pagination<VisitFeedBackInfoDto> pagination, VisitFeedBackInfoDto visitFeedBackInfoDto, String token)
 			throws ServiceException;
+
+	public byte[] getVisitFeedBackByExcel(VisitFeedBackInfoDto visitFeedBackInfoDto)throws ServiceException;
 
 }
