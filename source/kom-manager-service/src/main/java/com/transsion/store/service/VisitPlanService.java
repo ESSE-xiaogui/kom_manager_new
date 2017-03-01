@@ -153,4 +153,8 @@ public class VisitPlanService {
 	public List<VisitInfoDto> queryPlanedVisitList(VisitInfoDto visitInfoDto) throws ServiceException {
 		return visitPlanMapper.queryPlanedVisitList(visitInfoDto);
 	}
+	
+	public List<VisitInfoDto> queryWeekPlanCount(VisitInfoDto visitInfoDto) throws ServiceException {
+		return visitPlanMapper.queryWeekPlanCount(visitInfoDto);
+	}
 }

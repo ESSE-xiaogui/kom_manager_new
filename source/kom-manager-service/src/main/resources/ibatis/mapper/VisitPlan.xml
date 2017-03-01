@@ -43,6 +43,8 @@
 		<result column="GRADE_ID" property="gradeId"/>
 		<result column="GRADE_NAME" property="gradeName"/>
 		<result column="REGION_NAME" property="cityName"/>
+		<result column="PLANNER" property="planner"/>
+		<result column="weekPlanQty" property="weekPlanQty"/>
 	</resultMap>
 <!-- 	
 	<resultMap id="VisitPlanParamDtoResultMapper" type="VisitPlanParamDto">
@@ -334,7 +336,12 @@
 	<select id="queryPlanedVisitList" parameterType="VisitInfoDto" resultMap="VisitInfoDtoResultMapper">
 		SELECT v.*, s.SHOP_NAME, g.GRADE_NAME, r.REGION_NAME FROM T_VISIT_PLAN v LEFT JOIN T_SHOP s ON v.SHOP_ID = s.ID 
 		LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID LEFT JOIN T_REGION r ON s.REGION_ID = r.ID 
-		WHERE v.SHOP_ID = #{shopId} AND SUBSTRING(v.PLAN_DATE, 1, 10) = #{planDate}
+		WHERE SUBSTRING(v.PLAN_DATE, 1, 10) = #{planDate} AND PLANNER = #{planner}
+	</select>
+	
+	<select id="queryWeekPlanCount" parameterType="VisitInfoDto" resultMap="VisitInfoDtoResultMapper">
+		SELECT SHOP_ID, COUNT(*) AS weekPlanQty FROM T_VISIT_PLAN 
+		WHERE SUBSTRING(PLAN_DATE, 1, 10) BETWEEN #{planDate} AND #{planDate} AND PLANNER = #{planner} GROUP BY SHOP_ID
 	</select>
 	
 	<select id="findWeekQtry" parameterType="VisitPlanParamDto" resultType="int">

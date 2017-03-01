@@ -74,6 +74,8 @@ public class VisitInfoDto implements Serializable {
 	private boolean isFinished;
 	
 	private String cityName;
+	
+	private String planner;
 
 	/**
 	  *	备注
@@ -167,12 +169,21 @@ public class VisitInfoDto implements Serializable {
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
 	}
+	
+	public String getPlanner() {
+		return planner;
+	}
+
+	public void setPlanner(String planner) {
+		this.planner = planner;
+	}
 
 	@Override
 	public String toString() {
 		return "VisitInfoDto [id=" + id + ", planDate=" + planDate + ", shopId=" + shopId + ", shopName=" + shopName
 				+ ", gradeId=" + gradeId + ", gradeName=" + gradeName + ", weekPlanQty=" + weekPlanQty + ", isPlaned="
-				+ isPlaned + ", isFinished=" + isFinished + ", cityName=" + cityName + ", remark=" + remark + "]";
+				+ isPlaned + ", isFinished=" + isFinished + ", cityName=" + cityName + ", planner=" + planner
+				+ ", remark=" + remark + "]";
 	}
 	
 }
