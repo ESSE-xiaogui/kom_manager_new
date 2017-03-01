@@ -453,6 +453,10 @@ public class ShopManager {
 		shop.setOwnerName(shopInfoDto.getOwnerName());
 		shop.setOwnerPhone(shopInfoDto.getOwnerPhone());
 		shop.setPurchasChannel(shopInfoDto.getPurchasChannel());
+		shop.setMaterielId(shopInfoDto.getMaterielId());
+		shop.setPromoter(shopInfoDto.getPromoter());
+		shop.setRelationship(shopInfoDto.getRelationship());
+		shop.setBizCategory(shopInfoDto.getBizCategory());
 		shop.setRemark(shopInfoDto.getRemark());
 		shop.setStatus(1);
 		shop.setIsInactive(shopInfoDto.getIsInactive());

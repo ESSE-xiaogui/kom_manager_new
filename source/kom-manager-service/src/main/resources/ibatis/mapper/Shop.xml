@@ -93,7 +93,7 @@
 		<result column="SALE_SP_QTY" property="saleSpQty"/>  
 		<result column="SALE_BRAND_QTY" property="saleBrandQty"/> 
 		<result column="SALE_BRANDSP_QTY" property="saleBrandspQty"/>
-		<result column="MATERIEL_TYPE" property="type"/>
+		<result column="MATERIEL_TYPE" property="materielType"/>
 		<result column="MATERIEL_ID" property="materielId"/>
 		<result column="PURCHAS_CHANNEL" property="purchasChannel"/>
 		<result column="RELATIONSHIP" property="relationship"/>
