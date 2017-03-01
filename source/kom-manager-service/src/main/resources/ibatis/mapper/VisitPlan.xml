@@ -341,7 +341,7 @@
 	
 	<select id="queryWeekPlanCount" parameterType="VisitInfoDto" resultMap="VisitInfoDtoResultMapper">
 		SELECT SHOP_ID, COUNT(*) AS weekPlanQty FROM T_VISIT_PLAN 
-		WHERE SUBSTRING(PLAN_DATE, 1, 10) BETWEEN #{planDate} AND #{planDate} AND PLANNER = #{planner} GROUP BY SHOP_ID
+		WHERE SUBSTRING(PLAN_DATE, 1, 10) BETWEEN #{beginDate} AND #{endDate} AND PLANNER = #{planner} GROUP BY SHOP_ID
 	</select>
 	
 	<select id="findWeekQtry" parameterType="VisitPlanParamDto" resultType="int">

@@ -12,7 +12,6 @@ import com.shangkang.tools.UtilHelper;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.VisitDto;
 import com.transsion.store.dto.VisitInfoDto;
-import com.transsion.store.dto.VisitModelSettingDto;
 import com.transsion.store.dto.VisitRecordDto;
 import com.transsion.store.dto.VisitScoreSettingDto;
 import com.transsion.store.dto.VisitSettingDto;
@@ -22,6 +21,7 @@ import com.transsion.store.mapper.VisitScoreSettingMapper;
 import com.transsion.store.service.VisitPlanService;
 import com.transsion.store.service.VisitService;
 import com.transsion.store.utils.CacheUtils;
+import com.transsion.store.utils.DateConvertUtils;
 
 @Service("/visitManager")
 public class VisitManager {
@@ -53,7 +53,16 @@ public class VisitManager {
 		
 		List<VisitInfoDto> list = visitPlanService.queryPlanedVisitList(visitInfoDto);
 		
-		List<VisitInfoDto> weekPlanCountList = visitPlanService.queryWeekPlanCount(visitInfoDto);
+		List<VisitInfoDto> weekPlanCountList = null;
+		String dateList = DateConvertUtils.getWeekDays(planDate);
+		if(!UtilHelper.isEmpty(dateList)){
+			String[] splitDate = dateList.split(",");
+			String beginDate = splitDate[1];
+			String endDate = splitDate[0];
+			visitInfoDto.setBeginDate(beginDate);
+			visitInfoDto.setEndDate(endDate);
+			weekPlanCountList = visitPlanService.queryWeekPlanCount(visitInfoDto);
+		}
 		
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getShopId().equals(weekPlanCountList.get(i).getShopId())) {
@@ -79,7 +88,17 @@ public class VisitManager {
 		
 		List<VisitInfoDto> list = visitService.queryUnplanedVisitList(visitInfoDto);
 		
-		List<VisitInfoDto> weekPlanCountList = visitPlanService.queryWeekPlanCount(visitInfoDto);
+		List<VisitInfoDto> weekPlanCountList = null;
+		String dateList = DateConvertUtils.getWeekDays(planDate);
+		if(!UtilHelper.isEmpty(dateList)){
+			String[] splitDate = dateList.split(",");
+			String beginDate = splitDate[1];
+			String endDate = splitDate[0];
+			visitInfoDto.setBeginDate(beginDate);
+			visitInfoDto.setEndDate(endDate);
+			weekPlanCountList = visitPlanService.queryWeekPlanCount(visitInfoDto);
+		}
+		
 		
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getShopId().equals(weekPlanCountList.get(i).getShopId())) {

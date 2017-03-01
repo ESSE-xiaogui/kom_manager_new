@@ -76,6 +76,10 @@ public class VisitInfoDto implements Serializable {
 	private String cityName;
 	
 	private String planner;
+	
+	private String beginDate;
+	
+	private String endDate;
 
 	/**
 	  *	备注
@@ -177,13 +181,29 @@ public class VisitInfoDto implements Serializable {
 	public void setPlanner(String planner) {
 		this.planner = planner;
 	}
+	
+	public String getBeginDate() {
+		return beginDate;
+	}
+
+	public void setBeginDate(String beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
 
 	@Override
 	public String toString() {
 		return "VisitInfoDto [id=" + id + ", planDate=" + planDate + ", shopId=" + shopId + ", shopName=" + shopName
 				+ ", gradeId=" + gradeId + ", gradeName=" + gradeName + ", weekPlanQty=" + weekPlanQty + ", isPlaned="
 				+ isPlaned + ", isFinished=" + isFinished + ", cityName=" + cityName + ", planner=" + planner
-				+ ", remark=" + remark + "]";
+				+ ", beginDate=" + beginDate + ", endDate=" + endDate + ", remark=" + remark + "]";
 	}
 	
 }
