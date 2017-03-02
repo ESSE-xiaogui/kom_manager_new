@@ -197,9 +197,6 @@
             <if test="visitFeedBackInfoDto.regionId!= null and visitFeedBackInfoDto.regionId!= ''">
 				AND r1.ID=#{visitFeedBackInfoDto.regionId}
             </if>
-            <if test="visitFeedBackInfoDto.action!= null and visitFeedBackInfoDto.action!= ''">
-				AND ACTION=#{visitFeedBackInfoDto.action}
-            </if>
             <if test="visitFeedBackInfoDto.shopCode!= null and visitFeedBackInfoDto.shopCode!= ''">
 				AND SHOP_CODE=#{visitFeedBackInfoDto.shopCode}
             </if>
@@ -222,13 +219,13 @@
 				AND f.CREATE_BY=#{visitFeedBackInfoDto.createBy}
             </if>
             <if test="visitFeedBackInfoDto.createTime!= null and visitFeedBackInfoDto.createTime!= ''">
-				AND CREATE_TIME=str_to_date(#{visitFeedBackInfoDto.createTime},'%Y-%m-%d %H:%i:%s')
+				AND f.CREATE_TIME=str_to_date(#{visitFeedBackInfoDto.createTime},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="visitFeedBackInfoDto.createTimeStart!= null and visitFeedBackInfoDto.createTimeStart!= ''">
-				AND CREATE_TIME &gt;=str_to_date(#{visitFeedBackInfoDto.createTimeStart},'%Y-%m-%d %H:%i:%s')
+				AND DATE_FORMAT(f.CREATE_TIME, '%Y-%m-%d')  &gt;=str_to_date(#{visitFeedBackInfoDto.createTimeStart},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="visitFeedBackInfoDto.createTimeEnd!= null and visitFeedBackInfoDto.createTimeEnd!= ''">
-				AND CREATE_TIME &lt;=str_to_date(#{visitFeedBackInfoDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
+				AND DATE_FORMAT(f.CREATE_TIME, '%Y-%m-%d')  &lt;=str_to_date(#{visitFeedBackInfoDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="visitFeedBackInfoDto.updateBy!= null and visitFeedBackInfoDto.updateBy!= ''">
 				AND UPDATE_BY=#{visitFeedBackInfoDto.updateBy}
@@ -258,6 +255,24 @@
             </when>
         	<when test="key == 'visitId'">
 				VISIT_ID ${value}
+            </when>
+            <when test="key == 'companyId'">
+				v.COMPANY_ID ${value}
+            </when>
+            <when test="key == 'countryName'">
+				r1.REGION_NAME ${value}
+            </when>
+            <when test="key == 'cityName'">
+				r2.REGION_NAME ${value}
+            </when>
+            <when test="key == 'visitNo'">
+				VISIT_ID ${value}
+            </when>
+            <when test="key == 'shopCode'">
+				SHOP_CODE ${value}
+            </when>
+            <when test="key == 'shopName'">
+				SHOP_NAME ${value}
             </when>
         	<when test="key == 'issue'">
 				ISSUE ${value}
@@ -376,7 +391,7 @@
 		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID
 		WHERE 1=1
 		<if test="companyId!= null and companyId!= ''"> 
-			AND s.COMPANY_ID =#{companyId}
+			AND v.COMPANY_ID =#{companyId}
 		</if>
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />

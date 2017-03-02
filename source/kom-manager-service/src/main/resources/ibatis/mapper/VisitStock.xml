@@ -217,10 +217,10 @@
 				AND CREATE_TIME=str_to_date(#{visitStockDetailDto.createTime},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="visitStockDetailDto.createTimeStart!= null and visitStockDetailDto.createTimeStart!= ''">
-				AND s.CREATE_TIME &gt;=str_to_date(#{visitStockDetailDto.createTimeStart},'%Y-%m-%d %H:%i:%s')
+				AND DATE_FORMAT(s.CREATE_TIME, '%Y-%m-%d') &gt;=str_to_date(#{visitStockDetailDto.createTimeStart},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="visitStockDetailDto.createTimeEnd!= null and visitStockDetailDto.createTimeEnd!= ''">
-				AND s.CREATE_TIME &lt;=str_to_date(#{visitStockDetailDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
+				AND DATE_FORMAT(s.CREATE_TIME, '%Y-%m-%d') &lt;=str_to_date(#{visitStockDetailDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="visitStockDetailDto.updateBy!= null and visitStockDetailDto.updateBy!= ''">
 				AND UPDATE_BY=#{visitStockDetailDto.updateBy}

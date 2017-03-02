@@ -273,10 +273,10 @@
 				AND CREATE_TIME=str_to_date(#{visitPlanDetailInfoDto.createTime},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="visitPlanDetailInfoDto.createTimeStart!= null and visitPlanDetailInfoDto.createTimeStart!= ''">
-				AND p.CREATE_TIME &gt;=str_to_date(#{visitPlanDetailInfoDto.createTimeStart},'%Y-%m-%d %H:%i:%s')
+				AND DATE_FORMAT(p.CREATE_TIME, '%Y-%m-%d')  &gt;=str_to_date(#{visitPlanDetailInfoDto.createTimeStart},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="visitPlanDetailInfoDto.createTimeEnd!= null and visitPlanDetailInfoDto.createTimeEnd!= ''">
-				AND p.CREATE_TIME &lt;=str_to_date(#{visitPlanDetailInfoDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
+				AND DATE_FORMAT(p.CREATE_TIME, '%Y-%m-%d')  &lt;=str_to_date(#{visitPlanDetailInfoDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="visitPlanDetailInfoDto.updateBy!= null and visitPlanDetailInfoDto.updateBy!= ''">
 				AND UPDATE_BY=#{visitPlanDetailInfoDto.updateBy}

@@ -214,10 +214,10 @@
 				AND CREATE_TIME=str_to_date(#{visitScoreDetailInfoDto.createTime},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="visitScoreDetailInfoDto.createTimeStart!= null and visitScoreDetailInfoDto.createTimeStart!= ''">
-				AND vs.CREATE_TIME &gt;=str_to_date(#{visitScoreDetailInfoDto.createTimeStart},'%Y-%m-%d %H:%i:%s')
+				AND DATE_FORMAT(vs.CREATE_TIME, '%Y-%m-%d')  &gt;=str_to_date(#{visitScoreDetailInfoDto.createTimeStart},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="visitScoreDetailInfoDto.createTimeEnd!= null and visitScoreDetailInfoDto.createTimeEnd!= ''">
-				AND vs.CREATE_TIME &lt;=str_to_date(#{visitScoreDetailInfoDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
+				AND DATE_FORMAT(vs.CREATE_TIME, '%Y-%m-%d') &lt;=str_to_date(#{visitScoreDetailInfoDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="visitScoreDetailInfoDto.updateBy!= null and visitScoreDetailInfoDto.updateBy!= ''">
 				AND UPDATE_BY=#{visitScoreDetailInfoDto.updateBy}
