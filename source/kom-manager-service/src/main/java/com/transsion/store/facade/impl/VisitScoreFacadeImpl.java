@@ -26,12 +26,16 @@ import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.VisitScore;
 import com.transsion.store.dto.VisitScoreDetailInfoDto;
 import com.transsion.store.facade.VisitScoreFacade;
+import com.transsion.store.manager.VisitScoreManager;
 import com.transsion.store.service.VisitScoreService;
 
 @Component("visitScoreFacade")
 public class VisitScoreFacadeImpl implements VisitScoreFacade {
 
 	private VisitScoreService visitScoreService;
+	
+	@Autowired
+	private VisitScoreManager visitScoreManager;
 	
 	@Autowired
 	public void setVisitScoreService(VisitScoreService visitScoreService)
@@ -145,5 +149,10 @@ public class VisitScoreFacadeImpl implements VisitScoreFacade {
 	public int findByCount(VisitScore visitScore) throws ServiceException
 	{
 		return visitScoreService.findByCount(visitScore);
+	}
+
+	@Override
+	public byte[] getVisitScoreByExcel(VisitScoreDetailInfoDto visitScoreDetailInfoDto) throws ServiceException {
+		return visitScoreManager.getVisitScoreByExcel(visitScoreDetailInfoDto);
 	}
 }

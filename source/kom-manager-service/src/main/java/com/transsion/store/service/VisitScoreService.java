@@ -84,7 +84,7 @@ public class VisitScoreService {
 	{
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		
-		Integer companyId = userContext.isAdmin()?null:userContext.getCompanyId().intValue();
+		Long companyId = userContext.isAdmin()?null:userContext.getCompanyId();
 		List<VisitScoreDetailInfoDto> list = visitScoreMapper.listPaginationByProperty(pagination, visitScoreDetailInfoDto, pagination.getOrderBy(),companyId);
 		
 		pagination.setResultList(list);
