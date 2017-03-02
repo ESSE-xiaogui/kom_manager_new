@@ -74,14 +74,6 @@
 		<result column="SALE_PRICE" property="salePrice"/>
 		<result column="IMEI_NO" property="imeiNo"/>
 	</resultMap>
-	<resultMap id="SalesDtoResultMapper" type="SalesDto">
-		<result column="SALE_DATE" property="saleDate"/>
-		<result column="BRAND_CODE" property="brandCode"/>
-		<result column="MODEL_CODE" property="modelMatCode"/>
-		<result column="SALE_QTY" property="saleQty"/>
-		<result column="SALE_PRICE" property="salePrice"/>
-		<result column="IMEI_NO" property="imeiNo"/>
-	</resultMap>
 	<resultMap id="StatShopModelSaleDtoMapper" type="StatShopModelSaleDto">
 		<result column="SHOP_ID" property="shopId"/>
 		<result column="MODEL_CODE" property="modelCode"/>
