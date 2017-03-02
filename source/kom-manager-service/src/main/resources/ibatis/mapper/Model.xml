@@ -1,250 +1,273 @@
-<?xml version="1.0" encoding="UTF-8"?> 
-<!-- 
- **
- * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
- *
- * No part of this publication may be reproduced, stored in a retrieval system,
- * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
- * recording, or otherwise, without the prior written permission of Liuzh.
- *
- * Created By: Liuzh
- * Created On: 2016-11-18 15:56:35
- *
- * Amendment History:
- * 
- * Amended By       Amended On      Amendment Description
- * ************     ***********     *********************************************
- *
- **
- -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ** * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED. * * No part of this 
+	publication may be reproduced, stored in a retrieval system, * or transmitted, 
+	on any form or by any means, electronic, mechanical, photocopying, * recording, 
+	or otherwise, without the prior written permission of Liuzh. * * Created 
+	By: Liuzh * Created On: 2016-11-18 15:56:35 * * Amendment History: * * Amended 
+	By Amended On Amendment Description * ************ *********** ********************************************* 
+	* ** -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.transsion.store.mapper.ModelMapper">
 	<resultMap id="ModelResultMapper" type="Model">
-		<result column="ID" property="id"/>
-		<result column="BRAND_ID" property="brandId"/>
-		<result column="BRAND_CODE" property="brandCode"/>
-		<result column="SERIES_CODE" property="seriesCode"/>
-		<result column="MODEL_CODE" property="modelCode"/>
-		<result column="MODEL_NAME" property="modelName"/>
-		<result column="COMPANY_ID" property="companyId"/>
-		<result column="SALE_TIME" property="saleTime"/>
-		<result column="PRICE_SCALE" property="priceScale"/>
-		<result column="ELEMENT_TYPE" property="elementType"/>
-		<result column="ELEMENT_CODE" property="elementCode"/>
-		<result column="IS_INACTIVE" property="isInactive"/>
-		<result column="REMARK" property="remark"/>
-		<result column="CREATED_BY" property="createdBy"/>
-		<result column="CREATED_TIME" property="createdTime"/>
-		<result column="UPDATED_BY" property="updatedBy"/>
-		<result column="UPDATED_TIME" property="updatedTime"/>
-		<result column="VERSION" property="version"/>
+		<result column="ID" property="id" />
+		<result column="BRAND_ID" property="brandId" />
+		<result column="BRAND_CODE" property="brandCode" />
+		<result column="SERIES_CODE" property="seriesCode" />
+		<result column="MODEL_CODE" property="modelCode" />
+		<result column="MODEL_NAME" property="modelName" />
+		<result column="COMPANY_ID" property="companyId" />
+		<result column="SALE_TIME" property="saleTime" />
+		<result column="PRICE_SCALE" property="priceScale" />
+		<result column="ELEMENT_TYPE" property="elementType" />
+		<result column="ELEMENT_CODE" property="elementCode" />
+		<result column="IS_INACTIVE" property="isInactive" />
+		<result column="REMARK" property="remark" />
+		<result column="CREATED_BY" property="createdBy" />
+		<result column="CREATED_TIME" property="createdTime" />
+		<result column="UPDATED_BY" property="updatedBy" />
+		<result column="UPDATED_TIME" property="updatedTime" />
+		<result column="VERSION" property="version" />
 	</resultMap>
 	<resultMap id="ModelListDtoResultMapper" type="ModelListDto">
-		<result column="ID" property="id"/>
-		<result column="BRAND_CODE" property="brandCode"/>
-		<result column="SERIES_CODE" property="seriesCode"/>
-		<result column="MODEL_CODE" property="modelCode"/>
-		<result column="MODEL_NAME" property="modelName"/>
-		<result column="COMPANY_ID" property="companyId"/>
-		<result column="SALE_TIME" property="saleTime"/>
-		<result column="PRICE_SCALE_CN" property="nameCN"/>
-		<result column="PRICE_SCALE_EN" property="nameEN"/>
-		<result column="ELEMENT_TYPE" property="elementType"/>
-		<result column="ELEMENT_CODE" property="elementCode"/>
-		<result column="IS_INACTIVE" property="isInactive"/>
-		<result column="REMARK" property="remark"/>
-		<result column="CREATED_BY" property="createdBy"/>
-		<result column="CREATED_TIME" property="createdTime"/>
-		<result column="UPDATED_BY" property="updatedBy"/>
-		<result column="UPDATED_TIME" property="updatedTime"/>
-		<result column="VERSION" property="version"/>
+		<result column="ID" property="id" />
+		<result column="BRAND_CODE" property="brandCode" />
+		<result column="SERIES_CODE" property="seriesCode" />
+		<result column="MODEL_CODE" property="modelCode" />
+		<result column="MODEL_NAME" property="modelName" />
+		<result column="COMPANY_ID" property="companyId" />
+		<result column="SALE_TIME" property="saleTime" />
+		<result column="PRICE_SCALE_CN" property="nameCN" />
+		<result column="PRICE_SCALE_EN" property="nameEN" />
+		<result column="ELEMENT_TYPE" property="elementType" />
+		<result column="ELEMENT_CODE" property="elementCode" />
+		<result column="IS_INACTIVE" property="isInactive" />
+		<result column="REMARK" property="remark" />
+		<result column="CREATED_BY" property="createdBy" />
+		<result column="CREATED_TIME" property="createdTime" />
+		<result column="UPDATED_BY" property="updatedBy" />
+		<result column="UPDATED_TIME" property="updatedTime" />
+		<result column="VERSION" property="version" />
 	</resultMap>
-	
+
 	<resultMap id="ModelDtoResultMapper" type="ModelDto">
-		<result column="BRAND_CODE" property="brandCode"/>
-		<result column="SERIES_CODE" property="seriesCode"/>
-		<result column="MODEL_CODE" property="modelCode"/>
-		<result column="MODEL_NAME" property="modelName"/>
-		<result column="COMPANY_ID" property="companyId"/>
-		<result column="SALE_TIME" property="saleTime"/>
-		<result column="PRICE_SCALE" property="priceScale"/>
-		<result column="IS_INACTIVE" property="isInactive"/>
-		<result column="REMARK" property="remark"/>
+		<result column="BRAND_CODE" property="brandCode" />
+		<result column="SERIES_CODE" property="seriesCode" />
+		<result column="MODEL_CODE" property="modelCode" />
+		<result column="MODEL_NAME" property="modelName" />
+		<result column="COMPANY_ID" property="companyId" />
+		<result column="SALE_TIME" property="saleTime" />
+		<result column="PRICE_SCALE" property="priceScale" />
+		<result column="IS_INACTIVE" property="isInactive" />
+		<result column="REMARK" property="remark" />
 	</resultMap>
-	
+
 	<sql id="commonColumns">
-		 ID
+		ID
+		, BRAND_ID
 		, BRAND_CODE
 		, SERIES_CODE
 		, MODEL_CODE
-		, MODEL_NAME
-		, COMPANY_ID
+		,
+		MODEL_NAME
+		,
+		COMPANY_ID
 		, SALE_TIME
 		, PRICE_SCALE
 		, ELEMENT_TYPE
-		, ELEMENT_CODE
-		, IS_INACTIVE
+		,
+		ELEMENT_CODE
+		,
+		IS_INACTIVE
 		, REMARK
 		, CREATED_BY
 		, CREATED_TIME
 		, UPDATED_BY
-		, UPDATED_TIME
+		,
+		UPDATED_TIME
 		, VERSION
 	</sql>
 
 	<sql id="commonColumnsNotPK">
-		 BRAND_CODE
-		, SERIES_CODE
-		, MODEL_CODE
-		, MODEL_NAME
-		, COMPANY_ID
-		, SALE_TIME
-		, PRICE_SCALE
-		, ELEMENT_TYPE
-		, ELEMENT_CODE
-		, IS_INACTIVE
-		, REMARK
-		, CREATED_BY
-		, CREATED_TIME
-		, UPDATED_BY
-		, UPDATED_TIME
-		, VERSION
-	</sql>
-	
-	<sql id="commonProcessDateColumns">
-		 ID
+		BRAND_ID
 		, BRAND_CODE
 		, SERIES_CODE
 		, MODEL_CODE
 		, MODEL_NAME
-		, COMPANY_ID
+		,
+		COMPANY_ID
 		, SALE_TIME
 		, PRICE_SCALE
 		, ELEMENT_TYPE
 		, ELEMENT_CODE
-		, IS_INACTIVE
+		,
+		IS_INACTIVE
 		, REMARK
 		, CREATED_BY
-		, date_format(CREATED_TIME, '%Y-%m-%d %H:%i:%s') CREATED_TIME
+		, CREATED_TIME
 		, UPDATED_BY
-		, date_format(UPDATED_TIME, '%Y-%m-%d %H:%i:%s') UPDATED_TIME
+		,
+		UPDATED_TIME
 		, VERSION
 	</sql>
-	
+
+	<sql id="commonProcessDateColumns">
+		ID
+		, BRAND_ID
+		, BRAND_CODE
+		, SERIES_CODE
+		, MODEL_CODE
+		,
+		MODEL_NAME
+		,
+		COMPANY_ID
+		, SALE_TIME
+		, PRICE_SCALE
+		, ELEMENT_TYPE
+		,
+		ELEMENT_CODE
+		,
+		IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		,
+		date_format(CREATED_TIME, '%Y-%m-%d
+		%H:%i:%s') CREATED_TIME
+		, UPDATED_BY
+		, date_format(UPDATED_TIME,
+		'%Y-%m-%d %H:%i:%s') UPDATED_TIME
+		, VERSION
+	</sql>
+
 	<sql id="commonCondition">
-		<if test="id!= null and id!= ''"> 
+		<if test="id!= null and id!= ''">
 			AND ID=#{id}
 		</if>
-		<if test="brandCode!= null and brandCode!= ''"> 
+		<if test="brandId!= null and brandId!= ''">
+			AND BRAND_ID=#{brandId}
+		</if>
+		<if test="brandCode!= null and brandCode!= ''">
 			AND BRAND_CODE=#{brandCode}
 		</if>
-		<if test="seriesCode!= null and seriesCode!= ''"> 
+		<if test="seriesCode!= null and seriesCode!= ''">
 			AND SERIES_CODE=#{seriesCode}
 		</if>
-		<if test="modelCode!= null and modelCode!= ''"> 
+		<if test="modelCode!= null and modelCode!= ''">
 			AND MODEL_CODE=#{modelCode}
 		</if>
-		<if test="modelName!= null and modelName!= ''"> 
+		<if test="modelName!= null and modelName!= ''">
 			AND MODEL_NAME=#{modelName}
 		</if>
-		<if test="companyId!= null and companyId!= ''"> 
+		<if test="companyId!= null and companyId!= ''">
 			AND COMPANY_ID=#{companyId}
 		</if>
-		<if test="saleTime!= null and saleTime!= ''"> 
+		<if test="saleTime!= null and saleTime!= ''">
 			AND SALE_TIME=#{saleTime}
 		</if>
-		<if test="priceScale!= null and priceScale!= ''"> 
+		<if test="priceScale!= null and priceScale!= ''">
 			AND PRICE_SCALE=#{priceScale}
 		</if>
-		<if test="elementType!= null and elementType!= ''"> 
+		<if test="elementType!= null and elementType!= ''">
 			AND ELEMENT_TYPE=#{elementType}
 		</if>
-		<if test="elementCode!= null and elementCode!= ''"> 
+		<if test="elementCode!= null and elementCode!= ''">
 			AND ELEMENT_CODE=#{elementCode}
 		</if>
-		<if test="isInactive!= null and isInactive!= ''"> 
+		<if test="isInactive!= null and isInactive!= ''">
 			AND IS_INACTIVE=#{isInactive}
 		</if>
-		<if test="remark!= null and remark!= ''"> 
+		<if test="remark!= null and remark!= ''">
 			AND REMARK=#{remark}
 		</if>
-		<if test="createdBy!= null and createdBy!= ''"> 
+		<if test="createdBy!= null and createdBy!= ''">
 			AND CREATED_BY=#{createdBy}
 		</if>
-		<if test="createdTime!= null and createdTime!= ''"> 
-			AND CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+		<if test="createdTime!= null and createdTime!= ''">
+			AND CREATED_TIME=str_to_date(#{createdTime},'%Y-%m-%d
+			%H:%i:%s')
 		</if>
-		<if test="updatedBy!= null and updatedBy!= ''"> 
+		<if test="updatedBy!= null and updatedBy!= ''">
 			AND UPDATED_BY=#{updatedBy}
 		</if>
-		<if test="updatedTime!= null and updatedTime!= ''"> 
-			AND UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+		<if test="updatedTime!= null and updatedTime!= ''">
+			AND UPDATED_TIME=str_to_date(#{updatedTime},'%Y-%m-%d
+			%H:%i:%s')
 		</if>
-		<if test="version!= null and version!= ''"> 
+		<if test="version!= null and version!= ''">
 			AND VERSION=#{version}
 		</if>
 	</sql>
 
 	<sql id="commonConditionByPrefix">
 		<if test="modelListDto != null">
-            <if test="modelListDto.id!= null and modelListDto.id!= ''">
+			<if test="modelListDto.id!= null and modelListDto.id!= ''">
 				AND m.ID=#{modelListDto.id}
-            </if>
-            <if test="modelListDto.brandCode!= null and modelListDto.brandCode!= ''">
+			</if>
+			<if test="modelListDto.brandCode!= null and modelListDto.brandCode!= ''">
 				AND m.BRAND_CODE=#{modelListDto.brandCode}
-            </if>
-            <if test="modelListDto.seriesCode!= null and modelListDto.seriesCode!= ''">
+			</if>
+			<if test="modelListDto.seriesCode!= null and modelListDto.seriesCode!= ''">
 				AND m.SERIES_CODE=#{modelListDto.seriesCode}
-            </if>
-            <if test="modelListDto.modelCode!= null and modelListDto.modelCode!= ''">
+			</if>
+			<if test="modelListDto.modelCode!= null and modelListDto.modelCode!= ''">
 				AND m.MODEL_CODE=#{modelListDto.modelCode}
-            </if>
-            <if test="modelListDto.modelName!= null and modelListDto.modelName!= ''">
+			</if>
+			<if test="modelListDto.modelName!= null and modelListDto.modelName!= ''">
 				AND m.MODEL_NAME=#{modelListDto.modelName}
-            </if>
-            <if test="modelListDto.companyId!= null and modelListDto.companyId!= ''">
+			</if>
+			<if test="modelListDto.companyId!= null and modelListDto.companyId!= ''">
 				AND m.COMPANY_ID=#{modelListDto.companyId}
-            </if>
-            <if test="modelListDto.saleTime!= null and modelListDto.saleTime!= ''">
+			</if>
+			<if test="modelListDto.saleTime!= null and modelListDto.saleTime!= ''">
 				AND m.SALE_TIME=#{modelListDto.saleTime}
-            </if>
-            <if test="modelListDto.priceScale!= null and modelListDto.priceScale!= ''">
-				AND p.PRICE_SCALE=#{modelListDto.priceScale}
-            </if>
-            <if test="modelListDto.elementType!= null and modelListDto.elementType!= ''">
+			</if>
+			<if test="modelListDto.nameCN!= null and modelListDto.nameCN!= ''">
+				AND p.NAME_CN=#{modelListDto.nameCN}
+			</if>
+			<if test="modelListDto.nameEN!= null and modelListDto.nameEN!= ''">
+				AND p.NAME_EN=#{modelListDto.nameEN}
+			</if>
+			<if
+				test="modelListDto.elementType!= null and modelListDto.elementType!= ''">
 				AND m.ELEMENT_TYPE=#{modelListDto.elementType}
-            </if>
-            <if test="modelListDto.elementCode!= null and modelListDto.elementCode!= ''">
+			</if>
+			<if
+				test="modelListDto.elementCode!= null and modelListDto.elementCode!= ''">
 				AND m.ELEMENT_CODE=#{modelListDto.elementCode}
-            </if>
-            <if test="modelListDto.isInactive!= null and modelListDto.isInactive!= ''">
+			</if>
+			<if test="modelListDto.isInactive!= null and modelListDto.isInactive!= ''">
 				AND m.IS_INACTIVE=#{modelListDto.isInactive}
-            </if>
-            <if test="modelListDto.remark!= null and modelListDto.remark!= ''">
+			</if>
+			<if test="modelListDto.remark!= null and modelListDto.remark!= ''">
 				AND m.REMARK=#{modelListDto.remark}
-            </if>
-            <if test="modelListDto.createdBy!= null and modelListDto.createdBy!= ''">
+			</if>
+			<if test="modelListDto.createdBy!= null and modelListDto.createdBy!= ''">
 				AND m.CREATED_BY=#{modelListDto.createdBy}
-            </if>
-            <if test="modelListDto.createdTime!= null and modelListDto.createdTime!= ''">
-				AND m.CREATED_TIME=str_to_date(#{modelListDto.createdTime},'%Y-%m-%d %H:%i:%s')
-            </if>
-            <if test="modelListDto.updatedBy!= null and modelListDto.updatedBy!= ''">
+			</if>
+			<if
+				test="modelListDto.createdTime!= null and modelListDto.createdTime!= ''">
+				AND
+				m.CREATED_TIME=str_to_date(#{modelListDto.createdTime},'%Y-%m-%d
+				%H:%i:%s')
+			</if>
+			<if test="modelListDto.updatedBy!= null and modelListDto.updatedBy!= ''">
 				AND m.UPDATED_BY=#{modelListDto.updatedBy}
-            </if>
-            <if test="modelListDto.updatedTime!= null and modelListDto.updatedTime!= ''">
-				AND m.UPDATED_TIME=str_to_date(#{modelListDto.updatedTime},'%Y-%m-%d %H:%i:%s')
-            </if>
-            <if test="modelListDto.version!= null and modelListDto.version!= ''">
+			</if>
+			<if
+				test="modelListDto.updatedTime!= null and modelListDto.updatedTime!= ''">
+				AND
+				m.UPDATED_TIME=str_to_date(#{modelListDto.updatedTime},'%Y-%m-%d
+				%H:%i:%s')
+			</if>
+			<if test="modelListDto.version!= null and modelListDto.version!= ''">
 				AND m.VERSION=#{modelListDto.version}
-            </if>
-        </if>
-    </sql>
+			</if>
+		</if>
+	</sql>
 
 	<sql id="orderByClause">
 		<if test="orderBy != null">
-			<foreach collection="orderBy" index="key" item="value"
-					 open=" order by " separator="," close=" ">
+			<foreach collection="orderBy" index="key" item="value" open=" order by "
+				separator="," close=" ">
 				<include refid="orderBy" />
 			</foreach>
 		</if>
@@ -252,66 +275,71 @@
 
 	<sql id="orderBy">
 		<choose>
-        	<when test="key == 'id'">
+			<when test="key == 'id'">
 				m.ID ${value}
-            </when>
-        	<when test="key == 'brandCode'">
+			</when>
+			<when test="key == 'brandCode'">
 				m.BRAND_CODE ${value}
-            </when>
-        	<when test="key == 'seriesCode'">
+			</when>
+			<when test="key == 'seriesCode'">
 				m.SERIES_CODE ${value}
-            </when>
-        	<when test="key == 'modelCode'">
+			</when>
+			<when test="key == 'modelCode'">
 				m.MODEL_CODE ${value}
-            </when>
-        	<when test="key == 'modelName'">
+			</when>
+			<when test="key == 'modelName'">
 				m.MODEL_NAME ${value}
-            </when>
-        	<when test="key == 'companyId'">
+			</when>
+			<when test="key == 'companyId'">
 				m.COMPANY_ID ${value}
-            </when>
-            <when test="key == 'saleTime'">
+			</when>
+			<when test="key == 'saleTime'">
 				m.SALE_TIME ${value}
-            </when>
-        	<when test="key == 'priceScale'">
-				p.PRICE_SCALE ${value}
-            </when>
-        	<when test="key == 'elementType'">
+			</when>
+			<when test="key == 'nameCN'">
+				p.NAME_CN ${value}
+			</when>
+			<when test="key == 'nameEN'">
+				p.NAME_EN ${value}
+			</when>
+			<when test="key == 'elementType'">
 				m.ELEMENT_TYPE ${value}
-            </when>
-        	<when test="key == 'elementCode'">
+			</when>
+			<when test="key == 'elementCode'">
 				m.ELEMENT_CODE ${value}
-            </when>
-        	<when test="key == 'isInactive'">
+			</when>
+			<when test="key == 'isInactive'">
 				m.IS_INACTIVE ${value}
-            </when>
-        	<when test="key == 'remark'">
+			</when>
+			<when test="key == 'remark'">
 				m.REMARK ${value}
-            </when>
-        	<when test="key == 'createdBy'">
+			</when>
+			<when test="key == 'createdBy'">
 				m.CREATED_BY ${value}
-            </when>
-        	<when test="key == 'createdTime'">
+			</when>
+			<when test="key == 'createdTime'">
 				m.CREATED_TIME ${value}
-            </when>
-        	<when test="key == 'updatedBy'">
+			</when>
+			<when test="key == 'updatedBy'">
 				m.UPDATED_BY ${value}
-            </when>
-        	<when test="key == 'updatedTime'">
+			</when>
+			<when test="key == 'updatedTime'">
 				m.UPDATED_TIME ${value}
-            </when>
-        	<when test="key == 'version'">
+			</when>
+			<when test="key == 'version'">
 				m.VERSION ${value}
-            </when>
+			</when>
 		</choose>
 	</sql>
 
-	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Model">
+	<insert id="save" useGeneratedKeys="true" keyProperty="id"
+		parameterType="Model">
 		<![CDATA[ INSERT INTO T_MODEL ( ]]>
-		<include refid="commonColumnsNotPK"/>
+		<include refid="commonColumnsNotPK" />
 		<![CDATA[
 			) VALUES ( 
-			 #{brandCode}
+			 #{brandId}
+			 , #{brandCode}
 			, #{seriesCode}
 			, #{modelCode}
 			, #{modelName}
@@ -332,6 +360,7 @@
 	<update id="update" parameterType="Model">
 		<![CDATA[ UPDATE T_MODEL SET 
 			 ID=#{id} 
+			 , BRAND_ID=#{brandId} 
 			, BRAND_CODE=#{brandCode} 
 			, SERIES_CODE=#{seriesCode} 
 			, MODEL_CODE=#{modelCode} 
@@ -360,63 +389,73 @@
 	</delete>
 	<delete id="deleteByProperty" parameterType="Model">
 		DELETE FROM T_MODEL WHERE 1 = 1
-		<include refid="commonCondition"/>
+		<include refid="commonCondition" />
 	</delete>
 	<select id="getByPK" parameterType="java.lang.Long" resultMap="ModelResultMapper">
 		<![CDATA[ SELECT ]]>
-			 <include refid="commonProcessDateColumns"/>
-		FROM T_MODEL WHERE ID = #{id}  
+		<include refid="commonProcessDateColumns" />
+		FROM T_MODEL WHERE ID = #{id}
 	</select>
 	<select id="list" resultMap="ModelResultMapper">
 		<![CDATA[ SELECT ]]>
-			 <include refid="commonProcessDateColumns"/>
- 		FROM T_MODEL
+		<include refid="commonProcessDateColumns" />
+		FROM T_MODEL
 	</select>
 	<select id="listByProperty" parameterType="Model" resultMap="ModelResultMapper">
 		<![CDATA[ SELECT ]]>
-			<include refid="commonProcessDateColumns"/>
-		FROM T_MODEL WHERE 1=1 
-		<include refid="commonCondition"/>
+		<include refid="commonProcessDateColumns" />
+		FROM T_MODEL WHERE 1=1
+		<include refid="commonCondition" />
 	</select>
 	<select id="listPaginationByProperty" parameterType="ModelListDto"
 		resultMap="ModelListDtoResultMapper">
 		SELECT m.ID, m.BRAND_CODE, m.SERIES_CODE, m.MODEL_CODE, m.MODEL_NAME,
-		m.COMPANY_ID, m.SALE_TIME, p.NAME_CN AS PRICE_SCALE_CN,p.NAME_EN AS PRICE_SCALE_EN,
+		m.COMPANY_ID, m.SALE_TIME, p.NAME_CN AS PRICE_SCALE_CN,p.NAME_EN AS
+		PRICE_SCALE_EN,
 		m.ELEMENT_TYPE, m.ELEMENT_CODE, m.IS_INACTIVE,
-		m.REMARK, m.CREATED_BY,m.CREATED_TIME, m.UPDATED_BY , m.UPDATED_TIME, m.VERSION
+		m.REMARK, m.CREATED_BY,m.CREATED_TIME, m.UPDATED_BY , m.UPDATED_TIME,
+		m.VERSION
 		FROM T_MODEL m
-		LEFT JOIN T_ATTRIBUTE p ON p.ID = m.PRICE_SCALE WHERE 1=1
+		LEFT JOIN T_ATTRIBUTE p ON p.ID = m.PRICE_SCALE
+		WHERE 1=1
 		<include refid="commonConditionByPrefix" />
 		<include refid="orderByClause" />
 	</select>
 	<select id="findByCount" parameterType="Model" resultType="int">
-		SELECT count(1) AS totalcount FROM T_MODEL WHERE 1=1 
-		<include refid="commonCondition"/>
+		SELECT count(1) AS totalcount FROM T_MODEL WHERE 1=1
+		<include refid="commonCondition" />
 	</select>
 	<select id="findModel" parameterType="Model" resultMap="ModelDtoResultMapper">
-	SELECT m.BRAND_CODE,m.SERIES_CODE,m.MODEL_CODE,m.MODEL_NAME,m.SALE_TIME,p.PRICE_SCALE,b.IS_SELF,m.IS_INACTIVE FROM T_MODEL m
-	LEFT JOIN T_MODEL_PRICE p ON p.ID = m.PRICE_SCALE
-	LEFT JOIN T_BRAND b ON b.BRAND_CODE = m.BRAND_CODE
-	WHERE m.COMPANY_ID=#{companyId}
-	<if test="brandCode!= null and brandCode!= ''"> 
+		SELECT
+		m.BRAND_CODE,m.SERIES_CODE,m.MODEL_CODE,m.MODEL_NAME,m.SALE_TIME,p.PRICE_SCALE,b.IS_SELF,m.IS_INACTIVE
+		FROM T_MODEL m
+		LEFT JOIN T_MODEL_PRICE p ON p.ID = m.PRICE_SCALE
+		LEFT
+		JOIN T_BRAND b ON b.BRAND_CODE = m.BRAND_CODE
+		WHERE
+		m.COMPANY_ID=#{companyId}
+		<if test="brandCode!= null and brandCode!= ''">
 			AND m.BRAND_CODE=#{brandCode}
-	</if>
-	<if test="seriesCode!= null and seriesCode!= ''"> 
+		</if>
+		<if test="seriesCode!= null and seriesCode!= ''">
 			AND m.SERIES_CODE=#{seriesCode}
-	</if>
-	<if test="modelCode!= null and modelCode!= ''"> 
+		</if>
+		<if test="modelCode!= null and modelCode!= ''">
 			AND m.MODEL_CODE=#{modelCode}
-	</if> 
-	<if test="isInactive!= null and isInactive!= ''"> 
+		</if>
+		<if test="isInactive!= null and isInactive!= ''">
 			AND m.IS_INACTIVE=#{isInactive}
 		</if>
 	</select>
 	<select id="findModelName" parameterType="java.lang.Long"
 		resultType="String">
-		SELECT MODEL_NAME FROM T_MODEL WHERE COMPANY_ID = #{companyId}
+		SELECT MODEL_NAME FROM T_MODEL WHERE COMPANY_ID =
+		#{companyId}
 	</select>
-	
-	<select id="queryModelListByBrandId" parameterType="java.lang.Long" resultMap="ModelResultMapper">
-		SELECT ID, MODEL_NAME FROM T_MODEL WHERE BRAND_ID = #{brandId}
+
+	<select id="queryModelListByBrandId" parameterType="java.lang.Long"
+		resultMap="ModelResultMapper">
+		SELECT ID, MODEL_NAME FROM T_MODEL WHERE BRAND_ID =
+		#{brandId}
 	</select>
 </mapper>
