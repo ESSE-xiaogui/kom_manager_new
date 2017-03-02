@@ -191,6 +191,14 @@ public class CalendarUtils {
 		c.set(Calendar.DAY_OF_MONTH, c.getActualMinimum(Calendar.DAY_OF_MONTH));
 		return c.getTime();
 	}
+	
+	public static Date getDayBeforeNDate(String referenceDate, int n) {
+		Calendar c = Calendar.getInstance();
+		Date convertedDate = DateHelper.parseDate(referenceDate);
+		c.setTime(convertedDate);
+		c.add(Calendar.DATE, -30);
+		return c.getTime();
+	}
 
     public static void main(String[] s) {
         System.out.println(CalendarUtils.getMonth());
@@ -209,7 +217,7 @@ public class CalendarUtils {
         
         System.out.println("****");
         System.out.println(CalendarUtils.getFirstDayOfMonth("2017-03-09"));
-
+        System.out.println(CalendarUtils.getDayBeforeNDate("2017-02-09", 28));
 
     }
 }
