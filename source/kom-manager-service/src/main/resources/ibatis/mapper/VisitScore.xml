@@ -106,20 +106,20 @@
 		, vs.VISIT_ID
 		, c.COMPANY_CODE
 		, r1.REGION_NAME AS COUNTRY_NAME
-		, r2.REGION_NAME AD CITY_NAME
+		, r2.REGION_NAME AS CITY_NAME
 		, s.SHOP_CODE
 		, s.SHOP_NAME
-		, e.EPM_NAME
+		, e.EMP_NAME
 		, SHOP_SCORE
 		, SALE_SCORE
 		, STAFF_SCORE
 		, TOTAL_SCORE
-		, REMARK
-		, CREATE_BY
-		, date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
-		, UPDATE_BY
-		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
-		, VERSION
+		, vs.REMARK
+		, vs.CREATE_BY
+		, date_format(vs.CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+		, vs.UPDATE_BY
+		, date_format(vs.UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
+		, vs.VERSION
 	</sql>
 	
 	<sql id="commonCondition">
@@ -162,69 +162,69 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="visitScoreDetailInfo != null">
-            <if test="visitScoreDetailInfo.id!= null and visitScoreDetailInfo.id!= ''">
-				AND ID=#{visitScoreDetailInfo.id}
+		<if test="visitScoreDetailInfoDto != null">
+            <if test="visitScoreDetailInfoDto.id!= null and visitScoreDetailInfoDto.id!= ''">
+				AND ID=#{visitScoreDetailInfoDto.id}
             </if>
-            <if test="visitScoreDetailInfo.visitId!= null and visitScoreDetailInfo.visitId!= ''">
-				AND VISIT_ID=#{visitScoreDetailInfo.visitId}
+            <if test="visitScoreDetailInfoDto.visitId!= null and visitScoreDetailInfoDto.visitId!= ''">
+				AND vs.VISIT_ID=#{visitScoreDetailInfoDto.visitId}
             </if>
-            <if test="visitScoreDetailInfo.companyId!= null and visitScoreDetailInfo.companyId!= ''">
-				AND COMPANY_ID=#{visitScoreDetailInfo.companyId}
+            <if test="visitScoreDetailInfoDto.companyId!= null and visitScoreDetailInfoDto.companyId!= ''">
+				AND v.COMPANY_ID=#{visitScoreDetailInfoDto.companyId}
             </if>
-            <if test="visitScoreDetailInfo.regionId!= null and visitScoreDetailInfo.regionId!= ''">
-				AND r1.ID=#{visitScoreDetailInfo.regionId}
+            <if test="visitScoreDetailInfoDto.regionId!= null and visitScoreDetailInfoDto.regionId!= ''">
+				AND r1.ID=#{visitScoreDetailInfoDto.regionId}
             </if>
-             <if test="visitScoreDetailInfo.shopCode!= null and visitScoreDetailInfo.shopCode!= ''">
-				AND SHOP_CODE=#{visitScoreDetailInfo.shopCode}
+             <if test="visitScoreDetailInfoDto.shopCode!= null and visitScoreDetailInfoDto.shopCode!= ''">
+				AND SHOP_CODE=#{visitScoreDetailInfoDto.shopCode}
             </if>
-            <if test="visitScoreDetailInfo.shopName!= null and visitScoreDetailInfo.shopName!= ''">
-				AND SHOP_NAME=#{visitScoreDetailInfo.shopName}
+            <if test="visitScoreDetailInfoDto.shopName!= null and visitScoreDetailInfoDto.shopName!= ''">
+				AND SHOP_NAME=#{visitScoreDetailInfoDto.shopName}
             </if>
-            <if test="visitScoreDetailInfo.shopScore!= null and visitScoreDetailInfo.shopScore!= ''">
-				AND SHOP_SCORE=#{visitScoreDetailInfo.shopScore}
+            <if test="visitScoreDetailInfoDto.shopScore!= null and visitScoreDetailInfoDto.shopScore!= ''">
+				AND SHOP_SCORE=#{visitScoreDetailInfoDto.shopScore}
             </if>
-            <if test="visitScoreDetailInfo.saleScore!= null and visitScoreDetailInfo.saleScore!= ''">
-				AND SALE_SCORE=#{visitScoreDetailInfo.saleScore}
+            <if test="visitScoreDetailInfoDto.saleScore!= null and visitScoreDetailInfoDto.saleScore!= ''">
+				AND SALE_SCORE=#{visitScoreDetailInfoDto.saleScore}
             </if>
-            <if test="visitScoreDetailInfo.staffScore!= null and visitScoreDetailInfo.staffScore!= ''">
-				AND STAFF_SCORE=#{visitScoreDetailInfo.staffScore}
+            <if test="visitScoreDetailInfoDto.staffScore!= null and visitScoreDetailInfoDto.staffScore!= ''">
+				AND STAFF_SCORE=#{visitScoreDetailInfoDto.staffScore}
             </if>
-            <if test="visitScoreDetailInfo.totalScore!= null and visitScoreDetailInfo.totalScore!= ''">
-				AND TOTAL_SCORE=#{visitScoreDetailInfo.totalScore}
+            <if test="visitScoreDetailInfoDto.totalScore!= null and visitScoreDetailInfoDto.totalScore!= ''">
+				AND TOTAL_SCORE=#{visitScoreDetailInfoDto.totalScore}
             </if>
-            <if test="visitScoreDetailInfo.totalScoreStart!= null and visitScoreDetailInfo.totalScoreStart!= ''">
-				AND TOTAL_SCORE &gt;=#{visitScoreDetailInfo.totalScoreStart}
+            <if test="visitScoreDetailInfoDto.totalScoreStart!= null and visitScoreDetailInfoDto.totalScoreStart!= ''">
+				AND TOTAL_SCORE &gt;=#{visitScoreDetailInfoDto.totalScoreStart}
             </if>
-            <if test="visitScoreDetailInfo.totalScoreEnd!= null and visitScoreDetailInfo.totalScoreEnd!= ''">
-				AND TOTAL_SCORE &lt;=#{visitScoreDetailInfo.totalScoreEnd}
+            <if test="visitScoreDetailInfoDto.totalScoreEnd!= null and visitScoreDetailInfoDto.totalScoreEnd!= ''">
+				AND TOTAL_SCORE &lt;=#{visitScoreDetailInfoDto.totalScoreEnd}
             </if>
-            <if test="visitScoreDetailInfo.empName!= null and visitScoreDetailInfo.empName!= ''">
-				AND EMP_NAME=#{visitScoreDetailInfo.empName}
+            <if test="visitScoreDetailInfoDto.empName!= null and visitScoreDetailInfoDto.empName!= ''">
+				AND EMP_NAME=#{visitScoreDetailInfoDto.empName}
             </if>
-            <if test="visitScoreDetailInfo.remark!= null and visitScoreDetailInfo.remark!= ''">
-				AND REMARK=#{visitScoreDetailInfo.remark}
+            <if test="visitScoreDetailInfoDto.remark!= null and visitScoreDetailInfoDto.remark!= ''">
+				AND REMARK=#{visitScoreDetailInfoDto.remark}
             </if>
-            <if test="visitScoreDetailInfo.createBy!= null and visitScoreDetailInfo.createBy!= ''">
-				AND CREATE_BY=#{visitScoreDetailInfo.createBy}
+            <if test="visitScoreDetailInfoDto.createBy!= null and visitScoreDetailInfoDto.createBy!= ''">
+				AND vs.CREATE_BY=#{visitScoreDetailInfoDto.createBy}
             </if>
-            <if test="visitScoreDetailInfo.createTime!= null and visitScoreDetailInfo.createTime!= ''">
-				AND CREATE_TIME=str_to_date(#{visitScoreDetailInfo.createTime},'%Y-%m-%d %H:%i:%s')
+            <if test="visitScoreDetailInfoDto.createTime!= null and visitScoreDetailInfoDto.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{visitScoreDetailInfoDto.createTime},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="visitScoreDetailInfo.createTimeStart!= null and visitScoreDetailInfo.createTimeStart!= ''">
-				AND CREATE_TIME &gt;=str_to_date(#{visitScoreDetailInfo.createTimeStart},'%Y-%m-%d %H:%i:%s')
+            <if test="visitScoreDetailInfoDto.createTimeStart!= null and visitScoreDetailInfoDto.createTimeStart!= ''">
+				AND vs.CREATE_TIME &gt;=str_to_date(#{visitScoreDetailInfoDto.createTimeStart},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="visitScoreDetailInfo.createTimeEnd!= null and visitScoreDetailInfo.createTimeEnd!= ''">
-				AND CREATE_TIME &lt;=str_to_date(#{visitScoreDetailInfo.createTimeEnd},'%Y-%m-%d %H:%i:%s')
+            <if test="visitScoreDetailInfoDto.createTimeEnd!= null and visitScoreDetailInfoDto.createTimeEnd!= ''">
+				AND vs.CREATE_TIME &lt;=str_to_date(#{visitScoreDetailInfoDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="visitScoreDetailInfo.updateBy!= null and visitScoreDetailInfo.updateBy!= ''">
-				AND UPDATE_BY=#{visitScoreDetailInfo.updateBy}
+            <if test="visitScoreDetailInfoDto.updateBy!= null and visitScoreDetailInfoDto.updateBy!= ''">
+				AND UPDATE_BY=#{visitScoreDetailInfoDto.updateBy}
             </if>
-            <if test="visitScoreDetailInfo.updateTime!= null and visitScoreDetailInfo.updateTime!= ''">
-				AND UPDATE_TIME=str_to_date(#{visitScoreDetailInfo.updateTime},'%Y-%m-%d %H:%i:%s')
+            <if test="visitScoreDetailInfoDto.updateTime!= null and visitScoreDetailInfoDto.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{visitScoreDetailInfoDto.updateTime},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="visitScoreDetailInfo.version!= null and visitScoreDetailInfo.version!= ''">
-				AND VERSION=#{visitScoreDetailInfo.version}
+            <if test="visitScoreDetailInfoDto.version!= null and visitScoreDetailInfoDto.version!= ''">
+				AND VERSION=#{visitScoreDetailInfoDto.version}
             </if>
         </if>
     </sql>
