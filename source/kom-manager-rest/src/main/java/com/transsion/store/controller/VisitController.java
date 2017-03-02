@@ -213,15 +213,14 @@ public class VisitController extends AbstractController{
 	 * historyList页面 
 	 * @author guihua.zhang on 2017-03-02
 	 * @param startDate 前八周的第一天
-	 * @param endDate 今日日期/后台去今日日期的前一天
+	 * @param endDate 今日日期的前一天
 	 * @return
 	 * @throws ServiceException
 	 */
 	@GET
 	@Path("/queryVisitSummaryHistory")
-	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({ MediaType.APPLICATION_JSON })
-	public List<VisitHistorySummaryDto> queryVisitSummaryHistory(String startDate, String endDate)
+	public List<VisitHistorySummaryDto> queryVisitSummaryHistory(@QueryParam("startDate")String startDate, @QueryParam("endDate")String endDate)
 			throws ServiceException {
 		String token = this.getAuthorization();
 		return visitFacade.queryVisitSummaryHistory(token, startDate, endDate);
