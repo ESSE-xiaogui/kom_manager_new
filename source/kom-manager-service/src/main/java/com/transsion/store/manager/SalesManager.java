@@ -766,23 +766,24 @@ public class SalesManager {
 	
 	
 	/**
-	 *  店铺销量统计
+	 * 店铺销量统计
+	 * 
 	 * @return
 	 * @throws ServiceException
-	 * */
-	public long calcShopSaleQty(long shopId,String startDate,String endDate) throws ServiceException
-	{
-		return -1;
+	 */
+	public long calcShopSaleQty(long shopId, String startDate, String endDate) throws ServiceException {
+		return saleMapper.calcShopSaleQty(shopId, startDate, endDate);
 	}
-	
+
 	/**
-	 *  店铺机型销量统计
+	 * 店铺机型销量统计
+	 * 
 	 * @return
 	 * @throws ServiceException
-	 * */
-	public List<StatShopModelSaleDto> calcShopModelSaleQty(long shopId, List<String> modelCodeList, String startDate,String endDate) throws ServiceException
-	{
-		return null;
+	 */
+	public List<StatShopModelSaleDto> calcShopModelSaleQty(long shopId, List<String> modelCodeList, String startDate,
+			String endDate) throws ServiceException {
+		return saleMapper.calcShopModelSaleQty(shopId, modelCodeList, startDate, endDate);
 	}
 	
 }

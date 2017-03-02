@@ -74,6 +74,19 @@
 		<result column="SALE_PRICE" property="salePrice"/>
 		<result column="IMEI_NO" property="imeiNo"/>
 	</resultMap>
+	<resultMap id="SalesDtoResultMapper" type="SalesDto">
+		<result column="SALE_DATE" property="saleDate"/>
+		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="MODEL_CODE" property="modelMatCode"/>
+		<result column="SALE_QTY" property="saleQty"/>
+		<result column="SALE_PRICE" property="salePrice"/>
+		<result column="IMEI_NO" property="imeiNo"/>
+	</resultMap>
+	<resultMap id="StatShopModelSaleDtoMapper" type="StatShopModelSaleDto">
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="MODEL_CODE" property="modelCode"/>
+		<result column="SALE_QTY" property="saleQty"/>
+	</resultMap>
 	<sql id="commonColumns">
 		 ID
 		, BILLNO
@@ -651,5 +664,37 @@
 		WHERE 1=1 AND i.ID IS NOT null
 		<include refid="commonConditionByPrefix1" />
 		ORDER BY s.SALE_DATE DESC
+	</select>
+	<select id="calcShopSaleQty" resultType="int">
+		SELECT SUM(m.SALE_QTY) as saleQty FROM T_SALE s
+		LEFT JOIN T_SALE_ITEM m
+		ON m.SALE_ID = s.ID
+		WHERE m.SHOP_ID = #{shopId}
+		<if test="startDate!=null and startDate!=''">
+			AND s.SALE_DATE &gt;= date_format(#{startDate}, '%Y-%m-%d
+			%H:%i:%s')
+		</if>
+		<if test="endDate!=null and endDate!=''">
+			AND s.SALE_DATE &lt;= date_format(#{endDate}, '%Y-%m-%d
+			%H:%i:%s')
+		</if>
+	</select>
+	<select id="calcShopModelSaleQty" resultMap="SaleDailyDtoResultMapper">
+		SELECT m.SHOP_ID, d.MODEL_CODE,SUM(d.SALE_QTY) as saleQty FROM T_SALE m
+		LEFT JOIN T_SALE_ITEM d on d.SALE_ID=m.ID
+		WHERE m.SHOP_ID=#{shopId}
+        AND d.MODEL_CODE IS NOT NULL
+		AND MODEL_CODE IN
+			<foreach item="modelCodeList" collection="list" separator="," open="("
+				close=")" index="">
+				#{modelCodeList}
+			</foreach>
+		<if test="startDate!=null and startDate!=''">
+			AND  m.SALE_DATE &gt;=   date_format(#{startDate}, '%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="endDate!=null and endDate!=''">
+			AND  m.SALE_DATE &lt;= date_format(#{endDate}, '%Y-%m-%d %H:%i:%s')
+		</if>
+		GROUP BY m.SHOP_ID, d.MODEL_CODE
 	</select>
 </mapper>
