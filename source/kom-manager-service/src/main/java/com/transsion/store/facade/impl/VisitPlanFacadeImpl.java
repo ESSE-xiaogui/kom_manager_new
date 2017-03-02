@@ -196,7 +196,7 @@ public class VisitPlanFacadeImpl implements VisitPlanFacade {
 	}
 
 	@Override
-	public byte[] getVisitPlanByExcel(VisitPlanDetailInfoDto visitPlanDetailInfoDto) throws ServiceException {
+	public byte[] getVisitPlanByExcel(VisitPlanDetailInfoDto visitPlanDetailInfoDto) throws ServiceException, ParseException {
 		return visitPlanManager.getVisitPlanByExcel(visitPlanDetailInfoDto);
 	}
 

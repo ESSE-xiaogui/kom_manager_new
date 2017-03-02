@@ -1,5 +1,7 @@
 package com.transsion.store.manager;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +23,7 @@ import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.VisitPlanMapper;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
+import com.transsion.store.utils.CalendarUtils;
 import com.transsion.store.utils.DateConvertUtils;
 import com.transsion.store.utils.ExcelUtils;
 
@@ -131,16 +134,21 @@ public class VisitPlanManager {
 	 * 巡店计划导出Excel
 	 * @param visitPlanDetailInfoDto
 	 * @return
+	 * @throws ParseException 
 	 * @throws throws ServiceException  
 	 */
-	public byte[] getVisitPlanByExcel(VisitPlanDetailInfoDto visitPlanDetailInfoDto) throws ServiceException  {
+	public byte[] getVisitPlanByExcel(VisitPlanDetailInfoDto visitPlanDetailInfoDto) throws ServiceException, ParseException  {
 		String[] headers = {"序号","事业部","周数","计划巡店日期","门店名称","门店等级","门店类型","国家","城市","状态","上传用户", "员工姓名",
 		"巡店计划上传日期","巡店完成日期"};
 		List<VisitPlanDetailInfoDto> list = visitPlanMapper.listVisitPlanByProperty(visitPlanDetailInfoDto);
 		List<Object[]> dataset = new ArrayList<Object[]>();
 		int i=1;
 		for(VisitPlanDetailInfoDto visitPlanDetailInfoDto1 :list){
-			dataset.add(new Object[]{i++,visitPlanDetailInfoDto1.getCompanyCode(),visitPlanDetailInfoDto1.getWeekNo(),
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");//小写的mm表示的是分钟  
+			String dstr = visitPlanDetailInfoDto1.getPlanDate();
+			java.util.Date date=sdf.parse(dstr);
+			int weekNo= CalendarUtils.getWeekOfYear(date);
+			dataset.add(new Object[]{i++,visitPlanDetailInfoDto1.getCompanyCode(),weekNo,
 							visitPlanDetailInfoDto1.getPlanDate(),visitPlanDetailInfoDto1.getShopName(),
 							visitPlanDetailInfoDto1.getGradeName(),visitPlanDetailInfoDto1.getBizName(),
 							visitPlanDetailInfoDto1.getCountryName(),visitPlanDetailInfoDto1.getCityName(),

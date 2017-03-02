@@ -148,7 +148,7 @@ public interface VisitPlanFacade {
 	 */
 	public List<VisitPlanInfoDto> queryPlanInfo(String token, String startDate, String endDate) throws ServiceException;
 
-	public byte[] getVisitPlanByExcel(VisitPlanDetailInfoDto visitPlanDetailInfoDto) throws ServiceException;
+	public byte[] getVisitPlanByExcel(VisitPlanDetailInfoDto visitPlanDetailInfoDto) throws ServiceException, ParseException;
 	
 
 }

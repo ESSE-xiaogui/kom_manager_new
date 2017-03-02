@@ -206,6 +206,7 @@ public class VisitPlanController extends AbstractController{
 	 * @return
 	 * @throws ServiceException
 	 * @throws IOException
+	 * @throws ParseException 
 	 */
 	@GET
 	@Path("/exportExcel") 
@@ -215,7 +216,7 @@ public class VisitPlanController extends AbstractController{
 		@QueryParam("planDateEnd") String planDateEnd,@QueryParam("gradeId") String gradeId,
 		@QueryParam("regionId")String regionId,@QueryParam("bizId")String bizId,
 		@QueryParam("weekNo")String weekNo,@QueryParam("createBy") String createBy,
-		@QueryParam("companyId") String companyId,@QueryParam("status") String status) throws ServiceException,IOException {
+		@QueryParam("companyId") String companyId,@QueryParam("status") String status) throws ServiceException,IOException, ParseException {
 		VisitPlanDetailInfoDto visitPlanDetailInfoDto = new VisitPlanDetailInfoDto();
 		visitPlanDetailInfoDto.setCreateTimeStart(createTimeStart);
 		visitPlanDetailInfoDto.setCreateTimeEnd(createTimeEnd);
