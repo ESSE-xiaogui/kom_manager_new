@@ -2,6 +2,7 @@ package com.transsion.store.utils;
 
 import com.shangkang.tools.DateHelper;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -182,6 +183,14 @@ public class CalendarUtils {
 
         return calendar.getTime();
     }
+    
+	public static Date getFirstDayOfMonth(String referenceDate) {
+		Calendar c = Calendar.getInstance();
+		Date convertedDate = DateHelper.parseDate(referenceDate);
+		c.setTime(convertedDate);
+		c.set(Calendar.DAY_OF_MONTH, c.getActualMinimum(Calendar.DAY_OF_MONTH));
+		return c.getTime();
+	}
 
     public static void main(String[] s) {
         System.out.println(CalendarUtils.getMonth());
@@ -197,6 +206,10 @@ public class CalendarUtils {
         System.out.println(CalendarUtils.getWeekFirstDay(DateHelper.parseDate("2017-03-05"), 3));
 
         System.out.println(CalendarUtils.getWeekEndDay(DateHelper.parseDate("2017-03-01"), 0));
+        
+        System.out.println("****");
+        System.out.println(CalendarUtils.getFirstDayOfMonth("2017-03-09"));
+
 
     }
 }
