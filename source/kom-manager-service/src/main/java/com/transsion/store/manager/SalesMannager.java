@@ -40,7 +40,6 @@ import com.transsion.store.mapper.SaleMapper;
 import com.transsion.store.mapper.ShopBizMapper;
 import com.transsion.store.mapper.ShopGradeMapper;
 import com.transsion.store.service.SaleItemService;
-import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 import com.transsion.store.utils.ExcelUtils;
 import com.transsion.store.utils.PropertiesUtils;
@@ -60,9 +59,6 @@ public class SalesMannager {
 	
 	@Autowired
 	private ScanValidateManager scanValidateManager;
-	
-	@Autowired
-	private SystemDateService systemDateService;
 	
 	@Autowired
 	private ShopBizMapper shopBizMapper;

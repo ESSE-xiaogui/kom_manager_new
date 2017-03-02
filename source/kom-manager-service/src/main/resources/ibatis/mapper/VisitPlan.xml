@@ -73,6 +73,12 @@
 		<result column="PLAN_DATE" property="visitPlanDate"/>
 		<result column="PLAN_QTY" property="visitPlanQty"/>
 	</resultMap>
+	<resultMap id="VisitPlanInfoDtoResultMapper" type="VisitPlanInfoDto">
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="GRADE_NAME" property="gradeName"/>
+		<result column="REGION_NAME" property="cityName"/>
+		<result column="SHOP_QTY" property="weekPlansQty"/>
+	</resultMap>
 	
 <!-- 	
 	<resultMap id="VisitPlanParamDtoResultMapper" type="VisitPlanParamDto">
@@ -204,6 +210,21 @@
 		</if>		
 		<if test="endDate!= null and endDate!= ''"> 
 			AND PLAN_DATE&lt;=str_to_date(#{endDate},'%Y-%m-%d')
+		</if>		
+	</sql>
+	
+	<sql id="commonConditionByParam1">
+		<if test="companyId!= null and companyId!= ''"> 
+			AND vp.COMPANY_ID=#{companyId}
+		</if>
+		<if test="planner!= null and planner!= ''"> 
+			AND vp.PLANNER=#{planner}
+		</if>		
+		<if test="beginDate!= null and beginDate!= ''"> 
+			AND vp.PLAN_DATE&gt;=str_to_date(#{beginDate},'%Y-%m-%d')
+		</if>		
+		<if test="endDate!= null and endDate!= ''"> 
+			AND vp.PLAN_DATE&lt;=str_to_date(#{endDate},'%Y-%m-%d')
 		</if>		
 	</sql>
 
@@ -452,5 +473,17 @@
 		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	ORDER BY p.CREATE_TIME
+	</select>
+
+	<select id="queryPlanInfo" parameterType="VisitPlanParamDto"
+		resultMap="VisitPlanInfoDtoResultMapper">
+		SELECT g.GRADE_NAME,p.SHOP_NAME,r.REGION_NAME,count(vp.SHOP_ID) AS SHOP_QTY
+		FROM T_VISIT_PLAN vp
+		LEFT JOIN T_SHOP p ON p.ID = vp.SHOP_ID
+		LEFT JOIN T_SHOP_GRADE g ON g.ID = p.GRADE_ID
+		LEFT JOIN T_REGION r ON r.ID = p.REGION_ID
+		WHERE 1=1
+		<include refid="commonConditionByParam1"/>
+		GROUP BY vp.SHOP_ID
 	</select>
 </mapper>

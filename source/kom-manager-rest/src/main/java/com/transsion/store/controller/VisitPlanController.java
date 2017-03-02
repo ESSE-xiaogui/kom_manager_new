@@ -161,7 +161,7 @@ public class VisitPlanController extends AbstractController{
 	/**
 	 * plan List 页面
 	 * 每天多少店铺数 和 时间
-	 * 入参是 第一周第一天和第八周最后一天日期
+	 * 入参是 需要查询的开始的日期 和 最后结束日期
 	 * @return
 	 * @throws ServiceException
 	 * @author guihua.zhang on 2017-03-01

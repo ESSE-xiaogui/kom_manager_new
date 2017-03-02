@@ -28,6 +28,7 @@ import com.transsion.store.bo.VisitPlan;
 import com.transsion.store.dto.VisitInfoDto;
 import com.transsion.store.dto.VisitPlanDetailInfoDto;
 import com.transsion.store.dto.VisitPlanDetailSummaryDto;
+import com.transsion.store.dto.VisitPlanInfoDto;
 import com.transsion.store.dto.VisitPlanParamDto;
 
 public interface VisitPlanMapper extends GenericIBatisMapper<VisitPlan, java.lang.Long> {
@@ -45,4 +46,7 @@ public interface VisitPlanMapper extends GenericIBatisMapper<VisitPlan, java.lan
 
 	//查询两周的巡店计划
 	public List<VisitPlanDetailSummaryDto> findTwoWeekQty(VisitPlanParamDto visitPlanParamDto);
+	
+	//查询巡店计划详情信息
+	public List<VisitPlanInfoDto> queryPlanInfo(VisitPlanParamDto visitPlanParamDto);
 }

@@ -180,11 +180,12 @@ public class VisitPlanFacadeImpl implements VisitPlanFacade {
 		return visitPlanManager.queryPlanDetailSummary(token, startDate, endDate);
 	}
 
-	@Override
+	/**
+	 * 查询巡店计划详情信息
+	 */
 	public List<VisitPlanInfoDto> queryPlanInfo(String token, String startDate, String endDate)
 			throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
+		return visitPlanManager.queryPlanInfo(token, startDate, endDate);
 	}
 
 	@Override

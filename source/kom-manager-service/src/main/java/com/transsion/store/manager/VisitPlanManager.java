@@ -15,6 +15,7 @@ import com.transsion.store.dto.VisitPlanBriefSummaryDto;
 import com.transsion.store.dto.VisitPlanDetailInfoDto;
 import com.transsion.store.dto.VisitPlanDetailSummaryDto;
 import com.transsion.store.dto.VisitPlanDto;
+import com.transsion.store.dto.VisitPlanInfoDto;
 import com.transsion.store.dto.VisitPlanParamDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.VisitPlanMapper;
@@ -169,7 +170,29 @@ public class VisitPlanManager {
 		visit.setEndDate(endDate);
 		return visitPlanMapper.findTwoWeekQty(visit);
 	}
-	
+	/**
+	 * 查询巡店计划详情信息
+	 * */
+	public List<VisitPlanInfoDto> queryPlanInfo(String token, String startDate, String endDate)
+					throws ServiceException {
+		if (UtilHelper.isEmpty(token)) {
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		if (UtilHelper.isEmpty(startDate) || UtilHelper.isEmpty(endDate)) {
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())
+						|| UtilHelper.isEmpty(userContext.getCompanyId())) {
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		VisitPlanParamDto visit = new VisitPlanParamDto();
+		visit.setCompanyId(userContext.getCompanyId());
+		visit.setPlanner(userContext.getUserCode());
+		visit.setBeginDate(startDate);
+		visit.setEndDate(endDate);
+		return visitPlanMapper.queryPlanInfo(visit);
+	}
 	/*
 	 * 上传巡店记录后跟新巡店计划
 	 */
