@@ -34,6 +34,11 @@ public class VisitScore extends Model{
 	  *	
 	  */
 	private java.lang.Long visitId;
+	
+	/**
+	  *	
+	  */
+	private java.lang.Long shopId;
 
 	/**
 	  *	
@@ -116,6 +121,23 @@ public class VisitScore extends Model{
 	{
 		this.visitId = visitId;
 	}
+	
+	/**
+	  *	
+	  */
+	public java.lang.Long getShopId() 
+	{
+		return shopId;
+	}
+	
+	/**
+	  *	
+	  */
+	public void setShopId(java.lang.Long shopId) 
+	{
+		this.shopId = shopId;
+	}
+	
 	
 	/**
 	  *	

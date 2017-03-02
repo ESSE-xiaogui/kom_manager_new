@@ -38,6 +38,11 @@ public class VisitFeedback extends Model{
 	/**
 	  *	
 	  */
+	private java.lang.Long shopId;
+	
+	/**
+	  *	
+	  */
 	private java.lang.String issue;
 
 	/**
@@ -120,6 +125,22 @@ public class VisitFeedback extends Model{
 	public void setVisitId(java.lang.Long visitId) 
 	{
 		this.visitId = visitId;
+	}
+	
+	/**
+	  *	
+	  */
+	public java.lang.Long getShopId() 
+	{
+		return shopId;
+	}
+	
+	/**
+	  *	
+	  */
+	public void setShopId(java.lang.Long shopId) 
+	{
+		this.shopId = shopId;
 	}
 	
 	/**

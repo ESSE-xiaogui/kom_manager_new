@@ -38,6 +38,11 @@ public class VisitSale extends Model{
 	/**
 	  *	
 	  */
+	private java.lang.Long shopId;
+	
+	/**
+	  *	
+	  */
 	private java.lang.Long brandId;
 
 	/**
@@ -111,6 +116,23 @@ public class VisitSale extends Model{
 	{
 		this.visitId = visitId;
 	}
+	
+	/**
+	  *	
+	  */
+	public java.lang.Long getShopId() 
+	{
+		return shopId;
+	}
+	
+	/**
+	  *	
+	  */
+	public void setShopId(java.lang.Long shopId) 
+	{
+		this.shopId = shopId;
+	}
+	
 	
 	/**
 	  *	
