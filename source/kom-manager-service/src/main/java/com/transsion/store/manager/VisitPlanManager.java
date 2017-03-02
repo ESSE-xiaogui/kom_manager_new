@@ -177,5 +177,14 @@ public class VisitPlanManager {
 	{
 		
 	}
+	
+	
+	/*
+	 * 判断巡店是否在计划内
+	 */
+	public boolean isVisitPlanned(Visit visit)
+	{
+		return false;
+	}
 
 }

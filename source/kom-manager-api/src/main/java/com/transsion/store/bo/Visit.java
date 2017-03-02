@@ -25,6 +25,22 @@ public class Visit extends Model{
 	 */
 	private static final long	serialVersionUID	= 1L;
 	
+	public enum State {
+		
+		PLANNED(1), 
+		UNPLANNED(2);
+		
+		private final int value;
+
+		private State(int value) {
+			this.value = value;
+		}
+
+		public int getVal() {
+			return value;
+		}
+	};
+	
 	/**
 	  *	
 	  */
