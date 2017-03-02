@@ -171,7 +171,7 @@
 			AND IMEI_NO=#{imeiNo}
 		</if>
 		<if test="imeiList!= null and imeiList!= ''"> 
-			AND IMEI_LIST=#{imeiList}
+			AND IMEI_LIST like CONCAT('%',#{imeiList},'%')
 		</if>
 		<if test="imgPrototypeUrl!= null and imgPrototypeUrl!= ''"> 
 			AND IMG_PROTOTYPE_URL=#{imgPrototypeUrl}
@@ -412,6 +412,16 @@
 			, #{version}
   ) ]]>
 	</insert>
+	
+	<update id="update" parameterType="Prototype">
+		UPDATE T_PROTOTYPE 
+		<set >
+			<include refid="commonCondition"/>
+		</set>
+		where ID = #{id}
+	</update>
+	
+	<!-- 
 	<update id="update" parameterType="Prototype">
 		<![CDATA[ UPDATE T_PROTOTYPE SET 
 			 ID=#{id} 
@@ -440,6 +450,7 @@
 			, VERSION=#{version} 
 		WHERE ID = #{id}  ]]>
 	</update>
+	 -->
 	<delete id="deleteByPK" parameterType="java.lang.Long">
 		<![CDATA[ DELETE FROM T_PROTOTYPE WHERE ID = #{id}  ]]>
 	</delete>
@@ -477,9 +488,9 @@
 		pro.SHOP_ID, shop.SHOP_NAME,pro.STATUS
 		
 		FROM T_PROTOTYPE pro
-		left join T_BRAND brand on pro.BRAND_ID = brand.BRAND_ID
+		left join T_BRAND brand on pro.BRAND_ID = brand.ID
 		left join T_SHOP shop on pro.SHOP_ID = shop.SHOP_ID
-		left join T_MODEL model on pro.MODEL_ID = model.MODEL_ID
+		left join T_MODEL model on pro.MODEL_ID = model.ID
 		
 		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
@@ -489,10 +500,9 @@
 	<select id="findByCountDto" parameterType="PrototypeDto" resultType="int">
 		SELECT count(1) AS totalcount 
 		FROM T_PROTOTYPE pro
-		left join T_BRAND brand on pro.BRAND_ID = brand.BRAND_ID
+		left join T_BRAND brand on pro.BRAND_ID = brand.ID
 		left join T_SHOP shop on pro.SHOP_ID = shop.SHOP_ID
-		left join T_MODEL model on pro.MODEL_ID = model.MODEL_ID
-		
+		left join T_MODEL model on pro.MODEL_ID = model.ID
 		WHERE 1=1
 		<include refid="commonConditionByPrefix"/>
 	</select>

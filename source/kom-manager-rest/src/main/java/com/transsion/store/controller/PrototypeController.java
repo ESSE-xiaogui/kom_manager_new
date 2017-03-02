@@ -89,9 +89,9 @@ public class PrototypeController extends AbstractController{
 	@POST
 	@Path("/add")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void add(Prototype prototype) throws ServiceException
-	{
-		prototypeFacade.save(prototype);
+	public void add(PrototypeDto prototypeDto) throws ServiceException {
+		String token = this.getAuthorization();
+		prototypeFacade.save(prototypeDto, token);
 	}
 
 	/**
@@ -115,8 +115,8 @@ public class PrototypeController extends AbstractController{
 	@PUT
 	@Path("/update")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void update(Prototype prototype) throws ServiceException
-	{
-		prototypeFacade.update(prototype);
+	public void update(PrototypeDto prototypeDto) throws ServiceException {
+		String token = this.getAuthorization();
+		prototypeFacade.update(prototypeDto, token);
 	}
 }

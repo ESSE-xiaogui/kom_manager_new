@@ -73,19 +73,21 @@ public interface PrototypeFacade {
 
 	/**
 	 * 保存记录
-	 * @param prototype
+	 * @param prototypeDto
+	 * @param token
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(Prototype prototype) throws ServiceException;
+	public void save(PrototypeDto prototypeDto, String token) throws ServiceException;
 
 	/**
 	 * 更新记录
-	 * @param prototype
+	 * @param prototypeDto
+	 * @param token
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(Prototype prototype) throws ServiceException;
+	public int update(PrototypeDto prototypeDto, String token) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数

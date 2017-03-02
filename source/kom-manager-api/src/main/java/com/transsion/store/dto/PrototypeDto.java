@@ -27,6 +27,8 @@ public class PrototypeDto implements Serializable {
 	private Integer status;				// 样机状态
 	private String remark;				// 备注
 	
+	private String unpublishCause;		// 下架原因
+	
 	public Long getId() {
 		return id;
 	}
@@ -129,4 +131,10 @@ public class PrototypeDto implements Serializable {
 		this.remark = remark;
 	}
 	
+	public String getUnpublishCause() {
+		return unpublishCause;
+	}
+	public void setUnpublishCause(String unpublishCause) {
+		this.unpublishCause = unpublishCause;
+	}
 }

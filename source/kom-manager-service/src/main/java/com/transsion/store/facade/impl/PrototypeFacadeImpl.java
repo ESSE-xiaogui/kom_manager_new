@@ -26,12 +26,15 @@ import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Prototype;
 import com.transsion.store.dto.PrototypeDto;
 import com.transsion.store.facade.PrototypeFacade;
+import com.transsion.store.manager.PrototypeManager;
 import com.transsion.store.service.PrototypeService;
 
 @Component("prototypeFacade")
 public class PrototypeFacadeImpl implements PrototypeFacade {
 
 	private PrototypeService prototypeService;
+	@Autowired
+	private PrototypeManager prototypeManager;
 	
 	@Autowired
 	public void setPrototypeService(PrototypeService prototypeService)
@@ -116,24 +119,26 @@ public class PrototypeFacadeImpl implements PrototypeFacade {
 
 	/**
 	 * 保存记录
-	 * @param prototype
+	 * @param prototypeDto
+	 * @param token
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(Prototype prototype) throws ServiceException
+	public void save(PrototypeDto prototypeDto, String token) throws ServiceException
 	{
-		prototypeService.save(prototype);
+		prototypeManager.savePrototype(prototypeDto, token);
 	}
 
 	/**
 	 * 更新记录
 	 * @param prototype
+	 * @param token
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(Prototype prototype) throws ServiceException
+	public int update(PrototypeDto prototypeDto, String token) throws ServiceException
 	{
-		return prototypeService.update(prototype);
+		return prototypeManager.updatePrototype(prototypeDto, token);
 	}
 
 	/**
