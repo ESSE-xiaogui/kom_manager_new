@@ -91,7 +91,7 @@
 	
 	<sql id="commonProcessDateColumns">
 		 ID
-		, date_format(ACTION_DATE, '%Y-%m-%d %H:%i:%s') ACTION_DATE
+		, ACTION_DATE
 		, COMPANY_ID
 		, BRAND_ID
 		, MODEL_ID
@@ -109,7 +109,7 @@
 			AND ID=#{id}
 		</if>
 		<if test="actionDate!= null and actionDate!= ''"> 
-			AND ACTION_DATE=str_to_date(#{actionDate},'%Y-%m-%d %H:%i:%s')
+			AND ACTION_DATE=#{actionDate}
 		</if>
 		<if test="companyId!= null and companyId!= ''"> 
 			AND COMPANY_ID=#{companyId}
@@ -149,7 +149,7 @@
 				AND t.ID=#{visitModelSettingInfoDto.id}
             </if>
             <if test="visitModelSettingInfoDto.actionDate!= null and visitModelSettingInfoDto.actionDate!= ''">
-				AND t.ACTION_DATE=str_to_date(#{visitModelSettingInfoDto.actionDate},'%Y-%m-%d %H:%i:%s')
+				AND t.ACTION_DATE=#{visitModelSettingInfoDto.actionDate}
             </if>
             <if test="visitModelSettingInfoDto.companyId!= null and visitModelSettingInfoDto.companyId!= ''">
 				AND t.COMPANY_ID=#{visitModelSettingInfoDto.companyId}
@@ -230,7 +230,7 @@
 		<include refid="commonColumnsNotPK"/>
 		<![CDATA[
 			) VALUES ( 
-			 str_to_date(#{actionDate},'%Y-%m-%d %H:%i:%s')
+			 #{actionDate}
 			, #{companyId}
 			, #{brandId}
 			, #{modelId}
@@ -246,7 +246,7 @@
 	<update id="update" parameterType="VisitModelSetting">
 		<![CDATA[ UPDATE T_VISIT_MODEL_SETTING SET 
 			 ID=#{id} 
-			, ACTION_DATE=str_to_date(#{actionDate},'%Y-%m-%d %H:%i:%s')
+			, ACTION_DATE=#{actionDate}
 			, COMPANY_ID=#{companyId} 
 			, BRAND_ID=#{brandId} 
 			, MODEL_ID=#{modelId} 
