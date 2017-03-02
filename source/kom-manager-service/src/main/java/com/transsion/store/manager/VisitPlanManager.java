@@ -40,6 +40,11 @@ public class VisitPlanManager {
 	 * 巡店计划默认状态:1.未巡店
 	 */
 	private static final Integer undo = 1;
+	
+	/**
+	 * 巡店计划默认状态:2.已巡店
+	 */
+	private static final Integer done = 2;
 
 	/**
 	 * @author guihua.zhang on 2017-02-28 巡店计划上传接口
@@ -148,6 +153,7 @@ public class VisitPlanManager {
 	}
 	
 	/**
+	 * @author guihua.zhang on 2017-03-02
 	 * 查询每天多少店铺数 和 时间
 	 */
 	public List<VisitPlanDetailSummaryDto> queryPlanDetailSummary(String token, String startDate, String endDate)
@@ -171,6 +177,7 @@ public class VisitPlanManager {
 		return visitPlanMapper.findTwoWeekQty(visit);
 	}
 	/**
+	 * @author guihua.zhang on 2017-03-02
 	 * 查询巡店计划详情信息
 	 * */
 	public List<VisitPlanInfoDto> queryPlanInfo(String token, String startDate, String endDate)
@@ -193,20 +200,35 @@ public class VisitPlanManager {
 		visit.setEndDate(endDate);
 		return visitPlanMapper.queryPlanInfo(visit);
 	}
-	/*
-	 * 上传巡店记录后跟新巡店计划
+	/**
+	 * @author guihua.zhang on 2017-03-02
+	 * 上传巡店记录后更新新巡店计划
 	 */
-	public void updatePlanByVisit(Visit visit)
-	{
-		
+	public void updatePlanByVisit(Visit visit) throws ServiceException{
+		if(UtilHelper.isEmpty(visit) || UtilHelper.isEmpty(visit.getShopId()) 
+						|| UtilHelper.isEmpty(visit.getVisitDate())){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		VisitPlan visitPlan = new VisitPlan();
+		visitPlan.setPlanDate(visit.getVisitDate());
+		visitPlan.setShopId(visit.getShopId());
+		visitPlan.setStatus(done);
+		visitPlanMapper.update(visitPlan);
 	}
 	
 	
-	/*
+	/**
+	 * @author guihua.zhang on 2017-03-02
 	 * 判断巡店是否在计划内
 	 */
-	public boolean isVisitPlanned(Visit visit)
-	{
+	public boolean isVisitPlanned(Visit visit) throws ServiceException{
+		VisitPlan visitPlan = new VisitPlan();
+		visitPlan.setPlanDate(visit.getVisitDate());
+		visitPlan.setShopId(visit.getShopId());
+		int count = visitPlanMapper.findByCount(visitPlan);
+		if(count<0){
+			return true;
+		}
 		return false;
 	}
 

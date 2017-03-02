@@ -486,4 +486,10 @@
 		<include refid="commonConditionByParam1"/>
 		GROUP BY vp.SHOP_ID
 	</select>
+
+	<update id="updateStatusByShopIdAndPlanDate" parameterType="VisitPlan">
+		UPDATE T_VISIT_PLAN SET STATUS = #{status}
+		WHERE 1=1
+		<include refid="commonCondition" />
+	</update>
 </mapper>
