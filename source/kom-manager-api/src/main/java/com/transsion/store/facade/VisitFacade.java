@@ -144,7 +144,7 @@ public interface VisitFacade {
 	 * @author guihua.zhang
 	 * 
 	 */
-	public List<VisitStockInfoDto> queryVisitModelInfo(String token, String planDate) throws ServiceException;
+	public List<VisitStockInfoDto> queryVisitModelInfo(String token, java.lang.Long shopId, String planDate) throws ServiceException;
 	
 	/**
 	 * @author guihua.zhang

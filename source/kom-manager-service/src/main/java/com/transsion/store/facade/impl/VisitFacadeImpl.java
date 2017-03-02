@@ -187,7 +187,7 @@ public class VisitFacadeImpl implements VisitFacade {
 	}
 
 	@Override
-	public List<VisitStockInfoDto> queryVisitModelInfo(String token, String planDate) throws ServiceException {
+	public List<VisitStockInfoDto> queryVisitModelInfo(String token,java.lang.Long shopId, String planDate) throws ServiceException {
 		return null;
 	}
 

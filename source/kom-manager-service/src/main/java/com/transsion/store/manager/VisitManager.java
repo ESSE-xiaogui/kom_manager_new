@@ -32,6 +32,7 @@ import com.transsion.store.dto.VisitShopInfoDto;
 import com.transsion.store.dto.VisitStockDto;
 import com.transsion.store.dto.VisitStockInfoDto;
 import com.transsion.store.exception.ExceptionDef;
+import com.transsion.store.mapper.SaleGoalMapper;
 import com.transsion.store.mapper.VisitMapper;
 import com.transsion.store.mapper.VisitScoreSettingMapper;
 import com.transsion.store.service.VisitFeedbackService;
@@ -73,6 +74,8 @@ public class VisitManager {
 	@Autowired
 	private VisitPlanManager visitPlanManager;
 	
+	@Autowired
+	private SaleGoalManager saleGoalManager;
 	
 	public List<VisitInfoDto> queryPlanedVisitList(String token, String planDate) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
@@ -159,6 +162,11 @@ public class VisitManager {
 		return visitService.queryVisitShopInfo(visitShopInfoDto);
 	}
 	
+	public List<VisitStockInfoDto> queryVisitModelInfo(String token,java.lang.Long shopId, String planDate) throws ServiceException {
+		//return saleGoalManager.getShopModelSaleInfo(shopId, modelList, saleDate);
+		return null;
+	}
+
 	public VisitRecordInfoDto queryVisitRecordInfo(String token, String id) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
