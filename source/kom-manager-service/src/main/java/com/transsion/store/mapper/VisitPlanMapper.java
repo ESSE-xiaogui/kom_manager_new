@@ -27,6 +27,7 @@ import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.transsion.store.bo.VisitPlan;
 import com.transsion.store.dto.VisitInfoDto;
 import com.transsion.store.dto.VisitPlanDetailInfoDto;
+import com.transsion.store.dto.VisitPlanDetailSummaryDto;
 import com.transsion.store.dto.VisitPlanParamDto;
 
 public interface VisitPlanMapper extends GenericIBatisMapper<VisitPlan, java.lang.Long> {
@@ -41,4 +42,7 @@ public interface VisitPlanMapper extends GenericIBatisMapper<VisitPlan, java.lan
 	public int findWeekQtry(VisitPlanParamDto visitPlanParamDto);
 
 	public List<VisitPlanDetailInfoDto> listVisitPlanByProperty(@Param("visitPlanDetailInfoDto")VisitPlanDetailInfoDto visitPlanDetailInfoDto)throws DataAccessFailureException;
+
+	//查询八周的巡店计划
+		public List<VisitPlanDetailSummaryDto> findTwoWeekQty(VisitPlanParamDto visitPlanParamDto);
 }

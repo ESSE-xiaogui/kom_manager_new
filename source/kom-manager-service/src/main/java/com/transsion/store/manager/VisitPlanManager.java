@@ -6,14 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.VisitPlan;
 import com.transsion.store.context.UserContext;
-import com.transsion.store.dto.VisitFeedBackInfoDto;
 import com.transsion.store.dto.VisitPlanBriefSummaryDto;
 import com.transsion.store.dto.VisitPlanDetailInfoDto;
+import com.transsion.store.dto.VisitPlanDetailSummaryDto;
 import com.transsion.store.dto.VisitPlanDto;
 import com.transsion.store.dto.VisitPlanParamDto;
 import com.transsion.store.exception.ExceptionDef;
@@ -144,6 +143,30 @@ public class VisitPlanManager {
 		}
 		String title = "巡店计划报表";
 		return ExcelUtils.exportExcel(title, headers, dataset);
+	}
+	
+	/**
+	 * 查询每天多少店铺数 和 时间
+	 */
+	public List<VisitPlanDetailSummaryDto> queryPlanDetailSummary(String token, String startDate, String endDate)
+			throws ServiceException {
+		if (UtilHelper.isEmpty(token)) {
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		if (UtilHelper.isEmpty(startDate) || UtilHelper.isEmpty(endDate)) {
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())
+						|| UtilHelper.isEmpty(userContext.getCompanyId())) {
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		VisitPlanParamDto visit = new VisitPlanParamDto();
+		visit.setCompanyId(userContext.getCompanyId());
+		visit.setPlanner(userContext.getUserCode());
+		visit.setBeginDate(startDate);
+		visit.setEndDate(endDate);
+		return visitPlanMapper.findTwoWeekQty(visit);
 	}
 
 }

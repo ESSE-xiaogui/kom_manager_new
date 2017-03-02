@@ -173,11 +173,11 @@ public class VisitPlanFacadeImpl implements VisitPlanFacade {
 	}
 
 	/**
-	 * 查询店铺数和时间
+	 * 查询每天多少店铺数 和 时间
 	 */
 	public List<VisitPlanDetailSummaryDto> queryPlanDetailSummary(String token, String startDate, String endDate)
 			throws ServiceException {
-		return null;
+		return visitPlanManager.queryPlanDetailSummary(token, startDate, endDate);
 	}
 
 	@Override

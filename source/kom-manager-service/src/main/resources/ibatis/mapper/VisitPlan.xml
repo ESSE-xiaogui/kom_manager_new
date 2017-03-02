@@ -68,6 +68,12 @@
 		<result column="UPDATE_TIME" property="updateTime"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
+	
+	<resultMap id="VisitPlanDetailSummaryDtoResultMapper" type="VisitPlanDetailSummaryDto">
+		<result column="PLAN_DATE" property="visitPlanDate"/>
+		<result column="PLAN_QTY" property="visitPlanQty"/>
+	</resultMap>
+	
 <!-- 	
 	<resultMap id="VisitPlanParamDtoResultMapper" type="VisitPlanParamDto">
 		<result column="ID" property="companyId"/>
@@ -422,6 +428,15 @@
 		T_VISIT_PLAN WHERE 1=1
 		<include refid="commonConditionByParam"/>
 	</select>
+	
+	<select id="findTwoWeekQty" parameterType="VisitPlanParamDto"
+		resultMap="VisitPlanDetailSummaryDtoResultMapper">
+		SELECT PLAN_DATE,COUNT(*) AS PLAN_QTY FROM T_VISIT_PLAN
+		GROUP BY PLAN_DATE
+		WHERE 1=1 
+		<include refid="commonConditionByParam"/>
+	</select>
+	
 	<select id="listVisitPlanByProperty" parameterType="VisitPlanDetailInfoDto" resultMap="VisitPlanDetailInfoDtoResultMapper">
 		SELECT 
 		<include refid="commonProcessDateColumn"/>
