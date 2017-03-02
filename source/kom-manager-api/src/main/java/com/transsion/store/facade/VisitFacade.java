@@ -161,7 +161,7 @@ public interface VisitFacade {
 	/*
 	 * visit page
 	 */
-	public VisitShopInfoDto queryVisitShopInfo(String token, String planDate) throws ServiceException;
+	public VisitShopInfoDto queryVisitShopInfo(String token, java.lang.Long shopId, String planDate) throws ServiceException;
 
 	
 

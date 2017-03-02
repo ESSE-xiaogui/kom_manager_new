@@ -144,7 +144,7 @@ public class VisitManager {
 		return list;
 	}
 	
-	public VisitShopInfoDto queryVisitShopInfo(String token, String planDate) throws ServiceException {
+	public VisitShopInfoDto queryVisitShopInfo(String token, java.lang.Long shopId, String planDate) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
@@ -154,7 +154,7 @@ public class VisitManager {
 		}
 		
 		VisitShopInfoDto visitShopInfoDto = new VisitShopInfoDto();
-		visitShopInfoDto.setShopId(userContext.getShop().getId());
+		visitShopInfoDto.setShopId(shopId);
 		visitShopInfoDto.setPlanDate(planDate);
 		return visitService.queryVisitShopInfo(visitShopInfoDto);
 	}

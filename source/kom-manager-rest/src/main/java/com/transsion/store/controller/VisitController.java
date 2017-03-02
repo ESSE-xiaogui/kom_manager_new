@@ -173,9 +173,9 @@ public class VisitController extends AbstractController{
 	@Path("/queryVisitShopInfo")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({ MediaType.APPLICATION_JSON })
-	public VisitShopInfoDto queryVisitShopInfo(@QueryParam("planDate")String planDate) throws ServiceException{
+	public VisitShopInfoDto queryVisitShopInfo(@QueryParam("shopId")java.lang.Long shopId, @QueryParam("planDate")String planDate) throws ServiceException{
 		String token = this.getAuthorization();
-		return visitFacade.queryVisitShopInfo(token, planDate);
+		return visitFacade.queryVisitShopInfo(token, shopId, planDate);
 	}
 	
 	/**
