@@ -262,6 +262,9 @@
             <when test="key == 'countryName'">
 				r1.REGION_NAME ${value}
             </when>
+            <when test="key == 'companyCode'">
+				c.COMPANY_CODE ${value}
+            </when>
             <when test="key == 'cityName'">
 				r2.REGION_NAME ${value}
             </when>
@@ -270,6 +273,9 @@
             </when>
             <when test="key == 'shopCode'">
 				SHOP_CODE ${value}
+            </when>
+            <when test="key == 'empName'">
+				EMP_NAME ${value}
             </when>
             <when test="key == 'shopName'">
 				SHOP_NAME ${value}
@@ -413,7 +419,7 @@
 		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID
 		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
-    	ORDER BY f.CREATE_TIME
+    	ORDER BY f.CREATE_TIME DESC
 	</select>
 	
 	<select id="queryVisitFeedbackByVisitId" parameterType="java.lang.Long" resultMap="VisitFeedbackDtoResultMapper">

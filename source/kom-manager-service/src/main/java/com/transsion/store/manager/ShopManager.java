@@ -416,20 +416,11 @@ public class ShopManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		
-		Shop tempShop1 = new Shop();
-		tempShop1.setShopName(shopInfoDto.getShopName());
-		int countShopName1 = shopService.findByCount(tempShop1);
-		tempShop1.setId(shopInfoDto.getId());
-		int countShopName2 = shopService.findByCount(tempShop1);
-		if(countShopName1>0&&countShopName2<1){
-			throw new ServiceException(ExceptionDef.ERROR_SHOP_ALREADY_EXIST.getName());
-		}
-		
-		Shop tempShop2 = new Shop();
-		tempShop2.setShopName(shopInfoDto.getShopName());
-		int countShopCode1 = shopService.findByCount(tempShop2);
-		tempShop1.setId(shopInfoDto.getId());
-		int countShopCode2 = shopService.findByCount(tempShop2);
+		Shop tempShop = new Shop();
+		tempShop.setShopCode(shopInfoDto.getShopCode());
+		int countShopCode1 = shopService.findByCount(tempShop);
+		tempShop.setId(shopInfoDto.getId());
+		int countShopCode2 = shopService.findByCount(tempShop);
 		if(countShopCode1>0&&countShopCode2<1){
 			throw new ServiceException(ExceptionDef.ERROR_SHOPCODE_ALREADY_EXIST.getName());
 		}

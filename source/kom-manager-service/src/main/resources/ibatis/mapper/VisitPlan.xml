@@ -310,6 +310,27 @@
         	<when test="key == 'visitDate'">
 				VISIT_DATE ${value}
             </when>
+            <when test="key == 'countryName'">
+				r1.REGION_NAME ${value}
+            </when>
+            <when test="key == 'cityName'">
+				r2.REGION_NAME ${value}
+            </when>
+            <when test="key == 'empName'">
+				EMP_NAME ${value}
+            </when>
+            <when test="key == 'companyCode'">
+				c.COMPANY_CODE ${value}
+            </when>
+            <when test="key == 'shopName'">
+				SHOP_NAME ${value}
+            </when>
+            <when test="key == 'gradeName'">
+				GRADE_NAME ${value}
+            </when>
+            <when test="key == 'bizName'">
+				BIZ_NAME ${value}
+            </when>
             <when test="key == 'planner'">
 				PLANNER ${value}
             </when>
@@ -472,7 +493,7 @@
 		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID
 		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
-    	ORDER BY p.CREATE_TIME
+    	ORDER BY p.CREATE_TIME DESC
 	</select>
 
 	<select id="queryPlanInfo" parameterType="VisitPlanParamDto"
