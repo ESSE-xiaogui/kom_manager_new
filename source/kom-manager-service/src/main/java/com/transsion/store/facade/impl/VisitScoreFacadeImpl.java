@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.VisitScore;
+import com.transsion.store.dto.VisitScoreDetailInfoDto;
 import com.transsion.store.facade.VisitScoreFacade;
 import com.transsion.store.service.VisitScoreService;
 
@@ -75,10 +76,10 @@ public class VisitScoreFacadeImpl implements VisitScoreFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<VisitScore> listPaginationByProperty(Pagination<VisitScore> pagination, VisitScore visitScore)
+	public Pagination<VisitScoreDetailInfoDto> listPaginationByProperty(Pagination<VisitScoreDetailInfoDto> pagination, VisitScoreDetailInfoDto visitScoreDetailInfoDto,String token)
 			throws ServiceException
 	{
-		return visitScoreService.listPaginationByProperty(pagination, visitScore);
+		return visitScoreService.listPaginationByProperty(pagination, visitScoreDetailInfoDto,token);
 	}
 
 	/**

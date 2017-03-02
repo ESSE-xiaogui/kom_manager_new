@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.VisitScore;
+import com.transsion.store.dto.VisitScoreDetailInfoDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -96,10 +97,18 @@ public interface VisitScoreFacade {
 	
 	/**
 	 * 根据查询条件查询分页记录
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<VisitScore> listPaginationByProperty(Pagination<VisitScore> pagination, VisitScore visitScore)
+	public Pagination<VisitScoreDetailInfoDto> listPaginationByProperty(Pagination<VisitScoreDetailInfoDto> pagination, VisitScoreDetailInfoDto visitScoreDetailInfoDto, String token)
 			throws ServiceException;
+
+	/**
+	 * 巡店打分导出Excel
+	 * @param visitScoreDetailInfoDto
+	 * @return
+	 */
+	public byte[] getVisitScoreByExcel(VisitScoreDetailInfoDto visitScoreDetailInfoDto)throws ServiceException;
 
 }

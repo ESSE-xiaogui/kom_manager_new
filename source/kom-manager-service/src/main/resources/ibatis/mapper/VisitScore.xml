@@ -34,15 +34,28 @@
 		<result column="VERSION" property="version"/>
 	</resultMap>
 	
-	<resultMap id="VisitScoreDtoResultMapper" type="VisitScoreDto">
+	<resultMap id="VisitScoreDetailInfoDtoResultMapper" type="VisitScoreDetailInfoDto">
 		<result column="ID" property="id"/>
 		<result column="VISIT_ID" property="visitId"/>
+		<result column="COMPANY_CODE" property="companyCode"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="SHOP_CODE" property="shopCode"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="STAFF_SCORE" property="staffScore"/>
 		<result column="SHOP_SCORE" property="shopScore"/>
 		<result column="SALE_SCORE" property="saleScore"/>
 		<result column="STAFF_SCORE" property="staffScore"/>
 		<result column="TOTAL_SCORE" property="totalScore"/>
 		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
 	</resultMap>
+	
 	
 	<sql id="commonColumns">
 		 ID
@@ -76,6 +89,27 @@
 	<sql id="commonProcessDateColumns">
 		 ID
 		, VISIT_ID
+		, SHOP_SCORE
+		, SALE_SCORE
+		, STAFF_SCORE
+		, TOTAL_SCORE
+		, REMARK
+		, CREATE_BY
+		, date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+		, UPDATE_BY
+		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumn">
+		 vs.ID
+		, vs.VISIT_ID
+		, c.COMPANY_CODE
+		, r1.REGION_NAME AS COUNTRY_NAME
+		, r2.REGION_NAME AD CITY_NAME
+		, s.SHOP_CODE
+		, s.SHOP_NAME
+		, e.EPM_NAME
 		, SHOP_SCORE
 		, SALE_SCORE
 		, STAFF_SCORE
@@ -128,42 +162,69 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="visitScore != null">
-            <if test="visitScore.id!= null and visitScore.id!= ''">
-				AND ID=#{visitScore.id}
+		<if test="visitScoreDetailInfo != null">
+            <if test="visitScoreDetailInfo.id!= null and visitScoreDetailInfo.id!= ''">
+				AND ID=#{visitScoreDetailInfo.id}
             </if>
-            <if test="visitScore.visitId!= null and visitScore.visitId!= ''">
-				AND VISIT_ID=#{visitScore.visitId}
+            <if test="visitScoreDetailInfo.visitId!= null and visitScoreDetailInfo.visitId!= ''">
+				AND VISIT_ID=#{visitScoreDetailInfo.visitId}
             </if>
-            <if test="visitScore.shopScore!= null and visitScore.shopScore!= ''">
-				AND SHOP_SCORE=#{visitScore.shopScore}
+            <if test="visitScoreDetailInfo.companyId!= null and visitScoreDetailInfo.companyId!= ''">
+				AND COMPANY_ID=#{visitScoreDetailInfo.companyId}
             </if>
-            <if test="visitScore.saleScore!= null and visitScore.saleScore!= ''">
-				AND SALE_SCORE=#{visitScore.saleScore}
+            <if test="visitScoreDetailInfo.regionId!= null and visitScoreDetailInfo.regionId!= ''">
+				AND r1.ID=#{visitScoreDetailInfo.regionId}
             </if>
-            <if test="visitScore.staffScore!= null and visitScore.staffScore!= ''">
-				AND STAFF_SCORE=#{visitScore.staffScore}
+             <if test="visitScoreDetailInfo.shopCode!= null and visitScoreDetailInfo.shopCode!= ''">
+				AND SHOP_CODE=#{visitScoreDetailInfo.shopCode}
             </if>
-            <if test="visitScore.totalScore!= null and visitScore.totalScore!= ''">
-				AND TOTAL_SCORE=#{visitScore.totalScore}
+            <if test="visitScoreDetailInfo.shopName!= null and visitScoreDetailInfo.shopName!= ''">
+				AND SHOP_NAME=#{visitScoreDetailInfo.shopName}
             </if>
-            <if test="visitScore.remark!= null and visitScore.remark!= ''">
-				AND REMARK=#{visitScore.remark}
+            <if test="visitScoreDetailInfo.shopScore!= null and visitScoreDetailInfo.shopScore!= ''">
+				AND SHOP_SCORE=#{visitScoreDetailInfo.shopScore}
             </if>
-            <if test="visitScore.createBy!= null and visitScore.createBy!= ''">
-				AND CREATE_BY=#{visitScore.createBy}
+            <if test="visitScoreDetailInfo.saleScore!= null and visitScoreDetailInfo.saleScore!= ''">
+				AND SALE_SCORE=#{visitScoreDetailInfo.saleScore}
             </if>
-            <if test="visitScore.createTime!= null and visitScore.createTime!= ''">
-				AND CREATE_TIME=str_to_date(#{visitScore.createTime},'%Y-%m-%d %H:%i:%s')
+            <if test="visitScoreDetailInfo.staffScore!= null and visitScoreDetailInfo.staffScore!= ''">
+				AND STAFF_SCORE=#{visitScoreDetailInfo.staffScore}
             </if>
-            <if test="visitScore.updateBy!= null and visitScore.updateBy!= ''">
-				AND UPDATE_BY=#{visitScore.updateBy}
+            <if test="visitScoreDetailInfo.totalScore!= null and visitScoreDetailInfo.totalScore!= ''">
+				AND TOTAL_SCORE=#{visitScoreDetailInfo.totalScore}
             </if>
-            <if test="visitScore.updateTime!= null and visitScore.updateTime!= ''">
-				AND UPDATE_TIME=str_to_date(#{visitScore.updateTime},'%Y-%m-%d %H:%i:%s')
+            <if test="visitScoreDetailInfo.totalScoreStart!= null and visitScoreDetailInfo.totalScoreStart!= ''">
+				AND TOTAL_SCORE &gt;=#{visitScoreDetailInfo.totalScoreStart}
             </if>
-            <if test="visitScore.version!= null and visitScore.version!= ''">
-				AND VERSION=#{visitScore.version}
+            <if test="visitScoreDetailInfo.totalScoreEnd!= null and visitScoreDetailInfo.totalScoreEnd!= ''">
+				AND TOTAL_SCORE &lt;=#{visitScoreDetailInfo.totalScoreEnd}
+            </if>
+            <if test="visitScoreDetailInfo.empName!= null and visitScoreDetailInfo.empName!= ''">
+				AND EMP_NAME=#{visitScoreDetailInfo.empName}
+            </if>
+            <if test="visitScoreDetailInfo.remark!= null and visitScoreDetailInfo.remark!= ''">
+				AND REMARK=#{visitScoreDetailInfo.remark}
+            </if>
+            <if test="visitScoreDetailInfo.createBy!= null and visitScoreDetailInfo.createBy!= ''">
+				AND CREATE_BY=#{visitScoreDetailInfo.createBy}
+            </if>
+            <if test="visitScoreDetailInfo.createTime!= null and visitScoreDetailInfo.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{visitScoreDetailInfo.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitScoreDetailInfo.createTimeStart!= null and visitScoreDetailInfo.createTimeStart!= ''">
+				AND CREATE_TIME &gt;=str_to_date(#{visitScoreDetailInfo.createTimeStart},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitScoreDetailInfo.createTimeEnd!= null and visitScoreDetailInfo.createTimeEnd!= ''">
+				AND CREATE_TIME &lt;=str_to_date(#{visitScoreDetailInfo.createTimeEnd},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitScoreDetailInfo.updateBy!= null and visitScoreDetailInfo.updateBy!= ''">
+				AND UPDATE_BY=#{visitScoreDetailInfo.updateBy}
+            </if>
+            <if test="visitScoreDetailInfo.updateTime!= null and visitScoreDetailInfo.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{visitScoreDetailInfo.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitScoreDetailInfo.version!= null and visitScoreDetailInfo.version!= ''">
+				AND VERSION=#{visitScoreDetailInfo.version}
             </if>
         </if>
     </sql>
@@ -224,7 +285,6 @@
 		<![CDATA[
 			) VALUES ( 
 			 #{visitId}
-			, #{shopId}
 			, #{shopScore}
 			, #{saleScore}
 			, #{staffScore}
@@ -240,8 +300,7 @@
 	<update id="update" parameterType="VisitScore">
 		<![CDATA[ UPDATE T_VISIT_SCORE SET 
 			 ID=#{id} 
-			, VISIT_ID=#{visitId}
-			, SHOP_ID=#{shopId}  
+			, VISIT_ID=#{visitId} 
 			, SHOP_SCORE=#{shopScore} 
 			, SALE_SCORE=#{saleScore} 
 			, STAFF_SCORE=#{staffScore} 
@@ -284,10 +343,21 @@
 		FROM T_VISIT_SCORE WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="VisitScore" resultMap="VisitScoreResultMapper">
+	<select id="listPaginationByProperty" parameterType="VisitScoreDetailInfoDto" resultMap="VisitScoreDetailInfoDtoResultMapper">
 		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_VISIT_SCORE WHERE 1=1
+		<include refid="commonProcessDateColumn"/>
+		FROM T_VISIT_SCORE vs
+		LEFT JOIN T_VISIT v ON v.ID = vs.VISIT_ID
+		LEFT JOIN T_COMPANY c ON c.ID = v.COMPANY_ID
+		LEFT JOIN T_SHOP s ON s.ID = vs.SHOP_ID
+		LEFT JOIN T_REGION r1 ON r1.ID = s.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = s.CITY
+		LEFT JOIN T_USER u ON u.USER_CODE = vs.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID
+		WHERE 1=1
+		<if test="companyId!= null and companyId!= ''"> 
+			AND v.COMPANY_ID =#{companyId}
+		</if>
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>
@@ -295,8 +365,19 @@
 		SELECT count(1) AS totalcount FROM T_VISIT_SCORE WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	
-	<select id="queryVisitScoreByVisitId" parameterType="java.lang.Long" resultMap="VisitScoreDtoResultMapper">
-		SELECT * FROM T_VISIT_SCORE WHERE VISIT_ID = #{visitId}
+	<select id="listVisitScoreByProperty" parameterType="VisitScoreDetailInfoDto" resultMap="VisitScoreDetailInfoDtoResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumn"/>
+		FROM T_VISIT_SCORE vs
+		LEFT JOIN T_VISIT v ON v.ID = vs.VISIT_ID
+		LEFT JOIN T_COMPANY c ON c.ID = v.COMPANY_ID
+		LEFT JOIN T_SHOP s ON s.ID = vs.SHOP_ID
+		LEFT JOIN T_REGION r1 ON r1.ID = s.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = s.CITY
+		LEFT JOIN T_USER u ON u.USER_CODE = vs.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID
+		WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	ORDER BY vs.CREATE_TIME
 	</select>
 </mapper>

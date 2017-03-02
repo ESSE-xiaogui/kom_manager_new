@@ -190,6 +190,23 @@ public class VisitPlanController extends AbstractController{
 		return visitPlanFacade.queryPlanInfo(token, startDate, endDate);
 	}
 	
+	/**
+	 * 巡店计划导出Excel
+	 * @param createTimeStart
+	 * @param createTimeEnd
+	 * @param planDateStart
+	 * @param planDateEnd
+	 * @param gradeId
+	 * @param regionId
+	 * @param bizId
+	 * @param weekNo
+	 * @param createBy
+	 * @param companyId
+	 * @param status
+	 * @return
+	 * @throws ServiceException
+	 * @throws IOException
+	 */
 	@GET
 	@Path("/exportExcel") 
 	@Produces({MediaType.TEXT_PLAIN})  
