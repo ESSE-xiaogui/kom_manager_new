@@ -201,6 +201,7 @@
 		<![CDATA[
 			) VALUES ( 
 			 #{visitId}
+			, #{shopId}
 			, #{brandId}
 			, #{modelId}
 			, #{saleQty}
@@ -216,6 +217,7 @@
 		<![CDATA[ UPDATE T_VISIT_SALE SET 
 			 ID=#{id} 
 			, VISIT_ID=#{visitId} 
+			, SHOP_ID=#{shopId} 
 			, BRAND_ID=#{brandId} 
 			, MODEL_ID=#{modelId} 
 			, SALE_QTY=#{saleQty} 

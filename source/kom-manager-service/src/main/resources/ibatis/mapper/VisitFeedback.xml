@@ -289,6 +289,7 @@
 		<![CDATA[
 			) VALUES ( 
 			 #{visitId}
+			, #{shopId}
 			, #{issue}
 			, #{action}
 			, #{imgFirstUrl}
@@ -305,7 +306,8 @@
 	<update id="update" parameterType="VisitFeedback">
 		<![CDATA[ UPDATE T_VISIT_FEEDBACK SET 
 			 ID=#{id} 
-			, VISIT_ID=#{visitId} 
+			, VISIT_ID=#{visitId}
+			, SHOP_ID=#{shopId}
 			, ISSUE=#{issue} 
 			, ACTION=#{action} 
 			, IMG_FIRST_URL=#{imgFirstUrl} 

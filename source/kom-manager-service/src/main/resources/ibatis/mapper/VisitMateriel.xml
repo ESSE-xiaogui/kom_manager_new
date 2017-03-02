@@ -188,6 +188,7 @@
 		<![CDATA[
 			) VALUES ( 
 			 #{visitId}
+			, #{shopId}
 			, #{materielId}
 			, #{materielQty}
 			, #{remark}
@@ -202,6 +203,7 @@
 		<![CDATA[ UPDATE T_VISIT_MATERIEL SET 
 			 ID=#{id} 
 			, VISIT_ID=#{visitId} 
+			, SHOP_ID=#{shopId} 
 			, MATERIEL_ID=#{materielId} 
 			, MATERIEL_QTY=#{materielQty} 
 			, REMARK=#{remark} 

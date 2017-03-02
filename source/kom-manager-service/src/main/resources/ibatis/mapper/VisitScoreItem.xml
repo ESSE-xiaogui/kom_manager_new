@@ -188,6 +188,7 @@
 		<![CDATA[
 			) VALUES ( 
 			 #{visitId}
+			, #{shopId}
 			, #{scoreSettingId}
 			, #{score}
 			, #{remark}
@@ -202,6 +203,7 @@
 		<![CDATA[ UPDATE T_VISIT_SCORE_ITEM SET 
 			 ID=#{id} 
 			, VISIT_ID=#{visitId} 
+			, SHOP_ID=#{shopId} 
 			, SCORE_SETTING_ID=#{scoreSettingId} 
 			, SCORE=#{score} 
 			, REMARK=#{remark} 

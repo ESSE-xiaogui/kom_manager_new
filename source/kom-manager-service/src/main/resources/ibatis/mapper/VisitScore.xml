@@ -214,6 +214,7 @@
 		<![CDATA[
 			) VALUES ( 
 			 #{visitId}
+			, #{shopId}
 			, #{shopScore}
 			, #{saleScore}
 			, #{staffScore}
@@ -229,7 +230,8 @@
 	<update id="update" parameterType="VisitScore">
 		<![CDATA[ UPDATE T_VISIT_SCORE SET 
 			 ID=#{id} 
-			, VISIT_ID=#{visitId} 
+			, VISIT_ID=#{visitId}
+			, SHOP_ID=#{shopId}  
 			, SHOP_SCORE=#{shopScore} 
 			, SALE_SCORE=#{saleScore} 
 			, STAFF_SCORE=#{staffScore} 

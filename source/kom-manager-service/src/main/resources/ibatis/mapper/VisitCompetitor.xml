@@ -188,6 +188,7 @@
 		<![CDATA[
 			) VALUES ( 
 			 #{visitId}
+			, #{shopId}
 			, #{brandId}
 			, #{saleQty}
 			, #{remark}
@@ -202,6 +203,7 @@
 		<![CDATA[ UPDATE T_VISIT_COMPETITOR SET 
 			 ID=#{id} 
 			, VISIT_ID=#{visitId} 
+			, SHOP_ID=#{shopId} 
 			, BRAND_ID=#{brandId} 
 			, SALE_QTY=#{saleQty} 
 			, REMARK=#{remark} 
