@@ -210,10 +210,11 @@ public class VisitPlanManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		VisitPlan visitPlan = new VisitPlan();
+		visitPlan.setCompanyId(visit.getCompanyId());
 		visitPlan.setPlanDate(visit.getVisitDate());
 		visitPlan.setShopId(visit.getShopId());
 		visitPlan.setStatus(done);
-		visitPlanMapper.update(visitPlan);
+		visitPlanMapper.updateStatusByShopIdAndPlanDate(visitPlan);
 	}
 	
 	
@@ -223,6 +224,7 @@ public class VisitPlanManager {
 	 */
 	public boolean isVisitPlanned(Visit visit) throws ServiceException{
 		VisitPlan visitPlan = new VisitPlan();
+		visitPlan.setCompanyId(visit.getCompanyId());
 		visitPlan.setPlanDate(visit.getVisitDate());
 		visitPlan.setShopId(visit.getShopId());
 		int count = visitPlanMapper.findByCount(visitPlan);
