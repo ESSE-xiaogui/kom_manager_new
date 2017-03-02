@@ -31,7 +31,7 @@ public class SaleGoalManager {
 	
 	
 	@Autowired
-	private SalesMannager salesMannager;
+	private SalesManager salesMannager;
 	
 	
 	/**

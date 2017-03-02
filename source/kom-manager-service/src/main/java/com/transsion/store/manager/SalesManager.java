@@ -45,8 +45,8 @@ import com.transsion.store.utils.ExcelUtils;
 import com.transsion.store.utils.PropertiesUtils;
 
 @Service("salesMannager")
-public class SalesMannager {
-	Logger logger = LoggerFactory.getLogger(SalesMannager.class);
+public class SalesManager {
+	Logger logger = LoggerFactory.getLogger(SalesManager.class);
 	
 	@Autowired
 	private SaleMapper saleMapper;

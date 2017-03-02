@@ -29,7 +29,7 @@ import com.transsion.store.dto.SalesDto;
 import com.transsion.store.dto.SalesUploadDto;
 import com.transsion.store.dto.TShopSaleDto;
 import com.transsion.store.facade.SaleFacade;
-import com.transsion.store.manager.SalesMannager;
+import com.transsion.store.manager.SalesManager;
 import com.transsion.store.service.SaleService;
 
 @Component("saleFacade")
@@ -44,7 +44,7 @@ public class SaleFacadeImpl implements SaleFacade {
 	}
 	
 	@Autowired
-	private SalesMannager salesMannager;
+	private SalesManager salesMannager;
 	
 	
 	/**
