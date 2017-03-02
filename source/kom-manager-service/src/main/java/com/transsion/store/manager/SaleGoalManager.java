@@ -65,7 +65,7 @@ public class SaleGoalManager {
 	/*
 	 *  获取店铺机型月销量信息
 	 */
-	public  List<VisitStockInfoDto> getShopModelSaleInfo(long shopId,List<String> modelList, String saleDate)
+	public  List<VisitStockInfoDto> getShopModelSaleInfo(long shopId, List<String> modelCodeList, String saleDate)
 	{
 		return null;
 	}

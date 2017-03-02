@@ -1,6 +1,7 @@
 package com.transsion.store.manager;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -163,8 +164,8 @@ public class VisitManager {
 	}
 	
 	public List<VisitStockInfoDto> queryVisitModelInfo(String token,java.lang.Long shopId, String planDate) throws ServiceException {
-		//return saleGoalManager.getShopModelSaleInfo(shopId, modelList, saleDate);
-		return null;
+		 List<String> modelCodeList = new ArrayList<String>();
+		return saleGoalManager.getShopModelSaleInfo(shopId, modelCodeList, planDate);
 	}
 
 	public VisitRecordInfoDto queryVisitRecordInfo(String token, String id) throws ServiceException {
