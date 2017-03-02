@@ -210,31 +210,44 @@ public class VisitManager {
 		
 		String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 		VisitDto visitDto = visitRecordDto.getVisitDto();
-		Visit visit = visitDto.toModel();
+		
+		Long visitId = null;
 		if (visitDto != null) {
+			Visit visit = visitDto.toModel();
+			Long companyId = userContext.getCompanyId();
+			visit.setCompanyId(companyId);
 			visit.setCreateBy(userContext.getUserCode());
 			visit.setCreateTime(currentDate);
 			visit.setUpdateBy(userContext.getUserCode());
 			visit.setUpdateTime(currentDate);
+			
+			visit.setVistor(userContext.getUserCode());
 			visitService.save(visit);
-//			visitService.saveVisitDto(visitDto);
+			visitId = visit.getId();
 		}
 		
+		Long shopId = userContext.getShop().getId();
 		List<VisitStockDto> visitStockDtoList = visitRecordDto.getVisitStockDtoList();
 		if (visitStockDtoList != null && visitStockDtoList.size() > 0) {
 			for (VisitStockDto visitStockDto : visitStockDtoList) {
-				VisitStock visitStock = visitStockDto.toModel();
-				visitStock.setCreateBy(userContext.getUserCode());
-				visitStock.setCreateTime(currentDate);
-				visitStock.setUpdateBy(userContext.getUserCode());
-				visitStock.setUpdateTime(currentDate);
-				visitStockService.save(visitStock);
+				if (visitStockDto != null) {
+					VisitStock visitStock = visitStockDto.toModel();
+					visitStock.setVisitId(visitId);
+					visitStock.setShopId(shopId);
+					visitStock.setCreateBy(userContext.getUserCode());
+					visitStock.setCreateTime(currentDate);
+					visitStock.setUpdateBy(userContext.getUserCode());
+					visitStock.setUpdateTime(currentDate);
+					visitStockService.save(visitStock);
+				}
 			}
 		}
 		
 		VisitScoreDto visitScoreDto = visitRecordDto.getVisitScoreDto();
 		if (visitScoreDto != null) {
 			VisitScore visitScore = visitScoreDto.toModel();
+			visitScore.setVisitId(visitId);
+			visitScore.setShopId(Long.valueOf(1));
 			visitScore.setCreateBy(userContext.getUserCode());
 			visitScore.setCreateTime(currentDate);
 			visitScore.setUpdateBy(userContext.getUserCode());
@@ -246,6 +259,8 @@ public class VisitManager {
 		if (visitScoreItemDtoList != null && visitScoreItemDtoList.size() > 0) {
 			for (VisitScoreItemDto visitScoreItemDto : visitScoreItemDtoList) {
 				VisitScoreItem visitScoreItem = visitScoreItemDto.toModel();
+				visitScoreItem.setVisitId(visitId);
+				visitScoreItem.setShopId(shopId);
 				visitScoreItem.setCreateBy(userContext.getUserCode());
 				visitScoreItem.setCreateTime(currentDate);
 				visitScoreItem.setUpdateBy(userContext.getUserCode());
@@ -257,19 +272,14 @@ public class VisitManager {
 		VisitFeedbackDto visitFeedbackDto = visitRecordDto.getVisitFeedbackDto();
 		if (visitFeedbackDto != null) {
 			VisitFeedback visitFeedback = visitFeedbackDto.toModel();
+			visitFeedback.setVisitId(visitId);
+			visitFeedback.setShopId(shopId);
 			visitFeedback.setCreateBy(userContext.getUserCode());
 			visitFeedback.setCreateTime(currentDate);
 			visitFeedback.setUpdateBy(userContext.getUserCode());
 			visitFeedback.setUpdateTime(currentDate);
 			visitFeedbackService.save(visitFeedback);
 		}
-		
-		if(!visitPlanManager.isVisitPlanned(visit))
-		{
-			visit.setPlanType(Visit.State.UNPLANNED.getVal());
-		}
-			
-		visitPlanManager.updatePlanByVisit(visit);
 	}
 	
 	/**

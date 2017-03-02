@@ -22,6 +22,7 @@
 	<resultMap id="VisitScoreResultMapper" type="VisitScore">
 		<result column="ID" property="id"/>
 		<result column="VISIT_ID" property="visitId"/>
+		<result column="SHOP_ID" property="shopId"/>
 		<result column="SHOP_SCORE" property="shopScore"/>
 		<result column="SALE_SCORE" property="saleScore"/>
 		<result column="STAFF_SCORE" property="staffScore"/>
@@ -74,6 +75,7 @@
 
 	<sql id="commonColumnsNotPK">
 		 VISIT_ID
+		, SHOP_ID
 		, SHOP_SCORE
 		, SALE_SCORE
 		, STAFF_SCORE

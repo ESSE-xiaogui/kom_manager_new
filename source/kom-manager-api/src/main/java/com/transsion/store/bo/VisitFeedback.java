@@ -318,24 +318,14 @@ public class VisitFeedback extends Model{
 	{
 		this.version = version;
 	}
-	
-	public String toString()
-	{
-		return "VisitFeedback [" + 
-					"id=" + id + 
-					", visitId=" + visitId + 
-					", issue=" + issue + 
-					", action=" + action + 
-					", imgFirstUrl=" + imgFirstUrl + 
-					", imgSecondUrl=" + imgSecondUrl + 
-					", imgThirdUrl=" + imgThirdUrl + 
-					", remark=" + remark + 
-					", createBy=" + createBy + 
-					", createTime=" + createTime + 
-					", updateBy=" + updateBy + 
-					", updateTime=" + updateTime + 
-					", version=" + version + 
-				"]";
+
+	@Override
+	public String toString() {
+		return "VisitFeedback [id=" + id + ", visitId=" + visitId + ", shopId=" + shopId + ", issue=" + issue
+				+ ", action=" + action + ", imgFirstUrl=" + imgFirstUrl + ", imgSecondUrl=" + imgSecondUrl
+				+ ", imgThirdUrl=" + imgThirdUrl + ", remark=" + remark + ", createBy=" + createBy + ", createTime="
+				+ createTime + ", updateBy=" + updateBy + ", updateTime=" + updateTime + ", version=" + version + "]";
 	}
+	
 }
 

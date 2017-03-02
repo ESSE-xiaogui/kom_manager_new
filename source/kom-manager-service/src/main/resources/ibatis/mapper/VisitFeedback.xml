@@ -22,6 +22,7 @@
 	<resultMap id="VisitFeedbackResultMapper" type="VisitFeedback">
 		<result column="ID" property="id"/>
 		<result column="VISIT_ID" property="visitId"/>
+		<result column="SHOP_ID" property="shopId"/>
 		<result column="ISSUE" property="issue"/>
 		<result column="ACTION" property="action"/>
 		<result column="IMG_FIRST_URL" property="imgFirstUrl"/>
@@ -85,6 +86,7 @@
 
 	<sql id="commonColumnsNotPK">
 		 VISIT_ID
+		, SHOP_ID
 		, ISSUE
 		, ACTION
 		, IMG_FIRST_URL

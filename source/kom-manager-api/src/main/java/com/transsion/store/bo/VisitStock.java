@@ -319,24 +319,14 @@ public class VisitStock extends Model{
 	{
 		this.version = version;
 	}
-	
-	public String toString()
-	{
-		return "VisitStock [" + 
-					"id=" + id + 
-					", visitId=" + visitId + 
-					", brandId=" + brandId + 
-					", modelId=" + modelId + 
-					", stockQty=" + stockQty + 
-					", saleAvg=" + saleAvg + 
-					", stockIto=" + stockIto + 
-					", remark=" + remark + 
-					", createBy=" + createBy + 
-					", createTime=" + createTime + 
-					", updateBy=" + updateBy + 
-					", updateTime=" + updateTime + 
-					", version=" + version + 
-				"]";
+
+	@Override
+	public String toString() {
+		return "VisitStock [id=" + id + ", visitId=" + visitId + ", shopId=" + shopId + ", brandId=" + brandId
+				+ ", modelId=" + modelId + ", stockQty=" + stockQty + ", saleAvg=" + saleAvg + ", stockIto=" + stockIto
+				+ ", remark=" + remark + ", createBy=" + createBy + ", createTime=" + createTime + ", updateBy="
+				+ updateBy + ", updateTime=" + updateTime + ", version=" + version + "]";
 	}
+	
 }
 

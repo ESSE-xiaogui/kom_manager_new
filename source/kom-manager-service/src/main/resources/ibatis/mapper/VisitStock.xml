@@ -22,6 +22,7 @@
 	<resultMap id="VisitStockResultMapper" type="VisitStock">
 		<result column="ID" property="id"/>
 		<result column="VISIT_ID" property="visitId"/>
+		<result column="SHOP_ID" property="shopId"/>
 		<result column="BRAND_ID" property="brandId"/>
 		<result column="MODEL_ID" property="modelId"/>
 		<result column="STOCK_QTY" property="stockQty"/>
@@ -94,6 +95,7 @@
 
 	<sql id="commonColumnsNotPK">
 		 VISIT_ID
+		, SHOP_ID
 		, BRAND_ID
 		, MODEL_ID
 		, STOCK_QTY

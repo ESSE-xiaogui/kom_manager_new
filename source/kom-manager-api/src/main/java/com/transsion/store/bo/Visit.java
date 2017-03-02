@@ -105,6 +105,8 @@ public class Visit extends Model{
 	  *	
 	  */
 	private java.lang.Integer version;
+	
+	private java.lang.String vistor;
 
 	/**
 	  *	
@@ -312,6 +314,14 @@ public class Visit extends Model{
 	public void setVersion(java.lang.Integer version) 
 	{
 		this.version = version;
+	}
+	
+	public java.lang.String getVistor() {
+		return vistor;
+	}
+
+	public void setVistor(java.lang.String vistor) {
+		this.vistor = vistor;
 	}
 	
 	public String toString()
