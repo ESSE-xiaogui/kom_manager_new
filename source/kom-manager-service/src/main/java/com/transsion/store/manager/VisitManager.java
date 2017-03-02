@@ -264,6 +264,11 @@ public class VisitManager {
 			visitFeedbackService.save(visitFeedback);
 		}
 		
+		if(!visitPlanManager.isVisitPlanned(visit))
+		{
+			visit.setPlanType(Visit.State.UNPLANNED.getVal());
+		}
+			
 		visitPlanManager.updatePlanByVisit(visit);
 	}
 	
