@@ -11,12 +11,15 @@ import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.VisitDto;
+import com.transsion.store.dto.VisitHistorySummaryDto;
 import com.transsion.store.dto.VisitInfoDto;
+import com.transsion.store.dto.VisitPlanParamDto;
 import com.transsion.store.dto.VisitRecordDto;
 import com.transsion.store.dto.VisitScoreSettingDto;
 import com.transsion.store.dto.VisitSettingDto;
 import com.transsion.store.dto.VisitShopInfoDto;
 import com.transsion.store.exception.ExceptionDef;
+import com.transsion.store.mapper.VisitMapper;
 import com.transsion.store.mapper.VisitScoreSettingMapper;
 import com.transsion.store.service.VisitPlanService;
 import com.transsion.store.service.VisitService;
@@ -34,6 +37,9 @@ public class VisitManager {
 	
 	@Autowired
 	private VisitPlanService visitPlanService;
+	
+	@Autowired
+	private VisitMapper visitMapper;
 	
 	public List<VisitInfoDto> queryPlanedVisitList(String token, String planDate) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
@@ -151,5 +157,33 @@ public class VisitManager {
 		visitDto.setUpdateBy(userContext.getUserCode());
 		visitDto.setUpdateTime(currentDate);
 		visitService.saveVisitDto(visitDto);
+	}
+	
+	/**
+	 * app 历史巡店记录列表查询
+	 * historyList页面 
+	 * @author guihua.zhang on 2017-03-02
+	 * @param startDate 前八周的第一天
+	 * @param endDate 今日日期/后台去今日日期的前一天
+	 */
+	public List<VisitHistorySummaryDto> queryVisitSummaryHistory(String token, String startDate, String endDate)
+					throws ServiceException {
+		if (UtilHelper.isEmpty(token)) {
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		if (UtilHelper.isEmpty(startDate) || UtilHelper.isEmpty(endDate)) {
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())
+						|| UtilHelper.isEmpty(userContext.getCompanyId())) {
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		VisitPlanParamDto visit = new VisitPlanParamDto();
+		visit.setCompanyId(userContext.getCompanyId());
+		visit.setPlanner(userContext.getUserCode());
+		visit.setBeginDate(startDate);
+		visit.setEndDate(endDate);
+		return visitMapper.queryVisitSummaryHistory(visit);
 	}
 }

@@ -209,8 +209,10 @@ public class VisitController extends AbstractController{
 	
 	/**
 	 * app 历史巡店记录列表查询
-	 * @param startDate
-	 * @param endDate
+	 * historyList页面 
+	 * @author guihua.zhang on 2017-03-02
+	 * @param startDate 前八周的第一天
+	 * @param endDate 今日日期/后台去今日日期的前一天
 	 * @return
 	 * @throws ServiceException
 	 */

@@ -161,10 +161,13 @@ public class VisitFacadeImpl implements VisitFacade {
 		return visitManager.queryVisitSetting(token);
 	}
 
-	@Override
+	/**
+	 * app 历史巡店记录列表查询
+	 * historyList页面 
+	 */
 	public List<VisitHistorySummaryDto> queryVisitSummaryHistory(String token, String startDate, String endDate)
 			throws ServiceException {
-		return null;
+		return visitManager.queryVisitSummaryHistory(token, startDate, endDate);
 	}
 
 	@Override

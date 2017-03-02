@@ -43,6 +43,6 @@ public interface VisitPlanMapper extends GenericIBatisMapper<VisitPlan, java.lan
 
 	public List<VisitPlanDetailInfoDto> listVisitPlanByProperty(@Param("visitPlanDetailInfoDto")VisitPlanDetailInfoDto visitPlanDetailInfoDto)throws DataAccessFailureException;
 
-	//查询八周的巡店计划
-		public List<VisitPlanDetailSummaryDto> findTwoWeekQty(VisitPlanParamDto visitPlanParamDto);
+	//查询两周的巡店计划
+	public List<VisitPlanDetailSummaryDto> findTwoWeekQty(VisitPlanParamDto visitPlanParamDto);
 }

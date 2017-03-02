@@ -71,6 +71,11 @@
 		<result column="SALE_TARGET" property="targetSaleQty"/>
 	</resultMap>
 	
+	<resultMap id="VisitHistorySummaryDtoResultMapper" type="VisitHistorySummaryDto">
+		<result column="VISIT_DATE" property="visitDate"/>
+		<result column="VISIT_QTY" property="visitStoreQty"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, VISIT_DATE
@@ -159,7 +164,20 @@
 			AND VERSION=#{version}
 		</if>
 	</sql>
-
+	<sql id="commonConditionByParam">
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="planner!= null and planner!= ''"> 
+			AND VISTOR=#{planner}
+		</if>		
+		<if test="beginDate!= null and beginDate!= ''"> 
+			AND VISIT_DATE&gt;=str_to_date(#{beginDate},'%Y-%m-%d')
+		</if>		
+		<if test="endDate!= null and endDate!= ''"> 
+			AND VISIT_DATE&lt;=str_to_date(#{endDate},'%Y-%m-%d')
+		</if>		
+	</sql>
 	<sql id="commonConditionByPrefix">
 		<if test="visit != null">
             <if test="visit.id!= null and visit.id!= ''">
@@ -378,4 +396,11 @@
 			#{updateTime}
 		)
 	</insert>
+	<select id="queryVisitSummaryHistory" parameterType="VisitPlanParamDto"
+		resultMap="VisitHistorySummaryDtoResultMapper">
+		SELECT VISIT_DATE,COUNT(*) AS VISIT_QTY FROM T_VISIT
+		WHERE 1=1
+		<include refid="commonConditionByParam"/>
+		GROUP BY VISIT_DATE
+	</select>
 </mapper>
