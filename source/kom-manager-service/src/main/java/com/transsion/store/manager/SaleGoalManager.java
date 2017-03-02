@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
+import com.transsion.store.bo.GoalSupervisor;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.SaleGoalDto;
 import com.transsion.store.dto.ShopInfoDto;
@@ -16,6 +17,7 @@ import com.transsion.store.dto.StatShopModelSaleDto;
 import com.transsion.store.dto.VisitShopInfoDto;
 import com.transsion.store.dto.VisitStockInfoDto;
 import com.transsion.store.exception.ExceptionDef;
+import com.transsion.store.mapper.GoalSupervisorMapper;
 import com.transsion.store.mapper.SaleGoalMapper;
 import com.transsion.store.mapper.ShopMapper;
 import com.transsion.store.utils.CacheUtils;
@@ -36,6 +38,9 @@ public class SaleGoalManager {
 	
 	@Autowired
 	private ShopMapper shopMapper;
+	
+	@Autowired
+	private GoalSupervisorMapper goalSupervisorMapper;
 	
 	
 	/**
@@ -77,7 +82,12 @@ public class SaleGoalManager {
 		visitShopInfoDto.setCityName(shopInfoDto.getCityName());
 
 		// 获取绩效信息
-
+		GoalSupervisor goalSupervisor = new GoalSupervisor();
+		goalSupervisor.setShopId(shopId);
+		goalSupervisor.setGoalMonth(saleDate.substring(1, 7));
+		Long saleTarget = goalSupervisorMapper.querySaleTargetByShopId(goalSupervisor);
+		visitShopInfoDto.setTargetSaleQty(saleTarget);
+		
 		// 获取销量信息
 		visitShopInfoDto.setCurrentSaleQty(salesMannager.calcShopSaleQty(shopId, saleDate, saleDate));
 		return visitShopInfoDto;

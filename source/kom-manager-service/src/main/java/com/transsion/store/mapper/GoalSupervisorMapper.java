@@ -28,4 +28,6 @@ import org.apache.ibatis.annotations.Param;
 public interface GoalSupervisorMapper extends GenericIBatisMapper<GoalSupervisor, java.lang.Long> {
 
     public List<GoalSupervisor> listPaginationByProperty(Pagination<GoalSupervisor> pagination, @Param("goalSupervisor")GoalSupervisor goalSupervisor, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    
+    public Long querySaleTargetByShopId(GoalSupervisor goalSupervisor);
 }

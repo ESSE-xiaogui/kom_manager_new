@@ -343,4 +343,8 @@
 		SELECT count(1) AS totalcount FROM T_GOAL_SUPERVISOR WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
+	
+	<select id="querySaleTargetByShopId" parameterType="GoalSupervisor" resultType="java.lang.Long">
+		SELECT SALE_TARGET FROM T_GOAL_SUPERVISOR WHERE SHOP_ID = #{shopId} AND GOAL_MONTH = #{saleDate}
+	</select>
 </mapper>
