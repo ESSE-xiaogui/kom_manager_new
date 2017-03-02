@@ -316,4 +316,9 @@
 	<select id="queryVisitModelSettingList" resultMap="VisitModelSettingDtoResultMapper">
 		SELECT * FROM T_VISIT_MODEL_SETTING
 	</select>
+	
+	<select id="queryModeCodeListByCompanyId" parameterType="VisitModelSetting" resultType="java.lang.String">
+		SELECT m.MODEL_CODE FROM T_VISIT_MODEL_SETTING v LEFT JOIN T_MODEL m ON v.MODEL_ID = m.ID 
+		WHERE v.COMPANY_ID = #{companyId} AND v.ACTION_DATE = #{actionDate}
+	</select>
 </mapper>

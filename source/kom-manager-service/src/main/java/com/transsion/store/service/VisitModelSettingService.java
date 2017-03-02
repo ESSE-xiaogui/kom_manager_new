@@ -149,4 +149,8 @@ public class VisitModelSettingService {
 	{
 		return visitModelSettingMapper.findByCount(visitModelSetting);
 	}
+	
+	public List<String> queryModeCodeListByCompanyId(VisitModelSetting visitModelSetting) throws ServiceException {
+		return visitModelSettingMapper.queryModeCodeListByCompanyId(visitModelSetting);
+	}
 }
