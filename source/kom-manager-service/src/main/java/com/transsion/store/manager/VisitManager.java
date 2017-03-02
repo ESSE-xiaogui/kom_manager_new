@@ -70,6 +70,10 @@ public class VisitManager {
 	@Autowired
 	private VisitFeedbackService visitFeedbackService;
 	
+	@Autowired
+	private VisitPlanManager visitPlanManager;
+	
+	
 	public List<VisitInfoDto> queryPlanedVisitList(String token, String planDate) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
@@ -206,8 +210,8 @@ public class VisitManager {
 		
 		String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 		VisitDto visitDto = visitRecordDto.getVisitDto();
+		Visit visit = visitDto.toModel();
 		if (visitDto != null) {
-			Visit visit = visitDto.toModel();
 			visit.setCreateBy(userContext.getUserCode());
 			visit.setCreateTime(currentDate);
 			visit.setUpdateBy(userContext.getUserCode());
@@ -259,6 +263,8 @@ public class VisitManager {
 			visitFeedback.setUpdateTime(currentDate);
 			visitFeedbackService.save(visitFeedback);
 		}
+		
+		visitPlanManager.updatePlanByVisit(visit);
 	}
 	
 	/**

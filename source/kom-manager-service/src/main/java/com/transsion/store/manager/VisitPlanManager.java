@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
+import com.transsion.store.bo.Visit;
 import com.transsion.store.bo.VisitPlan;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.VisitPlanBriefSummaryDto;
@@ -167,6 +168,14 @@ public class VisitPlanManager {
 		visit.setBeginDate(startDate);
 		visit.setEndDate(endDate);
 		return visitPlanMapper.findTwoWeekQty(visit);
+	}
+	
+	/*
+	 * 上传巡店记录后跟新巡店计划
+	 */
+	public void updatePlanByVisit(Visit visit)
+	{
+		
 	}
 
 }
