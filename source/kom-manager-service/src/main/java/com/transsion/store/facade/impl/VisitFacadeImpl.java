@@ -179,7 +179,7 @@ public class VisitFacadeImpl implements VisitFacade {
 
 	@Override
 	public VisitShopInfoDto queryVisitShopInfo(String token, String planDate) throws ServiceException {
-		return null;
+		return visitManager.queryVisitShopInfo(token, planDate);
 	}
 
 	@Override

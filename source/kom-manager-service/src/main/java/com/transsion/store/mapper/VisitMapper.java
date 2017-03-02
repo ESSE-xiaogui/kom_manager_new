@@ -22,6 +22,7 @@ import java.util.Map;
 import com.transsion.store.bo.Visit;
 import com.transsion.store.dto.VisitDto;
 import com.transsion.store.dto.VisitInfoDto;
+import com.transsion.store.dto.VisitShopInfoDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
@@ -34,4 +35,6 @@ public interface VisitMapper extends GenericIBatisMapper<Visit, java.lang.Long> 
     public List<VisitInfoDto> queryUnplanedVisitList(VisitInfoDto visitInfoDto) throws DataAccessFailureException;
     
     public void saveVisitDto(VisitDto visitDto) throws DataAccessFailureException;
+    
+    public VisitShopInfoDto queryVisitShopInfo(VisitShopInfoDto visitShopInfoDto) throws DataAccessFailureException;
 }

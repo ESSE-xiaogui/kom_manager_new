@@ -15,6 +15,7 @@ import com.transsion.store.dto.VisitInfoDto;
 import com.transsion.store.dto.VisitRecordDto;
 import com.transsion.store.dto.VisitScoreSettingDto;
 import com.transsion.store.dto.VisitSettingDto;
+import com.transsion.store.dto.VisitShopInfoDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.VisitModelSettingMapper;
 import com.transsion.store.mapper.VisitScoreSettingMapper;
@@ -106,6 +107,21 @@ public class VisitManager {
 			}
 		}
 		return list;
+	}
+	
+	public VisitShopInfoDto queryVisitShopInfo(String token, String planDate) throws ServiceException {
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		
+		VisitShopInfoDto visitShopInfoDto = new VisitShopInfoDto();
+		visitShopInfoDto.setShopId(userContext.getShop().getId());
+		visitShopInfoDto.setPlanDate(planDate);
+		return visitService.queryVisitShopInfo(visitShopInfoDto);
 	}
 	
 	public VisitSettingDto queryVisitSetting(String token) throws ServiceException {

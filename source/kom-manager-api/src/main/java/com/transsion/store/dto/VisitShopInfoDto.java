@@ -8,11 +8,11 @@ public class VisitShopInfoDto implements Serializable {
 
 	private java.lang.Long shopId;
 
-	private java.lang.Long shopName;
+	private java.lang.String shopName;
 
 	private java.lang.Long gradeId;
 
-	private java.lang.Long gradeName;
+	private java.lang.String gradeName;
 	
 	private java.lang.String cityName;
 
@@ -25,6 +25,8 @@ public class VisitShopInfoDto implements Serializable {
 	  *	
 	  */
 	private java.lang.Long targetSaleQty;
+	
+	private java.lang.String planDate;
 
 	public java.lang.Long getShopId() {
 		return shopId;
@@ -34,11 +36,11 @@ public class VisitShopInfoDto implements Serializable {
 		this.shopId = shopId;
 	}
 
-	public java.lang.Long getShopName() {
+	public java.lang.String getShopName() {
 		return shopName;
 	}
 
-	public void setShopName(java.lang.Long shopName) {
+	public void setShopName(java.lang.String shopName) {
 		this.shopName = shopName;
 	}
 
@@ -50,11 +52,11 @@ public class VisitShopInfoDto implements Serializable {
 		this.gradeId = gradeId;
 	}
 
-	public java.lang.Long getGradeName() {
+	public java.lang.String getGradeName() {
 		return gradeName;
 	}
 
-	public void setGradeName(java.lang.Long gradeName) {
+	public void setGradeName(java.lang.String gradeName) {
 		this.gradeName = gradeName;
 	}
 
@@ -73,13 +75,28 @@ public class VisitShopInfoDto implements Serializable {
 	public void setTargetSaleQty(java.lang.Long targetSaleQty) {
 		this.targetSaleQty = targetSaleQty;
 	}
+	
+	public java.lang.String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(java.lang.String cityName) {
+		this.cityName = cityName;
+	}
+	
+	public java.lang.String getPlanDate() {
+		return planDate;
+	}
+
+	public void setPlanDate(java.lang.String planDate) {
+		this.planDate = planDate;
+	}
 
 	@Override
 	public String toString() {
-		return "VisitShopInfo [shopId=" + shopId + ", shopName=" + shopName + ", gradeId=" + gradeId + ", gradeName="
-				+ gradeName + ", currentSaleQty=" + currentSaleQty + ", targetSaleQty=" + targetSaleQty + "]";
+		return "VisitShopInfoDto [shopId=" + shopId + ", shopName=" + shopName + ", gradeId=" + gradeId + ", gradeName="
+				+ gradeName + ", cityName=" + cityName + ", currentSaleQty=" + currentSaleQty + ", targetSaleQty="
+				+ targetSaleQty + ", planDate=" + planDate + "]";
 	}
-	
-	
-	
+
 }

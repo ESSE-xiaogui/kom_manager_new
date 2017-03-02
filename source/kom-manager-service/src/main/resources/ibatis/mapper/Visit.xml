@@ -61,6 +61,16 @@
 		<result column="UPDATE_TIME" property="updateTime"/>
 	</resultMap>
 	
+	<resultMap id="VisitShopInfoDtoResultMapper" type="VisitShopInfoDto">
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="GRADE_ID" property="gradeId"/>
+		<result column="GRADE_NAME" property="gradeName"/>
+		<result column="REGION_NAME" property="cityName"/>
+		<result column="SALE_CURRENT" property="currentSaleQty"/>
+		<result column="SALE_TARGET" property="targetSaleQty"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, VISIT_DATE
@@ -329,6 +339,14 @@
 		SELECT v.*, s.SHOP_NAME, s.GRADE_ID, g.GRADE_NAME FROM T_VISIT v LEFT JOIN T_SHOP s ON v.SHOP_ID = s.ID 
 		LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID 
 		WHERE v.VISIT_DATE = #{planDate} AND v.VISTOR = #{planner}
+	</select>
+	
+	<select id="queryVisitShopInfo" parameterType="VisitShopInfoDto" resultMap="VisitShopInfoDtoResultMapper">
+		SELECT v.*, s.SHOP_NAME, g.GRADE_NAME, r.REGION_NAME FROM T_VISIT v 
+		LEFT JOIN T_SHOP s ON v.SHOP_ID = s.ID 
+		LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID
+		LEFT JOIN T_REGION r ON s.REGION_ID = r.ID
+		WHERE v.SHOP_ID = #{shopId} AND v.VISIT_DATE = #{planDate}
 	</select>
 	
 	<insert id="saveVisitDto" parameterType="VisitDto">

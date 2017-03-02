@@ -173,7 +173,7 @@ public class VisitController extends AbstractController{
 	@Path("/queryVisitShopInfo")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({ MediaType.APPLICATION_JSON })
-	public VisitShopInfoDto queryVisitShopInfo(String planDate) throws ServiceException{
+	public VisitShopInfoDto queryVisitShopInfo(@QueryParam("planDate")String planDate) throws ServiceException{
 		String token = this.getAuthorization();
 		return visitFacade.queryVisitShopInfo(token, planDate);
 	}
