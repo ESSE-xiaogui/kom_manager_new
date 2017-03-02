@@ -63,10 +63,13 @@ public class ShopGradeManager {
 		if(UtilHelper.isEmpty(userContext.getCompanyId())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
-		
+		Integer companyId = userContext.isAdmin()?null:userContext.getCompanyId().intValue();
 		ShopGrade tempSg = new ShopGrade();
 		tempSg.setGradeName(shopGrade.getGradeName());
-		tempSg.setBrandCode(shopGrade.getBrandCode());
+		if(UtilHelper.isEmpty(companyId)){
+			tempSg.setCompanyId(shopGrade.getCompanyId());
+		}
+		tempSg.setCompanyId(companyId);
 		int count = shopGradeMapper.findByCount(tempSg);
 		if(count>0){
 			throw new ServiceException(ExceptionDef.ERROR_SHOP_GRADE_EXIST.getName());
@@ -96,10 +99,13 @@ public class ShopGradeManager {
 		if(UtilHelper.isEmpty(userContext.getCompanyId())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
-		
+		Integer companyId = userContext.isAdmin()?null:userContext.getCompanyId().intValue();
 		ShopGrade tempSg = new ShopGrade();
 		tempSg.setGradeName(shopGrade.getGradeName());
-		tempSg.setBrandCode(shopGrade.getBrandCode());
+		if(UtilHelper.isEmpty(companyId)){
+			tempSg.setCompanyId(shopGrade.getCompanyId());
+		}
+		tempSg.setCompanyId(companyId);
 		int count1 = shopGradeMapper.findByCount(tempSg);
 		tempSg.setId(shopGrade.getId());
 		int count2 = shopGradeMapper.findByCount(tempSg);
