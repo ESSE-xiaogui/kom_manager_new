@@ -1,5 +1,6 @@
 package com.transsion.store.manager;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,7 +102,7 @@ public class SaleGoalManager {
 		visitShopInfoDto.setPlanDate(saleDate);
 		
 		// 获取销量信息
-		visitShopInfoDto.setCurrentSaleQty(salesMannager.calcShopSaleQty(shopId, CalendarUtils.getFirstDayOfMonth(saleDate).toString(), saleDate));
+		visitShopInfoDto.setCurrentSaleQty(salesMannager.calcShopSaleQty(shopId, (new SimpleDateFormat("yyyy-MM-dd").format(CalendarUtils.getFirstDayOfMonth(saleDate))), saleDate));
 		return visitShopInfoDto;
 	}
 
@@ -141,12 +142,12 @@ public class SaleGoalManager {
 
 		// 获取月销量信息
 		List<StatShopModelSaleDto> shopModelMonthSaleList = salesMannager.calcShopModelSaleQty(shopId, modelCodeList,
-				saleDate, saleDate);
+				(new SimpleDateFormat("yyyy-MM-dd").format(CalendarUtils.getFirstDayOfMonth(saleDate))), saleDate);
 		storeShopModelMonthSale(visitStockInfoList, shopModelMonthSaleList);
 
 		// 前四周平均销量信息
 		List<StatShopModelSaleDto> shopModelWeekAvgSaleList = salesMannager.calcShopModelSaleQty(shopId, modelCodeList,
-				saleDate, saleDate);
+				new SimpleDateFormat("yyyy-MM-dd").format(CalendarUtils.getDayBeforeNDate(saleDate, 28)), saleDate);
 		storeShopModelWeekAvgSale(visitStockInfoList, shopModelWeekAvgSaleList);
 
 		return visitStockInfoList;
