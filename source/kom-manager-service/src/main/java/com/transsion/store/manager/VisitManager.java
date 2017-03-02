@@ -157,10 +157,7 @@ public class VisitManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		
-		VisitShopInfoDto visitShopInfoDto = new VisitShopInfoDto();
-		visitShopInfoDto.setShopId(shopId);
-		visitShopInfoDto.setPlanDate(planDate);
-		return visitService.queryVisitShopInfo(visitShopInfoDto);
+		return saleGoalManager.getShopSaleInfo(shopId, planDate);
 	}
 	
 	public List<VisitStockInfoDto> queryVisitModelInfo(String token,java.lang.Long shopId, String planDate) throws ServiceException {
