@@ -19,7 +19,11 @@ package com.transsion.store.mapper;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.Path;
+
 import com.transsion.store.bo.VisitScore;
+import com.transsion.store.dto.VisitPlanDetailInfoDto;
+import com.transsion.store.dto.VisitScoreDetailInfoDto;
 import com.transsion.store.dto.VisitScoreDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
@@ -28,7 +32,9 @@ import org.apache.ibatis.annotations.Param;
 
 public interface VisitScoreMapper extends GenericIBatisMapper<VisitScore, java.lang.Long> {
 
-    public List<VisitScore> listPaginationByProperty(Pagination<VisitScore> pagination, @Param("visitScore")VisitScore visitScore, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<VisitPlanDetailInfoDto> listPaginationByProperty(Pagination<VisitPlanDetailInfoDto> pagination, @Param("visitPlanDetailInfoDto")VisitPlanDetailInfoDto visitPlanDetailInfoDto, @Param("orderBy") Map<String, String> orderBy,@Param("companyId")Long companyId) throws DataAccessFailureException;
     
     public VisitScoreDto queryVisitScoreByVisitId(Long visitId) throws DataAccessFailureException;
+
+	public List<VisitScoreDetailInfoDto> listVisitScoreByProperty(@Param("visitScoreDetailInfoDto")VisitScoreDetailInfoDto visitScoreDetailInfoDto)throws DataAccessFailureException;
 }

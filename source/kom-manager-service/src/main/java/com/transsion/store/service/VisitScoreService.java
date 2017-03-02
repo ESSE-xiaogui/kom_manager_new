@@ -22,10 +22,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.VisitScore;
+import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.VisitScoreDetailInfoDto;
 import com.transsion.store.dto.VisitScoreDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.VisitScoreMapper;
+import com.transsion.store.utils.CacheUtils;
 
 @Service("visitScoreService")
 public class VisitScoreService {
@@ -72,13 +75,17 @@ public class VisitScoreService {
 	
 	/**
 	 * 根据查询条件查询分页记录
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<VisitScore> listPaginationByProperty(Pagination<VisitScore> pagination, VisitScore visitScore)
+	public Pagination<VisitScoreDetailInfoDto> listPaginationByProperty(Pagination<VisitScoreDetailInfoDto> pagination, VisitScoreDetailInfoDto visitScoreDetailInfoDto, String token)
 			throws ServiceException
 	{
-		List<VisitScore> list = visitScoreMapper.listPaginationByProperty(pagination, visitScore, pagination.getOrderBy());
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		
+		Integer companyId = userContext.isAdmin()?null:userContext.getCompanyId().intValue();
+		List<VisitScoreDetailInfoDto> list = visitScoreMapper.listPaginationByProperty(pagination, visitScoreDetailInfoDto, pagination.getOrderBy(),companyId);
 		
 		pagination.setResultList(list);
 		

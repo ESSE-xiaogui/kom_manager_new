@@ -18,15 +18,29 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.VisitScore;
+import com.transsion.store.controller.VisitPlanController.BigFileOutputStream;
+import com.transsion.store.dto.VisitPlanDetailInfoDto;
+import com.transsion.store.dto.VisitScoreDetailInfoDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.VisitScoreFacade;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
@@ -59,9 +73,9 @@ public class VisitScoreController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<VisitScore> listPgVisitScore(RequestModel<VisitScore> requestModel) throws ServiceException
+	public Pagination<VisitScoreDetailInfoDto> listPgVisitScore(RequestModel<VisitScoreDetailInfoDto> requestModel) throws ServiceException
 	{
-		Pagination<VisitScore> pagination = new Pagination<VisitScore>();
+		Pagination<VisitScoreDetailInfoDto> pagination = new Pagination<VisitScoreDetailInfoDto>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());
@@ -69,7 +83,7 @@ public class VisitScoreController extends AbstractController{
 		pagination.setParams(requestModel.getParams());
 		pagination.setOrderBy(requestModel.getOrderBy());
 
-		return visitScoreFacade.listPaginationByProperty(pagination, requestModel.getParams());
+		return visitScoreFacade.listPaginationByProperty(pagination, requestModel.getParams(),this.getAuthorization());
 	}
 
 	/**
@@ -110,4 +124,85 @@ public class VisitScoreController extends AbstractController{
 	{
 		visitScoreFacade.update(visitScore);
 	}
+	
+	/**
+	 * 巡店打分导出Excel
+	 * @param createTimeStart
+	 * @param createTimeEnd
+	 * @param visitId
+	 * @param shopCode
+	 * @param shopName
+	 * @param regionId
+	 * @param totalScoreStart
+	 * @param totalScoreEnd
+	 * @param createBy
+	 * @param companyId
+	 * @return
+	 * @throws ServiceException
+	 * @throws IOException
+	 */
+	@GET
+	@Path("/exportExcel") 
+	@Produces({MediaType.TEXT_PLAIN})  
+	public Response getVisitScoreByExcel(@QueryParam("createTimeStart") String createTimeStart,
+		@QueryParam("createTimeEnd") String createTimeEnd,@QueryParam("visitId") String visitId,
+		@QueryParam("shopCode") String shopCode,@QueryParam("shopName") String shopName,
+		@QueryParam("regionId")String regionId,@QueryParam("totalScoreStart")String totalScoreStart,
+		@QueryParam("totalScoreEnd")String totalScoreEnd,@QueryParam("createBy") String createBy,
+		@QueryParam("companyId") String companyId) throws ServiceException,IOException {
+		
+		VisitScoreDetailInfoDto visitScoreDetailInfoDto = new VisitScoreDetailInfoDto();
+		visitScoreDetailInfoDto.setCreateTimeStart(createTimeStart);
+		visitScoreDetailInfoDto.setCreateTimeEnd(createTimeEnd);
+		visitScoreDetailInfoDto.setShopCode(shopCode);
+		visitScoreDetailInfoDto.setShopName(shopName);
+		visitScoreDetailInfoDto.setCreateBy(createBy);
+		
+		if(!UtilHelper.isEmpty(regionId)){
+			visitScoreDetailInfoDto.setRegionId(Long.parseLong(regionId));
+		}
+		if(!UtilHelper.isEmpty(companyId)){
+			visitScoreDetailInfoDto.setCompanyId(Long.parseLong(companyId));
+		}
+		if(!UtilHelper.isEmpty(visitId)){
+			visitScoreDetailInfoDto.setVisitId(Long.parseLong(visitId));
+		}
+		if(!UtilHelper.isEmpty(totalScoreStart)){
+			visitScoreDetailInfoDto.setTotalScoreStart(BigDecimal.valueOf(Double.parseDouble(totalScoreStart)));
+		}
+		if(!UtilHelper.isEmpty(totalScoreEnd)){
+			visitScoreDetailInfoDto.setTotalScoreEnd(BigDecimal.valueOf(Double.parseDouble(totalScoreEnd)));
+		}
+	
+		byte[] bytes = visitScoreFacade.getVisitScoreByExcel(visitScoreDetailInfoDto);       
+		InputStream inputStream = new ByteArrayInputStream(bytes);          
+		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));          
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"巡店打分报表.xlsx";
+		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));         
+		//根据自己文件类型修改         
+		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");          
+		return response.build();      	
+	}
+	class BigFileOutputStream implements javax.ws.rs.core.StreamingOutput {
+        private InputStream inputStream;
+        public BigFileOutputStream(){}
+        public BigFileOutputStream(InputStream inputStream)
+        {
+            this.inputStream = inputStream;
+        }
+
+        @Override
+        public void write(OutputStream output) throws IOException,
+                WebApplicationException {
+            // TODO Auto-generated method stub
+            IOUtils.copy(inputStream, output);
+        }
+
+        public InputStream getInputStream() {
+            return inputStream;
+        }
+        public void setInputStream(InputStream inputStream) {
+            this.inputStream = inputStream;
+        }
+    }
 }
