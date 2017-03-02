@@ -26,6 +26,7 @@ import com.transsion.store.mapper.ModelMapper;
 import com.transsion.store.mapper.SaleGoalMapper;
 import com.transsion.store.mapper.ShopMapper;
 import com.transsion.store.utils.CacheUtils;
+import com.transsion.store.utils.CalendarUtils;
 
 /**
  * @author guihua.zhang
@@ -100,7 +101,7 @@ public class SaleGoalManager {
 		visitShopInfoDto.setPlanDate(saleDate);
 		
 		// 获取销量信息
-		visitShopInfoDto.setCurrentSaleQty(salesMannager.calcShopSaleQty(shopId, saleDate, saleDate));
+		visitShopInfoDto.setCurrentSaleQty(salesMannager.calcShopSaleQty(shopId, CalendarUtils.getFirstDayOfMonth(saleDate).toString(), saleDate));
 		return visitShopInfoDto;
 	}
 
