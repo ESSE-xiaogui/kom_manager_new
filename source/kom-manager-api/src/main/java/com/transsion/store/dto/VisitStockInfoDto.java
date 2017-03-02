@@ -45,6 +45,14 @@ public class VisitStockInfoDto implements Serializable {
 	  */
 	private java.lang.Long modelId;
 	
+	/**
+	  *	
+	  */
+	private java.lang.String modelCode;
+	
+	/**
+	  *	
+	  */
 	private java.lang.String modelName;
 
 	/**
@@ -132,6 +140,22 @@ public class VisitStockInfoDto implements Serializable {
 	  */
 	public void setModelId(java.lang.Long modelId) {
 		this.modelId = modelId;
+	}
+	
+	public java.lang.String getModelCode() {
+		return modelCode;
+	}
+
+	public void setModelCode(java.lang.String modelCode) {
+		this.modelCode = modelCode;
+	}
+
+	public java.lang.String getModelName() {
+		return modelName;
+	}
+
+	public void setModelName(java.lang.String modelName) {
+		this.modelName = modelName;
 	}
 
 	/**

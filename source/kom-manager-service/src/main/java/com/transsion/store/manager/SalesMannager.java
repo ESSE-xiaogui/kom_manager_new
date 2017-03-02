@@ -780,7 +780,7 @@ public class SalesMannager {
 	 * @return
 	 * @throws ServiceException
 	 * */
-	public List<StatShopModelSaleDto> calcShopModelSaleQty(long shopId,List<String> modelList, String startDate,String endDate) throws ServiceException
+	public List<StatShopModelSaleDto> calcShopModelSaleQty(long shopId, List<String> modelCodeList, String startDate,String endDate) throws ServiceException
 	{
 		return null;
 	}
