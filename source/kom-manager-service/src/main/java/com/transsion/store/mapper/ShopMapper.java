@@ -48,4 +48,6 @@ public interface ShopMapper extends GenericIBatisMapper<Shop, java.lang.Long> {
 	public ShopInfoDto getByPKey(Long primaryKey)throws DataAccessFailureException;
 
 	public List<ShopInfoDto> listShopByProperty(@Param("shopInfoDto")ShopInfoDto shopInfoDto)throws DataAccessFailureException;
+	
+	public ShopInfoDto queryShopInfoByShopId(Long shopId) throws DataAccessFailureException;
 }

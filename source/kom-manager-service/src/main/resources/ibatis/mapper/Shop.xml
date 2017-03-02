@@ -1022,4 +1022,11 @@
     	<include refid="commonConditionByPrefix"/>
     	ORDER BY s.CREATE_DATE
 	</select>
+	
+	<select id="queryShopInfoByShopId" parameterType="java.lang.Long" resultMap="ShopInfoDtoResultMapper">
+		SELECT s.SHOP_NAME, s.GRADE_ID, g.GRADE_NAME, r.REGION_NAME AS cityName FROM T_SHOP s 
+		LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID 
+		LEFT JOIN T_REGION r ON s.REGION_ID = r.ID 
+		WHERE s.ID = #{shopId}
+	</select>
 </mapper>

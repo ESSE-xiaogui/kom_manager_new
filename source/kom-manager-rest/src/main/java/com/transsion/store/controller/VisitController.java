@@ -126,6 +126,12 @@ public class VisitController extends AbstractController{
 		visitFacade.update(visit);
 	}
 	
+	/**
+	 * 计划内的巡店列表查询
+	 * @param planDate
+	 * @return
+	 * @throws ServiceException
+	 */
 	@GET
 	@Path("/queryPlanedVisitList")
 	@Consumes({MediaType.APPLICATION_JSON})
@@ -136,7 +142,7 @@ public class VisitController extends AbstractController{
 	}
 	
 	/**
-	 * app 查询计划之外的巡店列表
+	 * 计划外的巡店列表查询
 	 * @param token
 	 * @param planDate
 	 * @return
@@ -197,7 +203,7 @@ public class VisitController extends AbstractController{
 	
 	
 	/**
-	 * app 保存打分项数据
+	 * 保存巡店记录数据
 	 * @param visitRecordDto
 	 * @throws ServiceException
 	 */
@@ -242,6 +248,13 @@ public class VisitController extends AbstractController{
 		return visitFacade.queryVisitRecordInfo(token, visitId);
 	}
 	
+	/**
+	 * 重点机型信息查询列表查询
+	 * @param shopId
+	 * @param planDate
+	 * @return
+	 * @throws ServiceException
+	 */
 	@GET
 	@Path("/queryVisitModelInfo")
 	@Consumes({MediaType.APPLICATION_JSON})

@@ -11,12 +11,13 @@ import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.SaleGoalDto;
+import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.StatShopModelSaleDto;
 import com.transsion.store.dto.VisitShopInfoDto;
 import com.transsion.store.dto.VisitStockInfoDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.SaleGoalMapper;
-import com.transsion.store.mapper.SaleMapper;
+import com.transsion.store.mapper.ShopMapper;
 import com.transsion.store.utils.CacheUtils;
 
 /**
@@ -32,6 +33,9 @@ public class SaleGoalManager {
 	
 	@Autowired
 	private SalesManager salesMannager;
+	
+	@Autowired
+	private ShopMapper shopMapper;
 	
 	
 	/**
@@ -65,6 +69,12 @@ public class SaleGoalManager {
 	public VisitShopInfoDto getShopSaleInfo(long shopId, String saleDate) throws ServiceException {
 		VisitShopInfoDto visitShopInfoDto = new VisitShopInfoDto();
 		// 获取店铺信息
+		ShopInfoDto shopInfoDto =  shopMapper.queryShopInfoByShopId(shopId);
+		visitShopInfoDto.setShopId(shopId);
+		visitShopInfoDto.setShopName(shopInfoDto.getShopName());
+		visitShopInfoDto.setGradeId(shopInfoDto.getGradeId());
+		visitShopInfoDto.setGradeName(shopInfoDto.getGradeName());
+		visitShopInfoDto.setCityName(shopInfoDto.getCityName());
 
 		// 获取绩效信息
 
