@@ -2,7 +2,6 @@ package com.transsion.store.dto;
 
 import java.io.Serializable;
 
-import com.transsion.store.bo.Shop;
 import com.transsion.store.bo.ShopExtension;
 
 /*

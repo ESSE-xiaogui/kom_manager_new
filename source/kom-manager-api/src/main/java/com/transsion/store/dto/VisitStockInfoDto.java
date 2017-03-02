@@ -85,6 +85,16 @@ public class VisitStockInfoDto implements Serializable {
 	  *	
 	  */
 	private java.lang.String remark;
+	
+	private java.lang.Long shopId;
+
+	private java.lang.String shopName;
+
+	private java.lang.Long gradeId;
+
+	private java.lang.String gradeName;
+	
+	private java.lang.String cityName;
 
 	/**
 	  *	
@@ -230,11 +240,53 @@ public class VisitStockInfoDto implements Serializable {
 		this.remark = remark;
 	}
 
+	public java.lang.Long getShopId() {
+		return shopId;
+	}
+
+	public void setShopId(java.lang.Long shopId) {
+		this.shopId = shopId;
+	}
+
+	public java.lang.String getShopName() {
+		return shopName;
+	}
+
+	public void setShopName(java.lang.String shopName) {
+		this.shopName = shopName;
+	}
+
+	public java.lang.Long getGradeId() {
+		return gradeId;
+	}
+
+	public void setGradeId(java.lang.Long gradeId) {
+		this.gradeId = gradeId;
+	}
+
+	public java.lang.String getGradeName() {
+		return gradeName;
+	}
+
+	public void setGradeName(java.lang.String gradeName) {
+		this.gradeName = gradeName;
+	}
+
+	public java.lang.String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(java.lang.String cityName) {
+		this.cityName = cityName;
+	}
+
 	@Override
 	public String toString() {
-		return "VisitStockDto [id=" + id + ", visitId=" + visitId + ", brandId=" + brandId + ", modelId=" + modelId
-				+ ", stockQty=" + stockQty + ", saleAvg=" + saleAvg + ", stockIto=" + stockIto + ", remark=" + remark
-				+ "]";
+		return "VisitStockInfoDto [id=" + id + ", visitId=" + visitId + ", brandId=" + brandId + ", modelId=" + modelId
+				+ ", modelCode=" + modelCode + ", modelName=" + modelName + ", stockQty=" + stockQty
+				+ ", currentSaleQty=" + currentSaleQty + ", targetSaleQty=" + targetSaleQty + ", saleAvg=" + saleAvg
+				+ ", stockIto=" + stockIto + ", remark=" + remark + ", shopId=" + shopId + ", shopName=" + shopName
+				+ ", gradeId=" + gradeId + ", gradeName=" + gradeName + ", cityName=" + cityName + "]";
 	}
 
 }
