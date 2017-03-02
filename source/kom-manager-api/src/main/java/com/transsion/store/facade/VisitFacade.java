@@ -26,6 +26,7 @@ import com.transsion.store.dto.VisitRecordDto;
 import com.transsion.store.dto.VisitRecordInfoDto;
 import com.transsion.store.dto.VisitSettingDto;
 import com.transsion.store.dto.VisitShopInfoDto;
+import com.transsion.store.dto.VisitStockInfoDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -143,7 +144,7 @@ public interface VisitFacade {
 	 * @author guihua.zhang
 	 * 
 	 */
-	public List<VisitModelInfoDto> queryVisitModelInfo(String token, String planDate) throws ServiceException;
+	public List<VisitStockInfoDto> queryVisitModelInfo(String token, String planDate) throws ServiceException;
 	
 	/**
 	 * @author guihua.zhang

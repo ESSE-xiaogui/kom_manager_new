@@ -30,6 +30,7 @@ import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.SaleDailyDto;
 import com.transsion.store.dto.SalesDto;
 import com.transsion.store.dto.SalesUploadDto;
+import com.transsion.store.dto.StatShopModelSaleDto;
 import com.transsion.store.dto.TShopSaleDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.CurrencyMapper;
@@ -766,4 +767,26 @@ public class SalesMannager {
 		String title = "销量报表";
 		return ExcelUtils.exportExcel(title, headers, dataset);
 	}
+	
+	
+	/**
+	 *  店铺销量统计
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public long calcShopSaleQty(long shopId,String startDate,String endDate) throws ServiceException
+	{
+		return -1;
+	}
+	
+	/**
+	 *  店铺机型销量统计
+	 * @return
+	 * @throws ServiceException
+	 * */
+	public List<StatShopModelSaleDto> calcShopModelSaleQty(long shopId,List<String> modelList, String startDate,String endDate) throws ServiceException
+	{
+		return null;
+	}
+	
 }

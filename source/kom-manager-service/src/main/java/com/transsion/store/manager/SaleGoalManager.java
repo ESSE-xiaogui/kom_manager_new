@@ -1,4 +1,6 @@
 package com.transsion.store.manager;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,8 @@ import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.SaleGoalDto;
+import com.transsion.store.dto.VisitShopInfoDto;
+import com.transsion.store.dto.VisitStockInfoDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.SaleGoalMapper;
 import com.transsion.store.utils.CacheUtils;
@@ -48,4 +52,22 @@ public class SaleGoalManager {
 			return goalQty;
 		}
 	}
+	
+	/*
+	 * 获取店铺月销量信息
+	 */
+	public  VisitShopInfoDto getShopSaleInfo(long shopId,String saleDate)
+	{
+		return null;
+	}
+	
+	
+	/*
+	 *  获取店铺机型月销量信息
+	 */
+	public  List<VisitStockInfoDto> getShopModelSaleInfo(long shopId,List<String> modelList, String saleDate)
+	{
+		return null;
+	}
+	
 }

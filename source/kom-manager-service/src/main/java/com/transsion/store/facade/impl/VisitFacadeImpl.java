@@ -28,6 +28,7 @@ import com.transsion.store.dto.VisitModelInfoDto;
 import com.transsion.store.dto.VisitRecordDto;
 import com.transsion.store.dto.VisitSettingDto;
 import com.transsion.store.dto.VisitShopInfoDto;
+import com.transsion.store.dto.VisitStockInfoDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.VisitFacade;
@@ -186,7 +187,7 @@ public class VisitFacadeImpl implements VisitFacade {
 	}
 
 	@Override
-	public List<VisitModelInfoDto> queryVisitModelInfo(String token, String planDate) throws ServiceException {
+	public List<VisitStockInfoDto> queryVisitModelInfo(String token, String planDate) throws ServiceException {
 		return null;
 	}
 
