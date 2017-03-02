@@ -69,8 +69,8 @@ public class VisitModelSettingController extends AbstractController{
 		pagination.setPageSize(requestModel.getPageSize());
 		pagination.setParams(requestModel.getParams());
 		pagination.setOrderBy(requestModel.getOrderBy());
-
-		return visitModelSettingFacade.listPaginationByProperty(pagination, requestModel.getParams());
+		String token = this.getAuthorization();
+		return visitModelSettingFacade.listPaginationByProperty(token,pagination, requestModel.getParams());
 	}
 
 	/**

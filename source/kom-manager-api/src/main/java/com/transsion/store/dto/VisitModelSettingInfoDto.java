@@ -8,68 +8,68 @@ public class VisitModelSettingInfoDto implements Serializable {
 	/**
 	  *	
 	  */
-	private java.lang.Long id;
+	private Long id;
 
 	/**
 	  *	
 	  */
-	private java.lang.String actionDate;
+	private String actionDate;
 	
 	private Long companyId;
 	
-	private java.lang.String companyCode;
+	private String companyCode;
 
 	/**
 	  *	
 	  */
-	private java.lang.Long brandId;
+	private Long brandId;
 
 	/**
 	  *	
 	  */
-	private java.lang.Long modelId;
+	private Long modelId;
 	
-	private java.lang.String brandCode;
+	private String brandCode;
 	
-	private java.lang.String modelCode;
+	private String modelCode;
 
 
 	/**
 	  *	
 	  */
-	private java.lang.String remark;
+	private String remark;
 
 	/**
 	  *	
 	  */
-	private java.lang.String createBy;
+	private String createBy;
 
 	/**
 	  *	
 	  */
-	private java.lang.String createTime;
+	private String createTime;
 	
-	private java.lang.String updateBy;
+	private String updateBy;
 	
-	private java.lang.String updateTime;
+	private String updateTime;
 
-	public java.lang.Long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(java.lang.Long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public java.lang.String getActionDate() {
+	public String getActionDate() {
 		return actionDate;
 	}
 
-	public void setActionDate(java.lang.String actionDate) {
+	public void setActionDate(String actionDate) {
 		this.actionDate = actionDate;
 	}
 
-	public java.lang.String getCompanyCode() {
+	public String getCompanyCode() {
 		return companyCode;
 	}
 
@@ -81,79 +81,79 @@ public class VisitModelSettingInfoDto implements Serializable {
 		this.companyId = companyId;
 	}
 
-	public void setCompanyCode(java.lang.String companyCode) {
+	public void setCompanyCode(String companyCode) {
 		this.companyCode = companyCode;
 	}
 
-	public java.lang.Long getBrandId() {
+	public Long getBrandId() {
 		return brandId;
 	}
 
-	public void setBrandId(java.lang.Long brandId) {
+	public void setBrandId(Long brandId) {
 		this.brandId = brandId;
 	}
 
-	public java.lang.Long getModelId() {
+	public Long getModelId() {
 		return modelId;
 	}
 
-	public void setModelId(java.lang.Long modelId) {
+	public void setModelId(Long modelId) {
 		this.modelId = modelId;
 	}
 
-	public java.lang.String getBrandCode() {
+	public String getBrandCode() {
 		return brandCode;
 	}
 
-	public void setBrandCode(java.lang.String brandCode) {
+	public void setBrandCode(String brandCode) {
 		this.brandCode = brandCode;
 	}
 
-	public java.lang.String getModelCode() {
+	public String getModelCode() {
 		return modelCode;
 	}
 
-	public void setModelCode(java.lang.String modelCode) {
+	public void setModelCode(String modelCode) {
 		this.modelCode = modelCode;
 	}
 
-	public java.lang.String getRemark() {
+	public String getRemark() {
 		return remark;
 	}
 
-	public void setRemark(java.lang.String remark) {
+	public void setRemark(String remark) {
 		this.remark = remark;
 	}
 
-	public java.lang.String getCreateBy() {
+	public String getCreateBy() {
 		return createBy;
 	}
 
-	public void setCreateBy(java.lang.String createBy) {
+	public void setCreateBy(String createBy) {
 		this.createBy = createBy;
 	}
 
-	public java.lang.String getCreateTime() {
+	public String getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(java.lang.String createTime) {
+	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
 
-	public java.lang.String getUpdateBy() {
+	public String getUpdateBy() {
 		return updateBy;
 	}
 
-	public void setUpdateBy(java.lang.String updateBy) {
+	public void setUpdateBy(String updateBy) {
 		this.updateBy = updateBy;
 	}
 
-	public java.lang.String getUpdateTime() {
+	public String getUpdateTime() {
 		return updateTime;
 	}
 
-	public void setUpdateTime(java.lang.String updateTime) {
+	public void setUpdateTime(String updateTime) {
 		this.updateTime = updateTime;
 	}
 

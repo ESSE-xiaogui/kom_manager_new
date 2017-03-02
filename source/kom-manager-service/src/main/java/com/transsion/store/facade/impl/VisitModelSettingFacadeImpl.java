@@ -80,10 +80,10 @@ public class VisitModelSettingFacadeImpl implements VisitModelSettingFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<VisitModelSettingInfoDto> listPaginationByProperty(Pagination<VisitModelSettingInfoDto> pagination, VisitModelSettingInfoDto visitModelSettingInfoDto)
+	public Pagination<VisitModelSettingInfoDto> listPaginationByProperty(String token,Pagination<VisitModelSettingInfoDto> pagination, VisitModelSettingInfoDto visitModelSettingInfoDto)
 			throws ServiceException
 	{
-		return visitModelSettingService.listPaginationByProperty(pagination, visitModelSettingInfoDto);
+		return visitModeSettingManager.listPaginationByProperty(token,pagination, visitModelSettingInfoDto);
 	}
 
 	/**

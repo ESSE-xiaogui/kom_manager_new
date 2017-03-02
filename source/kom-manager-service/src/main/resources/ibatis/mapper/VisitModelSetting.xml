@@ -151,8 +151,11 @@
             <if test="visitModelSettingInfoDto.actionDate!= null and visitModelSettingInfoDto.actionDate!= ''">
 				AND t.ACTION_DATE=str_to_date(#{visitModelSettingInfoDto.actionDate},'%Y-%m-%d %H:%i:%s')
             </if>
+            <if test="visitModelSettingInfoDto.companyId!= null and visitModelSettingInfoDto.companyId!= ''">
+				AND t.COMPANY_ID=#{visitModelSettingInfoDto.companyId}
+            </if>
             <if test="visitModelSettingInfoDto.companyCode!= null and visitModelSettingInfoDto.companyCode!= ''">
-				AND c.COMPANY_CODE=str_to_date(#{visitModelSettingInfoDto.companyCode},'%Y-%m-%d %H:%i:%s')
+				AND c.COMPANY_CODE=#{visitModelSettingInfoDto.companyCode}
             </if>
             <if test="visitModelSettingInfoDto.brandCode!= null and visitModelSettingInfoDto.brandCode!= ''">
 				AND b.BRAND_CODE=#{visitModelSettingInfoDto.brandCode}
@@ -170,7 +173,7 @@
 				AND t.UPDATE_BY=#{visitModelSettingInfoDto.updateBy}
             </if>
             <if test="visitModelSettingInfoDto.updateTime!= null and visitModelSettingInfoDto.updateTime!= ''">
-				AND t.UPDATE_TIME=#{visitModelSettingInfoDto.updateTime}
+				AND t.UPDATE_TIME=str_to_date(#{visitModelSettingInfoDto.updateTime},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="visitModelSettingInfoDto.remark!= null and visitModelSettingInfoDto.remark!= ''">
 				AND t.REMARK=#{visitModelSettingInfoDto.remark}
@@ -199,10 +202,10 @@
 				c.COMPANY_CODE ${value}
             </when>            
             <when test="key == 'brandCode'">
-				t.BRAND_CODE ${value}
+				b.BRAND_CODE ${value}
             </when>
             <when test="key == 'modelCode'">
-				t.MODEL_CODE ${value}
+				m.MODEL_CODE ${value}
             </when>        	
         	<when test="key == 'remark'">
 				t.REMARK ${value}

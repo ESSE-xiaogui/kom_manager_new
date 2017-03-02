@@ -2,6 +2,7 @@ package com.transsion.store.manager;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -84,13 +85,16 @@ public class VisitScoreSettingManager {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext)){
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getCompanyId())){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
+		VisitScoreSettingDetailDto vss = new VisitScoreSettingDetailDto();
 		if(!userContext.isAdmin()){
-			visitScoreSettingDetailDto.setCompanyId(userContext.getCompanyId());
+			vss.setCompanyId(userContext.getCompanyId());
+		}else{
+			BeanUtils.copyProperties(vss, visitScoreSettingDetailDto);
 		}
-		List<VisitScoreSettingDetailDto> list = visitScoreSettingMapper.listPaginationByProperty(pagination, visitScoreSettingDetailDto, pagination.getOrderBy());
+		List<VisitScoreSettingDetailDto> list = visitScoreSettingMapper.listPaginationByProperty(pagination, vss, pagination.getOrderBy());
 		pagination.setResultList(list);
 		return pagination;
 	}
