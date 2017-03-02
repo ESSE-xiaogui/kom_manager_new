@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import com.transsion.store.bo.VisitFeedback;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.VisitFeedBackInfoDto;
+import com.transsion.store.dto.VisitFeedbackDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.VisitFeedbackMapper;
@@ -155,5 +156,9 @@ public class VisitFeedbackService {
 	public int findByCount(VisitFeedback visitFeedback) throws ServiceException
 	{
 		return visitFeedbackMapper.findByCount(visitFeedback);
+	}
+	
+	public VisitFeedbackDto queryVisitFeedbackByVisitId(Long visitId) throws ServiceException {
+		return visitFeedbackMapper.queryVisitFeedbackByVisitId(visitId);
 	}
 }

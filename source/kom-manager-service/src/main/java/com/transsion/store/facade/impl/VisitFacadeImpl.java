@@ -198,8 +198,7 @@ public class VisitFacadeImpl implements VisitFacade {
 	@Override
 	public com.transsion.store.dto.VisitRecordInfoDto queryVisitRecordInfo(String token, String visitId)
 			throws ServiceException {
-		return null;
+		return visitManager.queryVisitRecordInfo(token, visitId);
 	}
-
 
 }

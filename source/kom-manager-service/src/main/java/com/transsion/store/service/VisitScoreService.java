@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.VisitScore;
+import com.transsion.store.dto.VisitScoreDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.VisitScoreMapper;
@@ -147,5 +148,9 @@ public class VisitScoreService {
 	public int findByCount(VisitScore visitScore) throws ServiceException
 	{
 		return visitScoreMapper.findByCount(visitScore);
+	}
+	
+	public VisitScoreDto queryVisitScoreByVisitId(Long visitId) throws ServiceException {
+		return visitScoreMapper.queryVisitScoreByVisitId(visitId);
 	}
 }

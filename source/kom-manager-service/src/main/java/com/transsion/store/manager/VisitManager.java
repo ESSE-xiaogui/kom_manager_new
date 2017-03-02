@@ -9,20 +9,37 @@ import org.springframework.stereotype.Service;
 
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
+import com.transsion.store.bo.Visit;
+import com.transsion.store.bo.VisitFeedback;
+import com.transsion.store.bo.VisitScore;
+import com.transsion.store.bo.VisitScoreItem;
+import com.transsion.store.bo.VisitStock;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.VisitDto;
+import com.transsion.store.dto.VisitFeedbackDto;
 import com.transsion.store.dto.VisitHistorySummaryDto;
 import com.transsion.store.dto.VisitInfoDto;
 import com.transsion.store.dto.VisitPlanParamDto;
 import com.transsion.store.dto.VisitRecordDto;
+import com.transsion.store.dto.VisitRecordInfoDto;
+import com.transsion.store.dto.VisitScoreDto;
+import com.transsion.store.dto.VisitScoreItemDto;
+import com.transsion.store.dto.VisitScoreItemInfoDto;
 import com.transsion.store.dto.VisitScoreSettingDto;
 import com.transsion.store.dto.VisitSettingDto;
+import com.transsion.store.dto.VisitShopDto;
 import com.transsion.store.dto.VisitShopInfoDto;
+import com.transsion.store.dto.VisitStockDto;
+import com.transsion.store.dto.VisitStockInfoDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.VisitMapper;
 import com.transsion.store.mapper.VisitScoreSettingMapper;
+import com.transsion.store.service.VisitFeedbackService;
 import com.transsion.store.service.VisitPlanService;
+import com.transsion.store.service.VisitScoreItemService;
+import com.transsion.store.service.VisitScoreService;
 import com.transsion.store.service.VisitService;
+import com.transsion.store.service.VisitStockService;
 import com.transsion.store.utils.CacheUtils;
 import com.transsion.store.utils.DateConvertUtils;
 
@@ -40,6 +57,18 @@ public class VisitManager {
 	
 	@Autowired
 	private VisitMapper visitMapper;
+	
+	@Autowired
+	private VisitStockService visitStockService;
+	
+	@Autowired
+	private VisitScoreService visitScoreService;
+	
+	@Autowired
+	private VisitScoreItemService visitScoreItemService;
+	
+	@Autowired
+	private VisitFeedbackService visitFeedbackService;
 	
 	public List<VisitInfoDto> queryPlanedVisitList(String token, String planDate) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
@@ -126,6 +155,31 @@ public class VisitManager {
 		return visitService.queryVisitShopInfo(visitShopInfoDto);
 	}
 	
+	public VisitRecordInfoDto queryVisitRecordInfo(String token, String id) throws ServiceException {
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		
+		Long visitId = Long.valueOf(id);
+		VisitShopDto visitShopDto = visitService.queryVisitByVisitId(visitId);
+		List<VisitStockInfoDto> visitStockInfoDtoList = visitStockService.queryVisitStockByVisitId(visitId);
+		VisitScoreDto visitScoreDto =  visitScoreService.queryVisitScoreByVisitId(visitId);
+		List<VisitScoreItemInfoDto> visitScoreItemInfoDtoList = visitScoreItemService.queryVisitScoreItemByVisitId(visitId);
+		VisitFeedbackDto visitFeedbackDto = visitFeedbackService.queryVisitFeedbackByVisitId(visitId);
+		
+		VisitRecordInfoDto visitRecordInfoDto = new VisitRecordInfoDto();
+		visitRecordInfoDto.setVisitShopDto(visitShopDto);
+		visitRecordInfoDto.setVisitStockInfoDtoList(visitStockInfoDtoList);
+		visitRecordInfoDto.setVisitScoreDto(visitScoreDto);
+		visitRecordInfoDto.setVisitScoreItemInfoDtoList(visitScoreItemInfoDtoList);
+		visitRecordInfoDto.setVisitFeedbackDto(visitFeedbackDto);
+		return visitRecordInfoDto;
+	}
+	
 	public VisitSettingDto queryVisitSetting(String token) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
@@ -150,13 +204,61 @@ public class VisitManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		
-		VisitDto visitDto = visitRecordDto.getVisitDto();
 		String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-		visitDto.setCreateBy(userContext.getUserCode());
-		visitDto.setCreateTime(currentDate);
-		visitDto.setUpdateBy(userContext.getUserCode());
-		visitDto.setUpdateTime(currentDate);
-		visitService.saveVisitDto(visitDto);
+		VisitDto visitDto = visitRecordDto.getVisitDto();
+		if (visitDto != null) {
+			Visit visit = visitDto.toModel();
+			visit.setCreateBy(userContext.getUserCode());
+			visit.setCreateTime(currentDate);
+			visit.setUpdateBy(userContext.getUserCode());
+			visit.setUpdateTime(currentDate);
+			visitService.save(visit);
+//			visitService.saveVisitDto(visitDto);
+		}
+		
+		List<VisitStockDto> visitStockDtoList = visitRecordDto.getVisitStockDtoList();
+		if (visitStockDtoList != null && visitStockDtoList.size() > 0) {
+			for (VisitStockDto visitStockDto : visitStockDtoList) {
+				VisitStock visitStock = visitStockDto.toModel();
+				visitStock.setCreateBy(userContext.getUserCode());
+				visitStock.setCreateTime(currentDate);
+				visitStock.setUpdateBy(userContext.getUserCode());
+				visitStock.setUpdateTime(currentDate);
+				visitStockService.save(visitStock);
+			}
+		}
+		
+		VisitScoreDto visitScoreDto = visitRecordDto.getVisitScoreDto();
+		if (visitScoreDto != null) {
+			VisitScore visitScore = visitScoreDto.toModel();
+			visitScore.setCreateBy(userContext.getUserCode());
+			visitScore.setCreateTime(currentDate);
+			visitScore.setUpdateBy(userContext.getUserCode());
+			visitScore.setUpdateTime(currentDate);
+			visitScoreService.save(visitScore);
+		}
+		
+		List<VisitScoreItemDto> visitScoreItemDtoList = visitRecordDto.getVisitScoreItemDtoList();
+		if (visitScoreItemDtoList != null && visitScoreItemDtoList.size() > 0) {
+			for (VisitScoreItemDto visitScoreItemDto : visitScoreItemDtoList) {
+				VisitScoreItem visitScoreItem = visitScoreItemDto.toModel();
+				visitScoreItem.setCreateBy(userContext.getUserCode());
+				visitScoreItem.setCreateTime(currentDate);
+				visitScoreItem.setUpdateBy(userContext.getUserCode());
+				visitScoreItem.setUpdateTime(currentDate);
+				visitScoreItemService.save(visitScoreItem);
+			}
+		}
+		
+		VisitFeedbackDto visitFeedbackDto = visitRecordDto.getVisitFeedbackDto();
+		if (visitFeedbackDto != null) {
+			VisitFeedback visitFeedback = visitFeedbackDto.toModel();
+			visitFeedback.setCreateBy(userContext.getUserCode());
+			visitFeedback.setCreateTime(currentDate);
+			visitFeedback.setUpdateBy(userContext.getUserCode());
+			visitFeedback.setUpdateTime(currentDate);
+			visitFeedbackService.save(visitFeedback);
+		}
 	}
 	
 	/**

@@ -71,6 +71,19 @@
 		<result column="SALE_TARGET" property="targetSaleQty"/>
 	</resultMap>
 	
+	<resultMap id="VisitShopDtoResultMapper" type="VisitShopDto">
+		<result column="ID" property="id"/>
+		<result column="VISIT_DATE" property="visitDate"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="SALE_CURRENT" property="currentSaleQty"/>
+		<result column="SALE_TARGET" property="targetSaleQty"/>
+		<result column="ACHIEVED" property="achieved"/>
+		<result column="SALE_TOTAL_QTY" property="saleTotalQty"/>
+		<result column="SALE_PB_QTY" property="salePbQty"/>
+		<result column="REMARK" property="remark"/>
+	</resultMap>
+	
 	<resultMap id="VisitHistorySummaryDtoResultMapper" type="VisitHistorySummaryDto">
 		<result column="VISIT_DATE" property="visitDate"/>
 		<result column="VISIT_QTY" property="visitStoreQty"/>
@@ -365,6 +378,10 @@
 		LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID
 		LEFT JOIN T_REGION r ON s.REGION_ID = r.ID
 		WHERE v.SHOP_ID = #{shopId} AND v.VISIT_DATE = #{planDate}
+	</select>
+	
+	<select id="queryVisitByVisitId" parameterType="java.lang.Long" resultMap="VisitShopDtoResultMapper">
+		SELECT * FROM T_VISIT WHERE ID = #{visitId}
 	</select>
 	
 	<insert id="saveVisitDto" parameterType="VisitDto">

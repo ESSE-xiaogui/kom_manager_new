@@ -18,6 +18,8 @@ package com.transsion.store.dto;
 
 import java.io.Serializable;
 
+import com.transsion.store.bo.Visit;
+
 
 public class VisitDto implements Serializable {
 
@@ -234,6 +236,24 @@ public class VisitDto implements Serializable {
 
 	public void setUpdateTime(java.lang.String updateTime) {
 		this.updateTime = updateTime;
+	}
+	
+	public Visit toModel() {
+		Visit visit = new Visit();
+		visit.setId(this.getId());
+		visit.setVisitDate(this.getVisitDate());
+//		visit.setCompanyId();
+		visit.setShopId(this.getShopId());
+//		visit.setPlanType();
+		visit.setSaleTotalQty(this.getSaleTotalQty());
+		visit.setSalePbQty(this.getSalePbQty());
+		visit.setRemark(this.getRemark());
+		visit.setCreateBy(this.getCreateBy());
+		visit.setCreateTime(this.getCreateTime());
+		visit.setUpdateBy(this.getUpdateBy());
+		visit.setUpdateTime(this.getUpdateTime());
+//		visit.setVersion();
+		return null;
 	}
 
 	@Override

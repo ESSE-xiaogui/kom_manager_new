@@ -32,6 +32,15 @@
 		<result column="VERSION" property="version"/>
 	</resultMap>
 	
+	<resultMap id="VisitScoreItemInfoDtoResultMapper" type="VisitScoreItemInfoDto">
+		<result column="ID" property="id"/>
+		<result column="VISIT_ID" property="visitId"/>
+		<result column="SCORE_SETTING_ID" property="scoreSettingId"/>
+		<result column="DESC_EN" property="descEn"/>
+		<result column="SCORE" property="score"/>
+		<result column="REMARK" property="remark"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, VISIT_ID
@@ -254,5 +263,9 @@
 	<select id="findByCount" parameterType="VisitScoreItem" resultType="int">
 		SELECT count(1) AS totalcount FROM T_VISIT_SCORE_ITEM WHERE 1=1 
 		<include refid="commonCondition"/>
+	</select>
+	
+	<select id="queryVisitScoreItemByVisitId" parameterType="java.lang.Long" resultMap="VisitScoreItemInfoDtoResultMapper">
+		SELECT * FROM T_VISIT_SCORE_ITEM WHERE VISIT_ID = #{visitId}
 	</select>
 </mapper>

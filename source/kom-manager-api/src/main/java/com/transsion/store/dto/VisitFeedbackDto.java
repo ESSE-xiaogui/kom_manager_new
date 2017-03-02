@@ -18,6 +18,8 @@ package com.transsion.store.dto;
 
 import java.io.Serializable;
 
+import com.transsion.store.bo.VisitFeedback;
+
 public class VisitFeedbackDto implements Serializable {
 
 	/**
@@ -156,6 +158,24 @@ public class VisitFeedbackDto implements Serializable {
 	  */
 	public void setImgThirdUrl(java.lang.String imgThirdUrl) {
 		this.imgThirdUrl = imgThirdUrl;
+	}
+	
+	public VisitFeedback toModel() {
+		VisitFeedback visitFeedback = new VisitFeedback();
+		visitFeedback.setId(this.getId());
+		visitFeedback.setVisitId(this.getVisitId());
+		visitFeedback.setIssue(this.getIssue());
+		visitFeedback.setAction(this.getAction());
+		visitFeedback.setImgFirstUrl(this.getImgFirstUrl());
+		visitFeedback.setImgSecondUrl(this.getImgSecondUrl());
+		visitFeedback.setImgThirdUrl(this.getImgThirdUrl());
+//		visitFeedback.setRemark();
+//		visitFeedback.setCreateBy();
+//		visitFeedback.setCreateTime();
+//		visitFeedback.setUpdateBy();
+//		visitFeedback.setUpdateTime();
+//		visitFeedback.setVersion();
+		return visitFeedback;
 	}
 
 	@Override

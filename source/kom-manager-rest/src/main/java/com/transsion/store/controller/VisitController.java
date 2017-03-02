@@ -236,7 +236,7 @@ public class VisitController extends AbstractController{
 	@Path("/queryVisitRecordInfo")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({ MediaType.APPLICATION_JSON })
-	public VisitRecordInfoDto queryVisitRecordInfo(String visitId) throws ServiceException {
+	public VisitRecordInfoDto queryVisitRecordInfo(@QueryParam("visitId")String visitId) throws ServiceException {
 		String token = this.getAuthorization();
 		return visitFacade.queryVisitRecordInfo(token, visitId);
 	}

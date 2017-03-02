@@ -57,6 +57,16 @@
 		<result column="VERSION" property="version"/>
 	</resultMap>
 	
+	<resultMap id="VisitFeedbackDtoResultMapper" type="VisitFeedbackDto">
+		<result column="ID" property="id"/>
+		<result column="VISIT_ID" property="visitId"/>
+		<result column="ISSUE" property="issue"/>
+		<result column="ACTION" property="action"/>
+		<result column="IMG_FIRST_URL" property="imgFirstUrl"/>
+		<result column="IMG_SECOND_URL" property="imgSecondUrl"/>
+		<result column="IMG_THIRD_URL" property="imgThirdUrl"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, VISIT_ID
@@ -387,5 +397,9 @@
 		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	ORDER BY f.CREATE_TIME
+	</select>
+	
+	<select id="queryVisitFeedbackByVisitId" parameterType="java.lang.Long" resultMap="VisitFeedbackDtoResultMapper">
+		SELECT * FROM T_VISIT_FEEDBACK WHERE VISIT_ID = #{visitId}
 	</select>
 </mapper>

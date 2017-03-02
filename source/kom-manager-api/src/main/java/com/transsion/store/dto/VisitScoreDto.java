@@ -18,6 +18,8 @@ package com.transsion.store.dto;
 
 import java.io.Serializable;
 
+import com.transsion.store.bo.VisitScore;
+
 public class VisitScoreDto implements Serializable {
 
 	/**
@@ -156,6 +158,23 @@ public class VisitScoreDto implements Serializable {
 	  */
 	public void setRemark(java.lang.String remark) {
 		this.remark = remark;
+	}
+	
+	public VisitScore toModel() {
+		VisitScore visitScore = new VisitScore();
+		visitScore.setId(this.getId());
+		visitScore.setVisitId(this.getVisitId());
+		visitScore.setShopScore(this.getShopScore());
+		visitScore.setSaleScore(this.getSaleScore());
+		visitScore.setStaffScore(this.getStaffScore());
+		visitScore.setTotalScore(this.getTotalScore());
+		visitScore.setRemark(this.getRemark());
+//		visitScore.setCreateBy();
+//		visitScore.setCreateTime();
+//		visitScore.setUpdateBy();
+//		visitScore.setUpdateTime();
+//		visitScore.setVersion();
+		return visitScore;
 	}
 
 	@Override

@@ -24,6 +24,7 @@ import com.transsion.store.dto.VisitDto;
 import com.transsion.store.dto.VisitHistorySummaryDto;
 import com.transsion.store.dto.VisitInfoDto;
 import com.transsion.store.dto.VisitPlanParamDto;
+import com.transsion.store.dto.VisitShopDto;
 import com.transsion.store.dto.VisitShopInfoDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
@@ -42,4 +43,6 @@ public interface VisitMapper extends GenericIBatisMapper<Visit, java.lang.Long> 
     
     //查询前八周的巡店历史记录
     public List<VisitHistorySummaryDto> queryVisitSummaryHistory(VisitPlanParamDto visitPlanParamDto)throws DataAccessFailureException;
+    
+    public VisitShopDto queryVisitByVisitId(Long id) throws DataAccessFailureException;
 }
