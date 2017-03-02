@@ -41,6 +41,7 @@ import com.transsion.store.dto.VisitRecordDto;
 import com.transsion.store.dto.VisitRecordInfoDto;
 import com.transsion.store.dto.VisitSettingDto;
 import com.transsion.store.dto.VisitShopInfoDto;
+import com.transsion.store.dto.VisitStockInfoDto;
 import com.transsion.store.facade.VisitFacade;
 
 @Controller
@@ -181,6 +182,7 @@ public class VisitController extends AbstractController{
 	/**
 	 * shopscore页面
 	 * score setting...
+	 * 查询所有分数接口
 	 * @author guihua.zhang
 	 * @return
 	 * @throws ServiceException
@@ -212,15 +214,14 @@ public class VisitController extends AbstractController{
 	 * historyList页面 
 	 * @author guihua.zhang on 2017-03-02
 	 * @param startDate 前八周的第一天
-	 * @param endDate 今日日期/后台去今日日期的前一天
+	 * @param endDate 今日日期的前一天
 	 * @return
 	 * @throws ServiceException
 	 */
 	@GET
 	@Path("/queryVisitSummaryHistory")
-	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({ MediaType.APPLICATION_JSON })
-	public List<VisitHistorySummaryDto> queryVisitSummaryHistory(String startDate, String endDate)
+	public List<VisitHistorySummaryDto> queryVisitSummaryHistory(@QueryParam("startDate")String startDate, @QueryParam("endDate")String endDate)
 			throws ServiceException {
 		String token = this.getAuthorization();
 		return visitFacade.queryVisitSummaryHistory(token, startDate, endDate);
@@ -239,5 +240,14 @@ public class VisitController extends AbstractController{
 	public VisitRecordInfoDto queryVisitRecordInfo(@QueryParam("visitId")String visitId) throws ServiceException {
 		String token = this.getAuthorization();
 		return visitFacade.queryVisitRecordInfo(token, visitId);
+	}
+	
+	@GET
+	@Path("/queryVisitModelInfo")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<VisitStockInfoDto> queryVisitModelInfo(@QueryParam("shopId")Long shopId, @QueryParam("planDate")String planDate) throws ServiceException {
+		String token = this.getAuthorization();
+		return visitFacade.queryVisitModelInfo(token, shopId, planDate);
 	}
 }

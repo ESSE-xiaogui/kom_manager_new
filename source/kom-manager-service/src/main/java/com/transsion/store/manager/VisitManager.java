@@ -12,6 +12,7 @@ import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Visit;
 import com.transsion.store.bo.VisitFeedback;
+import com.transsion.store.bo.VisitModelSetting;
 import com.transsion.store.bo.VisitScore;
 import com.transsion.store.bo.VisitScoreItem;
 import com.transsion.store.bo.VisitStock;
@@ -33,10 +34,10 @@ import com.transsion.store.dto.VisitShopInfoDto;
 import com.transsion.store.dto.VisitStockDto;
 import com.transsion.store.dto.VisitStockInfoDto;
 import com.transsion.store.exception.ExceptionDef;
-import com.transsion.store.mapper.SaleGoalMapper;
 import com.transsion.store.mapper.VisitMapper;
 import com.transsion.store.mapper.VisitScoreSettingMapper;
 import com.transsion.store.service.VisitFeedbackService;
+import com.transsion.store.service.VisitModelSettingService;
 import com.transsion.store.service.VisitPlanService;
 import com.transsion.store.service.VisitScoreItemService;
 import com.transsion.store.service.VisitScoreService;
@@ -73,10 +74,10 @@ public class VisitManager {
 	private VisitFeedbackService visitFeedbackService;
 	
 	@Autowired
-	private VisitPlanManager visitPlanManager;
+	private SaleGoalManager saleGoalManager;
 	
 	@Autowired
-	private SaleGoalManager saleGoalManager;
+	private VisitModelSettingService visitModelSettingService;
 	
 	public List<VisitInfoDto> queryPlanedVisitList(String token, String planDate) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
@@ -161,7 +162,21 @@ public class VisitManager {
 	}
 	
 	public List<VisitStockInfoDto> queryVisitModelInfo(String token,java.lang.Long shopId, String planDate) throws ServiceException {
-		 List<String> modelCodeList = new ArrayList<String>();
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		
+		List<String> modelCodeList = new ArrayList<String>();
+		
+		VisitModelSetting visitModelSetting = new VisitModelSetting();
+		visitModelSetting.setCompanyId(userContext.getCompanyId());
+		visitModelSetting.setActionDate(planDate);
+		modelCodeList = visitModelSettingService.queryModeCodeListByCompanyId(visitModelSetting);
+		
 		return saleGoalManager.getShopModelSaleInfo(shopId, modelCodeList, planDate);
 	}
 
@@ -190,6 +205,10 @@ public class VisitManager {
 		return visitRecordInfoDto;
 	}
 	
+	/**
+	 * 查询所有分数接口
+	 * @author guihua.zhang
+	 */
 	public VisitSettingDto queryVisitSetting(String token) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());

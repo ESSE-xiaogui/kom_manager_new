@@ -33,4 +33,6 @@ public interface VisitModelSettingMapper extends GenericIBatisMapper<VisitModelS
     public List<VisitModelSettingInfoDto> listPaginationByProperty(Pagination<VisitModelSettingInfoDto> pagination, @Param("visitModelSettingInfoDto")VisitModelSettingInfoDto visitModelSettingInfoDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     
     public List<VisitModelSettingDto> queryVisitModelSettingList() throws DataAccessFailureException;
+    
+    public List<String> queryModeCodeListByCompanyId(VisitModelSetting visitModelSetting) throws DataAccessFailureException;
 }
