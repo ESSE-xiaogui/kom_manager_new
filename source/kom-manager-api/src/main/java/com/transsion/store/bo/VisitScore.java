@@ -298,23 +298,14 @@ public class VisitScore extends Model{
 	{
 		this.version = version;
 	}
-	
-	public String toString()
-	{
-		return "VisitScore [" + 
-					"id=" + id + 
-					", visitId=" + visitId + 
-					", shopScore=" + shopScore + 
-					", saleScore=" + saleScore + 
-					", staffScore=" + staffScore + 
-					", totalScore=" + totalScore + 
-					", remark=" + remark + 
-					", createBy=" + createBy + 
-					", createTime=" + createTime + 
-					", updateBy=" + updateBy + 
-					", updateTime=" + updateTime + 
-					", version=" + version + 
-				"]";
+
+	@Override
+	public String toString() {
+		return "VisitScore [id=" + id + ", visitId=" + visitId + ", shopId=" + shopId + ", shopScore=" + shopScore
+				+ ", saleScore=" + saleScore + ", staffScore=" + staffScore + ", totalScore=" + totalScore + ", remark="
+				+ remark + ", createBy=" + createBy + ", createTime=" + createTime + ", updateBy=" + updateBy
+				+ ", updateTime=" + updateTime + ", version=" + version + "]";
 	}
+	
 }
 

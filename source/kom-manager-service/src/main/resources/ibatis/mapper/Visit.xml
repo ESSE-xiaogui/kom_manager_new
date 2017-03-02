@@ -33,6 +33,7 @@
 		<result column="UPDATE_BY" property="updateBy"/>
 		<result column="UPDATE_TIME" property="updateTime"/>
 		<result column="VERSION" property="version"/>
+		<result column="VISTOR" property="vistor"/>
 	</resultMap>
 	
 	<resultMap id="VisitInfoDtoResultMapper" type="VisitInfoDto">
@@ -118,6 +119,7 @@
 		, UPDATE_BY
 		, UPDATE_TIME
 		, VERSION
+		, VISTOR
 	</sql>
 	
 	<sql id="commonProcessDateColumns">
@@ -305,6 +307,7 @@
 			, #{updateBy}
 			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
 			, #{version}
+			, #{vistor}
   ) ]]>
 	</insert>
 	<update id="update" parameterType="Visit">

@@ -253,7 +253,7 @@ public class VisitDto implements Serializable {
 		visit.setUpdateBy(this.getUpdateBy());
 		visit.setUpdateTime(this.getUpdateTime());
 //		visit.setVersion();
-		return null;
+		return visit;
 	}
 
 	@Override

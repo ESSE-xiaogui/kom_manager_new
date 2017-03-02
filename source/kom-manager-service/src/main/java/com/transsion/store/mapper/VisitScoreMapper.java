@@ -32,7 +32,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface VisitScoreMapper extends GenericIBatisMapper<VisitScore, java.lang.Long> {
 
-    public List<VisitScoreDetailInfoDto> listPaginationByProperty(Pagination<VisitScoreDetailInfoDto> pagination, @Param("visitPlanDetailInfoDto")VisitScoreDetailInfoDto visitScoreDetailInfoDto, @Param("orderBy") Map<String, String> orderBy,@Param("companyId")Long companyId) throws DataAccessFailureException;
+    public List<VisitScoreDetailInfoDto> listPaginationByProperty(Pagination<VisitScoreDetailInfoDto> pagination, @Param("visitScoreDetailInfoDto")VisitScoreDetailInfoDto visitScoreDetailInfoDto, @Param("orderBy") Map<String, String> orderBy,@Param("companyId")Long companyId) throws DataAccessFailureException;
     
     public VisitScoreDto queryVisitScoreByVisitId(Long visitId) throws DataAccessFailureException;
 
