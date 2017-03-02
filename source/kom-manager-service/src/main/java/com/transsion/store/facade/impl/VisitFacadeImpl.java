@@ -24,7 +24,6 @@ import org.springframework.stereotype.Component;
 import com.transsion.store.bo.Visit;
 import com.transsion.store.dto.VisitHistorySummaryDto;
 import com.transsion.store.dto.VisitInfoDto;
-import com.transsion.store.dto.VisitModelInfoDto;
 import com.transsion.store.dto.VisitRecordDto;
 import com.transsion.store.dto.VisitSettingDto;
 import com.transsion.store.dto.VisitShopInfoDto;
@@ -157,7 +156,10 @@ public class VisitFacadeImpl implements VisitFacade {
 		return visitService.findByCount(visit);
 	}
 
-	@Override
+	/**
+	 * 查询所有分数接口
+	 * @author guihua.zhang
+	 */
 	public VisitSettingDto queryVisitSetting(String token) throws ServiceException {
 		return visitManager.queryVisitSetting(token);
 	}

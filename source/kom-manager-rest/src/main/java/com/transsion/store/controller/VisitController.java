@@ -181,6 +181,7 @@ public class VisitController extends AbstractController{
 	/**
 	 * shopscore页面
 	 * score setting...
+	 * 查询所有分数接口
 	 * @author guihua.zhang
 	 * @return
 	 * @throws ServiceException

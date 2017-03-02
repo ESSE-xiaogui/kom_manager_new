@@ -33,7 +33,6 @@ import com.transsion.store.dto.VisitShopInfoDto;
 import com.transsion.store.dto.VisitStockDto;
 import com.transsion.store.dto.VisitStockInfoDto;
 import com.transsion.store.exception.ExceptionDef;
-import com.transsion.store.mapper.SaleGoalMapper;
 import com.transsion.store.mapper.VisitMapper;
 import com.transsion.store.mapper.VisitScoreSettingMapper;
 import com.transsion.store.service.VisitFeedbackService;
@@ -71,9 +70,6 @@ public class VisitManager {
 	
 	@Autowired
 	private VisitFeedbackService visitFeedbackService;
-	
-	@Autowired
-	private VisitPlanManager visitPlanManager;
 	
 	@Autowired
 	private SaleGoalManager saleGoalManager;
@@ -190,6 +186,10 @@ public class VisitManager {
 		return visitRecordInfoDto;
 	}
 	
+	/**
+	 * 查询所有分数接口
+	 * @author guihua.zhang
+	 */
 	public VisitSettingDto queryVisitSetting(String token) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
