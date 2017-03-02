@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2017 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2017-3-1 16:31:42
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.PrototypeSettingRegionMapper">
+	<resultMap id="PrototypeSettingRegionResultMapper" type="PrototypeSettingRegion">
+		<result column="ID" property="id"/>
+		<result column="SETTING_ID" property="settingId"/>
+		<result column="REGION_ID" property="regionId"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, SETTING_ID
+		, REGION_ID
+		, CREATE_BY
+		, CREATE_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 SETTING_ID
+		, REGION_ID
+		, CREATE_BY
+		, CREATE_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, SETTING_ID
+		, REGION_ID
+		, CREATE_BY
+		, date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+		, UPDATE_BY
+		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="settingId!= null and settingId!= ''"> 
+			AND SETTING_ID=#{settingId}
+		</if>
+		<if test="regionId!= null and regionId!= ''"> 
+			AND REGION_ID=#{regionId}
+		</if>
+		<if test="createBy!= null and createBy!= ''"> 
+			AND CREATE_BY=#{createBy}
+		</if>
+		<if test="createTime!= null and createTime!= ''"> 
+			AND CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updateBy!= null and updateBy!= ''"> 
+			AND UPDATE_BY=#{updateBy}
+		</if>
+		<if test="updateTime!= null and updateTime!= ''"> 
+			AND UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="prototypeSettingRegion != null">
+            <if test="prototypeSettingRegion.id!= null and prototypeSettingRegion.id!= ''">
+				AND ID=#{prototypeSettingRegion.id}
+            </if>
+            <if test="prototypeSettingRegion.settingId!= null and prototypeSettingRegion.settingId!= ''">
+				AND SETTING_ID=#{prototypeSettingRegion.settingId}
+            </if>
+            <if test="prototypeSettingRegion.regionId!= null and prototypeSettingRegion.regionId!= ''">
+				AND REGION_ID=#{prototypeSettingRegion.regionId}
+            </if>
+            <if test="prototypeSettingRegion.createBy!= null and prototypeSettingRegion.createBy!= ''">
+				AND CREATE_BY=#{prototypeSettingRegion.createBy}
+            </if>
+            <if test="prototypeSettingRegion.createTime!= null and prototypeSettingRegion.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{prototypeSettingRegion.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="prototypeSettingRegion.updateBy!= null and prototypeSettingRegion.updateBy!= ''">
+				AND UPDATE_BY=#{prototypeSettingRegion.updateBy}
+            </if>
+            <if test="prototypeSettingRegion.updateTime!= null and prototypeSettingRegion.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{prototypeSettingRegion.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="prototypeSettingRegion.version!= null and prototypeSettingRegion.version!= ''">
+				AND VERSION=#{prototypeSettingRegion.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'settingId'">
+				SETTING_ID ${value}
+            </when>
+        	<when test="key == 'regionId'">
+				REGION_ID ${value}
+            </when>
+        	<when test="key == 'createBy'">
+				CREATE_BY ${value}
+            </when>
+        	<when test="key == 'createTime'">
+				CREATE_TIME ${value}
+            </when>
+        	<when test="key == 'updateBy'">
+				UPDATE_BY ${value}
+            </when>
+        	<when test="key == 'updateTime'">
+				UPDATE_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="PrototypeSettingRegion">
+		<![CDATA[ INSERT INTO T_PROTOTYPE_SETTING_REGION ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{settingId}
+			, #{regionId}
+			, #{createBy}
+			, str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, #{updateBy}
+			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="PrototypeSettingRegion">
+		<![CDATA[ UPDATE T_PROTOTYPE_SETTING_REGION SET 
+			 ID=#{id} 
+			, SETTING_ID=#{settingId} 
+			, REGION_ID=#{regionId} 
+			, CREATE_BY=#{createBy} 
+			, CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATE_BY=#{updateBy} 
+			, UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_PROTOTYPE_SETTING_REGION WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_PROTOTYPE_SETTING_REGION WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			#{id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="PrototypeSettingRegion">
+		DELETE FROM T_PROTOTYPE_SETTING_REGION WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="PrototypeSettingRegionResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_PROTOTYPE_SETTING_REGION WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="PrototypeSettingRegionResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_PROTOTYPE_SETTING_REGION
+	</select>
+	<select id="listByProperty" parameterType="PrototypeSettingRegion" resultMap="PrototypeSettingRegionResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_PROTOTYPE_SETTING_REGION WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="PrototypeSettingRegion" resultMap="PrototypeSettingRegionResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_PROTOTYPE_SETTING_REGION WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="PrototypeSettingRegion" resultType="int">
+		SELECT count(1) AS totalcount FROM T_PROTOTYPE_SETTING_REGION WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

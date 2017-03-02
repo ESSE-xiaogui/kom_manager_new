@@ -17,16 +17,18 @@
 package com.transsion.store.facade.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.shangkang.core.bo.Pagination;
+import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Region;
 import com.transsion.store.dto.RegionDto;
 import com.transsion.store.dto.RegionListDto;
 import com.transsion.store.dto.RegionResponseDto;
 import com.transsion.store.dto.RegionShopDto;
 import com.transsion.store.dto.ShopBindRegionDto;
-import com.shangkang.core.bo.Pagination;
-import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.RegionFacade;
 import com.transsion.store.manager.RegionManager;
 import com.transsion.store.service.RegionService;

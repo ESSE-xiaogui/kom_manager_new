@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2017 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2017-3-1 16:31:42
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.GoalPromoterMapper">
+	<resultMap id="GoalPromoterResultMapper" type="GoalPromoter">
+		<result column="ID" property="id"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="GOAL_MONTH" property="goalMonth"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="USER_CODE" property="userCode"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="SHOP_CODE" property="shopCode"/>
+		<result column="SALE_TARGET" property="saleTarget"/>
+		<result column="SALE_CURRENT" property="saleCurrent"/>
+		<result column="ACHIEVED" property="achieved"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, COMPANY_ID
+		, GOAL_MONTH
+		, USER_ID
+		, USER_CODE
+		, SHOP_ID
+		, SHOP_CODE
+		, SALE_TARGET
+		, SALE_CURRENT
+		, ACHIEVED
+		, REMARK
+		, CREATE_BY
+		, CREATE_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 COMPANY_ID
+		, GOAL_MONTH
+		, USER_ID
+		, USER_CODE
+		, SHOP_ID
+		, SHOP_CODE
+		, SALE_TARGET
+		, SALE_CURRENT
+		, ACHIEVED
+		, REMARK
+		, CREATE_BY
+		, CREATE_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, COMPANY_ID
+		, date_format(GOAL_MONTH, '%Y-%m-%d %H:%i:%s') GOAL_MONTH
+		, USER_ID
+		, USER_CODE
+		, SHOP_ID
+		, SHOP_CODE
+		, SALE_TARGET
+		, SALE_CURRENT
+		, ACHIEVED
+		, REMARK
+		, CREATE_BY
+		, date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+		, UPDATE_BY
+		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="goalMonth!= null and goalMonth!= ''"> 
+			AND GOAL_MONTH=str_to_date(#{goalMonth},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="userId!= null and userId!= ''"> 
+			AND USER_ID=#{userId}
+		</if>
+		<if test="userCode!= null and userCode!= ''"> 
+			AND USER_CODE=#{userCode}
+		</if>
+		<if test="shopId!= null and shopId!= ''"> 
+			AND SHOP_ID=#{shopId}
+		</if>
+		<if test="shopCode!= null and shopCode!= ''"> 
+			AND SHOP_CODE=#{shopCode}
+		</if>
+		<if test="saleTarget!= null and saleTarget!= ''"> 
+			AND SALE_TARGET=#{saleTarget}
+		</if>
+		<if test="saleCurrent!= null and saleCurrent!= ''"> 
+			AND SALE_CURRENT=#{saleCurrent}
+		</if>
+		<if test="achieved!= null and achieved!= ''"> 
+			AND ACHIEVED=#{achieved}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createBy!= null and createBy!= ''"> 
+			AND CREATE_BY=#{createBy}
+		</if>
+		<if test="createTime!= null and createTime!= ''"> 
+			AND CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updateBy!= null and updateBy!= ''"> 
+			AND UPDATE_BY=#{updateBy}
+		</if>
+		<if test="updateTime!= null and updateTime!= ''"> 
+			AND UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="goalPromoter != null">
+            <if test="goalPromoter.id!= null and goalPromoter.id!= ''">
+				AND ID=#{goalPromoter.id}
+            </if>
+            <if test="goalPromoter.companyId!= null and goalPromoter.companyId!= ''">
+				AND COMPANY_ID=#{goalPromoter.companyId}
+            </if>
+            <if test="goalPromoter.goalMonth!= null and goalPromoter.goalMonth!= ''">
+				AND GOAL_MONTH=str_to_date(#{goalPromoter.goalMonth},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="goalPromoter.userId!= null and goalPromoter.userId!= ''">
+				AND USER_ID=#{goalPromoter.userId}
+            </if>
+            <if test="goalPromoter.userCode!= null and goalPromoter.userCode!= ''">
+				AND USER_CODE=#{goalPromoter.userCode}
+            </if>
+            <if test="goalPromoter.shopId!= null and goalPromoter.shopId!= ''">
+				AND SHOP_ID=#{goalPromoter.shopId}
+            </if>
+            <if test="goalPromoter.shopCode!= null and goalPromoter.shopCode!= ''">
+				AND SHOP_CODE=#{goalPromoter.shopCode}
+            </if>
+            <if test="goalPromoter.saleTarget!= null and goalPromoter.saleTarget!= ''">
+				AND SALE_TARGET=#{goalPromoter.saleTarget}
+            </if>
+            <if test="goalPromoter.saleCurrent!= null and goalPromoter.saleCurrent!= ''">
+				AND SALE_CURRENT=#{goalPromoter.saleCurrent}
+            </if>
+            <if test="goalPromoter.achieved!= null and goalPromoter.achieved!= ''">
+				AND ACHIEVED=#{goalPromoter.achieved}
+            </if>
+            <if test="goalPromoter.remark!= null and goalPromoter.remark!= ''">
+				AND REMARK=#{goalPromoter.remark}
+            </if>
+            <if test="goalPromoter.createBy!= null and goalPromoter.createBy!= ''">
+				AND CREATE_BY=#{goalPromoter.createBy}
+            </if>
+            <if test="goalPromoter.createTime!= null and goalPromoter.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{goalPromoter.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="goalPromoter.updateBy!= null and goalPromoter.updateBy!= ''">
+				AND UPDATE_BY=#{goalPromoter.updateBy}
+            </if>
+            <if test="goalPromoter.updateTime!= null and goalPromoter.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{goalPromoter.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="goalPromoter.version!= null and goalPromoter.version!= ''">
+				AND VERSION=#{goalPromoter.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'goalMonth'">
+				GOAL_MONTH ${value}
+            </when>
+        	<when test="key == 'userId'">
+				USER_ID ${value}
+            </when>
+        	<when test="key == 'userCode'">
+				USER_CODE ${value}
+            </when>
+        	<when test="key == 'shopId'">
+				SHOP_ID ${value}
+            </when>
+        	<when test="key == 'shopCode'">
+				SHOP_CODE ${value}
+            </when>
+        	<when test="key == 'saleTarget'">
+				SALE_TARGET ${value}
+            </when>
+        	<when test="key == 'saleCurrent'">
+				SALE_CURRENT ${value}
+            </when>
+        	<when test="key == 'achieved'">
+				ACHIEVED ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createBy'">
+				CREATE_BY ${value}
+            </when>
+        	<when test="key == 'createTime'">
+				CREATE_TIME ${value}
+            </when>
+        	<when test="key == 'updateBy'">
+				UPDATE_BY ${value}
+            </when>
+        	<when test="key == 'updateTime'">
+				UPDATE_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="GoalPromoter">
+		<![CDATA[ INSERT INTO T_GOAL_PROMOTER ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{companyId}
+			, str_to_date(#{goalMonth},'%Y-%m-%d %H:%i:%s')
+			, #{userId}
+			, #{userCode}
+			, #{shopId}
+			, #{shopCode}
+			, #{saleTarget}
+			, #{saleCurrent}
+			, #{achieved}
+			, #{remark}
+			, #{createBy}
+			, str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, #{updateBy}
+			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="GoalPromoter">
+		<![CDATA[ UPDATE T_GOAL_PROMOTER SET 
+			 ID=#{id} 
+			, COMPANY_ID=#{companyId} 
+			, GOAL_MONTH=str_to_date(#{goalMonth},'%Y-%m-%d %H:%i:%s')
+			, USER_ID=#{userId} 
+			, USER_CODE=#{userCode} 
+			, SHOP_ID=#{shopId} 
+			, SHOP_CODE=#{shopCode} 
+			, SALE_TARGET=#{saleTarget} 
+			, SALE_CURRENT=#{saleCurrent} 
+			, ACHIEVED=#{achieved} 
+			, REMARK=#{remark} 
+			, CREATE_BY=#{createBy} 
+			, CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATE_BY=#{updateBy} 
+			, UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_GOAL_PROMOTER WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_GOAL_PROMOTER WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			#{id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="GoalPromoter">
+		DELETE FROM T_GOAL_PROMOTER WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="GoalPromoterResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_GOAL_PROMOTER WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="GoalPromoterResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_GOAL_PROMOTER
+	</select>
+	<select id="listByProperty" parameterType="GoalPromoter" resultMap="GoalPromoterResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_GOAL_PROMOTER WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="GoalPromoter" resultMap="GoalPromoterResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_GOAL_PROMOTER WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="GoalPromoter" resultType="int">
+		SELECT count(1) AS totalcount FROM T_GOAL_PROMOTER WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

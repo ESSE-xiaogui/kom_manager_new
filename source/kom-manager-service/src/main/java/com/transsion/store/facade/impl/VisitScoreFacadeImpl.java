@@ -21,9 +21,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.transsion.store.bo.VisitScore;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.transsion.store.bo.VisitScore;
 import com.transsion.store.facade.VisitScoreFacade;
 import com.transsion.store.service.VisitScoreService;
 

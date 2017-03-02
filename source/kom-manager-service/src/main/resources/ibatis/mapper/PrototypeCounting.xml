@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2017 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2017-3-1 16:31:41
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.PrototypeCountingMapper">
+	<resultMap id="PrototypeCountingResultMapper" type="PrototypeCounting">
+		<result column="ID" property="id"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="PROTOTYPE_ID" property="prototypeId"/>
+		<result column="IMG_PROTOTYPE_URL" property="imgPrototypeUrl"/>
+		<result column="IMG_SHOP_URL" property="imgShopUrl"/>
+		<result column="IMG_IMEI_URL" property="imgImeiUrl"/>
+		<result column="STATUS" property="status"/>
+		<result column="COUTING_BY" property="coutingBy"/>
+		<result column="COUNTING_TIME" property="countingTime"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, COMPANY_ID
+		, SHOP_ID
+		, PROTOTYPE_ID
+		, IMG_PROTOTYPE_URL
+		, IMG_SHOP_URL
+		, IMG_IMEI_URL
+		, STATUS
+		, COUTING_BY
+		, COUNTING_TIME
+		, REMARK
+		, CREATE_BY
+		, CREATE_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 COMPANY_ID
+		, SHOP_ID
+		, PROTOTYPE_ID
+		, IMG_PROTOTYPE_URL
+		, IMG_SHOP_URL
+		, IMG_IMEI_URL
+		, STATUS
+		, COUTING_BY
+		, COUNTING_TIME
+		, REMARK
+		, CREATE_BY
+		, CREATE_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, COMPANY_ID
+		, SHOP_ID
+		, PROTOTYPE_ID
+		, IMG_PROTOTYPE_URL
+		, IMG_SHOP_URL
+		, IMG_IMEI_URL
+		, STATUS
+		, COUTING_BY
+		, date_format(COUNTING_TIME, '%Y-%m-%d %H:%i:%s') COUNTING_TIME
+		, REMARK
+		, CREATE_BY
+		, date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+		, UPDATE_BY
+		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="shopId!= null and shopId!= ''"> 
+			AND SHOP_ID=#{shopId}
+		</if>
+		<if test="prototypeId!= null and prototypeId!= ''"> 
+			AND PROTOTYPE_ID=#{prototypeId}
+		</if>
+		<if test="imgPrototypeUrl!= null and imgPrototypeUrl!= ''"> 
+			AND IMG_PROTOTYPE_URL=#{imgPrototypeUrl}
+		</if>
+		<if test="imgShopUrl!= null and imgShopUrl!= ''"> 
+			AND IMG_SHOP_URL=#{imgShopUrl}
+		</if>
+		<if test="imgImeiUrl!= null and imgImeiUrl!= ''"> 
+			AND IMG_IMEI_URL=#{imgImeiUrl}
+		</if>
+		<if test="status!= null and status!= ''"> 
+			AND STATUS=#{status}
+		</if>
+		<if test="coutingBy!= null and coutingBy!= ''"> 
+			AND COUTING_BY=#{coutingBy}
+		</if>
+		<if test="countingTime!= null and countingTime!= ''"> 
+			AND COUNTING_TIME=str_to_date(#{countingTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createBy!= null and createBy!= ''"> 
+			AND CREATE_BY=#{createBy}
+		</if>
+		<if test="createTime!= null and createTime!= ''"> 
+			AND CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updateBy!= null and updateBy!= ''"> 
+			AND UPDATE_BY=#{updateBy}
+		</if>
+		<if test="updateTime!= null and updateTime!= ''"> 
+			AND UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="prototypeCounting != null">
+            <if test="prototypeCounting.id!= null and prototypeCounting.id!= ''">
+				AND ID=#{prototypeCounting.id}
+            </if>
+            <if test="prototypeCounting.companyId!= null and prototypeCounting.companyId!= ''">
+				AND COMPANY_ID=#{prototypeCounting.companyId}
+            </if>
+            <if test="prototypeCounting.shopId!= null and prototypeCounting.shopId!= ''">
+				AND SHOP_ID=#{prototypeCounting.shopId}
+            </if>
+            <if test="prototypeCounting.prototypeId!= null and prototypeCounting.prototypeId!= ''">
+				AND PROTOTYPE_ID=#{prototypeCounting.prototypeId}
+            </if>
+            <if test="prototypeCounting.imgPrototypeUrl!= null and prototypeCounting.imgPrototypeUrl!= ''">
+				AND IMG_PROTOTYPE_URL=#{prototypeCounting.imgPrototypeUrl}
+            </if>
+            <if test="prototypeCounting.imgShopUrl!= null and prototypeCounting.imgShopUrl!= ''">
+				AND IMG_SHOP_URL=#{prototypeCounting.imgShopUrl}
+            </if>
+            <if test="prototypeCounting.imgImeiUrl!= null and prototypeCounting.imgImeiUrl!= ''">
+				AND IMG_IMEI_URL=#{prototypeCounting.imgImeiUrl}
+            </if>
+            <if test="prototypeCounting.status!= null and prototypeCounting.status!= ''">
+				AND STATUS=#{prototypeCounting.status}
+            </if>
+            <if test="prototypeCounting.coutingBy!= null and prototypeCounting.coutingBy!= ''">
+				AND COUTING_BY=#{prototypeCounting.coutingBy}
+            </if>
+            <if test="prototypeCounting.countingTime!= null and prototypeCounting.countingTime!= ''">
+				AND COUNTING_TIME=str_to_date(#{prototypeCounting.countingTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="prototypeCounting.remark!= null and prototypeCounting.remark!= ''">
+				AND REMARK=#{prototypeCounting.remark}
+            </if>
+            <if test="prototypeCounting.createBy!= null and prototypeCounting.createBy!= ''">
+				AND CREATE_BY=#{prototypeCounting.createBy}
+            </if>
+            <if test="prototypeCounting.createTime!= null and prototypeCounting.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{prototypeCounting.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="prototypeCounting.updateBy!= null and prototypeCounting.updateBy!= ''">
+				AND UPDATE_BY=#{prototypeCounting.updateBy}
+            </if>
+            <if test="prototypeCounting.updateTime!= null and prototypeCounting.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{prototypeCounting.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="prototypeCounting.version!= null and prototypeCounting.version!= ''">
+				AND VERSION=#{prototypeCounting.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'shopId'">
+				SHOP_ID ${value}
+            </when>
+        	<when test="key == 'prototypeId'">
+				PROTOTYPE_ID ${value}
+            </when>
+        	<when test="key == 'imgPrototypeUrl'">
+				IMG_PROTOTYPE_URL ${value}
+            </when>
+        	<when test="key == 'imgShopUrl'">
+				IMG_SHOP_URL ${value}
+            </when>
+        	<when test="key == 'imgImeiUrl'">
+				IMG_IMEI_URL ${value}
+            </when>
+        	<when test="key == 'status'">
+				STATUS ${value}
+            </when>
+        	<when test="key == 'coutingBy'">
+				COUTING_BY ${value}
+            </when>
+        	<when test="key == 'countingTime'">
+				COUNTING_TIME ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createBy'">
+				CREATE_BY ${value}
+            </when>
+        	<when test="key == 'createTime'">
+				CREATE_TIME ${value}
+            </when>
+        	<when test="key == 'updateBy'">
+				UPDATE_BY ${value}
+            </when>
+        	<when test="key == 'updateTime'">
+				UPDATE_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="PrototypeCounting">
+		<![CDATA[ INSERT INTO T_PROTOTYPE_COUNTING ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{companyId}
+			, #{shopId}
+			, #{prototypeId}
+			, #{imgPrototypeUrl}
+			, #{imgShopUrl}
+			, #{imgImeiUrl}
+			, #{status}
+			, #{coutingBy}
+			, str_to_date(#{countingTime},'%Y-%m-%d %H:%i:%s')
+			, #{remark}
+			, #{createBy}
+			, str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, #{updateBy}
+			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="PrototypeCounting">
+		<![CDATA[ UPDATE T_PROTOTYPE_COUNTING SET 
+			 ID=#{id} 
+			, COMPANY_ID=#{companyId} 
+			, SHOP_ID=#{shopId} 
+			, PROTOTYPE_ID=#{prototypeId} 
+			, IMG_PROTOTYPE_URL=#{imgPrototypeUrl} 
+			, IMG_SHOP_URL=#{imgShopUrl} 
+			, IMG_IMEI_URL=#{imgImeiUrl} 
+			, STATUS=#{status} 
+			, COUTING_BY=#{coutingBy} 
+			, COUNTING_TIME=str_to_date(#{countingTime},'%Y-%m-%d %H:%i:%s')
+			, REMARK=#{remark} 
+			, CREATE_BY=#{createBy} 
+			, CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATE_BY=#{updateBy} 
+			, UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_PROTOTYPE_COUNTING WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_PROTOTYPE_COUNTING WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			#{id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="PrototypeCounting">
+		DELETE FROM T_PROTOTYPE_COUNTING WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="PrototypeCountingResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_PROTOTYPE_COUNTING WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="PrototypeCountingResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_PROTOTYPE_COUNTING
+	</select>
+	<select id="listByProperty" parameterType="PrototypeCounting" resultMap="PrototypeCountingResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_PROTOTYPE_COUNTING WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="PrototypeCounting" resultMap="PrototypeCountingResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_PROTOTYPE_COUNTING WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="PrototypeCounting" resultType="int">
+		SELECT count(1) AS totalcount FROM T_PROTOTYPE_COUNTING WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

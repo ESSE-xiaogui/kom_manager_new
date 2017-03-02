@@ -21,11 +21,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.shangkang.core.bo.Pagination;
+import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Brand;
 import com.transsion.store.dto.BrandDto;
 import com.transsion.store.dto.BrandModelListDto;
-import com.shangkang.core.bo.Pagination;
-import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.BrandFacade;
 import com.transsion.store.manager.BrandManager;
 import com.transsion.store.service.BrandService;

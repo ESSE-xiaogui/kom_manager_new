@@ -16,6 +16,12 @@
 **/
 package com.transsion.store.facade.impl;
 
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.FileTemplate;
@@ -23,11 +29,6 @@ import com.transsion.store.dto.FileTemplateDto;
 import com.transsion.store.facade.FileTemplateFacade;
 import com.transsion.store.manager.FileTemplateManager;
 import com.transsion.store.service.FileTemplateService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.Map;
 
 @Component("fileTemplateFacade")
 public class FileTemplateFacadeImpl implements FileTemplateFacade {

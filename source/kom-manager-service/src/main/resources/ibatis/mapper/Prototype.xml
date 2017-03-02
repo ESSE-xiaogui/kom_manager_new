@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2017 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2017-3-1 16:30:39
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.PrototypeMapper">
+	<resultMap id="PrototypeResultMapper" type="Prototype">
+		<result column="ID" property="id"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="BRAND_ID" property="brandId"/>
+		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="MODEL_ID" property="modelId"/>
+		<result column="MODEL_CODE" property="modelCode"/>
+		<result column="IMEI_NO" property="imeiNo"/>
+		<result column="IMEI_LIST" property="imeiList"/>
+		<result column="IMG_PROTOTYPE_URL" property="imgPrototypeUrl"/>
+		<result column="IMG_SHOP_URL" property="imgShopUrl"/>
+		<result column="IMG_IMEI_URL" property="imgImeiUrl"/>
+		<result column="STATUS" property="status"/>
+		<result column="PUBLISH_BY" property="publishBy"/>
+		<result column="PUBLISH_TIME" property="publishTime"/>
+		<result column="UNPUBLISH_BY" property="unpublishBy"/>
+		<result column="UNPUBLISH_TIME" property="unpublishTime"/>
+		<result column="UNPUBLISH_CAUSE" property="unpublishCause"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<resultMap id="PrototypeDtoResultMapper" type="PrototypeDto">
+		<result column="ID" property="id"/>
+		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="BRAND_NAME" property="brandName"/>
+		<result column="MODE_CODE" property="modeCode"/>
+		<result column="MODE_NAME" property="modeName"/>
+		<result column="MODEL_ID" property="modelId"/>
+		<result column="MODEL_CODE" property="modelCode"/>
+		<result column="IMEI_NO" property="imeiNo"/>
+		<result column="IMEI_LIST" property="imeiList"/>
+		<result column="IMG_PROTOTYPE_URL" property="imgPrototypeUrl"/>
+		<result column="IMG_SHOP_URL" property="imgShopUrl"/>
+		<result column="IMG_IMEI_URL" property="imgImeiUrl"/>
+		<result column="STATUS" property="status"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="SHOP_ID" property="shopId"/>
+	</resultMap>
+	
+	
+	<sql id="commonColumns">
+		 ID
+		, COMPANY_ID
+		, SHOP_ID
+		, BRAND_ID
+		, BRAND_CODE
+		, MODEL_ID
+		, MODEL_CODE
+		, IMEI_NO
+		, IMEI_LIST
+		, IMG_PROTOTYPE_URL
+		, IMG_SHOP_URL
+		, IMG_IMEI_URL
+		, STATUS
+		, PUBLISH_BY
+		, PUBLISH_TIME
+		, UNPUBLISH_BY
+		, UNPUBLISH_TIME
+		, UNPUBLISH_CAUSE
+		, REMARK
+		, CREATE_BY
+		, CREATE_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 COMPANY_ID
+		, SHOP_ID
+		, BRAND_ID
+		, BRAND_CODE
+		, MODEL_ID
+		, MODEL_CODE
+		, IMEI_NO
+		, IMEI_LIST
+		, IMG_PROTOTYPE_URL
+		, IMG_SHOP_URL
+		, IMG_IMEI_URL
+		, STATUS
+		, PUBLISH_BY
+		, PUBLISH_TIME
+		, UNPUBLISH_BY
+		, UNPUBLISH_TIME
+		, UNPUBLISH_CAUSE
+		, REMARK
+		, CREATE_BY
+		, CREATE_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, COMPANY_ID
+		, SHOP_ID
+		, BRAND_ID
+		, BRAND_CODE
+		, MODEL_ID
+		, MODEL_CODE
+		, IMEI_NO
+		, IMEI_LIST
+		, IMG_PROTOTYPE_URL
+		, IMG_SHOP_URL
+		, IMG_IMEI_URL
+		, STATUS
+		, PUBLISH_BY
+		, date_format(PUBLISH_TIME, '%Y-%m-%d %H:%i:%s') PUBLISH_TIME
+		, UNPUBLISH_BY
+		, date_format(UNPUBLISH_TIME, '%Y-%m-%d %H:%i:%s') UNPUBLISH_TIME
+		, UNPUBLISH_CAUSE
+		, REMARK
+		, CREATE_BY
+		, date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+		, UPDATE_BY
+		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="shopId!= null and shopId!= ''"> 
+			AND SHOP_ID=#{shopId}
+		</if>
+		<if test="brandId!= null and brandId!= ''"> 
+			AND BRAND_ID=#{brandId}
+		</if>
+		<if test="brandCode!= null and brandCode!= ''"> 
+			AND BRAND_CODE=#{brandCode}
+		</if>
+		<if test="modelId!= null and modelId!= ''"> 
+			AND MODEL_ID=#{modelId}
+		</if>
+		<if test="modelCode!= null and modelCode!= ''"> 
+			AND MODEL_CODE=#{modelCode}
+		</if>
+		<if test="imeiNo!= null and imeiNo!= ''"> 
+			AND IMEI_NO=#{imeiNo}
+		</if>
+		<if test="imeiList!= null and imeiList!= ''"> 
+			AND IMEI_LIST=#{imeiList}
+		</if>
+		<if test="imgPrototypeUrl!= null and imgPrototypeUrl!= ''"> 
+			AND IMG_PROTOTYPE_URL=#{imgPrototypeUrl}
+		</if>
+		<if test="imgShopUrl!= null and imgShopUrl!= ''"> 
+			AND IMG_SHOP_URL=#{imgShopUrl}
+		</if>
+		<if test="imgImeiUrl!= null and imgImeiUrl!= ''"> 
+			AND IMG_IMEI_URL=#{imgImeiUrl}
+		</if>
+		<if test="status!= null and status!= ''"> 
+			AND STATUS=#{status}
+		</if>
+		<if test="publishBy!= null and publishBy!= ''"> 
+			AND PUBLISH_BY=#{publishBy}
+		</if>
+		<if test="publishTime!= null and publishTime!= ''"> 
+			AND PUBLISH_TIME=str_to_date(#{publishTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="unpublishBy!= null and unpublishBy!= ''"> 
+			AND UNPUBLISH_BY=#{unpublishBy}
+		</if>
+		<if test="unpublishTime!= null and unpublishTime!= ''"> 
+			AND UNPUBLISH_TIME=str_to_date(#{unpublishTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="unpublishCause!= null and unpublishCause!= ''"> 
+			AND UNPUBLISH_CAUSE=#{unpublishCause}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createBy!= null and createBy!= ''"> 
+			AND CREATE_BY=#{createBy}
+		</if>
+		<if test="createTime!= null and createTime!= ''"> 
+			AND CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updateBy!= null and updateBy!= ''"> 
+			AND UPDATE_BY=#{updateBy}
+		</if>
+		<if test="updateTime!= null and updateTime!= ''"> 
+			AND UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="prototypeDto != null">
+            <if test="prototypeDto.id!= null and prototypeDto.id!= ''">
+				AND pro.ID=#{prototypeDto.id}
+            </if>
+            <if test="prototypeDto.brandId!= null and prototypeDto.brandId!= ''">
+				AND pro.BRAND_ID=#{prototypeDto.brandId}
+            </if>
+            <if test="prototypeDto.brandCode!= null and prototypeDto.brandCode != ''">
+				AND brand.BRAND_CODE like CONCAT('%',#{prototypeDto.BRAND_CODE},'%')
+            </if>
+            <if test="prototypeDto.brandName!= null and prototypeDto.brandName!= ''">
+				AND brand.BRAND_NAME like CONCAT('%',#{prototypeDto.brandName},'%')
+            </if>
+            <if test="prototypeDto.shopId!= null and prototypeDto.shopId!= ''">
+				AND pro.SHOP_ID=#{prototypeDto.shopId}
+            </if>
+            <if test="prototypeDto.shopName!= null and prototypeDto.shopName!= ''">
+				AND shop.SHOP_NAME like CONCAT('%',#{prototypeDto.shopName},'%')
+            </if>
+            <if test="prototypeDto.modelId!= null and prototypeDto.modelId!= ''">
+				AND pro.MODEL_ID=#{prototypeDto.modelId}
+            </if>
+            <if test="prototypeDto.modelCode!= null and prototypeDto.modelCode!= != ''">
+				AND model.MODEL_CODE like CONCAT('%',#{prototypeDto.modelCode},'%')
+            </if>
+            <if test="prototypeDto.modelName!= null and prototypeDto.modelName!= ''">
+				AND model.MODEL_NAME like CONCAT('%',#{prototypeDto.modelName},'%')
+            </if>
+            <if test="prototypeDto.imeiNo!= null and prototypeDto.imeiNo!= ''">
+				AND pro.IMEI_NO=#{prototypeDto.imeiNo}
+            </if>
+            <if test="prototypeDto.imeiList!= null and prototypeDto.imeiList!= ''">
+				AND pro.IMEI_LIST=#{prototypeDto.imeiList}
+            </if>
+            <if test="prototypeDto.status!= null and prototypeDto.status!= ''">
+				AND pro.STATUS=#{prototypeDto.status}
+            </if>
+            <!-- 
+            <if test="prototype.publishBy!= null and prototype.publishBy!= ''">
+				AND PUBLISH_BY=#{prototype.publishBy}
+            </if>
+            <if test="prototype.publishTime!= null and prototype.publishTime!= ''">
+				AND PUBLISH_TIME=str_to_date(#{prototype.publishTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="prototype.unpublishBy!= null and prototype.unpublishBy!= ''">
+				AND UNPUBLISH_BY=#{prototype.unpublishBy}
+            </if>
+            <if test="prototype.unpublishTime!= null and prototype.unpublishTime!= ''">
+				AND UNPUBLISH_TIME=str_to_date(#{prototype.unpublishTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="prototype.unpublishCause!= null and prototype.unpublishCause!= ''">
+				AND UNPUBLISH_CAUSE=#{prototype.unpublishCause}
+            </if>
+            <if test="prototype.remark!= null and prototype.remark!= ''">
+				AND REMARK=#{prototype.remark}
+            </if>
+            <if test="prototype.createBy!= null and prototype.createBy!= ''">
+				AND CREATE_BY=#{prototype.createBy}
+            </if>
+            <if test="prototype.createTime!= null and prototype.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{prototype.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="prototype.updateBy!= null and prototype.updateBy!= ''">
+				AND UPDATE_BY=#{prototype.updateBy}
+            </if>
+            <if test="prototype.updateTime!= null and prototype.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{prototype.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="prototype.version!= null and prototype.version!= ''">
+				AND VERSION=#{prototype.version}
+            </if>
+             -->
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'shopId'">
+				SHOP_ID ${value}
+            </when>
+        	<when test="key == 'brandId'">
+				BRAND_ID ${value}
+            </when>
+        	<when test="key == 'brandCode'">
+				BRAND_CODE ${value}
+            </when>
+        	<when test="key == 'modelId'">
+				MODEL_ID ${value}
+            </when>
+        	<when test="key == 'modelCode'">
+				MODEL_CODE ${value}
+            </when>
+        	<when test="key == 'imeiNo'">
+				IMEI_NO ${value}
+            </when>
+        	<when test="key == 'imeiList'">
+				IMEI_LIST ${value}
+            </when>
+        	<when test="key == 'imgPrototypeUrl'">
+				IMG_PROTOTYPE_URL ${value}
+            </when>
+        	<when test="key == 'imgShopUrl'">
+				IMG_SHOP_URL ${value}
+            </when>
+        	<when test="key == 'imgImeiUrl'">
+				IMG_IMEI_URL ${value}
+            </when>
+        	<when test="key == 'status'">
+				STATUS ${value}
+            </when>
+        	<when test="key == 'publishBy'">
+				PUBLISH_BY ${value}
+            </when>
+        	<when test="key == 'publishTime'">
+				PUBLISH_TIME ${value}
+            </when>
+        	<when test="key == 'unpublishBy'">
+				UNPUBLISH_BY ${value}
+            </when>
+        	<when test="key == 'unpublishTime'">
+				UNPUBLISH_TIME ${value}
+            </when>
+        	<when test="key == 'unpublishCause'">
+				UNPUBLISH_CAUSE ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createBy'">
+				CREATE_BY ${value}
+            </when>
+        	<when test="key == 'createTime'">
+				CREATE_TIME ${value}
+            </when>
+        	<when test="key == 'updateBy'">
+				UPDATE_BY ${value}
+            </when>
+        	<when test="key == 'updateTime'">
+				UPDATE_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Prototype">
+		<![CDATA[ INSERT INTO T_PROTOTYPE ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{companyId}
+			, #{shopId}
+			, #{brandId}
+			, #{brandCode}
+			, #{modelId}
+			, #{modelCode}
+			, #{imeiNo}
+			, #{imeiList}
+			, #{imgPrototypeUrl}
+			, #{imgShopUrl}
+			, #{imgImeiUrl}
+			, #{status}
+			, #{publishBy}
+			, str_to_date(#{publishTime},'%Y-%m-%d %H:%i:%s')
+			, #{unpublishBy}
+			, str_to_date(#{unpublishTime},'%Y-%m-%d %H:%i:%s')
+			, #{unpublishCause}
+			, #{remark}
+			, #{createBy}
+			, str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, #{updateBy}
+			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="Prototype">
+		<![CDATA[ UPDATE T_PROTOTYPE SET 
+			 ID=#{id} 
+			, COMPANY_ID=#{companyId} 
+			, SHOP_ID=#{shopId} 
+			, BRAND_ID=#{brandId} 
+			, BRAND_CODE=#{brandCode} 
+			, MODEL_ID=#{modelId} 
+			, MODEL_CODE=#{modelCode} 
+			, IMEI_NO=#{imeiNo} 
+			, IMEI_LIST=#{imeiList} 
+			, IMG_PROTOTYPE_URL=#{imgPrototypeUrl} 
+			, IMG_SHOP_URL=#{imgShopUrl} 
+			, IMG_IMEI_URL=#{imgImeiUrl} 
+			, STATUS=#{status} 
+			, PUBLISH_BY=#{publishBy} 
+			, PUBLISH_TIME=str_to_date(#{publishTime},'%Y-%m-%d %H:%i:%s')
+			, UNPUBLISH_BY=#{unpublishBy} 
+			, UNPUBLISH_TIME=str_to_date(#{unpublishTime},'%Y-%m-%d %H:%i:%s')
+			, UNPUBLISH_CAUSE=#{unpublishCause} 
+			, REMARK=#{remark} 
+			, CREATE_BY=#{createBy} 
+			, CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATE_BY=#{updateBy} 
+			, UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_PROTOTYPE WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_PROTOTYPE WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			#{id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="Prototype">
+		DELETE FROM T_PROTOTYPE WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="PrototypeResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_PROTOTYPE WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="PrototypeResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_PROTOTYPE
+	</select>
+	<select id="listByProperty" parameterType="Prototype" resultMap="PrototypeResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_PROTOTYPE WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByPropertyDto" parameterType="PrototypeDto" resultMap="PrototypeDtoResultMapper">
+		SELECT 
+		pro.ID, pro.BRAND_CODE, brand.BRAND_NAME, pro.MODEL_CODE, model.MODEL_NAME, 
+		pro.IMEI_NO, pro.IMEI_LIST, pro.IMG_PROTOTYPE_URL, pro.IMG_SHOP_URL, pro.IMG_IMEI_URL,
+		pro.SHOP_ID, shop.SHOP_NAME,pro.STATUS
+		
+		FROM T_PROTOTYPE pro
+		left join T_BRAND brand on pro.BRAND_ID = brand.BRAND_ID
+		left join T_SHOP shop on pro.SHOP_ID = shop.SHOP_ID
+		left join T_MODEL model on pro.MODEL_ID = model.MODEL_ID
+		
+		WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	
+	<select id="findByCountDto" parameterType="PrototypeDto" resultType="int">
+		SELECT count(1) AS totalcount 
+		FROM T_PROTOTYPE pro
+		left join T_BRAND brand on pro.BRAND_ID = brand.BRAND_ID
+		left join T_SHOP shop on pro.SHOP_ID = shop.SHOP_ID
+		left join T_MODEL model on pro.MODEL_ID = model.MODEL_ID
+		
+		WHERE 1=1
+		<include refid="commonConditionByPrefix"/>
+	</select>
+	
+	<select id="findByCount" parameterType="Prototype" resultType="int">
+		SELECT count(1) AS totalcount FROM T_PROTOTYPE WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

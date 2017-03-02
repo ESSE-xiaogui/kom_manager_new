@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2017 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2017-3-1 16:30:39
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.PrototypeSettingMapper">
+	<resultMap id="PrototypeSettingResultMapper" type="PrototypeSetting">
+		<result column="ID" property="id"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="EFFECTIVE_MONTH" property="effectiveMonth"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_DATE" property="updateDate"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 ID
+		, COMPANY_ID
+		, EFFECTIVE_MONTH
+		, IS_INACTIVE
+		, REMARK
+		, CREATE_BY
+		, CREATE_DATE
+		, UPDATE_BY
+		, UPDATE_DATE
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 COMPANY_ID
+		, EFFECTIVE_MONTH
+		, IS_INACTIVE
+		, REMARK
+		, CREATE_BY
+		, CREATE_DATE
+		, UPDATE_BY
+		, UPDATE_DATE
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 ID
+		, COMPANY_ID
+		, date_format(EFFECTIVE_MONTH, '%Y-%m-%d %H:%i:%s') EFFECTIVE_MONTH
+		, IS_INACTIVE
+		, REMARK
+		, CREATE_BY
+		, date_format(CREATE_DATE, '%Y-%m-%d %H:%i:%s') CREATE_DATE
+		, UPDATE_BY
+		, date_format(UPDATE_DATE, '%Y-%m-%d %H:%i:%s') UPDATE_DATE
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID=#{id}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="effectiveMonth!= null and effectiveMonth!= ''"> 
+			AND EFFECTIVE_MONTH=str_to_date(#{effectiveMonth},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="isInactive!= null and isInactive!= ''"> 
+			AND IS_INACTIVE=#{isInactive}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK=#{remark}
+		</if>
+		<if test="createBy!= null and createBy!= ''"> 
+			AND CREATE_BY=#{createBy}
+		</if>
+		<if test="createDate!= null and createDate!= ''"> 
+			AND CREATE_DATE=str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updateBy!= null and updateBy!= ''"> 
+			AND UPDATE_BY=#{updateBy}
+		</if>
+		<if test="updateDate!= null and updateDate!= ''"> 
+			AND UPDATE_DATE=str_to_date(#{updateDate},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION=#{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="prototypeSetting != null">
+            <if test="prototypeSetting.id!= null and prototypeSetting.id!= ''">
+				AND ID=#{prototypeSetting.id}
+            </if>
+            <if test="prototypeSetting.companyId!= null and prototypeSetting.companyId!= ''">
+				AND COMPANY_ID=#{prototypeSetting.companyId}
+            </if>
+            <if test="prototypeSetting.effectiveMonth!= null and prototypeSetting.effectiveMonth!= ''">
+				AND EFFECTIVE_MONTH=str_to_date(#{prototypeSetting.effectiveMonth},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="prototypeSetting.isInactive!= null and prototypeSetting.isInactive!= ''">
+				AND IS_INACTIVE=#{prototypeSetting.isInactive}
+            </if>
+            <if test="prototypeSetting.remark!= null and prototypeSetting.remark!= ''">
+				AND REMARK=#{prototypeSetting.remark}
+            </if>
+            <if test="prototypeSetting.createBy!= null and prototypeSetting.createBy!= ''">
+				AND CREATE_BY=#{prototypeSetting.createBy}
+            </if>
+            <if test="prototypeSetting.createDate!= null and prototypeSetting.createDate!= ''">
+				AND CREATE_DATE=str_to_date(#{prototypeSetting.createDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="prototypeSetting.updateBy!= null and prototypeSetting.updateBy!= ''">
+				AND UPDATE_BY=#{prototypeSetting.updateBy}
+            </if>
+            <if test="prototypeSetting.updateDate!= null and prototypeSetting.updateDate!= ''">
+				AND UPDATE_DATE=str_to_date(#{prototypeSetting.updateDate},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="prototypeSetting.version!= null and prototypeSetting.version!= ''">
+				AND VERSION=#{prototypeSetting.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'effectiveMonth'">
+				EFFECTIVE_MONTH ${value}
+            </when>
+        	<when test="key == 'isInactive'">
+				IS_INACTIVE ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createBy'">
+				CREATE_BY ${value}
+            </when>
+        	<when test="key == 'createDate'">
+				CREATE_DATE ${value}
+            </when>
+        	<when test="key == 'updateBy'">
+				UPDATE_BY ${value}
+            </when>
+        	<when test="key == 'updateDate'">
+				UPDATE_DATE ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="PrototypeSetting">
+		<![CDATA[ INSERT INTO T_PROTOTYPE_SETTING ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{companyId}
+			, str_to_date(#{effectiveMonth},'%Y-%m-%d %H:%i:%s')
+			, #{isInactive}
+			, #{remark}
+			, #{createBy}
+			, str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
+			, #{updateBy}
+			, str_to_date(#{updateDate},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="PrototypeSetting">
+		<![CDATA[ UPDATE T_PROTOTYPE_SETTING SET 
+			 ID=#{id} 
+			, COMPANY_ID=#{companyId} 
+			, EFFECTIVE_MONTH=str_to_date(#{effectiveMonth},'%Y-%m-%d %H:%i:%s')
+			, IS_INACTIVE=#{isInactive} 
+			, REMARK=#{remark} 
+			, CREATE_BY=#{createBy} 
+			, CREATE_DATE=str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
+			, UPDATE_BY=#{updateBy} 
+			, UPDATE_DATE=str_to_date(#{updateDate},'%Y-%m-%d %H:%i:%s')
+			, VERSION=#{version} 
+		WHERE ID = #{id}  ]]>
+	</update>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_PROTOTYPE_SETTING WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_PROTOTYPE_SETTING WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			#{id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="PrototypeSetting">
+		DELETE FROM T_PROTOTYPE_SETTING WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="PrototypeSettingResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_PROTOTYPE_SETTING WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="PrototypeSettingResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_PROTOTYPE_SETTING
+	</select>
+	<select id="listByProperty" parameterType="PrototypeSetting" resultMap="PrototypeSettingResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_PROTOTYPE_SETTING WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="PrototypeSetting" resultMap="PrototypeSettingResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_PROTOTYPE_SETTING WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="PrototypeSetting" resultType="int">
+		SELECT count(1) AS totalcount FROM T_PROTOTYPE_SETTING WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>
