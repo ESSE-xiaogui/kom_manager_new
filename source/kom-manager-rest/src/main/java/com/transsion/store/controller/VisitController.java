@@ -179,7 +179,9 @@ public class VisitController extends AbstractController{
 	}
 	
 	/**
-	 * 
+	 * shopscore页面
+	 * score setting...
+	 * @author guihua.zhang
 	 * @return
 	 * @throws ServiceException
 	 */

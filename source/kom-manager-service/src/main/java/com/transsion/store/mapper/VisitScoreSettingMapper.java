@@ -31,5 +31,5 @@ public interface VisitScoreSettingMapper extends GenericIBatisMapper<VisitScoreS
 
     public List<VisitScoreSettingDetailDto> listPaginationByProperty(Pagination<VisitScoreSettingDetailDto> pagination, @Param("visitScoreSettingDetailDto")VisitScoreSettingDetailDto visitScoreSettingDetailDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     
-    public List<VisitScoreSettingDto> queryVisitScoreSettingList() throws DataAccessFailureException;
+    public List<VisitScoreSettingDto> queryVisitScoreSettingList(@Param("companyId") Long companyId) throws DataAccessFailureException;
 }

@@ -432,9 +432,9 @@
 	<select id="findTwoWeekQty" parameterType="VisitPlanParamDto"
 		resultMap="VisitPlanDetailSummaryDtoResultMapper">
 		SELECT PLAN_DATE,COUNT(*) AS PLAN_QTY FROM T_VISIT_PLAN
-		GROUP BY PLAN_DATE
 		WHERE 1=1 
 		<include refid="commonConditionByParam"/>
+		GROUP BY PLAN_DATE
 	</select>
 	
 	<select id="listVisitPlanByProperty" parameterType="VisitPlanDetailInfoDto" resultMap="VisitPlanDetailInfoDtoResultMapper">

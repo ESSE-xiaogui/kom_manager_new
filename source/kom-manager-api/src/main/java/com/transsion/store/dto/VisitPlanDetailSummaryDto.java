@@ -31,6 +31,7 @@ public class VisitPlanDetailSummaryDto  implements Serializable {
 	public void setVisitPlanDate(String visitPlanDate) {
 		this.visitPlanDate = visitPlanDate;
 	}
+	
 
 	/**
 	 * 计划巡店日期巡店数
@@ -48,7 +49,8 @@ public class VisitPlanDetailSummaryDto  implements Serializable {
 
 	@Override
 	public String toString() {
-		return "VisitPlanDetailSummaryDto [visitPlanDate=" + visitPlanDate + ", visitPlanQty=" + visitPlanQty + "]";
+		return "VisitPlanDetailSummaryDto [visitPlanDate=" + visitPlanDate + ", visitPlanQty="
+						+ visitPlanQty + "]";
 	}
-	
+
 }

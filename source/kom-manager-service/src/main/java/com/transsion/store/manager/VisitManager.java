@@ -17,7 +17,6 @@ import com.transsion.store.dto.VisitScoreSettingDto;
 import com.transsion.store.dto.VisitSettingDto;
 import com.transsion.store.dto.VisitShopInfoDto;
 import com.transsion.store.exception.ExceptionDef;
-import com.transsion.store.mapper.VisitModelSettingMapper;
 import com.transsion.store.mapper.VisitScoreSettingMapper;
 import com.transsion.store.service.VisitPlanService;
 import com.transsion.store.service.VisitService;
@@ -29,9 +28,6 @@ public class VisitManager {
 	
 	@Autowired
 	private VisitService visitService;
-	
-	@Autowired
-	private VisitModelSettingMapper visitModelSettingMapper;
 	
 	@Autowired
 	private VisitScoreSettingMapper visitScoreSettingMapper;
@@ -129,15 +125,12 @@ public class VisitManager {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())){
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())
+						|| UtilHelper.isEmpty(userContext.getCompanyId())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
-		//List<VisitModelSettingDto> visitModelSettingDtoList = visitModelSettingMapper.queryVisitModelSettingList();
-		
-		List<VisitScoreSettingDto> visitScoreSettingDtoList = visitScoreSettingMapper.queryVisitScoreSettingList();
-		
+		List<VisitScoreSettingDto> visitScoreSettingDtoList = visitScoreSettingMapper.queryVisitScoreSettingList(userContext.getCompanyId());
 		VisitSettingDto visitSettingDto = new VisitSettingDto();
-		//visitSettingDto.setVisitModelSettingDtoList(visitModelSettingDtoList);
 		visitSettingDto.setVisitScoreSettingDtoList(visitScoreSettingDtoList);
 		return visitSettingDto;
 	}

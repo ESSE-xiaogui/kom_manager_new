@@ -308,6 +308,10 @@
 	</select>
 	
 	<select id="queryVisitScoreSettingList" resultMap="VisitScoreSettingDtoResultMapper">
-		SELECT * FROM T_VISIT_SCORE_SETTING
+		SELECT 
+		 <include refid="commonProcessDateColumns"/>
+		FROM T_VISIT_SCORE_SETTING
+		WHERE 1=1
+		AND COMPANY_ID = #{companyId}
 	</select>
 </mapper>
