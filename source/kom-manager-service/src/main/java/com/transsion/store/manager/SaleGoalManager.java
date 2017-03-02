@@ -1,4 +1,5 @@
 package com.transsion.store.manager;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,14 +11,18 @@ import org.springframework.stereotype.Service;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.GoalSupervisor;
+import com.transsion.store.bo.Model;
 import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.GoalModelDto;
 import com.transsion.store.dto.SaleGoalDto;
 import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.StatShopModelSaleDto;
 import com.transsion.store.dto.VisitShopInfoDto;
 import com.transsion.store.dto.VisitStockInfoDto;
 import com.transsion.store.exception.ExceptionDef;
+import com.transsion.store.mapper.GoalModelMapper;
 import com.transsion.store.mapper.GoalSupervisorMapper;
+import com.transsion.store.mapper.ModelMapper;
 import com.transsion.store.mapper.SaleGoalMapper;
 import com.transsion.store.mapper.ShopMapper;
 import com.transsion.store.utils.CacheUtils;
@@ -41,6 +46,11 @@ public class SaleGoalManager {
 	
 	@Autowired
 	private GoalSupervisorMapper goalSupervisorMapper;
+	
+	@Autowired
+	private ModelMapper modelMapper;
+	
+	private GoalModelMapper goalModelMapper;
 	
 	
 	/**
@@ -87,6 +97,7 @@ public class SaleGoalManager {
 		goalSupervisor.setGoalMonth(saleDate.substring(1, 7));
 		Long saleTarget = goalSupervisorMapper.querySaleTargetByShopId(goalSupervisor);
 		visitShopInfoDto.setTargetSaleQty(saleTarget);
+		visitShopInfoDto.setPlanDate(saleDate);
 		
 		// 获取销量信息
 		visitShopInfoDto.setCurrentSaleQty(salesMannager.calcShopSaleQty(shopId, saleDate, saleDate));
@@ -101,8 +112,31 @@ public class SaleGoalManager {
 		List<VisitStockInfoDto> visitStockInfoList = new ArrayList<VisitStockInfoDto>();
 
 		// 获取店铺信息
-
+		ShopInfoDto shopInfoDto =  shopMapper.queryShopInfoByShopId(shopId);
+		
+		List<Model> modelList = modelMapper.queryModelListByModelCode(modelCodeList);
+		for (Model model : modelList) {
+			VisitStockInfoDto visitStockInfoDto = new VisitStockInfoDto();
+			visitStockInfoDto.setShopId(shopId);
+			visitStockInfoDto.setShopName(shopInfoDto.getShopName());
+			visitStockInfoDto.setGradeId(shopInfoDto.getGradeId());
+			visitStockInfoDto.setGradeName(shopInfoDto.getGradeName());
+			visitStockInfoDto.setCityName(shopInfoDto.getCityName());
+			
+			visitStockInfoDto.setBrandId(model.getBrandId());
+			visitStockInfoDto.setModelId(model.getId());
+			visitStockInfoDto.setModelCode(model.getModelCode());
+			visitStockInfoDto.setModelName(model.getModelName());
+			visitStockInfoList.add(visitStockInfoDto);
+		}
+		
 		// 获取绩效信息
+		GoalModelDto goalModelDto = new GoalModelDto();
+		goalModelDto.setShopId(shopId);
+		goalModelDto.setGoalMonth(saleDate.substring(1, 7));
+		goalModelDto.setModelCodeList(modelCodeList);
+		List<StatShopModelSaleDto> saleTargetList = goalModelMapper.queryModelSaleTargetByShopId(goalModelDto);
+		storeShopModelTargetSaleQty(visitStockInfoList, saleTargetList);
 
 		// 获取月销量信息
 		List<StatShopModelSaleDto> shopModelMonthSaleList = salesMannager.calcShopModelSaleQty(shopId, modelCodeList,
@@ -139,7 +173,7 @@ public class SaleGoalManager {
 			StatShopModelSaleDto statShopModelSaleDto = getStatShopModelSale(modeCode, statShopModelSaleList);
 			if(statShopModelSaleDto!=null)
 			{
-				visitStockInfo.setSaleAvg(statShopModelSaleDto.getSaleQty());
+				visitStockInfo.setSaleAvg((new BigDecimal(statShopModelSaleDto.getSaleQty().longValue() / 4)));
 			}
 		}
 	}
@@ -153,9 +187,21 @@ public class SaleGoalManager {
 				{
 					return shopModelSale;
 				}
-				
 			}
 		}
 		return null;
+	}
+	
+	private void storeShopModelTargetSaleQty(List<VisitStockInfoDto> visitStockInfoList,
+			List<StatShopModelSaleDto> saleTargetList) {
+		for(VisitStockInfoDto visitStockInfo:visitStockInfoList )
+		{
+			String modeCode = visitStockInfo.getModelCode();
+			StatShopModelSaleDto statShopModelSaleDto = getStatShopModelSale(modeCode, saleTargetList);
+			if(statShopModelSaleDto!=null)
+			{
+				visitStockInfo.setTargetSaleQty(statShopModelSaleDto.getTargetSaleQty());
+			}
+		}
 	}
 }

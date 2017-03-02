@@ -7,7 +7,9 @@ public class StatShopModelSaleDto {
 	private String modelCode;
 
 	private java.math.BigDecimal saleQty;
-
+	
+	private java.lang.Long targetSaleQty;
+	
 	public long getShopId() {
 		return shopId;
 	}
@@ -34,10 +36,19 @@ public class StatShopModelSaleDto {
 	public void setSaleQty(java.math.BigDecimal saleQty) {
 		this.saleQty = saleQty;
 	}
+	
+	public java.lang.Long getTargetSaleQty() {
+		return targetSaleQty;
+	}
+
+	public void setTargetSaleQty(java.lang.Long targetSaleQty) {
+		this.targetSaleQty = targetSaleQty;
+	}
 
 	@Override
 	public String toString() {
-		return "StatShopModelSaleDto [shopId=" + shopId + ", modelCode=" + modelCode + ", saleQty=" + saleQty + "]";
+		return "StatShopModelSaleDto [shopId=" + shopId + ", modelCode=" + modelCode + ", saleQty=" + saleQty
+				+ ", targetSaleQty=" + targetSaleQty + "]";
 	}
 
 }

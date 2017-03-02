@@ -36,4 +36,6 @@ public interface ModelMapper extends GenericIBatisMapper<Model, java.lang.Long> 
     public List<String> findModelName(@Param("companyId") Long companyId) throws ServiceException;
     
     public List<Model> queryModelListByBrandId(Long brandId) throws DataAccessFailureException;
+    
+    public List<Model> queryModelListByModelCode(List<String> list) throws DataAccessFailureException;
 }

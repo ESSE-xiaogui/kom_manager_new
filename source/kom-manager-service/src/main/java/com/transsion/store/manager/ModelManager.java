@@ -44,6 +44,7 @@ public class ModelManager {
 		//同一品牌下的机型不能重复，不同品牌下的机型可以重复
 		Model modelParam = new Model();
 		modelParam.setModelName(model.getModelName());
+		modelParam.setBrandId(model.getBrandId());
 		modelParam.setBrandCode(model.getBrandCode());
 		int count = modelMapper.findByCount(modelParam);
 		if(count>0){
