@@ -39,8 +39,11 @@
 	<resultMap id="VisitStockDetailDtoMapper" type="VisitStockDetailDto">
 		<result column="ID" property="id"/>
 		<result column="VISIT_ID" property="visitId"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY_NAME" property="cityName"/>
 		<result column="BRAND_ID" property="brandId"/>
 		<result column="MODEL_ID" property="modelId"/>
+		<result column="MODEL_NAME" property="modelName"/>
 		<result column="STOCK_QTY" property="stockQty"/>
 		<result column="SALE_AVG" property="saleAvg"/>
 		<result column="STOCK_ITO" property="stockIto"/>
@@ -50,7 +53,6 @@
 		<result column="UPDATE_BY" property="updateBy"/>
 		<result column="UPDATE_TIME" property="updateTime"/>
 		<result column="VERSION" property="version"/>
-		
 		<result column="COMPANY_ID" property="companyId"/>
 		<result column="COMPANY_CODE" property="companyCode"/>
 		<!-- <result column="" property="countryId"/>
@@ -168,45 +170,66 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="visitStock != null">
-            <if test="visitStock.id!= null and visitStock.id!= ''">
-				AND ID=#{visitStock.id}
+		<if test="visitStockDetailDto != null">
+            <if test="visitStockDetailDto.id!= null and visitStockDetailDto.id!= ''">
+				AND ID=#{visitStockDetailDto.id}
             </if>
-            <if test="visitStock.visitId!= null and visitStock.visitId!= ''">
-				AND VISIT_ID=#{visitStock.visitId}
+            <if test="visitStockDetailDto.visitId!= null and visitStockDetailDto.visitId!= ''">
+				AND s.VISIT_ID=#{visitStockDetailDto.visitId}
             </if>
-            <if test="visitStock.brandId!= null and visitStock.brandId!= ''">
-				AND BRAND_ID=#{visitStock.brandId}
+            <if test="visitStockDetailDto.companyId!= null and visitStockDetailDto.companyId!= ''">
+				AND v.COMPANY_ID=#{visitStockDetailDto.companyId}
             </if>
-            <if test="visitStock.modelId!= null and visitStock.modelId!= ''">
-				AND MODEL_ID=#{visitStock.modelId}
+            <if test="visitStockDetailDto.brandId!= null and visitStockDetailDto.brandId!= ''">
+				AND BRAND_ID=#{visitStockDetailDto.brandId}
             </if>
-            <if test="visitStock.stockQty!= null and visitStock.stockQty!= ''">
-				AND STOCK_QTY=#{visitStock.stockQty}
+            <if test="visitStockDetailDto.regionId!= null and visitStockDetailDto.regionId!= ''">
+				AND r1.ID=#{visitStockDetailDto.regionId}
             </if>
-            <if test="visitStock.saleAvg!= null and visitStock.saleAvg!= ''">
-				AND SALE_AVG=#{visitStock.saleAvg}
+            <if test="visitStockDetailDto.shopCode!= null and visitStockDetailDto.shopCode!= ''">
+				AND SHOP_CODE=#{visitStockDetailDto.shopCode}
             </if>
-            <if test="visitStock.stockIto!= null and visitStock.stockIto!= ''">
-				AND STOCK_ITO=#{visitStock.stockIto}
+            <if test="visitStockDetailDto.shopName!= null and visitStockDetailDto.shopName!= ''">
+				AND SHOP_NAME=#{visitStockDetailDto.shopName}
             </if>
-            <if test="visitStock.remark!= null and visitStock.remark!= ''">
-				AND REMARK=#{visitStock.remark}
+            <if test="visitStockDetailDto.modelId!= null and visitStockDetailDto.modelId!= ''">
+				AND MODEL_ID=#{visitStockDetailDto.modelId}
             </if>
-            <if test="visitStock.createBy!= null and visitStock.createBy!= ''">
-				AND CREATE_BY=#{visitStock.createBy}
+            <if test="visitStockDetailDto.modelName!= null and visitStockDetailDto.modelName!= ''">
+				AND m.MODEL_NAME=#{visitStockDetailDto.modelName}
             </if>
-            <if test="visitStock.createTime!= null and visitStock.createTime!= ''">
-				AND CREATE_TIME=str_to_date(#{visitStock.createTime},'%Y-%m-%d %H:%i:%s')
+            <if test="visitStockDetailDto.stockQty!= null and visitStockDetailDto.stockQty!= ''">
+				AND STOCK_QTY=#{visitStockDetailDto.stockQty}
             </if>
-            <if test="visitStock.updateBy!= null and visitStock.updateBy!= ''">
-				AND UPDATE_BY=#{visitStock.updateBy}
+            <if test="visitStockDetailDto.saleAvg!= null and visitStockDetailDto.saleAvg!= ''">
+				AND SALE_AVG=#{visitStockDetailDto.saleAvg}
             </if>
-            <if test="visitStock.updateTime!= null and visitStock.updateTime!= ''">
-				AND UPDATE_TIME=str_to_date(#{visitStock.updateTime},'%Y-%m-%d %H:%i:%s')
+            <if test="visitStockDetailDto.stockIto!= null and visitStockDetailDto.stockIto!= ''">
+				AND STOCK_ITO=#{visitStockDetailDto.stockIto}
             </if>
-            <if test="visitStock.version!= null and visitStock.version!= ''">
-				AND VERSION=#{visitStock.version}
+            <if test="visitStockDetailDto.remark!= null and visitStockDetailDto.remark!= ''">
+				AND REMARK=#{visitStockDetailDto.remark}
+            </if>
+            <if test="visitStockDetailDto.createBy!= null and visitStockDetailDto.createBy!= ''">
+				AND s.CREATE_BY=#{visitStockDetailDto.createBy}
+            </if>
+            <if test="visitStockDetailDto.createTime!= null and visitStockDetailDto.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{visitStockDetailDto.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitStockDetailDto.createTimeStart!= null and visitStockDetailDto.createTimeStart!= ''">
+				AND s.CREATE_TIME &gt;=str_to_date(#{visitStockDetailDto.createTimeStart},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitStockDetailDto.createTimeEnd!= null and visitStockDetailDto.createTimeEnd!= ''">
+				AND s.CREATE_TIME &lt;=str_to_date(#{visitStockDetailDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitStockDetailDto.updateBy!= null and visitStockDetailDto.updateBy!= ''">
+				AND UPDATE_BY=#{visitStockDetailDto.updateBy}
+            </if>
+            <if test="visitStockDetailDto.updateTime!= null and visitStockDetailDto.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{visitStockDetailDto.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitStockDetailDto.version!= null and visitStockDetailDto.version!= ''">
+				AND VERSION=#{visitStockDetailDto.version}
             </if>
         </if>
     </sql>
@@ -338,8 +361,11 @@
 		FROM T_VISIT_STOCK WHERE 1=1 -->
 		SELECT 
 			s.ID,
+			v.VISIT_ID
 			c.COMPANY_CODE,
 			p.COUNTRY,
+			r1.REGION_ID AS COUNTRY_NAME
+			r2.REGION_ID AS CITY_NAME
 			p.CITY,
 			p.SHOP_CODE,
 			p.SHOP_NAME,
@@ -349,13 +375,52 @@
 			s.STOCK_QTY,
 			s.SALE_AVG,
 			s.STOCK_ITO,
-			s.UPDATE_TIME
+			s.CREATE_TIME
 		FROM T_VISIT_STOCK s LEFT JOIN T_VISIT v ON s.VISIT_ID = v.ID 
 		LEFT JOIN T_COMPANY c ON v.COMPANY_ID = c.ID 
 		LEFT JOIN T_SHOP p ON p.SHOP_ID = v.SHOP_ID AND p.COMPANY_ID = v.COMPANY_ID 
-		LEFT JOIN T_EMPLOYEE e ON e.U_ID = s.CREATE_BY LEFT JOIN T_MODEL m ON m.BRAND_ID = s.BRAND_ID
-    	<!-- <include refid="commonConditionByPrefix"/> -->
+		LEFT JOIN T_REGION r1 ON r1.ID = p.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = p.CITY
+		LEFT JOIN T_USER u ON u.USER_CODE = s.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID 
+		LEFT JOIN T_MODEL m ON m.BRAND_ID = s.BRAND_ID
+		<if test="companyId!= null and companyId!= ''"> 
+			AND v.COMPANY_ID =#{companyId}
+		</if>
+    	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
+	</select>
+	<select id="listVisitStockByProperty" parameterType="VisitStockDetailDto" resultMap="VisitStockDetailDtoMapper">
+		<!-- SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_VISIT_STOCK WHERE 1=1 -->
+		SELECT 
+			s.ID,
+			v.VISIT_ID
+			c.COMPANY_CODE,
+			p.COUNTRY,
+			r1.REGION_ID AS COUNTRY_NAME
+			r2.REGION_ID AS CITY_NAME
+			p.CITY,
+			p.SHOP_CODE,
+			p.SHOP_NAME,
+			s.CREATE_BY,
+			e.EMP_NAME,
+			m.MODEL_NAME,
+			s.STOCK_QTY,
+			s.SALE_AVG,
+			s.STOCK_ITO,
+			s.CREATE_TIME
+		FROM T_VISIT_STOCK s LEFT JOIN T_VISIT v ON s.VISIT_ID = v.ID 
+		LEFT JOIN T_COMPANY c ON v.COMPANY_ID = c.ID 
+		LEFT JOIN T_SHOP p ON p.SHOP_ID = v.SHOP_ID AND p.COMPANY_ID = v.COMPANY_ID 
+		LEFT JOIN T_REGION r1 ON r1.ID = p.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = p.CITY
+		LEFT JOIN T_USER u ON u.USER_CODE = s.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID 
+		LEFT JOIN T_MODEL m ON m.BRAND_ID = s.BRAND_ID
+    	<include refid="commonConditionByPrefix"/>
+    	ORDER BY vs.CREATE_TIME DESC
 	</select>
 	<select id="findByCount" parameterType="VisitStock" resultType="int">
 		SELECT count(1) AS totalcount FROM T_VISIT_STOCK WHERE 1=1 

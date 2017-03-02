@@ -26,12 +26,15 @@ import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.VisitStock;
 import com.transsion.store.dto.VisitStockDetailDto;
 import com.transsion.store.facade.VisitStockFacade;
+import com.transsion.store.manager.VisitStockManager;
 import com.transsion.store.service.VisitStockService;
 
 @Component("visitStockFacade")
 public class VisitStockFacadeImpl implements VisitStockFacade {
 
 	private VisitStockService visitStockService;
+	@Autowired
+	private VisitStockManager visitStockManager;
 	
 	@Autowired
 	public void setVisitStockService(VisitStockService visitStockService)
@@ -76,10 +79,10 @@ public class VisitStockFacadeImpl implements VisitStockFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<VisitStockDetailDto> listPaginationByProperty(Pagination<VisitStockDetailDto> pagination, VisitStockDetailDto visitStockDetailDto)
+	public Pagination<VisitStockDetailDto> listPaginationByProperty(Pagination<VisitStockDetailDto> pagination, VisitStockDetailDto visitStockDetailDto,String token)
 			throws ServiceException
 	{
-		return visitStockService.listPaginationByProperty(pagination, visitStockDetailDto);
+		return visitStockService.listPaginationByProperty(pagination, visitStockDetailDto,token);
 	}
 
 	/**
@@ -150,5 +153,13 @@ public class VisitStockFacadeImpl implements VisitStockFacade {
 	@Override
 	public List<VisitStockDetailDto> queryVisitStockList() throws ServiceException {
 		return visitStockService.queryVisitStockList();
+	}
+
+	/**
+	 * 重点机型库存导出Excel
+	 */
+	@Override
+	public byte[] getVisitStockByExcel(VisitStockDetailDto visitStockDetailDto) throws ServiceException {
+		return visitStockManager.getVisitStockByExcel(visitStockDetailDto);
 	}
 }

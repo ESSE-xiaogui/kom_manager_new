@@ -380,6 +380,6 @@
 		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID
 		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
-    	ORDER BY vs.CREATE_TIME
+    	ORDER BY vs.CREATE_TIME DESC
 	</select>
 </mapper>

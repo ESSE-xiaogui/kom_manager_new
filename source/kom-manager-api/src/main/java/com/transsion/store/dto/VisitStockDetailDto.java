@@ -74,6 +74,8 @@ public class VisitStockDetailDto implements Serializable {
 	
 	private java.lang.String companyCode;
 	
+	private java.lang.Long regionId;
+	
 	private java.lang.Long countryId;
 	
 	private java.lang.String countryName;
@@ -87,6 +89,12 @@ public class VisitStockDetailDto implements Serializable {
 	private java.lang.String shopName;
 	
 	private java.lang.String empName;
+	
+	private java.lang.String modelName;
+	
+	private java.lang.String createTimeStart;
+	
+	private java.lang.String createTimeEnd;
 
 	public java.lang.Long getId() {
 		return id;
@@ -212,6 +220,14 @@ public class VisitStockDetailDto implements Serializable {
 		return countryId;
 	}
 
+	public java.lang.Long getRegionId() {
+		return regionId;
+	}
+
+	public void setRegionId(java.lang.Long regionId) {
+		this.regionId = regionId;
+	}
+
 	public void setCountryId(java.lang.Long countryId) {
 		this.countryId = countryId;
 	}
@@ -264,15 +280,42 @@ public class VisitStockDetailDto implements Serializable {
 		this.empName = empName;
 	}
 
+	public java.lang.String getCreateTimeStart() {
+		return createTimeStart;
+	}
+
+	public void setCreateTimeStart(java.lang.String createTimeStart) {
+		this.createTimeStart = createTimeStart;
+	}
+
+	public java.lang.String getCreateTimeEnd() {
+		return createTimeEnd;
+	}
+
+	public void setCreateTimeEnd(java.lang.String createTimeEnd) {
+		this.createTimeEnd = createTimeEnd;
+	}
+
+	public java.lang.String getModelName() {
+		return modelName;
+	}
+
+	public void setModelName(java.lang.String modelName) {
+		this.modelName = modelName;
+	}
+
 	@Override
 	public String toString() {
 		return "VisitStockDetailDto [id=" + id + ", visitId=" + visitId + ", brandId=" + brandId + ", modelId="
-				+ modelId + ", stockQty=" + stockQty + ", saleAvg=" + saleAvg + ", stockIto=" + stockIto + ", remark="
-				+ remark + ", createBy=" + createBy + ", createTime=" + createTime + ", updateBy=" + updateBy
-				+ ", updateTime=" + updateTime + ", version=" + version + ", companyId=" + companyId + ", companyCode="
-				+ companyCode + ", countryId=" + countryId + ", countryName=" + countryName + ", cityId=" + cityId
-				+ ", cityName=" + cityName + ", shopCode=" + shopCode + ", shopName=" + shopName + ", empName="
-				+ empName + "]";
+						+ modelId + ", stockQty=" + stockQty + ", saleAvg=" + saleAvg + ", stockIto=" + stockIto
+						+ ", remark=" + remark + ", createBy=" + createBy + ", createTime=" + createTime + ", updateBy="
+						+ updateBy + ", updateTime=" + updateTime + ", version=" + version + ", companyId=" + companyId
+						+ ", companyCode=" + companyCode + ", regionId=" + regionId + ", countryId=" + countryId
+						+ ", countryName=" + countryName + ", cityId=" + cityId + ", cityName=" + cityName
+						+ ", shopCode=" + shopCode + ", shopName=" + shopName + ", empName=" + empName + ", modelName="
+						+ modelName + ", createTimeStart=" + createTimeStart + ", createTimeEnd=" + createTimeEnd + "]";
 	}
-	
+
+
+
 }

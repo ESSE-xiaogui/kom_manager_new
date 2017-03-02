@@ -22,11 +22,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.VisitStock;
+import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.VisitStockDetailDto;
 import com.transsion.store.dto.VisitStockInfoDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.VisitStockMapper;
+import com.transsion.store.utils.CacheUtils;
 
 @Service("visitStockService")
 public class VisitStockService {
@@ -73,13 +75,17 @@ public class VisitStockService {
 	
 	/**
 	 * 根据查询条件查询分页记录
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<VisitStockDetailDto> listPaginationByProperty(Pagination<VisitStockDetailDto> pagination, VisitStockDetailDto visitStockDetailDto)
+	public Pagination<VisitStockDetailDto> listPaginationByProperty(Pagination<VisitStockDetailDto> pagination, VisitStockDetailDto visitStockDetailDto, String token)
 			throws ServiceException
 	{
-		List<VisitStockDetailDto> list = visitStockMapper.listPaginationByProperty(pagination, visitStockDetailDto, pagination.getOrderBy());
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		
+		Long companyId = userContext.isAdmin()?null:userContext.getCompanyId();
+		List<VisitStockDetailDto> list = visitStockMapper.listPaginationByProperty(pagination, visitStockDetailDto, pagination.getOrderBy(),companyId);
 		
 		pagination.setResultList(list);
 		

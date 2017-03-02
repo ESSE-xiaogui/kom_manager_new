@@ -29,9 +29,11 @@ import org.apache.ibatis.annotations.Param;
 
 public interface VisitStockMapper extends GenericIBatisMapper<VisitStock, java.lang.Long> {
 
-    public List<VisitStockDetailDto> listPaginationByProperty(Pagination<VisitStockDetailDto> pagination, @Param("visitStockDetailDto")VisitStockDetailDto visitStockDetailDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<VisitStockDetailDto> listPaginationByProperty(Pagination<VisitStockDetailDto> pagination, @Param("visitStockDetailDto")VisitStockDetailDto visitStockDetailDto, @Param("orderBy") Map<String, String> orderBy,@Param("companyId") Long companyId) throws DataAccessFailureException;
     
     public List<VisitStockDetailDto> queryVisitStockList();
     
     public List<VisitStockInfoDto> queryVisitStockByVisitId(Long visitId) throws DataAccessFailureException;
+
+	public List<VisitStockDetailDto> listVisitStockByProperty(@Param("visitStockDetailDto")VisitStockDetailDto visitStockDetailDto)throws DataAccessFailureException;
 }

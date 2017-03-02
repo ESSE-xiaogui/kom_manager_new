@@ -97,11 +97,20 @@ public interface VisitStockFacade {
 	
 	/**
 	 * 根据查询条件查询分页记录
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<VisitStockDetailDto> listPaginationByProperty(Pagination<VisitStockDetailDto> pagination, VisitStockDetailDto visitStockDetailDto)
+	public Pagination<VisitStockDetailDto> listPaginationByProperty(Pagination<VisitStockDetailDto> pagination, VisitStockDetailDto visitStockDetailDto, String token)
 			throws ServiceException;
 	
 	public List<VisitStockDetailDto> queryVisitStockList() throws ServiceException;
+
+	/**
+	 * 重点机型库存导出Excel
+	 * @param visitStockDetailDto
+	 * @return
+	 * @throws ServiceException
+	 */
+	public byte[] getVisitStockByExcel(VisitStockDetailDto visitStockDetailDto)throws ServiceException;
 }
