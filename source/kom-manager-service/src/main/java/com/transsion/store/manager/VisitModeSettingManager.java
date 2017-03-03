@@ -84,8 +84,10 @@ public class VisitModeSettingManager {
 		VisitModelSettingInfoDto vms = new VisitModelSettingInfoDto();
 		if(!userContext.isAdmin()){
 			vms.setCompanyId(userContext.getCompanyId());
-		}else{
-			BeanUtils.copyProperties(vms, visitModelSettingInfoDto);
+		} else {
+			if (visitModelSettingInfoDto != null) {
+				BeanUtils.copyProperties(vms, visitModelSettingInfoDto);
+			}
 		}
 		List<VisitModelSettingInfoDto> list = visitModelSettingMapper.listPaginationByProperty(pagination, vms, pagination.getOrderBy());
 		pagination.setResultList(list);
