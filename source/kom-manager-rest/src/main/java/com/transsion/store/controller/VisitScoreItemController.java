@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.VisitScoreItem;
+import com.transsion.store.dto.VisitScoreItemDetailDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.VisitScoreItemFacade;
 import com.shangkang.core.bo.Pagination;
@@ -109,5 +110,12 @@ public class VisitScoreItemController extends AbstractController{
 	public void update(VisitScoreItem visitScoreItem) throws ServiceException
 	{
 		visitScoreItemFacade.update(visitScoreItem);
+	}
+	
+	@GET
+	@Path("/queryVisitHistoryDataByVisitId")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<VisitScoreItemDetailDto> queryVisitHistoryDataByVisitId(@QueryParam("visitId")Long visitId) throws ServiceException {
+		return visitScoreItemFacade.queryVisitHistoryDataByVisitId(visitId);
 	}
 }
