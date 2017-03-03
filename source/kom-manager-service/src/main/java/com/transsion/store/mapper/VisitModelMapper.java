@@ -30,5 +30,5 @@ public interface VisitModelMapper extends GenericIBatisMapper<VisitModel, java.l
 
     public List<VisitModelDetailInfoDto> listPaginationByProperty(Pagination<VisitModelDetailInfoDto> pagination, @Param("visitModelDetailInfoDto")VisitModelDetailInfoDto visitModelDetailInfoDto, @Param("orderBy") Map<String, String> orderBy, @Param("companyId")Long companyId) throws DataAccessFailureException;
 
-	public List<VisitModelDetailInfoDto> listVisitStockByProperty(@Param("visitModelDetailInfoDto")VisitModelDetailInfoDto visitModelDetailInfoDto);
+	public List<VisitModelDetailInfoDto> listVisitModelByProperty(@Param("visitModelDetailInfoDto")VisitModelDetailInfoDto visitModelDetailInfoDto);
 }

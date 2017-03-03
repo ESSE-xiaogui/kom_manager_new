@@ -18,7 +18,7 @@ public class VisitModelManager {
 	public byte[] getVisitModelByExcel(VisitModelDetailInfoDto visitModelDetailInfoDto) {
 		String[] headers = {"序号","巡店单号","事业部","国家","城市","门店代码","门店名称","品牌名称","上柜机型","上传用户", "员工姓名",
 		"上传时间"};
-		List<VisitModelDetailInfoDto> list = visitModelMapper.listVisitStockByProperty(visitModelDetailInfoDto);
+		List<VisitModelDetailInfoDto> list = visitModelMapper.listVisitModelByProperty(visitModelDetailInfoDto);
 		List<Object[]> dataset = new ArrayList<Object[]>();
 		int i=1;
 		for(VisitModelDetailInfoDto visitModelDetailInfoDto1 :list){
