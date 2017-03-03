@@ -34,6 +34,13 @@
 		<result column="UPDATE_TIME" property="updateTime"/>
 		<result column="VERSION" property="version"/>
 		<result column="VISTOR" property="vistor"/>
+		
+		<result column="COMPANY_CODE" property="companyCode"/>
+		<result column="SHOP_CODE" property="shopCode"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="EMP_NAME" property="empName"/>
 	</resultMap>
 	
 	<resultMap id="VisitInfoDtoResultMapper" type="VisitInfoDto">
@@ -359,8 +366,24 @@
 	</select>
 	<select id="listPaginationByProperty" parameterType="Visit" resultMap="VisitResultMapper">
 		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_VISIT WHERE 1=1
+			v.ID, 
+			c.COMPANY_CODE,
+			s.SHOP_CODE,
+			s.SHOP_NAME,
+			r.REGION_NAME AS COUNTRY_NAME,
+			e.REGION_NAME AS CITY_NAME,
+			v.PLAN_TYPE,
+			v.CREATE_BY,
+			v.CREATE_TIME,
+			m.EMP_NAME
+		FROM T_VISIT v 
+		LEFT JOIN T_COMPANY c ON v.COMPANY_ID = c.ID 
+		LEFT JOIN T_SHOP s ON v.SHOP_ID = s.ID
+		LEFT JOIN T_REGION r ON s.COUNTRY = r.ID
+		LEFT JOIN T_REGION e ON s.CITY = e.ID
+		LEFT JOIN T_USER u ON v.CREATE_BY = u.USER_CODE
+		LEFT JOIN T_EMPLOYEE m ON u.ID = m.U_ID
+		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>

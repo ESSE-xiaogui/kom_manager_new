@@ -107,6 +107,20 @@ public class Visit extends Model{
 	private java.lang.Integer version;
 	
 	private java.lang.String vistor;
+	
+	
+	
+	private java.lang.String companyCode;
+	
+	private java.lang.String shopCode;
+	
+	private java.lang.String shopName;
+	
+	private java.lang.String countryName;
+	
+	private java.lang.String cityName;
+	
+	private java.lang.String empName;
 
 	/**
 	  *	
@@ -324,6 +338,54 @@ public class Visit extends Model{
 		this.vistor = vistor;
 	}
 	
+	public java.lang.String getShopCode() {
+		return shopCode;
+	}
+
+	public void setShopCode(java.lang.String shopCode) {
+		this.shopCode = shopCode;
+	}
+	
+	public java.lang.String getShopName() {
+		return shopName;
+	}
+
+	public void setShopName(java.lang.String shopName) {
+		this.shopName = shopName;
+	}
+
+	public java.lang.String getCountryName() {
+		return countryName;
+	}
+
+	public void setCountryName(java.lang.String countryName) {
+		this.countryName = countryName;
+	}
+
+	public java.lang.String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(java.lang.String cityName) {
+		this.cityName = cityName;
+	}
+
+	public java.lang.String getCompanyCode() {
+		return companyCode;
+	}
+
+	public void setCompanyCode(java.lang.String companyCode) {
+		this.companyCode = companyCode;
+	}
+	
+	public java.lang.String getEmpName() {
+		return empName;
+	}
+
+	public void setEmpName(java.lang.String empName) {
+		this.empName = empName;
+	}
+
 	public String toString()
 	{
 		return "Visit [" + 

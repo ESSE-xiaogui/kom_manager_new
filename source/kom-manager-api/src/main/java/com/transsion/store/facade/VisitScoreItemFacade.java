@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.VisitScoreItem;
+import com.transsion.store.dto.VisitScoreItemDetailDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -101,5 +102,6 @@ public interface VisitScoreItemFacade {
 	 */
 	public Pagination<VisitScoreItem> listPaginationByProperty(Pagination<VisitScoreItem> pagination, VisitScoreItem visitScoreItem)
 			throws ServiceException;
-
+	
+	public List<VisitScoreItemDetailDto> queryVisitHistoryDataByVisitId(Long visitId) throws ServiceException;
 }
