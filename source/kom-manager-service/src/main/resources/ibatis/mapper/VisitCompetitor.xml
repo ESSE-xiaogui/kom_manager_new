@@ -22,7 +22,7 @@
 	<resultMap id="VisitCompetitorResultMapper" type="VisitCompetitor">
 		<result column="ID" property="id"/>
 		<result column="VISIT_ID" property="visitId"/>
-		<result column="BRAND_ID" property="brandId"/>
+		<result column="BRAND_NAME" property="brandId"/>
 		<result column="SALE_QTY" property="saleQty"/>
 		<result column="REMARK" property="remark"/>
 		<result column="CREATE_BY" property="createBy"/>
@@ -35,7 +35,7 @@
 	<sql id="commonColumns">
 		 ID
 		, VISIT_ID
-		, BRAND_ID
+		, BRAND_NAME
 		, SALE_QTY
 		, REMARK
 		, CREATE_BY
@@ -47,7 +47,7 @@
 
 	<sql id="commonColumnsNotPK">
 		 VISIT_ID
-		, BRAND_ID
+		, BRAND_NAME
 		, SALE_QTY
 		, REMARK
 		, CREATE_BY
@@ -60,7 +60,7 @@
 	<sql id="commonProcessDateColumns">
 		 ID
 		, VISIT_ID
-		, BRAND_ID
+		, BRAND_NAME
 		, SALE_QTY
 		, REMARK
 		, CREATE_BY
@@ -78,7 +78,7 @@
 			AND VISIT_ID=#{visitId}
 		</if>
 		<if test="brandId!= null and brandId!= ''"> 
-			AND BRAND_ID=#{brandId}
+			AND BRAND_NAME=#{brandId}
 		</if>
 		<if test="saleQty!= null and saleQty!= ''"> 
 			AND SALE_QTY=#{saleQty}
@@ -112,7 +112,7 @@
 				AND VISIT_ID=#{visitCompetitor.visitId}
             </if>
             <if test="visitCompetitor.brandId!= null and visitCompetitor.brandId!= ''">
-				AND BRAND_ID=#{visitCompetitor.brandId}
+				AND BRAND_NAME=#{visitCompetitor.brandId}
             </if>
             <if test="visitCompetitor.saleQty!= null and visitCompetitor.saleQty!= ''">
 				AND SALE_QTY=#{visitCompetitor.saleQty}
@@ -156,7 +156,7 @@
 				VISIT_ID ${value}
             </when>
         	<when test="key == 'brandId'">
-				BRAND_ID ${value}
+				BRAND_NAME ${value}
             </when>
         	<when test="key == 'saleQty'">
 				SALE_QTY ${value}
@@ -204,7 +204,7 @@
 			 ID=#{id} 
 			, VISIT_ID=#{visitId} 
 			, SHOP_ID=#{shopId} 
-			, BRAND_ID=#{brandId} 
+			, BRAND_NAME=#{brandId} 
 			, SALE_QTY=#{saleQty} 
 			, REMARK=#{remark} 
 			, CREATE_BY=#{createBy} 

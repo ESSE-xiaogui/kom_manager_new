@@ -14,11 +14,12 @@
  * ------------     -----------     ---------------------------------------------
  *
  **/
-package com.transsion.store.bo;
+package com.transsion.store.dto;
 
-import com.shangkang.core.bo.Model;
+import java.io.Serializable;
 
-public class VisitCompetitor extends Model{
+
+public class VisitCompetitorDetailDto implements Serializable{
 
 	/**
 	 * 
@@ -39,6 +40,22 @@ public class VisitCompetitor extends Model{
 	  *	
 	  */
 	private java.lang.Long shopId;
+	
+	private java.lang.Long companyId;
+	
+	private java.lang.String companyCode;
+	
+	private java.lang.String countryName;
+	
+	private java.lang.String cityName;
+	
+	private java.lang.String shopCode;
+	
+	private java.lang.String shopName;
+	
+	private java.lang.String empName;
+	
+	private java.lang.Long regionId;
 
 	/**
 	  *	
@@ -112,6 +129,78 @@ public class VisitCompetitor extends Model{
 		this.visitId = visitId;
 	}
 	
+	public java.lang.Long getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(java.lang.Long companyId) {
+		this.companyId = companyId;
+	}
+
+	public java.lang.String getCompanyCode() {
+		return companyCode;
+	}
+
+	public void setCompanyCode(java.lang.String companyCode) {
+		this.companyCode = companyCode;
+	}
+
+	public java.lang.String getCountryName() {
+		return countryName;
+	}
+
+	public void setCountryName(java.lang.String countryName) {
+		this.countryName = countryName;
+	}
+
+	public java.lang.String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(java.lang.String cityName) {
+		this.cityName = cityName;
+	}
+
+	public java.lang.String getShopCode() {
+		return shopCode;
+	}
+
+	public void setShopCode(java.lang.String shopCode) {
+		this.shopCode = shopCode;
+	}
+
+	public java.lang.String getShopName() {
+		return shopName;
+	}
+
+	public void setShopName(java.lang.String shopName) {
+		this.shopName = shopName;
+	}
+
+	public java.lang.String getEmpName() {
+		return empName;
+	}
+
+	public void setEmpName(java.lang.String empName) {
+		this.empName = empName;
+	}
+
+	public java.lang.Long getRegionId() {
+		return regionId;
+	}
+
+	public void setRegionId(java.lang.Long regionId) {
+		this.regionId = regionId;
+	}
+
+	public java.lang.String getBrandName() {
+		return brandName;
+	}
+
+	public void setBrandName(java.lang.String brandName) {
+		this.brandName = brandName;
+	}
+
 	/**
 	  *	
 	  */
@@ -128,15 +217,8 @@ public class VisitCompetitor extends Model{
 		this.shopId = shopId;
 	}
 	
+
 	
-	public java.lang.String getBrandName() {
-		return brandName;
-	}
-
-	public void setBrandName(java.lang.String brandName) {
-		this.brandName = brandName;
-	}
-
 	/**
 	  *	
 	  */
@@ -251,10 +333,13 @@ public class VisitCompetitor extends Model{
 
 	@Override
 	public String toString() {
-		return "VisitCompetitor [id=" + id + ", visitId=" + visitId + ", shopId=" + shopId + ", brandName=" + brandName
-				+ ", saleQty=" + saleQty + ", remark=" + remark + ", createBy=" + createBy + ", createTime="
-				+ createTime + ", updateBy=" + updateBy + ", updateTime=" + updateTime + ", version=" + version + "]";
+		return "VisitCompetitorDetailDto [id=" + id + ", visitId=" + visitId + ", shopId=" + shopId + ", companyId="
+				+ companyId + ", companyCode=" + companyCode + ", countryName=" + countryName + ", cityName=" + cityName
+				+ ", shopCode=" + shopCode + ", shopName=" + shopName + ", empName=" + empName + ", regionId="
+				+ regionId + ", brandName=" + brandName + ", saleQty=" + saleQty + ", remark=" + remark + ", createBy="
+				+ createBy + ", createTime=" + createTime + ", updateBy=" + updateBy + ", updateTime=" + updateTime
+				+ ", version=" + version + "]";
 	}
-	
+
 }
 
