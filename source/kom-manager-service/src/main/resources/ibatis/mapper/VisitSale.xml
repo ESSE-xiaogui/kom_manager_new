@@ -33,6 +33,29 @@
 		<result column="VERSION" property="version"/>
 	</resultMap>
 	
+	<resultMap id="VisitSaleInfoDtoResultMapper" type="VisitSaleInfoDto">
+		<result column="ID" property="id"/>
+		<result column="VISIT_ID" property="visitId"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="BRAND_NAME" property="brandName"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="BRAND_ID" property="brandId"/>
+		<result column="SALE_QTY" property="saleQty"/>
+		<result column="MODEL_ID" property="modelId"/>
+		<result column="MODEL_NAME" property="modelName"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="COMPANY_CODE" property="companyCode"/>
+		<result column="SHOP_CODE" property="shopCode"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="EMP_NAME" property="empName"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, VISIT_ID
@@ -73,6 +96,21 @@
 		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
 		, VERSION
 	</sql>
+	<sql id="commonProcessDateColumn">
+		vs.ID,
+		vs.VISIT_ID,
+		m.BRAND_CODE AS BRAND_NAME,
+		c.COMPANY_CODE,
+		r1.REGION_NAME AS COUNTRY_NAME,
+		r2.REGION_NAME AS CITY_NAME,
+		p.SHOP_CODE,
+		p.SHOP_NAME,
+		vs.SALE_QTY,
+		vs.CREATE_BY,
+		e.EMP_NAME,
+		m.MODEL_NAME,
+		date_format(vs.CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+	</sql>
 	
 	<sql id="commonCondition">
 		<if test="id!= null and id!= ''"> 
@@ -111,40 +149,61 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="visitSale != null">
-            <if test="visitSale.id!= null and visitSale.id!= ''">
-				AND ID=#{visitSale.id}
+		<if test="visitSaleInfoDto != null">
+            <if test="visitSaleInfoDto.id!= null and visitSaleInfoDto.id!= ''">
+				AND ID=#{visitSaleInfoDto.id}
             </if>
-            <if test="visitSale.visitId!= null and visitSale.visitId!= ''">
-				AND VISIT_ID=#{visitSale.visitId}
+            <if test="visitSaleInfoDto.visitId!= null and visitSaleInfoDto.visitId!= ''">
+				AND vs.VISIT_ID=#{visitSaleInfoDto.visitId}
             </if>
-            <if test="visitSale.brandId!= null and visitSale.brandId!= ''">
-				AND BRAND_ID=#{visitSale.brandId}
+            <if test="visitSaleInfoDto.brandId!= null and visitSaleInfoDto.brandId!= ''">
+				AND BRAND_ID=#{visitSaleInfoDto.brandId}
             </if>
-            <if test="visitSale.modelId!= null and visitSale.modelId!= ''">
-				AND MODEL_ID=#{visitSale.modelId}
+            <if test="visitSaleInfoDto.regionId!= null and visitSaleInfoDto.regionId!= ''">
+				AND r1.ID=#{visitSaleInfoDto.regionId}
             </if>
-            <if test="visitSale.saleQty!= null and visitSale.saleQty!= ''">
-				AND SALE_QTY=#{visitSale.saleQty}
+            <if test="visitSaleInfoDto.shopCode!= null and visitSaleInfoDto.shopCode!= ''">
+				AND p.SHOP_CODE=#{visitSaleInfoDto.shopCode}
             </if>
-            <if test="visitSale.remark!= null and visitSale.remark!= ''">
-				AND REMARK=#{visitSale.remark}
+            <if test="visitSaleInfoDto.shopName!= null and visitSaleInfoDto.shopName!= ''">
+				AND SHOP_NAME=#{visitSaleInfoDto.shopName}
             </if>
-            <if test="visitSale.createBy!= null and visitSale.createBy!= ''">
-				AND CREATE_BY=#{visitSale.createBy}
+            <if test="visitSaleInfoDto.modelId!= null and visitSaleInfoDto.modelId!= ''">
+				AND MODEL_ID=#{visitSaleInfoDto.modelId}
             </if>
-            <if test="visitSale.createTime!= null and visitSale.createTime!= ''">
-				AND CREATE_TIME=str_to_date(#{visitSale.createTime},'%Y-%m-%d %H:%i:%s')
+            <if test="visitSaleInfoDto.modelName!= null and visitSaleInfoDto.modelName!= ''">
+				AND m.MODEL_NAME=#{visitSaleInfoDto.modelName}
             </if>
-            <if test="visitSale.updateBy!= null and visitSale.updateBy!= ''">
-				AND UPDATE_BY=#{visitSale.updateBy}
+            <if test="visitSaleInfoDto.companyId!= null and visitSaleInfoDto.companyId!= ''">
+				AND v.COMPANY_ID=#{visitSaleInfoDto.companyId}
             </if>
-            <if test="visitSale.updateTime!= null and visitSale.updateTime!= ''">
-				AND UPDATE_TIME=str_to_date(#{visitSale.updateTime},'%Y-%m-%d %H:%i:%s')
+            <if test="visitSaleInfoDto.saleQty!= null and visitSaleInfoDto.saleQty!= ''">
+				AND SALE_QTY=#{visitSaleInfoDto.saleQty}
             </if>
-            <if test="visitSale.version!= null and visitSale.version!= ''">
-				AND VERSION=#{visitSale.version}
+           <!--  <if test="visitSaleInfoDto.remark!= null and visitSaleInfoDto.remark!= ''">
+				AND REMARK=#{visitSaleInfoDto.remark}
+            </if> -->
+            <if test="visitSaleInfoDto.createBy!= null and visitSaleInfoDto.createBy!= ''">
+				AND vs.CREATE_BY=#{visitSaleInfoDto.createBy}
             </if>
+            <if test="visitSaleInfoDto.createTime!= null and visitSaleInfoDto.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{visitSaleInfoDto.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitSaleInfoDto.createTimeStart!= null and visitSaleInfoDto.createTimeStart!= ''">
+				AND DATE_FORMAT(vs.CREATE_TIME, '%Y-%m-%d') &gt;=str_to_date(#{visitSaleInfoDto.createTimeStart},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitSaleInfoDto.createTimeEnd!= null and visitSaleInfoDto.createTimeEnd!= ''">
+				AND DATE_FORMAT(vs.CREATE_TIME, '%Y-%m-%d') &lt;=str_to_date(#{visitSaleInfoDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
+            </if>
+           <!--  <if test="visitSaleInfoDto.updateBy!= null and visitSaleInfoDto.updateBy!= ''">
+				AND UPDATE_BY=#{visitSaleInfoDto.updateBy}
+            </if>
+            <if test="visitSaleInfoDto.updateTime!= null and visitSaleInfoDto.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{visitSaleInfoDto.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitSaleInfoDto.version!= null and visitSaleInfoDto.version!= ''">
+				AND VERSION=#{visitSaleInfoDto.version}
+            </if> -->
         </if>
     </sql>
 
@@ -259,12 +318,40 @@
 		FROM T_VISIT_SALE WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="VisitSale" resultMap="VisitSaleResultMapper">
+	<select id="listPaginationByProperty" parameterType="VisitSaleInfoDto" resultMap="VisitSaleInfoDtoResultMapper">
 		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_VISIT_SALE WHERE 1=1
+		<include refid="commonProcessDateColumn"/>
+		FROM T_VISIT_SALE vs 
+		LEFT JOIN T_VISIT v ON vs.VISIT_ID = v.ID 
+		LEFT JOIN T_COMPANY c ON v.COMPANY_ID = c.ID 
+		LEFT JOIN T_SHOP p ON p.ID = vs.SHOP_ID  
+		LEFT JOIN T_REGION r1 ON r1.ID = p.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = p.CITY
+		LEFT JOIN T_USER u ON u.USER_CODE = vs.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID 
+		LEFT JOIN T_MODEL m ON m.BRAND_ID = vs.BRAND_ID
+		WHERE 1=1
+		<if test="companyId!= null and companyId!= ''"> 
+			AND v.COMPANY_ID =#{companyId}
+		</if>
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
+	</select>
+	<select id="listVisitSaleByProperty" parameterType="VisitSaleInfoDto" resultMap="VisitSaleInfoDtoResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumn"/>
+		FROM T_VISIT_SALE vs 
+		LEFT JOIN T_VISIT v ON vs.VISIT_ID = v.ID 
+		LEFT JOIN T_COMPANY c ON v.COMPANY_ID = c.ID 
+		LEFT JOIN T_SHOP p ON p.ID = vs.SHOP_ID  
+		LEFT JOIN T_REGION r1 ON r1.ID = p.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = p.CITY
+		LEFT JOIN T_USER u ON u.USER_CODE = vs.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID 
+		LEFT JOIN T_MODEL m ON m.BRAND_ID = vs.BRAND_ID
+		WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	ORDER BY vs.CREATE_TIME DESC
 	</select>
 	<select id="findByCount" parameterType="VisitSale" resultType="int">
 		SELECT count(1) AS totalcount FROM T_VISIT_SALE WHERE 1=1 

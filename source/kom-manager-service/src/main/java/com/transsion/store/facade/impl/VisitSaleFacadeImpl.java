@@ -24,13 +24,18 @@ import org.springframework.stereotype.Component;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.VisitSale;
+import com.transsion.store.dto.VisitSaleInfoDto;
 import com.transsion.store.facade.VisitSaleFacade;
+import com.transsion.store.manager.VisitSaleManager;
 import com.transsion.store.service.VisitSaleService;
 
 @Component("visitSaleFacade")
 public class VisitSaleFacadeImpl implements VisitSaleFacade {
 
 	private VisitSaleService visitSaleService;
+	
+	@Autowired
+	private VisitSaleManager visitSaleManager;
 	
 	@Autowired
 	public void setVisitSaleService(VisitSaleService visitSaleService)
@@ -75,10 +80,10 @@ public class VisitSaleFacadeImpl implements VisitSaleFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<VisitSale> listPaginationByProperty(Pagination<VisitSale> pagination, VisitSale visitSale)
+	public Pagination<VisitSaleInfoDto> listPaginationByProperty(Pagination<VisitSaleInfoDto> pagination, VisitSaleInfoDto visitSaleInfoDto,String token)
 			throws ServiceException
 	{
-		return visitSaleService.listPaginationByProperty(pagination, visitSale);
+		return visitSaleService.listPaginationByProperty(pagination, visitSaleInfoDto,token);
 	}
 
 	/**
@@ -144,5 +149,10 @@ public class VisitSaleFacadeImpl implements VisitSaleFacade {
 	public int findByCount(VisitSale visitSale) throws ServiceException
 	{
 		return visitSaleService.findByCount(visitSale);
+	}
+
+	
+	public byte[] getVisitSaleByExcel(VisitSaleInfoDto visitSaleInfoDto) throws ServiceException {
+		return visitSaleManager.getVisitSaleByExcel(visitSaleInfoDto);
 	}
 }

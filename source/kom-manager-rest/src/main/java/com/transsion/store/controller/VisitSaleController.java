@@ -18,15 +18,28 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.VisitSale;
+import com.transsion.store.controller.VisitStockController.BigFileOutputStream;
+import com.transsion.store.dto.VisitSaleInfoDto;
+import com.transsion.store.dto.VisitStockDetailDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.VisitSaleFacade;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
@@ -59,9 +72,9 @@ public class VisitSaleController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<VisitSale> listPgVisitSale(RequestModel<VisitSale> requestModel) throws ServiceException
+	public Pagination<VisitSaleInfoDto> listPgVisitSale(RequestModel<VisitSaleInfoDto> requestModel) throws ServiceException
 	{
-		Pagination<VisitSale> pagination = new Pagination<VisitSale>();
+		Pagination<VisitSaleInfoDto> pagination = new Pagination<VisitSaleInfoDto>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());
@@ -69,7 +82,7 @@ public class VisitSaleController extends AbstractController{
 		pagination.setParams(requestModel.getParams());
 		pagination.setOrderBy(requestModel.getOrderBy());
 
-		return visitSaleFacade.listPaginationByProperty(pagination, requestModel.getParams());
+		return visitSaleFacade.listPaginationByProperty(pagination, requestModel.getParams(),this.getAuthorization());
 	}
 
 	/**
@@ -110,4 +123,76 @@ public class VisitSaleController extends AbstractController{
 	{
 		visitSaleFacade.update(visitSale);
 	}
+	
+	/**
+	 * 重点机型销量导出Excel
+	 * @param createTimeStart
+	 * @param createTimeEnd
+	 * @param visitId
+	 * @param shopCode
+	 * @param shopName
+	 * @param regionId
+	 * @param modelName
+	 * @param createBy
+	 * @param companyId
+	 * @return
+	 * @throws ServiceException
+	 * @throws IOException
+	 */
+	@GET
+	@Path("/exportExcel") 
+	@Produces({MediaType.TEXT_PLAIN})  
+	public Response getVisitSaleByExcel(@QueryParam("createTimeStart") String createTimeStart,
+		@QueryParam("createTimeEnd") String createTimeEnd,@QueryParam("visitId") String visitId,
+		@QueryParam("shopCode") String shopCode,@QueryParam("shopName") String shopName,
+		@QueryParam("regionId")String regionId,@QueryParam("modelName")String modelName,
+		@QueryParam("createBy") String createBy,@QueryParam("companyId") String companyId) throws ServiceException,IOException {
+		
+		VisitSaleInfoDto visitSaleInfoDto = new VisitSaleInfoDto();
+		visitSaleInfoDto.setCreateTimeStart(createTimeStart);
+		visitSaleInfoDto.setCreateTimeEnd(createTimeEnd);
+		visitSaleInfoDto.setShopCode(shopCode);
+		visitSaleInfoDto.setShopName(shopName);
+		visitSaleInfoDto.setCreateBy(createBy);
+		visitSaleInfoDto.setModelName(modelName);
+		if(!UtilHelper.isEmpty(regionId)){
+			visitSaleInfoDto.setRegionId(Long.parseLong(regionId));
+		}
+		if(!UtilHelper.isEmpty(companyId)){
+			visitSaleInfoDto.setCompanyId(Long.parseLong(companyId));
+		}
+		if(!UtilHelper.isEmpty(visitId)){
+			visitSaleInfoDto.setVisitId(Long.parseLong(visitId));
+		}
+		byte[] bytes = visitSaleFacade.getVisitSaleByExcel(visitSaleInfoDto);       
+		InputStream inputStream = new ByteArrayInputStream(bytes);          
+		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));          
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"重点机型销量报表.xlsx";
+		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));         
+		//根据自己文件类型修改         
+		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");          
+		return response.build();      	
+	}
+	class BigFileOutputStream implements javax.ws.rs.core.StreamingOutput {
+        private InputStream inputStream;
+        public BigFileOutputStream(){}
+        public BigFileOutputStream(InputStream inputStream)
+        {
+            this.inputStream = inputStream;
+        }
+
+        @Override
+        public void write(OutputStream output) throws IOException,
+                WebApplicationException {
+            // TODO Auto-generated method stub
+            IOUtils.copy(inputStream, output);
+        }
+
+        public InputStream getInputStream() {
+            return inputStream;
+        }
+        public void setInputStream(InputStream inputStream) {
+            this.inputStream = inputStream;
+        }
+    }
 }
