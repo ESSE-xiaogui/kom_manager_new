@@ -24,6 +24,8 @@ import org.springframework.stereotype.Component;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.VisitCompetitor;
+import com.transsion.store.dto.VisitCompetitorDetailDto;
+import com.transsion.store.dto.VisitScoreDetailInfoDto;
 import com.transsion.store.facade.VisitCompetitorFacade;
 import com.transsion.store.service.VisitCompetitorService;
 
@@ -75,10 +77,10 @@ public class VisitCompetitorFacadeImpl implements VisitCompetitorFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<VisitCompetitor> listPaginationByProperty(Pagination<VisitCompetitor> pagination, VisitCompetitor visitCompetitor)
+	public Pagination<VisitCompetitorDetailDto> listPaginationByProperty(Pagination<VisitCompetitorDetailDto> pagination, VisitCompetitorDetailDto visitCompetitorDetailDto, String token)
 			throws ServiceException
 	{
-		return visitCompetitorService.listPaginationByProperty(pagination, visitCompetitor);
+		return visitCompetitorService.listPaginationByProperty(pagination, visitCompetitorDetailDto, token);
 	}
 
 	/**

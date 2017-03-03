@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.VisitCompetitor;
+import com.transsion.store.dto.VisitCompetitorDetailDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.VisitCompetitorFacade;
 import com.shangkang.core.bo.Pagination;
@@ -59,9 +60,9 @@ public class VisitCompetitorController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<VisitCompetitor> listPgVisitCompetitor(RequestModel<VisitCompetitor> requestModel) throws ServiceException
+	public Pagination<VisitCompetitorDetailDto> listPgVisitCompetitor(RequestModel<VisitCompetitorDetailDto> requestModel) throws ServiceException
 	{
-		Pagination<VisitCompetitor> pagination = new Pagination<VisitCompetitor>();
+		Pagination<VisitCompetitorDetailDto> pagination = new Pagination<VisitCompetitorDetailDto>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());
@@ -69,7 +70,7 @@ public class VisitCompetitorController extends AbstractController{
 		pagination.setParams(requestModel.getParams());
 		pagination.setOrderBy(requestModel.getOrderBy());
 
-		return visitCompetitorFacade.listPaginationByProperty(pagination, requestModel.getParams());
+		return visitCompetitorFacade.listPaginationByProperty(pagination, requestModel.getParams(),this.getAuthorization());
 	}
 
 	/**
