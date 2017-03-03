@@ -81,7 +81,10 @@ public class VisitCompetitorDetailDto implements Serializable{
 	  *	
 	  */
 	private java.lang.String createTime;
+	
+	private java.lang.String createTimeStart;
 
+	private java.lang.String createTimeEnd;
 	/**
 	  *	
 	  */
@@ -331,15 +334,33 @@ public class VisitCompetitorDetailDto implements Serializable{
 		this.version = version;
 	}
 
+	public java.lang.String getCreateTimeStart() {
+		return createTimeStart;
+	}
+
+	public void setCreateTimeStart(java.lang.String createTimeStart) {
+		this.createTimeStart = createTimeStart;
+	}
+
+	public java.lang.String getCreateTimeEnd() {
+		return createTimeEnd;
+	}
+
+	public void setCreateTimeEnd(java.lang.String createTimeEnd) {
+		this.createTimeEnd = createTimeEnd;
+	}
+
 	@Override
 	public String toString() {
 		return "VisitCompetitorDetailDto [id=" + id + ", visitId=" + visitId + ", shopId=" + shopId + ", companyId="
-				+ companyId + ", companyCode=" + companyCode + ", countryName=" + countryName + ", cityName=" + cityName
-				+ ", shopCode=" + shopCode + ", shopName=" + shopName + ", empName=" + empName + ", regionId="
-				+ regionId + ", brandName=" + brandName + ", saleQty=" + saleQty + ", remark=" + remark + ", createBy="
-				+ createBy + ", createTime=" + createTime + ", updateBy=" + updateBy + ", updateTime=" + updateTime
-				+ ", version=" + version + "]";
+						+ companyId + ", companyCode=" + companyCode + ", countryName=" + countryName + ", cityName="
+						+ cityName + ", shopCode=" + shopCode + ", shopName=" + shopName + ", empName=" + empName
+						+ ", regionId=" + regionId + ", brandName=" + brandName + ", saleQty=" + saleQty + ", remark="
+						+ remark + ", createBy=" + createBy + ", createTime=" + createTime + ", createTimeStart="
+						+ createTimeStart + ", createTimeEnd=" + createTimeEnd + ", updateBy=" + updateBy
+						+ ", updateTime=" + updateTime + ", version=" + version + "]";
 	}
+
 
 }
 

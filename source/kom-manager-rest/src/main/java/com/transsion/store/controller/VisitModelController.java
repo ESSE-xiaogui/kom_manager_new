@@ -125,7 +125,7 @@ public class VisitModelController extends AbstractController{
 	}
 	
 	/**
-	 * 
+	 * 上柜机型导出Excel
 	 * @param createTimeStart
 	 * @param createTimeEnd
 	 * @param visitId

@@ -27,12 +27,16 @@ import com.transsion.store.bo.VisitCompetitor;
 import com.transsion.store.dto.VisitCompetitorDetailDto;
 import com.transsion.store.dto.VisitScoreDetailInfoDto;
 import com.transsion.store.facade.VisitCompetitorFacade;
+import com.transsion.store.manager.VisitCompetitorManager;
 import com.transsion.store.service.VisitCompetitorService;
 
 @Component("visitCompetitorFacade")
 public class VisitCompetitorFacadeImpl implements VisitCompetitorFacade {
 
 	private VisitCompetitorService visitCompetitorService;
+	
+	@Autowired
+	private VisitCompetitorManager visitCompetitorManager;
 	
 	@Autowired
 	public void setVisitCompetitorService(VisitCompetitorService visitCompetitorService)
@@ -146,5 +150,10 @@ public class VisitCompetitorFacadeImpl implements VisitCompetitorFacade {
 	public int findByCount(VisitCompetitor visitCompetitor) throws ServiceException
 	{
 		return visitCompetitorService.findByCount(visitCompetitor);
+	}
+
+
+	public byte[] getVisitCompetitorByExcel(VisitCompetitorDetailDto vCompetitorDetailDto) throws ServiceException {
+		return visitCompetitorManager.getVisitCompetitorByExcel(vCompetitorDetailDto);
 	}
 }

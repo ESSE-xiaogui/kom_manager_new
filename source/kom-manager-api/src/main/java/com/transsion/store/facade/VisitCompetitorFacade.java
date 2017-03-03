@@ -103,4 +103,6 @@ public interface VisitCompetitorFacade {
 	public Pagination<VisitCompetitorDetailDto> listPaginationByProperty(Pagination<VisitCompetitorDetailDto> pagination, VisitCompetitorDetailDto visitScoreDetailInfoDto, String token)
 			throws ServiceException;
 
+	public byte[] getVisitCompetitorByExcel(VisitCompetitorDetailDto vCompetitorDetailDto)throws ServiceException;
+
 }

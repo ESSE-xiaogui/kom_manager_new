@@ -31,6 +31,25 @@
 		<result column="UPDATE_TIME" property="updateTime"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
+	<resultMap id="VisitCompetitorDetailDtoResultMapper" type="VisitCompetitorDetailDto">
+		<result column="ID" property="id"/>
+		<result column="VISIT_ID" property="visitId"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="SALE_QTY" property="saleQty"/>
+		<result column="BRAND_NAME" property="brandName"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="COMPANY_CODE" property="companyCode"/>
+		<result column="SHOP_CODE" property="shopCode"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="EMP_NAME" property="empName"/>	
+	</resultMap>
 	
 	<sql id="commonColumns">
 		 ID
@@ -69,6 +88,20 @@
 		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
 		, VERSION
 	</sql>
+	<sql id="commonProcessDateColumn">
+		vc.ID,
+		vc.VISIT_ID,
+		vc.BRAND_NAME,
+		vc.SALE_QTY,
+		c.COMPANY_CODE,
+		r1.REGION_NAME AS COUNTRY_NAME,
+		r2.REGION_NAME AS CITY_NAME,
+		p.SHOP_CODE,
+		p.SHOP_NAME,
+		vc.CREATE_BY,
+		e.EMP_NAME,
+		date_format(vc.CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+	</sql>
 	
 	<sql id="commonCondition">
 		<if test="id!= null and id!= ''"> 
@@ -104,37 +137,58 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="visitCompetitor != null">
-            <if test="visitCompetitor.id!= null and visitCompetitor.id!= ''">
-				AND ID=#{visitCompetitor.id}
+		<if test="visitCompetitorDetailDto != null">
+            <if test="visitCompetitorDetailDto.id!= null and visitCompetitorDetailDto.id!= ''">
+				AND ID=#{visitCompetitorDetailDto.id}
             </if>
-            <if test="visitCompetitor.visitId!= null and visitCompetitor.visitId!= ''">
-				AND VISIT_ID=#{visitCompetitor.visitId}
+            <if test="visitCompetitorDetailDto.visitId!= null and visitCompetitorDetailDto.visitId!= ''">
+				AND vc.VISIT_ID=#{visitCompetitorDetailDto.visitId}
             </if>
-            <if test="visitCompetitor.brandId!= null and visitCompetitor.brandId!= ''">
-				AND BRAND_NAME=#{visitCompetitor.brandId}
+           <!--  <if test="visitCompetitorDetailDto.brandId!= null and visitCompetitorDetailDto.brandId!= ''">
+				AND BRAND_NAME=#{visitCompetitorDetailDto.brandId}
+            </if> -->
+            <if test="visitCompetitorDetailDto.companyId!= null and visitCompetitorDetailDto.companyId!= ''">
+				AND v.COMPANY_ID=#{visitCompetitorDetailDto.companyId}
             </if>
-            <if test="visitCompetitor.saleQty!= null and visitCompetitor.saleQty!= ''">
-				AND SALE_QTY=#{visitCompetitor.saleQty}
+            <if test="visitCompetitorDetailDto.regionId!= null and visitCompetitorDetailDto.regionId!= ''">
+				AND r1.ID=#{visitCompetitorDetailDto.regionId}
             </if>
-            <if test="visitCompetitor.remark!= null and visitCompetitor.remark!= ''">
-				AND REMARK=#{visitCompetitor.remark}
+            <if test="visitCompetitorDetailDto.saleQty!= null and visitCompetitorDetailDto.saleQty!= ''">
+				AND SALE_QTY=#{visitCompetitorDetailDto.saleQty}
             </if>
-            <if test="visitCompetitor.createBy!= null and visitCompetitor.createBy!= ''">
-				AND CREATE_BY=#{visitCompetitor.createBy}
+            <if test="visitCompetitorDetailDto.shopCode!= null and visitCompetitorDetailDto.shopCode!= ''">
+				AND SHOP_CODE=#{visitCompetitorDetailDto.shopCode}
             </if>
-            <if test="visitCompetitor.createTime!= null and visitCompetitor.createTime!= ''">
-				AND CREATE_TIME=str_to_date(#{visitCompetitor.createTime},'%Y-%m-%d %H:%i:%s')
+            <if test="visitCompetitorDetailDto.shopName!= null and visitCompetitorDetailDto.shopName!= ''">
+				AND SHOP_NAME=#{visitCompetitorDetailDto.shopName}
             </if>
-            <if test="visitCompetitor.updateBy!= null and visitCompetitor.updateBy!= ''">
-				AND UPDATE_BY=#{visitCompetitor.updateBy}
+            <if test="visitCompetitorDetailDto.brandName!= null and visitCompetitorDetailDto.brandName!= ''">
+				AND BRAND_NAME=#{visitCompetitorDetailDto.brandName}
             </if>
-            <if test="visitCompetitor.updateTime!= null and visitCompetitor.updateTime!= ''">
-				AND UPDATE_TIME=str_to_date(#{visitCompetitor.updateTime},'%Y-%m-%d %H:%i:%s')
+         <!--    <if test="visitCompetitorDetailDto.remark!= null and visitCompetitorDetailDto.remark!= ''">
+				AND REMARK=#{visitCompetitorDetailDto.remark}
+            </if> -->
+            <if test="visitCompetitorDetailDto.createBy!= null and visitCompetitorDetailDto.createBy!= ''">
+				AND vc.CREATE_BY=#{visitCompetitorDetailDto.createBy}
             </if>
-            <if test="visitCompetitor.version!= null and visitCompetitor.version!= ''">
-				AND VERSION=#{visitCompetitor.version}
+            <if test="visitCompetitorDetailDto.createTime!= null and visitCompetitorDetailDto.createTime!= ''">
+				AND vc.CREATE_TIME=str_to_date(#{visitCompetitorDetailDto.createTime},'%Y-%m-%d %H:%i:%s')
             </if>
+            <if test="visitCompetitorDetailDto.createTimeStart!= null and visitCompetitorDetailDto.createTimeStart!= ''">
+				AND DATE_FORMAT(vc.CREATE_TIME, '%Y-%m-%d') &gt;=str_to_date(#{visitCompetitorDetailDto.createTimeStart},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitCompetitorDetailDto.createTimeEnd!= null and visitCompetitorDetailDto.createTimeEnd!= ''">
+				AND DATE_FORMAT(vc.CREATE_TIME, '%Y-%m-%d') &lt;=str_to_date(#{visitCompetitorDetailDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
+            </if>
+         <!--    <if test="visitCompetitorDetailDto.updateBy!= null and visitCompetitorDetailDto.updateBy!= ''">
+				AND UPDATE_BY=#{visitCompetitorDetailDto.updateBy}
+            </if>
+            <if test="visitCompetitorDetailDto.updateTime!= null and visitCompetitorDetailDto.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{visitCompetitorDetailDto.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitCompetitorDetailDto.version!= null and visitCompetitorDetailDto.version!= ''">
+				AND VERSION=#{visitCompetitorDetailDto.version}
+            </if> -->
         </if>
     </sql>
 
@@ -244,13 +298,40 @@
 		FROM T_VISIT_COMPETITOR WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="VisitCompetitor" resultMap="VisitCompetitorResultMapper">
+	<select id="listPaginationByProperty" parameterType="VisitCompetitorDetailDto" resultMap="VisitCompetitorDetailDtoResultMapper">
 		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_VISIT_COMPETITOR WHERE 1=1
+		<include refid="commonProcessDateColumn"/>
+		FROM T_VISIT_COMPETITOR vc 
+		LEFT JOIN T_VISIT v ON vc.VISIT_ID = v.ID 
+		LEFT JOIN T_COMPANY c ON v.COMPANY_ID = c.ID 
+		LEFT JOIN T_SHOP p ON p.ID = vc.SHOP_ID  
+		LEFT JOIN T_REGION r1 ON r1.ID = p.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = p.CITY
+		LEFT JOIN T_USER u ON u.USER_CODE = vc.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID 
+		WHERE 1=1
+		<if test="companyId!= null and companyId!= ''"> 
+			AND vc.COMPANY_ID =#{companyId}
+		</if>
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>
+	<select id="listVisitCompetitorByProperty" parameterType="VisitCompetitorDetailDto" resultMap="VisitCompetitorDetailDtoResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumn"/>
+		FROM T_VISIT_COMPETITOR vc 
+		LEFT JOIN T_VISIT v ON vc.VISIT_ID = v.ID 
+		LEFT JOIN T_COMPANY c ON v.COMPANY_ID = c.ID 
+		LEFT JOIN T_SHOP p ON p.ID = vc.SHOP_ID  
+		LEFT JOIN T_REGION r1 ON r1.ID = p.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = p.CITY
+		LEFT JOIN T_USER u ON u.USER_CODE = vc.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID 
+		WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	ORDER BY vc.CREATE_TIME DESC
+	</select>
+	
 	<select id="findByCount" parameterType="VisitCompetitor" resultType="int">
 		SELECT count(1) AS totalcount FROM T_VISIT_COMPETITOR WHERE 1=1 
 		<include refid="commonCondition"/>
