@@ -32,5 +32,29 @@ public class AttributeManager {
 		
 		return attributeService.getAttributeListByType(type, companyId);
 	}
+	
+	public Attribute getAttribute(Type type, int seq, String token) throws ServiceException {
+		if (UtilHelper.isEmpty(token)) {
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext)) {
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+
+		Integer companyId = userContext.isAdmin() ? null : userContext.getCompanyId().intValue();
+
+		List<Attribute> attributes = attributeService.getAttributeListByType(type, companyId);
+
+		if (attributes != null) {
+			for (Attribute attribute : attributes) {
+				if (seq == attribute.getSqe()) {
+					return attribute;
+				}
+			}
+		}
+
+		return null;
+	}
 
 }
