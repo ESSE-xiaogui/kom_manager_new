@@ -24,13 +24,18 @@ import org.springframework.stereotype.Component;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.VisitModel;
+import com.transsion.store.dto.VisitModelDetailInfoDto;
 import com.transsion.store.facade.VisitModelFacade;
+import com.transsion.store.manager.VisitModelManager;
 import com.transsion.store.service.VisitModelService;
 
 @Component("visitModelFacade")
 public class VisitModelFacadeImpl implements VisitModelFacade {
 
 	private VisitModelService visitModelService;
+	
+	@Autowired
+	private VisitModelManager visitModelManager;
 	
 	@Autowired
 	public void setVisitModelService(VisitModelService visitModelService)
@@ -75,10 +80,10 @@ public class VisitModelFacadeImpl implements VisitModelFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<VisitModel> listPaginationByProperty(Pagination<VisitModel> pagination, VisitModel visitModel)
+	public Pagination<VisitModelDetailInfoDto> listPaginationByProperty(Pagination<VisitModelDetailInfoDto> pagination, VisitModelDetailInfoDto visitModelDetailInfoDto,String token)
 			throws ServiceException
 	{
-		return visitModelService.listPaginationByProperty(pagination, visitModel);
+		return visitModelService.listPaginationByProperty(pagination, visitModelDetailInfoDto,token);
 	}
 
 	/**
@@ -145,4 +150,10 @@ public class VisitModelFacadeImpl implements VisitModelFacade {
 	{
 		return visitModelService.findByCount(visitModel);
 	}
+
+	@Override
+	public byte[] getVisitModelByExcel(VisitModelDetailInfoDto visitModelDetailInfoDto) {
+		return visitModelManager.getVisitModelByExcel(visitModelDetailInfoDto);
+	}
+
 }

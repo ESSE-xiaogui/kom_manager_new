@@ -43,6 +43,7 @@
 		<result column="MODEL_ID" property="modelId"/>
 		<result column="BRAND_CODE" property="brandCode"/>
 		<result column="MODEL_CODE" property="modelCode"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
 		<result column="REMARK" property="remark"/>
 		<result column="CREATE_BY" property="createBy"/>
 		<result column="CREATE_TIME" property="createTime"/>
@@ -153,6 +154,9 @@
             </if>
             <if test="visitModelSettingInfoDto.companyId!= null and visitModelSettingInfoDto.companyId!= ''">
 				AND t.COMPANY_ID=#{visitModelSettingInfoDto.companyId}
+            </if>
+            <if test="visitModelSettingInfoDto.regionId!= null and visitModelSettingInfoDto.regionId!= ''">
+				AND r.REGION_ID=#{visitModelSettingInfoDto.regionId}
             </if>
             <if test="visitModelSettingInfoDto.companyCode!= null and visitModelSettingInfoDto.companyCode!= ''">
 				AND c.COMPANY_CODE=#{visitModelSettingInfoDto.companyCode}
@@ -302,11 +306,13 @@
 		t.CREATE_TIME,
 		t.UPDATE_BY,
 		t.UPDATE_TIME,
+		r.REGION_NAME AS COUNTRY_NAME,
 		t.REMARK
 		FROM T_VISIT_MODEL_SETTING t
 		LEFT JOIN T_BRAND b ON b.ID = t.BRAND_ID
 		LEFT JOIN T_MODEL m ON t.MODEL_ID = m.ID
 		LEFT JOIN T_COMPANY c ON t.COMPANY_ID = c.ID
+		LEFT JOIN T_REGION r ON r.ID = t.REGION_ID
 		WHERE 1=1
 		<include refid="commonConditionByPrefix" />
 		<include refid="orderByClause" />

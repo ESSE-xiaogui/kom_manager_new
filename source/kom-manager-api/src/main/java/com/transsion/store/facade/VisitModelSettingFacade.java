@@ -97,6 +97,7 @@ public interface VisitModelSettingFacade {
 	
 	/**
 	 * 根据查询条件查询分页记录
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
