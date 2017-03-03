@@ -343,7 +343,7 @@ public class ShopExtensionDto implements Serializable {
 	{
 		ShopExtension shopExtension = new ShopExtension();
 		shopExtension.setId(this.getId());
-		shopExtension.setShopId(this.getId());
+		shopExtension.setShopId(this.getShopId());
 		shopExtension.setShopArea(this.getShopArea());
 		shopExtension.setClerkTotalQty(this.getClerkTotalQty());
 		shopExtension.setClerkBrandQty(this.getClerkBrandQty());

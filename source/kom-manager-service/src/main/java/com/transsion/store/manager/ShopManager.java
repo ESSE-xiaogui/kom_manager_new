@@ -355,6 +355,7 @@ public class ShopManager {
 		ShopExtensionDto shopExtensionDto = shopDetailDto.getShopExtensionDto();
 		if (shopExtensionDto != null) {
 			ShopExtension shopExtension = shopDetailDto.getShopExtensionDto().toModel();
+			shopExtension.setShopId(shop.getId());
 			shopExtension.setShopArea(new Long(shop.getShopArea()));
 			shopExtensionService.update(shopExtension);
 		}
