@@ -25,6 +25,7 @@ import com.transsion.store.bo.Visit;
 import com.transsion.store.dto.VisitHistorySummaryDto;
 import com.transsion.store.dto.VisitInfoDto;
 import com.transsion.store.dto.VisitRecordDto;
+import com.transsion.store.dto.VisitRecordInfoDto;
 import com.transsion.store.dto.VisitSettingDto;
 import com.transsion.store.dto.VisitShopInfoDto;
 import com.transsion.store.dto.VisitStockInfoDto;
@@ -184,12 +185,12 @@ public class VisitFacadeImpl implements VisitFacade {
 	}
 
 	@Override
-	public VisitShopInfoDto queryVisitShopInfo(String token, java.lang.Long shopId, String planDate) throws ServiceException {
+	public VisitShopInfoDto queryVisitShopInfo(String token, Long shopId, String planDate) throws ServiceException {
 		return visitManager.queryVisitShopInfo(token, shopId, planDate);
 	}
 
 	@Override
-	public List<VisitStockInfoDto> queryVisitModelInfo(String token,java.lang.Long shopId, String planDate) throws ServiceException {
+	public List<VisitStockInfoDto> queryVisitModelInfo(String token, Long shopId, String planDate) throws ServiceException {
 		return visitManager.queryVisitModelInfo(token, shopId, planDate);
 	}
 
@@ -199,7 +200,7 @@ public class VisitFacadeImpl implements VisitFacade {
 	}
 
 	@Override
-	public com.transsion.store.dto.VisitRecordInfoDto queryVisitRecordInfo(String token, String visitId)
+	public VisitRecordInfoDto queryVisitRecordInfo(String token, String visitId)
 			throws ServiceException {
 		return visitManager.queryVisitRecordInfo(token, visitId);
 	}

@@ -18,17 +18,16 @@ package com.transsion.store.facade;
 
 import java.util.List;
 
+import com.shangkang.core.bo.Pagination;
+import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Visit;
 import com.transsion.store.dto.VisitHistorySummaryDto;
 import com.transsion.store.dto.VisitInfoDto;
-import com.transsion.store.dto.VisitModelInfoDto;
 import com.transsion.store.dto.VisitRecordDto;
 import com.transsion.store.dto.VisitRecordInfoDto;
 import com.transsion.store.dto.VisitSettingDto;
 import com.transsion.store.dto.VisitShopInfoDto;
 import com.transsion.store.dto.VisitStockInfoDto;
-import com.shangkang.core.bo.Pagination;
-import com.shangkang.core.exception.ServiceException;
 
 public interface VisitFacade {
 
@@ -152,9 +151,6 @@ public interface VisitFacade {
 	 * score setting...
 	 */
 	public VisitSettingDto queryVisitSetting(String token) throws ServiceException;
-	
-	
-	
 
 	public List<VisitInfoDto> queryUnplanedVisitList(String token, String planDate) throws ServiceException;
 
@@ -162,9 +158,6 @@ public interface VisitFacade {
 	 * visit page
 	 */
 	public VisitShopInfoDto queryVisitShopInfo(String token, java.lang.Long shopId, String planDate) throws ServiceException;
-
-	
-
 
 	/*
 	 * 
