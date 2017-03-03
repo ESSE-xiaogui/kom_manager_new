@@ -44,6 +44,11 @@ public class VisitPlanInfoDto implements Serializable {
 	 * */
 	private String cityName;
 
+	/*
+	 * 判断店铺当天是有巡店计划
+	 *  默认是与queryPlanInfo接口兼容
+	 */
+	private boolean isTheDayPlanned = true;
 	/**
 	  *	readonly 周计划巡店数
 	  */
@@ -89,6 +94,14 @@ public class VisitPlanInfoDto implements Serializable {
 	 * */
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
+	}
+
+	public boolean isTheDayPlanned() {
+		return isTheDayPlanned;
+	}
+
+	public void setTheDayPlanned(boolean isTheDayPlanned) {
+		this.isTheDayPlanned = isTheDayPlanned;
 	}
 
 	/**

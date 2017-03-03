@@ -191,6 +191,21 @@ public class VisitPlanController extends AbstractController{
 	}
 	
 	/**
+	 * make plan页面
+	 * 查询督导所有店铺某天巡店计划详情
+	 * @return
+	 * @throws ServiceException
+	 * @author guihua.zhang on 2017-03-01
+	 */
+	@GET
+	@Path("querySelfShopPlanInfo")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<VisitPlanInfoDto> querySelfShopPlanInfo(@QueryParam("startDate")String startDate, @QueryParam("endDate")String endDate) throws ServiceException{
+		String token = this.getAuthorization();
+		return visitPlanFacade.queryPlanInfo(token, startDate, endDate);
+	}
+	
+	/**
 	 * 巡店计划导出Excel
 	 * @param createTimeStart
 	 * @param createTimeEnd
