@@ -79,6 +79,9 @@ public class VisitManager {
 	@Autowired
 	private VisitModelSettingService visitModelSettingService;
 	
+	@Autowired
+	private VisitPlanManager visitPlanManager;
+	
 	public List<VisitInfoDto> queryPlanedVisitList(String token, String planDate) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
@@ -224,6 +227,9 @@ public class VisitManager {
 		return visitSettingDto;
 	}
 	
+	/*
+	 * saveVisitRecord
+	 */
 	public void saveVisitRecord(String token, VisitRecordDto visitRecordDto) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
@@ -233,25 +239,29 @@ public class VisitManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		
-		String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 		VisitDto visitDto = visitRecordDto.getVisitDto();
-		
-		Long visitId = null;
-		if (visitDto != null) {
-			Visit visit = visitDto.toModel();
-			Long companyId = userContext.getCompanyId();
-			visit.setCompanyId(companyId);
-			visit.setCreateBy(userContext.getUserCode());
-			visit.setCreateTime(currentDate);
-			visit.setUpdateBy(userContext.getUserCode());
-			visit.setUpdateTime(currentDate);
-			
-			visit.setVistor(userContext.getUserCode());
-			visitService.save(visit);
-			visitId = visit.getId();
+		if (visitDto == null) {
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
+			
+		String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+		Visit visit = visitDto.toModel();
+		Long companyId = userContext.getCompanyId();
+		visit.setCompanyId(companyId);
+		visit.setCreateBy(userContext.getUserCode());
+		visit.setCreateTime(currentDate);
+		visit.setUpdateBy(userContext.getUserCode());
+		visit.setUpdateTime(currentDate);
+		visit.setVistor(userContext.getUserCode());
+		if(!visitPlanManager.isVisitPlanned(visit))
+		{
+			visit.setPlanType(Visit.State.UNPLANNED.getVal());
+		}
+		visitService.save(visit);
 		
-		Long shopId = userContext.getShop().getId();
+		Long visitId = visit.getId();
+		Long shopId = visitDto.getShopId();
+		
 		List<VisitStockDto> visitStockDtoList = visitRecordDto.getVisitStockDtoList();
 		if (visitStockDtoList != null && visitStockDtoList.size() > 0) {
 			for (VisitStockDto visitStockDto : visitStockDtoList) {
@@ -272,7 +282,7 @@ public class VisitManager {
 		if (visitScoreDto != null) {
 			VisitScore visitScore = visitScoreDto.toModel();
 			visitScore.setVisitId(visitId);
-			visitScore.setShopId(Long.valueOf(1));
+			visitScore.setShopId(shopId);
 			visitScore.setCreateBy(userContext.getUserCode());
 			visitScore.setCreateTime(currentDate);
 			visitScore.setUpdateBy(userContext.getUserCode());
@@ -305,6 +315,8 @@ public class VisitManager {
 			visitFeedback.setUpdateTime(currentDate);
 			visitFeedbackService.save(visitFeedback);
 		}
+		
+		visitPlanManager.updatePlanByVisit(visit);
 	}
 	
 	/**
