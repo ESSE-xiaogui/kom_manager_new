@@ -22,9 +22,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.VisitModel;
+import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.VisitModelDetailInfoDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.VisitModelMapper;
+import com.transsion.store.utils.CacheUtils;
 
 @Service("visitModelService")
 public class VisitModelService {
@@ -71,13 +74,17 @@ public class VisitModelService {
 	
 	/**
 	 * 根据查询条件查询分页记录
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<VisitModel> listPaginationByProperty(Pagination<VisitModel> pagination, VisitModel visitModel)
+	public Pagination<VisitModelDetailInfoDto> listPaginationByProperty(Pagination<VisitModelDetailInfoDto> pagination, VisitModelDetailInfoDto visitModelDetailInfoDto, String token)
 			throws ServiceException
 	{
-		List<VisitModel> list = visitModelMapper.listPaginationByProperty(pagination, visitModel, pagination.getOrderBy());
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		
+		Long companyId = userContext.isAdmin()?null:userContext.getCompanyId();
+		List<VisitModelDetailInfoDto> list = visitModelMapper.listPaginationByProperty(pagination, visitModelDetailInfoDto, pagination.getOrderBy(),companyId);
 		
 		pagination.setResultList(list);
 		

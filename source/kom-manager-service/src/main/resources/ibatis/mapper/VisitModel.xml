@@ -31,7 +31,27 @@
 		<result column="UPDATE_TIME" property="updateTime"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
-	
+	<resultMap id="VisitModelDetailInfoDtoResultMapper" type="VisitModelDetailInfoDto">
+		<result column="ID" property="id"/>
+		<result column="VISIT_ID" property="visitId"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="BRAND_NAME" property="brandName"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="BRAND_ID" property="brandId"/>
+		<result column="MODEL_ID" property="modelId"/>
+		<result column="MODEL_NAME" property="modelName"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="COMPANY_CODE" property="companyCode"/>
+		<result column="SHOP_CODE" property="shopCode"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="EMP_NAME" property="empName"/>
+	</resultMap>
 	<sql id="commonColumns">
 		 ID
 		, VISIT_ID
@@ -104,37 +124,55 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="visitModel != null">
-            <if test="visitModel.id!= null and visitModel.id!= ''">
-				AND ID=#{visitModel.id}
+		<if test="visitModelDetailInfoDto != null">
+            <if test="visitModelDetailInfoDto.id!= null and visitModelDetailInfoDto.id!= ''">
+				AND ID=#{visitModelDetailInfoDto.id}
             </if>
-            <if test="visitModel.visitId!= null and visitModel.visitId!= ''">
-				AND VISIT_ID=#{visitModel.visitId}
+            <if test="visitModelDetailInfoDto.visitId!= null and visitModelDetailInfoDto.visitId!= ''">
+				AND vm.VISIT_ID=#{visitModelDetailInfoDto.visitId}
             </if>
-            <if test="visitModel.brandId!= null and visitModel.brandId!= ''">
-				AND BRAND_ID=#{visitModel.brandId}
+           <!--  <if test="visitModelDetailInfoDto.brandId!= null and visitModelDetailInfoDto.brandId!= ''">
+				AND vm.BRAND_ID=#{visitModelDetailInfoDto.brandId}
+            </if> -->
+            <if test="visitModelDetailInfoDto.regionId!= null and visitModelDetailInfoDto.regionId!= ''">
+				AND r1.ID=#{visitModelDetailInfoDto.regionId}
             </if>
-            <if test="visitModel.modelId!= null and visitModel.modelId!= ''">
-				AND MODEL_ID=#{visitModel.modelId}
+            <if test="visitModelDetailInfoDto.modelName!= null and visitModelDetailInfoDto.modelName!= ''">
+				AND m.MODEL_NAME=#{visitModelDetailInfoDto.modelName}
             </if>
-            <if test="visitModel.remark!= null and visitModel.remark!= ''">
-				AND REMARK=#{visitModel.remark}
+            <if test="visitModelDetailInfoDto.shopCode!= null and visitModelDetailInfoDto.shopCode!= ''">
+				AND SHOP_CODE=#{visitModelDetailInfoDto.shopCode}
             </if>
-            <if test="visitModel.createBy!= null and visitModel.createBy!= ''">
-				AND CREATE_BY=#{visitModel.createBy}
+            <if test="visitModelDetailInfoDto.shopName!= null and visitModelDetailInfoDto.shopName!= ''">
+				AND SHOP_NAME=#{visitModelDetailInfoDto.shopName}
             </if>
-            <if test="visitModel.createTime!= null and visitModel.createTime!= ''">
-				AND CREATE_TIME=str_to_date(#{visitModel.createTime},'%Y-%m-%d %H:%i:%s')
+            <if test="visitModelDetailInfoDto.companyId!= null and visitModelDetailInfoDto.companyId!= ''">
+				AND v.COMPANY_ID=#{visitModelDetailInfoDto.companyId}
             </if>
-            <if test="visitModel.updateBy!= null and visitModel.updateBy!= ''">
-				AND UPDATE_BY=#{visitModel.updateBy}
+         <!--    <if test="visitModelDetailInfoDto.remark!= null and visitModelDetailInfoDto.remark!= ''">
+				AND REMARK=#{visitModelDetailInfoDto.remark}
+            </if> -->
+            <if test="visitModelDetailInfoDto.createBy!= null and visitModelDetailInfoDto.createBy!= ''">
+				AND vm.CREATE_BY=#{visitModelDetailInfoDto.createBy}
             </if>
-            <if test="visitModel.updateTime!= null and visitModel.updateTime!= ''">
-				AND UPDATE_TIME=str_to_date(#{visitModel.updateTime},'%Y-%m-%d %H:%i:%s')
+            <if test="visitModelDetailInfoDto.createTime!= null and visitModelDetailInfoDto.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{visitModelDetailInfoDto.createTime},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="visitModel.version!= null and visitModel.version!= ''">
-				AND VERSION=#{visitModel.version}
+            <if test="visitModelDetailInfoDto.createTimeStart!= null and visitModelDetailInfoDto.createTimeStart!= ''">
+				AND DATE_FORMAT(vm.CREATE_TIME, '%Y-%m-%d') &gt;=str_to_date(#{visitModelDetailInfoDto.createTimeStart},'%Y-%m-%d %H:%i:%s')
             </if>
+            <if test="visitModelDetailInfoDto.createTimeEnd!= null and visitModelDetailInfoDto.createTimeEnd!= ''">
+				AND DATE_FORMAT(vm.CREATE_TIME, '%Y-%m-%d') &lt;=str_to_date(#{visitModelDetailInfoDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
+            </if>
+           <!--  <if test="visitModelDetailInfoDto.updateBy!= null and visitModelDetailInfoDto.updateBy!= ''">
+				AND UPDATE_BY=#{visitModelDetailInfoDto.updateBy}
+            </if>
+            <if test="visitModelDetailInfoDto.updateTime!= null and visitModelDetailInfoDto.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{visitModelDetailInfoDto.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="visitModelDetailInfoDto.version!= null and visitModelDetailInfoDto.version!= ''">
+				AND VERSION=#{visitModelDetailInfoDto.version}
+            </if> -->
         </if>
     </sql>
 
@@ -244,12 +282,60 @@
 		FROM T_VISIT_MODEL WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="VisitModel" resultMap="VisitModelResultMapper">
+	<select id="listPaginationByProperty" parameterType="VisitModelDetailInfoDto" resultMap="VisitModelDetailInfoDtoResultMapper">
 		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_VISIT_MODEL WHERE 1=1
+			vm.ID,
+			vm.VISIT_ID,
+			m.BRAND_CODE AS BRAND_NAME,
+			c.COMPANY_CODE,
+			r1.REGION_NAME AS COUNTRY_NAME,
+			r2.REGION_NAME AS CITY_NAME,
+			p.SHOP_CODE,
+			p.SHOP_NAME,
+			vm.CREATE_BY,
+			e.EMP_NAME,
+			m.MODEL_NAME,
+			vm.CREATE_TIME
+		FROM T_VISIT_MODEL vm LEFT JOIN T_VISIT v ON vm.VISIT_ID = v.ID 
+		LEFT JOIN T_COMPANY c ON v.COMPANY_ID = c.ID 
+		LEFT JOIN T_SHOP p ON p.ID = v.SHOP_ID AND p.COMPANY_ID = v.COMPANY_ID 
+		LEFT JOIN T_REGION r1 ON r1.ID = p.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = p.CITY
+		LEFT JOIN T_USER u ON u.USER_CODE = vm.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID 
+		LEFT JOIN T_MODEL m ON m.BRAND_ID = vm.BRAND_ID
+		WHERE 1=1
+		<if test="companyId!= null and companyId!= ''"> 
+			AND v.COMPANY_ID =#{companyId}
+		</if>
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
+	</select>
+	<select id="listVisitStockByProperty" parameterType="VisitModelDetailInfoDto" resultMap="VisitModelDetailInfoDtoResultMapper">
+		SELECT 
+			vm.ID,
+			vm.VISIT_ID,
+			m.BRAND_CODE AS BRAND_NAME,
+			c.COMPANY_CODE,
+			r1.REGION_NAME AS COUNTRY_NAME,
+			r2.REGION_NAME AS CITY_NAME,
+			p.SHOP_CODE,
+			p.SHOP_NAME,
+			vm.CREATE_BY,
+			e.EMP_NAME,
+			m.MODEL_NAME,
+			vm.CREATE_TIME
+		FROM T_VISIT_MODEL vm LEFT JOIN T_VISIT v ON vm.VISIT_ID = v.ID 
+		LEFT JOIN T_COMPANY c ON v.COMPANY_ID = c.ID 
+		LEFT JOIN T_SHOP p ON p.ID = v.SHOP_ID AND p.COMPANY_ID = v.COMPANY_ID 
+		LEFT JOIN T_REGION r1 ON r1.ID = p.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = p.CITY
+		LEFT JOIN T_USER u ON u.USER_CODE = vm.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID 
+		LEFT JOIN T_MODEL m ON m.BRAND_ID = vm.BRAND_ID
+		WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	ORDER BY vm.CREATE_TIME DESC
 	</select>
 	<select id="findByCount" parameterType="VisitModel" resultType="int">
 		SELECT count(1) AS totalcount FROM T_VISIT_MODEL WHERE 1=1 

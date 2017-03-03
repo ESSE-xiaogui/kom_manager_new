@@ -112,4 +112,6 @@ public class VisitModelSettingController extends AbstractController{
 		String token = this.getAuthorization();
 		visitModelSettingFacade.update(visitModelSetting,token);
 	}
+	
+	
 }

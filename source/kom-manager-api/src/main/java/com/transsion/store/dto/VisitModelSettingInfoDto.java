@@ -23,6 +23,8 @@ public class VisitModelSettingInfoDto implements Serializable {
 	  *	
 	  */
 	private Long brandId;
+	
+	private Long regionId;
 
 	/**
 	  *	
@@ -32,6 +34,8 @@ public class VisitModelSettingInfoDto implements Serializable {
 	private String brandCode;
 	
 	private String modelCode;
+	
+	private String countryName;
 
 
 	/**
@@ -157,13 +161,30 @@ public class VisitModelSettingInfoDto implements Serializable {
 		this.updateTime = updateTime;
 	}
 
+	public String getCountryName() {
+		return countryName;
+	}
+
+	public void setCountryName(String countryName) {
+		this.countryName = countryName;
+	}
+
+	public Long getRegionId() {
+		return regionId;
+	}
+
+	public void setRegionId(Long regionId) {
+		this.regionId = regionId;
+	}
+
 	@Override
 	public String toString() {
 		return "VisitModelSettingInfoDto [id=" + id + ", actionDate=" + actionDate + ", companyId=" + companyId
-						+ ", companyCode=" + companyCode + ", brandId=" + brandId + ", modelId=" + modelId
-						+ ", brandCode=" + brandCode + ", modelCode=" + modelCode + ", remark=" + remark + ", createBy="
-						+ createBy + ", createTime=" + createTime + ", updateBy=" + updateBy + ", updateTime="
-						+ updateTime + "]";
+						+ ", companyCode=" + companyCode + ", brandId=" + brandId + ", regionId=" + regionId
+						+ ", modelId=" + modelId + ", brandCode=" + brandCode + ", modelCode=" + modelCode
+						+ ", countryName=" + countryName + ", remark=" + remark + ", createBy=" + createBy
+						+ ", createTime=" + createTime + ", updateBy=" + updateBy + ", updateTime=" + updateTime + "]";
 	}
+
 
 }
