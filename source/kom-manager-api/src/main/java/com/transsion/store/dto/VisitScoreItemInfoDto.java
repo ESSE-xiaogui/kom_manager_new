@@ -27,7 +27,7 @@ public class VisitScoreItemInfoDto implements Serializable {
 	private static final long	serialVersionUID	= 1L;
 	
 	/**
-	  *	
+	  *	visit score item id
 	  */
 	private java.lang.Long id;
 

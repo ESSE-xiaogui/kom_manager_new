@@ -28,7 +28,7 @@ public class VisitFeedbackDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	  *	
+	  *	visit feedback id
 	  */
 	private java.lang.Long id;
 

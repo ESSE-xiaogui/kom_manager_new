@@ -26,7 +26,7 @@ public class VisitStockInfoDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	  *	
+	  *	seq number
 	  */
 	private java.lang.Long id;
 

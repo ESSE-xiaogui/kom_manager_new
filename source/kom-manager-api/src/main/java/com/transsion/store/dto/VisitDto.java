@@ -29,7 +29,7 @@ public class VisitDto implements Serializable {
 	private static final long	serialVersionUID	= 1L;
 	
 	/**
-	  *	
+	  *	don't use for create, will be create by db
 	  */
 	private java.lang.Long id;
 	

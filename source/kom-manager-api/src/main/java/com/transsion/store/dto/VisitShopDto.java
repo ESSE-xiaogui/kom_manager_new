@@ -27,7 +27,7 @@ public class VisitShopDto implements Serializable {
 	private static final long	serialVersionUID	= 1L;
 	
 	/**
-	  *	
+	  *	visit id
 	  */
 	private java.lang.Long id;
 	

@@ -28,7 +28,7 @@ public class VisitScoreDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	  *	
+	  *	visit score id
 	  */
 	private java.lang.Long id;
 

@@ -29,7 +29,7 @@ public class VisitInfoDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	  *	
+	  *	visit id, let empty when create
 	  */
 	private Long id;
 
