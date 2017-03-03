@@ -311,7 +311,7 @@
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>
-	<select id="listVisitStockByProperty" parameterType="VisitModelDetailInfoDto" resultMap="VisitModelDetailInfoDtoResultMapper">
+	<select id="listVisitModelByProperty" parameterType="VisitModelDetailInfoDto" resultMap="VisitModelDetailInfoDtoResultMapper">
 		SELECT 
 			vm.ID,
 			vm.VISIT_ID,
