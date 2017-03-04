@@ -21,11 +21,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.transsion.store.bo.VisitScoreItem;
-import com.transsion.store.dto.VisitScoreItemDetailDto;
-import com.transsion.store.dto.VisitScoreItemInfoDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.transsion.store.bo.VisitScoreItem;
+import com.transsion.store.dto.VisitScoreItemInfoDto;
 import com.transsion.store.mapper.VisitScoreItemMapper;
 
 @Service("visitScoreItemService")
@@ -153,9 +152,5 @@ public class VisitScoreItemService {
 	
 	public List<VisitScoreItemInfoDto> queryVisitScoreItemByVisitId(Long visitId) throws ServiceException {
 		return visitScoreItemMapper.queryVisitScoreItemByVisitId(visitId);
-	}
-	
-	public List<VisitScoreItemDetailDto> queryVisitHistoryDataByVisitId(Long visitId) throws ServiceException {
-		return visitScoreItemMapper.queryVisitHistoryDataByVisitId(visitId);
 	}
 }

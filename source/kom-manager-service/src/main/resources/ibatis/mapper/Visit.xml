@@ -97,6 +97,22 @@
 		<result column="VISIT_QTY" property="visitStoreQty"/>
 	</resultMap>
 	
+	<resultMap id="VisitShopDetailDtoResultMapper" type="VisitShopDetailDto">
+		<result column="SHOP_SCORE" property="shopScore"/>
+		<result column="SALE_SCORE" property="saleScore"/>
+		<result column="STAFF_SCORE" property="staffScore"/>
+		<result column="TOTAL_SCORE" property="totalScore"/>
+		<result column="ISSUE" property="issue"/>
+		<result column="ACTION" property="action"/>
+	</resultMap>
+	
+	<resultMap id="VisitScoreInfoDtoResultMapper" type="VisitScoreInfoDto">
+		<result column="TYPE" property="type"/>
+		<result column="DESC_CN" property="descCn"/>
+		<result column="DESC_EN" property="descEn"/>
+		<result column="SCORE" property="score"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, VISIT_DATE
@@ -458,5 +474,28 @@
 		WHERE 1=1
 		<include refid="commonConditionByParam"/>
 		GROUP BY VISIT_DATE
+	</select>
+	
+	<select id="queryVisitScoreInfoByVisitId" parameterType="java.lang.Long" resultMap="VisitShopDetailDtoResultMapper">
+		SELECT 
+			v.SHOP_SCORE, 
+			v.SALE_SCORE, 
+			v.STAFF_SCORE, 
+			v.TOTAL_SCORE,
+			f.ISSUE,
+			f.ACTION
+		FROM T_VISIT_SCORE v 
+		LEFT JOIN T_VISIT_FEEDBACK f ON v.VISIT_ID = f.VISIT_ID
+		WHERE v.VISIT_ID = #{visitId}
+	</select>
+	
+	<select id="queryVisitScoreItemInfoByVisitId" parameterType="java.lang.Long" resultMap="VisitScoreInfoDtoResultMapper">
+		SELECT 
+			s.TYPE, 
+			s.DESC_CN, 
+			s.DESC_EN, 
+			v.SCORE
+		FROM T_VISIT_SCORE_ITEM v LEFT JOIN T_VISIT_SCORE_SETTING s ON v.SCORE_SETTING_ID = s.ID 
+		WHERE v.VISIT_ID = #{visitId}
 	</select>
 </mapper>

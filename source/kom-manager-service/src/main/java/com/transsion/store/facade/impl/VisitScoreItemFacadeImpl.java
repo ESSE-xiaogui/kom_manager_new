@@ -24,7 +24,6 @@ import org.springframework.stereotype.Component;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.VisitScoreItem;
-import com.transsion.store.dto.VisitScoreItemDetailDto;
 import com.transsion.store.facade.VisitScoreItemFacade;
 import com.transsion.store.service.VisitScoreItemService;
 
@@ -145,10 +144,5 @@ public class VisitScoreItemFacadeImpl implements VisitScoreItemFacade {
 	public int findByCount(VisitScoreItem visitScoreItem) throws ServiceException
 	{
 		return visitScoreItemService.findByCount(visitScoreItem);
-	}
-
-	@Override
-	public List<VisitScoreItemDetailDto> queryVisitHistoryDataByVisitId(Long visitId) throws ServiceException {
-		return visitScoreItemService.queryVisitHistoryDataByVisitId(visitId);
 	}
 }

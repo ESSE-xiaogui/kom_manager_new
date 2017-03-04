@@ -17,16 +17,12 @@
 package com.transsion.store.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 
-public class VisitScoreItemDetailDto implements Serializable {
+public class VisitShopDetailDto implements Serializable {
 	private static final long serialVersionUID = 5891973057158196773L;
 	
-	private String nameCn;
-	private String nameEn;
-	private String descCn;
-	private String descEn;
-	private Integer score;
 	private Integer shopScore;
 	private Integer saleScore;
 	private Integer staffScore;
@@ -34,36 +30,8 @@ public class VisitScoreItemDetailDto implements Serializable {
 	private String issue;
 	private String action;
 	
-	public String getNameCn() {
-		return nameCn;
-	}
-	public void setNameCn(String nameCn) {
-		this.nameCn = nameCn;
-	}
-	public String getNameEn() {
-		return nameEn;
-	}
-	public void setNameEn(String nameEn) {
-		this.nameEn = nameEn;
-	}
-	public String getDescCn() {
-		return descCn;
-	}
-	public void setDescCn(String descCn) {
-		this.descCn = descCn;
-	}
-	public String getDescEn() {
-		return descEn;
-	}
-	public void setDescEn(String descEn) {
-		this.descEn = descEn;
-	}
-	public Integer getScore() {
-		return score;
-	}
-	public void setScore(Integer score) {
-		this.score = score;
-	}
+	private List<VisitScoreInfoDto> visitScoreInfoList;
+	
 	public Integer getShopScore() {
 		return shopScore;
 	}
@@ -101,12 +69,18 @@ public class VisitScoreItemDetailDto implements Serializable {
 		this.action = action;
 	}
 	
+	public List<VisitScoreInfoDto> getVisitScoreInfoList() {
+		return visitScoreInfoList;
+	}
+	public void setVisitScoreInfoList(List<VisitScoreInfoDto> visitScoreInfoList) {
+		this.visitScoreInfoList = visitScoreInfoList;
+	}
+	
 	@Override
 	public String toString() {
-		return "VisitScoreItemDetailDto [nameCn=" + nameCn + ", nameEn=" + nameEn + ", descCn=" + descCn + ", descEn="
-				+ descEn + ", score=" + score + ", shopScore=" + shopScore + ", saleScore=" + saleScore
-				+ ", staffScore=" + staffScore + ", totalScore=" + totalScore + ", issue=" + issue + ", action="
-				+ action + "]";
+		return "VisitShopDetailDto [shopScore=" + shopScore + ", saleScore=" + saleScore + ", staffScore=" + staffScore
+				+ ", totalScore=" + totalScore + ", issue=" + issue + ", action=" + action + ", visitScoreInfoList="
+				+ visitScoreInfoList + "]";
 	}
 	
 }

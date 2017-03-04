@@ -25,10 +25,12 @@ import com.transsion.store.dto.VisitPlanParamDto;
 import com.transsion.store.dto.VisitRecordDto;
 import com.transsion.store.dto.VisitRecordInfoDto;
 import com.transsion.store.dto.VisitScoreDto;
+import com.transsion.store.dto.VisitScoreInfoDto;
 import com.transsion.store.dto.VisitScoreItemDto;
 import com.transsion.store.dto.VisitScoreItemInfoDto;
 import com.transsion.store.dto.VisitScoreSettingDto;
 import com.transsion.store.dto.VisitSettingDto;
+import com.transsion.store.dto.VisitShopDetailDto;
 import com.transsion.store.dto.VisitShopDto;
 import com.transsion.store.dto.VisitShopInfoDto;
 import com.transsion.store.dto.VisitStockDto;
@@ -345,5 +347,13 @@ public class VisitManager {
 		visit.setBeginDate(startDate);
 		visit.setEndDate(endDate);
 		return visitMapper.queryVisitSummaryHistory(visit);
+	}
+	
+	public VisitShopDetailDto queryVisitHistoryDataByVisitId(Long visitId) throws ServiceException { 
+		VisitShopDetailDto visitShopDetailDto = visitMapper.queryVisitScoreInfoByVisitId(visitId);
+		
+		List<VisitScoreInfoDto> visitScoreInfoList = visitMapper.queryVisitScoreItemInfoByVisitId(visitId);
+		visitShopDetailDto.setVisitScoreInfoList(visitScoreInfoList);
+		return visitShopDetailDto;
 	}
 }

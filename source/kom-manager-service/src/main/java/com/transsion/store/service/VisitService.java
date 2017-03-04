@@ -26,6 +26,7 @@ import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Visit;
 import com.transsion.store.dto.VisitDto;
 import com.transsion.store.dto.VisitInfoDto;
+import com.transsion.store.dto.VisitShopDetailDto;
 import com.transsion.store.dto.VisitShopDto;
 import com.transsion.store.dto.VisitShopInfoDto;
 import com.transsion.store.mapper.VisitMapper;
@@ -168,5 +169,8 @@ public class VisitService {
 	public void saveVisitDto(VisitDto visitDto) throws ServiceException {
 		visitMapper.saveVisitDto(visitDto);
 	}
-	 
+	
+	public VisitShopDetailDto queryVisitScoreInfoByVisitId(Long visitId) throws ServiceException {
+		return visitMapper.queryVisitScoreInfoByVisitId(visitId);
+	}
 }

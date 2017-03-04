@@ -42,20 +42,6 @@
 		<result column="REMARK" property="remark"/>
 	</resultMap>
 	
-	<resultMap id="VisitScoreItemDetailDtoResultMapper" type="VisitScoreItemDetailDto">
-		<result column="NAME_CN" property="nameCn"/>
-		<result column="NAME_EN" property="nameEn"/>
-		<result column="DESC_CN" property="descCn"/>
-		<result column="DESC_EN" property="descEn"/>
-		<result column="SCORE" property="score"/>
-		<result column="SHOP_SCORE" property="shopScore"/>
-		<result column="SALE_SCORE" property="saleScore"/>
-		<result column="STAFF_SCORE" property="staffScore"/>
-		<result column="TOTAL_SCORE" property="totalScore"/>
-		<result column="ISSUE" property="issue"/>
-		<result column="ACTION" property="action"/>
-	</resultMap>
-	
 	<sql id="commonColumns">
 		 ID
 		, VISIT_ID
@@ -283,25 +269,5 @@
 	
 	<select id="queryVisitScoreItemByVisitId" parameterType="java.lang.Long" resultMap="VisitScoreItemInfoDtoResultMapper">
 		SELECT * FROM T_VISIT_SCORE_ITEM WHERE VISIT_ID = #{visitId}
-	</select>
-	
-	<select id="queryVisitHistoryDataByVisitId" parameterType="java.lang.Long" resultMap="VisitScoreItemDetailDtoResultMapper">
-		SELECT 
-			v.SCORE, 
-			s.DESC_CN, 
-			s.DESC_EN, 
-			t.SHOP_SCORE, 
-			t.SALE_SCORE, 
-			t.STAFF_SCORE, 
-			t.TOTAL_SCORE, 
-			a.NAME_CN, 
-			a.NAME_EN,
-			f.ISSUE,
-			f.ACTION
-		FROM T_VISIT_SCORE_ITEM v LEFT JOIN T_VISIT_SCORE_SETTING s ON v.SCORE_SETTING_ID = s.ID 
-		LEFT JOIN T_VISIT_SCORE t ON v.VISIT_ID = t.VISIT_ID 
-		LEFT JOIN T_ATTRIBUTE a ON s.TYPE = a.TYPE 
-		LEFT JOIN T_VISIT_FEEDBACK f ON v.VISIT_ID = f.VISIT_ID
-		WHERE v.VISIT_ID = #{visitId}
 	</select>
 </mapper>

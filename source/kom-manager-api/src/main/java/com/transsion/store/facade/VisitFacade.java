@@ -26,6 +26,7 @@ import com.transsion.store.dto.VisitInfoDto;
 import com.transsion.store.dto.VisitRecordDto;
 import com.transsion.store.dto.VisitRecordInfoDto;
 import com.transsion.store.dto.VisitSettingDto;
+import com.transsion.store.dto.VisitShopDetailDto;
 import com.transsion.store.dto.VisitShopInfoDto;
 import com.transsion.store.dto.VisitStockInfoDto;
 
@@ -171,4 +172,6 @@ public interface VisitFacade {
 			throws ServiceException;
 
 	public VisitRecordInfoDto queryVisitRecordInfo(String token, String visitId) throws ServiceException;
+	
+	public VisitShopDetailDto queryVisitHistoryDataByVisitId(Long visitId) throws ServiceException;
 }

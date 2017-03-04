@@ -40,6 +40,7 @@ import com.transsion.store.dto.VisitInfoDto;
 import com.transsion.store.dto.VisitRecordDto;
 import com.transsion.store.dto.VisitRecordInfoDto;
 import com.transsion.store.dto.VisitSettingDto;
+import com.transsion.store.dto.VisitShopDetailDto;
 import com.transsion.store.dto.VisitShopInfoDto;
 import com.transsion.store.dto.VisitStockInfoDto;
 import com.transsion.store.facade.VisitFacade;
@@ -262,5 +263,18 @@ public class VisitController extends AbstractController{
 	public List<VisitStockInfoDto> queryVisitModelInfo(@QueryParam("shopId")Long shopId, @QueryParam("planDate")String planDate) throws ServiceException {
 		String token = this.getAuthorization();
 		return visitFacade.queryVisitModelInfo(token, shopId, planDate);
+	}
+	
+	/**
+	 * web 巡店历史详情查询
+	 * @param visitId
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/queryVisitHistoryDataByVisitId")
+	@Produces({MediaType.APPLICATION_JSON})
+	public VisitShopDetailDto queryVisitHistoryDataByVisitId(@QueryParam("visitId")Long visitId) throws ServiceException {
+		return visitFacade.queryVisitHistoryDataByVisitId(visitId);
 	}
 }
