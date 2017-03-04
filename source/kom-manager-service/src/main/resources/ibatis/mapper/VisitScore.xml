@@ -57,6 +57,15 @@
 		<result column="VERSION" property="version"/>
 	</resultMap>
 	
+	<resultMap id="VisitScoreDtoResultMapper" type="VisitScoreDto">
+		<result column="ID" property="id"/>
+		<result column="VISIT_ID" property="visitId"/>
+		<result column="SHOP_SCORE" property="shopScore"/>
+		<result column="SALE_SCORE" property="saleScore"/>
+		<result column="STAFF_SCORE" property="staffScore"/>
+		<result column="TOTAL_SCORE" property="totalScore"/>
+		<result column="REMARK" property="remark"/>
+	</resultMap>
 	
 	<sql id="commonColumns">
 		 ID
@@ -381,5 +390,9 @@
 		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	ORDER BY vs.CREATE_TIME DESC
+	</select>
+	
+	<select id="queryVisitScoreByVisitId" parameterType="java.lang.Long" resultMap="VisitScoreDtoResultMapper">
+		SELECT * FROM T_VISIT_SCORE WHERE VISIT_ID = #{visitId}
 	</select>
 </mapper>
