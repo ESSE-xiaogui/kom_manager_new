@@ -121,6 +121,12 @@ public class Visit extends Model{
 	private java.lang.String cityName;
 	
 	private java.lang.String empName;
+	
+	private java.lang.Integer regionId;
+	
+	private java.lang.String startDate;
+	
+	private java.lang.String endDate;
 
 	/**
 	  *	
@@ -384,6 +390,30 @@ public class Visit extends Model{
 
 	public void setEmpName(java.lang.String empName) {
 		this.empName = empName;
+	}
+
+	public java.lang.Integer getRegionId() {
+		return regionId;
+	}
+
+	public void setRegionId(java.lang.Integer regionId) {
+		this.regionId = regionId;
+	}
+	
+	public java.lang.String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(java.lang.String startDate) {
+		this.startDate = startDate;
+	}
+
+	public java.lang.String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(java.lang.String endDate) {
+		this.endDate = endDate;
 	}
 
 	public String toString()

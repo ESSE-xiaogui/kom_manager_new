@@ -203,43 +203,56 @@
 	<sql id="commonConditionByPrefix">
 		<if test="visit != null">
             <if test="visit.id!= null and visit.id!= ''">
-				AND ID=#{visit.id}
+				AND v.ID=#{visit.id}
             </if>
             <if test="visit.visitDate!= null and visit.visitDate!= ''">
-				AND VISIT_DATE=str_to_date(#{visit.visitDate},'%Y-%m-%d %H:%i:%s')
+				AND v.VISIT_DATE=str_to_date(#{visit.visitDate},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="visit.companyId!= null and visit.companyId!= ''">
-				AND COMPANY_ID=#{visit.companyId}
+				AND v.COMPANY_ID=#{visit.companyId}
             </if>
             <if test="visit.shopId!= null and visit.shopId!= ''">
-				AND SHOP_ID=#{visit.shopId}
+				AND v.SHOP_ID=#{visit.shopId}
             </if>
             <if test="visit.planType!= null and visit.planType!= ''">
-				AND PLAN_TYPE=#{visit.planType}
+				AND v.PLAN_TYPE=#{visit.planType}
             </if>
             <if test="visit.saleTotalQty!= null and visit.saleTotalQty!= ''">
-				AND SALE_TOTAL_QTY=#{visit.saleTotalQty}
+				AND v.SALE_TOTAL_QTY=#{visit.saleTotalQty}
             </if>
             <if test="visit.salePbQty!= null and visit.salePbQty!= ''">
-				AND SALE_PB_QTY=#{visit.salePbQty}
+				AND v.SALE_PB_QTY=#{visit.salePbQty}
             </if>
             <if test="visit.remark!= null and visit.remark!= ''">
-				AND REMARK=#{visit.remark}
+				AND v.REMARK=#{visit.remark}
             </if>
             <if test="visit.createBy!= null and visit.createBy!= ''">
-				AND CREATE_BY=#{visit.createBy}
-            </if>
-            <if test="visit.createTime!= null and visit.createTime!= ''">
-				AND CREATE_TIME=str_to_date(#{visit.createTime},'%Y-%m-%d %H:%i:%s')
+				AND v.CREATE_BY=#{visit.createBy}
             </if>
             <if test="visit.updateBy!= null and visit.updateBy!= ''">
-				AND UPDATE_BY=#{visit.updateBy}
+				AND v.UPDATE_BY=#{visit.updateBy}
             </if>
             <if test="visit.updateTime!= null and visit.updateTime!= ''">
-				AND UPDATE_TIME=str_to_date(#{visit.updateTime},'%Y-%m-%d %H:%i:%s')
+				AND v.UPDATE_TIME=str_to_date(#{visit.updateTime},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="visit.version!= null and visit.version!= ''">
-				AND VERSION=#{visit.version}
+				AND v.VERSION=#{visit.version}
+            </if>
+            
+            <if test="visit.shopName!= null and visit.shopName!= ''">
+				AND s.SHOP_NAME=#{visit.shopName}
+            </if>
+            <if test="visit.shopCode!= null and visit.shopCode!= ''">
+				AND s.SHOP_CODE=#{visit.shopCode}
+            </if>
+            <if test="visit.regionId!= null and visit.regionId!= ''">
+				AND r.ID=#{visit.regionId}
+            </if>
+            <if test="visit.startDate!= null and visit.startDate!= ''">
+				AND SUBSTRING(v.CREATE_TIME,1,10) &gt;=#{visit.startDate}
+            </if>
+             <if test="visit.endDate!= null and visit.endDate!= ''">
+				AND SUBSTRING(v.CREATE_TIME,1,10) &lt;=#{visit.endDate}
             </if>
         </if>
     </sql>
@@ -256,43 +269,43 @@
 	<sql id="orderBy">
 		<choose>
         	<when test="key == 'id'">
-				ID ${value}
+				v.ID ${value}
             </when>
         	<when test="key == 'visitDate'">
-				VISIT_DATE ${value}
+				v.VISIT_DATE ${value}
             </when>
         	<when test="key == 'companyId'">
-				COMPANY_ID ${value}
+				v.COMPANY_ID ${value}
             </when>
         	<when test="key == 'shopId'">
-				SHOP_ID ${value}
+				v.SHOP_ID ${value}
             </when>
         	<when test="key == 'planType'">
-				PLAN_TYPE ${value}
+				v.PLAN_TYPE ${value}
             </when>
         	<when test="key == 'saleTotalQty'">
-				SALE_TOTAL_QTY ${value}
+				v.SALE_TOTAL_QTY ${value}
             </when>
         	<when test="key == 'salePbQty'">
-				SALE_PB_QTY ${value}
+				v.SALE_PB_QTY ${value}
             </when>
         	<when test="key == 'remark'">
-				REMARK ${value}
+				v.REMARK ${value}
             </when>
         	<when test="key == 'createBy'">
-				CREATE_BY ${value}
+				v.CREATE_BY ${value}
             </when>
         	<when test="key == 'createTime'">
-				CREATE_TIME ${value}
+				v.CREATE_TIME ${value}
             </when>
         	<when test="key == 'updateBy'">
-				UPDATE_BY ${value}
+				v.UPDATE_BY ${value}
             </when>
         	<when test="key == 'updateTime'">
-				UPDATE_TIME ${value}
+				v.UPDATE_TIME ${value}
             </when>
         	<when test="key == 'version'">
-				VERSION ${value}
+				v.VERSION ${value}
             </when>
 		</choose>
 	</sql>
