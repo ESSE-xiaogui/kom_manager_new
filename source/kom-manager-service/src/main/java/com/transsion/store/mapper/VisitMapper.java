@@ -25,10 +25,14 @@ import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.transsion.store.bo.Visit;
+import com.transsion.store.dto.VisitCompetitorInfoDto;
 import com.transsion.store.dto.VisitDto;
 import com.transsion.store.dto.VisitHistorySummaryDto;
 import com.transsion.store.dto.VisitInfoDto;
+import com.transsion.store.dto.VisitMaterielDetailDto;
+import com.transsion.store.dto.VisitModelDetailDto;
 import com.transsion.store.dto.VisitPlanParamDto;
+import com.transsion.store.dto.VisitSaleDetailDto;
 import com.transsion.store.dto.VisitScoreInfoDto;
 import com.transsion.store.dto.VisitShopDetailDto;
 import com.transsion.store.dto.VisitShopDto;
@@ -51,5 +55,11 @@ public interface VisitMapper extends GenericIBatisMapper<Visit, java.lang.Long> 
     
     public VisitShopDetailDto queryVisitScoreInfoByVisitId(Long visitId) throws DataAccessFailureException;
     
-    public List<VisitScoreInfoDto> queryVisitScoreItemInfoByVisitId(Long visitId);
+    public List<VisitScoreInfoDto> queryVisitScoreItemInfoByVisitId(Long visitId) throws DataAccessFailureException;
+    
+    public String queryIssueByVisitId(Long visitId) throws DataAccessFailureException;
+    public List<VisitModelDetailDto> queryVisitHistoryModelListByVisitId(Long visitId) throws DataAccessFailureException;
+    public List<VisitSaleDetailDto> queryVisitHistorySaleListByVisitId(Long visitId) throws DataAccessFailureException;
+    public List<VisitCompetitorInfoDto> queryVisitHistoryCompetitorListByVisitId(Long visitId) throws DataAccessFailureException;
+    public List<VisitMaterielDetailDto> queryVisitHistoryMaterielListByVisitId(Long visitId) throws DataAccessFailureException;
 }

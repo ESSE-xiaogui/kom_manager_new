@@ -113,6 +113,23 @@
 		<result column="SCORE" property="score"/>
 	</resultMap>
 	
+	<resultMap id="VisitModelDetailDtoResultMapper" type="VisitModelDetailDto">
+		<result column="SERIES_CODE" property="seriesCode"/>
+		<result column="MODEL_CODE" property="modelCode"/>
+	</resultMap>
+	<resultMap id="VisitSaleDetailDtoResultMapper" type="VisitSaleDetailDto">
+		<result column="MODEL_CODE" property="modelCode"/>
+		<result column="SALE_QTY" property="saleQty"/>
+	</resultMap>
+	<resultMap id="VisitCompetitorInfoDtoResultMapper" type="VisitCompetitorInfoDto">
+		<result column="BRAND_NAME" property="brandName"/>
+		<result column="SALE_QTY" property="saleQty"/>
+	</resultMap>
+	<resultMap id="VisitMaterielDetailDtoResultMapper" type="VisitMaterielDetailDto">
+		<result column="NAME_EN" property="nameEn"/>
+		<result column="TYPE" property="type"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, VISIT_DATE
@@ -497,5 +514,21 @@
 			v.SCORE
 		FROM T_VISIT_SCORE_ITEM v LEFT JOIN T_VISIT_SCORE_SETTING s ON v.SCORE_SETTING_ID = s.ID 
 		WHERE v.VISIT_ID = #{visitId}
+	</select>
+	
+	<select id="queryIssueByVisitId" parameterType="java.lang.Long" resultType="java.lang.String">
+		SELECT v.ISSUE FROM T_VISIT_FEEDBACK v WHERE v.VISIT_ID = #{visitId}
+	</select>
+	<select id="queryVisitHistoryModelListByVisitId" parameterType="java.lang.Long" resultMap="VisitModelDetailDtoResultMapper">
+		SELECT m.SERIES_CODE, m.MODEL_CODE FROM T_VISIT_MODEL v LEFT JOIN T_MODEL m ON v.MODEL_ID = m.ID WHERE v.VISIT_ID = #{visitId}
+	</select>
+	<select id="queryVisitHistorySaleListByVisitId" parameterType="java.lang.Long" resultMap="VisitSaleDetailDtoResultMapper">
+		SELECT m.MODEL_CODE, s.SALE_QTY FROM T_VISIT_SALE s LEFT JOIN T_MODEL m ON s.MODEL_ID = m.ID WHERE s.VISIT_ID = #{visitId}
+	</select>
+	<select id="queryVisitHistoryCompetitorListByVisitId" parameterType="java.lang.Long" resultMap="VisitCompetitorInfoDtoResultMapper">
+		SELECT c.BRAND_NAME, c.SALE_QTY FROM T_VISIT_COMPETITOR c WHERE c.VISIT_ID = #{visitId}
+	</select>
+	<select id="queryVisitHistoryMaterielListByVisitId" parameterType="java.lang.Long" resultMap="VisitMaterielDetailDtoResultMapper">
+		SELECT m.NAME_EN, m.TYPE FROM T_VISIT_MATERIEL v LEFT JOIN T_MATERIEL m ON v.MATERIEL_ID = m.ID WHERE v.VISIT_ID = #{visitId}
 	</select>
 </mapper>

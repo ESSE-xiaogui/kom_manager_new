@@ -17,13 +17,18 @@ import com.transsion.store.bo.VisitScore;
 import com.transsion.store.bo.VisitScoreItem;
 import com.transsion.store.bo.VisitStock;
 import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.VisitCompetitorInfoDto;
 import com.transsion.store.dto.VisitDto;
 import com.transsion.store.dto.VisitFeedbackDto;
+import com.transsion.store.dto.VisitHistoryDetailDto;
 import com.transsion.store.dto.VisitHistorySummaryDto;
 import com.transsion.store.dto.VisitInfoDto;
+import com.transsion.store.dto.VisitMaterielDetailDto;
+import com.transsion.store.dto.VisitModelDetailDto;
 import com.transsion.store.dto.VisitPlanParamDto;
 import com.transsion.store.dto.VisitRecordDto;
 import com.transsion.store.dto.VisitRecordInfoDto;
+import com.transsion.store.dto.VisitSaleDetailDto;
 import com.transsion.store.dto.VisitScoreDto;
 import com.transsion.store.dto.VisitScoreInfoDto;
 import com.transsion.store.dto.VisitScoreItemDto;
@@ -355,5 +360,21 @@ public class VisitManager {
 		List<VisitScoreInfoDto> visitScoreInfoList = visitMapper.queryVisitScoreItemInfoByVisitId(visitId);
 		visitShopDetailDto.setVisitScoreInfoList(visitScoreInfoList);
 		return visitShopDetailDto;
+	}
+	
+	public VisitHistoryDetailDto queryItelVisitHistoryDetailByVisitId(Long visitId) throws ServiceException {
+		String issue = visitMapper.queryIssueByVisitId(visitId);
+		List<VisitModelDetailDto> visitModelDetailDtoList = visitMapper.queryVisitHistoryModelListByVisitId(visitId);
+		List<VisitSaleDetailDto> visitSaleDetailDtoList= visitMapper.queryVisitHistorySaleListByVisitId(visitId);
+		List<VisitCompetitorInfoDto> visitCompetitorInfoDtoList = visitMapper.queryVisitHistoryCompetitorListByVisitId(visitId);
+		List<VisitMaterielDetailDto> visitMaterielDetailDtoList = visitMapper.queryVisitHistoryMaterielListByVisitId(visitId);
+		
+		VisitHistoryDetailDto visitHistoryDetailDto = new VisitHistoryDetailDto();
+		visitHistoryDetailDto.setIssue(issue);
+		visitHistoryDetailDto.setVisitModelDetailDtoList(visitModelDetailDtoList);
+		visitHistoryDetailDto.setVisitSaleDetailDtoList(visitSaleDetailDtoList);
+		visitHistoryDetailDto.setVisitCompetitorInfoDtoList(visitCompetitorInfoDtoList);
+		visitHistoryDetailDto.setVisitMaterielDetailDtoList(visitMaterielDetailDtoList);
+		return visitHistoryDetailDto;
 	}
 }

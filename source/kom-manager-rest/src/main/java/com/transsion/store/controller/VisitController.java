@@ -35,6 +35,7 @@ import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.dto.RequestModel;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Visit;
+import com.transsion.store.dto.VisitHistoryDetailDto;
 import com.transsion.store.dto.VisitHistorySummaryDto;
 import com.transsion.store.dto.VisitInfoDto;
 import com.transsion.store.dto.VisitRecordDto;
@@ -276,5 +277,12 @@ public class VisitController extends AbstractController{
 	@Produces({MediaType.APPLICATION_JSON})
 	public VisitShopDetailDto queryVisitHistoryDataByVisitId(@QueryParam("visitId")Long visitId) throws ServiceException {
 		return visitFacade.queryVisitHistoryDataByVisitId(visitId);
+	}
+	
+	@GET
+	@Path("/queryItelVisitHistoryDetailByVisitId")
+	@Produces({MediaType.APPLICATION_JSON})
+	public VisitHistoryDetailDto queryItelVisitHistoryDetailByVisitId(@QueryParam("visitId")Long visitId) throws ServiceException {
+		return visitFacade.queryItelVisitHistoryDetailByVisitId(visitId);
 	}
 }

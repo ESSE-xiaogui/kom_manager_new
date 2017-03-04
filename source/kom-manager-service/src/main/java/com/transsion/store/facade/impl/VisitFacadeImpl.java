@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.Visit;
+import com.transsion.store.dto.VisitHistoryDetailDto;
 import com.transsion.store.dto.VisitHistorySummaryDto;
 import com.transsion.store.dto.VisitInfoDto;
 import com.transsion.store.dto.VisitRecordDto;
@@ -209,5 +210,10 @@ public class VisitFacadeImpl implements VisitFacade {
 	@Override
 	public VisitShopDetailDto queryVisitHistoryDataByVisitId(Long visitId) throws ServiceException {
 		return visitManager.queryVisitHistoryDataByVisitId(visitId);
+	}
+
+	@Override
+	public VisitHistoryDetailDto queryItelVisitHistoryDetailByVisitId(Long visitId) throws ServiceException {
+		return visitManager.queryItelVisitHistoryDetailByVisitId(visitId);
 	}
 }

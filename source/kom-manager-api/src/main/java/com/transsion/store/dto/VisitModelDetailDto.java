@@ -21,5 +21,9 @@ public class VisitModelDetailDto implements Serializable {
 		this.modelCode = modelCode;
 	}
 	
+	@Override
+	public String toString() {
+		return "VisitModelDetailDto [seriesCode=" + seriesCode + ", modelCode=" + modelCode + "]";
+	}
 	
 }

@@ -21,6 +21,7 @@ import java.util.List;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Visit;
+import com.transsion.store.dto.VisitHistoryDetailDto;
 import com.transsion.store.dto.VisitHistorySummaryDto;
 import com.transsion.store.dto.VisitInfoDto;
 import com.transsion.store.dto.VisitRecordDto;
@@ -174,4 +175,6 @@ public interface VisitFacade {
 	public VisitRecordInfoDto queryVisitRecordInfo(String token, String visitId) throws ServiceException;
 	
 	public VisitShopDetailDto queryVisitHistoryDataByVisitId(Long visitId) throws ServiceException;
+	
+	public VisitHistoryDetailDto queryItelVisitHistoryDetailByVisitId(Long visitId) throws ServiceException;
 }
