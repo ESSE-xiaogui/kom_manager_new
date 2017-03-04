@@ -19,15 +19,12 @@ package com.transsion.store.mapper;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.PathParam;
-
 import org.apache.ibatis.annotations.Param;
 
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.transsion.store.bo.ShopMateriel;
-import com.transsion.store.dto.SaleDailyDto;
 import com.transsion.store.dto.ShopMaterielDto;
 
 public interface ShopMaterielMapper extends GenericIBatisMapper<ShopMateriel, java.lang.Long> {

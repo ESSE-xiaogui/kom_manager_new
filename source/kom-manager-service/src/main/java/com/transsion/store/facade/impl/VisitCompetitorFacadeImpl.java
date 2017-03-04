@@ -25,7 +25,6 @@ import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.VisitCompetitor;
 import com.transsion.store.dto.VisitCompetitorDetailDto;
-import com.transsion.store.dto.VisitScoreDetailInfoDto;
 import com.transsion.store.facade.VisitCompetitorFacade;
 import com.transsion.store.manager.VisitCompetitorManager;
 import com.transsion.store.service.VisitCompetitorService;

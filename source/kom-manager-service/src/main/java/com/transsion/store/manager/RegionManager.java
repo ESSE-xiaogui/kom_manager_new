@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
@@ -12,7 +13,6 @@ import com.transsion.store.bo.Employee;
 import com.transsion.store.bo.Region;
 import com.transsion.store.bo.Shop;
 import com.transsion.store.context.UserContext;
-import com.transsion.store.dto.EmpResponseDto;
 import com.transsion.store.dto.RegionDto;
 import com.transsion.store.dto.RegionResponseDto;
 import com.transsion.store.dto.RegionShopDto;
@@ -24,7 +24,6 @@ import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.EmployeeMapper;
 import com.transsion.store.mapper.RegionMapper;
 import com.transsion.store.mapper.ShopMapper;
-import com.transsion.store.service.EmployeeService;
 import com.transsion.store.service.RegionService;
 import com.transsion.store.service.ShopService;
 import com.transsion.store.service.SystemDateService;

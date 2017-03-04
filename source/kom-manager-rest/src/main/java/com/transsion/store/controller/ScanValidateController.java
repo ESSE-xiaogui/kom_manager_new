@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
 import com.rest.service.controller.AbstractController;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.dto.ScanValidateDto;

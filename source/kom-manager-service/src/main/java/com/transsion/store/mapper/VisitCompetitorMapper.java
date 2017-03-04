@@ -19,13 +19,13 @@ package com.transsion.store.mapper;
 import java.util.List;
 import java.util.Map;
 
-import com.transsion.store.bo.VisitCompetitor;
-import com.transsion.store.dto.VisitCompetitorDetailDto;
-import com.transsion.store.dto.VisitSaleInfoDto;
-import com.shangkang.core.mapper.GenericIBatisMapper;
+import org.apache.ibatis.annotations.Param;
+
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
-import org.apache.ibatis.annotations.Param;
+import com.shangkang.core.mapper.GenericIBatisMapper;
+import com.transsion.store.bo.VisitCompetitor;
+import com.transsion.store.dto.VisitCompetitorDetailDto;
 
 public interface VisitCompetitorMapper extends GenericIBatisMapper<VisitCompetitor, java.lang.Long> {
 

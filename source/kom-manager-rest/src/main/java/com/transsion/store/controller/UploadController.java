@@ -1,22 +1,33 @@
 package com.transsion.store.controller;
 
-import com.rest.service.codec.response.StandardResult;
-import com.rest.service.controller.AbstractController;
-import com.transsion.store.support.FastdfsClientSingleton;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Map;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.james.mime4j.field.FieldName;
 import org.apache.james.mime4j.message.BodyPart;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import org.springframework.stereotype.Controller;
-import sun.misc.BASE64Encoder;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import java.io.*;
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
+import com.rest.service.codec.response.StandardResult;
+import com.rest.service.controller.AbstractController;
+import com.transsion.store.support.FastdfsClientSingleton;
+
+import sun.misc.BASE64Encoder;
 
 @Controller
 @Path("/fastdfs")

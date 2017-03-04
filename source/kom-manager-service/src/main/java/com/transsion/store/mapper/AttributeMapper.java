@@ -1,13 +1,11 @@
 package com.transsion.store.mapper;
 
 import java.util.List;
-import java.util.Map;
 
-import javax.ws.rs.QueryParam;
+import org.apache.ibatis.annotations.Param;
 
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.transsion.store.bo.Attribute;
-import org.apache.ibatis.annotations.Param;
 
 public interface AttributeMapper extends GenericIBatisMapper<Attribute, java.lang.Long>{
 	public List<Attribute> getAttributeListByType(@Param("type") Integer type,@Param("companyId") Integer companyId);

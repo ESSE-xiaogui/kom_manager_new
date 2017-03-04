@@ -1,6 +1,7 @@
 package com.transsion.store.controller;
 
 import java.util.List;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import com.rest.service.controller.AbstractController;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Attribute;
-import com.transsion.store.bo.Attribute.Type;
 import com.transsion.store.facade.AttributeFacade;
 
 @Controller

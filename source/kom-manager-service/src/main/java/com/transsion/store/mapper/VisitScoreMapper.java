@@ -19,16 +19,14 @@ package com.transsion.store.mapper;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.Path;
+import org.apache.ibatis.annotations.Param;
 
-import com.transsion.store.bo.VisitScore;
-import com.transsion.store.dto.VisitPlanDetailInfoDto;
-import com.transsion.store.dto.VisitScoreDetailInfoDto;
-import com.transsion.store.dto.VisitScoreDto;
-import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
-import org.apache.ibatis.annotations.Param;
+import com.shangkang.core.mapper.GenericIBatisMapper;
+import com.transsion.store.bo.VisitScore;
+import com.transsion.store.dto.VisitScoreDetailInfoDto;
+import com.transsion.store.dto.VisitScoreDto;
 
 public interface VisitScoreMapper extends GenericIBatisMapper<VisitScore, java.lang.Long> {
 
