@@ -28,7 +28,35 @@
 		<result column="IMG_SHOP_URL" property="imgShopUrl"/>
 		<result column="IMG_IMEI_URL" property="imgImeiUrl"/>
 		<result column="STATUS" property="status"/>
-		<result column="COUTING_BY" property="coutingBy"/>
+		<result column="COUNTING_BY" property="countingBy"/>
+		<result column="COUNTING_TIME" property="countingTime"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	<resultMap id="PrototypeCountingDtoResultMapper" type="PrototypeCountingDto">
+		<result column="ID" property="id"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="PROTOTYPE_ID" property="prototypeId"/>
+		<result column="IMG_PROTOTYPE_URL" property="imgPrototypeUrl"/>
+		<result column="IMG_SHOP_URL" property="imgShopUrl"/>
+		<result column="IMG_IMEI_URL" property="imgImeiUrl"/>
+		<result column="IMEI_NO" property="imeiNo"/>
+		<result column="COMPANY_CODE" property="companyCode"/>
+		<result column="BRAND_NAME" property="brandName"/>
+		<result column="BRAND_ID" property="brandId"/>
+		<result column="MODEL_NAME" property="modelName"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="SHOP_CODE" property="shopCode"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="STATUS" property="status"/>
+		<result column="COUNTING_BY" property="countingBy"/>
 		<result column="COUNTING_TIME" property="countingTime"/>
 		<result column="REMARK" property="remark"/>
 		<result column="CREATE_BY" property="createBy"/>
@@ -47,7 +75,7 @@
 		, IMG_SHOP_URL
 		, IMG_IMEI_URL
 		, STATUS
-		, COUTING_BY
+		, COUNTING_BY
 		, COUNTING_TIME
 		, REMARK
 		, CREATE_BY
@@ -65,7 +93,7 @@
 		, IMG_SHOP_URL
 		, IMG_IMEI_URL
 		, STATUS
-		, COUTING_BY
+		, COUNTING_BY
 		, COUNTING_TIME
 		, REMARK
 		, CREATE_BY
@@ -84,7 +112,7 @@
 		, IMG_SHOP_URL
 		, IMG_IMEI_URL
 		, STATUS
-		, COUTING_BY
+		, COUNTING_BY
 		, date_format(COUNTING_TIME, '%Y-%m-%d %H:%i:%s') COUNTING_TIME
 		, REMARK
 		, CREATE_BY
@@ -92,6 +120,30 @@
 		, UPDATE_BY
 		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
 		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumn">
+		pc.ID
+		, c.COMPANY_CODE
+		, m.BRAND_CODE AS BRAND_NAME
+		, p.BRAND_ID
+		, m.MODEL_NAME
+		, p.IMEI_NO
+		, r1.REGION_NAME AS COUNTRY_NAME
+		, r2.REGION_NAME AS CITY_NAME
+		, s.SHOP_CODE
+		, s.SHOP_NAME
+		, pc.CREATE_BY
+		, e.EMP_NAME
+		, PROTOTYPE_ID
+		, pc.IMG_PROTOTYPE_URL
+		, pc.IMG_SHOP_URL
+		, pc.IMG_IMEI_URL
+		, pc.STATUS
+		, COUNTING_BY
+		, date_format(COUNTING_TIME, '%Y-%m-%d %H:%i:%s') COUNTING_TIME
+		, pc.REMARK
+		, date_format(pc.CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
 	</sql>
 	
 	<sql id="commonCondition">
@@ -119,8 +171,8 @@
 		<if test="status!= null and status!= ''"> 
 			AND STATUS=#{status}
 		</if>
-		<if test="coutingBy!= null and coutingBy!= ''"> 
-			AND COUTING_BY=#{coutingBy}
+		<if test="countingBy!= null and countingBy!= ''"> 
+			AND COUNTING_BY=#{countingBy}
 		</if>
 		<if test="countingTime!= null and countingTime!= ''"> 
 			AND COUNTING_TIME=str_to_date(#{countingTime},'%Y-%m-%d %H:%i:%s')
@@ -146,55 +198,85 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="prototypeCounting != null">
-            <if test="prototypeCounting.id!= null and prototypeCounting.id!= ''">
-				AND ID=#{prototypeCounting.id}
+		<if test="prototypeCountingDto != null">
+            <if test="prototypeCountingDto.id!= null and prototypeCountingDto.id!= ''">
+				AND ID=#{prototypeCountingDto.id}
             </if>
-            <if test="prototypeCounting.companyId!= null and prototypeCounting.companyId!= ''">
-				AND COMPANY_ID=#{prototypeCounting.companyId}
+            <if test="prototypeCountingDto.companyId!= null and prototypeCountingDto.companyId!= ''">
+				AND pc.COMPANY_ID=#{prototypeCountingDto.companyId}
             </if>
-            <if test="prototypeCounting.shopId!= null and prototypeCounting.shopId!= ''">
-				AND SHOP_ID=#{prototypeCounting.shopId}
+            <if test="prototypeCountingDto.shopId!= null and prototypeCountingDto.shopId!= ''">
+				AND SHOP_ID=#{prototypeCountingDto.shopId}
             </if>
-            <if test="prototypeCounting.prototypeId!= null and prototypeCounting.prototypeId!= ''">
-				AND PROTOTYPE_ID=#{prototypeCounting.prototypeId}
+            <if test="prototypeCountingDto.shopCode!= null and prototypeCountingDto.shopCode!= ''">
+				AND SHOP_CODE=#{prototypeCountingDto.shopCode}
             </if>
-            <if test="prototypeCounting.imgPrototypeUrl!= null and prototypeCounting.imgPrototypeUrl!= ''">
-				AND IMG_PROTOTYPE_URL=#{prototypeCounting.imgPrototypeUrl}
+            <if test="prototypeCountingDto.shopName!= null and prototypeCountingDto.shopName!= ''">
+				AND SHOP_NAME=#{prototypeCountingDto.shopName}
             </if>
-            <if test="prototypeCounting.imgShopUrl!= null and prototypeCounting.imgShopUrl!= ''">
-				AND IMG_SHOP_URL=#{prototypeCounting.imgShopUrl}
+            <if test="prototypeCountingDto.imeiNo!= null and prototypeCountingDto.imeiNo!= ''">
+				AND p.IMEI_NO=#{prototypeCountingDto.imeiNo}
             </if>
-            <if test="prototypeCounting.imgImeiUrl!= null and prototypeCounting.imgImeiUrl!= ''">
-				AND IMG_IMEI_URL=#{prototypeCounting.imgImeiUrl}
+            <if test="prototypeCountingDto.modelName!= null and prototypeCountingDto.modelName!= ''">
+				AND m.MODEL_NAME=#{prototypeCountingDto.modelName}
             </if>
-            <if test="prototypeCounting.status!= null and prototypeCounting.status!= ''">
-				AND STATUS=#{prototypeCounting.status}
+            <if test="prototypeCountingDto.brandId!= null and prototypeCountingDto.brandId!= ''">
+				AND p.BRAND_ID=#{prototypeCountingDto.brandId}
             </if>
-            <if test="prototypeCounting.coutingBy!= null and prototypeCounting.coutingBy!= ''">
-				AND COUTING_BY=#{prototypeCounting.coutingBy}
+            <if test="prototypeCountingDto.regionId!= null and prototypeCountingDto.regionId!= ''">
+				AND r1.ID=#{prototypeCountingDto.regionId}
             </if>
-            <if test="prototypeCounting.countingTime!= null and prototypeCounting.countingTime!= ''">
-				AND COUNTING_TIME=str_to_date(#{prototypeCounting.countingTime},'%Y-%m-%d %H:%i:%s')
+            <if test="prototypeCountingDto.prototypeId!= null and prototypeCountingDto.prototypeId!= ''">
+				AND pc.PROTOTYPE_ID=#{prototypeCountingDto.prototypeId}
             </if>
-            <if test="prototypeCounting.remark!= null and prototypeCounting.remark!= ''">
-				AND REMARK=#{prototypeCounting.remark}
+            <if test="prototypeCountingDto.imgPrototypeUrl!= null and prototypeCountingDto.imgPrototypeUrl!= ''">
+				AND IMG_PROTOTYPE_URL=#{prototypeCountingDto.imgPrototypeUrl}
             </if>
-            <if test="prototypeCounting.createBy!= null and prototypeCounting.createBy!= ''">
-				AND CREATE_BY=#{prototypeCounting.createBy}
+            <if test="prototypeCountingDto.imgShopUrl!= null and prototypeCountingDto.imgShopUrl!= ''">
+				AND IMG_SHOP_URL=#{prototypeCountingDto.imgShopUrl}
             </if>
-            <if test="prototypeCounting.createTime!= null and prototypeCounting.createTime!= ''">
-				AND CREATE_TIME=str_to_date(#{prototypeCounting.createTime},'%Y-%m-%d %H:%i:%s')
+            <if test="prototypeCountingDto.imgImeiUrl!= null and prototypeCountingDto.imgImeiUrl!= ''">
+				AND IMG_IMEI_URL=#{prototypeCountingDto.imgImeiUrl}
             </if>
-            <if test="prototypeCounting.updateBy!= null and prototypeCounting.updateBy!= ''">
-				AND UPDATE_BY=#{prototypeCounting.updateBy}
+            <if test="prototypeCountingDto.status!= null and prototypeCountingDto.status!= ''">
+				AND pc.STATUS=#{prototypeCountingDto.status}
             </if>
-            <if test="prototypeCounting.updateTime!= null and prototypeCounting.updateTime!= ''">
-				AND UPDATE_TIME=str_to_date(#{prototypeCounting.updateTime},'%Y-%m-%d %H:%i:%s')
+            <if test="prototypeCountingDto.countingBy!= null and prototypeCountingDto.countingBy!= ''">
+				AND COUNTING_BY=#{prototypeCountingDto.countingBy}
             </if>
-            <if test="prototypeCounting.version!= null and prototypeCounting.version!= ''">
-				AND VERSION=#{prototypeCounting.version}
+            <if test="prototypeCountingDto.countingTime!= null and prototypeCountingDto.countingTime!= ''">
+				AND COUNTING_TIME=str_to_date(#{prototypeCountingDto.countingTime},'%Y-%m-%d %H:%i:%s')
             </if>
+            <if test="prototypeCountingDto.countingTimeStart!= null and prototypeCountingDto.countingTimeStart!= ''">
+				AND DATE_FORMAT(pc.COUNTING_TIME, '%Y-%m-%d')&gt;=str_to_date(#{prototypeCountingDto.countingTimeStart},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="prototypeCountingDto.countingTimeEnd!= null and prototypeCountingDto.countingTimeEnd!= ''">
+				AND DATE_FORMAT(pc.COUNTING_TIME, '%Y-%m-%d')&lt;=str_to_date(#{prototypeCountingDto.countingTimeEnd},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="prototypeCountingDto.remark!= null and prototypeCountingDto.remark!= ''">
+				AND REMARK=#{prototypeCountingDto.remark}
+            </if>
+            <if test="prototypeCountingDto.createBy!= null and prototypeCountingDto.createBy!= ''">
+				AND pc.CREATE_BY=#{prototypeCountingDto.createBy}
+            </if>
+            <if test="prototypeCountingDto.createTime!= null and prototypeCountingDto.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{prototypeCountingDto.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="prototypeCountingDto.createTimeStart!= null and prototypeCountingDto.createTimeStart!= ''">
+				AND DATE_FORMAT(pc.CREATE_TIME, '%Y-%m-%d') &gt;=str_to_date(#{prototypeCountingDto.createTimeStart},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="prototypeCountingDto.createTimeEnd!= null and prototypeCountingDto.createTimeEnd!= ''">
+				AND DATE_FORMAT(pc.CREATE_TIME, '%Y-%m-%d') &lt;=str_to_date(#{prototypeCountingDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
+            </if>
+           <!--  <if test="prototypeCountingDto.updateBy!= null and prototypeCountingDto.updateBy!= ''">
+				AND UPDATE_BY=#{prototypeCountingDto.updateBy}
+            </if>
+            <if test="prototypeCountingDto.updateTime!= null and prototypeCountingDto.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{prototypeCountingDto.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="prototypeCountingDto.version!= null and prototypeCountingDto.version!= ''">
+				AND VERSION=#{prototypeCountingDto.version}
+            </if> -->
         </if>
     </sql>
 
@@ -233,8 +315,8 @@
         	<when test="key == 'status'">
 				STATUS ${value}
             </when>
-        	<when test="key == 'coutingBy'">
-				COUTING_BY ${value}
+        	<when test="key == 'countingBy'">
+				COUNTING_BY ${value}
             </when>
         	<when test="key == 'countingTime'">
 				COUNTING_TIME ${value}
@@ -272,7 +354,7 @@
 			, #{imgShopUrl}
 			, #{imgImeiUrl}
 			, #{status}
-			, #{coutingBy}
+			, #{countingBy}
 			, str_to_date(#{countingTime},'%Y-%m-%d %H:%i:%s')
 			, #{remark}
 			, #{createBy}
@@ -292,7 +374,7 @@
 			, IMG_SHOP_URL=#{imgShopUrl} 
 			, IMG_IMEI_URL=#{imgImeiUrl} 
 			, STATUS=#{status} 
-			, COUTING_BY=#{coutingBy} 
+			, COUNTING_BY=#{countingBy} 
 			, COUNTING_TIME=str_to_date(#{countingTime},'%Y-%m-%d %H:%i:%s')
 			, REMARK=#{remark} 
 			, CREATE_BY=#{createBy} 
@@ -332,12 +414,40 @@
 		FROM T_PROTOTYPE_COUNTING WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="PrototypeCounting" resultMap="PrototypeCountingResultMapper">
+	<select id="listPaginationByProperty" parameterType="PrototypeCountingDto" resultMap="PrototypeCountingDtoResultMapper">
 		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_PROTOTYPE_COUNTING WHERE 1=1
+		<include refid="commonProcessDateColumn"/>
+		FROM T_PROTOTYPE_COUNTING pc 
+		LEFT JOIN T_PROTOTYPE p ON p.ID = pc.PROTOTYPE_ID
+		LEFT JOIN T_COMPANY c ON pc.COMPANY_ID = c.ID 
+		LEFT JOIN T_SHOP s ON s.ID = pc.SHOP_ID 
+		LEFT JOIN T_REGION r1 ON r1.ID = s.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = s.CITY
+		LEFT JOIN T_USER u ON u.USER_CODE = pc.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID 
+		LEFT JOIN T_MODEL m ON m.BRAND_ID = p.BRAND_ID
+	    WHERE 1=1
+	    <if test="companyId!= null and companyId!= ''"> 
+			AND pc.COMPANY_ID =#{companyId}
+		</if>
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
+	</select>
+	<select id="listPrototypeCountingByProperty" parameterType="PrototypeCountingDto" resultMap="PrototypeCountingDtoResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumn"/>
+		FROM T_PROTOTYPE_COUNTING pc 
+		LEFT JOIN T_PROTOTYPE p ON p.ID = pc.PROTOTYPE_ID
+		LEFT JOIN T_COMPANY c ON pc.COMPANY_ID = c.ID 
+		LEFT JOIN T_SHOP s ON s.ID = pc.SHOP_ID 
+		LEFT JOIN T_REGION r1 ON r1.ID = s.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = s.CITY
+		LEFT JOIN T_USER u ON u.USER_CODE = pc.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID 
+		LEFT JOIN T_MODEL m ON m.BRAND_ID = p.BRAND_ID
+	    WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	ORDER BY pc.CREATE_TIME DESC
 	</select>
 	<select id="findByCount" parameterType="PrototypeCounting" resultType="int">
 		SELECT count(1) AS totalcount FROM T_PROTOTYPE_COUNTING WHERE 1=1 

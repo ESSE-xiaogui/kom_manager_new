@@ -34,7 +34,6 @@
 		<result column="UPDATE_TIME" property="updateTime"/>
 		<result column="VERSION" property="version"/>
 		<result column="VISTOR" property="vistor"/>
-		
 		<result column="COMPANY_CODE" property="companyCode"/>
 		<result column="SHOP_CODE" property="shopCode"/>
 		<result column="SHOP_NAME" property="shopName"/>
@@ -282,10 +281,10 @@
 				AND r.ID=#{visit.regionId}
             </if>
             <if test="visit.startDate!= null and visit.startDate!= ''">
-				AND SUBSTRING(v.CREATE_TIME,1,10) &gt;=#{visit.startDate}
+				AND DATE_FORMAT(v.CREATE_TIME, '%Y-%m-%d') &gt;=str_to_date(#{visit.startDate},'%Y-%m-%d %H:%i:%s')
             </if>
-             <if test="visit.endDate!= null and visit.endDate!= ''">
-				AND SUBSTRING(v.CREATE_TIME,1,10) &lt;=#{visit.endDate}
+            <if test="visit.endDate!= null and visit.endDate!= ''">
+				AND DATE_FORMAT(v.CREATE_TIME, '%Y-%m-%d') &lt;=str_to_date(#{visit.endDate},'%Y-%m-%d %H:%i:%s')
             </if>
         </if>
     </sql>
@@ -421,6 +420,7 @@
 			v.PLAN_TYPE,
 			v.CREATE_BY,
 			v.CREATE_TIME,
+			v.SALE_TOTAL_QTY,
 			m.EMP_NAME
 		FROM T_VISIT v 
 		LEFT JOIN T_COMPANY c ON v.COMPANY_ID = c.ID 
@@ -433,11 +433,59 @@
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>
+	<select id="listVisitShopSaleByProperty" parameterType="Visit" resultMap="VisitResultMapper">
+		SELECT 
+			v.ID, 
+			c.COMPANY_CODE,
+			s.SHOP_CODE,
+			s.SHOP_NAME,
+			r.REGION_NAME AS COUNTRY_NAME,
+			e.REGION_NAME AS CITY_NAME,
+			v.PLAN_TYPE,
+			v.CREATE_BY,
+			v.CREATE_TIME,
+			v.SALE_TOTAL_QTY,
+			m.EMP_NAME
+		FROM T_VISIT v 
+		LEFT JOIN T_COMPANY c ON v.COMPANY_ID = c.ID 
+		LEFT JOIN T_SHOP s ON v.SHOP_ID = s.ID
+		LEFT JOIN T_REGION r ON s.COUNTRY = r.ID
+		LEFT JOIN T_REGION e ON s.CITY = e.ID
+		LEFT JOIN T_USER u ON v.CREATE_BY = u.USER_CODE
+		LEFT JOIN T_EMPLOYEE m ON u.ID = m.U_ID
+		WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	ORDER BY v.CREATE_TIME DESC
+	</select>
+	<select id="listShopHistoryByProperty" parameterType="Visit" resultMap="VisitResultMapper">
+		SELECT 
+			v.ID, 
+			c.COMPANY_CODE,
+			s.SHOP_CODE,
+			s.SHOP_NAME,
+			v.PLAN_TYPE,
+			r.REGION_NAME AS COUNTRY_NAME,
+			e.REGION_NAME AS CITY_NAME,
+			v.PLAN_TYPE,
+			v.CREATE_BY,
+			v.CREATE_TIME,
+			v.SALE_TOTAL_QTY,
+			m.EMP_NAME
+		FROM T_VISIT v 
+		LEFT JOIN T_COMPANY c ON v.COMPANY_ID = c.ID 
+		LEFT JOIN T_SHOP s ON v.SHOP_ID = s.ID
+		LEFT JOIN T_REGION r ON s.COUNTRY = r.ID
+		LEFT JOIN T_REGION e ON s.CITY = e.ID
+		LEFT JOIN T_USER u ON v.CREATE_BY = u.USER_CODE
+		LEFT JOIN T_EMPLOYEE m ON u.ID = m.U_ID
+		WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	ORDER BY v.CREATE_TIME DESC
+	</select>
 	<select id="findByCount" parameterType="Visit" resultType="int">
 		SELECT count(1) AS totalcount FROM T_VISIT WHERE 1=1 
 		<include refid="commonCondition"/>
-	</select>
-	
+	</select>	
 	<select id="queryUnplanedVisitList" parameterType="VisitInfoDto" resultMap="VisitInfoDtoResultMapper">
 		SELECT v.*, s.SHOP_NAME, s.GRADE_ID, g.GRADE_NAME FROM T_VISIT v LEFT JOIN T_SHOP s ON v.SHOP_ID = s.ID 
 		LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID 

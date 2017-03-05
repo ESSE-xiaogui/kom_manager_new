@@ -177,4 +177,8 @@ public interface VisitFacade {
 	public VisitShopDetailDto queryVisitHistoryDataByVisitId(Long visitId) throws ServiceException;
 	
 	public VisitHistoryDetailDto queryItelVisitHistoryDetailByVisitId(Long visitId) throws ServiceException;
+
+	public byte[] getVisitShopSaleByExcel(Visit visit)throws ServiceException;
+
+	public byte[] getShopHistoryByExcel(Visit visit)throws ServiceException;
 }

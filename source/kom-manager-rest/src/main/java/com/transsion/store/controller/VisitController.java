@@ -16,6 +16,11 @@
  **/
 package com.transsion.store.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -25,8 +30,11 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -34,6 +42,7 @@ import com.rest.service.controller.AbstractController;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.dto.RequestModel;
 import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Visit;
 import com.transsion.store.dto.VisitHistoryDetailDto;
 import com.transsion.store.dto.VisitHistorySummaryDto;
@@ -285,4 +294,112 @@ public class VisitController extends AbstractController{
 	public VisitHistoryDetailDto queryItelVisitHistoryDetailByVisitId(@QueryParam("visitId")Long visitId) throws ServiceException {
 		return visitFacade.queryItelVisitHistoryDetailByVisitId(visitId);
 	}
+	
+	/**
+	 * 门店总销量导出Excel
+	 * @param startDate
+	 * @param endDate
+	 * @param visitId
+	 * @param shopCode
+	 * @param shopName
+	 * @param regionId
+	 * @param createBy
+	 * @param companyId
+	 * @return
+	 * @throws ServiceException
+	 * @throws IOException
+	 */
+	@GET
+	@Path("/exportShopSaleExcel") 
+	@Produces({MediaType.TEXT_PLAIN})  
+	public Response getVisitShopSaleByExcel(@QueryParam("startDate") String startDate,
+		@QueryParam("endDate") String endDate,@QueryParam("visitId") String visitId,
+		@QueryParam("shopCode") String shopCode,@QueryParam("shopName") String shopName,
+		@QueryParam("regionId")String regionId,@QueryParam("createBy") String createBy,
+		@QueryParam("companyId") String companyId) throws ServiceException,IOException {
+		
+		Visit visit = new Visit();
+		visit.setStartDate(startDate);
+		visit.setEndDate(endDate);
+		visit.setShopCode(shopCode);
+		visit.setShopName(shopName);
+		visit.setCreateBy(createBy);
+		if(!UtilHelper.isEmpty(regionId)){
+			visit.setRegionId(Long.parseLong(regionId));
+		}
+		if(!UtilHelper.isEmpty(companyId)){
+			visit.setCompanyId(Long.parseLong(companyId));
+		}
+		if(!UtilHelper.isEmpty(visitId)){
+			visit.setId(Long.parseLong(visitId));
+		}
+		byte[] bytes = visitFacade.getVisitShopSaleByExcel(visit);       
+		InputStream inputStream = new ByteArrayInputStream(bytes);          
+		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));          
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"门店总销量报表.xlsx";
+		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));         
+		//根据自己文件类型修改         
+		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");          
+		return response.build();      	
+	}
+	class BigFileOutputStream implements javax.ws.rs.core.StreamingOutput {
+        private InputStream inputStream;
+        public BigFileOutputStream(){}
+        public BigFileOutputStream(InputStream inputStream)
+        {
+            this.inputStream = inputStream;
+        }
+
+        @Override
+        public void write(OutputStream output) throws IOException,
+                WebApplicationException {
+            // TODO Auto-generated method stub
+            IOUtils.copy(inputStream, output);
+        }
+
+        public InputStream getInputStream() {
+            return inputStream;
+        }
+        public void setInputStream(InputStream inputStream) {
+            this.inputStream = inputStream;
+        }
+    }
+	
+	@GET
+	@Path("/exportShopHistoryExcel") 
+	@Produces({MediaType.TEXT_PLAIN})  
+	public Response getShopHistoryByExcel(@QueryParam("startDate") String startDate,
+		@QueryParam("endDate") String endDate,@QueryParam("visitId") String visitId,
+		@QueryParam("shopCode") String shopCode,@QueryParam("shopName") String shopName,
+		@QueryParam("regionId")String regionId,@QueryParam("createBy") String createBy,
+		@QueryParam("companyId") String companyId,@QueryParam("planType") String planType) throws ServiceException,IOException {
+		
+		Visit visit = new Visit();
+		visit.setStartDate(startDate);
+		visit.setEndDate(endDate);
+		visit.setShopCode(shopCode);
+		visit.setShopName(shopName);
+		visit.setCreateBy(createBy);
+		if(!UtilHelper.isEmpty(regionId)){
+			visit.setRegionId(Long.parseLong(regionId));
+		}
+		if(!UtilHelper.isEmpty(companyId)){
+			visit.setCompanyId(Long.parseLong(companyId));
+		}
+		if(!UtilHelper.isEmpty(visitId)){
+			visit.setId(Long.parseLong(visitId));
+		}
+		if(!UtilHelper.isEmpty(planType)){
+			visit.setPlanType(Integer.valueOf(planType));
+		}
+		byte[] bytes = visitFacade.getShopHistoryByExcel(visit);       
+		InputStream inputStream = new ByteArrayInputStream(bytes);          
+		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));          
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"巡店历史报表.xlsx";
+		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));         
+		//根据自己文件类型修改         
+		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");          
+		return response.build();      	
+	}
+
 }

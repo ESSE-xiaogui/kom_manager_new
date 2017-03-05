@@ -86,6 +86,7 @@ public class BrandManager {
 		for(Brand b:brandList){
 			BrandDto bd = new BrandDto();
 			bd.setBrandName(b.getBrandName());
+			bd.setBrandId(b.getId());
 			bd.setIsSelf(b.getIsSelf());
 			bd.setIsInactive(b.getIsInactive());
 			brandDtoList.add(bd);

@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.transsion.store.bo.PrototypeCounting;
+import com.transsion.store.dto.PrototypeCountingDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
@@ -27,5 +28,8 @@ import org.apache.ibatis.annotations.Param;
 
 public interface PrototypeCountingMapper extends GenericIBatisMapper<PrototypeCounting, java.lang.Long> {
 
-    public List<PrototypeCounting> listPaginationByProperty(Pagination<PrototypeCounting> pagination, @Param("prototypeCounting")PrototypeCounting prototypeCounting, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<PrototypeCountingDto> listPaginationByProperty(Pagination<PrototypeCountingDto> pagination, @Param("prototypeCountingDto")PrototypeCountingDto prototypeCountingDto, @Param("orderBy") Map<String, String> orderBy,@Param("companyId")Long companyId) throws DataAccessFailureException;
+
+	public List<PrototypeCountingDto> listPrototypeCountingByProperty(@Param("prototypeCountingDto")PrototypeCountingDto prototypeCountingDto);
+
 }

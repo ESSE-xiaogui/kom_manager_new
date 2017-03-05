@@ -122,7 +122,7 @@ public class Visit extends Model{
 	
 	private java.lang.String empName;
 	
-	private java.lang.Integer regionId;
+	private java.lang.Long regionId;
 	
 	private java.lang.String startDate;
 	
@@ -391,15 +391,15 @@ public class Visit extends Model{
 	public void setEmpName(java.lang.String empName) {
 		this.empName = empName;
 	}
-
-	public java.lang.Integer getRegionId() {
+	
+	public java.lang.Long getRegionId() {
 		return regionId;
 	}
 
-	public void setRegionId(java.lang.Integer regionId) {
+	public void setRegionId(java.lang.Long regionId) {
 		this.regionId = regionId;
 	}
-	
+
 	public java.lang.String getStartDate() {
 		return startDate;
 	}

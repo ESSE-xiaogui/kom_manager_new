@@ -12,6 +12,8 @@ public class BrandDto implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	private Long brandId;
+	
 	/**
 	  *	品牌名称
 	  */
@@ -69,8 +71,19 @@ public class BrandDto implements Serializable{
 		this.isInactive = isInactive;
 	}
 
+	public Long getBrandId() {
+		return brandId;
+	}
+
+	public void setBrandId(Long brandId) {
+		this.brandId = brandId;
+	}
+
 	@Override
 	public String toString() {
-		return "BrandDto [brandName=" + brandName + ", isSelf=" + isSelf + ", isInactive=" + isInactive + "]";
+		return "BrandDto [brandId=" + brandId + ", brandName=" + brandName + ", isSelf=" + isSelf + ", isInactive="
+						+ isInactive + "]";
 	}
+
+
 }

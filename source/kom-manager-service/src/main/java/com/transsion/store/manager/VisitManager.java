@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Visit;
@@ -29,6 +30,7 @@ import com.transsion.store.dto.VisitPlanParamDto;
 import com.transsion.store.dto.VisitRecordDto;
 import com.transsion.store.dto.VisitRecordInfoDto;
 import com.transsion.store.dto.VisitSaleDetailDto;
+import com.transsion.store.dto.VisitSaleInfoDto;
 import com.transsion.store.dto.VisitScoreDto;
 import com.transsion.store.dto.VisitScoreInfoDto;
 import com.transsion.store.dto.VisitScoreItemDto;
@@ -52,6 +54,7 @@ import com.transsion.store.service.VisitService;
 import com.transsion.store.service.VisitStockService;
 import com.transsion.store.utils.CacheUtils;
 import com.transsion.store.utils.DateConvertUtils;
+import com.transsion.store.utils.ExcelUtils;
 
 @Service("/visitManager")
 public class VisitManager {
@@ -376,5 +379,49 @@ public class VisitManager {
 		visitHistoryDetailDto.setVisitCompetitorInfoDtoList(visitCompetitorInfoDtoList);
 		visitHistoryDetailDto.setVisitMaterielDetailDtoList(visitMaterielDetailDtoList);
 		return visitHistoryDetailDto;
+	}
+
+	/**
+	 * 门店总销量导出Excel
+	 * @param visit
+	 * @return
+	 * @throws ServiceException
+	 */
+	public byte[] getVisitShopSaleByExcel(Visit visit) throws ServiceException {
+		String[] headers = {"序号","巡店单号","事业部","国家","城市","门店代码","门店名称","上传用户", "员工姓名",
+		"门店itel总销量","上传时间"};
+		List<Visit> list = visitMapper.listVisitShopSaleByProperty(visit);
+		List<Object[]> dataset = new ArrayList<Object[]>();
+		int i=1;
+		for(Visit visit1 :list){
+			dataset.add(new Object[]{i++,visit1.getId(),visit1.getCompanyCode(),visit1.getCountryName(),
+							visit1.getCityName(),visit1.getShopCode(),visit1.getShopName(),
+							visit1.getCreateBy(),visit1.getEmpName(),visit1.getSaleTotalQty(),
+							visit1.getCreateTime()});
+		}
+		String title = "门店总销量报表";
+		return ExcelUtils.exportExcel(title, headers, dataset);
+	}
+
+	/**
+	 * 巡店历史导出Excel
+	 * @param visit
+	 * @return
+	 * @throws ServiceException
+	 */
+	public byte[] getShopHistoryByExcel(Visit visit) throws ServiceException {
+		String[] headers = {"序号","巡店单号","事业部","国家","城市","门店代码","门店名称","计划类型","上传用户", 
+		"员工姓名","上传时间"};
+		List<Visit> list = visitMapper.listShopHistoryByProperty(visit);
+		List<Object[]> dataset = new ArrayList<Object[]>();
+		int i=1;
+		for(Visit visit1 :list){
+			dataset.add(new Object[]{i++,visit1.getId(),visit1.getCompanyCode(),visit1.getCountryName(),
+							visit1.getCityName(),visit1.getShopCode(),visit1.getShopName(),
+							visit1.getPlanType(),visit1.getCreateBy(),visit1.getEmpName(),
+							visit1.getCreateTime()});
+		}
+		String title = "巡店历史报表";
+		return ExcelUtils.exportExcel(title, headers, dataset);
 	}
 }

@@ -18,8 +18,6 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.VisitStock;
-import com.transsion.store.controller.VisitScoreController.BigFileOutputStream;
-import com.transsion.store.dto.VisitScoreDetailInfoDto;
 import com.transsion.store.dto.VisitStockDetailDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.VisitStockFacade;
@@ -39,7 +37,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.List;
 

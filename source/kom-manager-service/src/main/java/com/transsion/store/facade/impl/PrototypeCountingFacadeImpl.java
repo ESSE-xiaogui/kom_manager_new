@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.PrototypeCounting;
+import com.transsion.store.dto.PrototypeCountingDto;
 import com.transsion.store.facade.PrototypeCountingFacade;
 import com.transsion.store.manager.PrototypeCountingManager;
 import com.transsion.store.service.PrototypeCountingService;
@@ -79,10 +80,10 @@ public class PrototypeCountingFacadeImpl implements PrototypeCountingFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<PrototypeCounting> listPaginationByProperty(Pagination<PrototypeCounting> pagination, PrototypeCounting prototypeCounting)
+	public Pagination<PrototypeCountingDto> listPaginationByProperty(Pagination<PrototypeCountingDto> pagination, PrototypeCountingDto prototypeCountingDto,String token)
 			throws ServiceException
 	{
-		return prototypeCountingService.listPaginationByProperty(pagination, prototypeCounting);
+		return prototypeCountingService.listPaginationByProperty(pagination, prototypeCountingDto, token);
 	}
 
 	/**
@@ -150,4 +151,10 @@ public class PrototypeCountingFacadeImpl implements PrototypeCountingFacade {
 	{
 		return prototypeCountingService.findByCount(prototypeCounting);
 	}
+
+	@Override
+	public byte[] getPrototypeCountingByExcel(PrototypeCountingDto prototypeCountingDto) throws ServiceException {
+		return prototypeCountingManager.getPrototypeCountingByExcel(prototypeCountingDto);
+	}
+
 }

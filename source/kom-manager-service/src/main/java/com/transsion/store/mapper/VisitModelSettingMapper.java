@@ -30,7 +30,7 @@ import com.transsion.store.dto.VisitModelSettingInfoDto;
 
 public interface VisitModelSettingMapper extends GenericIBatisMapper<VisitModelSetting, java.lang.Long> {
 
-    public List<VisitModelSettingInfoDto> listPaginationByProperty(Pagination<VisitModelSettingInfoDto> pagination, @Param("visitModelSettingInfoDto")VisitModelSettingInfoDto visitModelSettingInfoDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<VisitModelSettingInfoDto> listPaginationByProperty(Pagination<VisitModelSettingInfoDto> pagination, @Param("visitModelSettingInfoDto")VisitModelSettingInfoDto visitModelSettingInfoDto, @Param("orderBy") Map<String, String> orderBy, @Param("companyId")Long companyId) throws DataAccessFailureException;
     
     public List<VisitModelSettingDto> queryVisitModelSettingList() throws DataAccessFailureException;
     

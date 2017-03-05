@@ -22,9 +22,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.PrototypeCounting;
+import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.PrototypeCountingDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.PrototypeCountingMapper;
+import com.transsion.store.utils.CacheUtils;
 
 @Service("prototypeCountingService")
 public class PrototypeCountingService {
@@ -74,10 +77,13 @@ public class PrototypeCountingService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<PrototypeCounting> listPaginationByProperty(Pagination<PrototypeCounting> pagination, PrototypeCounting prototypeCounting)
+	public Pagination<PrototypeCountingDto> listPaginationByProperty(Pagination<PrototypeCountingDto> pagination, PrototypeCountingDto prototypeCountingDto,String token)
 			throws ServiceException
-	{
-		List<PrototypeCounting> list = prototypeCountingMapper.listPaginationByProperty(pagination, prototypeCounting, pagination.getOrderBy());
+	{	
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+	
+		Long companyId = userContext.isAdmin()?null:userContext.getCompanyId();
+		List<PrototypeCountingDto> list = prototypeCountingMapper.listPaginationByProperty(pagination, prototypeCountingDto, pagination.getOrderBy(),companyId);
 		
 		pagination.setResultList(list);
 		

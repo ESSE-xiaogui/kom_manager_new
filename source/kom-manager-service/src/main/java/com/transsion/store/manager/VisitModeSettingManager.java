@@ -72,26 +72,19 @@ public class VisitModeSettingManager {
 	 * @author guihua.zhang on 2017-03-02
 	 * 重点机型分页查询
 	 * */
-	public Pagination<VisitModelSettingInfoDto> listPaginationByProperty(String token,Pagination<VisitModelSettingInfoDto> pagination, VisitModelSettingInfoDto visitModelSettingInfoDto)
+	/*public Pagination<VisitModelSettingInfoDto> listPaginationByProperty(String token,Pagination<VisitModelSettingInfoDto> pagination, VisitModelSettingInfoDto visitModelSettingInfoDto)
 			throws ServiceException{
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getCompanyId())){
+		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
-		VisitModelSettingInfoDto vms = new VisitModelSettingInfoDto();
-		if(!userContext.isAdmin()){
-			vms.setCompanyId(userContext.getCompanyId());
-		} else {
-			if (visitModelSettingInfoDto != null) {
-				BeanUtils.copyProperties(vms, visitModelSettingInfoDto);
-			}
-		}
-		List<VisitModelSettingInfoDto> list = visitModelSettingMapper.listPaginationByProperty(pagination, vms, pagination.getOrderBy());
+		Long companyId = userContext.isAdmin()?null:userContext.getCompanyId();
+		List<VisitModelSettingInfoDto> list = visitModelSettingMapper.listPaginationByProperty(pagination, visitModelSettingInfoDto, pagination.getOrderBy(),companyId);
 		pagination.setResultList(list);
 		
 		return pagination;
-	}
+	}*/
 }

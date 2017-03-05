@@ -216,4 +216,14 @@ public class VisitFacadeImpl implements VisitFacade {
 	public VisitHistoryDetailDto queryItelVisitHistoryDetailByVisitId(Long visitId) throws ServiceException {
 		return visitManager.queryItelVisitHistoryDetailByVisitId(visitId);
 	}
+
+	@Override
+	public byte[] getVisitShopSaleByExcel(Visit visit) throws ServiceException {
+		return visitManager.getVisitShopSaleByExcel(visit);
+	}
+
+	@Override
+	public byte[] getShopHistoryByExcel(Visit visit) throws ServiceException {
+		return visitManager.getShopHistoryByExcel(visit);
+	}
 }
