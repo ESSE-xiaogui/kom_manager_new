@@ -11,23 +11,37 @@ public class PrototypeDto implements Serializable {
 	private Long brandId;				// 品牌ID
 	private String brandCode;			// 品牌代码
 	private String brandName;			// 品牌名称
-	
 	private Long shopId;				// 店铺ID
+	private String shopCode;			// 店铺编码
 	private String shopName;			// 店铺名称
-	
 	private Long modelId;				// 型号ID
 	private String modelCode;			// 型号代码
 	private String modelName;			// 型号名称
+	private String countryName;			// 国家
+	private String cityName;			// 城市
 	private String imeiNo;				// IMEI码
 	private String imeiList;			// IMEIlist
 	private String imgPrototypeUrl;		// 样机图片
 	private String imgShopUrl;			// 店铺图片
 	private String imgImeiUrl;			// imei图片
-	
 	private Integer status;				// 样机状态
 	private String remark;				// 备注
-	
 	private String unpublishCause;		// 下架原因
+	private String countingTime;		// 计划盘点时间
+	
+	private String publishBy;			// 上架人CODE
+	private String publisherName;		// 上架人姓名
+	private String publishTime;			// 上架时间
+	private String beginPublishTime;	// 上架开始时间
+	private String endPublishTime;		// 上架结束时间
+	
+	private String unpublishBy;			// 下架人CODE
+	private String unpublisherName;		// 下架人姓名
+	private String unpublishTime;		// 下架时间
+	private String beginUnpublishTime;	// 下架开始时间
+	private String endUnpublishTime;	// 下架结束时间
+	private Long companyId;				// 事业部ID
+	private String companyName;			// 事业部名称
 	
 	public Long getId() {
 		return id;
@@ -66,6 +80,19 @@ public class PrototypeDto implements Serializable {
 	}
 	public void setModelName(String modelName) {
 		this.modelName = modelName;
+	}
+	
+	public String getCountryName() {
+		return countryName;
+	}
+	public void setCountryName(String countryName) {
+		this.countryName = countryName;
+	}
+	public String getCityName() {
+		return cityName;
+	}
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
 	}
 	public String getImeiNo() {
 		return imeiNo;
@@ -117,6 +144,14 @@ public class PrototypeDto implements Serializable {
 	public void setShopId(Long shopId) {
 		this.shopId = shopId;
 	}
+	
+	public String getShopCode() {
+		return shopCode;
+	}
+	public void setShopCode(String shopCode) {
+		this.shopCode = shopCode;
+	}
+	
 	public Integer getStatus() {
 		return status;
 	}
@@ -136,5 +171,84 @@ public class PrototypeDto implements Serializable {
 	}
 	public void setUnpublishCause(String unpublishCause) {
 		this.unpublishCause = unpublishCause;
+	}
+	
+	public String getCountingTime() {
+		return countingTime;
+	}
+	public void setCountingTime(String countingTime) {
+		this.countingTime = countingTime;
+	}
+	public String getPublishBy() {
+		return publishBy;
+	}
+	public void setPublishBy(String publishBy) {
+		this.publishBy = publishBy;
+	}
+	public String getPublisherName() {
+		return publisherName;
+	}
+	public void setPublisherName(String publisherName) {
+		this.publisherName = publisherName;
+	}
+	public String getPublishTime() {
+		return publishTime;
+	}
+	public void setPublishTime(String publishTime) {
+		this.publishTime = publishTime;
+	}
+	public String getBeginPublishTime() {
+		return beginPublishTime;
+	}
+	public void setBeginPublishTime(String beginPublishTime) {
+		this.beginPublishTime = beginPublishTime;
+	}
+	public String getEndPublishTime() {
+		return endPublishTime;
+	}
+	public void setEndPublishTime(String endPublishTime) {
+		this.endPublishTime = endPublishTime;
+	}
+	public String getUnpublishBy() {
+		return unpublishBy;
+	}
+	public void setUnpublishBy(String unpublishBy) {
+		this.unpublishBy = unpublishBy;
+	}
+	public String getUnpublisherName() {
+		return unpublisherName;
+	}
+	public void setUnpublisherName(String unpublisherName) {
+		this.unpublisherName = unpublisherName;
+	}
+	public String getUnpublishTime() {
+		return unpublishTime;
+	}
+	public void setUnpublishTime(String unpublishTime) {
+		this.unpublishTime = unpublishTime;
+	}
+	public String getBeginUnpublishTime() {
+		return beginUnpublishTime;
+	}
+	public void setBeginUnpublishTime(String beginUnpublishTime) {
+		this.beginUnpublishTime = beginUnpublishTime;
+	}
+	public String getEndUnpublishTime() {
+		return endUnpublishTime;
+	}
+	public void setEndUnpublishTime(String endUnpublishTime) {
+		this.endUnpublishTime = endUnpublishTime;
+	}
+	public Long getCompanyId() {
+		return companyId;
+	}
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
+	}
+	public String getCompanyName() {
+		return companyName;
+	}
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 }

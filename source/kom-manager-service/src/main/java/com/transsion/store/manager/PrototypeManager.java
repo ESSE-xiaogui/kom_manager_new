@@ -59,12 +59,12 @@ public class PrototypeManager {
 		}
 		
 		// 新增时校验IMEI是否唯一
-		Prototype conditions = new Prototype();
-		conditions.setImeiList(prototypeDto.getImeiNo());
+		Prototype conditionOne = new Prototype();
+		conditionOne.setImeiNo(prototypeDto.getImeiNo());
 		
-		int count = prototypeMapper.findByCount(conditions);
+		int imeiCount = prototypeMapper.checkImeiOnly(conditionOne);		
 		
-		if (count > 0) {
+		if (imeiCount > 0) {
 			throw new ServiceException(ExceptionDef.ERROR_PROTOTYPE_TOO_MANY_RESULTS.getName());
 		}
 		
@@ -125,7 +125,6 @@ public class PrototypeManager {
 		prototype.setCreateBy(userContext.getUserCode());
 		prototype.setCreateTime(systemDateService.getCurrentDate());
 		
-		
 		prototypeMapper.save(prototype);
 	}
 	
@@ -137,7 +136,6 @@ public class PrototypeManager {
 	 * @throws ServiceException
 	 */
 	public int updatePrototype(PrototypeDto prototypeDto,String token) throws ServiceException {
-		
 		// 是否登录
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
@@ -153,9 +151,6 @@ public class PrototypeManager {
 		}
 		
 		Prototype prototype = prototypeMapper.getByPK(prototypeDto.getId());
-		
-		
-		
 		
 		if (prototype != null) {
 			if (!"".equals(prototypeDto.getImeiNo())) {

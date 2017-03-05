@@ -25,12 +25,16 @@ import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.PrototypeCounting;
 import com.transsion.store.facade.PrototypeCountingFacade;
+import com.transsion.store.manager.PrototypeCountingManager;
 import com.transsion.store.service.PrototypeCountingService;
 
 @Component("prototypeCountingFacade")
 public class PrototypeCountingFacadeImpl implements PrototypeCountingFacade {
 
 	private PrototypeCountingService prototypeCountingService;
+	
+	@Autowired
+	private PrototypeCountingManager prototypeCountingManager;
 	
 	@Autowired
 	public void setPrototypeCountingService(PrototypeCountingService prototypeCountingService)
@@ -116,12 +120,13 @@ public class PrototypeCountingFacadeImpl implements PrototypeCountingFacade {
 	/**
 	 * 保存记录
 	 * @param prototypeCounting
+	 * @param token
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(PrototypeCounting prototypeCounting) throws ServiceException
+	public void save(PrototypeCounting prototypeCounting, String token) throws ServiceException
 	{
-		prototypeCountingService.save(prototypeCounting);
+		prototypeCountingManager.savePrototypeCounting(prototypeCounting, token);
 	}
 
 	/**

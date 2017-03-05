@@ -48,22 +48,35 @@
 	
 	<resultMap id="PrototypeDtoResultMapper" type="PrototypeDto">
 		<result column="ID" property="id"/>
+		<result column="BRAND_ID" property="brandId"/>
 		<result column="BRAND_CODE" property="brandCode"/>
 		<result column="BRAND_NAME" property="brandName"/>
-		<result column="MODE_CODE" property="modeCode"/>
-		<result column="MODE_NAME" property="modeName"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="SHOP_CODE" property="shopCode"/>
+		<result column="SHOP_NAME" property="shopName"/>
 		<result column="MODEL_ID" property="modelId"/>
 		<result column="MODEL_CODE" property="modelCode"/>
+		<result column="MODEL_NAME" property="modelName"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY_NAME" property="cityName"/>
 		<result column="IMEI_NO" property="imeiNo"/>
 		<result column="IMEI_LIST" property="imeiList"/>
 		<result column="IMG_PROTOTYPE_URL" property="imgPrototypeUrl"/>
 		<result column="IMG_SHOP_URL" property="imgShopUrl"/>
 		<result column="IMG_IMEI_URL" property="imgImeiUrl"/>
 		<result column="STATUS" property="status"/>
-		<result column="SHOP_NAME" property="shopName"/>
-		<result column="SHOP_ID" property="shopId"/>
+		<result column="REMARK" property="rmark"/>
+		<result column="UNPUBLISH_CAUSE" property="unpublishCause"/>
+		<result column="COUNTING_TIME" property="countingTime"/>
+		<result column="PUBLISH_BY" property="publishBy"/>
+		<result column="PUBLISHER_NAME" property="publisherName"/>
+		<result column="PUBLISH_TIME" property="publishTime"/>
+		<result column="UNPUBLISH_BY" property="unpublishBy"/>
+		<result column="PUBLISHER_NAME" property="unpublisherName"/>
+		<result column="UNPUBLISH_TIME" property="unpublishTime"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="COMPANY_NAME" property="companyName"/>
 	</resultMap>
-	
 	
 	<sql id="commonColumns">
 		 ID
@@ -225,6 +238,9 @@
             <if test="prototypeDto.id!= null and prototypeDto.id!= ''">
 				AND pro.ID=#{prototypeDto.id}
             </if>
+            <if test="prototypeDto.companyId!= null and prototypeDto.companyId!= ''">
+				AND pro.COMPANY_ID=#{prototypeDto.companyId}
+            </if>
             <if test="prototypeDto.brandId!= null and prototypeDto.brandId!= ''">
 				AND pro.BRAND_ID=#{prototypeDto.brandId}
             </if>
@@ -236,6 +252,9 @@
             </if>
             <if test="prototypeDto.shopId!= null and prototypeDto.shopId!= ''">
 				AND pro.SHOP_ID=#{prototypeDto.shopId}
+            </if>
+            <if test="prototypeDto.shopCode!= null and prototypeDto.shopCode!= ''">
+				AND shop.SHOP_CODE=#{prototypeDto.shopCode}
             </if>
             <if test="prototypeDto.shopName!= null and prototypeDto.shopName!= ''">
 				AND shop.SHOP_NAME like CONCAT('%',#{prototypeDto.shopName},'%')
@@ -258,10 +277,34 @@
             <if test="prototypeDto.status!= null and prototypeDto.status!= ''">
 				AND pro.STATUS=#{prototypeDto.status}
             </if>
-            <!-- 
-            <if test="prototype.publishBy!= null and prototype.publishBy!= ''">
-				AND PUBLISH_BY=#{prototype.publishBy}
+            <if test="prototypeDto.beginPublishTime != null and prototypeDto.beginPublishTime !=''">
+				AND pro.PUBLISH_TIME <![CDATA[ >= ]]> #{prototypeDto.beginPublishTime}
+			</if>
+			<if test="prototypeDto.endPublishTime != null and prototypeDto.endPublishTime !=''">
+				AND pro.PUBLISH_TIME <![CDATA[ <= ]]> #{prototypeDto.endPublishTime}
+			</if>
+            <if test="prototypeDto.beginUnpublishTime != null and prototypeDto.beginUnpublishTime !=''">
+				AND pro.UNPUBLISH_TIME <![CDATA[ >= ]]> #{prototypeDto.beginUnpublishTime}
+			</if>
+			<if test="prototypeDto.endUnpublishTime != null and prototypeDto.endUnpublishTime !=''">
+				AND pro.UNPUBLISH_TIME <![CDATA[ <= ]]> #{prototypeDto.endPublishTime}
+			</if>
+			<if test="prototypeDto.countryName!= null and prototypeDto.countryName!= ''">
+				AND r1.REGION_NAME=#{prototypeDto.countryName}
             </if>
+            <if test="prototypeDto.cityName!= null and prototypeDto.cityName!= ''">
+				AND r2.REGION_NAME=#{prototypeDto.cityName}
+            </if>
+            <if test="prototypeDto.publishBy!= null and prototypeDto.publishBy!= ''">
+				AND pro.PUBLISH_BY=#{prototypeDto.publishBy}
+            </if>
+            <if test="prototypeDto.unpublishBy!= null and prototypeDto.unpublishBy!= ''">
+				AND pro.UNPUBLISH_BY=#{prototypeDto.unpublishBy}
+            </if>
+            
+            
+            <!-- 
+            
             <if test="prototype.publishTime!= null and prototype.publishTime!= ''">
 				AND PUBLISH_TIME=str_to_date(#{prototype.publishTime},'%Y-%m-%d %H:%i:%s')
             </if>
@@ -470,6 +513,14 @@
 			 <include refid="commonProcessDateColumns"/>
 		FROM T_PROTOTYPE WHERE ID = #{id}  
 	</select>
+	
+	<select id="getPrototypeDtoById" parameterType="java.lang.Long" resultMap="PrototypeDtoResultMapper">
+		select pro.*, shop.SHOP_NAME
+		from T_PROTOTYPE pro, T_SHOP shop
+		where pro.SHOP_ID = shop.SHOP_ID
+		and pro.ID = #{id}
+	</select>
+	
 	<select id="list" resultMap="PrototypeResultMapper">
 		<![CDATA[ SELECT ]]>
 			 <include refid="commonProcessDateColumns"/>
@@ -483,15 +534,27 @@
 	</select>
 	<select id="listPaginationByPropertyDto" parameterType="PrototypeDto" resultMap="PrototypeDtoResultMapper">
 		SELECT 
-		pro.ID, pro.BRAND_CODE, brand.BRAND_NAME, pro.MODEL_CODE, model.MODEL_NAME, 
-		pro.IMEI_NO, pro.IMEI_LIST, pro.IMG_PROTOTYPE_URL, pro.IMG_SHOP_URL, pro.IMG_IMEI_URL,
-		pro.SHOP_ID, shop.SHOP_NAME,pro.STATUS
-		
+		pro.ID, pro.BRAND_CODE, brand.ID AS BRAND_ID, brand.BRAND_NAME, 
+		pro.SHOP_ID, shop.SHOP_NAME,shop.SHOP_CODE,
+		pro.MODEL_ID,pro.MODEL_CODE, model.MODEL_NAME, 
+		r1.REGION_NAME as COUNTRY_NAME, r2.REGION_NAME AS CITY_NAME,
+		pro.IMEI_NO, pro.IMEI_LIST,
+		pro.IMG_PROTOTYPE_URL, pro.IMG_SHOP_URL, pro.IMG_IMEI_URL,
+		pro.STATUS, pro.REMARK, pro.UNPUBLISH_CAUSE,company.COMPANY_NAME, pro.COMPANY_ID,
+		pro.PUBLISH_BY, employee1.EMP_NAME AS PUBLISHER_NAME, pro.PUBLISH_TIME,
+		pro.UNPUBLISH_BY, employee2.EMP_NAME AS UNPUBLILSHER_NAME
 		FROM T_PROTOTYPE pro
 		left join T_BRAND brand on pro.BRAND_ID = brand.ID
 		left join T_SHOP shop on pro.SHOP_ID = shop.SHOP_ID
 		left join T_MODEL model on pro.MODEL_ID = model.ID
-		
+		left join T_REGION r1 on r1.ID = shop.COUNTRY
+		left join T_REGION r2 on r2.ID = shop.CITY
+		left join T_COMPANY company on pro.COMPANY_ID = company.ID
+		left join T_USER user1 on user1.USER_CODE = pro.PUBLISH_BY
+		left join T_USER user2 on user2.USER_CODE = pro.UNPUBLISH_BY
+		left join T_EMPLOYEE employee1 on employee1.U_ID = user1.ID
+		left join T_EMPLOYEE employee2 on employee2.U_ID = user2.ID
+				
 		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
@@ -503,6 +566,13 @@
 		left join T_BRAND brand on pro.BRAND_ID = brand.ID
 		left join T_SHOP shop on pro.SHOP_ID = shop.SHOP_ID
 		left join T_MODEL model on pro.MODEL_ID = model.ID
+		left join T_REGION r1 on r1.ID = shop.COUNTRY
+		left join T_REGION r2 on r2.ID = shop.CITY
+		left join T_COMPANY company on pro.COMPANY_ID = company.ID
+		left join T_USER user1 on user1.USER_CODE = pro.PUBLISH_BY
+		left join T_USER user2 on user2.USER_CODE = pro.UNPUBLISH_BY
+		left join T_EMPLOYEE employee1 on employee1.U_ID = user1.ID
+		left join T_EMPLOYEE employee2 on employee2.U_ID = user2.ID
 		WHERE 1=1
 		<include refid="commonConditionByPrefix"/>
 	</select>
@@ -511,4 +581,10 @@
 		SELECT count(1) AS totalcount FROM T_PROTOTYPE WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
+	
+	<select id="checkImeiOnly" parameterType="Prototype" resultType="int">
+		SELECT count(1) AS totalcount FROM T_PROTOTYPE WHERE 
+		imei_no = #{prototype.imeiNo} OR imei_list LIKE CONCAT('%',#{prototype.imeiNo},'%')
+	</select>
+	
 </mapper>

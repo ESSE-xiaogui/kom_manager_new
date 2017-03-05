@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.PrototypeSetting;
+import com.transsion.store.dto.PrototypeSettingDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -72,11 +73,12 @@ public interface PrototypeSettingFacade {
 
 	/**
 	 * 保存记录
-	 * @param prototypeSetting
+	 * @param prototypeSettingDto
+	 * @param token
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(PrototypeSetting prototypeSetting) throws ServiceException;
+	public void save(PrototypeSettingDto prototypeSettingDto, String token) throws ServiceException;
 
 	/**
 	 * 更新记录
@@ -99,7 +101,7 @@ public interface PrototypeSettingFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<PrototypeSetting> listPaginationByProperty(Pagination<PrototypeSetting> pagination, PrototypeSetting prototypeSetting)
+	public Pagination<PrototypeSettingDto> listPaginationByPropertySettingDto(Pagination<PrototypeSettingDto> pagination, PrototypeSettingDto prototypeSettingDto)
 			throws ServiceException;
 
 }

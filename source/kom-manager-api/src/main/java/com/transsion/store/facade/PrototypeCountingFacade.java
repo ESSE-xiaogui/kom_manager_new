@@ -73,10 +73,11 @@ public interface PrototypeCountingFacade {
 	/**
 	 * 保存记录
 	 * @param prototypeCounting
+	 * @param token
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(PrototypeCounting prototypeCounting) throws ServiceException;
+	public void save(PrototypeCounting prototypeCounting, String token) throws ServiceException;
 
 	/**
 	 * 更新记录

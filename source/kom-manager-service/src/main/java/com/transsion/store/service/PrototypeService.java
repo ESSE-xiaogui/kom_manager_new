@@ -45,9 +45,9 @@ public class PrototypeService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Prototype getByPK(java.lang.Long primaryKey) throws ServiceException
+	public PrototypeDto getPrototypeDtoById(java.lang.Long primaryKey) throws ServiceException
 	{
-		return prototypeMapper.getByPK(primaryKey);
+		return prototypeMapper.getPrototypeDtoById(primaryKey);
 	}
 
 	/**

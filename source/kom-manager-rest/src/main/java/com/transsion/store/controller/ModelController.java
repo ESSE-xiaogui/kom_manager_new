@@ -145,4 +145,13 @@ public class ModelController extends AbstractController{
 	public List<Model> queryModelListByBrandId(@QueryParam("brandId")Long brandId) throws ServiceException{
 		return modelFacade.queryModelListByBrandId(brandId);
 	}
+	
+	@GET
+	@Path("/findModelListByCompanyId")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<Model> findModelListByCompanyId(@QueryParam("companyId")Long companyId) throws ServiceException{
+		Model model = new Model();
+		model.setCompanyId(Integer.parseInt(companyId.toString()));
+		return modelFacade.listByProperty(model);
+	}
 }

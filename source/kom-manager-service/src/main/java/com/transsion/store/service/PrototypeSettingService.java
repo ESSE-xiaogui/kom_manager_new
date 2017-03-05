@@ -21,9 +21,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.transsion.store.bo.PrototypeSetting;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.transsion.store.bo.PrototypeSetting;
+import com.transsion.store.dto.PrototypeSettingDto;
 import com.transsion.store.mapper.PrototypeSettingMapper;
 
 @Service("prototypeSettingService")
@@ -74,10 +75,10 @@ public class PrototypeSettingService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<PrototypeSetting> listPaginationByProperty(Pagination<PrototypeSetting> pagination, PrototypeSetting prototypeSetting)
+	public Pagination<PrototypeSettingDto> listPaginationByPropertySettingDto(Pagination<PrototypeSettingDto> pagination, PrototypeSettingDto prototypeSettingDto)
 			throws ServiceException
 	{
-		List<PrototypeSetting> list = prototypeSettingMapper.listPaginationByProperty(pagination, prototypeSetting, pagination.getOrderBy());
+		List<PrototypeSettingDto> list = prototypeSettingMapper.listPaginationByPropertySettingDto(pagination, prototypeSettingDto, pagination.getOrderBy());
 		
 		pagination.setResultList(list);
 		

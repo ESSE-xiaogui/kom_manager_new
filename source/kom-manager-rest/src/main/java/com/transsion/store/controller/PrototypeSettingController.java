@@ -34,15 +34,16 @@ import com.rest.service.controller.AbstractController;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.dto.RequestModel;
 import com.shangkang.core.exception.ServiceException;
-import com.transsion.store.dto.PrototypeDto;
-import com.transsion.store.facade.PrototypeFacade;
+import com.transsion.store.bo.PrototypeSetting;
+import com.transsion.store.dto.PrototypeSettingDto;
+import com.transsion.store.facade.PrototypeSettingFacade;
 
 @Controller
-@Path("prototype")
-public class PrototypeController extends AbstractController{
+@Path("prototypeSetting")
+public class PrototypeSettingController extends AbstractController{
 
 	@Autowired
-	private PrototypeFacade prototypeFacade;
+	private PrototypeSettingFacade prototypeSettingFacade;
 	
 	/**
 	 * 通过主键查询实体对象
@@ -53,13 +54,13 @@ public class PrototypeController extends AbstractController{
 	@GET
 	@Path("/getByPK")
 	@Produces({MediaType.APPLICATION_JSON})
-	public PrototypeDto getByPK(@QueryParam("key") java.lang.Long primaryKey) throws ServiceException
+	public PrototypeSetting getByPK(@QueryParam("key") java.lang.Long primaryKey) throws ServiceException
 	{
-		return prototypeFacade.getByPK(primaryKey);
+		return prototypeSettingFacade.getByPK(primaryKey);
 	}
 
 	/**
-	* 后台管理系统分页查询记录
+	* 分页查询记录
 	* @return
 	* @throws ServiceException
 	*/
@@ -67,9 +68,9 @@ public class PrototypeController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<PrototypeDto> listPgPrototype(RequestModel<PrototypeDto> requestModel) throws ServiceException
+	public Pagination<PrototypeSettingDto> listPgPrototypeSetting(RequestModel<PrototypeSettingDto> requestModel) throws ServiceException
 	{
-		Pagination<PrototypeDto> pagination = new Pagination<PrototypeDto>();
+		Pagination<PrototypeSettingDto> pagination = new Pagination<PrototypeSettingDto>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());
@@ -77,21 +78,7 @@ public class PrototypeController extends AbstractController{
 		pagination.setParams(requestModel.getParams());
 		pagination.setOrderBy(requestModel.getOrderBy());
 
-		return prototypeFacade.listPaginationByPropertyDto(pagination, requestModel.getParams());
-	}
-	
-	/**
-	 * app端查询List
-	 * @param requestModel
-	 * @return
-	 * @throws ServiceException
-	 */
-	@POST
-	@Path("/list")
-	@Consumes({MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_JSON})
-	public List<PrototypeDto> listPrototype(RequestModel<PrototypeDto> requestModel) throws ServiceException {
-		return null;
+		return prototypeSettingFacade.listPaginationByPropertySettingDto(pagination, requestModel.getParams());
 	}
 
 	/**
@@ -102,9 +89,9 @@ public class PrototypeController extends AbstractController{
 	@POST
 	@Path("/add")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void add(PrototypeDto prototypeDto) throws ServiceException {
+	public void add(PrototypeSettingDto prototypeSettingDto) throws ServiceException {
 		String token = this.getAuthorization();
-		prototypeFacade.save(prototypeDto, token);
+		prototypeSettingFacade.save(prototypeSettingDto, token);
 	}
 
 	/**
@@ -117,7 +104,7 @@ public class PrototypeController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void delete(List<java.lang.Long> primaryKeys) throws ServiceException
 	{
-		prototypeFacade.deleteByPKeys(primaryKeys);
+		prototypeSettingFacade.deleteByPKeys(primaryKeys);
 	}
 
 	/**
@@ -128,8 +115,8 @@ public class PrototypeController extends AbstractController{
 	@PUT
 	@Path("/update")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void update(PrototypeDto prototypeDto) throws ServiceException {
-		String token = this.getAuthorization();
-		prototypeFacade.update(prototypeDto, token);
+	public void update(PrototypeSetting prototypeSetting) throws ServiceException
+	{
+		prototypeSettingFacade.update(prototypeSetting);
 	}
 }

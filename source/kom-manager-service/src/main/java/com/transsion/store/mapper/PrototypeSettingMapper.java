@@ -19,13 +19,15 @@ package com.transsion.store.mapper;
 import java.util.List;
 import java.util.Map;
 
-import com.transsion.store.bo.PrototypeSetting;
-import com.shangkang.core.mapper.GenericIBatisMapper;
+import org.apache.ibatis.annotations.Param;
+
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
-import org.apache.ibatis.annotations.Param;
+import com.shangkang.core.mapper.GenericIBatisMapper;
+import com.transsion.store.bo.PrototypeSetting;
+import com.transsion.store.dto.PrototypeSettingDto;
 
 public interface PrototypeSettingMapper extends GenericIBatisMapper<PrototypeSetting, java.lang.Long> {
 
-    public List<PrototypeSetting> listPaginationByProperty(Pagination<PrototypeSetting> pagination, @Param("prototypeSetting")PrototypeSetting prototypeSetting, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<PrototypeSettingDto> listPaginationByPropertySettingDto(Pagination<PrototypeSettingDto> pagination, @Param("prototypeSettingDto")PrototypeSettingDto prototypeSettingDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
 }

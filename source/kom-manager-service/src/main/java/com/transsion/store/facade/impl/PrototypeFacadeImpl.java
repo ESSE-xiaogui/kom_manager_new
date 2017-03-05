@@ -48,9 +48,9 @@ public class PrototypeFacadeImpl implements PrototypeFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Prototype getByPK(java.lang.Long primaryKey) throws ServiceException
+	public PrototypeDto getByPK(java.lang.Long primaryKey) throws ServiceException
 	{
-		return prototypeService.getByPK(primaryKey);
+		return prototypeService.getPrototypeDtoById(primaryKey);
 	}
 
 	/**

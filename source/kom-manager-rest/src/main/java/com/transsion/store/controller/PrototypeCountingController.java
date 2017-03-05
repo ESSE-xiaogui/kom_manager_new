@@ -6,7 +6,7 @@
  * recording, or otherwise, without the prior written permission of Liuzh.
  *
  * Created By: Liuzh
- * Created On: 2017-3-1 16:30:39
+ * Created On: 2017-3-1 16:31:41
  *
  * Amendment History:
  * 
@@ -16,33 +16,25 @@
  **/
 package com.transsion.store.controller;
 
-import java.util.List;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-
+import com.rest.service.controller.AbstractController;
+import com.transsion.store.bo.PrototypeCounting;
+import com.shangkang.core.dto.RequestModel;
+import com.transsion.store.facade.PrototypeCountingFacade;
+import com.shangkang.core.bo.Pagination;
+import com.shangkang.core.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.rest.service.controller.AbstractController;
-import com.shangkang.core.bo.Pagination;
-import com.shangkang.core.dto.RequestModel;
-import com.shangkang.core.exception.ServiceException;
-import com.transsion.store.dto.PrototypeDto;
-import com.transsion.store.facade.PrototypeFacade;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Controller
-@Path("prototype")
-public class PrototypeController extends AbstractController{
+@Path("prototypeCounting")
+public class PrototypeCountingController extends AbstractController{
 
 	@Autowired
-	private PrototypeFacade prototypeFacade;
+	private PrototypeCountingFacade prototypeCountingFacade;
 	
 	/**
 	 * 通过主键查询实体对象
@@ -53,13 +45,13 @@ public class PrototypeController extends AbstractController{
 	@GET
 	@Path("/getByPK")
 	@Produces({MediaType.APPLICATION_JSON})
-	public PrototypeDto getByPK(@QueryParam("key") java.lang.Long primaryKey) throws ServiceException
+	public PrototypeCounting getByPK(@QueryParam("key") java.lang.Long primaryKey) throws ServiceException
 	{
-		return prototypeFacade.getByPK(primaryKey);
+		return prototypeCountingFacade.getByPK(primaryKey);
 	}
 
 	/**
-	* 后台管理系统分页查询记录
+	* 分页查询记录
 	* @return
 	* @throws ServiceException
 	*/
@@ -67,9 +59,9 @@ public class PrototypeController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<PrototypeDto> listPgPrototype(RequestModel<PrototypeDto> requestModel) throws ServiceException
+	public Pagination<PrototypeCounting> listPgPrototypeCounting(RequestModel<PrototypeCounting> requestModel) throws ServiceException
 	{
-		Pagination<PrototypeDto> pagination = new Pagination<PrototypeDto>();
+		Pagination<PrototypeCounting> pagination = new Pagination<PrototypeCounting>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());
@@ -77,34 +69,20 @@ public class PrototypeController extends AbstractController{
 		pagination.setParams(requestModel.getParams());
 		pagination.setOrderBy(requestModel.getOrderBy());
 
-		return prototypeFacade.listPaginationByPropertyDto(pagination, requestModel.getParams());
-	}
-	
-	/**
-	 * app端查询List
-	 * @param requestModel
-	 * @return
-	 * @throws ServiceException
-	 */
-	@POST
-	@Path("/list")
-	@Consumes({MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_JSON})
-	public List<PrototypeDto> listPrototype(RequestModel<PrototypeDto> requestModel) throws ServiceException {
-		return null;
+		return prototypeCountingFacade.listPaginationByProperty(pagination, requestModel.getParams());
 	}
 
 	/**
-	* 新增记录
+	* 新增样机盘点
 	* @return
 	* @throws ServiceException
 	*/
 	@POST
 	@Path("/add")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void add(PrototypeDto prototypeDto) throws ServiceException {
+	public void add(PrototypeCounting prototypeCounting) throws ServiceException {
 		String token = this.getAuthorization();
-		prototypeFacade.save(prototypeDto, token);
+		prototypeCountingFacade.save(prototypeCounting, token);
 	}
 
 	/**
@@ -117,7 +95,7 @@ public class PrototypeController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void delete(List<java.lang.Long> primaryKeys) throws ServiceException
 	{
-		prototypeFacade.deleteByPKeys(primaryKeys);
+		prototypeCountingFacade.deleteByPKeys(primaryKeys);
 	}
 
 	/**
@@ -128,8 +106,8 @@ public class PrototypeController extends AbstractController{
 	@PUT
 	@Path("/update")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void update(PrototypeDto prototypeDto) throws ServiceException {
-		String token = this.getAuthorization();
-		prototypeFacade.update(prototypeDto, token);
+	public void update(PrototypeCounting prototypeCounting) throws ServiceException
+	{
+		prototypeCountingFacade.update(prototypeCounting);
 	}
 }

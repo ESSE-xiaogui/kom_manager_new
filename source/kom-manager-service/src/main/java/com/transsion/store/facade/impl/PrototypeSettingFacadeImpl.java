@@ -24,12 +24,17 @@ import org.springframework.stereotype.Component;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.PrototypeSetting;
+import com.transsion.store.dto.PrototypeSettingDto;
 import com.transsion.store.facade.PrototypeSettingFacade;
+import com.transsion.store.manager.PrototypeSettingManager;
 import com.transsion.store.service.PrototypeSettingService;
 
 @Component("prototypeSettingFacade")
 public class PrototypeSettingFacadeImpl implements PrototypeSettingFacade {
 
+	@Autowired
+	private PrototypeSettingManager prototypeSettingManager;
+	
 	private PrototypeSettingService prototypeSettingService;
 	
 	@Autowired
@@ -75,10 +80,9 @@ public class PrototypeSettingFacadeImpl implements PrototypeSettingFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<PrototypeSetting> listPaginationByProperty(Pagination<PrototypeSetting> pagination, PrototypeSetting prototypeSetting)
-			throws ServiceException
-	{
-		return prototypeSettingService.listPaginationByProperty(pagination, prototypeSetting);
+	public Pagination<PrototypeSettingDto> listPaginationByPropertySettingDto(Pagination<PrototypeSettingDto> pagination, PrototypeSettingDto prototypeSetting)
+			throws ServiceException {
+		return prototypeSettingManager.listPaginationByPropertySettingDto(pagination, prototypeSetting);
 	}
 
 	/**
@@ -115,13 +119,14 @@ public class PrototypeSettingFacadeImpl implements PrototypeSettingFacade {
 
 	/**
 	 * 保存记录
-	 * @param prototypeSetting
+	 * @param prototypeSettingDto
+	 * @param token
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(PrototypeSetting prototypeSetting) throws ServiceException
+	public void save(PrototypeSettingDto prototypeSettingDto, String token) throws ServiceException
 	{
-		prototypeSettingService.save(prototypeSetting);
+		prototypeSettingManager.savePrototypeSetting(prototypeSettingDto, token);
 	}
 
 	/**

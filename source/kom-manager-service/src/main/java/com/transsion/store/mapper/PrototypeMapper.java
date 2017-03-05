@@ -30,4 +30,8 @@ import com.transsion.store.dto.PrototypeDto;
 public interface PrototypeMapper extends GenericIBatisMapper<Prototype, java.lang.Long> {
 
     public List<PrototypeDto> listPaginationByPropertyDto(Pagination<PrototypeDto> pagination, @Param("prototypeDto")PrototypeDto prototypeDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    
+    public PrototypeDto getPrototypeDtoById(Long id);
+    
+    public int checkImeiOnly(@Param("prototype")Prototype prototype);
 }

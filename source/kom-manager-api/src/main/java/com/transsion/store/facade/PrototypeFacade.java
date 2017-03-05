@@ -31,7 +31,7 @@ public interface PrototypeFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Prototype getByPK(java.lang.Long primaryKey) throws ServiceException;
+	public PrototypeDto getByPK(java.lang.Long primaryKey) throws ServiceException;
 
 	/**
 	 * 查询所有记录
