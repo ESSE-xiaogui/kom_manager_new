@@ -11,9 +11,15 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 public class FastdfsClientSingleton {
     private static final String configFile = "FastdfsClient.properties";
     private static PropertiesConfiguration config;
+    private static FastdfsClientSingleton singleton;
 
     public static FastdfsClientSingleton getSingleton() {
-        return new FastdfsClientSingleton();
+
+        if(singleton == null) {
+            singleton = new  FastdfsClientSingleton();
+        }
+
+        return singleton;
     }
 
     private FastdfsClientSingleton() {

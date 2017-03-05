@@ -1,33 +1,23 @@
 package com.transsion.store.controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
-
+import com.rest.service.codec.response.StandardResult;
+import com.rest.service.controller.AbstractController;
+import com.transsion.store.support.FastdfsClientSingleton;
 import org.apache.commons.io.IOUtils;
 import org.apache.james.mime4j.field.FieldName;
 import org.apache.james.mime4j.message.BodyPart;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import org.springframework.stereotype.Controller;
-
-import com.rest.service.codec.response.StandardResult;
-import com.rest.service.controller.AbstractController;
-import com.transsion.store.support.FastdfsClientSingleton;
-
 import sun.misc.BASE64Encoder;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.io.*;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @Path("/fastdfs")
@@ -39,14 +29,16 @@ public class UploadController extends AbstractController{
     @Consumes({MediaType.MULTIPART_FORM_DATA})
     @Produces({MediaType.APPLICATION_JSON})
     public Object uploadFile(MultipartFormDataInput input) {
+        List<Files> filesList = new ArrayList<Files>();
         try {
 
-            String fileName = "";
+            String fileName;
             Map<String, List<InputPart>> formParts = input.getFormDataMap();
             List<InputPart> inPart = formParts.get("file");
 
             for (InputPart inputPart : inPart) {
 
+                fileName = "";
                 Field bodyPartField = inputPart.getClass().getDeclaredField("bodyPart");
                 bodyPartField.setAccessible(true);
                 BodyPart bodyPart = (BodyPart) bodyPartField.get(inputPart);
@@ -86,8 +78,7 @@ public class UploadController extends AbstractController{
                 files.setFileIdEncode(encode.encode(fileId.getBytes()));
 
                 tmp.delete();
-
-                return new FileResult(files);
+                filesList.add(files);
             }
         }catch (IOException e) {
             e.printStackTrace();
@@ -96,7 +87,7 @@ public class UploadController extends AbstractController{
             e.printStackTrace();
             return new StandardResult(500,e.getMessage());
         }
-        return null;
+        return new FileResult(filesList.toArray(new Files[filesList.size()]));
     }
     private String parseFileName(String headers) {
 
