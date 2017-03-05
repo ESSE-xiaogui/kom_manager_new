@@ -49,9 +49,8 @@ public class PrototypeSettingFacadeImpl implements PrototypeSettingFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public PrototypeSetting getByPK(java.lang.Long primaryKey) throws ServiceException
-	{
-		return prototypeSettingService.getByPK(primaryKey);
+	public PrototypeSettingDto getByPK(java.lang.Long primaryKey, String token) throws ServiceException {
+		return prototypeSettingManager.getByPK(primaryKey, token);
 	}
 
 	/**
@@ -80,9 +79,9 @@ public class PrototypeSettingFacadeImpl implements PrototypeSettingFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<PrototypeSettingDto> listPaginationByPropertySettingDto(Pagination<PrototypeSettingDto> pagination, PrototypeSettingDto prototypeSetting)
+	public Pagination<PrototypeSettingDto> listPaginationByProperty(Pagination<PrototypeSettingDto> pagination, PrototypeSettingDto prototypeSetting)
 			throws ServiceException {
-		return prototypeSettingManager.listPaginationByPropertySettingDto(pagination, prototypeSetting);
+		return prototypeSettingManager.listPaginationByProperty(pagination, prototypeSetting);
 	}
 
 	/**
@@ -131,13 +130,13 @@ public class PrototypeSettingFacadeImpl implements PrototypeSettingFacade {
 
 	/**
 	 * 更新记录
-	 * @param prototypeSetting
+	 * @param prototypeSettingDto
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(PrototypeSetting prototypeSetting) throws ServiceException
+	public void update(PrototypeSettingDto prototypeSettingDto, String token) throws ServiceException
 	{
-		return prototypeSettingService.update(prototypeSetting);
+		prototypeSettingManager.update(prototypeSettingDto, token);
 	}
 
 	/**

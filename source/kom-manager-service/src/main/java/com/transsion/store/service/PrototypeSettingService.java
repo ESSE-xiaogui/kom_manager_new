@@ -75,10 +75,10 @@ public class PrototypeSettingService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<PrototypeSettingDto> listPaginationByPropertySettingDto(Pagination<PrototypeSettingDto> pagination, PrototypeSettingDto prototypeSettingDto)
+	public Pagination<PrototypeSettingDto> listPaginationByProperty(Pagination<PrototypeSettingDto> pagination, PrototypeSettingDto prototypeSettingDto)
 			throws ServiceException
 	{
-		List<PrototypeSettingDto> list = prototypeSettingMapper.listPaginationByPropertySettingDto(pagination, prototypeSettingDto, pagination.getOrderBy());
+		List<PrototypeSettingDto> list = prototypeSettingMapper.listPaginationByProperty(pagination, prototypeSettingDto, pagination.getOrderBy());
 		
 		pagination.setResultList(list);
 		

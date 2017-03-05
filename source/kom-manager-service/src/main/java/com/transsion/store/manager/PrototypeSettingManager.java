@@ -45,9 +45,35 @@ public class PrototypeSettingManager {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<PrototypeSettingDto> listPaginationByPropertySettingDto(Pagination<PrototypeSettingDto> pagination, PrototypeSettingDto prototypeSettingDto)
+	public Pagination<PrototypeSettingDto> listPaginationByProperty(Pagination<PrototypeSettingDto> pagination, PrototypeSettingDto prototypeSettingDto)
 			throws ServiceException {
-		return prototypeSettingService.listPaginationByPropertySettingDto(pagination, prototypeSettingDto);
+		
+			Pagination<PrototypeSettingDto> pagin = prototypeSettingService.listPaginationByProperty(pagination, prototypeSettingDto);
+			
+			List<PrototypeSettingDto> prototypeSettingDtos = pagin.getResultList();
+			
+			if (!prototypeSettingDtos.isEmpty()) {
+				
+				for (PrototypeSettingDto prototypeSettingDtoTemp: prototypeSettingDtos) {
+					PrototypeSettingTime prototypeSettingTime =  new PrototypeSettingTime();
+					List<PrototypeSettingTime> prototypeSettingTimes = new ArrayList<PrototypeSettingTime>();
+					prototypeSettingTime.setSettingId(prototypeSettingDtoTemp.getId());
+					prototypeSettingTimes = prototypeSettingTimeMapper.listByProperty(prototypeSettingTime);
+					
+					if (!prototypeSettingTimes.isEmpty()) {
+						String str = "";
+						
+						for (PrototypeSettingTime prototypeSettingTimeTemp : prototypeSettingTimes) {
+							str += prototypeSettingTimeTemp.getCountDate() + ",";
+						}
+						prototypeSettingDtoTemp.setCountDates(str.substring(0, str.length() - 1));
+					}
+				}
+			}
+			
+			pagin.setResultList(prototypeSettingDtos);
+			
+			return pagin;
 	}
 	
 	/**
@@ -73,7 +99,7 @@ public class PrototypeSettingManager {
 		PrototypeSetting prototypeSetting = new PrototypeSetting();
 		
 		prototypeSetting.setCompanyId(prototypeSettingDto.getCompanyId());
-		prototypeSetting.setEffectiveMonth(prototypeSettingDto.getEffectiveMonth());
+		prototypeSetting.setEffectiveMonth(systemDateService.getCurrentDate());
 		prototypeSetting.setIsInactive(prototypeSettingDto.getIsInactive());
 		prototypeSetting.setRemark(prototypeSettingDto.getRemark());
 		prototypeSetting.setVersion(prototypeSettingDto.getVersion());
@@ -82,36 +108,230 @@ public class PrototypeSettingManager {
 		
 		prototypeSettingMapper.save(prototypeSetting);
 		
-		List<PrototypeSettingRegion> prototypeSettingRegions = new ArrayList<PrototypeSettingRegion>();
+		// List<PrototypeSettingRegion> prototypeSettingRegions = new ArrayList<PrototypeSettingRegion>();
+		// List<PrototypeSettingModel> prototypeSettingModels = new ArrayList<PrototypeSettingModel>();
+		// List<PrototypeSettingTime> prototypeSettingTimes = new ArrayList<PrototypeSettingTime>();
+		
+		// prototypeSettingRegions = prototypeSettingDto.getPrototypeSettingRegions();
+		// prototypeSettingModels = prototypeSettingDto.getPrototypeSettingModels();
+		// prototypeSettingTimes = prototypeSettingDto.getPrototypeSettingTimes();
+		
+		if (prototypeSettingDto.getModelIds() != null && !prototypeSettingDto.getModelIds().isEmpty()) {
+			for (Long modelId : prototypeSettingDto.getModelIds()) {
+				PrototypeSettingModel prototypeSettingModel = new PrototypeSettingModel();
+				
+				prototypeSettingModel.setSettingId(prototypeSetting.getId());
+				prototypeSettingModel.setCreateBy(userContext.getUserCode());
+				prototypeSettingModel.setCreateTime(systemDateService.getCurrentDate());
+				prototypeSettingModel.setModelId(modelId);
+				
+				prototypeSettingModelMapper.save(prototypeSettingModel);
+			}
+		}
+		
+		if (prototypeSettingDto.getRegionIds() != null && !prototypeSettingDto.getRegionIds().isEmpty()) {
+			for (Long regionId : prototypeSettingDto.getRegionIds()) {
+				PrototypeSettingRegion prototypeSettingRegion = new PrototypeSettingRegion();
+				
+				prototypeSettingRegion.setSettingId(prototypeSetting.getId());
+				prototypeSettingRegion.setCreateBy(userContext.getUserCode());
+				prototypeSettingRegion.setCreateTime(systemDateService.getCurrentDate());
+				prototypeSettingRegion.setRegionId(regionId);;
+				
+				prototypeSettingRegionMapper.save(prototypeSettingRegion);
+			}
+		}
+		
+		String countDatesStr = prototypeSettingDto.getCountDates();
+		
+		String[] countDatesStrs = countDatesStr.split(",");
+		
+		if (countDatesStrs != null && countDatesStrs.length > 0) {
+			for (String countDate : countDatesStrs) {
+				PrototypeSettingTime prototypeSettingTime = new PrototypeSettingTime();
+				
+				prototypeSettingTime.setSettingId(prototypeSetting.getId());
+				prototypeSettingTime.setCreateBy(userContext.getUserCode());
+				prototypeSettingTime.setCreateTime(systemDateService.getCurrentDate());
+				prototypeSettingTime.setCountDate(countDate);
+				
+				prototypeSettingTimeMapper.save(prototypeSettingTime);
+			}
+		}
+	}
+	
+	/**
+	 * 通过主键查询PrototypeSettingDto
+	 * @param primaryKey
+	 * @return
+	 * @throws ServiceException
+	 */
+	public PrototypeSettingDto getByPK(java.lang.Long primaryKey, String token) throws ServiceException {
+		
+		// 是否登录
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		// 登录信息是否为空
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUser())){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		
+		PrototypeSettingDto prototypeSettingDto = new PrototypeSettingDto();
+		
+		PrototypeSetting prototypeSetting = prototypeSettingMapper.getByPK(primaryKey);
+		
+		if (prototypeSetting != null) {
+			prototypeSettingDto.setCompanyId(prototypeSetting.getCompanyId());
+			prototypeSettingDto.setIsInactive(prototypeSetting.getIsInactive());
+			prototypeSettingDto.setRemark(prototypeSetting.getRemark());
+			prototypeSettingDto.setId(prototypeSetting.getId());
+		}
+		
+		PrototypeSettingModel prototypeSettingModel =  new PrototypeSettingModel();
 		List<PrototypeSettingModel> prototypeSettingModels = new ArrayList<PrototypeSettingModel>();
+		prototypeSettingModel.setSettingId(prototypeSetting.getId());
+		prototypeSettingModels = prototypeSettingModelMapper.listByProperty(prototypeSettingModel);
+		
+		if (!prototypeSettingModels.isEmpty()) {
+			List<Long> modelIds = new ArrayList<Long>();
+			for (PrototypeSettingModel prototypeSettingModelTemp : prototypeSettingModels) {
+				modelIds.add(prototypeSettingModelTemp.getModelId());
+			}
+			
+			prototypeSettingDto.setModelIds(modelIds);
+		}
+		
+		PrototypeSettingRegion prototypeSettingRegion =  new PrototypeSettingRegion();
+		List<PrototypeSettingRegion> prototypeSettingRegions = new ArrayList<PrototypeSettingRegion>();
+		prototypeSettingRegion.setSettingId(prototypeSetting.getId());
+		prototypeSettingRegions = prototypeSettingRegionMapper.listByProperty(prototypeSettingRegion);
+		
+		if (!prototypeSettingRegions.isEmpty()) {
+			List<Long> regionIds = new ArrayList<Long>();
+			for (PrototypeSettingRegion prototypeSettingRegionTemp : prototypeSettingRegions) {
+				regionIds.add(prototypeSettingRegionTemp.getRegionId());
+			}
+			
+			prototypeSettingDto.setRegionIds(regionIds);
+		}
+		
+		PrototypeSettingTime prototypeSettingTime =  new PrototypeSettingTime();
 		List<PrototypeSettingTime> prototypeSettingTimes = new ArrayList<PrototypeSettingTime>();
+		prototypeSettingTime.setSettingId(prototypeSetting.getId());
+		prototypeSettingTimes = prototypeSettingTimeMapper.listByProperty(prototypeSettingTime);
 		
-		prototypeSettingRegions = prototypeSettingDto.getPrototypeSettingRegions();
-		prototypeSettingModels = prototypeSettingDto.getPrototypeSettingModels();
-		prototypeSettingTimes = prototypeSettingDto.getPrototypeSettingTimes();
-		
-		for (PrototypeSettingRegion prototypeSettingRegion : prototypeSettingRegions) {
-			prototypeSettingRegion.setSettingId(prototypeSetting.getId());
-			prototypeSettingRegion.setCreateBy(userContext.getUserCode());
-			prototypeSettingRegion.setCreateTime(systemDateService.getCurrentDate());
+		if (!prototypeSettingTimes.isEmpty()) {
+			String countDates = "";
+			for (PrototypeSettingTime prototypeSettingTimeTemp : prototypeSettingTimes) {
+				countDates += prototypeSettingTimeTemp.getCountDate() + ",";
+			}
 			
-			prototypeSettingRegionMapper.save(prototypeSettingRegion);
+			countDates = countDates.substring(0, countDates.length() - 1);
+			
+			prototypeSettingDto.setCountDates(countDates);
 		}
 		
-		for (PrototypeSettingModel prototypeSettingModel : prototypeSettingModels) {
-			prototypeSettingModel.setSettingId(prototypeSetting.getId());
-			prototypeSettingModel.setCreateBy(userContext.getUserCode());
-			prototypeSettingModel.setCreateTime(systemDateService.getCurrentDate());
-			
-			prototypeSettingModelMapper.save(prototypeSettingModel);
+		return prototypeSettingDto;
+	}
+	
+	
+	/**
+	 * 更新记录
+	 * @param prototypeSettingDto
+	 * @return
+	 * @throws ServiceException
+	 */
+	public void update(PrototypeSettingDto prototypeSettingDto, String token) throws ServiceException {
+		
+		// 是否登录
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		// 登录信息是否为空
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUser())){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		
-		for (PrototypeSettingTime prototypeSettingTime : prototypeSettingTimes) {
-			prototypeSettingTime.setSettingId(prototypeSetting.getId());
-			prototypeSettingTime.setCreateBy(userContext.getUserCode());
-			prototypeSettingTime.setCreateTime(systemDateService.getCurrentDate());
+		PrototypeSetting prototypeSettingTemp = prototypeSettingMapper.getByPK(prototypeSettingDto.getId());
+		PrototypeSetting prototypeSetting = new PrototypeSetting();
+		
+		prototypeSetting.setId(prototypeSettingDto.getId());
+		prototypeSetting.setCompanyId(prototypeSettingDto.getCompanyId());
+		prototypeSetting.setIsInactive(prototypeSettingDto.getIsInactive());
+		prototypeSetting.setRemark(prototypeSettingDto.getRemark());
+		prototypeSetting.setUpdateBy(userContext.getUserCode());
+		prototypeSetting.setUpdateDate(systemDateService.getCurrentDate());
+		prototypeSetting.setCreateBy(prototypeSettingTemp.getCreateBy());
+		prototypeSetting.setCreateDate(prototypeSettingTemp.getCreateDate());
+		prototypeSetting.setEffectiveMonth(prototypeSettingTemp.getEffectiveMonth());
+		prototypeSetting.setVersion(prototypeSettingTemp.getVersion());
+		
+		prototypeSettingMapper.update(prototypeSetting);
+		
+		// 从表，先删除，后新增
+		
+		if (prototypeSettingDto.getModelIds() != null && !prototypeSettingDto.getModelIds().isEmpty()) {
 			
-			prototypeSettingTimeMapper.save(prototypeSettingTime);
+			PrototypeSettingModel prototypeSettingModelTemp = new PrototypeSettingModel();
+			prototypeSettingModelTemp.setSettingId(prototypeSettingDto.getId());
+			
+			prototypeSettingModelMapper.deleteByProperty(prototypeSettingModelTemp);
+			
+			for (Long modelId : prototypeSettingDto.getModelIds()) {
+				PrototypeSettingModel prototypeSettingModel = new PrototypeSettingModel();
+				
+				prototypeSettingModel.setSettingId(prototypeSetting.getId());
+				prototypeSettingModel.setCreateBy(userContext.getUserCode());
+				prototypeSettingModel.setCreateTime(systemDateService.getCurrentDate());
+				prototypeSettingModel.setModelId(modelId);
+				
+				prototypeSettingModelMapper.update(prototypeSettingModel);
+			}
+		}
+		
+		if (prototypeSettingDto.getRegionIds() != null && !prototypeSettingDto.getRegionIds().isEmpty()) {
+			
+			PrototypeSettingRegion prototypeSettingRegionTemp = new PrototypeSettingRegion();
+			prototypeSettingRegionTemp.setSettingId(prototypeSettingDto.getId());
+			
+			prototypeSettingRegionMapper.deleteByProperty(prototypeSettingRegionTemp);
+			
+			for (Long regionId : prototypeSettingDto.getRegionIds()) {
+				PrototypeSettingRegion prototypeSettingRegion = new PrototypeSettingRegion();
+				
+				prototypeSettingRegion.setSettingId(prototypeSetting.getId());
+				prototypeSettingRegion.setCreateBy(userContext.getUserCode());
+				prototypeSettingRegion.setCreateTime(systemDateService.getCurrentDate());
+				prototypeSettingRegion.setRegionId(regionId);;
+				
+				prototypeSettingRegionMapper.save(prototypeSettingRegion);
+			}
+		}
+		
+		String countDatesStr = prototypeSettingDto.getCountDates();
+		
+		String[] countDatesStrs = countDatesStr.split(",");
+		
+		if (countDatesStrs != null && countDatesStrs.length > 0) {
+			
+			PrototypeSettingTime prototypeSettingTimeTemp = new PrototypeSettingTime();
+			prototypeSettingTimeTemp.setSettingId(prototypeSettingDto.getId());
+			
+			prototypeSettingTimeMapper.deleteByProperty(prototypeSettingTimeTemp);
+			
+			for (String countDate : countDatesStrs) {
+				PrototypeSettingTime prototypeSettingTime = new PrototypeSettingTime();
+				
+				prototypeSettingTime.setSettingId(prototypeSetting.getId());
+				prototypeSettingTime.setCreateBy(userContext.getUserCode());
+				prototypeSettingTime.setCreateTime(systemDateService.getCurrentDate());
+				prototypeSettingTime.setCountDate(countDate);
+				
+				prototypeSettingTimeMapper.save(prototypeSettingTime);
+			}
 		}
 	}
 }

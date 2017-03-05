@@ -54,7 +54,7 @@
 	<sql id="commonProcessDateColumns">
 		 ID
 		, SETTING_ID
-		, date_format(COUNT_DATE, '%Y-%m-%d %H:%i:%s') COUNT_DATE
+		, date_format(COUNT_DATE, '%Y-%m-%d') COUNT_DATE
 		, CREATE_BY
 		, date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
 		, UPDATE_BY

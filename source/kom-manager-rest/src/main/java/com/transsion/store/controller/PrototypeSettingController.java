@@ -34,7 +34,6 @@ import com.rest.service.controller.AbstractController;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.dto.RequestModel;
 import com.shangkang.core.exception.ServiceException;
-import com.transsion.store.bo.PrototypeSetting;
 import com.transsion.store.dto.PrototypeSettingDto;
 import com.transsion.store.facade.PrototypeSettingFacade;
 
@@ -54,9 +53,9 @@ public class PrototypeSettingController extends AbstractController{
 	@GET
 	@Path("/getByPK")
 	@Produces({MediaType.APPLICATION_JSON})
-	public PrototypeSetting getByPK(@QueryParam("key") java.lang.Long primaryKey) throws ServiceException
-	{
-		return prototypeSettingFacade.getByPK(primaryKey);
+	public PrototypeSettingDto getByPK(@QueryParam("key") java.lang.Long primaryKey) throws ServiceException {
+		String token = this.getAuthorization();
+		return prototypeSettingFacade.getByPK(primaryKey, token);
 	}
 
 	/**
@@ -78,7 +77,7 @@ public class PrototypeSettingController extends AbstractController{
 		pagination.setParams(requestModel.getParams());
 		pagination.setOrderBy(requestModel.getOrderBy());
 
-		return prototypeSettingFacade.listPaginationByPropertySettingDto(pagination, requestModel.getParams());
+		return prototypeSettingFacade.listPaginationByProperty(pagination, requestModel.getParams());
 	}
 
 	/**
@@ -115,8 +114,8 @@ public class PrototypeSettingController extends AbstractController{
 	@PUT
 	@Path("/update")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void update(PrototypeSetting prototypeSetting) throws ServiceException
-	{
-		prototypeSettingFacade.update(prototypeSetting);
+	public void update(PrototypeSettingDto prototypeSettingDto) throws ServiceException {
+		String token = this.getAuthorization();
+		prototypeSettingFacade.update(prototypeSettingDto, token);
 	}
 }

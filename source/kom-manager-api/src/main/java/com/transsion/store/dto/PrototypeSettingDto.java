@@ -13,11 +13,13 @@ public class PrototypeSettingDto extends PrototypeSetting implements Serializabl
 	private static final long serialVersionUID = 1L;
 	
 	private String companyName;		// 事业部名称
-	private String createName;		// 创建人
-	private String updateName;		// 修改人
 	private String modelName;		// 机型
 	private String countryId;		// 国家ID
 	private String brandId;			// 品牌ID
+	private String countDates;		// 时间列表 逗好隔开
+	
+	private List<Long> modelIds;	// 机型list
+	private List<Long> regionIds;	// 国家List
 	
 	private List<PrototypeSettingModel> prototypeSettingModels;			// 盘点计划机型列表
 	private List<PrototypeSettingRegion> prototypeSettingRegions;		// 盘点计划国家列表
@@ -28,20 +30,6 @@ public class PrototypeSettingDto extends PrototypeSetting implements Serializabl
 	}
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
-	}
-	
-	public String getCreateName() {
-		return createName;
-	}
-	public void setCreateName(String createName) {
-		this.createName = createName;
-	}
-	
-	public String getUpdateName() {
-		return updateName;
-	}
-	public void setUpdateName(String updateName) {
-		this.updateName = updateName;
 	}
 	
 	public String getModelName() {
@@ -62,7 +50,26 @@ public class PrototypeSettingDto extends PrototypeSetting implements Serializabl
 	public void setBrandId(String brandId) {
 		this.brandId = brandId;
 	}
+	
+	public String getCountDates() {
+		return countDates;
+	}
+	public void setCountDates(String countDates) {
+		this.countDates = countDates;
+	}
 
+	public List<Long> getModelIds() {
+		return modelIds;
+	}
+	public void setModelIds(List<Long> modelIds) {
+		this.modelIds = modelIds;
+	}
+	public List<Long> getRegionIds() {
+		return regionIds;
+	}
+	public void setRegionIds(List<Long> regionIds) {
+		this.regionIds = regionIds;
+	}
 	public List<PrototypeSettingModel> getPrototypeSettingModels() {
 		return prototypeSettingModels;
 	}

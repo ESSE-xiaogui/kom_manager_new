@@ -32,6 +32,20 @@
 		<result column="VERSION" property="version"/>
 	</resultMap>
 	
+	<resultMap id="PrototypeSettingDtoResultMapper" type="PrototypeSettingDto">
+		<result column="ID" property="id"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="EFFECTIVE_MONTH" property="effectiveMonth"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_DATE" property="updateDate"/>
+		<result column="VERSION" property="version"/>
+		<result column="COMPANY_NAME" property="companyName"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, COMPANY_ID
@@ -104,22 +118,26 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="prototypeSetting != null">
-            <if test="prototypeSetting.id!= null and prototypeSetting.id!= ''">
-				AND ID=#{prototypeSetting.id}
+		<if test="prototypeSettingDto != null">
+            <if test="prototypeSettingDto.countryId!= null and prototypeSettingDto.countryId!= ''">
+				AND r.ID=#{prototypeSettingDto.countryId}
             </if>
-            <if test="prototypeSetting.companyId!= null and prototypeSetting.companyId!= ''">
-				AND COMPANY_ID=#{prototypeSetting.companyId}
+            <if test="prototypeSettingDto.companyId!= null and prototypeSettingDto!= ''">
+				AND pro.COMPANY_ID=#{prototypeSettingDto.companyId}
             </if>
-            <if test="prototypeSetting.effectiveMonth!= null and prototypeSetting.effectiveMonth!= ''">
-				AND EFFECTIVE_MONTH=str_to_date(#{prototypeSetting.effectiveMonth},'%Y-%m-%d %H:%i:%s')
+            <if test="prototypeSettingDto.effectiveMonth!= null and prototypeSettingDto.effectiveMonth!= ''">
+				AND pro.EFFECTIVE_MONTH=str_to_date(#{prototypeSettingDto.effectiveMonth},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="prototypeSetting.isInactive!= null and prototypeSetting.isInactive!= ''">
-				AND IS_INACTIVE=#{prototypeSetting.isInactive}
+            <if test="prototypeSettingDto.isInactive!= null and prototypeSettingDto.isInactive!= ''">
+				AND pro.IS_INACTIVE=#{prototypeSettingDto.isInactive}
             </if>
-            <if test="prototypeSetting.remark!= null and prototypeSetting.remark!= ''">
-				AND REMARK=#{prototypeSetting.remark}
+            <if test="prototypeSettingDto.remark!= null and prototypeSettingDto.remark!= ''">
+				AND pro.REMARK=#{prototypeSettingDto.remark}
             </if>
+            <if test="prototypeSettingDto.version!= null and prototypeSettingDto.version!= ''">
+				AND pro.VERSION=#{prototypeSettingDto.version}
+            </if>
+            <!-- 
             <if test="prototypeSetting.createBy!= null and prototypeSetting.createBy!= ''">
 				AND CREATE_BY=#{prototypeSetting.createBy}
             </if>
@@ -132,9 +150,7 @@
             <if test="prototypeSetting.updateDate!= null and prototypeSetting.updateDate!= ''">
 				AND UPDATE_DATE=str_to_date(#{prototypeSetting.updateDate},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="prototypeSetting.version!= null and prototypeSetting.version!= ''">
-				AND VERSION=#{prototypeSetting.version}
-            </if>
+             -->
         </if>
     </sql>
 
@@ -168,7 +184,7 @@
 				CREATE_BY ${value}
             </when>
         	<when test="key == 'createDate'">
-				CREATE_DATE ${value}
+				pro.CREATE_DATE ${value}
             </when>
         	<when test="key == 'updateBy'">
 				UPDATE_BY ${value}
@@ -178,6 +194,50 @@
             </when>
         	<when test="key == 'version'">
 				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+	
+	<sql id="orderSpeByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderSpeBy">
+		<choose>
+        	<when test="key == 'id'">
+				pro.ID ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				pro.COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'effectiveMonth'">
+				pro.EFFECTIVE_MONTH ${value}
+            </when>
+        	<when test="key == 'isInactive'">
+				pro.IS_INACTIVE ${value}
+            </when>
+        	<when test="key == 'remark'">
+				pro.REMARK ${value}
+            </when>
+        	<when test="key == 'createBy'">
+				pro.CREATE_BY ${value}
+            </when>
+        	<when test="key == 'createDate'">
+				pro.CREATE_DATE ${value}
+            </when>
+        	<when test="key == 'updateBy'">
+				pro.UPDATE_BY ${value}
+            </when>
+        	<when test="key == 'updateDate'">
+				pro.UPDATE_DATE ${value}
+            </when>
+        	<when test="key == 'version'">
+				pro.VERSION ${value}
             </when>
 		</choose>
 	</sql>
@@ -236,21 +296,16 @@
 			 <include refid="commonProcessDateColumns"/>
  		FROM T_PROTOTYPE_SETTING
 	</select>
-	<select id="listByProperty" parameterType="PrototypeSetting" resultMap="PrototypeSettingResultMapper">
-		<![CDATA[ SELECT ]]>
-			<include refid="commonProcessDateColumns"/>
-		FROM T_PROTOTYPE_SETTING WHERE 1=1 
-		<include refid="commonCondition"/>
-	</select>
-	<select id="listPaginationByProperty" parameterType="PrototypeSetting" resultMap="PrototypeSettingResultMapper">
-		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_PROTOTYPE_SETTING WHERE 1=1
+	<select id="listPaginationByProperty" parameterType="PrototypeSettingDto" resultMap="PrototypeSettingDtoResultMapper">
+		SELECT pro.*, company.COMPANY_NAME
+		FROM T_PROTOTYPE_SETTING pro
+		LEFT JOIN T_COMPANY company ON company.ID = pro.COMPANY_ID 
     	<include refid="commonConditionByPrefix"/>
-    	<include refid="orderByClause" />
+    	<include refid="orderSpeByClause" />
 	</select>
 	<select id="findByCount" parameterType="PrototypeSetting" resultType="int">
 		SELECT count(1) AS totalcount FROM T_PROTOTYPE_SETTING WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
+	
 </mapper>

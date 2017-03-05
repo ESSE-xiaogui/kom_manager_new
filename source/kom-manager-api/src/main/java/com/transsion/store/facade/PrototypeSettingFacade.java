@@ -31,7 +31,7 @@ public interface PrototypeSettingFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public PrototypeSetting getByPK(java.lang.Long primaryKey) throws ServiceException;
+	public PrototypeSettingDto getByPK(java.lang.Long primaryKey, String token) throws ServiceException;
 
 	/**
 	 * 查询所有记录
@@ -82,11 +82,11 @@ public interface PrototypeSettingFacade {
 
 	/**
 	 * 更新记录
-	 * @param prototypeSetting
+	 * @param prototypeSettingDto
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(PrototypeSetting prototypeSetting) throws ServiceException;
+	public void update(PrototypeSettingDto prototypeSettingDto, String token) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数
@@ -101,7 +101,7 @@ public interface PrototypeSettingFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<PrototypeSettingDto> listPaginationByPropertySettingDto(Pagination<PrototypeSettingDto> pagination, PrototypeSettingDto prototypeSettingDto)
+	public Pagination<PrototypeSettingDto> listPaginationByProperty(Pagination<PrototypeSettingDto> pagination, PrototypeSettingDto prototypeSettingDto)
 			throws ServiceException;
 
 }
