@@ -65,7 +65,7 @@
 		<result column="IMG_SHOP_URL" property="imgShopUrl"/>
 		<result column="IMG_IMEI_URL" property="imgImeiUrl"/>
 		<result column="STATUS" property="status"/>
-		<result column="REMARK" property="rmark"/>
+		<result column="REMARK" property="remark"/>
 		<result column="UNPUBLISH_CAUSE" property="unpublishCause"/>
 		<result column="COUNTING_TIME" property="countingTime"/>
 		<result column="PUBLISH_BY" property="publishBy"/>

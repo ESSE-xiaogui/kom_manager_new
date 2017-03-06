@@ -258,6 +258,8 @@ public class PrototypeSettingManager {
 		PrototypeSetting prototypeSettingTemp = prototypeSettingMapper.getByPK(prototypeSettingDto.getId());
 		PrototypeSetting prototypeSetting = new PrototypeSetting();
 		
+		// 当月已生效的
+		
 		prototypeSetting.setId(prototypeSettingDto.getId());
 		prototypeSetting.setCompanyId(prototypeSettingDto.getCompanyId());
 		prototypeSetting.setIsInactive(prototypeSettingDto.getIsInactive());
