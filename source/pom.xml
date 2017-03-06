@@ -23,12 +23,12 @@
         <maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
         <maven.resources.plugin.version>2.7</maven.resources.plugin.version>
         <maven.javadoc.plugin.version>2.10.3</maven.javadoc.plugin.version>
-        <core.base.version>2.0.0</core.base.version>
+        <core.base.version>2.0.1</core.base.version>
         <rest.version>1.1.2</rest.version>
         <java.version>1.8</java.version>
 
         <org.slf4j.version>1.7.19</org.slf4j.version>
-        <org.log4j2.version>2.5</org.log4j2.version>
+        <org.log4j2.version>2.8</org.log4j2.version>
 
         <netty.version>4.1.6.Final</netty.version>
         <spring.version>4.2.5.RELEASE</spring.version>
@@ -49,6 +49,7 @@
         <build.main.class>com.rest.service.main.Main</build.main.class>
 
         <fastDfsClient.version>0.0.5</fastDfsClient.version>
+        <es.client.version>5.2.1</es.client.version>
     </properties>
 
     <!-- 配置默认中央仓库 -->
@@ -417,10 +418,15 @@
                 <version>${commons-lang3.version}</version>
             </dependency>
             <dependency>
-			<groupId>commons-configuration</groupId>
-			<artifactId>commons-configuration</artifactId>
-			<version>${commons-configuration.version}</version>
-		</dependency>
+                <groupId>commons-configuration</groupId>
+                <artifactId>commons-configuration</artifactId>
+                <version>${commons-configuration.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>transport</artifactId>
+                <version>${es.client.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

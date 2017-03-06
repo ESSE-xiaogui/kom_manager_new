@@ -248,6 +248,75 @@
 			, VERSION=#{version} 
 		WHERE ID = #{id}  ]]>
 	</update>
+
+	<insert id="saveOrUpdate" parameterType="Brand">
+		<![CDATA[ INSERT INTO T_BRAND ( ]]>
+		<include refid="commonColumns"/>
+		<![CDATA[
+		) VALUES (
+			 #{id}
+			, #{brandCode}
+			, #{brandName}
+			, #{companyId}
+			, #{isSelf}
+			, #{isInactive}
+			, #{remark}
+			, #{createdBy}
+			, str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+		) ON DUPLICATE KEY UPDATE
+			 ID = VALUES(ID)
+			, BRAND_CODE = VALUES(BRAND_CODE)
+			, BRAND_NAME = VALUES(BRAND_NAME)
+			, COMPANY_ID = VALUES(COMPANY_ID)
+			, IS_SELF = VALUES(IS_SELF)
+			, IS_INACTIVE = VALUES(IS_INACTIVE)
+			, REMARK = VALUES(REMARK)
+			, CREATED_BY = VALUES(CREATED_BY)
+			, CREATED_TIME = VALUES(CREATED_TIME)
+			, UPDATED_BY = VALUES(UPDATED_BY)
+			, UPDATED_TIME = VALUES(UPDATED_TIME)
+			, VERSION = VALUES(VERSION)
+		]]>
+	</insert>
+	<insert id="batchSaveOrUpdate" parameterType="List">
+		<![CDATA[ INSERT INTO T_BRAND ( ]]>
+		<include refid="commonColumns"/>
+		<![CDATA[ ) VALUES ]]>
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			#{item.id}
+			, #{item.brandCode}
+			, #{item.brandName}
+			, #{item.companyId}
+			, #{item.isSelf}
+			, #{item.isInactive}
+			, #{item.remark}
+			, #{item.createdBy}
+			, str_to_date(#{item.createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{item.updatedBy}
+			, str_to_date(#{item.updatedTime},'%Y-%m-%d %H:%i:%s')
+			, #{item.version}
+			)
+		</foreach>
+		<![CDATA[ ON DUPLICATE KEY UPDATE
+		 ID = VALUES(ID)
+		, BRAND_CODE = VALUES(BRAND_CODE)
+		, BRAND_NAME = VALUES(BRAND_NAME)
+		, COMPANY_ID = VALUES(COMPANY_ID)
+		, IS_SELF = VALUES(IS_SELF)
+		, IS_INACTIVE = VALUES(IS_INACTIVE)
+		, REMARK = VALUES(REMARK)
+		, CREATED_BY = VALUES(CREATED_BY)
+		, CREATED_TIME = VALUES(CREATED_TIME)
+		, UPDATED_BY = VALUES(UPDATED_BY)
+		, UPDATED_TIME = VALUES(UPDATED_TIME)
+		, VERSION = VALUES(VERSION)
+		]]>
+	</insert>
+
 	<delete id="deleteByPK" parameterType="java.lang.Long">
 		<![CDATA[ DELETE FROM T_BRAND WHERE ID = #{id}  ]]>
 	</delete>

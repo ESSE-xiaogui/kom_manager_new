@@ -80,6 +80,7 @@
             <tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception"/>
             <tx:method name="edit*" propagation="REQUIRED" rollback-for="Exception"/>
             <tx:method name="save*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="batch*" propagation="REQUIRED" rollback-for="Exception"/>
             <tx:method name="create*" propagation="REQUIRED" rollback-for="Exception"/>
             <tx:method name="execute*" propagation="REQUIRED" rollback-for="Exception"/>
             <tx:method name="ext*" propagation="REQUIRES_NEW" rollback-for="Exception"/>
