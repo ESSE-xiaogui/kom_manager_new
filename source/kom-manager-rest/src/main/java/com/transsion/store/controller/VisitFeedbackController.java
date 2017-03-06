@@ -18,11 +18,9 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.VisitFeedback;
-import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.VisitFeedBackInfoDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.VisitFeedbackFacade;
-import com.transsion.store.utils.CacheUtils;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
@@ -146,8 +144,6 @@ public class VisitFeedbackController extends AbstractController{
 		@QueryParam("regionId")String regionId,@QueryParam("shopCode")String shopCode,
 		@QueryParam("createBy") String createBy,@QueryParam("companyId") String companyId,
 		@QueryParam("shopName") String shopName) throws ServiceException,IOException {
-		
-		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(this.getAuthorization());
 		VisitFeedBackInfoDto visitFeedBackInfoDto = new VisitFeedBackInfoDto();
 		visitFeedBackInfoDto.setCreateTimeStart(createTimeStart);
 		visitFeedBackInfoDto.setCreateTimeEnd(createTimeEnd);
@@ -160,10 +156,6 @@ public class VisitFeedbackController extends AbstractController{
 		}
 		if(!UtilHelper.isEmpty(companyId)){
 			visitFeedBackInfoDto.setCompanyId(Integer.valueOf(companyId));
-		}else{
-			if(!userContext.isAdmin()){
-				visitFeedBackInfoDto.setCompanyId(userContext.getCompanyId().intValue());
-			}
 		}
 		byte[] bytes = visitFeedbackFacade.getVisitFeedBackByExcel(visitFeedBackInfoDto);       
 		InputStream inputStream = new ByteArrayInputStream(bytes);          

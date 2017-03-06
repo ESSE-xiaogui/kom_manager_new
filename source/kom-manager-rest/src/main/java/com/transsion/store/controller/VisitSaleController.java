@@ -44,10 +44,8 @@ import com.shangkang.core.dto.RequestModel;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.VisitSale;
-import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.VisitSaleInfoDto;
 import com.transsion.store.facade.VisitSaleFacade;
-import com.transsion.store.utils.CacheUtils;
 
 @Controller
 @Path("visitSale")
@@ -155,7 +153,6 @@ public class VisitSaleController extends AbstractController{
 		@QueryParam("regionId")String regionId,@QueryParam("modelName")String modelName,
 		@QueryParam("createBy") String createBy,@QueryParam("companyId") String companyId) throws ServiceException,IOException {
 		
-		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(this.getAuthorization());
 		VisitSaleInfoDto visitSaleInfoDto = new VisitSaleInfoDto();
 		visitSaleInfoDto.setCreateTimeStart(createTimeStart);
 		visitSaleInfoDto.setCreateTimeEnd(createTimeEnd);
@@ -168,10 +165,6 @@ public class VisitSaleController extends AbstractController{
 		}
 		if(!UtilHelper.isEmpty(companyId)){
 			visitSaleInfoDto.setCompanyId(Long.parseLong(companyId));
-		}else{
-			if(!userContext.isAdmin()){
-				visitSaleInfoDto.setCompanyId(userContext.getCompanyId());
-			}
 		}
 		if(!UtilHelper.isEmpty(visitId)){
 			visitSaleInfoDto.setVisitId(Long.parseLong(visitId));

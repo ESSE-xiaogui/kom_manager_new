@@ -45,10 +45,8 @@ import com.shangkang.core.dto.RequestModel;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.VisitScore;
-import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.VisitScoreDetailInfoDto;
 import com.transsion.store.facade.VisitScoreFacade;
-import com.transsion.store.utils.CacheUtils;
 
 @Controller
 @Path("visitScore")
@@ -158,7 +156,6 @@ public class VisitScoreController extends AbstractController{
 		@QueryParam("totalScoreEnd")String totalScoreEnd,@QueryParam("createBy") String createBy,
 		@QueryParam("companyId") String companyId) throws ServiceException,IOException {
 		
-		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(this.getAuthorization());
 		VisitScoreDetailInfoDto visitScoreDetailInfoDto = new VisitScoreDetailInfoDto();
 		visitScoreDetailInfoDto.setCreateTimeStart(createTimeStart);
 		visitScoreDetailInfoDto.setCreateTimeEnd(createTimeEnd);
@@ -171,10 +168,6 @@ public class VisitScoreController extends AbstractController{
 		}
 		if(!UtilHelper.isEmpty(companyId)){
 			visitScoreDetailInfoDto.setCompanyId(Long.parseLong(companyId));
-		}else{
-			if(!userContext.isAdmin()){
-				visitScoreDetailInfoDto.setCompanyId(userContext.getCompanyId());
-			}
 		}
 		if(!UtilHelper.isEmpty(visitId)){
 			visitScoreDetailInfoDto.setVisitId(Long.parseLong(visitId));

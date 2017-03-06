@@ -44,7 +44,6 @@ import com.shangkang.core.dto.RequestModel;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Visit;
-import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.VisitHistoryDetailDto;
 import com.transsion.store.dto.VisitHistorySummaryDto;
 import com.transsion.store.dto.VisitInfoDto;
@@ -55,7 +54,6 @@ import com.transsion.store.dto.VisitShopDetailDto;
 import com.transsion.store.dto.VisitShopInfoDto;
 import com.transsion.store.dto.VisitStockInfoDto;
 import com.transsion.store.facade.VisitFacade;
-import com.transsion.store.utils.CacheUtils;
 
 @Controller
 @Path("visit")
@@ -327,7 +325,6 @@ public class VisitController extends AbstractController{
 		@QueryParam("regionId")String regionId,@QueryParam("createBy") String createBy,
 		@QueryParam("companyId") String companyId) throws ServiceException,IOException {
 		
-		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(this.getAuthorization());
 		Visit visit = new Visit();
 		visit.setStartDate(startDate);
 		visit.setEndDate(endDate);
@@ -339,10 +336,6 @@ public class VisitController extends AbstractController{
 		}
 		if(!UtilHelper.isEmpty(companyId)){
 			visit.setCompanyId(Long.parseLong(companyId));
-		}else{
-			if(!userContext.isAdmin()){
-				visit.setCompanyId(userContext.getCompanyId());
-			}
 		}
 		if(!UtilHelper.isEmpty(visitId)){
 			visit.setId(Long.parseLong(visitId));

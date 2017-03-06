@@ -247,10 +247,6 @@ public class VisitPlanController extends AbstractController{
 		}
 		if(!UtilHelper.isEmpty(companyId)){
 			visitPlanDetailInfoDto.setCompanyId(Long.parseLong(companyId));
-		}else{
-			if(!userContext.isAdmin()){
-				visitPlanDetailInfoDto.setCompanyId(userContext.getCompanyId());
-			}
 		}
 		if(!UtilHelper.isEmpty(bizId)){
 			visitPlanDetailInfoDto.setBizId(Long.parseLong(bizId));
