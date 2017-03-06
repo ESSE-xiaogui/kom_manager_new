@@ -961,7 +961,11 @@
 		JOIN T_USER_SHOP us ON us.SHOP_ID = p.ID
 		JOIN T_USER u ON u.ID = us.USER_ID 
 		</if>
-		WHERE p.COMPANY_ID = #{companyId} AND p.REGION_ID IS NOT NULL
+		WHERE 1=1
+		AND p.IS_INACTIVE = 1
+		AND p.STATUS = 1
+		AND p.COMPANY_ID = #{companyId} 
+		AND p.REGION_ID IS NOT NULL
 		AND p.REGION_ID = #{regionId}
 		<if test="userName!= null and userName!= ''">
 		AND u.USER_CODE = #{userName} 
