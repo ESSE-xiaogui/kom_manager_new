@@ -296,6 +296,7 @@
 		<![CDATA[
 			) VALUES ( 
 			 #{visitId}
+			, #{shopId}
 			, #{shopScore}
 			, #{saleScore}
 			, #{staffScore}
