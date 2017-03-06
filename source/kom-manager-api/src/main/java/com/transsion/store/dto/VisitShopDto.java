@@ -197,11 +197,20 @@ public class VisitShopDto implements Serializable {
 	{
 		this.remark = remark;
 	}
+	
+	public java.lang.String getShopName() {
+		return shopName;
+	}
+
+	public void setShopName(java.lang.String shopName) {
+		this.shopName = shopName;
+	}
 
 	@Override
 	public String toString() {
-		return "VisitDto [id=" + id + ", visitDate=" + visitDate + ", shopId=" + shopId + ", saleTotalQty="
-				+ saleTotalQty + ", salePbQty=" + salePbQty + ", remark=" + remark + "]";
+		return "VisitShopDto [id=" + id + ", visitDate=" + visitDate + ", shopId=" + shopId + ", shopName=" + shopName
+				+ ", currentSaleQty=" + currentSaleQty + ", targetSaleQty=" + targetSaleQty + ", achieved=" + achieved
+				+ ", saleTotalQty=" + saleTotalQty + ", salePbQty=" + salePbQty + ", remark=" + remark + "]";
 	}
 
 }

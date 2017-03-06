@@ -66,4 +66,6 @@ public interface VisitMapper extends GenericIBatisMapper<Visit, java.lang.Long> 
 	public List<Visit> listVisitShopSaleByProperty(@Param("visit")Visit visit)throws DataAccessFailureException;
 
 	public List<Visit> listShopHistoryByProperty(@Param("visit")Visit visit)throws DataAccessFailureException;
+	
+	public Integer querySalePbQtyByVisitId(Long visitId);
 }

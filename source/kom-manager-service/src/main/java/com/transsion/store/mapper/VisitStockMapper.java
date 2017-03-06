@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.transsion.store.bo.VisitStock;
+import com.transsion.store.dto.VisitModelStockDto;
 import com.transsion.store.dto.VisitStockDetailDto;
 import com.transsion.store.dto.VisitStockInfoDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
@@ -36,4 +37,6 @@ public interface VisitStockMapper extends GenericIBatisMapper<VisitStock, java.l
     public List<VisitStockInfoDto> queryVisitStockByVisitId(Long visitId) throws DataAccessFailureException;
 
 	public List<VisitStockDetailDto> listVisitStockByProperty(@Param("visitStockDetailDto")VisitStockDetailDto visitStockDetailDto)throws DataAccessFailureException;
+	
+	public List<VisitModelStockDto> queryVisitModelStockListByVisitId(Long visitId) throws DataAccessFailureException;
 }

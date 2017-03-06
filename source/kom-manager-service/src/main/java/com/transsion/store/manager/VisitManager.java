@@ -8,7 +8,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Visit;
@@ -26,11 +25,11 @@ import com.transsion.store.dto.VisitHistorySummaryDto;
 import com.transsion.store.dto.VisitInfoDto;
 import com.transsion.store.dto.VisitMaterielDetailDto;
 import com.transsion.store.dto.VisitModelDetailDto;
+import com.transsion.store.dto.VisitModelStockDto;
 import com.transsion.store.dto.VisitPlanParamDto;
 import com.transsion.store.dto.VisitRecordDto;
 import com.transsion.store.dto.VisitRecordInfoDto;
 import com.transsion.store.dto.VisitSaleDetailDto;
-import com.transsion.store.dto.VisitSaleInfoDto;
 import com.transsion.store.dto.VisitScoreDto;
 import com.transsion.store.dto.VisitScoreInfoDto;
 import com.transsion.store.dto.VisitScoreItemDto;
@@ -362,10 +361,14 @@ public class VisitManager {
 		
 		List<VisitScoreInfoDto> visitScoreInfoList = visitMapper.queryVisitScoreItemInfoByVisitId(visitId);
 		visitShopDetailDto.setVisitScoreInfoList(visitScoreInfoList);
+		
+		List<VisitModelStockDto> visitModelStockList = visitStockService.queryVisitModelStockListByVisitId(visitId);
+		visitShopDetailDto.setVisitModelStockList(visitModelStockList);
 		return visitShopDetailDto;
 	}
 	
 	public VisitHistoryDetailDto queryItelVisitHistoryDetailByVisitId(Long visitId) throws ServiceException {
+		Integer salePbQty = visitMapper.querySalePbQtyByVisitId(visitId);
 		String issue = visitMapper.queryIssueByVisitId(visitId);
 		List<VisitModelDetailDto> visitModelDetailDtoList = visitMapper.queryVisitHistoryModelListByVisitId(visitId);
 		List<VisitSaleDetailDto> visitSaleDetailDtoList= visitMapper.queryVisitHistorySaleListByVisitId(visitId);
@@ -373,6 +376,7 @@ public class VisitManager {
 		List<VisitMaterielDetailDto> visitMaterielDetailDtoList = visitMapper.queryVisitHistoryMaterielListByVisitId(visitId);
 		
 		VisitHistoryDetailDto visitHistoryDetailDto = new VisitHistoryDetailDto();
+		visitHistoryDetailDto.setSalePbQty(salePbQty);
 		visitHistoryDetailDto.setIssue(issue);
 		visitHistoryDetailDto.setVisitModelDetailDtoList(visitModelDetailDtoList);
 		visitHistoryDetailDto.setVisitSaleDetailDtoList(visitSaleDetailDtoList);

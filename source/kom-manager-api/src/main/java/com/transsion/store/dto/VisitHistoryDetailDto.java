@@ -6,6 +6,8 @@ import java.util.List;
 public class VisitHistoryDetailDto implements Serializable {
 	private static final long serialVersionUID = 4773339162355387872L;
 	
+	private Integer salePbQty;
+	
 	// 问题描述
 	private String issue;
 	
@@ -20,6 +22,14 @@ public class VisitHistoryDetailDto implements Serializable {
 	
 	// 物料信息列表
 	private List<VisitMaterielDetailDto> visitMaterielDetailDtoList;
+
+	public Integer getSalePbQty() {
+		return salePbQty;
+	}
+
+	public void setSalePbQty(Integer salePbQty) {
+		this.salePbQty = salePbQty;
+	}
 
 	public String getIssue() {
 		return issue;
@@ -63,8 +73,10 @@ public class VisitHistoryDetailDto implements Serializable {
 
 	@Override
 	public String toString() {
-		return "VisitHistoryDetailDto [issue=" + issue + ", visitModelDetailDtoList=" + visitModelDetailDtoList
-				+ ", visitSaleDetailDtoList=" + visitSaleDetailDtoList + ", visitCompetitorInfoDtoList="
-				+ visitCompetitorInfoDtoList + ", visitMaterielDetailDtoList=" + visitMaterielDetailDtoList + "]";
+		return "VisitHistoryDetailDto [salePbQty=" + salePbQty + ", issue=" + issue + ", visitModelDetailDtoList="
+				+ visitModelDetailDtoList + ", visitSaleDetailDtoList=" + visitSaleDetailDtoList
+				+ ", visitCompetitorInfoDtoList=" + visitCompetitorInfoDtoList + ", visitMaterielDetailDtoList="
+				+ visitMaterielDetailDtoList + "]";
 	}
+	
 }
