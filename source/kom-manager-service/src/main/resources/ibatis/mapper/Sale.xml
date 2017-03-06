@@ -657,8 +657,8 @@
 		<include refid="commonConditionByPrefix1" />
 		ORDER BY s.SALE_DATE DESC
 	</select>
-	<select id="calcShopSaleQty" resultType="int">
-		SELECT SUM(m.SALE_QTY) as saleQty FROM T_SALE s
+	<select id="calcShopSaleQty" resultType="java.lang.Long">
+		SELECT IFNULL(SUM(m.SALE_QTY),0) as saleQty FROM T_SALE s
 		LEFT JOIN T_SALE_ITEM m
 		ON m.SALE_ID = s.ID
 		WHERE m.SHOP_ID = #{shopId}
