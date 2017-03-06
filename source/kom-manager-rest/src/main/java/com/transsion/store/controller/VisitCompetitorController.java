@@ -44,10 +44,8 @@ import com.shangkang.core.dto.RequestModel;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.VisitCompetitor;
-import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.VisitCompetitorDetailDto;
 import com.transsion.store.facade.VisitCompetitorFacade;
-import com.transsion.store.utils.CacheUtils;
 
 @Controller
 @Path("visitCompetitor")
@@ -154,8 +152,6 @@ public class VisitCompetitorController extends AbstractController{
 		@QueryParam("shopCode") String shopCode,@QueryParam("shopName") String shopName,
 		@QueryParam("regionId")String regionId,@QueryParam("brandName")String brandName,
 		@QueryParam("createBy") String createBy,@QueryParam("companyId") String companyId) throws ServiceException,IOException {
-		
-		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(this.getAuthorization());
 		VisitCompetitorDetailDto vCompetitorDetailDto = new VisitCompetitorDetailDto();
 		vCompetitorDetailDto.setCreateTimeStart(createTimeStart);
 		vCompetitorDetailDto.setCreateTimeEnd(createTimeEnd);
@@ -168,10 +164,6 @@ public class VisitCompetitorController extends AbstractController{
 		}
 		if(!UtilHelper.isEmpty(companyId)){
 			vCompetitorDetailDto.setCompanyId(Long.parseLong(companyId));
-		}else{
-			if(!userContext.isAdmin()){
-				vCompetitorDetailDto.setCompanyId(userContext.getCompanyId());
-			}
 		}
 		if(!UtilHelper.isEmpty(visitId)){
 			vCompetitorDetailDto.setVisitId(Long.parseLong(visitId));
