@@ -42,7 +42,7 @@
 		<result column="BRAND_ID" property="brandId"/>
 		<result column="MODEL_ID" property="modelId"/>
 		<result column="BRAND_CODE" property="brandCode"/>
-		<result column="MODEL_CODE" property="modelCode"/>
+		<result column="MODEL_NAME" property="modelName"/>
 		<result column="COUNTRY_NAME" property="countryName"/>
 		<result column="REMARK" property="remark"/>
 		<result column="CREATE_BY" property="createBy"/>
@@ -164,8 +164,8 @@
             <if test="visitModelSettingInfoDto.brandCode!= null and visitModelSettingInfoDto.brandCode!= ''">
 				AND b.BRAND_CODE=#{visitModelSettingInfoDto.brandCode}
             </if>
-            <if test="visitModelSettingInfoDto.modelCode!= null and visitModelSettingInfoDto.modelCode!= ''">
-				AND m.MODEL_CODE=#{visitModelSettingInfoDto.modelCode}
+            <if test="visitModelSettingInfoDto.modelName!= null and visitModelSettingInfoDto.modelName!= ''">
+				AND m.MODEL_NAME=#{visitModelSettingInfoDto.modelName}
             </if>
             <if test="visitModelSettingInfoDto.createBy!= null and visitModelSettingInfoDto.createBy!= ''">
 				AND t.CREATE_BY=#{visitModelSettingInfoDto.createBy}
@@ -207,6 +207,9 @@
             </when>            
             <when test="key == 'brandCode'">
 				b.BRAND_CODE ${value}
+            </when>
+            <when test="key == 'countryName'">
+				r.REGION_NAME ${value}
             </when>
             <when test="key == 'modelCode'">
 				m.MODEL_CODE ${value}
@@ -301,7 +304,7 @@
 		t.BRAND_ID,
 		b.BRAND_CODE,
 		t.MODEL_ID,
-		m.MODEL_CODE,
+		m.MODEL_NAME,
 		t.CREATE_BY,
 		t.CREATE_TIME,
 		t.UPDATE_BY,

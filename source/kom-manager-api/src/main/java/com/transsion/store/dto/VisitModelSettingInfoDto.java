@@ -33,7 +33,7 @@ public class VisitModelSettingInfoDto implements Serializable {
 	
 	private String brandCode;
 	
-	private String modelCode;
+	private String modelName;
 	
 	private String countryName;
 
@@ -113,12 +113,12 @@ public class VisitModelSettingInfoDto implements Serializable {
 		this.brandCode = brandCode;
 	}
 
-	public String getModelCode() {
-		return modelCode;
+	public String getModelName() {
+		return modelName;
 	}
 
-	public void setModelCode(String modelCode) {
-		this.modelCode = modelCode;
+	public void setModelName(String modelName) {
+		this.modelName = modelName;
 	}
 
 	public String getRemark() {
@@ -181,10 +181,9 @@ public class VisitModelSettingInfoDto implements Serializable {
 	public String toString() {
 		return "VisitModelSettingInfoDto [id=" + id + ", actionDate=" + actionDate + ", companyId=" + companyId
 						+ ", companyCode=" + companyCode + ", brandId=" + brandId + ", regionId=" + regionId
-						+ ", modelId=" + modelId + ", brandCode=" + brandCode + ", modelCode=" + modelCode
+						+ ", modelId=" + modelId + ", brandCode=" + brandCode + ", modelName=" + modelName
 						+ ", countryName=" + countryName + ", remark=" + remark + ", createBy=" + createBy
 						+ ", createTime=" + createTime + ", updateBy=" + updateBy + ", updateTime=" + updateTime + "]";
 	}
-
 
 }

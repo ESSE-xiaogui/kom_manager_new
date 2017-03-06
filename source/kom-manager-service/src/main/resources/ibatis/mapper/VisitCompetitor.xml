@@ -206,11 +206,29 @@
         	<when test="key == 'id'">
 				ID ${value}
             </when>
+            <when test="key == 'companyCode'">
+				c.COMPANY_CODE ${value}
+            </when>
+            <when test="key == 'countryName'">
+				r1.REGION_NAME ${value}
+            </when>
+            <when test="key == 'cityName'">
+				r2.REGION_NAME ${value}
+            </when>
+            <when test="key == 'shopCode'">
+				SHOP_CODE ${value}
+            </when>
+            <when test="key == 'shopName'">
+				SHOP_NAME ${value}
+            </when>
         	<when test="key == 'visitId'">
 				VISIT_ID ${value}
             </when>
-        	<when test="key == 'brandId'">
+        	<when test="key == 'brandName'">
 				BRAND_NAME ${value}
+            </when>
+            <when test="key == 'empName'">
+				EMP_NAME ${value}
             </when>
         	<when test="key == 'saleQty'">
 				SALE_QTY ${value}
@@ -219,10 +237,10 @@
 				REMARK ${value}
             </when>
         	<when test="key == 'createBy'">
-				CREATE_BY ${value}
+				vc.CREATE_BY ${value}
             </when>
         	<when test="key == 'createTime'">
-				CREATE_TIME ${value}
+				vc.CREATE_TIME ${value}
             </when>
         	<when test="key == 'updateBy'">
 				UPDATE_BY ${value}
