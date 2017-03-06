@@ -276,7 +276,7 @@ public class VisitController extends AbstractController{
 	}
 	
 	/**
-	 * web 巡店历史详情查询
+	 * web TECNO 巡店历史详情查询
 	 * @param visitId
 	 * @return
 	 * @throws ServiceException
@@ -288,6 +288,12 @@ public class VisitController extends AbstractController{
 		return visitFacade.queryVisitHistoryDataByVisitId(visitId);
 	}
 	
+	/**
+	 * web ITEL 巡店历史详情查询
+	 * @param visitId
+	 * @return
+	 * @throws ServiceException
+	 */
 	@GET
 	@Path("/queryItelVisitHistoryDetailByVisitId")
 	@Produces({MediaType.APPLICATION_JSON})

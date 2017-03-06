@@ -556,11 +556,13 @@
 	
 	<select id="queryVisitScoreItemInfoByVisitId" parameterType="java.lang.Long" resultMap="VisitScoreInfoDtoResultMapper">
 		SELECT 
-			s.TYPE, 
+			a.SQE AS TYPE,
 			s.DESC_CN, 
 			s.DESC_EN, 
 			v.SCORE
-		FROM T_VISIT_SCORE_ITEM v LEFT JOIN T_VISIT_SCORE_SETTING s ON v.SCORE_SETTING_ID = s.ID 
+		FROM T_VISIT_SCORE_ITEM v 
+		LEFT JOIN T_VISIT_SCORE_SETTING s ON v.SCORE_SETTING_ID = s.ID 
+		LEFT JOIN T_ATTRIBUTE a ON s.TYPE = a.ID
 		WHERE v.VISIT_ID = #{visitId}
 	</select>
 	
