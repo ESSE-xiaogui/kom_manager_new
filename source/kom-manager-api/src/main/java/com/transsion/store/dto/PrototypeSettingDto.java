@@ -12,9 +12,9 @@ public class PrototypeSettingDto extends PrototypeSetting implements Serializabl
 
 	private static final long serialVersionUID = 1L;
 	
-	private String companyName;		// 事业部名称
+	private String companyCode;		// 事业部代码
 	private String modelName;		// 机型
-	private String countryId;		// 国家ID
+	private Long countryId;			// 国家ID
 	private String brandId;			// 品牌ID
 	private String countDates;		// 时间列表 逗好隔开
 	
@@ -25,11 +25,11 @@ public class PrototypeSettingDto extends PrototypeSetting implements Serializabl
 	private List<PrototypeSettingRegion> prototypeSettingRegions;		// 盘点计划国家列表
 	private List<PrototypeSettingTime> prototypeSettingTimes;			// 盘点计划时间列表
 	
-	public String getCompanyName() {
-		return companyName;
+	public String getCompanyCode() {
+		return companyCode;
 	}
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
 	}
 	
 	public String getModelName() {
@@ -38,10 +38,10 @@ public class PrototypeSettingDto extends PrototypeSetting implements Serializabl
 	public void setModelName(String modelName) {
 		this.modelName = modelName;
 	}
-	public String getCountryId() {
+	public Long getCountryId() {
 		return countryId;
 	}
-	public void setCountryId(String countryId) {
+	public void setCountryId(Long countryId) {
 		this.countryId = countryId;
 	}
 	public String getBrandId() {

@@ -288,7 +288,7 @@ public class PrototypeSettingManager {
 				prototypeSettingModel.setCreateTime(systemDateService.getCurrentDate());
 				prototypeSettingModel.setModelId(modelId);
 				
-				prototypeSettingModelMapper.update(prototypeSettingModel);
+				prototypeSettingModelMapper.save(prototypeSettingModel);
 			}
 		}
 		
