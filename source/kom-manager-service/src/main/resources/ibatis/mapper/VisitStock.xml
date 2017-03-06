@@ -79,6 +79,12 @@
 		<result column="REMARK" property="remark"/>
 	</resultMap>
 	
+	<resultMap id="VisitModelStockDtoResultMapper" type="VisitModelStockDto">
+		<result column="MODEL_NAME" property="modelName"/>
+		<result column="STOCK_QTY" property="stockQty"/>
+		<result column="STOCK_ITO" property="stockIto"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, VISIT_ID
@@ -451,5 +457,9 @@
 	
 	<select id="queryVisitStockByVisitId" parameterType="java.lang.Long" resultMap="VisitStockInfoDtoDtoMapper">
 		SELECT * FROM T_VISIT_STOCK WHERE VISIT_ID = #{visitId}
+	</select>
+	
+	<select id="queryVisitModelStockListByVisitId" parameterType="java.lang.Long" resultMap="VisitModelStockDtoResultMapper">
+		SELECT m.MODEL_NAME, v.STOCK_QTY, v.STOCK_ITO FROM T_VISIT_STOCK v LEFT JOIN T_MODEL m ON v.MODEL_ID = m.ID WHERE v.VISIT_ID = #{visitId}
 	</select>
 </mapper>

@@ -32,6 +32,8 @@ public class VisitShopDetailDto implements Serializable {
 	
 	private List<VisitScoreInfoDto> visitScoreInfoList;
 	
+	private List<VisitModelStockDto> visitModelStockList;
+	
 	public Integer getShopScore() {
 		return shopScore;
 	}
@@ -76,11 +78,18 @@ public class VisitShopDetailDto implements Serializable {
 		this.visitScoreInfoList = visitScoreInfoList;
 	}
 	
+	public List<VisitModelStockDto> getVisitModelStockList() {
+		return visitModelStockList;
+	}
+	public void setVisitModelStockList(List<VisitModelStockDto> visitModelStockList) {
+		this.visitModelStockList = visitModelStockList;
+	}
+	
 	@Override
 	public String toString() {
 		return "VisitShopDetailDto [shopScore=" + shopScore + ", saleScore=" + saleScore + ", staffScore=" + staffScore
 				+ ", totalScore=" + totalScore + ", issue=" + issue + ", action=" + action + ", visitScoreInfoList="
-				+ visitScoreInfoList + "]";
+				+ visitScoreInfoList + ", visitModelStockList=" + visitModelStockList + "]";
 	}
 	
 }

@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.VisitStock;
 import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.VisitModelStockDto;
 import com.transsion.store.dto.VisitStockDetailDto;
 import com.transsion.store.dto.VisitStockInfoDto;
 import com.shangkang.core.bo.Pagination;
@@ -163,5 +164,9 @@ public class VisitStockService {
 	
 	public List<VisitStockInfoDto> queryVisitStockByVisitId(Long visitId) throws ServiceException {
 		return visitStockMapper.queryVisitStockByVisitId(visitId);
+	}
+	
+	public List<VisitModelStockDto> queryVisitModelStockListByVisitId(Long visitId) throws ServiceException {
+		return visitStockMapper.queryVisitModelStockListByVisitId(visitId);
 	}
 }
