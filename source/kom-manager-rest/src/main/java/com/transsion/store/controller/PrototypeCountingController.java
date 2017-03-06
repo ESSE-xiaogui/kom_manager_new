@@ -18,9 +18,11 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.PrototypeCounting;
+import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.PrototypeCountingDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.PrototypeCountingFacade;
+import com.transsion.store.utils.CacheUtils;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
@@ -154,6 +156,7 @@ public class PrototypeCountingController extends AbstractController{
 		@QueryParam("status") String status,@QueryParam("imeiNo") String imeiNo,
 		@QueryParam("prototypeId") String prototypeId) throws ServiceException,IOException {
 		
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(this.getAuthorization());
 		PrototypeCountingDto prototypeCountingDto = new PrototypeCountingDto();
 		prototypeCountingDto.setCreateTimeStart(createTimeStart);
 		prototypeCountingDto.setCreateTimeEnd(createTimeEnd);
@@ -169,6 +172,8 @@ public class PrototypeCountingController extends AbstractController{
 		}
 		if(!UtilHelper.isEmpty(companyId)){
 			prototypeCountingDto.setCompanyId(Long.parseLong(companyId));
+		}else{
+			prototypeCountingDto.setCompanyId(userContext.isAdmin()?null:userContext.getCompanyId());
 		}
 		if(!UtilHelper.isEmpty(brandId)){
 			prototypeCountingDto.setBrandId(Long.parseLong(brandId));

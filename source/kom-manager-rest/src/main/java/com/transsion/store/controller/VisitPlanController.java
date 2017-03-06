@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.VisitPlan;
+import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.VisitPlanBriefSummaryDto;
 import com.transsion.store.dto.VisitPlanDetailInfoDto;
 import com.transsion.store.dto.VisitPlanDetailSummaryDto;
@@ -25,6 +26,7 @@ import com.transsion.store.dto.VisitPlanDto;
 import com.transsion.store.dto.VisitPlanInfoDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.VisitPlanFacade;
+import com.transsion.store.utils.CacheUtils;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
@@ -232,6 +234,8 @@ public class VisitPlanController extends AbstractController{
 		@QueryParam("regionId")String regionId,@QueryParam("bizId")String bizId,
 		@QueryParam("weekNo")String weekNo,@QueryParam("createBy") String createBy,
 		@QueryParam("companyId") String companyId,@QueryParam("status") String status) throws ServiceException,IOException, ParseException {
+		
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(this.getAuthorization());
 		VisitPlanDetailInfoDto visitPlanDetailInfoDto = new VisitPlanDetailInfoDto();
 		visitPlanDetailInfoDto.setCreateTimeStart(createTimeStart);
 		visitPlanDetailInfoDto.setCreateTimeEnd(createTimeEnd);
@@ -243,6 +247,8 @@ public class VisitPlanController extends AbstractController{
 		}
 		if(!UtilHelper.isEmpty(companyId)){
 			visitPlanDetailInfoDto.setCompanyId(Long.parseLong(companyId));
+		}else{
+			visitPlanDetailInfoDto.setCompanyId(userContext.isAdmin()?null:userContext.getCompanyId());;
 		}
 		if(!UtilHelper.isEmpty(bizId)){
 			visitPlanDetailInfoDto.setBizId(Long.parseLong(bizId));

@@ -18,9 +18,11 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.VisitStock;
+import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.VisitStockDetailDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.VisitStockFacade;
+import com.transsion.store.utils.CacheUtils;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
@@ -153,6 +155,7 @@ public class VisitStockController extends AbstractController{
 		@QueryParam("regionId")String regionId,@QueryParam("modelName")String modelName,
 		@QueryParam("createBy") String createBy,@QueryParam("companyId") String companyId) throws ServiceException,IOException {
 		
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(this.getAuthorization());
 		VisitStockDetailDto visitStockDetailDto = new VisitStockDetailDto();
 		visitStockDetailDto.setCreateTimeStart(createTimeStart);
 		visitStockDetailDto.setCreateTimeEnd(createTimeEnd);
@@ -165,6 +168,8 @@ public class VisitStockController extends AbstractController{
 		}
 		if(!UtilHelper.isEmpty(companyId)){
 			visitStockDetailDto.setCompanyId(Long.parseLong(companyId));
+		}else{
+			visitStockDetailDto.setCompanyId(userContext.isAdmin()?null:userContext.getCompanyId());
 		}
 		if(!UtilHelper.isEmpty(visitId)){
 			visitStockDetailDto.setVisitId(Long.parseLong(visitId));
