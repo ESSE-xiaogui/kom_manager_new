@@ -1,6 +1,10 @@
 package com.transsion.store.manager;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,13 +51,11 @@ public class PrototypeSettingManager {
 	 */
 	public Pagination<PrototypeSettingDto> listPaginationByProperty(Pagination<PrototypeSettingDto> pagination, PrototypeSettingDto prototypeSettingDto)
 			throws ServiceException {
-		
 			Pagination<PrototypeSettingDto> pagin = prototypeSettingService.listPaginationByProperty(pagination, prototypeSettingDto);
 			
 			List<PrototypeSettingDto> prototypeSettingDtos = pagin.getResultList();
 			
 			if (!prototypeSettingDtos.isEmpty()) {
-				
 				for (PrototypeSettingDto prototypeSettingDtoTemp: prototypeSettingDtos) {
 					PrototypeSettingTime prototypeSettingTime =  new PrototypeSettingTime();
 					List<PrototypeSettingTime> prototypeSettingTimes = new ArrayList<PrototypeSettingTime>();
@@ -81,7 +83,6 @@ public class PrototypeSettingManager {
 	 * @param prototypeSettingDto
 	 */
 	public void savePrototypeSetting(PrototypeSettingDto prototypeSettingDto, String token) throws ServiceException {
-		
 		// 是否登录
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
@@ -99,7 +100,7 @@ public class PrototypeSettingManager {
 		PrototypeSetting prototypeSetting = new PrototypeSetting();
 		
 		prototypeSetting.setCompanyId(prototypeSettingDto.getCompanyId());
-		prototypeSetting.setEffectiveMonth(systemDateService.getCurrentDate());
+		prototypeSetting.setEffectiveMonth(formatDate(prototypeSettingDto));
 		prototypeSetting.setIsInactive(prototypeSettingDto.getIsInactive());
 		prototypeSetting.setRemark(prototypeSettingDto.getRemark());
 		prototypeSetting.setVersion(prototypeSettingDto.getVersion());
@@ -107,14 +108,6 @@ public class PrototypeSettingManager {
 		prototypeSetting.setCreateDate(systemDateService.getCurrentDate());
 		
 		prototypeSettingMapper.save(prototypeSetting);
-		
-		// List<PrototypeSettingRegion> prototypeSettingRegions = new ArrayList<PrototypeSettingRegion>();
-		// List<PrototypeSettingModel> prototypeSettingModels = new ArrayList<PrototypeSettingModel>();
-		// List<PrototypeSettingTime> prototypeSettingTimes = new ArrayList<PrototypeSettingTime>();
-		
-		// prototypeSettingRegions = prototypeSettingDto.getPrototypeSettingRegions();
-		// prototypeSettingModels = prototypeSettingDto.getPrototypeSettingModels();
-		// prototypeSettingTimes = prototypeSettingDto.getPrototypeSettingTimes();
 		
 		if (prototypeSettingDto.getModelIds() != null && !prototypeSettingDto.getModelIds().isEmpty()) {
 			for (Long modelId : prototypeSettingDto.getModelIds()) {
@@ -143,7 +136,6 @@ public class PrototypeSettingManager {
 		}
 		
 		String countDatesStr = prototypeSettingDto.getCountDates();
-		
 		String[] countDatesStrs = countDatesStr.split(",");
 		
 		if (countDatesStrs != null && countDatesStrs.length > 0) {
@@ -236,7 +228,6 @@ public class PrototypeSettingManager {
 		return prototypeSettingDto;
 	}
 	
-	
 	/**
 	 * 更新记录
 	 * @param prototypeSettingDto
@@ -244,7 +235,6 @@ public class PrototypeSettingManager {
 	 * @throws ServiceException
 	 */
 	public void update(PrototypeSettingDto prototypeSettingDto, String token) throws ServiceException {
-		
 		// 是否登录
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
@@ -258,7 +248,33 @@ public class PrototypeSettingManager {
 		PrototypeSetting prototypeSettingTemp = prototypeSettingMapper.getByPK(prototypeSettingDto.getId());
 		PrototypeSetting prototypeSetting = new PrototypeSetting();
 		
-		// 当月已生效的
+		// 当月已生效的盘点日期，不能修改，只能改下个月或以后的
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM");
+		
+		String countDatesStr = prototypeSettingDto.getCountDates();
+		String[] countDatesStrs = countDatesStr.split(",");
+		
+		Date date = new Date();
+		if (countDatesStrs != null && countDatesStrs.length > 0) {
+			for (String countDate : countDatesStrs) {
+				try {
+					date = sdf.parse(countDate);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		// 当前日期上一个月
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, -1);
+		
+        // 启用状态且当前日期上一个月时间小于计划日期，说明当前日期与计划日期同月或之前，则不能修改，抛出异常
+		if (countDatesStrs != null && countDatesStrs.length > 0 && 
+				"1".equals(prototypeSettingTemp.getIsInactive()) && calendar.getTime().getTime() < date.getTime()) {
+			throw new ServiceException(ExceptionDef.ERROR_PROTOTYPESETTING_DATE_INVALID.getName());
+		}
 		
 		prototypeSetting.setId(prototypeSettingDto.getId());
 		prototypeSetting.setCompanyId(prototypeSettingDto.getCompanyId());
@@ -268,7 +284,7 @@ public class PrototypeSettingManager {
 		prototypeSetting.setUpdateDate(systemDateService.getCurrentDate());
 		prototypeSetting.setCreateBy(prototypeSettingTemp.getCreateBy());
 		prototypeSetting.setCreateDate(prototypeSettingTemp.getCreateDate());
-		prototypeSetting.setEffectiveMonth(prototypeSettingTemp.getEffectiveMonth());
+		prototypeSetting.setEffectiveMonth(formatDate(prototypeSettingDto));
 		prototypeSetting.setVersion(prototypeSettingTemp.getVersion());
 		
 		prototypeSettingMapper.update(prototypeSetting);
@@ -276,7 +292,6 @@ public class PrototypeSettingManager {
 		// 从表，先删除，后新增
 		
 		if (prototypeSettingDto.getModelIds() != null && !prototypeSettingDto.getModelIds().isEmpty()) {
-			
 			PrototypeSettingModel prototypeSettingModelTemp = new PrototypeSettingModel();
 			prototypeSettingModelTemp.setSettingId(prototypeSettingDto.getId());
 			
@@ -295,7 +310,6 @@ public class PrototypeSettingManager {
 		}
 		
 		if (prototypeSettingDto.getRegionIds() != null && !prototypeSettingDto.getRegionIds().isEmpty()) {
-			
 			PrototypeSettingRegion prototypeSettingRegionTemp = new PrototypeSettingRegion();
 			prototypeSettingRegionTemp.setSettingId(prototypeSettingDto.getId());
 			
@@ -313,12 +327,8 @@ public class PrototypeSettingManager {
 			}
 		}
 		
-		String countDatesStr = prototypeSettingDto.getCountDates();
-		
-		String[] countDatesStrs = countDatesStr.split(",");
 		
 		if (countDatesStrs != null && countDatesStrs.length > 0) {
-			
 			PrototypeSettingTime prototypeSettingTimeTemp = new PrototypeSettingTime();
 			prototypeSettingTimeTemp.setSettingId(prototypeSettingDto.getId());
 			
@@ -335,5 +345,35 @@ public class PrototypeSettingManager {
 				prototypeSettingTimeMapper.save(prototypeSettingTime);
 			}
 		}
+	}
+	
+	/**
+	 * 前端日期格式转换
+	 * @param prototypeSettingDto
+	 * @return
+	 */
+	private String formatDate(PrototypeSettingDto prototypeSettingDto) {
+		String countDatesStr = prototypeSettingDto.getCountDates();
+		String[] countDatesStrs = countDatesStr.split(",");
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // 设置时间格式
+		SimpleDateFormat sdfTemp = new SimpleDateFormat("yyyy-MM"); // 设置时间格式
+		String effectiveMonth = "";		// 存放前端转化的日期
+		
+		if (countDatesStrs != null && countDatesStrs.length > 0) {
+			for (String countDate : countDatesStrs) {
+				// 获取盘点月份
+				try {
+					Date date = sdf.parse(countDate);
+					effectiveMonth = sdfTemp.format(date);
+					
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return effectiveMonth;
 	}
 }
