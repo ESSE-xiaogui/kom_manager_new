@@ -14,7 +14,6 @@ import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.GoalSupervisor;
 import com.transsion.store.bo.Model;
 import com.transsion.store.context.UserContext;
-import com.transsion.store.dto.GoalModelDto;
 import com.transsion.store.dto.SaleGoalDto;
 import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.StatShopModelSaleDto;
@@ -52,6 +51,7 @@ public class SaleGoalManager {
 	@Autowired
 	private ModelMapper modelMapper;
 	
+	@Autowired
 	private GoalModelMapper goalModelMapper;
 	
 	
@@ -134,11 +134,7 @@ public class SaleGoalManager {
 		}
 		
 		// 获取绩效信息
-		GoalModelDto goalModelDto = new GoalModelDto();
-		goalModelDto.setShopId(shopId);
-		goalModelDto.setGoalMonth(saleDate.substring(1, 7));
-		goalModelDto.setModelCodeList(modelCodeList);
-		List<StatShopModelSaleDto> saleTargetList = goalModelMapper.queryModelSaleTargetByShopId(goalModelDto);
+		List<StatShopModelSaleDto> saleTargetList = goalModelMapper.queryModelSaleTargetByShopId(shopId, saleDate.substring(0, 7), modelCodeList);
 		storeShopModelTargetSaleQty(visitStockInfoList, saleTargetList);
 
 		// 获取月销量信息

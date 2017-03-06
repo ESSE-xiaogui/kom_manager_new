@@ -349,12 +349,12 @@
 		<include refid="commonCondition"/>
 	</select>
 	
-	<select id="queryModelSaleTargetByShopId" parameterType="GoalModelDto" resultMap="StatShopModelSaleDtoResultMapper">
-		SELECT MODEL_CODE, SALE_TARGET FROM T_GOAL_MODEL WHERE SHOP_ID = #{shopId} AND GOAL_MONTH = #{goalMonth} AND
-		 MODEL_CODE IN 
-		 <foreach item="modelCodeList" collection="list" separator="," open="("
+	<select id="queryModelSaleTargetByShopId" resultMap="StatShopModelSaleDtoResultMapper">
+		SELECT MODEL_CODE, SALE_TARGET FROM T_GOAL_MODEL WHERE SHOP_ID = #{shopId} AND GOAL_MONTH = #{goalMonth} 
+		AND MODEL_CODE IN 
+		 <foreach item="modelCode" collection="modelCodeList" separator="," open="("
 			close=")" index="">
-			#{modelCodeList}
+			#{modelCode}
 		</foreach>
 	</select>
 </mapper>

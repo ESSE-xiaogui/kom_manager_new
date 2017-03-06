@@ -19,17 +19,17 @@ package com.transsion.store.mapper;
 import java.util.List;
 import java.util.Map;
 
-import com.transsion.store.bo.GoalModel;
-import com.transsion.store.dto.GoalModelDto;
-import com.transsion.store.dto.StatShopModelSaleDto;
-import com.shangkang.core.mapper.GenericIBatisMapper;
+import org.apache.ibatis.annotations.Param;
+
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
-import org.apache.ibatis.annotations.Param;
+import com.shangkang.core.mapper.GenericIBatisMapper;
+import com.transsion.store.bo.GoalModel;
+import com.transsion.store.dto.StatShopModelSaleDto;
 
 public interface GoalModelMapper extends GenericIBatisMapper<GoalModel, java.lang.Long> {
 
     public List<GoalModel> listPaginationByProperty(Pagination<GoalModel> pagination, @Param("goalModel")GoalModel goalModel, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     
-    public List<StatShopModelSaleDto> queryModelSaleTargetByShopId(GoalModelDto goalModelDto);
+    public List<StatShopModelSaleDto> queryModelSaleTargetByShopId(@Param("shopId")Long shopId, @Param("goalMonth")String goalMonth, @Param("modelCodeList")List<String> modelCodeList) throws DataAccessFailureException;
 }
