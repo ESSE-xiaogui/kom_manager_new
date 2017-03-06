@@ -160,6 +160,27 @@ public class BrandFacadeImpl implements BrandFacade {
 	public void saveBrand(String token,BrandDto brandDto) throws ServiceException{
 		brandManager.saveBrand(token, brandDto);
 	}
+
+	/**
+	 * 保存或更新记录
+	 * @param brand
+	 * @return
+	 * @throws ServiceException
+	 */
+	public int saveOrUpdate(Brand brand) throws ServiceException {
+		return brandService.saveOrUpdate(brand);
+	}
+
+	/**
+	 * 批量保存或更新记录
+	 * @param list
+	 * @return
+	 * @throws ServiceException
+	 */
+	public int batchSaveOrUpdate(List<Brand> list) throws ServiceException {
+		return brandService.batchSaveOrUpdate(list);
+	}
+
 	/**
 	 * 查询品牌
 	 * @return

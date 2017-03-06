@@ -156,4 +156,24 @@ public class BrandService {
 	public List<Brand> queryBrandListByCompanyId(Long companyId) throws ServiceException {
 		return brandMapper.queryBrandListByCompanyId(companyId);
 	}
+
+	/**
+	 * 保存或更新记录
+	 * @param brand
+	 * @return
+	 * @throws ServiceException
+	 */
+	public int saveOrUpdate(Brand brand) throws ServiceException {
+		return brandMapper.saveOrUpdate(brand);
+	}
+
+	/**
+	 * 批量保存或更新记录
+	 * @param list
+	 * @return
+	 * @throws ServiceException
+	 */
+	public int batchSaveOrUpdate(List<Brand> list) throws ServiceException {
+		return brandMapper.batchSaveOrUpdate(list);
+	}
 }

@@ -89,6 +89,22 @@ public interface BrandFacade {
 	public void update(String token,Brand brand) throws ServiceException;
 
 	/**
+	 * 保存或更新记录
+	 * @param brand
+	 * @return
+	 * @throws ServiceException
+	 */
+	public int saveOrUpdate(Brand brand) throws ServiceException;
+
+	/**
+	 * 批量保存或更新记录
+	 * @param list
+	 * @return
+	 * @throws ServiceException
+	 */
+	public int batchSaveOrUpdate(List<Brand> list) throws ServiceException;
+
+	/**
 	 * 根据条件查询记录条数
 	 * @param brand
 	 * @return
