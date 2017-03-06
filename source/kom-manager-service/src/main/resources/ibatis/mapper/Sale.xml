@@ -676,11 +676,11 @@
 		LEFT JOIN T_SALE_ITEM d on d.SALE_ID=m.ID
 		WHERE m.SHOP_ID=#{shopId}
         AND d.MODEL_CODE IS NOT NULL
-		AND MODEL_CODE IN
-			<foreach item="modelCodeList" collection="list" separator="," open="("
-				close=")" index="">
-				#{modelCodeList}
-			</foreach>
+		AND d.MODEL_CODE IN
+		<foreach item="modelCode" collection="modelCodeList" separator="," open="("
+			close=")" index="">
+			#{modelCode}
+		</foreach>
 		<if test="startDate!=null and startDate!=''">
 			AND  m.SALE_DATE &gt;=   date_format(#{startDate}, '%Y-%m-%d %H:%i:%s')
 		</if>

@@ -186,7 +186,7 @@ public class VisitManager {
 		
 		VisitModelSetting visitModelSetting = new VisitModelSetting();
 		visitModelSetting.setCompanyId(userContext.getCompanyId());
-		visitModelSetting.setActionDate(planDate.substring(1, 7));
+		visitModelSetting.setActionDate(planDate.substring(0, 7));
 		modelCodeList = visitModelSettingService.queryModeCodeListByCompanyId(visitModelSetting);
 		
 		return saleGoalManager.getShopModelSaleInfo(shopId, modelCodeList, planDate);
