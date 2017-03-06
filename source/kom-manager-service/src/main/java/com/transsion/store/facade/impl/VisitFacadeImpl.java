@@ -88,10 +88,10 @@ public class VisitFacadeImpl implements VisitFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Visit> listPaginationByProperty(Pagination<Visit> pagination, Visit visit)
+	public Pagination<Visit> listPaginationByProperty(String token,Pagination<Visit> pagination, Visit visit)
 			throws ServiceException
 	{
-		return visitService.listPaginationByProperty(pagination, visit);
+		return visitService.listPaginationByProperty(token, pagination, visit);
 	}
 
 	/**

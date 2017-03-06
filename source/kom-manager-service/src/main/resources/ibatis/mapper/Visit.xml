@@ -429,7 +429,10 @@
 		LEFT JOIN T_REGION e ON s.CITY = e.ID
 		LEFT JOIN T_USER u ON v.CREATE_BY = u.USER_CODE
 		LEFT JOIN T_EMPLOYEE m ON u.ID = m.U_ID
-		WHERE 1=1
+		WHERE 1=1 
+		<if test="companyId!= null and companyId!= ''"> 
+			AND v.COMPANY_ID =#{companyId}
+		</if>
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>

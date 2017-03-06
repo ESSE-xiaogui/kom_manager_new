@@ -40,7 +40,7 @@ import com.transsion.store.dto.VisitShopInfoDto;
 
 public interface VisitMapper extends GenericIBatisMapper<Visit, java.lang.Long> {
 
-    public List<Visit> listPaginationByProperty(Pagination<Visit> pagination, @Param("visit")Visit visit, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<Visit> listPaginationByProperty(Pagination<Visit> pagination, @Param("visit")Visit visit, @Param("orderBy") Map<String, String> orderBy, @Param("companyId")Long companyId) throws DataAccessFailureException;
     
     public List<VisitInfoDto> queryUnplanedVisitList(VisitInfoDto visitInfoDto) throws DataAccessFailureException;
     

@@ -117,7 +117,7 @@ public interface VisitFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Visit> listPaginationByProperty(Pagination<Visit> pagination, Visit visit)
+	public Pagination<Visit> listPaginationByProperty(String token, Pagination<Visit> pagination, Visit visit)
 			throws ServiceException;
 
 	/*********************************
