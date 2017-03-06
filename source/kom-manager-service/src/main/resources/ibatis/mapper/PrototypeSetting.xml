@@ -43,7 +43,7 @@
 		<result column="UPDATE_BY" property="updateBy"/>
 		<result column="UPDATE_DATE" property="updateDate"/>
 		<result column="VERSION" property="version"/>
-		<result column="COMPANY_NAME" property="companyName"/>
+		<result column="COMPANY_CODE" property="companyCode"/>
 	</resultMap>
 	
 	<sql id="commonColumns">
@@ -118,11 +118,11 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="prototypeSettingDto != null">
+		<if test="prototypeSettingDto!= null">
             <if test="prototypeSettingDto.countryId!= null and prototypeSettingDto.countryId!= ''">
-				AND r.ID=#{prototypeSettingDto.countryId}
+				AND T.regionId=#{prototypeSettingDto.countryId}
             </if>
-            <if test="prototypeSettingDto.companyId!= null and prototypeSettingDto!= ''">
+            <if test="prototypeSettingDto.companyId!= null and prototypeSettingDto.companyId!= ''">
 				AND pro.COMPANY_ID=#{prototypeSettingDto.companyId}
             </if>
             <if test="prototypeSettingDto.effectiveMonth!= null and prototypeSettingDto.effectiveMonth!= ''">
@@ -202,7 +202,7 @@
 		<if test="orderBy != null">
 			<foreach collection="orderBy" index="key" item="value"
 					 open=" order by " separator="," close=" ">
-				<include refid="orderBy" />
+				<include refid="orderSpeBy" />
 			</foreach>
 		</if>
 	</sql>
@@ -297,9 +297,16 @@
  		FROM T_PROTOTYPE_SETTING
 	</select>
 	<select id="listPaginationByProperty" parameterType="PrototypeSettingDto" resultMap="PrototypeSettingDtoResultMapper">
-		SELECT pro.*, company.COMPANY_NAME
+		SELECT DISTINCT pro.id, pro.EFFECTIVE_MONTH, pro.IS_INACTIVE, pro.REMARK, pro.CREATE_BY,
+		pro.CREATE_DATE, pro.UPDATE_BY, pro.UPDATE_DATE, pro.VERSION, company.COMPANY_CODE
 		FROM T_PROTOTYPE_SETTING pro
-		LEFT JOIN T_COMPANY company ON company.ID = pro.COMPANY_ID 
+		LEFT JOIN T_COMPANY company ON company.ID = pro.COMPANY_ID
+		LEFT JOIN (
+			SELECT DISTINCT R.REGION_NAME, R.ID AS regionId, com.ID AS COMPANY_ID  FROM T_COMPANY com , T_SHOP s
+			LEFT JOIN T_REGION R ON s.COUNTRY = R.ID
+			WHERE s.COMPANY_ID = com.ID
+		) T  ON T.COMPANY_ID = pro.COMPANY_ID
+		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderSpeByClause" />
 	</select>

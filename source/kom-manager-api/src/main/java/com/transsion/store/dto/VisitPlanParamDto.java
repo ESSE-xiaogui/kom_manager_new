@@ -10,6 +10,11 @@ public class VisitPlanParamDto implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	/**
+	 * 用户Id 为空/后台自取
+	 * */
+	private Long userId;
+	
+	/**
 	  *	事业部ID
 	  */
 	private Long companyId;
@@ -27,6 +32,15 @@ public class VisitPlanParamDto implements Serializable{
 	  *	巡店计划日期本周开始日期--周六
 	  */
 	private String endDate;
+
+	
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
 	public Long getCompanyId() {
 		return companyId;
@@ -62,8 +76,8 @@ public class VisitPlanParamDto implements Serializable{
 
 	@Override
 	public String toString() {
-		return "VisitPlanParamDto [companyId=" + companyId + ", planner=" + planner + ", beginDate=" + beginDate
-						+ ", endDate=" + endDate + "]";
+		return "VisitPlanParamDto [userId=" + userId + ", companyId=" + companyId + ", planner=" + planner
+						+ ", beginDate=" + beginDate + ", endDate=" + endDate + "]";
 	}
 
 }

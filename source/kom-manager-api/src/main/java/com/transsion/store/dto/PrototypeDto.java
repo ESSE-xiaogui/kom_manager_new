@@ -39,7 +39,7 @@ public class PrototypeDto implements Serializable {
 	private String beginUnpublishTime;	// 下架开始时间
 	private String endUnpublishTime;	// 下架结束时间
 	private Long companyId;				// 事业部ID
-	private String companyName;			// 事业部名称
+	private String companyCode;			// 事业部名称
 	
 	public Long getId() {
 		return id;
@@ -231,10 +231,10 @@ public class PrototypeDto implements Serializable {
 	public void setCompanyId(Long companyId) {
 		this.companyId = companyId;
 	}
-	public String getCompanyName() {
-		return companyName;
+	public String getCompanyCode() {
+		return companyCode;
 	}
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
 	}
 }

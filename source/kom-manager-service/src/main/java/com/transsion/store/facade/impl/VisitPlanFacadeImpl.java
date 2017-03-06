@@ -187,6 +187,14 @@ public class VisitPlanFacadeImpl implements VisitPlanFacade {
 			throws ServiceException {
 		return visitPlanManager.queryPlanInfo(token, startDate, endDate);
 	}
+	/**
+	 * make plan页面/selectshop_plan 页面
+	 * 查询督导所有店铺某天巡店计划详情
+	 * @author guihua.zhang on 2017-03-06
+	 * */
+	public List<VisitPlanInfoDto> querySelfShopPlanInfo(String token,String startDate,String endDate) throws ServiceException{
+		return visitPlanManager.querySelfShopPlanInfo(token,startDate, endDate);
+	}
 
 	@Override
 	public Pagination<VisitPlanDetailDto> listPaginationByProperty(Pagination<VisitPlanDetailDto> pagination,

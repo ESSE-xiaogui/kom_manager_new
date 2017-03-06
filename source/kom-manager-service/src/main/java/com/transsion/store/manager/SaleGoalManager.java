@@ -96,13 +96,14 @@ public class SaleGoalManager {
 		// 获取绩效信息
 		GoalSupervisor goalSupervisor = new GoalSupervisor();
 		goalSupervisor.setShopId(shopId);
-		goalSupervisor.setGoalMonth(saleDate.substring(1, 7));
+		goalSupervisor.setGoalMonth(saleDate.substring(0, 7));
 		Long saleTarget = goalSupervisorMapper.querySaleTargetByShopId(goalSupervisor);
 		visitShopInfoDto.setTargetSaleQty(saleTarget);
 		visitShopInfoDto.setPlanDate(saleDate);
 		
 		// 获取销量信息
-		visitShopInfoDto.setCurrentSaleQty(salesMannager.calcShopSaleQty(shopId, (new SimpleDateFormat("yyyy-MM-dd").format(CalendarUtils.getFirstDayOfMonth(saleDate))), saleDate));
+		long currentSaleQty = salesMannager.calcShopSaleQty(shopId, (new SimpleDateFormat("yyyy-MM-dd").format(CalendarUtils.getFirstDayOfMonth(saleDate))), saleDate);
+		visitShopInfoDto.setCurrentSaleQty(currentSaleQty);
 		return visitShopInfoDto;
 	}
 

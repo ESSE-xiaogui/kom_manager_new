@@ -74,6 +74,7 @@
 		<result column="PLAN_QTY" property="visitPlanQty"/>
 	</resultMap>
 	<resultMap id="VisitPlanInfoDtoResultMapper" type="VisitPlanInfoDto">
+		<result column="SHOP_ID" property="shopId"/>
 		<result column="SHOP_NAME" property="shopName"/>
 		<result column="GRADE_NAME" property="gradeName"/>
 		<result column="REGION_NAME" property="cityName"/>
@@ -216,6 +217,9 @@
 	<sql id="commonConditionByParam1">
 		<if test="companyId!= null and companyId!= ''"> 
 			AND vp.COMPANY_ID=#{companyId}
+		</if>
+		<if test="userId!= null and userId!= ''"> 
+			AND up.USER_ID=#{userId}
 		</if>
 		<if test="planner!= null and planner!= ''"> 
 			AND vp.PLANNER=#{planner}
@@ -496,16 +500,38 @@
     	ORDER BY p.CREATE_TIME DESC
 	</select>
 
-	<select id="queryPlanInfo" parameterType="VisitPlanParamDto"
-		resultMap="VisitPlanInfoDtoResultMapper">
-		SELECT g.GRADE_NAME,p.SHOP_NAME,r.REGION_NAME,count(vp.SHOP_ID) AS SHOP_QTY
-		FROM T_VISIT_PLAN vp
+	<select id="queryPlanInfo" parameterType="VisitPlanParamDto" resultMap="VisitPlanInfoDtoResultMapper">
+		SELECT 
+		vp.SHOP_ID,
+		p.SHOP_NAME,
+		g.GRADE_NAME,		
+		r.REGION_NAME,
+		count(vp.SHOP_ID) AS SHOP_QTY
+		FROM
+		T_VISIT_PLAN vp
 		LEFT JOIN T_SHOP p ON p.ID = vp.SHOP_ID
 		LEFT JOIN T_SHOP_GRADE g ON g.ID = p.GRADE_ID
 		LEFT JOIN T_REGION r ON r.ID = p.REGION_ID
 		WHERE 1=1
-		<include refid="commonConditionByParam1"/>
+		<include refid="commonConditionByParam1" />
 		GROUP BY vp.SHOP_ID
+	</select>
+
+	<select id="querySelfShopPlanInfo" parameterType="VisitPlanParamDto" resultMap="VisitPlanInfoDtoResultMapper">
+		SELECT 
+		p.ID AS SHOP_ID,
+		p.SHOP_NAME,
+		g.GRADE_NAME,
+		r.REGION_NAME,
+		count(vp.SHOP_ID) AS SHOP_QTY FROM T_SHOP p
+		LEFT JOIN T_VISIT_PLAN vp ON vp.SHOP_ID = p.ID
+		LEFT JOIN T_USER_SHOP up ON up.SHOP_ID = p.ID
+		LEFT JOIN T_SHOP_GRADE g ON g.ID = p.GRADE_ID
+		LEFT JOIN T_REGION r ON r.ID = p.REGION_ID
+		WHERE 1=1
+		AND p.IS_INACTIVE = 1
+		<include refid="commonConditionByParam1" />
+		GROUP BY p.ID,p.SHOP_NAME,g.GRADE_NAME,r.REGION_NAME
 	</select>
 
 	<update id="updateStatusByShopIdAndPlanDate" parameterType="VisitPlan">

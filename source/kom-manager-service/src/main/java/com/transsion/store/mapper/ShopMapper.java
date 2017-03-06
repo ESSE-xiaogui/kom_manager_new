@@ -29,6 +29,7 @@ import com.transsion.store.dto.ShopChildrenDto;
 import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.ShopLoginDto;
 import com.transsion.store.dto.ShopUserDto;
+import com.transsion.store.dto.VisitPlanInfoDto;
 
 public interface ShopMapper extends GenericIBatisMapper<Shop, java.lang.Long> {
 
@@ -50,4 +51,7 @@ public interface ShopMapper extends GenericIBatisMapper<Shop, java.lang.Long> {
 	public List<ShopInfoDto> listShopByProperty(@Param("shopInfoDto")ShopInfoDto shopInfoDto)throws DataAccessFailureException;
 	
 	public ShopInfoDto queryShopInfoByShopId(Long shopId) throws DataAccessFailureException;
+	
+	//巡店计划:根据用户id返回此用户绑定的店铺/zgh 暂时不用
+	public List<VisitPlanInfoDto> findShopDetails(@Param("userId")Long userId) throws DataAccessFailureException;
 }

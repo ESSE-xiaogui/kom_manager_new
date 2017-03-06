@@ -345,6 +345,6 @@
 	</select>
 	
 	<select id="querySaleTargetByShopId" parameterType="GoalSupervisor" resultType="java.lang.Long">
-		SELECT SALE_TARGET FROM T_GOAL_SUPERVISOR WHERE SHOP_ID = #{shopId} AND GOAL_MONTH = #{saleDate}
+		SELECT SALE_TARGET FROM T_GOAL_SUPERVISOR WHERE SHOP_ID = #{shopId} AND SUBSTRING(GOAL_MONTH, 1, 7) = #{goalMonth}
 	</select>
 </mapper>
