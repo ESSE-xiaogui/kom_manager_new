@@ -157,4 +157,9 @@ public class PrototypeCountingFacadeImpl implements PrototypeCountingFacade {
 		return prototypeCountingManager.getPrototypeCountingByExcel(prototypeCountingDto);
 	}
 
+	@Override
+	public PrototypeCountingDto getByPKey(Long primaryKey) throws ServiceException {
+		return prototypeCountingService.getByPKey(primaryKey);
+	}
+
 }

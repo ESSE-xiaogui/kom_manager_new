@@ -32,4 +32,6 @@ public interface PrototypeCountingMapper extends GenericIBatisMapper<PrototypeCo
 
 	public List<PrototypeCountingDto> listPrototypeCountingByProperty(@Param("prototypeCountingDto")PrototypeCountingDto prototypeCountingDto);
 
+	public PrototypeCountingDto getByPKey(@Param("primaryKey")Long primaryKey);
+
 }

@@ -106,4 +106,6 @@ public interface PrototypeCountingFacade {
 
 	public byte[] getPrototypeCountingByExcel(PrototypeCountingDto prototypeCountingDto)throws ServiceException;
 
+	public PrototypeCountingDto getByPKey(Long primaryKey)throws ServiceException;
+
 }

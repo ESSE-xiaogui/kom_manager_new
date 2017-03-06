@@ -403,6 +403,20 @@
 			 <include refid="commonProcessDateColumns"/>
 		FROM T_PROTOTYPE_COUNTING WHERE ID = #{id}  
 	</select>
+	<select id="getByPKey" parameterType="java.lang.Long" resultMap="PrototypeCountingDtoResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumn"/>
+		FROM T_PROTOTYPE_COUNTING pc 
+		LEFT JOIN T_PROTOTYPE p ON p.ID = pc.PROTOTYPE_ID
+		LEFT JOIN T_COMPANY c ON pc.COMPANY_ID = c.ID 
+		LEFT JOIN T_SHOP s ON s.ID = pc.SHOP_ID 
+		LEFT JOIN T_REGION r1 ON r1.ID = s.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = s.CITY
+		LEFT JOIN T_USER u ON u.USER_CODE = pc.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID 
+		LEFT JOIN T_MODEL m ON m.BRAND_ID = p.BRAND_ID
+		WHERE pc.ID = #{primaryKey}  
+	</select>
 	<select id="list" resultMap="PrototypeCountingResultMapper">
 		<![CDATA[ SELECT ]]>
 			 <include refid="commonProcessDateColumns"/>

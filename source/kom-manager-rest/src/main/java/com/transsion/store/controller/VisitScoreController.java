@@ -172,7 +172,9 @@ public class VisitScoreController extends AbstractController{
 		if(!UtilHelper.isEmpty(companyId)){
 			visitScoreDetailInfoDto.setCompanyId(Long.parseLong(companyId));
 		}else{
-			visitScoreDetailInfoDto.setCompanyId(userContext.isAdmin()?null:userContext.getCompanyId());
+			if(!userContext.isAdmin()){
+				visitScoreDetailInfoDto.setCompanyId(userContext.getCompanyId());
+			}
 		}
 		if(!UtilHelper.isEmpty(visitId)){
 			visitScoreDetailInfoDto.setVisitId(Long.parseLong(visitId));

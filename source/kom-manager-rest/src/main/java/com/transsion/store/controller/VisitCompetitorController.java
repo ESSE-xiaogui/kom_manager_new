@@ -169,7 +169,9 @@ public class VisitCompetitorController extends AbstractController{
 		if(!UtilHelper.isEmpty(companyId)){
 			vCompetitorDetailDto.setCompanyId(Long.parseLong(companyId));
 		}else{
-			vCompetitorDetailDto.setCompanyId(userContext.isAdmin()?null:userContext.getCompanyId());
+			if(!userContext.isAdmin()){
+				vCompetitorDetailDto.setCompanyId(userContext.getCompanyId());
+			}
 		}
 		if(!UtilHelper.isEmpty(visitId)){
 			vCompetitorDetailDto.setVisitId(Long.parseLong(visitId));

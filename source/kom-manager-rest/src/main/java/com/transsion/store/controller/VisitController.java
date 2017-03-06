@@ -340,7 +340,9 @@ public class VisitController extends AbstractController{
 		if(!UtilHelper.isEmpty(companyId)){
 			visit.setCompanyId(Long.parseLong(companyId));
 		}else{
-			visit.setCompanyId(userContext.isAdmin()?null:userContext.getCompanyId());
+			if(!userContext.isAdmin()){
+				visit.setCompanyId(userContext.getCompanyId());
+			}
 		}
 		if(!UtilHelper.isEmpty(visitId)){
 			visit.setId(Long.parseLong(visitId));

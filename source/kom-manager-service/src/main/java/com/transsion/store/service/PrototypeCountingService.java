@@ -154,4 +154,8 @@ public class PrototypeCountingService {
 	{
 		return prototypeCountingMapper.findByCount(prototypeCounting);
 	}
+
+	public PrototypeCountingDto getByPKey(Long primaryKey) throws ServiceException{
+		return prototypeCountingMapper.getByPKey(primaryKey);
+	}
 }

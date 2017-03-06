@@ -58,9 +58,9 @@ public class PrototypeCountingController extends AbstractController{
 	@GET
 	@Path("/getByPK")
 	@Produces({MediaType.APPLICATION_JSON})
-	public PrototypeCounting getByPK(@QueryParam("key") java.lang.Long primaryKey) throws ServiceException
+	public PrototypeCountingDto getByPK(@QueryParam("key") java.lang.Long primaryKey) throws ServiceException
 	{
-		return prototypeCountingFacade.getByPK(primaryKey);
+		return prototypeCountingFacade.getByPKey(primaryKey);
 	}
 
 	/**
@@ -173,7 +173,9 @@ public class PrototypeCountingController extends AbstractController{
 		if(!UtilHelper.isEmpty(companyId)){
 			prototypeCountingDto.setCompanyId(Long.parseLong(companyId));
 		}else{
-			prototypeCountingDto.setCompanyId(userContext.isAdmin()?null:userContext.getCompanyId());
+			if(!userContext.isAdmin()){
+				prototypeCountingDto.setCompanyId(userContext.getCompanyId());
+			}
 		}
 		if(!UtilHelper.isEmpty(brandId)){
 			prototypeCountingDto.setBrandId(Long.parseLong(brandId));

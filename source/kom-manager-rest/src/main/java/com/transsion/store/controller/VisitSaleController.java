@@ -169,7 +169,9 @@ public class VisitSaleController extends AbstractController{
 		if(!UtilHelper.isEmpty(companyId)){
 			visitSaleInfoDto.setCompanyId(Long.parseLong(companyId));
 		}else{
-			visitSaleInfoDto.setCompanyId(userContext.isAdmin()?null:userContext.getCompanyId());
+			if(!userContext.isAdmin()){
+				visitSaleInfoDto.setCompanyId(userContext.getCompanyId());
+			}
 		}
 		if(!UtilHelper.isEmpty(visitId)){
 			visitSaleInfoDto.setVisitId(Long.parseLong(visitId));

@@ -161,7 +161,9 @@ public class VisitFeedbackController extends AbstractController{
 		if(!UtilHelper.isEmpty(companyId)){
 			visitFeedBackInfoDto.setCompanyId(Integer.valueOf(companyId));
 		}else{
-			visitFeedBackInfoDto.setCompanyId(userContext.isAdmin()?null:userContext.getCompanyId().intValue());
+			if(!userContext.isAdmin()){
+				visitFeedBackInfoDto.setCompanyId(userContext.getCompanyId().intValue());
+			}
 		}
 		byte[] bytes = visitFeedbackFacade.getVisitFeedBackByExcel(visitFeedBackInfoDto);       
 		InputStream inputStream = new ByteArrayInputStream(bytes);          
