@@ -147,6 +147,13 @@ public interface VisitPlanFacade {
 	 * plan details页面
 	 */
 	public List<VisitPlanInfoDto> queryPlanInfo(String token, String startDate, String endDate) throws ServiceException;
+	
+	/**
+	 * make plan页面/selectshop_plan 页面
+	 * 查询督导所有店铺某天巡店计划详情
+	 * @author guihua.zhang on 2017-03-06
+	 * */
+	public List<VisitPlanInfoDto> querySelfShopPlanInfo(String token,String startDate,String endDate) throws ServiceException; 
 
 	public byte[] getVisitPlanByExcel(VisitPlanDetailInfoDto visitPlanDetailInfoDto) throws ServiceException, ParseException;
 	

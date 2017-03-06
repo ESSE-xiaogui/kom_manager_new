@@ -131,6 +131,13 @@
 		<result column="CITY_NAME" property="cityName"/>
 		<result column="WERKS" property="werks"/>
 	</resultMap>
+
+	<resultMap id="VisitPlanInfoDtoMapper" type="VisitPlanInfoDto">
+		<result column="ID" property="shopId" />
+		<result column="SHOP_NAME" property="shopName" />
+		<result column="CITY_NAME" property="cityName" />
+		<result column="GRADE_NAME" property="gradeName" />
+	</resultMap>
 	
 	<sql id="commonColumns">
 		 ID
@@ -1028,5 +1035,20 @@
 		LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID 
 		LEFT JOIN T_REGION r ON s.REGION_ID = r.ID 
 		WHERE s.ID = #{shopId}
+	</select>
+
+	<select id="findShopDetails" parameterType="java.lang.Long"
+		resultMap="VisitPlanInfoDtoMapper">
+		SELECT 
+		p.ID,
+		p.SHOP_NAME,
+		r.REGION_NAME AS CITY_NAME,
+		g.GRADE_NAME 
+		FROM 
+		T_SHOP	p
+		LEFT JOIN T_USER_SHOP up ON up.SHOP_ID = p.ID
+		LEFT JOIN T_REGION r ON r.ID = p.REGION_ID
+		LEFT JOIN T_SHOP_GRADE g ON g.ID = p.GRADE_ID
+		WHERE p.IS_INACTIVE = 1 AND USER_ID = #{userId}
 	</select>
 </mapper>

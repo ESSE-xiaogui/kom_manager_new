@@ -5,9 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Visit;
@@ -208,6 +208,43 @@ public class VisitPlanManager {
 		visit.setEndDate(endDate);
 		return visitPlanMapper.queryPlanInfo(visit);
 	}
+	
+	/**
+	 * make plan页面/selectshop_plan 页面
+	 * 查询督导所有店铺某天巡店计划详情
+	 * @author guihua.zhang on 2017-03-06
+	 * */
+	public List<VisitPlanInfoDto> querySelfShopPlanInfo(String token,String startDate,String endDate) throws ServiceException{
+		if (UtilHelper.isEmpty(token)) {
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		if (UtilHelper.isEmpty(startDate) || UtilHelper.isEmpty(endDate)) {
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())
+						|| UtilHelper.isEmpty(userContext.getCompanyId()) 
+						|| UtilHelper.isEmpty(userContext.getUser()) 
+						|| UtilHelper.isEmpty(userContext.getUser().getId()) ) {
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		VisitPlanParamDto visit = new VisitPlanParamDto();	
+		visit.setUserId(userContext.getUser().getId());
+		List<VisitPlanInfoDto> list = visitPlanMapper.querySelfShopPlanInfo(visit);
+		List<VisitPlanInfoDto> vpinfoList = new ArrayList<VisitPlanInfoDto>();
+		if(!UtilHelper.isEmpty(list)){
+			for(VisitPlanInfoDto vv:list){
+				VisitPlanInfoDto vvDto = new VisitPlanInfoDto();
+				BeanUtils.copyProperties(vv, vvDto);
+				if(vv.getWeekPlansQty() == 0){
+					vvDto.setTheDayPlanned(false);
+				}
+				vpinfoList.add(vvDto);
+			}
+		}
+		return vpinfoList;
+	}
+	
 	/**
 	 * @author guihua.zhang on 2017-03-02
 	 * 上传巡店记录后更新新巡店计划

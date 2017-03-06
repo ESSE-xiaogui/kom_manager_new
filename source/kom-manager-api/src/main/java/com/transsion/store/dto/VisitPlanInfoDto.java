@@ -27,6 +27,11 @@ public class VisitPlanInfoDto implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * 店铺Id 编辑店铺详情时需要传入店铺Id
+	 * */
+	private Long shopId;
 
 	/**
 	  *	readonly 店铺名称
@@ -44,8 +49,8 @@ public class VisitPlanInfoDto implements Serializable {
 	 * */
 	private String cityName;
 
-	/*
-	 * 判断店铺当天是有巡店计划
+	/**
+	 * 判断店铺当天是有巡店计划  1.店铺是当前人绑定 2.店铺未巡
 	 *  默认是与queryPlanInfo接口兼容
 	 */
 	private boolean isTheDayPlanned = true;
@@ -54,6 +59,20 @@ public class VisitPlanInfoDto implements Serializable {
 	  */
 	private int weekPlansQty;
 	
+	/**
+	 * 店铺Id
+	 * */
+	public Long getShopId() {
+		return shopId;
+	}
+	
+	/**
+	 * 店铺Id
+	 * */
+	public void setShopId(Long shopId) {
+		this.shopId = shopId;
+	}
+
 	/**
 	  *	readonly 店铺名称
 	  */
@@ -96,10 +115,18 @@ public class VisitPlanInfoDto implements Serializable {
 		this.cityName = cityName;
 	}
 
+	/**
+	 * 判断店铺当天是有巡店计划  1.店铺是当前人绑定 2.店铺未巡
+	 *  默认是与queryPlanInfo接口兼容
+	 */
 	public boolean isTheDayPlanned() {
 		return isTheDayPlanned;
 	}
 
+	/**
+	 * 判断店铺当天是有巡店计划  1.店铺是当前人绑定 2.店铺未巡
+	 *  默认是与queryPlanInfo接口兼容
+	 */
 	public void setTheDayPlanned(boolean isTheDayPlanned) {
 		this.isTheDayPlanned = isTheDayPlanned;
 	}
@@ -120,8 +147,9 @@ public class VisitPlanInfoDto implements Serializable {
 
 	@Override
 	public String toString() {
-		return "VisitPlanInfoDto [shopName=" + shopName + ", gradeName=" + gradeName + ", cityName=" + cityName
-						+ ", weekPlansQty=" + weekPlansQty + "]";
+		return "VisitPlanInfoDto [shopId=" + shopId + ", shopName=" + shopName + ", gradeName=" + gradeName
+						+ ", cityName=" + cityName + ", isTheDayPlanned=" + isTheDayPlanned + ", weekPlansQty="
+						+ weekPlansQty + "]";
 	}
 
 }
