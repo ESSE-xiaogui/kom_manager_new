@@ -581,4 +581,7 @@
 	<select id="queryVisitHistoryMaterielListByVisitId" parameterType="java.lang.Long" resultMap="VisitMaterielDetailDtoResultMapper">
 		SELECT m.NAME_EN, m.TYPE FROM T_VISIT_MATERIEL v LEFT JOIN T_MATERIEL m ON v.MATERIEL_ID = m.ID WHERE v.VISIT_ID = #{visitId}
 	</select>
+	<select id="querySalePbQtyByVisitId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+		SELECT SALE_PB_QTY FROM T_VISIT WHERE ID = #{visitId}
+	</select>
 </mapper>

@@ -368,6 +368,7 @@ public class VisitManager {
 	}
 	
 	public VisitHistoryDetailDto queryItelVisitHistoryDetailByVisitId(Long visitId) throws ServiceException {
+		Integer salePbQty = visitMapper.querySalePbQtyByVisitId(visitId);
 		String issue = visitMapper.queryIssueByVisitId(visitId);
 		List<VisitModelDetailDto> visitModelDetailDtoList = visitMapper.queryVisitHistoryModelListByVisitId(visitId);
 		List<VisitSaleDetailDto> visitSaleDetailDtoList= visitMapper.queryVisitHistorySaleListByVisitId(visitId);
@@ -375,6 +376,7 @@ public class VisitManager {
 		List<VisitMaterielDetailDto> visitMaterielDetailDtoList = visitMapper.queryVisitHistoryMaterielListByVisitId(visitId);
 		
 		VisitHistoryDetailDto visitHistoryDetailDto = new VisitHistoryDetailDto();
+		visitHistoryDetailDto.setSalePbQty(salePbQty);
 		visitHistoryDetailDto.setIssue(issue);
 		visitHistoryDetailDto.setVisitModelDetailDtoList(visitModelDetailDtoList);
 		visitHistoryDetailDto.setVisitSaleDetailDtoList(visitSaleDetailDtoList);
