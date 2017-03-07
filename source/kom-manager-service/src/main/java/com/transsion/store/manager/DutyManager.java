@@ -38,18 +38,29 @@ public class DutyManager {
 	/**
 	 * 保存职位
 	 * */
-	public void save(Duty duty,String token) throws ServiceException{
-		if(UtilHelper.isEmpty(token)){
+	public void save(Duty duty, String token) throws ServiceException {
+		if (UtilHelper.isEmpty(token)) {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		if (UtilHelper.isEmpty(duty)) {
-					throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
-		}
-		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
-		if(!UtilHelper.isEmpty(userContext.getUserCode())){
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())) {
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		Duty existDuty = new Duty();
+		if (UtilHelper.isEmpty(duty.getCompanyId())) {
+			existDuty.setCompanyId(userContext.getCompanyId().intValue());
+		} else {
+			existDuty.setCompanyId(duty.getCompanyId());
+		}
+		existDuty.setDutyName(duty.getDutyName());
+		int count = dutyMapper.findByCount(existDuty);
+		if (count > 0) {
+			throw new ServiceException(ExceptionDef.ERROR_DUTY_IS_EXIST.getName());
+		}
+		if (!UtilHelper.isEmpty(userContext.getUserCode())) {
 			duty.setCreatedBy(userContext.getUserCode());
 		}
 		duty.setCreatedTime(systemDateService.getCurrentDate());
