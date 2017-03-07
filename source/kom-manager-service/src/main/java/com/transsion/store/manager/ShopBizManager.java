@@ -43,8 +43,21 @@ public class ShopBizManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext.getCompanyId()) || UtilHelper.isEmpty(userContext.getUserCode())){
+		if(UtilHelper.isEmpty(userContext) ||UtilHelper.isEmpty(userContext.getCompanyId()) 
+						|| UtilHelper.isEmpty(userContext.getUserCode())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		ShopBiz existShopBiz = new ShopBiz();
+		if(UtilHelper.isEmpty(shopBiz.getCompanyId())){
+			existShopBiz.setCompanyId(userContext.getCompanyId());
+		}else{
+			existShopBiz.setCompanyId(shopBiz.getCompanyId());
+		}
+		existShopBiz.setChinaName(shopBiz.getChinaName());
+		existShopBiz.setEnglishName(shopBiz.getEnglishName());
+		int count = shopBizMapper.findByCount(existShopBiz);
+		if(count>0){
+			throw new ServiceException(ExceptionDef.ERROR_SHOP_BIZ_EXIST.getName());
 		}
 		shopBiz.setCompanyId(userContext.getCompanyId());
 		shopBiz.setBrandCode(userContext.getBrandCode());
