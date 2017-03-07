@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.shangkang.core.exception.ServiceException;
@@ -217,7 +218,8 @@ public class VisitPlanManager {
 	 * 查询督导所有店铺某天巡店计划详情
 	 * @author guihua.zhang on 2017-03-06
 	 * */
-	public List<VisitPlanInfoDto> querySelfShopPlanInfo(String token,String startDate,String endDate) throws ServiceException{
+	public List<VisitPlanInfoDto> querySelfShopPlanInfo(String token, String startDate, String endDate)
+					throws ServiceException {
 		if (UtilHelper.isEmpty(token)) {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
@@ -226,12 +228,12 @@ public class VisitPlanManager {
 		}
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if (UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())
-						|| UtilHelper.isEmpty(userContext.getCompanyId()) 
-						|| UtilHelper.isEmpty(userContext.getUser()) 
-						|| UtilHelper.isEmpty(userContext.getUser().getId()) ) {
+						|| UtilHelper.isEmpty(userContext.getCompanyId()) || UtilHelper.isEmpty(userContext.getUser())
+						|| UtilHelper.isEmpty(userContext.getUser().getId())) {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
-		VisitPlanParamDto visit = new VisitPlanParamDto();	
+		List<VisitPlanInfoDto> vpinfoList = new ArrayList<VisitPlanInfoDto>();
+		VisitPlanParamDto visit = new VisitPlanParamDto();
 		visit.setCompanyId(userContext.getCompanyId());
 		visit.setPlanner(userContext.getUserCode());
 		visit.setBeginDate(startDate);
@@ -239,16 +241,37 @@ public class VisitPlanManager {
 		List<VisitPlanInfoDto> list = visitPlanMapper.queryPlanInfo(visit);
 		Long userId = userContext.getUser().getId();
 		List<Long> shopIds = new ArrayList<Long>();
-		if(!UtilHelper.isEmpty(list)){
-			for(VisitPlanInfoDto vpDto:list){
+		if (!UtilHelper.isEmpty(list)) {
+			for (VisitPlanInfoDto vpDto : list) {
 				shopIds.add(vpDto.getShopId());
-				List<VisitPlanInfoDto> shopLists = shopMapper.findShopDetails(userId,shopIds);
-				list.addAll(shopLists);
-				return list;
+			}
+			List<VisitPlanInfoDto> shopLists = shopMapper.findShopDetails(userId, shopIds);
+			list.addAll(shopLists);
+			// 设置未计划的状态为false
+			if (!UtilHelper.isEmpty(list)) {
+				for (VisitPlanInfoDto vv : list) {
+					VisitPlanInfoDto vvDto = new VisitPlanInfoDto();
+					BeanUtils.copyProperties(vv, vvDto);
+					if (vv.getWeekPlansQty() == 0) {
+						vvDto.setTheDayPlanned(false);
+					}
+					vpinfoList.add(vvDto);
+				}
+			}
+		} else {
+			List<VisitPlanInfoDto> shopList = shopMapper.findShops(userId);
+			if (!UtilHelper.isEmpty(shopList)) {
+				for (VisitPlanInfoDto vv : shopList) {
+					VisitPlanInfoDto vvDto = new VisitPlanInfoDto();
+					BeanUtils.copyProperties(vv, vvDto);
+					if (vv.getWeekPlansQty() == 0) {
+						vvDto.setTheDayPlanned(false);
+					}
+					vpinfoList.add(vvDto);
+				}
 			}
 		}
-		List<VisitPlanInfoDto> shopList = shopMapper.findShops(userId);
-		return shopList;
+		return vpinfoList;
 	}
 	
 	/**
