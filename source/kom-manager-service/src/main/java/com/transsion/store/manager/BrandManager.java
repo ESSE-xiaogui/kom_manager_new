@@ -56,6 +56,7 @@ public class BrandManager {
 		}
 		Brand brand = new Brand();
 		BeanUtils.copyProperties(brandDto, brand);
+		brand.setBrandCode(brandDto.getBrandName());
 		brand.setCompanyId(userContext.getCompanyId().intValue());
 		brand.setCreatedBy(userContext.getUserCode());
 		brand.setCreatedTime(systemDateService.getCurrentDate());
@@ -118,6 +119,7 @@ public class BrandManager {
 			throw new ServiceException(ExceptionDef.ERROR_BRAND_ALREADY_EXIST.getName());
 		}
 		Brand brandResult = brandMapper.getByPK(brand.getId());
+		brandResult.setBrandCode(brand.getBrandName());
 		brandResult.setCompanyId(userContext.getCompanyId().intValue());
 		brandResult.setBrandName(brand.getBrandName());
 		brandResult.setIsSelf(brand.getIsSelf());
