@@ -83,6 +83,16 @@ public class ShopBizManager {
 		if(UtilHelper.isEmpty(userContext.getCompanyId()) || UtilHelper.isEmpty(userContext.getUserCode())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
+		ShopBiz shopBizParam = new ShopBiz();
+		shopBizParam.setCompanyId(shopBiz.getCompanyId());
+		shopBizParam.setEnglishName(shopBiz.getEnglishName());
+		shopBizParam.setChinaName(shopBiz.getChinaName());
+		int count1 = shopBizMapper.findByCount(shopBizParam);
+		shopBizParam.setId(shopBiz.getId());
+		int count2 = shopBizMapper.findByCount(shopBizParam);
+		if(count1>0 && count2<1){
+			throw new ServiceException(ExceptionDef.ERROR_DUTY_IS_EXIST.getName());
+		}
 		shopBiz.setCompanyId(userContext.getCompanyId());
 		shopBiz.setBrandCode(userContext.getBrandCode());
 		shopBiz.setCreateBy(userContext.getUserCode());

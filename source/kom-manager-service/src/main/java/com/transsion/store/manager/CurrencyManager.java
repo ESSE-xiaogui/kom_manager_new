@@ -69,6 +69,16 @@ public class CurrencyManager {
 		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
+		Currency currencyParam = new Currency();
+		currencyParam.setBeginTime(currency.getBeginTime());
+		currencyParam.setEndTime(currency.getEndTime());
+		currencyParam.setCompanyId(currency.getCompanyId());
+		int count1 = currencyMapper.findByCount(currencyParam);
+		currencyParam.setId(currency.getId());
+		int count2 = currencyMapper.findByCount(currencyParam);
+		if(count1>0 && count2<1){
+			throw new ServiceException(ExceptionDef.ERROR_CURRENCY_IS_EXIST.getName());
+		}
 		currency.setUpdatedBy(userContext.getUserCode());
 		currency.setUpdatedTime(systemDateService.getCurrentDate());
 		currencyMapper.update(currency);

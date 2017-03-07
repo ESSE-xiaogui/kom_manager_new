@@ -27,9 +27,11 @@ public class AttributeManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
-		
-		Integer companyId = userContext.isAdmin()?null:userContext.getCompanyId().intValue();
-		
+		Integer companyId = null;
+		if(!userContext.isAdmin()){
+			companyId = userContext.getCompanyId().intValue();
+		}
+		//Integer companyId = userContext.isAdmin()?null:userContext.getCompanyId().intValue();
 		return attributeService.getAttributeListByType(type, companyId);
 	}
 	
