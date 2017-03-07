@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.shangkang.core.exception.ServiceException;
@@ -20,6 +19,7 @@ import com.transsion.store.dto.VisitPlanDto;
 import com.transsion.store.dto.VisitPlanInfoDto;
 import com.transsion.store.dto.VisitPlanParamDto;
 import com.transsion.store.exception.ExceptionDef;
+import com.transsion.store.mapper.ShopMapper;
 import com.transsion.store.mapper.VisitPlanMapper;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
@@ -38,6 +38,9 @@ public class VisitPlanManager {
 
 	@Autowired
 	private SystemDateService systemDateService;
+	
+	@Autowired
+	private ShopMapper shopMapper;
 
 	/**
 	 * 巡店计划默认状态:1.未巡店
@@ -229,20 +232,23 @@ public class VisitPlanManager {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		VisitPlanParamDto visit = new VisitPlanParamDto();	
-		visit.setUserId(userContext.getUser().getId());
-		List<VisitPlanInfoDto> list = visitPlanMapper.querySelfShopPlanInfo(visit);
-		List<VisitPlanInfoDto> vpinfoList = new ArrayList<VisitPlanInfoDto>();
+		visit.setCompanyId(userContext.getCompanyId());
+		visit.setPlanner(userContext.getUserCode());
+		visit.setBeginDate(startDate);
+		visit.setEndDate(endDate);
+		List<VisitPlanInfoDto> list = visitPlanMapper.queryPlanInfo(visit);
+		Long userId = userContext.getUser().getId();
+		List<Long> shopIds = new ArrayList<Long>();
 		if(!UtilHelper.isEmpty(list)){
-			for(VisitPlanInfoDto vv:list){
-				VisitPlanInfoDto vvDto = new VisitPlanInfoDto();
-				BeanUtils.copyProperties(vv, vvDto);
-				if(vv.getWeekPlansQty() == 0){
-					vvDto.setTheDayPlanned(false);
-				}
-				vpinfoList.add(vvDto);
+			for(VisitPlanInfoDto vpDto:list){
+				shopIds.add(vpDto.getShopId());
+				List<VisitPlanInfoDto> shopLists = shopMapper.findShopDetails(userId,shopIds);
+				list.addAll(shopLists);
+				return list;
 			}
 		}
-		return vpinfoList;
+		List<VisitPlanInfoDto> shopList = shopMapper.findShops(userId);
+		return shopList;
 	}
 	
 	/**

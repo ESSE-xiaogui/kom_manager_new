@@ -1,6 +1,7 @@
 package com.transsion.store.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class VisitPlanParamDto implements Serializable{
 
@@ -13,6 +14,9 @@ public class VisitPlanParamDto implements Serializable{
 	 * 用户Id 为空/后台自取
 	 * */
 	private Long userId;
+	
+	//判断逻辑用shopId
+	private List<Long> shopIds;
 	
 	/**
 	  *	事业部ID
@@ -40,6 +44,14 @@ public class VisitPlanParamDto implements Serializable{
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public List<Long> getShopIds() {
+		return shopIds;
+	}
+
+	public void setShopIds(List<Long> shopIds) {
+		this.shopIds = shopIds;
 	}
 
 	public Long getCompanyId() {
@@ -76,8 +88,8 @@ public class VisitPlanParamDto implements Serializable{
 
 	@Override
 	public String toString() {
-		return "VisitPlanParamDto [userId=" + userId + ", companyId=" + companyId + ", planner=" + planner
-						+ ", beginDate=" + beginDate + ", endDate=" + endDate + "]";
+		return "VisitPlanParamDto [userId=" + userId + ", shopIds=" + shopIds + ", companyId=" + companyId
+						+ ", planner=" + planner + ", beginDate=" + beginDate + ", endDate=" + endDate + "]";
 	}
 
 }

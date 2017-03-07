@@ -52,6 +52,8 @@ public interface ShopMapper extends GenericIBatisMapper<Shop, java.lang.Long> {
 	
 	public ShopInfoDto queryShopInfoByShopId(Long shopId) throws DataAccessFailureException;
 	
-	//巡店计划:根据用户id返回此用户绑定的店铺/zgh 暂时不用
-	public List<VisitPlanInfoDto> findShopDetails(@Param("userId")Long userId) throws DataAccessFailureException;
+	//巡店计划:根据用户id返回此用户绑定的店铺/zgh
+	public List<VisitPlanInfoDto> findShopDetails(@Param("userId")Long userId,@Param("shopIds")List<Long> shopIds) throws DataAccessFailureException;
+	public List<VisitPlanInfoDto> findShops(@Param("userId")Long userId) throws DataAccessFailureException;
+	
 }

@@ -1041,8 +1041,7 @@
 		WHERE s.ID = #{shopId}
 	</select>
 
-	<select id="findShopDetails" parameterType="java.lang.Long"
-		resultMap="VisitPlanInfoDtoMapper">
+	<select id="findShopDetails" resultMap="VisitPlanInfoDtoMapper">
 		SELECT 
 		p.ID,
 		p.SHOP_NAME,
@@ -1053,6 +1052,28 @@
 		LEFT JOIN T_USER_SHOP up ON up.SHOP_ID = p.ID
 		LEFT JOIN T_REGION r ON r.ID = p.REGION_ID
 		LEFT JOIN T_SHOP_GRADE g ON g.ID = p.GRADE_ID
-		WHERE p.IS_INACTIVE = 1 AND USER_ID = #{userId}
+		WHERE 1=1
+		AND p.IS_INACTIVE = 1 
+		AND up.USER_ID = #{userId}
+		AND p.ID NOT IN
+		<foreach item="id" collection="shopIds" separator="," open="("
+			close=")" index="">
+			#{id}
+		</foreach>
+	</select>
+	<select id="findShops" resultMap="VisitPlanInfoDtoMapper">
+		SELECT 
+		p.ID,
+		p.SHOP_NAME,
+		r.REGION_NAME AS CITY_NAME,
+		g.GRADE_NAME 
+		FROM 
+		T_SHOP	p
+		LEFT JOIN T_USER_SHOP up ON up.SHOP_ID = p.ID
+		LEFT JOIN T_REGION r ON r.ID = p.REGION_ID
+		LEFT JOIN T_SHOP_GRADE g ON g.ID = p.GRADE_ID
+		WHERE 1=1
+		AND p.IS_INACTIVE = 1 
+		AND up.USER_ID = #{userId}
 	</select>
 </mapper>
