@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2017 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2017-3-7 11:42:41
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.ReportSaleWeekMapper">
+	<resultMap id="ReportSaleWeekResultMapper" type="ReportSaleWeek">
+		<result column="REPORT_SALE_WEEK_ID" property="reportSaleWeekId"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="USER_CODE" property="userCode"/>
+		<result column="SHOP_CODE" property="shopCode"/>
+		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="MODEL_CODE" property="modelCode"/>
+		<result column="YEAR" property="year"/>
+		<result column="WEEK" property="week"/>
+		<result column="COMPANY_NAME" property="companyName"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="SALE_QTY" property="saleQty"/>
+		<result column="STOCK_QTY" property="stockQty"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 REPORT_SALE_WEEK_ID
+		, COMPANY_ID
+		, SHOP_ID
+		, USER_CODE
+		, SHOP_CODE
+		, BRAND_CODE
+		, MODEL_CODE
+		, YEAR
+		, WEEK
+		, COMPANY_NAME
+		, SHOP_NAME
+		, EMP_NAME
+		, COUNTRY_NAME
+		, CITY_NAME
+		, SALE_QTY
+		, STOCK_QTY
+		, CREATED_BY
+		, CREATE_TIME
+		, UPDATED_BY
+		, UPDATE_TIME
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 COMPANY_ID
+		, SHOP_ID
+		, USER_CODE
+		, SHOP_CODE
+		, BRAND_CODE
+		, MODEL_CODE
+		, YEAR
+		, WEEK
+		, COMPANY_NAME
+		, SHOP_NAME
+		, EMP_NAME
+		, COUNTRY_NAME
+		, CITY_NAME
+		, SALE_QTY
+		, STOCK_QTY
+		, CREATED_BY
+		, CREATE_TIME
+		, UPDATED_BY
+		, UPDATE_TIME
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 REPORT_SALE_WEEK_ID
+		, COMPANY_ID
+		, SHOP_ID
+		, USER_CODE
+		, SHOP_CODE
+		, BRAND_CODE
+		, MODEL_CODE
+		, YEAR
+		, WEEK
+		, COMPANY_NAME
+		, SHOP_NAME
+		, EMP_NAME
+		, COUNTRY_NAME
+		, CITY_NAME
+		, SALE_QTY
+		, STOCK_QTY
+		, CREATED_BY
+		, date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+		, UPDATED_BY
+		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="reportSaleWeekId!= null and reportSaleWeekId!= ''"> 
+			AND REPORT_SALE_WEEK_ID = #{reportSaleWeekId}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID = #{companyId}
+		</if>
+		<if test="shopId!= null and shopId!= ''"> 
+			AND SHOP_ID = #{shopId}
+		</if>
+		<if test="userCode!= null and userCode!= ''"> 
+			AND USER_CODE = #{userCode}
+		</if>
+		<if test="shopCode!= null and shopCode!= ''"> 
+			AND SHOP_CODE = #{shopCode}
+		</if>
+		<if test="brandCode!= null and brandCode!= ''"> 
+			AND BRAND_CODE = #{brandCode}
+		</if>
+		<if test="modelCode!= null and modelCode!= ''"> 
+			AND MODEL_CODE = #{modelCode}
+		</if>
+		<if test="year!= null and year!= ''"> 
+			AND YEAR = #{year}
+		</if>
+		<if test="week!= null and week!= ''"> 
+			AND WEEK = #{week}
+		</if>
+		<if test="companyName!= null and companyName!= ''"> 
+			AND COMPANY_NAME = #{companyName}
+		</if>
+		<if test="shopName!= null and shopName!= ''"> 
+			AND SHOP_NAME = #{shopName}
+		</if>
+		<if test="empName!= null and empName!= ''"> 
+			AND EMP_NAME = #{empName}
+		</if>
+		<if test="countryName!= null and countryName!= ''"> 
+			AND COUNTRY_NAME = #{countryName}
+		</if>
+		<if test="cityName!= null and cityName!= ''"> 
+			AND CITY_NAME = #{cityName}
+		</if>
+		<if test="saleQty!= null and saleQty!= ''"> 
+			AND SALE_QTY = #{saleQty}
+		</if>
+		<if test="stockQty!= null and stockQty!= ''"> 
+			AND STOCK_QTY = #{stockQty}
+		</if>
+		<if test="createdBy!= null and createdBy!= ''"> 
+			AND CREATED_BY = #{createdBy}
+		</if>
+		<if test="createTime!= null and createTime!= ''"> 
+			AND CREATE_TIME = str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updatedBy!= null and updatedBy!= ''"> 
+			AND UPDATED_BY = #{updatedBy}
+		</if>
+		<if test="updateTime!= null and updateTime!= ''"> 
+			AND UPDATE_TIME = str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="reportSaleWeek != null">
+            <if test="reportSaleWeek.reportSaleWeekId!= null and reportSaleWeek.reportSaleWeekId!= ''">
+				AND REPORT_SALE_WEEK_ID = #{reportSaleWeek.reportSaleWeekId}
+            </if>
+            <if test="reportSaleWeek.companyId!= null and reportSaleWeek.companyId!= ''">
+				AND COMPANY_ID = #{reportSaleWeek.companyId}
+            </if>
+            <if test="reportSaleWeek.shopId!= null and reportSaleWeek.shopId!= ''">
+				AND SHOP_ID = #{reportSaleWeek.shopId}
+            </if>
+            <if test="reportSaleWeek.userCode!= null and reportSaleWeek.userCode!= ''">
+				AND USER_CODE = #{reportSaleWeek.userCode}
+            </if>
+            <if test="reportSaleWeek.shopCode!= null and reportSaleWeek.shopCode!= ''">
+				AND SHOP_CODE = #{reportSaleWeek.shopCode}
+            </if>
+            <if test="reportSaleWeek.brandCode!= null and reportSaleWeek.brandCode!= ''">
+				AND BRAND_CODE = #{reportSaleWeek.brandCode}
+            </if>
+            <if test="reportSaleWeek.modelCode!= null and reportSaleWeek.modelCode!= ''">
+				AND MODEL_CODE = #{reportSaleWeek.modelCode}
+            </if>
+            <if test="reportSaleWeek.year!= null and reportSaleWeek.year!= ''">
+				AND YEAR = #{reportSaleWeek.year}
+            </if>
+            <if test="reportSaleWeek.week!= null and reportSaleWeek.week!= ''">
+				AND WEEK = #{reportSaleWeek.week}
+            </if>
+            <if test="reportSaleWeek.companyName!= null and reportSaleWeek.companyName!= ''">
+				AND COMPANY_NAME = #{reportSaleWeek.companyName}
+            </if>
+            <if test="reportSaleWeek.shopName!= null and reportSaleWeek.shopName!= ''">
+				AND SHOP_NAME = #{reportSaleWeek.shopName}
+            </if>
+            <if test="reportSaleWeek.empName!= null and reportSaleWeek.empName!= ''">
+				AND EMP_NAME = #{reportSaleWeek.empName}
+            </if>
+            <if test="reportSaleWeek.countryName!= null and reportSaleWeek.countryName!= ''">
+				AND COUNTRY_NAME = #{reportSaleWeek.countryName}
+            </if>
+            <if test="reportSaleWeek.cityName!= null and reportSaleWeek.cityName!= ''">
+				AND CITY_NAME = #{reportSaleWeek.cityName}
+            </if>
+            <if test="reportSaleWeek.saleQty!= null and reportSaleWeek.saleQty!= ''">
+				AND SALE_QTY = #{reportSaleWeek.saleQty}
+            </if>
+            <if test="reportSaleWeek.stockQty!= null and reportSaleWeek.stockQty!= ''">
+				AND STOCK_QTY = #{reportSaleWeek.stockQty}
+            </if>
+            <if test="reportSaleWeek.createdBy!= null and reportSaleWeek.createdBy!= ''">
+				AND CREATED_BY = #{reportSaleWeek.createdBy}
+            </if>
+            <if test="reportSaleWeek.createTime!= null and reportSaleWeek.createTime!= ''">
+				AND CREATE_TIME = str_to_date(#{reportSaleWeek.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="reportSaleWeek.updatedBy!= null and reportSaleWeek.updatedBy!= ''">
+				AND UPDATED_BY = #{reportSaleWeek.updatedBy}
+            </if>
+            <if test="reportSaleWeek.updateTime!= null and reportSaleWeek.updateTime!= ''">
+				AND UPDATE_TIME = str_to_date(#{reportSaleWeek.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'reportSaleWeekId'">
+				REPORT_SALE_WEEK_ID ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'shopId'">
+				SHOP_ID ${value}
+            </when>
+        	<when test="key == 'userCode'">
+				USER_CODE ${value}
+            </when>
+        	<when test="key == 'shopCode'">
+				SHOP_CODE ${value}
+            </when>
+        	<when test="key == 'brandCode'">
+				BRAND_CODE ${value}
+            </when>
+        	<when test="key == 'modelCode'">
+				MODEL_CODE ${value}
+            </when>
+        	<when test="key == 'year'">
+				YEAR ${value}
+            </when>
+        	<when test="key == 'week'">
+				WEEK ${value}
+            </when>
+        	<when test="key == 'companyName'">
+				COMPANY_NAME ${value}
+            </when>
+        	<when test="key == 'shopName'">
+				SHOP_NAME ${value}
+            </when>
+        	<when test="key == 'empName'">
+				EMP_NAME ${value}
+            </when>
+        	<when test="key == 'countryName'">
+				COUNTRY_NAME ${value}
+            </when>
+        	<when test="key == 'cityName'">
+				CITY_NAME ${value}
+            </when>
+        	<when test="key == 'saleQty'">
+				SALE_QTY ${value}
+            </when>
+        	<when test="key == 'stockQty'">
+				STOCK_QTY ${value}
+            </when>
+        	<when test="key == 'createdBy'">
+				CREATED_BY ${value}
+            </when>
+        	<when test="key == 'createTime'">
+				CREATE_TIME ${value}
+            </when>
+        	<when test="key == 'updatedBy'">
+				UPDATED_BY ${value}
+            </when>
+        	<when test="key == 'updateTime'">
+				UPDATE_TIME ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="reportSaleWeekId" parameterType="ReportSaleWeek">
+		<![CDATA[ INSERT INTO T_REPORT_SALE_WEEK ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{companyId}
+			, #{shopId}
+			, #{userCode}
+			, #{shopCode}
+			, #{brandCode}
+			, #{modelCode}
+			, #{year}
+			, #{week}
+			, #{companyName}
+			, #{shopName}
+			, #{empName}
+			, #{countryName}
+			, #{cityName}
+			, #{saleQty}
+			, #{stockQty}
+			, #{createdBy}
+			, str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="ReportSaleWeek">
+		<![CDATA[ UPDATE T_REPORT_SALE_WEEK SET 
+			 REPORT_SALE_WEEK_ID = #{reportSaleWeekId}
+			, COMPANY_ID = #{companyId}
+			, SHOP_ID = #{shopId}
+			, USER_CODE = #{userCode}
+			, SHOP_CODE = #{shopCode}
+			, BRAND_CODE = #{brandCode}
+			, MODEL_CODE = #{modelCode}
+			, YEAR = #{year}
+			, WEEK = #{week}
+			, COMPANY_NAME = #{companyName}
+			, SHOP_NAME = #{shopName}
+			, EMP_NAME = #{empName}
+			, COUNTRY_NAME = #{countryName}
+			, CITY_NAME = #{cityName}
+			, SALE_QTY = #{saleQty}
+			, STOCK_QTY = #{stockQty}
+			, CREATED_BY = #{createdBy}
+			, CREATE_TIME = str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATED_BY = #{updatedBy}
+			, UPDATE_TIME = str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		WHERE REPORT_SALE_WEEK_ID = #{reportSaleWeekId}  ]]>
+	</update>
+	<insert id="saveOrUpdate" parameterType="Brand">
+		<![CDATA[ INSERT INTO T_REPORT_SALE_WEEK ( ]]>
+		<include refid="commonColumns"/>
+		<![CDATA[
+		) VALUES (
+			 #{reportSaleWeekId}
+			, #{companyId}
+			, #{shopId}
+			, #{userCode}
+			, #{shopCode}
+			, #{brandCode}
+			, #{modelCode}
+			, #{year}
+			, #{week}
+			, #{companyName}
+			, #{shopName}
+			, #{empName}
+			, #{countryName}
+			, #{cityName}
+			, #{saleQty}
+			, #{stockQty}
+			, #{createdBy}
+			, str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		) ON DUPLICATE KEY UPDATE
+			 REPORT_SALE_WEEK_ID = VALUES(REPORT_SALE_WEEK_ID)
+			, COMPANY_ID = VALUES(COMPANY_ID)
+			, SHOP_ID = VALUES(SHOP_ID)
+			, USER_CODE = VALUES(USER_CODE)
+			, SHOP_CODE = VALUES(SHOP_CODE)
+			, BRAND_CODE = VALUES(BRAND_CODE)
+			, MODEL_CODE = VALUES(MODEL_CODE)
+			, YEAR = VALUES(YEAR)
+			, WEEK = VALUES(WEEK)
+			, COMPANY_NAME = VALUES(COMPANY_NAME)
+			, SHOP_NAME = VALUES(SHOP_NAME)
+			, EMP_NAME = VALUES(EMP_NAME)
+			, COUNTRY_NAME = VALUES(COUNTRY_NAME)
+			, CITY_NAME = VALUES(CITY_NAME)
+			, SALE_QTY = VALUES(SALE_QTY)
+			, STOCK_QTY = VALUES(STOCK_QTY)
+			, CREATED_BY = VALUES(CREATED_BY)
+			, CREATE_TIME = VALUES(CREATE_TIME)
+			, UPDATED_BY = VALUES(UPDATED_BY)
+			, UPDATE_TIME = VALUES(UPDATE_TIME)
+		]]>
+	</insert>
+	<insert id="batchSaveOrUpdate" parameterType="List">
+		<![CDATA[ INSERT INTO T_REPORT_SALE_WEEK ( ]]>
+		<include refid="commonColumns"/>
+		<![CDATA[ ) VALUES ]]>
+        <foreach collection="list" item="item" index="index" separator=",">
+			(
+			 #{item.reportSaleWeekId}
+			, #{item.companyId}
+			, #{item.shopId}
+			, #{item.userCode}
+			, #{item.shopCode}
+			, #{item.brandCode}
+			, #{item.modelCode}
+			, #{item.year}
+			, #{item.week}
+			, #{item.companyName}
+			, #{item.shopName}
+			, #{item.empName}
+			, #{item.countryName}
+			, #{item.cityName}
+			, #{item.saleQty}
+			, #{item.stockQty}
+			, #{item.createdBy}
+			, str_to_date(#{item.createTime},'%Y-%m-%d %H:%i:%s')
+			, #{item.updatedBy}
+			, str_to_date(#{item.updateTime},'%Y-%m-%d %H:%i:%s')
+        	)
+        </foreach>
+        <![CDATA[ ON DUPLICATE KEY UPDATE
+		 REPORT_SALE_WEEK_ID = VALUES(REPORT_SALE_WEEK_ID)
+		, COMPANY_ID = VALUES(COMPANY_ID)
+		, SHOP_ID = VALUES(SHOP_ID)
+		, USER_CODE = VALUES(USER_CODE)
+		, SHOP_CODE = VALUES(SHOP_CODE)
+		, BRAND_CODE = VALUES(BRAND_CODE)
+		, MODEL_CODE = VALUES(MODEL_CODE)
+		, YEAR = VALUES(YEAR)
+		, WEEK = VALUES(WEEK)
+		, COMPANY_NAME = VALUES(COMPANY_NAME)
+		, SHOP_NAME = VALUES(SHOP_NAME)
+		, EMP_NAME = VALUES(EMP_NAME)
+		, COUNTRY_NAME = VALUES(COUNTRY_NAME)
+		, CITY_NAME = VALUES(CITY_NAME)
+		, SALE_QTY = VALUES(SALE_QTY)
+		, STOCK_QTY = VALUES(STOCK_QTY)
+		, CREATED_BY = VALUES(CREATED_BY)
+		, CREATE_TIME = VALUES(CREATE_TIME)
+		, UPDATED_BY = VALUES(UPDATED_BY)
+		, UPDATE_TIME = VALUES(UPDATE_TIME)
+		]]>
+	</insert>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_REPORT_SALE_WEEK WHERE REPORT_SALE_WEEK_ID = #{reportSaleWeekId}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_REPORT_SALE_WEEK WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" REPORT_SALE_WEEK_ID IN(" separator="," close=") ">
+			#{id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="ReportSaleWeek">
+		DELETE FROM T_REPORT_SALE_WEEK WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="ReportSaleWeekResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_REPORT_SALE_WEEK WHERE REPORT_SALE_WEEK_ID = #{reportSaleWeekId}  
+	</select>
+	<select id="list" resultMap="ReportSaleWeekResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_REPORT_SALE_WEEK
+	</select>
+	<select id="listByProperty" parameterType="ReportSaleWeek" resultMap="ReportSaleWeekResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_REPORT_SALE_WEEK WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="ReportSaleWeek" resultMap="ReportSaleWeekResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_REPORT_SALE_WEEK WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="ReportSaleWeek" resultType="int">
+		SELECT count(1) AS totalcount FROM T_REPORT_SALE_WEEK WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

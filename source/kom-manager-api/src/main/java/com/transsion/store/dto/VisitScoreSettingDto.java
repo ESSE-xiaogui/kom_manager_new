@@ -28,121 +28,133 @@ public class VisitScoreSettingDto implements Serializable {
 	/**
 	  *	
 	  */
-	private java.lang.Long id;
+	private Long id;
+
+	/**
+	  *	事业部Id
+	  */
+	private Long companyId;
 
 	/**
 	  *	
 	  */
-	private java.lang.Long companyId;
+	private Long type;
+	
+	/**
+	 * 1.门店形象 2.业务技能 3.人员形象
+	 * */
+	private Long sqe;
+
+	/**
+	  *	 英文描述
+	  */
+	private String descEn;
+
+	/**
+	  *	中文描述
+	  */
+	private String descCn;
 
 	/**
 	  *	
 	  */
-	private java.lang.Long type;
+	private String remark;
 
 	/**
 	  *	
 	  */
-	private java.lang.String descEn;
-
-	/**
-	  *	
-	  */
-	private java.lang.String descCn;
-
-	/**
-	  *	
-	  */
-	private java.lang.String remark;
-
-	/**
-	  *	
-	  */
-	public java.lang.Long getId() {
+	public Long getId() {
 		return id;
 	}
 
 	/**
 	  *	
 	  */
-	public void setId(java.lang.Long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	/**
 	  *	
 	  */
-	public java.lang.Long getCompanyId() {
+	public Long getCompanyId() {
 		return companyId;
 	}
 
 	/**
 	  *	
 	  */
-	public void setCompanyId(java.lang.Long companyId) {
+	public void setCompanyId(Long companyId) {
 		this.companyId = companyId;
 	}
 
 	/**
 	  *	
 	  */
-	public java.lang.Long getType() {
+	public Long getType() {
 		return type;
+	}
+
+	public Long getSqe() {
+		return sqe;
+	}
+
+	public void setSqe(Long sqe) {
+		this.sqe = sqe;
 	}
 
 	/**
 	  *	
 	  */
-	public void setType(java.lang.Long type) {
+	public void setType(Long type) {
 		this.type = type;
 	}
 
 	/**
 	  *	
 	  */
-	public java.lang.String getDescEn() {
+	public String getDescEn() {
 		return descEn;
 	}
 
 	/**
 	  *	
 	  */
-	public void setDescEn(java.lang.String descEn) {
+	public void setDescEn(String descEn) {
 		this.descEn = descEn;
 	}
 
 	/**
 	  *	
 	  */
-	public java.lang.String getDescCn() {
+	public String getDescCn() {
 		return descCn;
 	}
 
 	/**
 	  *	
 	  */
-	public void setDescCn(java.lang.String descCn) {
+	public void setDescCn(String descCn) {
 		this.descCn = descCn;
 	}
 
 	/**
 	  *	
 	  */
-	public java.lang.String getRemark() {
+	public String getRemark() {
 		return remark;
 	}
 
 	/**
 	  *	
 	  */
-	public void setRemark(java.lang.String remark) {
+	public void setRemark(String remark) {
 		this.remark = remark;
 	}
 
 	@Override
 	public String toString() {
-		return "VisitScoreSettingDto [id=" + id + ", companyId=" + companyId + ", type=" + type + ", descEn=" + descEn
-				+ ", descCn=" + descCn + ", remark=" + remark + "]";
+		return "VisitScoreSettingDto [id=" + id + ", companyId=" + companyId + ", type=" + type + ", sqe=" + sqe
+						+ ", descEn=" + descEn + ", descCn=" + descCn + ", remark=" + remark + "]";
 	}
-
 }

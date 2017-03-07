@@ -18,6 +18,7 @@ import com.transsion.store.bo.PrototypeSettingModel;
 import com.transsion.store.bo.PrototypeSettingRegion;
 import com.transsion.store.bo.PrototypeSettingTime;
 import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.PrototypeDto;
 import com.transsion.store.dto.PrototypeSettingDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.PrototypeSettingMapper;
@@ -54,7 +55,15 @@ public class PrototypeSettingManager {
 		
 			UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 			Long companyId = userContext.isAdmin()?null:userContext.getCompanyId();
-			pagination.getParams().setCompanyId(companyId);
+			
+			if (pagination.getParams() == null) {
+				
+				prototypeSettingDto = new PrototypeSettingDto();
+				
+				prototypeSettingDto.setCompanyId(companyId);
+				
+				pagination.setParams(prototypeSettingDto);
+			} 
 		
 			Pagination<PrototypeSettingDto> pagin = prototypeSettingService.listPaginationByProperty(pagination, prototypeSettingDto);
 			

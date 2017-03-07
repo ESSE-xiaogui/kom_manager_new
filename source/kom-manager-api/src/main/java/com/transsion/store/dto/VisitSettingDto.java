@@ -43,7 +43,7 @@ public class VisitSettingDto implements Serializable {
 		List<VisitScoreSettingDto> list = new ArrayList<VisitScoreSettingDto>();
 		if(!UtilHelper.isEmpty(visitScoreSettingDtoList)){
 			for(VisitScoreSettingDto vss:visitScoreSettingDtoList){
-				if(type == vss.getType()){
+				if(type == vss.getSqe()){
 					VisitScoreSettingDto visit = new VisitScoreSettingDto();
 					BeanUtils.copyProperties(vss, visit);
 					list.add(visit);

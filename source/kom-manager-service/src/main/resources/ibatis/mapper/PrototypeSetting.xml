@@ -74,7 +74,7 @@
 	<sql id="commonProcessDateColumns">
 		 ID
 		, COMPANY_ID
-		, date_format(EFFECTIVE_MONTH, '%Y-%m-%d %H:%i:%s') EFFECTIVE_MONTH
+		, EFFECTIVE_MONTH
 		, IS_INACTIVE
 		, REMARK
 		, CREATE_BY
@@ -92,7 +92,7 @@
 			AND COMPANY_ID=#{companyId}
 		</if>
 		<if test="effectiveMonth!= null and effectiveMonth!= ''"> 
-			AND EFFECTIVE_MONTH=str_to_date(#{effectiveMonth},'%Y-%m-%d %H:%i:%s')
+			AND EFFECTIVE_MONTH=#{effectiveMonth}
 		</if>
 		<if test="isInactive!= null and isInactive!= ''"> 
 			AND IS_INACTIVE=#{isInactive}
@@ -126,7 +126,7 @@
 				AND pro.COMPANY_ID=#{prototypeSettingDto.companyId}
             </if>
             <if test="prototypeSettingDto.effectiveMonth!= null and prototypeSettingDto.effectiveMonth!= ''">
-				AND pro.EFFECTIVE_MONTH=str_to_date(#{prototypeSettingDto.effectiveMonth},'%Y-%m-%d %H:%i:%s')
+				AND pro.EFFECTIVE_MONTH=#{prototypeSettingDto.effectiveMonth}
             </if>
             <if test="prototypeSettingDto.isInactive!= null and prototypeSettingDto.isInactive!= ''">
 				AND pro.IS_INACTIVE=#{prototypeSettingDto.isInactive}
@@ -248,7 +248,7 @@
 		<![CDATA[
 			) VALUES ( 
 			 #{companyId}
-			, str_to_date(#{effectiveMonth},'%Y-%m-%d %H:%i:%s')
+			, #{effectiveMonth}
 			, #{isInactive}
 			, #{remark}
 			, #{createBy}
@@ -262,7 +262,7 @@
 		<![CDATA[ UPDATE T_PROTOTYPE_SETTING SET 
 			 ID=#{id} 
 			, COMPANY_ID=#{companyId} 
-			, EFFECTIVE_MONTH=str_to_date(#{effectiveMonth},'%Y-%m-%d %H:%i:%s')
+			, EFFECTIVE_MONTH=#{effectiveMonth}
 			, IS_INACTIVE=#{isInactive} 
 			, REMARK=#{remark} 
 			, CREATE_BY=#{createBy} 

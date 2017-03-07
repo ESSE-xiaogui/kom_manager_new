@@ -87,7 +87,15 @@ public class PrototypeFacadeImpl implements PrototypeFacade {
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		Long companyId = userContext.isAdmin()?null:userContext.getCompanyId();
 		
-		pagination.getParams().setCompanyId(companyId);
+		if (pagination.getParams() == null) {
+			
+			prototypeDto = new PrototypeDto();
+			
+			prototypeDto.setCompanyId(companyId);
+			
+			pagination.setParams(prototypeDto);
+		} 
+		
 		
 		return prototypeService.listPaginationByPropertyDto(pagination, prototypeDto);
 	}

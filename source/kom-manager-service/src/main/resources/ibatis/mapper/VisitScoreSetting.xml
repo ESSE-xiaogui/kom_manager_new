@@ -52,6 +52,7 @@
 		<result column="ID" property="id"/>
 		<result column="COMPANY_ID" property="companyId"/>
 		<result column="TYPE" property="type"/>
+		<result column="SQE" property="sqe"/>
 		<result column="DESC_EN" property="descEn"/>
 		<result column="DESC_CN" property="descCn"/>
 		<result column="REMARK" property="remark"/>
@@ -309,9 +310,21 @@
 	
 	<select id="queryVisitScoreSettingList" resultMap="VisitScoreSettingDtoResultMapper">
 		SELECT 
-		 <include refid="commonProcessDateColumns"/>
-		FROM T_VISIT_SCORE_SETTING
+		 s.ID
+		, s.COMPANY_ID
+		, s.TYPE
+		, s.DESC_EN
+		, s.DESC_CN	
+		, s.REMARK
+		, s.CREATE_BY
+		,s.CREATE_TIME
+		, s.UPDATE_BY
+		, s.UPDATE_TIME
+		, s.VERSION
+		,a.SQE AS SQE
+		FROM T_VISIT_SCORE_SETTING s
+		LEFT JOIN T_ATTRIBUTE a ON s.TYPE = a.ID
 		WHERE 1=1
-		AND COMPANY_ID = #{companyId}
+		AND s.COMPANY_ID = #{companyId}
 	</select>
 </mapper>

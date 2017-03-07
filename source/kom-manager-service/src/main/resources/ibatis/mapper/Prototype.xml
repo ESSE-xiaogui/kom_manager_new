@@ -278,16 +278,20 @@
 				AND pro.STATUS=#{prototypeDto.status}
             </if>
             <if test="prototypeDto.beginPublishTime != null and prototypeDto.beginPublishTime !=''">
-				AND pro.PUBLISH_TIME <![CDATA[ >= ]]> #{prototypeDto.beginPublishTime}
+				AND pro.PUBLISH_TIME <![CDATA[ >= ]]> str_to_date(#{prototypeDto.beginPublishTime},'%Y-%m-%d
+				%H:%i:%s')
 			</if>
 			<if test="prototypeDto.endPublishTime != null and prototypeDto.endPublishTime !=''">
-				AND pro.PUBLISH_TIME <![CDATA[ <= ]]> #{prototypeDto.endPublishTime}
+				AND pro.PUBLISH_TIME <![CDATA[ <= ]]> str_to_date(#{prototypeDto.endPublishTime},'%Y-%m-%d
+				%H:%i:%s')
 			</if>
             <if test="prototypeDto.beginUnpublishTime != null and prototypeDto.beginUnpublishTime !=''">
-				AND pro.UNPUBLISH_TIME <![CDATA[ >= ]]> #{prototypeDto.beginUnpublishTime}
+				AND pro.UNPUBLISH_TIME <![CDATA[ >= ]]> str_to_date(#{prototypeDto.beginUnpublishTime},'%Y-%m-%d
+				%H:%i:%s')
 			</if>
 			<if test="prototypeDto.endUnpublishTime != null and prototypeDto.endUnpublishTime !=''">
-				AND pro.UNPUBLISH_TIME <![CDATA[ <= ]]> #{prototypeDto.endPublishTime}
+				AND pro.UNPUBLISH_TIME <![CDATA[ <= ]]> str_to_date(#{prototypeDto.endPublishTime},'%Y-%m-%d
+				%H:%i:%s')
 			</if>
 			<if test="prototypeDto.countryName!= null and prototypeDto.countryName!= ''">
 				AND r1.REGION_NAME=#{prototypeDto.countryName}
