@@ -38,8 +38,16 @@ public class CurrencyManager {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUser())){
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		Currency c = new Currency();
+		c.setCurrencyName(currency.getCurrencyName());
+		c.setBeginTime(currency.getBeginTime());
+		c.setEndTime(currency.getEndTime());
+		int count = currencyMapper.findByCount(c);
+		if(count>0){
+			throw new ServiceException(ExceptionDef.ERROR_CURRENCY_IS_EXIST.getName());
 		}
 		currency.setCreatedBy(userContext.getUserCode());
 		currency.setFindex(1);
