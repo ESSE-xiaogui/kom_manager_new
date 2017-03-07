@@ -78,8 +78,18 @@ public class DutyManager {
 					throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext)){
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())){
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		
+		Duty dutyParam = new Duty();
+		dutyParam.setDutyName(duty.getDutyName());
+		dutyParam.setCompanyId(duty.getCompanyId());
+		int count1 = dutyMapper.findByCount(dutyParam);
+		dutyParam.setId(duty.getId());
+		int count2 = dutyMapper.findByCount(dutyParam);
+		if(count1>0 && count2<1){
+			throw new ServiceException(ExceptionDef.ERROR_DUTY_IS_EXIST.getName());
 		}
 		if(!UtilHelper.isEmpty(userContext.getUserCode())){
 			duty.setCreatedBy(userContext.getUserCode());
