@@ -33,6 +33,8 @@ public class ShopMaterielDto implements Serializable{
 	
 	private java.lang.Integer regionId;
 	
+	private java.lang.Long regionType;
+	
 	private java.lang.String countryName;
 	
 	private java.lang.String cityName;
@@ -280,16 +282,25 @@ public class ShopMaterielDto implements Serializable{
 		this.shopCode = shopCode;
 	}
 
+	public java.lang.Long getRegionType() {
+		return regionType;
+	}
+
+	public void setRegionType(java.lang.Long regionType) {
+		this.regionType = regionType;
+	}
+
 	@Override
 	public String toString() {
 		return "ShopMaterielDto [id=" + id + ", shopId=" + shopId + ", shopCode=" + shopCode + ", materielId="
-						+ materielId + ", materielQty=" + materielQty + ", regionId=" + regionId + ", countryName="
-						+ countryName + ", cityName=" + cityName + ", createDateStart=" + createDateStart
-						+ ", createDateEnd=" + createDateEnd + ", updateDateStart=" + updateDateStart
+						+ materielId + ", materielQty=" + materielQty + ", regionId=" + regionId + ", regionType="
+						+ regionType + ", countryName=" + countryName + ", cityName=" + cityName + ", createDateStart="
+						+ createDateStart + ", createDateEnd=" + createDateEnd + ", updateDateStart=" + updateDateStart
 						+ ", updateDateEnd=" + updateDateEnd + ", shopName=" + shopName + ", companyId=" + companyId
 						+ ", companyCode=" + companyCode + ", nameEN=" + nameEN + ", nameCN=" + nameCN + ", type="
 						+ type + ", remark=" + remark + ", createBy=" + createBy + ", createDate=" + createDate
 						+ ", updateBy=" + updateBy + ", updateDate=" + updateDate + ", version=" + version + "]";
 	}
+
 
 }

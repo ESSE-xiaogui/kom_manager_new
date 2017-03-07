@@ -56,6 +56,8 @@ public class VisitCompetitorDetailDto implements Serializable{
 	private java.lang.String empName;
 	
 	private java.lang.Long regionId;
+	
+	private java.lang.Long regionType;
 
 	/**
 	  *	
@@ -350,15 +352,23 @@ public class VisitCompetitorDetailDto implements Serializable{
 		this.createTimeEnd = createTimeEnd;
 	}
 
+	public java.lang.Long getRegionType() {
+		return regionType;
+	}
+
+	public void setRegionType(java.lang.Long regionType) {
+		this.regionType = regionType;
+	}
+
 	@Override
 	public String toString() {
 		return "VisitCompetitorDetailDto [id=" + id + ", visitId=" + visitId + ", shopId=" + shopId + ", companyId="
 						+ companyId + ", companyCode=" + companyCode + ", countryName=" + countryName + ", cityName="
 						+ cityName + ", shopCode=" + shopCode + ", shopName=" + shopName + ", empName=" + empName
-						+ ", regionId=" + regionId + ", brandName=" + brandName + ", saleQty=" + saleQty + ", remark="
-						+ remark + ", createBy=" + createBy + ", createTime=" + createTime + ", createTimeStart="
-						+ createTimeStart + ", createTimeEnd=" + createTimeEnd + ", updateBy=" + updateBy
-						+ ", updateTime=" + updateTime + ", version=" + version + "]";
+						+ ", regionId=" + regionId + ", regionType=" + regionType + ", brandName=" + brandName
+						+ ", saleQty=" + saleQty + ", remark=" + remark + ", createBy=" + createBy + ", createTime="
+						+ createTime + ", createTimeStart=" + createTimeStart + ", createTimeEnd=" + createTimeEnd
+						+ ", updateBy=" + updateBy + ", updateTime=" + updateTime + ", version=" + version + "]";
 	}
 
 

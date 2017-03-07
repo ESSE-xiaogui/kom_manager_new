@@ -37,6 +37,8 @@ public class VisitSaleInfoDto implements Serializable{
 	
 	private java.lang.Long regionId;
 	
+	private java.lang.Long regionType;
+	
 	private java.lang.String countryName;
 	
 	private java.lang.String cityName;
@@ -211,15 +213,24 @@ public class VisitSaleInfoDto implements Serializable{
 		this.createBy = createBy;
 	}
 
+	public java.lang.Long getRegionType() {
+		return regionType;
+	}
+
+	public void setRegionType(java.lang.Long regionType) {
+		this.regionType = regionType;
+	}
+
 	@Override
 	public String toString() {
 		return "VisitSaleInfoDto [id=" + id + ", visitId=" + visitId + ", brandId=" + brandId + ", saleQty=" + saleQty
 						+ ", modelId=" + modelId + ", companyId=" + companyId + ", companyCode=" + companyCode
-						+ ", regionId=" + regionId + ", countryName=" + countryName + ", cityName=" + cityName
-						+ ", shopCode=" + shopCode + ", shopName=" + shopName + ", empName=" + empName + ", modelName="
-						+ modelName + ", brandName=" + brandName + ", createTimeStart=" + createTimeStart
-						+ ", createTimeEnd=" + createTimeEnd + ", createTime=" + createTime + ", createBy=" + createBy
-						+ "]";
+						+ ", regionId=" + regionId + ", regionType=" + regionType + ", countryName=" + countryName
+						+ ", cityName=" + cityName + ", shopCode=" + shopCode + ", shopName=" + shopName + ", empName="
+						+ empName + ", modelName=" + modelName + ", brandName=" + brandName + ", createTimeStart="
+						+ createTimeStart + ", createTimeEnd=" + createTimeEnd + ", createTime=" + createTime
+						+ ", createBy=" + createBy + "]";
 	}
+
 
 }

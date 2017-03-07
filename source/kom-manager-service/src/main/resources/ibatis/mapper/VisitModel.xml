@@ -134,8 +134,11 @@
            <!--  <if test="visitModelDetailInfoDto.brandId!= null and visitModelDetailInfoDto.brandId!= ''">
 				AND vm.BRAND_ID=#{visitModelDetailInfoDto.brandId}
             </if> -->
-            <if test="visitModelDetailInfoDto.regionId!= null and visitModelDetailInfoDto.regionId!= ''">
+            <if test="visitModelDetailInfoDto.regionId!= null and visitModelDetailInfoDto.regionId!= '' and visitModelDetailInfoDto.regionType==2">
 				AND r1.ID=#{visitModelDetailInfoDto.regionId}
+            </if>
+            <if test="visitModelDetailInfoDto.regionId!= null and visitModelDetailInfoDto.regionId!= '' and visitModelDetailInfoDto.regionType==4">
+				AND r2.ID=#{visitModelDetailInfoDto.regionId}
             </if>
             <if test="visitModelDetailInfoDto.modelName!= null and visitModelDetailInfoDto.modelName!= ''">
 				AND m.MODEL_NAME=#{visitModelDetailInfoDto.modelName}

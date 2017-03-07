@@ -86,6 +86,8 @@ public class VisitFeedBackInfoDto implements Serializable{
 	
 	private java.lang.Long regionId;
 	
+	private java.lang.Long regionType;
+	
 	private java.lang.String visitNo;
 	
 	private java.lang.Integer companyId;
@@ -282,6 +284,14 @@ public class VisitFeedBackInfoDto implements Serializable{
 		this.companyId = companyId;
 	}
 
+	public java.lang.Long getRegionType() {
+		return regionType;
+	}
+
+	public void setRegionType(java.lang.Long regionType) {
+		this.regionType = regionType;
+	}
+
 	@Override
 	public String toString() {
 		return "VisitFeedBackInfoDto [id=" + id + ", visitId=" + visitId + ", issue=" + issue + ", action=" + action
@@ -290,9 +300,11 @@ public class VisitFeedBackInfoDto implements Serializable{
 						+ ", version=" + version + ", companyCode=" + companyCode + ", countryName=" + countryName
 						+ ", cityName=" + cityName + ", shopCode=" + shopCode + ", shopName=" + shopName + ", empName="
 						+ empName + ", createBy=" + createBy + ", createTime=" + createTime + ", createTimeStart="
-						+ createTimeStart + ", createTimeEnd=" + createTimeEnd + ", regionId=" + regionId + ", visitNo="
-						+ visitNo + ", companyId=" + companyId + "]";
+						+ createTimeStart + ", createTimeEnd=" + createTimeEnd + ", regionId=" + regionId
+						+ ", regionType=" + regionType + ", visitNo=" + visitNo + ", companyId=" + companyId + "]";
 	}
+
+	
 
 
 }

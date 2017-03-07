@@ -19,6 +19,7 @@ public class PrototypeCountingDto implements Serializable{
 	private String shopName;			// 店铺名称
 	private Long modelId;				// 型号ID
 	private Long regionId;				//国家区域ID
+	private Long regionType;            //
 	private Long companyId;				//事业部ID
 	private String modelCode;			// 型号代码
 	private String modelName;			// 机型名称
@@ -229,17 +230,24 @@ public class PrototypeCountingDto implements Serializable{
 	public void setCompanyId(Long companyId) {
 		this.companyId = companyId;
 	}
+	
+	public Long getRegionType() {
+		return regionType;
+	}
+	public void setRegionType(Long regionType) {
+		this.regionType = regionType;
+	}
 	@Override
 	public String toString() {
 		return "PrototypeCountingDto [id=" + id + ", prototypeId=" + prototypeId + ", brandId=" + brandId
 						+ ", companyCode=" + companyCode + ", brandName=" + brandName + ", shopId=" + shopId
 						+ ", shopCode=" + shopCode + ", shopName=" + shopName + ", modelId=" + modelId + ", regionId="
-						+ regionId + ", companyId=" + companyId + ", modelCode=" + modelCode + ", modelName="
-						+ modelName + ", countingTime=" + countingTime + ", countingBy=" + countingBy
-						+ ", countingTimeStart=" + countingTimeStart + ", countingTimeEnd=" + countingTimeEnd
-						+ ", createBy=" + createBy + ", createTime=" + createTime + ", createTimeStart="
-						+ createTimeStart + ", createTimeEnd=" + createTimeEnd + ", empName=" + empName
-						+ ", countryName=" + countryName + ", cityName=" + cityName + ", imeiNo=" + imeiNo
+						+ regionId + ", regionType=" + regionType + ", companyId=" + companyId + ", modelCode="
+						+ modelCode + ", modelName=" + modelName + ", countingTime=" + countingTime + ", countingBy="
+						+ countingBy + ", countingTimeStart=" + countingTimeStart + ", countingTimeEnd="
+						+ countingTimeEnd + ", createBy=" + createBy + ", createTime=" + createTime
+						+ ", createTimeStart=" + createTimeStart + ", createTimeEnd=" + createTimeEnd + ", empName="
+						+ empName + ", countryName=" + countryName + ", cityName=" + cityName + ", imeiNo=" + imeiNo
 						+ ", imeiList=" + imeiList + ", imgPrototypeUrl=" + imgPrototypeUrl + ", imgShopUrl="
 						+ imgShopUrl + ", imgImeiUrl=" + imgImeiUrl + ", status=" + status + ", remark=" + remark + "]";
 	}

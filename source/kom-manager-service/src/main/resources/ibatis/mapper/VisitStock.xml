@@ -189,8 +189,11 @@
             <if test="visitStockDetailDto.brandId!= null and visitStockDetailDto.brandId!= ''">
 				AND BRAND_ID=#{visitStockDetailDto.brandId}
             </if>
-            <if test="visitStockDetailDto.regionId!= null and visitStockDetailDto.regionId!= ''">
+            <if test="visitStockDetailDto.regionId!= null and visitStockDetailDto.regionId!= '' and visitStockDetailDto.regionType==2">
 				AND r1.ID=#{visitStockDetailDto.regionId}
+            </if>
+            <if test="visitStockDetailDto.regionId!= null and visitStockDetailDto.regionId!= '' and visitStockDetailDto.regionType==4">
+				AND r2.ID=#{visitStockDetailDto.regionId}
             </if>
             <if test="visitStockDetailDto.shopCode!= null and visitStockDetailDto.shopCode!= ''">
 				AND SHOP_CODE=#{visitStockDetailDto.shopCode}

@@ -141,8 +141,11 @@
             <if test="shopMaterielDto.materielQty!= null and shopMaterielDto.materielQty!= ''">
 				AND MATERIEL_QTY=#{shopMaterielDto.materielQty}
             </if>
-            <if test="shopMaterielDto.regionId!= null and shopMaterielDto.regionId!= ''">
+            <if test="shopMaterielDto.regionId!= null and shopMaterielDto.regionId!= '' and shopMaterielDto.regionType==2">
 				AND r1.ID=#{shopMaterielDto.regionId}
+            </if>
+            <if test="shopMaterielDto.regionId!= null and shopMaterielDto.regionId!= '' and shopMaterielDto.regionType==4">
+				AND r2.ID=#{shopMaterielDto.regionId}
             </if>
             <if test="shopMaterielDto.remark!= null and shopMaterielDto.remark!= ''">
 				AND sm.REMARK=#{shopMaterielDto.remark}

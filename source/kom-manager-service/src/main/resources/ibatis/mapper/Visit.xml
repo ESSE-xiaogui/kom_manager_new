@@ -269,16 +269,18 @@
             </if>
             <if test="visit.version!= null and visit.version!= ''">
 				AND v.VERSION=#{visit.version}
-            </if>
-            
+            </if>           
             <if test="visit.shopName!= null and visit.shopName!= ''">
 				AND s.SHOP_NAME=#{visit.shopName}
             </if>
             <if test="visit.shopCode!= null and visit.shopCode!= ''">
 				AND s.SHOP_CODE=#{visit.shopCode}
             </if>
-            <if test="visit.regionId!= null and visit.regionId!= ''">
+            <if test="visit.regionId!= null and visit.regionId!= '' and visit.regionType==2">
 				AND r.ID=#{visit.regionId}
+            </if>
+            <if test="visit.regionId!= null and visit.regionId!= '' and visit.regionType==4">
+				AND e.ID=#{visit.regionId}
             </if>
             <if test="visit.startDate!= null and visit.startDate!= ''">
 				AND DATE_FORMAT(v.CREATE_TIME, '%Y-%m-%d') &gt;=str_to_date(#{visit.startDate},'%Y-%m-%d %H:%i:%s')

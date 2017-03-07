@@ -20,6 +20,7 @@ public class StockInfoDto implements Serializable{
 	private java.lang.Long modelId;
 	private java.lang.Integer shopId;
 	private java.lang.Long regionId;
+	private java.lang.Long regionType;
 	
 	private java.math.BigDecimal qty;
 	
@@ -269,17 +270,25 @@ public class StockInfoDto implements Serializable{
 		this.modelId = modelId;
 	}
 
+	public java.lang.Long getRegionType() {
+		return regionType;
+	}
+
+	public void setRegionType(java.lang.Long regionType) {
+		this.regionType = regionType;
+	}
+
 	@Override
 	public String toString() {
 		return "StockInfoDto [id=" + id + ", companyId=" + companyId + ", billno=" + billno + ", stockDate=" + stockDate
 						+ ", stockId=" + stockId + ", brandCode=" + brandCode + ", brandId=" + brandId + ", modelCode="
 						+ modelCode + ", modelId=" + modelId + ", shopId=" + shopId + ", regionId=" + regionId
-						+ ", qty=" + qty + ", companyCode=" + companyCode + ", countryName=" + countryName
-						+ ", cityName=" + cityName + ", shopName=" + shopName + ", bizName=" + bizName + ", gradeName="
-						+ gradeName + ", empName=" + empName + ", dutyName=" + dutyName + ", shopCode=" + shopCode
-						+ ", userCode=" + userCode + ", stockDateStart=" + stockDateStart + ", stockDateEnd="
-						+ stockDateEnd + ", createTime=" + createTime + ", createTimeStart=" + createTimeStart
-						+ ", createTimeEnd=" + createTimeEnd + "]";
+						+ ", regionType=" + regionType + ", qty=" + qty + ", companyCode=" + companyCode
+						+ ", countryName=" + countryName + ", cityName=" + cityName + ", shopName=" + shopName
+						+ ", bizName=" + bizName + ", gradeName=" + gradeName + ", empName=" + empName + ", dutyName="
+						+ dutyName + ", shopCode=" + shopCode + ", userCode=" + userCode + ", stockDateStart="
+						+ stockDateStart + ", stockDateEnd=" + stockDateEnd + ", createTime=" + createTime
+						+ ", createTimeStart=" + createTimeStart + ", createTimeEnd=" + createTimeEnd + "]";
 	}
 
 	

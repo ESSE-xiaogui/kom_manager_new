@@ -76,6 +76,8 @@ public class VisitStockDetailDto implements Serializable {
 	
 	private java.lang.Long regionId;
 	
+	private java.lang.Long regionType;
+	
 	private java.lang.Long countryId;
 	
 	private java.lang.String countryName;
@@ -228,6 +230,14 @@ public class VisitStockDetailDto implements Serializable {
 		this.regionId = regionId;
 	}
 
+	public java.lang.Long getRegionType() {
+		return regionType;
+	}
+
+	public void setRegionType(java.lang.Long regionType) {
+		this.regionType = regionType;
+	}
+
 	public void setCountryId(java.lang.Long countryId) {
 		this.countryId = countryId;
 	}
@@ -310,10 +320,11 @@ public class VisitStockDetailDto implements Serializable {
 						+ modelId + ", stockQty=" + stockQty + ", saleAvg=" + saleAvg + ", stockIto=" + stockIto
 						+ ", remark=" + remark + ", createBy=" + createBy + ", createTime=" + createTime + ", updateBy="
 						+ updateBy + ", updateTime=" + updateTime + ", version=" + version + ", companyId=" + companyId
-						+ ", companyCode=" + companyCode + ", regionId=" + regionId + ", countryId=" + countryId
-						+ ", countryName=" + countryName + ", cityId=" + cityId + ", cityName=" + cityName
-						+ ", shopCode=" + shopCode + ", shopName=" + shopName + ", empName=" + empName + ", modelName="
-						+ modelName + ", createTimeStart=" + createTimeStart + ", createTimeEnd=" + createTimeEnd + "]";
+						+ ", companyCode=" + companyCode + ", regionId=" + regionId + ", regionType=" + regionType
+						+ ", countryId=" + countryId + ", countryName=" + countryName + ", cityId=" + cityId
+						+ ", cityName=" + cityName + ", shopCode=" + shopCode + ", shopName=" + shopName + ", empName="
+						+ empName + ", modelName=" + modelName + ", createTimeStart=" + createTimeStart
+						+ ", createTimeEnd=" + createTimeEnd + "]";
 	}
 
 

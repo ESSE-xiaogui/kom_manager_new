@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.transsion.store.bo.GoalSupervisor;
+import com.transsion.store.dto.GoalSupervisorInfoDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
@@ -27,7 +28,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface GoalSupervisorMapper extends GenericIBatisMapper<GoalSupervisor, java.lang.Long> {
 
-    public List<GoalSupervisor> listPaginationByProperty(Pagination<GoalSupervisor> pagination, @Param("goalSupervisor")GoalSupervisor goalSupervisor, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<GoalSupervisorInfoDto> listPaginationByProperty(Pagination<GoalSupervisorInfoDto> pagination, @Param("goalSupervisorInfoDto")GoalSupervisorInfoDto goalSupervisorInfoDto, @Param("orderBy") Map<String, String> orderBy,@Param("companyId")Long companyId) throws DataAccessFailureException;
     
     public Long querySaleTargetByShopId(GoalSupervisor goalSupervisor);
 }

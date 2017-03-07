@@ -242,8 +242,11 @@
            <!--  <if test="stockInfoDto.userId!= null and stockInfoDto.userId!= ''">
 				AND USER_ID=#{stockInfoDto.userId}
             </if> -->
-     		<if test="stockInfoDto.regionId!= null and stockInfoDto.regionId!= ''">
+     		<if test="stockInfoDto.regionId!= null and stockInfoDto.regionId!= '' and stockInfoDto.regionType==2">
 				AND r1.ID=#{stockInfoDto.regionId}
+            </if>
+            <if test="stockInfoDto.regionId!= null and stockInfoDto.regionId!= '' and stockInfoDto.regionType==4">
+				AND r2.ID=#{stockInfoDto.regionId}
             </if>
             <if test="stockInfoDto.userCode!= null and stockInfoDto.userCode!= ''">
 				AND s.USER_CODE=#{stockInfoDto.userCode}

@@ -223,8 +223,11 @@
             <if test="prototypeCountingDto.brandId!= null and prototypeCountingDto.brandId!= ''">
 				AND p.BRAND_ID=#{prototypeCountingDto.brandId}
             </if>
-            <if test="prototypeCountingDto.regionId!= null and prototypeCountingDto.regionId!= ''">
+            <if test="prototypeCountingDto.regionId!= null and prototypeCountingDto.regionId!= '' and prototypeCountingDto.regionType==2">
 				AND r1.ID=#{prototypeCountingDto.regionId}
+            </if>
+            <if test="prototypeCountingDto.regionId!= null and prototypeCountingDto.regionId!= '' and prototypeCountingDto.regionType==4">
+				AND r2.ID=#{prototypeCountingDto.regionId}
             </if>
             <if test="prototypeCountingDto.prototypeId!= null and prototypeCountingDto.prototypeId!= ''">
 				AND pc.PROTOTYPE_ID=#{prototypeCountingDto.prototypeId}

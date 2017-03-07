@@ -539,8 +539,11 @@
             <if test="shopInfoDto.parentId!= null and shopInfoDto.parentId!= ''">
 				AND PARENT_ID=#{shopInfoDto.parentId}
             </if>
-            <if test="shopInfoDto.regionId!= null and shopInfoDto.regionId!= ''">
+            <if test="shopInfoDto.regionId!= null and shopInfoDto.regionId!= '' and shopInfoDto.regionType==2">
 				AND r1.ID=#{shopInfoDto.regionId}
+            </if>
+            <if test="shopInfoDto.regionId!= null and shopInfoDto.regionId!= '' and shopInfoDto.regionType==4">
+				AND r2.ID=#{shopInfoDto.regionId}
             </if>
             <if test="shopInfoDto.country!= null and shopInfoDto.country!= ''">
 				AND COUNTRY=#{shopInfoDto.country}

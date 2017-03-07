@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.GoalSupervisor;
+import com.transsion.store.dto.GoalSupervisorInfoDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.GoalSupervisorFacade;
 import com.shangkang.core.bo.Pagination;
@@ -59,9 +60,9 @@ public class GoalSupervisorController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<GoalSupervisor> listPgGoalSupervisor(RequestModel<GoalSupervisor> requestModel) throws ServiceException
+	public Pagination<GoalSupervisorInfoDto> listPgGoalSupervisor(RequestModel<GoalSupervisorInfoDto> requestModel) throws ServiceException
 	{
-		Pagination<GoalSupervisor> pagination = new Pagination<GoalSupervisor>();
+		Pagination<GoalSupervisorInfoDto> pagination = new Pagination<GoalSupervisorInfoDto>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());
@@ -69,7 +70,7 @@ public class GoalSupervisorController extends AbstractController{
 		pagination.setParams(requestModel.getParams());
 		pagination.setOrderBy(requestModel.getOrderBy());
 
-		return goalSupervisorFacade.listPaginationByProperty(pagination, requestModel.getParams());
+		return goalSupervisorFacade.listPaginationByProperty(pagination, requestModel.getParams(),this.getAuthorization());
 	}
 
 	/**

@@ -194,8 +194,11 @@
             <if test="visitFeedBackInfoDto.issue!= null and visitFeedBackInfoDto.issue!= ''">
 				AND ISSUE=#{visitFeedBackInfoDto.issue}
             </if>
-            <if test="visitFeedBackInfoDto.regionId!= null and visitFeedBackInfoDto.regionId!= ''">
+            <if test="visitFeedBackInfoDto.regionId!= null and visitFeedBackInfoDto.regionId!= '' and visitFeedBackInfoDto.regionType==2">
 				AND r1.ID=#{visitFeedBackInfoDto.regionId}
+            </if>
+            <if test="visitFeedBackInfoDto.regionId!= null and visitFeedBackInfoDto.regionId!= '' and visitFeedBackInfoDto.regionType==4">
+				AND r2.ID=#{visitFeedBackInfoDto.regionId}
             </if>
             <if test="visitFeedBackInfoDto.shopCode!= null and visitFeedBackInfoDto.shopCode!= ''">
 				AND SHOP_CODE=#{visitFeedBackInfoDto.shopCode}

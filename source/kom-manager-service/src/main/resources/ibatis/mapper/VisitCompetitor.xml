@@ -150,8 +150,11 @@
             <if test="visitCompetitorDetailDto.companyId!= null and visitCompetitorDetailDto.companyId!= ''">
 				AND v.COMPANY_ID=#{visitCompetitorDetailDto.companyId}
             </if>
-            <if test="visitCompetitorDetailDto.regionId!= null and visitCompetitorDetailDto.regionId!= ''">
+            <if test="visitCompetitorDetailDto.regionId!= null and visitCompetitorDetailDto.regionId!= '' and visitCompetitorDetailDto.regionType==2">
 				AND r1.ID=#{visitCompetitorDetailDto.regionId}
+            </if>
+            <if test="visitCompetitorDetailDto.regionId!= null and visitCompetitorDetailDto.regionId!= '' and visitCompetitorDetailDto.regionType==4">
+				AND r2.ID=#{visitCompetitorDetailDto.regionId}
             </if>
             <if test="visitCompetitorDetailDto.saleQty!= null and visitCompetitorDetailDto.saleQty!= ''">
 				AND SALE_QTY=#{visitCompetitorDetailDto.saleQty}

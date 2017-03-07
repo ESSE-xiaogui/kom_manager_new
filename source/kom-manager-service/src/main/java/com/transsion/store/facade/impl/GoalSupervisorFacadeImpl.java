@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.GoalSupervisor;
+import com.transsion.store.dto.GoalSupervisorInfoDto;
 import com.transsion.store.facade.GoalSupervisorFacade;
 import com.transsion.store.service.GoalSupervisorService;
 
@@ -75,10 +76,10 @@ public class GoalSupervisorFacadeImpl implements GoalSupervisorFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<GoalSupervisor> listPaginationByProperty(Pagination<GoalSupervisor> pagination, GoalSupervisor goalSupervisor)
+	public Pagination<GoalSupervisorInfoDto> listPaginationByProperty(Pagination<GoalSupervisorInfoDto> pagination, GoalSupervisorInfoDto goalSupervisorInfoDto,String token)
 			throws ServiceException
 	{
-		return goalSupervisorService.listPaginationByProperty(pagination, goalSupervisor);
+		return goalSupervisorService.listPaginationByProperty(pagination, goalSupervisorInfoDto,token);
 	}
 
 	/**

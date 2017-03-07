@@ -54,6 +54,8 @@ public class VisitPlanDetailInfoDto implements Serializable{
 	
 	private java.lang.Long regionId;
 	
+	private java.lang.Long regionType;
+	
 	private java.lang.String countryName;
 	
 	private java.lang.String cityName;
@@ -315,22 +317,27 @@ public class VisitPlanDetailInfoDto implements Serializable{
 		this.version = version;
 	}
 
+	public java.lang.Long getRegionType() {
+		return regionType;
+	}
+
+	public void setRegionType(java.lang.Long regionType) {
+		this.regionType = regionType;
+	}
+
 	@Override
 	public String toString() {
 		return "VisitPlanDetailInfoDto [id=" + id + ", planDate=" + planDate + ", planDateStart=" + planDateStart
 						+ ", planDateEnd=" + planDateEnd + ", weekNo=" + weekNo + ", visitDate=" + visitDate
 						+ ", companyId=" + companyId + ", companyCode=" + companyCode + ", shopId=" + shopId
 						+ ", shopName=" + shopName + ", gradeName=" + gradeName + ", gradeId=" + gradeId + ", bizName="
-						+ bizName + ", bizId=" + bizId + ", regionId=" + regionId + ", countryName=" + countryName
-						+ ", cityName=" + cityName + ", empName=" + empName + ", status=" + status + ", remark="
-						+ remark + ", createBy=" + createBy + ", createTime=" + createTime + ", createTimeStart="
-						+ createTimeStart + ", createTimeEnd=" + createTimeEnd + ", updateBy=" + updateBy
-						+ ", updateTime=" + updateTime + ", version=" + version + "]";
+						+ bizName + ", bizId=" + bizId + ", regionId=" + regionId + ", regionType=" + regionType
+						+ ", countryName=" + countryName + ", cityName=" + cityName + ", empName=" + empName
+						+ ", status=" + status + ", remark=" + remark + ", createBy=" + createBy + ", createTime="
+						+ createTime + ", createTimeStart=" + createTimeStart + ", createTimeEnd=" + createTimeEnd
+						+ ", updateBy=" + updateBy + ", updateTime=" + updateTime + ", version=" + version + "]";
 	}
 
-	/**
-	  *	
-	  */
 	
 
 }

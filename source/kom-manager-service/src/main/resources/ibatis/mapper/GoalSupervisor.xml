@@ -37,6 +37,31 @@
 		<result column="UPDATE_TIME" property="updateTime"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
+	<resultMap id="GoalSupervisorInfoDtoResultMapper" type="GoalSupervisorInfoDto">
+		<result column="ID" property="id"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="GOAL_MONTH" property="goalMonth"/>
+		<result column="COMPANY_CODE" property="companyCode"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="DUTY_NAME" property="dutyName"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="CREATOR_NAME" property="creatorName"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="USER_CODE" property="userCode"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="SHOP_CODE" property="shopCode"/>
+		<result column="SALE_TARGET" property="saleTarget"/>
+		<result column="SALE_CURRENT" property="saleCurrent"/>
+		<result column="ACHIEVED" property="achieved"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
 	
 	<sql id="commonColumns">
 		 ID
@@ -94,6 +119,24 @@
 		, VERSION
 	</sql>
 	
+	<sql id="commonProcessDateColumn">
+		c.COMPANY_CODE,
+		r1.REGION_NAME AS COUNTRY_NAME,
+		r2.REGION_NAME AS CITY_NAME,
+		GOAL_MONTH,
+		gs.USER_CODE,
+		e1.EMP_NAME,
+		d.DUTY_NAME,
+		s.SHOP_CODE,
+		s.SHOP_NAME,
+		gs.SALE_TARGET,
+		SALE_CURRENT,
+		ACHIEVED,
+		gs.CREATE_BY,
+		e2.EMP_NAME AS CREATOR_NAME,
+		gs.CREATE_TIME
+	</sql>
+	
 	<sql id="commonCondition">
 		<if test="id!= null and id!= ''"> 
 			AND ID=#{id}
@@ -146,54 +189,54 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="goalSupervisor != null">
-            <if test="goalSupervisor.id!= null and goalSupervisor.id!= ''">
-				AND ID=#{goalSupervisor.id}
+		<if test="goalSupervisorInfoDto != null">
+            <if test="goalSupervisorInfoDto.id!= null and goalSupervisorInfoDto.id!= ''">
+				AND ID=#{goalSupervisorInfoDto.id}
             </if>
-            <if test="goalSupervisor.companyId!= null and goalSupervisor.companyId!= ''">
-				AND COMPANY_ID=#{goalSupervisor.companyId}
+            <if test="goalSupervisorInfoDto.companyId!= null and goalSupervisorInfoDto.companyId!= ''">
+				AND COMPANY_ID=#{goalSupervisorInfoDto.companyId}
             </if>
-            <if test="goalSupervisor.goalMonth!= null and goalSupervisor.goalMonth!= ''">
-				AND GOAL_MONTH=str_to_date(#{goalSupervisor.goalMonth},'%Y-%m-%d %H:%i:%s')
+            <if test="goalSupervisorInfoDto.goalMonth!= null and goalSupervisorInfoDto.goalMonth!= ''">
+				AND GOAL_MONTH=str_to_date(#{goalSupervisorInfoDto.goalMonth},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="goalSupervisor.userId!= null and goalSupervisor.userId!= ''">
-				AND USER_ID=#{goalSupervisor.userId}
+            <if test="goalSupervisorInfoDto.userId!= null and goalSupervisorInfoDto.userId!= ''">
+				AND USER_ID=#{goalSupervisorInfoDto.userId}
             </if>
-            <if test="goalSupervisor.userCode!= null and goalSupervisor.userCode!= ''">
-				AND USER_CODE=#{goalSupervisor.userCode}
+            <if test="goalSupervisorInfoDto.userCode!= null and goalSupervisorInfoDto.userCode!= ''">
+				AND USER_CODE=#{goalSupervisorInfoDto.userCode}
             </if>
-            <if test="goalSupervisor.shopId!= null and goalSupervisor.shopId!= ''">
-				AND SHOP_ID=#{goalSupervisor.shopId}
+            <if test="goalSupervisorInfoDto.shopId!= null and goalSupervisorInfoDto.shopId!= ''">
+				AND SHOP_ID=#{goalSupervisorInfoDto.shopId}
             </if>
-            <if test="goalSupervisor.shopCode!= null and goalSupervisor.shopCode!= ''">
-				AND SHOP_CODE=#{goalSupervisor.shopCode}
+            <if test="goalSupervisorInfoDto.shopCode!= null and goalSupervisorInfoDto.shopCode!= ''">
+				AND SHOP_CODE=#{goalSupervisorInfoDto.shopCode}
             </if>
-            <if test="goalSupervisor.saleTarget!= null and goalSupervisor.saleTarget!= ''">
-				AND SALE_TARGET=#{goalSupervisor.saleTarget}
+            <if test="goalSupervisorInfoDto.saleTarget!= null and goalSupervisorInfoDto.saleTarget!= ''">
+				AND SALE_TARGET=#{goalSupervisorInfoDto.saleTarget}
             </if>
-            <if test="goalSupervisor.saleCurrent!= null and goalSupervisor.saleCurrent!= ''">
-				AND SALE_CURRENT=#{goalSupervisor.saleCurrent}
+            <if test="goalSupervisorInfoDto.saleCurrent!= null and goalSupervisorInfoDto.saleCurrent!= ''">
+				AND SALE_CURRENT=#{goalSupervisorInfoDto.saleCurrent}
             </if>
-            <if test="goalSupervisor.achieved!= null and goalSupervisor.achieved!= ''">
-				AND ACHIEVED=#{goalSupervisor.achieved}
+            <if test="goalSupervisorInfoDto.achieved!= null and goalSupervisorInfoDto.achieved!= ''">
+				AND ACHIEVED=#{goalSupervisorInfoDto.achieved}
             </if>
-            <if test="goalSupervisor.remark!= null and goalSupervisor.remark!= ''">
-				AND REMARK=#{goalSupervisor.remark}
+            <if test="goalSupervisorInfoDto.remark!= null and goalSupervisorInfoDto.remark!= ''">
+				AND REMARK=#{goalSupervisorInfoDto.remark}
             </if>
-            <if test="goalSupervisor.createBy!= null and goalSupervisor.createBy!= ''">
-				AND CREATE_BY=#{goalSupervisor.createBy}
+            <if test="goalSupervisorInfoDto.createBy!= null and goalSupervisorInfoDto.createBy!= ''">
+				AND CREATE_BY=#{goalSupervisorInfoDto.createBy}
             </if>
-            <if test="goalSupervisor.createTime!= null and goalSupervisor.createTime!= ''">
-				AND CREATE_TIME=str_to_date(#{goalSupervisor.createTime},'%Y-%m-%d %H:%i:%s')
+            <if test="goalSupervisorInfoDto.createTime!= null and goalSupervisorInfoDto.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{goalSupervisorInfoDto.createTime},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="goalSupervisor.updateBy!= null and goalSupervisor.updateBy!= ''">
-				AND UPDATE_BY=#{goalSupervisor.updateBy}
+            <if test="goalSupervisorInfoDto.updateBy!= null and goalSupervisorInfoDto.updateBy!= ''">
+				AND UPDATE_BY=#{goalSupervisorInfoDto.updateBy}
             </if>
-            <if test="goalSupervisor.updateTime!= null and goalSupervisor.updateTime!= ''">
-				AND UPDATE_TIME=str_to_date(#{goalSupervisor.updateTime},'%Y-%m-%d %H:%i:%s')
+            <if test="goalSupervisorInfoDto.updateTime!= null and goalSupervisorInfoDto.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{goalSupervisorInfoDto.updateTime},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="goalSupervisor.version!= null and goalSupervisor.version!= ''">
-				AND VERSION=#{goalSupervisor.version}
+            <if test="goalSupervisorInfoDto.version!= null and goalSupervisorInfoDto.version!= ''">
+				AND VERSION=#{goalSupervisorInfoDto.version}
             </if>
         </if>
     </sql>
@@ -332,10 +375,19 @@
 		FROM T_GOAL_SUPERVISOR WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="GoalSupervisor" resultMap="GoalSupervisorResultMapper">
+	<select id="listPaginationByProperty" parameterType="GoalSupervisorInfoDto" resultMap="GoalSupervisorInfoDtoResultMapper">
 		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_GOAL_SUPERVISOR WHERE 1=1
+		<include refid="commonProcessDateColumn"/>
+		FROM T_GOAL_SUPERVISOR gs
+		LEFT JOIN T_COMPANY c ON c.ID = gs.COMPANY_ID
+		LEFT JOIN T_SHOP s ON s.ID = gs.SHOP_ID
+		LEFT JOIN T_REGION r1 ON r1.ID = s.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = s.CITY
+		LEFT JOIN T_EMPLOYEE e1 ON e1.U_ID = gs.USER_ID
+		LEFT JOIN T_DUTY d ON d.ID = e1.DUTY_ID
+		LEFT JOIN T_USER u ON u.USER_CODE = gs.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e2 ON e2.U_ID = u.ID 
+		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>

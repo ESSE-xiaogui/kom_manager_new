@@ -159,8 +159,11 @@
             <if test="visitSaleInfoDto.brandId!= null and visitSaleInfoDto.brandId!= ''">
 				AND BRAND_ID=#{visitSaleInfoDto.brandId}
             </if>
-            <if test="visitSaleInfoDto.regionId!= null and visitSaleInfoDto.regionId!= ''">
+            <if test="visitSaleInfoDto.regionId!= null and visitSaleInfoDto.regionId!= '' and visitSaleInfoDto.regionType==2">
 				AND r1.ID=#{visitSaleInfoDto.regionId}
+            </if>
+            <if test="visitSaleInfoDto.regionId!= null and visitSaleInfoDto.regionId!= '' and visitSaleInfoDto.regionType==4">
+				AND r2.ID=#{visitSaleInfoDto.regionId}
             </if>
             <if test="visitSaleInfoDto.shopCode!= null and visitSaleInfoDto.shopCode!= ''">
 				AND p.SHOP_CODE=#{visitSaleInfoDto.shopCode}

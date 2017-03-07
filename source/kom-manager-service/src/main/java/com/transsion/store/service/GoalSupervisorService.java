@@ -22,9 +22,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.GoalSupervisor;
+import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.GoalSupervisorInfoDto;
+import com.transsion.store.exception.ExceptionDef;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
 import com.transsion.store.mapper.GoalSupervisorMapper;
+import com.transsion.store.utils.CacheUtils;
 
 @Service("goalSupervisorService")
 public class GoalSupervisorService {
@@ -74,10 +79,15 @@ public class GoalSupervisorService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<GoalSupervisor> listPaginationByProperty(Pagination<GoalSupervisor> pagination, GoalSupervisor goalSupervisor)
+	public Pagination<GoalSupervisorInfoDto> listPaginationByProperty(Pagination<GoalSupervisorInfoDto> pagination, GoalSupervisorInfoDto goalSupervisorInfoDto,String token)
 			throws ServiceException
 	{
-		List<GoalSupervisor> list = goalSupervisorMapper.listPaginationByProperty(pagination, goalSupervisor, pagination.getOrderBy());
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		Long companyId = userContext.isAdmin()?null:userContext.getCompanyId();
+		List<GoalSupervisorInfoDto> list = goalSupervisorMapper.listPaginationByProperty(pagination, goalSupervisorInfoDto, pagination.getOrderBy(),companyId);
 		
 		pagination.setResultList(list);
 		

@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.GoalSupervisor;
+import com.transsion.store.dto.GoalSupervisorInfoDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -96,10 +97,11 @@ public interface GoalSupervisorFacade {
 	
 	/**
 	 * 根据查询条件查询分页记录
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<GoalSupervisor> listPaginationByProperty(Pagination<GoalSupervisor> pagination, GoalSupervisor goalSupervisor)
+	public Pagination<GoalSupervisorInfoDto> listPaginationByProperty(Pagination<GoalSupervisorInfoDto> pagination, GoalSupervisorInfoDto goalSupervisorInfoDto, String token)
 			throws ServiceException;
 
 }

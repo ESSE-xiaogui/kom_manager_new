@@ -35,6 +35,8 @@ public class VisitScoreDetailInfoDto implements Serializable{
 	
 	private java.lang.Long regionId;
 	
+	private java.lang.Long regionType;
+	
 	private java.lang.String createTimeStart;
 	
 	private java.lang.String createTimeEnd;
@@ -284,16 +286,26 @@ public class VisitScoreDetailInfoDto implements Serializable{
 		this.totalScoreEnd = totalScoreEnd;
 	}
 
+	public java.lang.Long getRegionType() {
+		return regionType;
+	}
+
+	public void setRegionType(java.lang.Long regionType) {
+		this.regionType = regionType;
+	}
+
 	@Override
 	public String toString() {
 		return "VisitScoreDetailInfoDto [id=" + id + ", visitId=" + visitId + ", companyId=" + companyId
 						+ ", companyCode=" + companyCode + ", countryName=" + countryName + ", cityName=" + cityName
 						+ ", shopCode=" + shopCode + ", shopName=" + shopName + ", empName=" + empName + ", regionId="
-						+ regionId + ", createTimeStart=" + createTimeStart + ", createTimeEnd=" + createTimeEnd
-						+ ", totalScoreStart=" + totalScoreStart + ", totalScoreEnd=" + totalScoreEnd + ", shopScore="
-						+ shopScore + ", saleScore=" + saleScore + ", staffScore=" + staffScore + ", totalScore="
-						+ totalScore + ", remark=" + remark + ", createBy=" + createBy + ", createTime=" + createTime
-						+ ", updateBy=" + updateBy + ", updateTime=" + updateTime + ", version=" + version + "]";
+						+ regionId + ", regionType=" + regionType + ", createTimeStart=" + createTimeStart
+						+ ", createTimeEnd=" + createTimeEnd + ", totalScoreStart=" + totalScoreStart
+						+ ", totalScoreEnd=" + totalScoreEnd + ", shopScore=" + shopScore + ", saleScore=" + saleScore
+						+ ", staffScore=" + staffScore + ", totalScore=" + totalScore + ", remark=" + remark
+						+ ", createBy=" + createBy + ", createTime=" + createTime + ", updateBy=" + updateBy
+						+ ", updateTime=" + updateTime + ", version=" + version + "]";
 	}
 
+	
 }

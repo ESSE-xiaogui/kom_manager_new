@@ -261,8 +261,11 @@
             <if test="visitPlanDetailInfoDto.bizId!= null and visitPlanDetailInfoDto.bizId!= ''">
 				AND BIZ_ID=#{visitPlanDetailInfoDto.bizId}
             </if>
-            <if test="visitPlanDetailInfoDto.regionId!= null and visitPlanDetailInfoDto.regionId!= ''">
+            <if test="visitPlanDetailInfoDto.regionId!= null and visitPlanDetailInfoDto.regionId!= '' and visitPlanDetailInfoDto.regionType==2">
 				AND r1.ID=#{visitPlanDetailInfoDto.regionId}
+            </if>
+            <if test="visitPlanDetailInfoDto.regionId!= null and visitPlanDetailInfoDto.regionId!= '' and visitPlanDetailInfoDto.regionType==4">
+				AND r2.ID=#{visitPlanDetailInfoDto.regionId}
             </if>
             <if test="visitPlanDetailInfoDto.status!= null and visitPlanDetailInfoDto.status!= ''">
 				AND STATUS=#{visitPlanDetailInfoDto.status}

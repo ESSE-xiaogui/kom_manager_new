@@ -183,10 +183,13 @@
             <if test="visitScoreDetailInfoDto.companyId!= null and visitScoreDetailInfoDto.companyId!= ''">
 				AND v.COMPANY_ID=#{visitScoreDetailInfoDto.companyId}
             </if>
-            <if test="visitScoreDetailInfoDto.regionId!= null and visitScoreDetailInfoDto.regionId!= ''">
+            <if test="visitScoreDetailInfoDto.regionId!= null and visitScoreDetailInfoDto.regionId!= '' and visitScoreDetailInfoDto.regionType==2">
 				AND r1.ID=#{visitScoreDetailInfoDto.regionId}
             </if>
-             <if test="visitScoreDetailInfoDto.shopCode!= null and visitScoreDetailInfoDto.shopCode!= ''">
+            <if test="visitScoreDetailInfoDto.regionId!= null and visitScoreDetailInfoDto.regionId!= '' and visitScoreDetailInfoDto.regionType==4">
+				AND r2.ID=#{visitScoreDetailInfoDto.regionId}
+            </if>
+            <if test="visitScoreDetailInfoDto.shopCode!= null and visitScoreDetailInfoDto.shopCode!= ''">
 				AND SHOP_CODE=#{visitScoreDetailInfoDto.shopCode}
             </if>
             <if test="visitScoreDetailInfoDto.shopName!= null and visitScoreDetailInfoDto.shopName!= ''">
