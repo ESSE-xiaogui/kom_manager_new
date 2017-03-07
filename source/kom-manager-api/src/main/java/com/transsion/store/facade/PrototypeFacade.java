@@ -102,7 +102,7 @@ public interface PrototypeFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<PrototypeDto> listPaginationByPropertyDto(Pagination<PrototypeDto> pagination, PrototypeDto prototypeDto)
+	public Pagination<PrototypeDto> listPaginationByPropertyDto(Pagination<PrototypeDto> pagination, PrototypeDto prototypeDto, String token)
 			throws ServiceException;
 
 }

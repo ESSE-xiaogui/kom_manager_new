@@ -30,11 +30,13 @@ public class PrototypeDto implements Serializable {
 	private String countingTime;		// 计划盘点时间
 	
 	private String publishBy;			// 上架人CODE
+	private String publishName;			// 上架人名字
 	private String publishTime;			// 上架时间
 	private String beginPublishTime;	// 上架开始时间
 	private String endPublishTime;		// 上架结束时间
 	
 	private String unpublishBy;			// 下架人CODE
+	private String unpublishName;		// 下架人名字
 	private String unpublishTime;		// 下架时间
 	private String beginUnpublishTime;	// 下架开始时间
 	private String endUnpublishTime;	// 下架结束时间
@@ -183,6 +185,14 @@ public class PrototypeDto implements Serializable {
 	public void setPublishBy(String publishBy) {
 		this.publishBy = publishBy;
 	}
+	
+	public String getPublishName() {
+		return publishName;
+	}
+	public void setPublishName(String publishName) {
+		this.publishName = publishName;
+	}
+	
 	public String getPublishTime() {
 		return publishTime;
 	}
@@ -207,6 +217,14 @@ public class PrototypeDto implements Serializable {
 	public void setUnpublishBy(String unpublishBy) {
 		this.unpublishBy = unpublishBy;
 	}
+	
+	public String getUnpublishName() {
+		return unpublishName;
+	}
+	public void setUnpublishName(String unpublishName) {
+		this.unpublishName = unpublishName;
+	}
+	
 	public String getUnpublishTime() {
 		return unpublishTime;
 	}

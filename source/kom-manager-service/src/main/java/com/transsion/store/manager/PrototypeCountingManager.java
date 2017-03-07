@@ -11,7 +11,6 @@ import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.PrototypeCounting;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.PrototypeCountingDto;
-import com.transsion.store.dto.VisitStockDetailDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.PrototypeCountingMapper;
 import com.transsion.store.service.SystemDateService;

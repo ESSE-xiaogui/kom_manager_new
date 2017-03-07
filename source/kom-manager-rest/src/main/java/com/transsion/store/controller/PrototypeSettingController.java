@@ -77,7 +77,7 @@ public class PrototypeSettingController extends AbstractController{
 		pagination.setParams(requestModel.getParams());
 		pagination.setOrderBy(requestModel.getOrderBy());
 
-		return prototypeSettingFacade.listPaginationByProperty(pagination, requestModel.getParams());
+		return prototypeSettingFacade.listPaginationByProperty(pagination, requestModel.getParams(), this.getAuthorization());
 	}
 
 	/**

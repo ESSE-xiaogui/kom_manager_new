@@ -120,7 +120,7 @@ public class PrototypeManager {
 		prototype.setRemark(prototypeDto.getRemark());
 		prototype.setShopId(prototypeDto.getShopId());
 		prototype.setStatus(prototypeDto.getStatus());
-		prototype.setPublishTime(userContext.getUserCode());
+		prototype.setPublishBy(userContext.getUserCode());
 		prototype.setPublishTime(systemDateService.getCurrentDate());
 		prototype.setCreateBy(userContext.getUserCode());
 		prototype.setCreateTime(systemDateService.getCurrentDate());

@@ -49,8 +49,13 @@ public class PrototypeSettingManager {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<PrototypeSettingDto> listPaginationByProperty(Pagination<PrototypeSettingDto> pagination, PrototypeSettingDto prototypeSettingDto)
+	public Pagination<PrototypeSettingDto> listPaginationByProperty(Pagination<PrototypeSettingDto> pagination, PrototypeSettingDto prototypeSettingDto, String token)
 			throws ServiceException {
+		
+			UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+			Long companyId = userContext.isAdmin()?null:userContext.getCompanyId();
+			pagination.getParams().setCompanyId(companyId);
+		
 			Pagination<PrototypeSettingDto> pagin = prototypeSettingService.listPaginationByProperty(pagination, prototypeSettingDto);
 			
 			List<PrototypeSettingDto> prototypeSettingDtos = pagin.getResultList();

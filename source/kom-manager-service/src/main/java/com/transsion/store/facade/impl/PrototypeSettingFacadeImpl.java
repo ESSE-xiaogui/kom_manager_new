@@ -79,9 +79,9 @@ public class PrototypeSettingFacadeImpl implements PrototypeSettingFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<PrototypeSettingDto> listPaginationByProperty(Pagination<PrototypeSettingDto> pagination, PrototypeSettingDto prototypeSetting)
+	public Pagination<PrototypeSettingDto> listPaginationByProperty(Pagination<PrototypeSettingDto> pagination, PrototypeSettingDto prototypeSetting, String token)
 			throws ServiceException {
-		return prototypeSettingManager.listPaginationByProperty(pagination, prototypeSetting);
+		return prototypeSettingManager.listPaginationByProperty(pagination, prototypeSetting, token);
 	}
 
 	/**

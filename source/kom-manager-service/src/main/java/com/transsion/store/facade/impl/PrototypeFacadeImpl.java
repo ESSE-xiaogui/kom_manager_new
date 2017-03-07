@@ -24,10 +24,12 @@ import org.springframework.stereotype.Component;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Prototype;
+import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.PrototypeDto;
 import com.transsion.store.facade.PrototypeFacade;
 import com.transsion.store.manager.PrototypeManager;
 import com.transsion.store.service.PrototypeService;
+import com.transsion.store.utils.CacheUtils;
 
 @Component("prototypeFacade")
 public class PrototypeFacadeImpl implements PrototypeFacade {
@@ -79,9 +81,14 @@ public class PrototypeFacadeImpl implements PrototypeFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<PrototypeDto> listPaginationByPropertyDto(Pagination<PrototypeDto> pagination, PrototypeDto prototypeDto)
-			throws ServiceException
-	{
+	public Pagination<PrototypeDto> listPaginationByPropertyDto(Pagination<PrototypeDto> pagination, PrototypeDto prototypeDto, String token)
+			throws ServiceException {
+		
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		Long companyId = userContext.isAdmin()?null:userContext.getCompanyId();
+		
+		pagination.getParams().setCompanyId(companyId);
+		
 		return prototypeService.listPaginationByPropertyDto(pagination, prototypeDto);
 	}
 
