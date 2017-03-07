@@ -21,6 +21,7 @@ import java.util.Map;
 
 import com.transsion.store.bo.Stock;
 import com.transsion.store.dto.StockDto;
+import com.transsion.store.dto.StockInfoDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
@@ -28,12 +29,14 @@ import org.apache.ibatis.annotations.Param;
 
 public interface StockMapper extends GenericIBatisMapper<Stock, java.lang.Long> {
 
-    public List<Stock> listPaginationByProperty(Pagination<Stock> pagination, @Param("stock")Stock stock, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<StockInfoDto> listPaginationByProperty(Pagination<StockInfoDto> pagination, @Param("stockInfoDto")StockInfoDto stockInfoDto, @Param("orderBy") Map<String, String> orderBy,@Param("companyId")Long companyId) throws DataAccessFailureException;
     public List<StockDto> findPromoterStock(@Param("startDate")String startDate,@Param("endDate")String endDate, @Param("model") String model,@Param("userId") Integer userId);
 
 	public List<StockDto> findPromoterCurrentStock(@Param("userId") Integer userId)throws DataAccessFailureException;
 	
 	public List<StockDto> findStocksByProp(@Param("shopId")Integer shopId,@Param("startDate")String startDate,@Param("endDate")String endDate, @Param("model") String model,@Param("userId") Integer userId)throws DataAccessFailureException;
 	public List<StockDto> findCurrentStockByProp(@Param("userId") Integer userId, @Param("shopId")Integer shopId)throws DataAccessFailureException;
+	public List<StockInfoDto> listStockByProperty(@Param("stockInfoDto")StockInfoDto stockInfoDto)throws DataAccessFailureException;
+	public StockInfoDto getByPKey(@Param("primaryKey")Long primaryKey)throws DataAccessFailureException;
 
 }

@@ -25,6 +25,7 @@ import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Stock;
 import com.transsion.store.dto.StockDto;
+import com.transsion.store.dto.StockInfoDto;
 import com.transsion.store.dto.StockResponseDto;
 import com.transsion.store.facade.StockFacade;
 import com.transsion.store.manager.StockManager;
@@ -50,9 +51,9 @@ public class StockFacadeImpl implements StockFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Stock getByPK(java.lang.Long primaryKey) throws ServiceException
+	public StockInfoDto getByPKey(java.lang.Long primaryKey) throws ServiceException
 	{
-		return stockService.getByPK(primaryKey);
+		return stockService.getByPKey(primaryKey);
 	}
 
 	/**
@@ -81,10 +82,10 @@ public class StockFacadeImpl implements StockFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Stock> listPaginationByProperty(Pagination<Stock> pagination, Stock stock)
+	public Pagination<StockInfoDto> listPaginationByProperty(Pagination<StockInfoDto> pagination, StockInfoDto stockInfoDto,String token)
 			throws ServiceException
 	{
-		return stockService.listPaginationByProperty(pagination, stock);
+		return stockService.listPaginationByProperty(pagination, stockInfoDto,token);
 	}
 
 	/**
@@ -195,5 +196,10 @@ public class StockFacadeImpl implements StockFacade {
 	@Override
 	public List<StockDto> findCurrentStockByProp(String token, Integer shopId) throws ServiceException {
 		return stockManager.findCurrentStockByProp(token, shopId);
+	}
+
+	@Override
+	public byte[] getStockByExcel(StockInfoDto stockInfoDto) throws ServiceException {
+		return stockManager.getStockByExcel(stockInfoDto);
 	}
 }

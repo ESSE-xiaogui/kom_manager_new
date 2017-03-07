@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 import com.transsion.store.bo.Stock;
 import com.transsion.store.dto.StockDto;
+import com.transsion.store.dto.StockInfoDto;
 import com.transsion.store.dto.StockResponseDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
@@ -31,7 +32,7 @@ public interface StockFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Stock getByPK(java.lang.Long primaryKey) throws ServiceException;
+	public StockInfoDto getByPKey(java.lang.Long primaryKey) throws ServiceException;
 
 	/**
 	 * 查询所有记录
@@ -100,7 +101,7 @@ public interface StockFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Stock> listPaginationByProperty(Pagination<Stock> pagination, Stock stock)
+	public Pagination<StockInfoDto> listPaginationByProperty(Pagination<StockInfoDto> pagination, StockInfoDto stockInfoDto,String token)
 			throws ServiceException;
     /**
      * 库存上报
@@ -127,5 +128,7 @@ public interface StockFacade {
 	public List<StockDto> findStocksByProp(String token, Integer shopId, String startDate, String endDate,String model)throws ServiceException;
 
 	public List<StockDto> findCurrentStockByProp(String token, Integer shopId)throws ServiceException;
+
+	public byte[] getStockByExcel(StockInfoDto stockInfoDto)throws ServiceException;
 
 }

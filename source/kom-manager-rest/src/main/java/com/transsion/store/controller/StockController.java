@@ -19,15 +19,26 @@ package com.transsion.store.controller;
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Stock;
 import com.transsion.store.dto.StockDto;
+import com.transsion.store.dto.StockInfoDto;
 import com.transsion.store.dto.StockResponseDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.StockFacade;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
@@ -46,9 +57,9 @@ public class StockController extends AbstractController{
 	@GET
 	@Path("/getByPK")
 	@Produces({MediaType.APPLICATION_JSON})
-	public Stock getByPK(@QueryParam("key") java.lang.Long primaryKey) throws ServiceException
+	public StockInfoDto getByPK(@QueryParam("key") java.lang.Long primaryKey) throws ServiceException
 	{
-		return stockFacade.getByPK(primaryKey);
+		return stockFacade.getByPKey(primaryKey);
 	}
 
 	/**
@@ -60,9 +71,9 @@ public class StockController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<Stock> listPgStock(RequestModel<Stock> requestModel) throws ServiceException
+	public Pagination<StockInfoDto> listPgStock(RequestModel<StockInfoDto> requestModel) throws ServiceException
 	{
-		Pagination<Stock> pagination = new Pagination<Stock>();
+		Pagination<StockInfoDto> pagination = new Pagination<StockInfoDto>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());
@@ -70,7 +81,7 @@ public class StockController extends AbstractController{
 		pagination.setParams(requestModel.getParams());
 		pagination.setOrderBy(requestModel.getOrderBy());
 
-		return stockFacade.listPaginationByProperty(pagination, requestModel.getParams());
+		return stockFacade.listPaginationByProperty(pagination, requestModel.getParams(),this.getAuthorization());
 	}
 
 	/**
@@ -178,4 +189,79 @@ public class StockController extends AbstractController{
 		String token = this.getAuthorization();
 		return stockFacade.findCurrentStockByProp(token, shopId);
 	}
+	
+	/**
+	 * 库存导出Excel
+	 * @param createTimeStart
+	 * @param createTimeEnd
+	 * @param stockDateStart
+	 * @param stockDateEnd
+	 * @param brandCode
+	 * @param shopCode
+	 * @param shopName
+	 * @param regionId
+	 * @param modelCode
+	 * @param userCode
+	 * @param companyId
+	 * @return
+	 * @throws ServiceException
+	 * @throws IOException
+	 */
+	@GET
+	@Path("/exportExcel") 
+	@Produces({MediaType.TEXT_PLAIN})  
+	public Response getStockByExcel(@QueryParam("createTimeStart") String createTimeStart,
+		@QueryParam("createTimeEnd") String createTimeEnd,@QueryParam("stockDateStart") String stockDateStart,
+		@QueryParam("stockDateEnd") String stockDateEnd,@QueryParam("brandCode")String brandCode,
+		@QueryParam("shopCode") String shopCode,@QueryParam("shopName") String shopName,
+		@QueryParam("regionId")String regionId,@QueryParam("modelCode")String modelCode,
+		@QueryParam("userCode") String userCode,@QueryParam("companyId") String companyId) throws ServiceException,IOException {
+		
+		StockInfoDto stockInfoDto = new StockInfoDto();
+		stockInfoDto.setCreateTimeStart(createTimeStart);
+		stockInfoDto.setCreateTimeEnd(createTimeEnd);
+		stockInfoDto.setStockDateStart(stockDateStart);
+		stockInfoDto.setStockDateEnd(stockDateEnd);
+		stockInfoDto.setBrandCode(brandCode);
+		stockInfoDto.setUserCode(userCode);
+		stockInfoDto.setShopCode(shopCode);
+		stockInfoDto.setShopName(shopName);
+		stockInfoDto.setModelCode(modelCode);
+		if(!UtilHelper.isEmpty(regionId)){
+			stockInfoDto.setRegionId(Long.parseLong(regionId));
+		}
+		if(!UtilHelper.isEmpty(companyId)){
+			stockInfoDto.setCompanyId(Long.parseLong(companyId));
+		}
+		byte[] bytes = stockFacade.getStockByExcel(stockInfoDto);       
+		InputStream inputStream = new ByteArrayInputStream(bytes);          
+		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));          
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"库存报表.xlsx";
+		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));         
+		//根据自己文件类型修改         
+		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");          
+		return response.build();      	
+	}
+	class BigFileOutputStream implements javax.ws.rs.core.StreamingOutput {
+        private InputStream inputStream;
+        public BigFileOutputStream(){}
+        public BigFileOutputStream(InputStream inputStream)
+        {
+            this.inputStream = inputStream;
+        }
+
+        @Override
+        public void write(OutputStream output) throws IOException,
+                WebApplicationException {
+            // TODO Auto-generated method stub
+            IOUtils.copy(inputStream, output);
+        }
+
+        public InputStream getInputStream() {
+            return inputStream;
+        }
+        public void setInputStream(InputStream inputStream) {
+            this.inputStream = inputStream;
+        }
+    }
 }

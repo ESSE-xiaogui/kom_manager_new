@@ -236,7 +236,6 @@ public class VisitPlanController extends AbstractController{
 		@QueryParam("weekNo")String weekNo,@QueryParam("createBy") String createBy,
 		@QueryParam("companyId") String companyId,@QueryParam("status") String status) throws ServiceException,IOException, ParseException {
 		
-		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(this.getAuthorization());
 		VisitPlanDetailInfoDto visitPlanDetailInfoDto = new VisitPlanDetailInfoDto();
 		visitPlanDetailInfoDto.setCreateTimeStart(createTimeStart);
 		visitPlanDetailInfoDto.setCreateTimeEnd(createTimeEnd);

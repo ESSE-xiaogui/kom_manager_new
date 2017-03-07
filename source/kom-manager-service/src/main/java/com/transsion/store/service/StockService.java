@@ -22,9 +22,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.Stock;
+import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.StockInfoDto;
+import com.transsion.store.exception.ExceptionDef;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
 import com.transsion.store.mapper.StockMapper;
+import com.transsion.store.utils.CacheUtils;
 
 @Service("stockService")
 public class StockService {
@@ -74,10 +79,15 @@ public class StockService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Stock> listPaginationByProperty(Pagination<Stock> pagination, Stock stock)
+	public Pagination<StockInfoDto> listPaginationByProperty(Pagination<StockInfoDto> pagination, StockInfoDto stockInfoDto,String token)
 			throws ServiceException
 	{
-		List<Stock> list = stockMapper.listPaginationByProperty(pagination, stock, pagination.getOrderBy());
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		Long companyId = userContext.isAdmin()?null:userContext.getCompanyId();
+		List<StockInfoDto> list = stockMapper.listPaginationByProperty(pagination, stockInfoDto, pagination.getOrderBy(),companyId);
 		
 		pagination.setResultList(list);
 		
@@ -147,5 +157,9 @@ public class StockService {
 	public int findByCount(Stock stock) throws ServiceException
 	{
 		return stockMapper.findByCount(stock);
+	}
+
+	public StockInfoDto getByPKey(Long primaryKey) throws ServiceException{
+		return stockMapper.getByPKey(primaryKey);
 	}
 }

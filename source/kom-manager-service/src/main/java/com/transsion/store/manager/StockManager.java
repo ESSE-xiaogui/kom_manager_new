@@ -10,13 +10,16 @@ import com.transsion.store.bo.Stock;
 import com.transsion.store.bo.StockItem;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.StockDto;
+import com.transsion.store.dto.StockInfoDto;
 import com.transsion.store.dto.StockResponseDto;
+import com.transsion.store.dto.VisitStockDetailDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.CurrencyMapper;
 import com.transsion.store.mapper.StockItemMapper;
 import com.transsion.store.mapper.StockMapper;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
+import com.transsion.store.utils.ExcelUtils;
 
 @Service("stockManager")
 public class StockManager {
@@ -208,6 +211,25 @@ public class StockManager {
 		if (UtilHelper.isEmpty(token)) {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
+	}
+	
+	
+	public byte[] getStockByExcel(StockInfoDto stockInfoDto) throws ServiceException{
+		String[] headers = {"序号","单号","库存日期","事业部","品牌","国家","城市","门店名称","机型", "数量",
+		"用户名","上传时间"};
+		List<StockInfoDto> list = stockMapper.listStockByProperty(stockInfoDto);
+		List<Object[]> dataset = new ArrayList<Object[]>();
+		int i=1;
+		for(StockInfoDto stockInfoDto1 :list){
+			dataset.add(new Object[]{i++,stockInfoDto1.getBillno(),stockInfoDto1.getStockDate(),
+							stockInfoDto1.getCompanyCode(),stockInfoDto1.getBrandCode(),
+							stockInfoDto1.getCountryName(),stockInfoDto1.getCityName(),
+							stockInfoDto1.getShopName(),stockInfoDto1.getModelCode(),
+							stockInfoDto1.getQty(),stockInfoDto1.getUserCode(),
+							stockInfoDto1.getCreateTime()});
+		}
+		String title = "库存报表";
+		return ExcelUtils.exportExcel(title, headers, dataset);
 	}
 
 }

@@ -391,6 +391,7 @@
 		LEFT JOIN T_USER u ON u.USER_CODE = s.CREATE_BY
 		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID 
 		LEFT JOIN T_MODEL m ON m.BRAND_ID = s.BRAND_ID
+		WHERE 1=1
 		<if test="companyId!= null and companyId!= ''"> 
 			AND v.COMPANY_ID =#{companyId}
 		</if>

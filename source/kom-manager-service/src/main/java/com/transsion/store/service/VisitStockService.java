@@ -26,8 +26,10 @@ import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.VisitModelStockDto;
 import com.transsion.store.dto.VisitStockDetailDto;
 import com.transsion.store.dto.VisitStockInfoDto;
+import com.transsion.store.exception.ExceptionDef;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
 import com.transsion.store.mapper.VisitStockMapper;
 import com.transsion.store.utils.CacheUtils;
 
@@ -84,7 +86,9 @@ public class VisitStockService {
 			throws ServiceException
 	{
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
-		
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
 		Long companyId = userContext.isAdmin()?null:userContext.getCompanyId();
 		List<VisitStockDetailDto> list = visitStockMapper.listPaginationByProperty(pagination, visitStockDetailDto, pagination.getOrderBy(),companyId);
 		

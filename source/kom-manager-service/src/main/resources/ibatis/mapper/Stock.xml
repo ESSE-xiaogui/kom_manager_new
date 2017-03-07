@@ -38,6 +38,38 @@
 		<result column="UPDATED_TIME" property="updatedTime"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
+	<resultMap id="StockInfoDtoResultMapper" type="StockInfoDto">
+		<result column="ID" property="id"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="BILLNO" property="billno"/>
+		<result column="TRANTYPE" property="trantype"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="SHOP_CODE" property="shopCode"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="GRADE_NAME" property="gradeName"/>
+		<result column="BIZ_NAME" property="bizName"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="DUTY_NAME" property="dutyName"/>
+		<result column="COMPANY_CODE" property="companyCode"/>
+		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="MODEL_CODE" property="modelCode"/>
+		<result column="QTY" property="qty"/>
+		<result column="COMPANY_CODE" property="companyCode"/>
+		<result column="STOCK_DATE" property="stockDate"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="USER_CODE" property="userCode"/>
+		<result column="WERKS" property="werks"/>
+		<result column="CURRENCY_RATIO" property="currencyRatio"/>
+		<result column="STATUS" property="status"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
 	<resultMap id="PromoterStockResultMapper" type="StockDto">
 		<result column="STOCK_DATE" property="fdate" />
 		<result column="BRAND_CODE" property="brandCode" />
@@ -104,6 +136,23 @@
 		, VERSION
 	</sql>
 	
+	<sql id="commonProcessDateColumn">
+		s.ID,
+		s.BILLNO,
+		s.STOCK_DATE,
+		i.BRAND_CODE,
+		i.MODEL_CODE,
+		i.QTY,
+		s.USER_CODE,
+		c.COMPANY_CODE,
+		r1.REGION_NAME AS COUNTRY_NAME,
+		r2.REGION_NAME AS CITY_NAME,
+		p.SHOP_CODE,
+		p.SHOP_NAME,
+		s.CREATED_TIME 
+	</sql>
+			
+	
 	<sql id="commonCondition">
 		<if test="id!= null and id!= ''"> 
 			AND ID=#{id}
@@ -159,58 +208,85 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="stock != null">
-            <if test="stock.id!= null and stock.id!= ''">
-				AND ID=#{stock.id}
+		<if test="stockInfoDto != null">
+            <if test="stockInfoDto.id!= null and stockInfoDto.id!= ''">
+				AND ID=#{stockInfoDto.id}
             </if>
-            <if test="stock.companyId!= null and stock.companyId!= ''">
-				AND COMPANY_ID=#{stock.companyId}
+            <if test="stockInfoDto.companyId!= null and stockInfoDto.companyId!= ''">
+				AND s.COMPANY_ID=#{stockInfoDto.companyId}
             </if>
-            <if test="stock.billno!= null and stock.billno!= ''">
-				AND BILLNO=#{stock.billno}
+            <if test="stockInfoDto.billno!= null and stockInfoDto.billno!= ''">
+				AND BILLNO=#{stockInfoDto.billno}
             </if>
-            <if test="stock.trantype!= null and stock.trantype!= ''">
-				AND TRANTYPE=#{stock.trantype}
+          <!--   <if test="stockInfoDto.trantype!= null and stockInfoDto.trantype!= ''">
+				AND TRANTYPE=#{stockInfoDto.trantype}
+            </if> -->
+            <!-- <if test="stockInfoDto.shopId!= null and stockInfoDto.shopId!= ''">
+				AND s.SHOP_ID=#{stockInfoDto.shopId}
+            </if> -->
+            <if test="stockInfoDto.shopName!= null and stockInfoDto.shopName!= ''">
+				AND p.SHOP_NAME=#{stockInfoDto.shopName}
             </if>
-            <if test="stock.shopId!= null and stock.shopId!= ''">
-				AND SHOP_ID=#{stock.shopId}
+            <if test="stockInfoDto.shopCode!= null and stockInfoDto.shopCode!= ''">
+				AND p.SHOP_CODE=#{stockInfoDto.shopCode}
             </if>
-            <if test="stock.stockDate!= null and stock.stockDate!= ''">
-				AND STOCK_DATE=str_to_date(#{stock.stockDate},'%Y-%m-%d %H:%i:%s')
+            <!-- <if test="stockInfoDto.stockDate!= null and stockInfoDto.stockDate!= ''">
+				AND STOCK_DATE=str_to_date(#{stockInfoDto.stockDate},'%Y-%m-%d %H:%i:%s')
+            </if> -->
+            <if test="stockInfoDto.stockDateStart!= null and stockInfoDto.stockDateStart!= ''">
+				AND DATE_FORMAT(s.STOCK_DATE,'%Y-%m-%d')&gt;=str_to_date(#{stockInfoDto.stockDateStart},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="stock.userId!= null and stock.userId!= ''">
-				AND USER_ID=#{stock.userId}
+            <if test="stockInfoDto.stockDateEnd!= null and stockInfoDto.stockDateEnd!= ''">
+				AND DATE_FORMAT(s.STOCK_DATE,'%Y-%m-%d')&lt;=str_to_date(#{stockInfoDto.stockDateEnd},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="stock.userCode!= null and stock.userCode!= ''">
-				AND USER_CODE=#{stock.userCode}
+           <!--  <if test="stockInfoDto.userId!= null and stockInfoDto.userId!= ''">
+				AND USER_ID=#{stockInfoDto.userId}
+            </if> -->
+     		<if test="stockInfoDto.regionId!= null and stockInfoDto.regionId!= ''">
+				AND r1.ID=#{stockInfoDto.regionId}
             </if>
-            <if test="stock.werks!= null and stock.werks!= ''">
-				AND WERKS=#{stock.werks}
+            <if test="stockInfoDto.userCode!= null and stockInfoDto.userCode!= ''">
+				AND s.USER_CODE=#{stockInfoDto.userCode}
             </if>
-            <if test="stock.currencyRatio!= null and stock.currencyRatio!= ''">
-				AND CURRENCY_RATIO=#{stock.currencyRatio}
+            <if test="stockInfoDto.brandId!= null and stockInfoDto.brandId!= ''">
+				AND b.ID=#{stockInfoDto.brandId}
             </if>
-            <if test="stock.status!= null and stock.status!= ''">
-				AND STATUS=#{stock.status}
+            <if test="stockInfoDto.modelId!= null and stockInfoDto.modelId!= ''">
+				AND m.ID=#{stockInfoDto.modelId}
             </if>
-            <if test="stock.remark!= null and stock.remark!= ''">
-				AND REMARK=#{stock.remark}
+         <!--    <if test="stockInfoDto.werks!= null and stockInfoDto.werks!= ''">
+				AND WERKS=#{stockInfoDto.werks}
             </if>
-            <if test="stock.createdBy!= null and stock.createdBy!= ''">
-				AND CREATED_BY=#{stock.createdBy}
+            <if test="stockInfoDto.currencyRatio!= null and stockInfoDto.currencyRatio!= ''">
+				AND CURRENCY_RATIO=#{stockInfoDto.currencyRatio}
+            </if> -->
+          <!--   <if test="stockInfoDto.status!= null and stockInfoDto.status!= ''">
+				AND STATUS=#{stockInfoDto.status}
+            </if> -->
+           <!--  <if test="stockInfoDto.remark!= null and stockInfoDto.remark!= ''">
+				AND REMARK=#{stockInfoDto.remark}
+            </if> -->
+           <!--  <if test="stockInfoDto.createdBy!= null and stockInfoDto.createdBy!= ''">
+				AND CREATED_BY=#{stockInfoDto.createdBy}
+            </if> -->
+           <!--  <if test="stockInfoDto.createTime!= null and stockInfoDto.createTime!= ''">
+				AND CREATED_TIME=str_to_date(#{stockInfoDto.createTime},'%Y-%m-%d %H:%i:%s')
+            </if> -->
+            <if test="stockInfoDto.createTimeStart!= null and stockInfoDto.createTimeStart!= ''">
+				AND DATE_FORMAT(s.CREATED_TIME,'%Y-%m-%d')&gt;=str_to_date(#{stockInfoDto.createTimeStart},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="stock.createdTime!= null and stock.createdTime!= ''">
-				AND CREATED_TIME=str_to_date(#{stock.createdTime},'%Y-%m-%d %H:%i:%s')
+            <if test="stockInfoDto.createTimeEnd!= null and stockInfoDto.createTimeEnd!= ''">
+				AND DATE_FORMAT(s.CREATED_TIME,'%Y-%m-%d')&lt;=str_to_date(#{stockInfoDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="stock.updatedBy!= null and stock.updatedBy!= ''">
-				AND UPDATED_BY=#{stock.updatedBy}
+          <!--   <if test="stockInfoDto.updatedBy!= null and stockInfoDto.updatedBy!= ''">
+				AND UPDATED_BY=#{stockInfoDto.updatedBy}
             </if>
-            <if test="stock.updatedTime!= null and stock.updatedTime!= ''">
-				AND UPDATED_TIME=str_to_date(#{stock.updatedTime},'%Y-%m-%d %H:%i:%s')
+            <if test="stockInfoDto.updatedTime!= null and stockInfoDto.updatedTime!= ''">
+				AND UPDATED_TIME=str_to_date(#{stockInfoDto.updatedTime},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="stock.version!= null and stock.version!= ''">
-				AND VERSION=#{stock.version}
-            </if>
+            <if test="stockInfoDto.version!= null and stockInfoDto.version!= ''">
+				AND VERSION=#{stockInfoDto.version}
+            </if> -->
         </if>
     </sql>
 
@@ -229,16 +305,34 @@
 				ID ${value}
             </when>
         	<when test="key == 'companyId'">
-				COMPANY_ID ${value}
+				c.COMPANY_ID ${value}
             </when>
         	<when test="key == 'billno'">
-				BILLNO ${value}
+				s.BILLNO ${value}
+            </when>
+            <when test="key == 'brandCode'">
+				s.BRAND_CODE ${value}
+            </when>
+            <when test="key == 'modelCode'">
+				s.MODEL_CODE ${value}
             </when>
         	<when test="key == 'trantype'">
 				TRANTYPE ${value}
             </when>
         	<when test="key == 'shopId'">
 				SHOP_ID ${value}
+            </when>
+            <when test="key == 'qty'">
+				i.QTY ${value}
+            </when>
+            <when test="key == 'shopName'">
+				SHOP_NAME ${value}
+            </when>
+            <when test="key == 'countryName'">
+				r1.REGION_NAME ${value}
+            </when>
+            <when test="key == 'cityName'">
+				r2.REGION_NAME ${value}
             </when>
         	<when test="key == 'stockDate'">
 				STOCK_DATE ${value}
@@ -264,8 +358,8 @@
         	<when test="key == 'createdBy'">
 				CREATED_BY ${value}
             </when>
-        	<when test="key == 'createdTime'">
-				CREATED_TIME ${value}
+        	<when test="key == 'createTime'">
+				s.CREATED_TIME ${value}
             </when>
         	<when test="key == 'updatedBy'">
 				UPDATED_BY ${value}
@@ -342,6 +436,19 @@
 			 <include refid="commonProcessDateColumns"/>
 		FROM T_STOCK WHERE ID = #{id}  
 	</select>
+	<select id="getByPKey" parameterType="java.lang.Long" resultMap="StockInfoDtoResultMapper">
+		SELECT 
+		p.SHOP_CODE,p.SHOP_NAME,g.GRADE_NAME,b.EN_NAME AS BIZ_NAME,s.USER_CODE,
+		e.EMP_NAME,d.DUTY_NAME
+		FROM T_STOCK s
+		LEFT JOIN T_SHOP p ON p.ID = s.SHOP_ID
+		LEFT JOIN T_SHOP_GRADE g ON g.ID = p.GRADE_ID
+		LEFT JOIN T_SHOP_BIZ b ON b.ID = p.BIZ_ID
+		LEFT JOIN T_USER u ON u.ID = s.USER_ID
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID
+		LEFT JOIN T_DUTY d ON d.ID = e.DUTY_ID
+		WHERE s.ID = #{primaryKey}  
+	</select>
 	<select id="list" resultMap="StockResultMapper">
 		<![CDATA[ SELECT ]]>
 			 <include refid="commonProcessDateColumns"/>
@@ -353,12 +460,36 @@
 		FROM T_STOCK WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="Stock" resultMap="StockResultMapper">
+	<select id="listPaginationByProperty" parameterType="StockInfoDto" resultMap="StockInfoDtoResultMapper">
 		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_STOCK WHERE 1=1
+		<include refid="commonProcessDateColumn"/>
+		FROM T_STOCK s 
+		LEFT JOIN T_STOCK_ITEM i ON i.STOCK_ID = s.ID 
+		LEFT JOIN T_BRAND b ON b.BRAND_CODE = i.BRAND_CODE
+		LEFT JOIN T_MODEL m ON m.MODEL_CODE = i.MODEL_CODE
+		LEFT JOIN T_COMPANY c ON s.COMPANY_ID = c.ID 
+		LEFT JOIN T_SHOP p ON p.ID = s.SHOP_ID 
+		LEFT JOIN T_REGION r1 ON r1.ID = p.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = p.CITY
+		WHERE 1=1
+		<if test="companyId!= null and companyId!= ''"> 
+			AND s.COMPANY_ID =#{companyId}
+		</if>
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
+	</select>
+	<select id="listStockByProperty" parameterType="StockInfoDto" resultMap="StockInfoDtoResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumn"/>
+		FROM T_STOCK s 
+		LEFT JOIN T_STOCK_ITEM i ON i.STOCK_ID = s.ID 
+		LEFT JOIN T_COMPANY c ON s.COMPANY_ID = c.ID 
+		LEFT JOIN T_SHOP p ON p.ID = s.SHOP_ID 
+		LEFT JOIN T_REGION r1 ON r1.ID = p.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = p.CITY
+		WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	ORDER BY s.CREATED_TIME DESC
 	</select>
 	<select id="findByCount" parameterType="Stock" resultType="int">
 		SELECT count(1) AS totalcount FROM T_STOCK WHERE 1=1 
