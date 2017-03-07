@@ -139,9 +139,10 @@ public class VisitPlanController extends AbstractController{
 	@POST
 	@Path("/savePlan")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void savePlan(List<VisitPlanDto> visitPlanDtoList) throws ServiceException{
+	@Produces({MediaType.APPLICATION_JSON})
+	public int savePlan(List<VisitPlanDto> visitPlanDtoList) throws ServiceException{
 		String token = this.getAuthorization();
-		visitPlanFacade.savePlan(token, visitPlanDtoList);
+		return visitPlanFacade.savePlan(token, visitPlanDtoList);
 	}
 	
 	/**

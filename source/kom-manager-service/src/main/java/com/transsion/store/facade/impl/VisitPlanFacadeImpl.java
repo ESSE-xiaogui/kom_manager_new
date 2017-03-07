@@ -161,8 +161,8 @@ public class VisitPlanFacadeImpl implements VisitPlanFacade {
 	/**
 	 * 巡店计划上传接口
 	 * */
-	public void savePlan(String token, List<VisitPlanDto> visitPlanDtoList) throws ServiceException {
-		visitPlanManager.savePlan(token, visitPlanDtoList);
+	public int savePlan(String token, List<VisitPlanDto> visitPlanDtoList) throws ServiceException {
+		return visitPlanManager.savePlan(token, visitPlanDtoList);
 	}
 	
 	/**

@@ -56,7 +56,7 @@ public class VisitPlanManager {
 	/**
 	 * @author guihua.zhang on 2017-02-28 巡店计划上传接口
 	 */
-	public void savePlan(String token, List<VisitPlanDto> visitPlanDtoList) throws ServiceException {
+	public int savePlan(String token, List<VisitPlanDto> visitPlanDtoList) throws ServiceException {
 		if (UtilHelper.isEmpty(token)) {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
@@ -87,6 +87,8 @@ public class VisitPlanManager {
 			visitPlan.setCreateTime(systemDateService.getCurrentDate());
 			visitPlanMapper.save(visitPlan);
 		}
+		int success = undo;
+		return success;
 	}
 
 	/**
