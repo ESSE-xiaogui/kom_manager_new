@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
  **
- * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ * COPYRIGHT (C) 2017 Liuzh. ALL RIGHTS RESERVED.
  *
  * No part of this publication may be reproduced, stored in a retrieval system,
  * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
  * recording, or otherwise, without the prior written permission of Liuzh.
  *
  * Created By: Liuzh
- * Created On: 2016-11-18 15:56:35
+ * Created On: 2017-3-8 15:11:11
  *
  * Amendment History:
- * 
+ *
  * Amended By       Amended On      Amendment Description
  * ************     ***********     *********************************************
  *
@@ -25,49 +25,177 @@
 		<result column="VALUE" property="value"/>
 		<result column="REMARK" property="remark"/>
 	</resultMap>
-	
+
 	<sql id="commonColumns">
-		 ID
+		ID
 		, NAME
 		, VALUE
 		, REMARK
 	</sql>
 
 	<sql id="commonColumnsNotPK">
+		NAME
+		, VALUE
+		, REMARK
+	</sql>
+
+	<sql id="commonProcessDateColumns">
+		ID
 		, NAME
 		, VALUE
 		, REMARK
 	</sql>
-	
+
 	<sql id="commonCondition">
-		<if test="id!= null and id!= ''"> 
-			AND ID=#{id}
+		<if test="id!= null and id!= ''">
+			AND ID = #{id}
 		</if>
-		<if test="name!= null and name!= ''"> 
-			AND NAME=#{name}
+		<if test="name!= null and name!= ''">
+			AND NAME = #{name}
 		</if>
-		<if test="value!= null and value!= ''"> 
-			AND VALUE=#{value}
+		<if test="value!= null and value!= ''">
+			AND VALUE = #{value}
 		</if>
-		<if test="remark!= null and remark!= ''"> 
-			AND REMARK=#{remark}
+		<if test="remark!= null and remark!= ''">
+			AND REMARK = #{remark}
 		</if>
 	</sql>
 
+	<sql id="commonConditionByPrefix">
+		<if test="configuration != null">
+			<if test="configuration.id!= null and configuration.id!= ''">
+				AND ID = #{configuration.id}
+			</if>
+			<if test="configuration.name!= null and configuration.name!= ''">
+				AND NAME = #{configuration.name}
+			</if>
+			<if test="configuration.value!= null and configuration.value!= ''">
+				AND VALUE = #{configuration.value}
+			</if>
+			<if test="configuration.remark!= null and configuration.remark!= ''">
+				AND REMARK = #{configuration.remark}
+			</if>
+		</if>
+	</sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+			<when test="key == 'id'">
+				ID ${value}
+			</when>
+			<when test="key == 'name'">
+				NAME ${value}
+			</when>
+			<when test="key == 'value'">
+				VALUE ${value}
+			</when>
+			<when test="key == 'remark'">
+				REMARK ${value}
+			</when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Configuration">
+		<![CDATA[ INSERT INTO T_CONFIGURATION ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES (
+			 #{name}
+			, #{value}
+			, #{remark}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="Configuration">
+		<![CDATA[ UPDATE T_CONFIGURATION SET
+			 ID = #{id}
+			, NAME = #{name}
+			, VALUE = #{value}
+			, REMARK = #{remark}
+		WHERE ID = #{id}  ]]>
+	</update>
+	<insert id="saveOrUpdate" parameterType="Brand">
+		<![CDATA[ INSERT INTO T_CONFIGURATION ( ]]>
+		<include refid="commonColumns"/>
+		<![CDATA[
+		) VALUES (
+			 #{id}
+			, #{name}
+			, #{value}
+			, #{remark}
+		) ON DUPLICATE KEY UPDATE
+			 ID = VALUES(ID)
+			, NAME = VALUES(NAME)
+			, VALUE = VALUES(VALUE)
+			, REMARK = VALUES(REMARK)
+		]]>
+	</insert>
+	<insert id="batchSaveOrUpdate" parameterType="List">
+		<![CDATA[ INSERT INTO T_CONFIGURATION ( ]]>
+		<include refid="commonColumns"/>
+		<![CDATA[ ) VALUES ]]>
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			#{item.id}
+			, #{item.name}
+			, #{item.value}
+			, #{item.remark}
+			)
+		</foreach>
+		<![CDATA[ ON DUPLICATE KEY UPDATE
+		 ID = VALUES(ID)
+		, NAME = VALUES(NAME)
+		, VALUE = VALUES(VALUE)
+		, REMARK = VALUES(REMARK)
+		]]>
+	</insert>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_CONFIGURATION WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_CONFIGURATION WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+				 open=" ID IN(" separator="," close=") ">
+			#{id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="Configuration">
+		DELETE FROM T_CONFIGURATION WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
 	<select id="getByPK" parameterType="java.lang.Long" resultMap="ConfigurationResultMapper">
 		<![CDATA[ SELECT ]]>
-			 <include refid="commonColumns"/>
-		FROM T_CONFIGURATION WHERE ID = #{id}  
+		<include refid="commonProcessDateColumns"/>
+		FROM T_CONFIGURATION WHERE ID = #{id}
 	</select>
 	<select id="list" resultMap="ConfigurationResultMapper">
 		<![CDATA[ SELECT ]]>
-			 <include refid="commonColumns"/>
- 		FROM T_CONFIGURATION
+		<include refid="commonProcessDateColumns"/>
+		FROM T_CONFIGURATION
 	</select>
-	<select id="listByProperty" parameterType="Duty" resultMap="ConfigurationResultMapper">
+	<select id="listByProperty" parameterType="Configuration" resultMap="ConfigurationResultMapper">
 		<![CDATA[ SELECT ]]>
-			<include refid="commonColumns"/>
-		FROM T_CONFIGURATION WHERE 1=1 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_CONFIGURATION WHERE 1=1
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="Configuration" resultMap="ConfigurationResultMapper">
+		SELECT
+		<include refid="commonProcessDateColumns"/>
+		FROM T_CONFIGURATION WHERE 1=1
+		<include refid="commonConditionByPrefix"/>
+		<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="Configuration" resultType="int">
+		SELECT count(1) AS totalcount FROM T_CONFIGURATION WHERE 1=1
 		<include refid="commonCondition"/>
 	</select>
 </mapper>

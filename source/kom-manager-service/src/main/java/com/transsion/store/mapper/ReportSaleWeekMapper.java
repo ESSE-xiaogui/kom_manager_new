@@ -28,4 +28,6 @@ import org.apache.ibatis.annotations.Param;
 public interface ReportSaleWeekMapper extends GenericIBatisMapper<ReportSaleWeek, java.lang.Long> {
 
     public List<ReportSaleWeek> listPaginationByProperty(Pagination<ReportSaleWeek> pagination, @Param("reportSaleWeek")ReportSaleWeek reportSaleWeek, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+
+    public List<ReportSaleWeek> findUnStatisticsDataByDate(String date) throws DataAccessFailureException;
 }

@@ -30,4 +30,6 @@ import com.transsion.store.dto.ReportSaleDailyDto;
 public interface ReportSaleDailyMapper extends GenericIBatisMapper<ReportSaleDaily, java.lang.Long> {
 
     public List<ReportSaleDailyDto> listPaginationByProperty(Pagination<ReportSaleDailyDto> pagination, @Param("reportSaleDailyDto")ReportSaleDailyDto reportSaleDailyDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+
+    public List<ReportSaleDaily> findUnStatisticsDataByDate(String date) throws DataAccessFailureException;
 }
