@@ -401,11 +401,10 @@
 	</select>
 	
 	<select id="queryShopIdListByGoalMonth" parameterType="java.lang.String" resultMap="GoalSupervisorResultMapper">
-		SELECT SHOP_ID, SALE_TARGET, SALE_CURRENT, ACHIEVED FROM T_GOAL_SUPERVISOR WHERE SUBSTRING(GOAL_MONTH, 1, 7) = #{goalMonth} ORDER BY SHOP_ID ASC
+		SELECT ID, SHOP_ID, SALE_TARGET, SALE_CURRENT, ACHIEVED FROM T_GOAL_SUPERVISOR WHERE SUBSTRING(GOAL_MONTH, 1, 7) = #{goalMonth} ORDER BY SHOP_ID ASC
 	</select>
 	
 	<update id="updateGoalSupervisorByShopId" parameterType="GoalSupervisor">
-		UPDATE T_GOAL_SUPERVISOR SET SALE_CURRENT = #{saleCurrent}, ACHIEVED = #{achieved} WHERE SHOP_ID = #{shopId} 
-		AND SUBSTRING(GOAL_MONTH, 1, 7) = #{goalMonth}
+		UPDATE T_GOAL_SUPERVISOR SET SALE_CURRENT = #{saleCurrent}, ACHIEVED = #{achieved} WHERE ID = #{id}
 	</update>
 </mapper>

@@ -104,6 +104,8 @@ public class GoalModel extends Model{
 	  *	
 	  */
 	private java.lang.Integer version;
+	
+	private java.lang.Long saleFourWeeks;
 
 	/**
 	  *	促销员目标销量表,ID自动增长
@@ -361,26 +363,22 @@ public class GoalModel extends Model{
 		this.version = version;
 	}
 	
-	public String toString()
-	{
-		return "GoalModel [" + 
-					"id=" + id + 
-					", companyId=" + companyId + 
-					", goalMonth=" + goalMonth + 
-					", shopId=" + shopId + 
-					", shopCode=" + shopCode + 
-					", modelId=" + modelId + 
-					", modelCode=" + modelCode + 
-					", saleTarget=" + saleTarget + 
-					", saleCurrent=" + saleCurrent + 
-					", achieved=" + achieved + 
-					", remark=" + remark + 
-					", createBy=" + createBy + 
-					", createTime=" + createTime + 
-					", updateBy=" + updateBy + 
-					", updateTime=" + updateTime + 
-					", version=" + version + 
-				"]";
+	public java.lang.Long getSaleFourWeeks() {
+		return saleFourWeeks;
 	}
+
+	public void setSaleFourWeeks(java.lang.Long saleFourWeeks) {
+		this.saleFourWeeks = saleFourWeeks;
+	}
+
+	@Override
+	public String toString() {
+		return "GoalModel [id=" + id + ", companyId=" + companyId + ", goalMonth=" + goalMonth + ", shopId=" + shopId
+				+ ", shopCode=" + shopCode + ", modelId=" + modelId + ", modelCode=" + modelCode + ", saleTarget="
+				+ saleTarget + ", saleCurrent=" + saleCurrent + ", achieved=" + achieved + ", remark=" + remark
+				+ ", createBy=" + createBy + ", createTime=" + createTime + ", updateBy=" + updateBy + ", updateTime="
+				+ updateTime + ", version=" + version + ", saleFourWeeks=" + saleFourWeeks + "]";
+	}
+	
 }
 

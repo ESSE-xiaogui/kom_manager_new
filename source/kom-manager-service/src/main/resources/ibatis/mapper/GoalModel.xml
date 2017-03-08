@@ -36,6 +36,8 @@
 		<result column="UPDATE_BY" property="updateBy"/>
 		<result column="UPDATE_TIME" property="updateTime"/>
 		<result column="VERSION" property="version"/>
+		
+		<result column="SALE_FOURWEEKS" property="saleFourWeeks"/>
 	</resultMap>
 	
 	<resultMap id="StatShopModelSaleDtoResultMapper" type="StatShopModelSaleDto">
@@ -362,10 +364,9 @@
 		SELECT SHOP_ID FROM T_GOAL_MODEL WHERE SUBSTRING(GOAL_MONTH, 1, 7) = #{goalMonth}
 	</select>
 	<select id="queryModelCodeListByShopId" parameterType="java.lang.Long" resultMap="GoalModelResultMapper">
-		SELECT SHOP_ID, MODEL_CODE, SALE_TARGET, SALE_CURRENT, ACHIEVED FROM T_GOAL_MODEL WHERE SHOP_ID = #{shopId} ORDER BY SHOP_ID ASC
+		SELECT ID, SHOP_ID, MODEL_CODE, SALE_TARGET, SALE_CURRENT, ACHIEVED FROM T_GOAL_MODEL WHERE SHOP_ID = #{shopId} ORDER BY SHOP_ID ASC
 	</select>
 	<update id="updateGoalModelByShopId" parameterType="GoalModel">
-		UPDATE T_GOAL_MODEL SET SALE_CURRENT = #{saleCurrent}, ACHIEVED = #{achieved} WHERE SHOP_ID = #{shopId} AND MODEL_CODE = #{modelCode} 
-		AND SUBSTRING(GOAL_MONTH, 1, 7) = #{goalMonth}
+		UPDATE T_GOAL_MODEL SET SALE_CURRENT = #{saleCurrent}, ACHIEVED = #{achieved}, SALE_FOURWEEKS = #{saleFourWeeks} WHERE ID = #{id}
 	</update>
 </mapper>

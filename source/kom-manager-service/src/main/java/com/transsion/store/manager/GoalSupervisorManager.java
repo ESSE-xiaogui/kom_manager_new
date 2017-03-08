@@ -58,7 +58,6 @@ public class GoalSupervisorManager {
 				}
 				
 				for (GoalSupervisor goalSupervisor : goalSupervisorList) {
-					goalSupervisor.setGoalMonth(currentMonth);
 					goalSupervisorMapper.updateGoalSupervisorByShopId(goalSupervisor);
 				}
 			}
@@ -72,6 +71,7 @@ public class GoalSupervisorManager {
 		if (shopIdList != null && shopIdList.size() > 0) {
 			String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
 			String firstDayOfMonth = new SimpleDateFormat("yyyy-MM-dd").format(CalendarUtils.getFirstDayOfMonth(currentDate));
+			String fourWeekBefore = new SimpleDateFormat("yyyy-MM-dd").format(CalendarUtils.getDayBeforeNDate(currentDate, 28));
 			for (int i = 0; i < shopIdList.size(); i++) {
 				Long shopId = shopIdList.get(i);
 				List<GoalModel> goalModelList = goalModelMapper.queryModelCodeListByShopId(shopId);
@@ -97,12 +97,23 @@ public class GoalSupervisorManager {
 								}
 							}
 						}
+						
+						List<StatShopModelSaleDto> shopModelWeekAvgSaleList = saleMapper.calcShopModelSaleQty(shopId, modelCodeList, fourWeekBefore, currentDate);
+						if (shopModelWeekAvgSaleList != null && shopModelWeekAvgSaleList.size() > 0) {
+							for (int j = 0; j < list.size(); j++) {
+								if (shopModelWeekAvgSaleList.get(j).getShopId() == goalModelList.get(j).getShopId() && shopModelWeekAvgSaleList.get(j).getModelCode().equals(goalModelList.get(j).getModelCode())) {
+									Long saleQty = shopModelWeekAvgSaleList.get(j).getSaleQty().longValue();
+									if (saleQty != 0) {
+										goalModelList.get(j).setSaleFourWeeks(saleQty / 4);
+									}
+								}
+							}
+						}
 					}
 				}
 				
 				if (goalModelList != null && goalModelList.size() > 0) {
 					for (GoalModel goalModel : goalModelList) {
-						goalModel.setGoalMonth(currentMonth);
 						goalModelMapper.updateGoalModelByShopId(goalModel);
 					}
 				}
