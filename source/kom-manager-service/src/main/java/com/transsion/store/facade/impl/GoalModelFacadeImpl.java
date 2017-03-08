@@ -25,12 +25,16 @@ import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.GoalModel;
 import com.transsion.store.facade.GoalModelFacade;
+import com.transsion.store.manager.GoalSupervisorManager;
 import com.transsion.store.service.GoalModelService;
 
 @Component("goalModelFacade")
 public class GoalModelFacadeImpl implements GoalModelFacade {
 
 	private GoalModelService goalModelService;
+	
+	@Autowired
+	private GoalSupervisorManager goalSupervisorManager;
 	
 	@Autowired
 	public void setGoalModelService(GoalModelService goalModelService)
@@ -144,5 +148,10 @@ public class GoalModelFacadeImpl implements GoalModelFacade {
 	public int findByCount(GoalModel goalModel) throws ServiceException
 	{
 		return goalModelService.findByCount(goalModel);
+	}
+
+	@Override
+	public void calcShopModelSaleQty() throws ServiceException {
+		goalSupervisorManager.calcShopModelSaleQty();
 	}
 }

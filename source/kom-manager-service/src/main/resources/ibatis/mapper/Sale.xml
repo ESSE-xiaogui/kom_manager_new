@@ -657,7 +657,7 @@
 		<include refid="commonConditionByPrefix1" />
 		ORDER BY s.SALE_DATE DESC
 	</select>
-	<select id="calcShopSaleQty" resultType="java.lang.Long">
+	<!-- <select id="calcShopSaleQty" resultType="java.lang.Long">
 		SELECT IFNULL(SUM(m.SALE_QTY),0) as saleQty FROM T_SALE s
 		LEFT JOIN T_SALE_ITEM m
 		ON m.SALE_ID = s.ID
@@ -670,8 +670,30 @@
 			AND s.SALE_DATE &lt;= date_format(#{endDate}, '%Y-%m-%d
 			%H:%i:%s')
 		</if>
+	</select> -->
+	
+	<select id="calcShopSaleQty" resultMap="SaleResultMapper">
+		SELECT m.SHOP_ID, IFNULL(SUM(m.SALE_QTY),0) as saleQty FROM T_SALE s
+		LEFT JOIN T_SALE_ITEM m
+		ON m.SALE_ID = s.ID
+		WHERE 1=1 
+		AND m.SHOP_ID IN 
+		<foreach item="shopId" collection="shopIdList" separator="," open="("
+			close=")" index="">
+			#{shopId}
+		</foreach>
+		<if test="startDate!=null and startDate!=''">
+			AND s.SALE_DATE &gt;= date_format(#{startDate}, '%Y-%m-%d
+			%H:%i:%s')
+		</if>
+		<if test="endDate!=null and endDate!=''">
+			AND s.SALE_DATE &lt;= date_format(#{endDate}, '%Y-%m-%d
+			%H:%i:%s')
+		</if>
+		GROUP BY m.SHOP_ID ORDER BY m.SHOP_ID ASC
 	</select>
-	<select id="calcShopModelSaleQty" resultMap="SaleDailyDtoResultMapper">
+	
+	<!-- <select id="calcShopModelSaleQty" resultMap="SaleDailyDtoResultMapper">
 		SELECT m.SHOP_ID, d.MODEL_CODE,SUM(d.SALE_QTY) as saleQty FROM T_SALE m
 		LEFT JOIN T_SALE_ITEM d on d.SALE_ID=m.ID
 		WHERE m.SHOP_ID=#{shopId}
@@ -688,5 +710,24 @@
 			AND  m.SALE_DATE &lt;= date_format(#{endDate}, '%Y-%m-%d %H:%i:%s')
 		</if>
 		GROUP BY m.SHOP_ID, d.MODEL_CODE
+	</select> -->
+	
+	<select id="calcShopModelSaleQty" resultMap="StatShopModelSaleDtoMapper">
+		SELECT m.SHOP_ID, d.MODEL_CODE,SUM(d.SALE_QTY) as saleQty FROM T_SALE m
+		LEFT JOIN T_SALE_ITEM d on d.SALE_ID=m.ID
+		WHERE m.SHOP_ID=#{shopId}
+        AND d.MODEL_CODE IS NOT NULL
+		AND d.MODEL_CODE IN
+		<foreach item="modelCode" collection="modelCodeList" separator="," open="("
+			close=")" index="">
+			#{modelCode}
+		</foreach>
+		<if test="startDate!=null and startDate!=''">
+			AND  m.SALE_DATE &gt;=   date_format(#{startDate}, '%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="endDate!=null and endDate!=''">
+			AND  m.SALE_DATE &lt;= date_format(#{endDate}, '%Y-%m-%d %H:%i:%s')
+		</if>
+		GROUP BY m.SHOP_ID, d.MODEL_CODE ORDER BY m.SHOP_ID ASC
 	</select>
 </mapper>

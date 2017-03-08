@@ -101,5 +101,6 @@ public interface GoalModelFacade {
 	 */
 	public Pagination<GoalModel> listPaginationByProperty(Pagination<GoalModel> pagination, GoalModel goalModel)
 			throws ServiceException;
-
+	
+	public void calcShopModelSaleQty() throws ServiceException;
 }

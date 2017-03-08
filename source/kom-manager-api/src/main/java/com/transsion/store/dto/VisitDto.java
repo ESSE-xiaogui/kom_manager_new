@@ -69,6 +69,8 @@ public class VisitDto implements Serializable {
 	  *private brand sale qty
 	  */
 	private java.lang.Long salePbQty;
+	
+	private java.lang.Integer planType; //1,plan; 2, not plan
 
 	/**
 	  *	
@@ -238,6 +240,14 @@ public class VisitDto implements Serializable {
 		this.updateTime = updateTime;
 	}
 	
+	public java.lang.Integer getPlanType() {
+		return planType;
+	}
+
+	public void setPlanType(java.lang.Integer planType) {
+		this.planType = planType;
+	}
+	
 	public Visit toModel() {
 		Visit visit = new Visit();
 		visit.setId(this.getId());
@@ -253,6 +263,7 @@ public class VisitDto implements Serializable {
 		visit.setUpdateBy(this.getUpdateBy());
 		visit.setUpdateTime(this.getUpdateTime());
 //		visit.setVersion();
+		visit.setPlanType(this.getPlanType());
 		return visit;
 	}
 

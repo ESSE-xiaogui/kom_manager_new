@@ -110,4 +110,10 @@ public class GoalModelController extends AbstractController{
 	{
 		goalModelFacade.update(goalModel);
 	}
+	
+	@GET
+	@Path("calcShopModelSaleQty")
+	public void calcShopModelSaleQty() throws ServiceException {
+		goalModelFacade.calcShopModelSaleQty();
+	}
 }

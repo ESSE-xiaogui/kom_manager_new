@@ -772,7 +772,8 @@ public class SalesManager {
 	 * @throws ServiceException
 	 */
 	public long calcShopSaleQty(long shopId, String startDate, String endDate) throws ServiceException {
-		return saleMapper.calcShopSaleQty(shopId, startDate, endDate);
+//		return saleMapper.calcShopSaleQty(shopId, startDate, endDate);
+		return 0;
 	}
 
 	/**

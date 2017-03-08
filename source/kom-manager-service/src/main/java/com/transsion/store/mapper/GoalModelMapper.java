@@ -32,4 +32,10 @@ public interface GoalModelMapper extends GenericIBatisMapper<GoalModel, java.lan
     public List<GoalModel> listPaginationByProperty(Pagination<GoalModel> pagination, @Param("goalModel")GoalModel goalModel, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     
     public List<StatShopModelSaleDto> queryModelSaleTargetByShopId(@Param("shopId")Long shopId, @Param("goalMonth")String goalMonth, @Param("modelCodeList")List<String> modelCodeList) throws DataAccessFailureException;
+    
+    public List<Long> queryShopIdListByGoalMonth(String goalMonth);
+    
+    public List<GoalModel> queryModelCodeListByShopId(Long shopId);
+    
+    public void updateGoalModelByShopId(GoalModel goalModel);
 }

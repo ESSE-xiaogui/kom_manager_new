@@ -111,4 +111,14 @@ public class GoalSupervisorController extends AbstractController{
 	{
 		goalSupervisorFacade.update(goalSupervisor);
 	}
+	
+	/**
+	 * 店铺月销量统计
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/calcShopSaleQty")
+	public void calcShopSaleQty() throws ServiceException {
+		goalSupervisorFacade.calcShopSaleQty();
+	}
 }

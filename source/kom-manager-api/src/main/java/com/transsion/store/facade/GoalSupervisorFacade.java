@@ -103,5 +103,6 @@ public interface GoalSupervisorFacade {
 	 */
 	public Pagination<GoalSupervisorInfoDto> listPaginationByProperty(Pagination<GoalSupervisorInfoDto> pagination, GoalSupervisorInfoDto goalSupervisorInfoDto, String token)
 			throws ServiceException;
-
+	
+	public void calcShopSaleQty() throws ServiceException;
 }
