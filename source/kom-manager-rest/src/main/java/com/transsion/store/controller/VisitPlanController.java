@@ -18,7 +18,6 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.VisitPlan;
-import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.VisitPlanBriefSummaryDto;
 import com.transsion.store.dto.VisitPlanDetailInfoDto;
 import com.transsion.store.dto.VisitPlanDetailSummaryDto;
@@ -26,7 +25,6 @@ import com.transsion.store.dto.VisitPlanDto;
 import com.transsion.store.dto.VisitPlanInfoDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.VisitPlanFacade;
-import com.transsion.store.utils.CacheUtils;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;

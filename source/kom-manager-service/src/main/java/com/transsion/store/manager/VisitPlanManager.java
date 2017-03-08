@@ -3,11 +3,15 @@ package com.transsion.store.manager;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Visit;
@@ -183,12 +187,71 @@ public class VisitPlanManager {
 						|| UtilHelper.isEmpty(userContext.getCompanyId())) {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
+		List<String> currencyDates = DateConvertUtils.getAllWeekDays(startDate);
+		String result = DateConvertUtils.getWeekFirstDay(endDate,-1);
+		List<String> nextWerkDates = DateConvertUtils.getAllWeekDays(result);
+		List<String> nextTwoWerkDates = DateConvertUtils.getAllWeekDays(endDate);
+		currencyDates.addAll(nextWerkDates);
+		currencyDates.addAll(nextTwoWerkDates);
+		List<VisitPlanDetailSummaryDto> visitList = new ArrayList<VisitPlanDetailSummaryDto>();
+		if(!UtilHelper.isEmpty(currencyDates)){
+			for(String visitPlanDate:currencyDates){
+			VisitPlanDetailSummaryDto vp = new VisitPlanDetailSummaryDto();
+			vp.setVisitPlanDate(visitPlanDate);
+			vp.setVisitPlanQty(0);
+			visitList.add(vp);
+		}
+		}
 		VisitPlanParamDto visit = new VisitPlanParamDto();
 		visit.setCompanyId(userContext.getCompanyId());
 		visit.setPlanner(userContext.getUserCode());
 		visit.setBeginDate(startDate);
 		visit.setEndDate(endDate);
-		return visitPlanMapper.findTwoWeekQty(visit);
+		List<VisitPlanDetailSummaryDto> visitLists = visitPlanMapper.findTwoWeekQty(visit);
+		return convertMap(visitLists,visitList);
+	}
+	/**
+	 * @author guihua.zhang on 2017-03-08
+	 * */
+	public static Map<String,Object> convertMap(List<Map<String,Object>> list,String key) {
+		Map<String,Object> result = new LinkedHashMap<String, Object>();
+		if(UtilHelper.isEmpty(list)) {
+			return null;
+		}
+		for(Map<String,Object> m:list){
+			result.put(m.get(key) == null ?null:m.get(key).toString(),m);
+		}
+		return result;
+	}
+	/**
+	 * @author guihua.zhang on 2017-03-08
+	 * */
+	public List<VisitPlanDetailSummaryDto> convertMap(List<VisitPlanDetailSummaryDto> v1,List<VisitPlanDetailSummaryDto> v2)throws ServiceException{
+		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+		for(VisitPlanDetailSummaryDto v1Dto:v2){
+			Map<String,Object> map = new LinkedHashMap<String,Object>();
+			map.put("visitPlanDate", v1Dto.getVisitPlanDate());
+			map.put("visitPlanQty",v1Dto.getVisitPlanQty());
+			list.add(map);
+		}
+		for(VisitPlanDetailSummaryDto v1Dto:v1){
+			Map<String,Object> map = new LinkedHashMap<String,Object>();
+			map.put("visitPlanDate", v1Dto.getVisitPlanDate());
+			map.put("visitPlanQty",v1Dto.getVisitPlanQty());
+			list.add(map);
+		}
+		Map<String,Object> map1 = convertMap(list,"visitPlanDate");
+		List<VisitPlanDetailSummaryDto> result = new ArrayList<VisitPlanDetailSummaryDto>();
+		Iterator<String> ite = map1.keySet().iterator();
+		while(ite.hasNext()){
+			String key = ite.next();
+			Map<String,Object>  map = (Map<String, Object>) map1.get(key);
+			VisitPlanDetailSummaryDto vpdsDto = new VisitPlanDetailSummaryDto();
+			vpdsDto.setVisitPlanDate(map.get("visitPlanDate").toString());
+			vpdsDto.setVisitPlanQty(Integer.parseInt(map.get("visitPlanQty").toString()));
+			result.add(vpdsDto);
+			}
+		return result;
 	}
 	/**
 	 * @author guihua.zhang on 2017-03-02
@@ -230,7 +293,8 @@ public class VisitPlanManager {
 		}
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		if (UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUserCode())
-						|| UtilHelper.isEmpty(userContext.getCompanyId()) || UtilHelper.isEmpty(userContext.getUser())
+						|| UtilHelper.isEmpty(userContext.getCompanyId()) 
+						|| UtilHelper.isEmpty(userContext.getUser())
 						|| UtilHelper.isEmpty(userContext.getUser().getId())) {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
@@ -266,9 +330,7 @@ public class VisitPlanManager {
 				for (VisitPlanInfoDto vv : shopList) {
 					VisitPlanInfoDto vvDto = new VisitPlanInfoDto();
 					BeanUtils.copyProperties(vv, vvDto);
-					if (vv.getWeekPlansQty() == 0) {
-						vvDto.setTheDayPlanned(false);
-					}
+					vvDto.setTheDayPlanned(false);
 					vpinfoList.add(vvDto);
 				}
 			}

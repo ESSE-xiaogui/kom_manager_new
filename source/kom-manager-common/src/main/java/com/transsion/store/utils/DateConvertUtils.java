@@ -25,10 +25,10 @@ public class DateConvertUtils {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(dt);
 		// 判断要计算的日期是否是周日，如果是则减一天计算周六的，否则会出问题，计算到下一周去了
-		/*int dayWeek = cal.get(Calendar.DAY_OF_WEEK);// 获得当前日期是一个星期的第几天
+		int dayWeek = cal.get(Calendar.DAY_OF_WEEK);// 获得当前日期是一个星期的第几天
 		if (1 == dayWeek) {
 			cal.add(Calendar.DAY_OF_MONTH, -1);
-		}*/
+		}
 		//默认周日是第一天
 		cal.setFirstDayOfWeek(Calendar.MONDAY);// 设置一个星期的第一天
 		int day = cal.get(Calendar.DAY_OF_WEEK);// 获得当前日期是一个星期的第几天
@@ -43,6 +43,33 @@ public class DateConvertUtils {
 		list.add(sdf.format(cal.getTime()));
 		return list;
 	}
+	
+	//获取周的第一天日期
+    public static String getWeekFirstDay(String date, int n) {
+    	
+        Calendar calendar = Calendar.getInstance();
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // 设置时间格式
+        
+		Date dt = new Date();
+		
+		try {
+			dt = sdf.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+        calendar.setTime(dt);
+
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
+        calendar.add(Calendar.DATE, (7 - dayOfWeek + 1) + 7 * (n - 1));
+       
+        String result = sdf.format(calendar.getTime());
+        
+        return  result;
+    }
+    
+    
 	
 	/**
 	 * 根据输入日期获取当前周 周六和周日的日期
@@ -70,15 +97,18 @@ public class DateConvertUtils {
 		result.append(Sunday);
 		return result.toString();
 	}
-	
 /*	public static void main(String[] args) {
-		String date = "2017-02-26";
-		String list = getWeekDays(date);
-		String[] zz = list.split(",");
-		String Saturday = zz[0];
-		System.out.println(Saturday);
-		String Sunday = zz[1];
-		System.out.println(Sunday);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("planDate1", "2017-03-08");
+		map.put("planQty2", "1");
+		map.put("planDate3", "2017-03-09");
+		map.put("planQty4", "1");
+		Map<String, String> map1 = new HashMap<String, String>();
+		map1.put("planDate1", "2017-03-08");
+		map1.put("planDate3", "2017-03-09");
+		map1.put("planQty5", "0");
+		map1.putAll(map);
+		System.out.println(map1);
 	}*/
 /*	public static void main(String[] args) {
 		String planDate = "2017-04-01";
