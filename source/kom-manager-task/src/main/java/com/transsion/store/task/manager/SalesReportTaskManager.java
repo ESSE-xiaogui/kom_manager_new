@@ -51,25 +51,25 @@ public class SalesReportTaskManager {
 
         List<Configuration> configurations = configurationService.listByProperty(configuration);
 
-        String executedDate = null;
+        String lastExecutedDate = null;
 
         if(!UtilHelper.isEmpty(configurations)) {
             configuration = configurations.get(0);
-            executedDate = configuration.getValue();
+            lastExecutedDate = configuration.getValue();
         }
 
-        if(UtilHelper.isEmpty(executedDate))
-            executedDate = systemDate;
+        if(UtilHelper.isEmpty(lastExecutedDate))
+            lastExecutedDate = systemDate;
 
-        executeStatisticsDailyData(systemDate, executedDate);
-        executeStatisticsWeekData(systemDate, executedDate);
+        executeStatisticsDailyData(systemDate, lastExecutedDate);
+        executeStatisticsWeekData(systemDate, lastExecutedDate);
 
         configuration.setValue(systemDate);
         configurationService.saveOrUpdate(configuration);
     }
 
-    private void executeStatisticsDailyData(String systemDate, String date) throws ServiceException {
-        List<ReportSaleDaily> reportSaleDailies = reportSaleDailyMapper.findUnStatisticsDataByDate(date);
+    private void executeStatisticsDailyData(String systemDate, String lastExecutedDate) throws ServiceException {
+        List<ReportSaleDaily> reportSaleDailies = reportSaleDailyMapper.findUnStatisticsDataByDate(lastExecutedDate);
         ReportSaleDaily daily;
         List<ReportSaleDaily> rs = new ArrayList<>();
 
@@ -106,8 +106,8 @@ public class SalesReportTaskManager {
         reportSaleDailyMapper.batchSaveOrUpdate(rs);
     }
 
-    private void executeStatisticsWeekData(String systemDate, String date) throws ServiceException {
-        List<ReportSaleWeek> reportSaleWeeks = reportSaleWeekMapper.findUnStatisticsDataByDate(date);
+    private void executeStatisticsWeekData(String systemDate, String lastExecutedDate) throws ServiceException {
+        List<ReportSaleWeek> reportSaleWeeks = reportSaleWeekMapper.findUnStatisticsDataByDate(lastExecutedDate);
         ReportSaleWeek week;
         List<ReportSaleWeek> rs = new ArrayList<>();
 
