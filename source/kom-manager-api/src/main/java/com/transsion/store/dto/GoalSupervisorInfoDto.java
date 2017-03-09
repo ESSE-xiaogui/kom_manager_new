@@ -35,6 +35,10 @@ public class GoalSupervisorInfoDto implements Serializable{
 	  *	目标设定年月 格式:201702
 	  */
 	private java.lang.String goalMonth;
+	
+	private java.lang.String goalMonthStart;
+	
+	private java.lang.String goalMonthEnd;
 
 	/**
 	  *	用户ID
@@ -276,16 +280,33 @@ public class GoalSupervisorInfoDto implements Serializable{
 		this.regionType = regionType;
 	}
 
+	public java.lang.String getGoalMonthStart() {
+		return goalMonthStart;
+	}
+
+	public void setGoalMonthStart(java.lang.String goalMonthStart) {
+		this.goalMonthStart = goalMonthStart;
+	}
+
+	public java.lang.String getGoalMonthEnd() {
+		return goalMonthEnd;
+	}
+
+	public void setGoalMonthEnd(java.lang.String goalMonthEnd) {
+		this.goalMonthEnd = goalMonthEnd;
+	}
+
 	@Override
 	public String toString() {
 		return "GoalSupervisorInfoDto [id=" + id + ", companyId=" + companyId + ", companyCode=" + companyCode
 						+ ", countryName=" + countryName + ", cityName=" + cityName + ", regionId=" + regionId
 						+ ", regionType=" + regionType + ", dutyName=" + dutyName + ", goalMonth=" + goalMonth
-						+ ", userId=" + userId + ", userCode=" + userCode + ", shopId=" + shopId + ", shopCode="
-						+ shopCode + ", shopName=" + shopName + ", saleTarget=" + saleTarget + ", saleCurrent="
-						+ saleCurrent + ", achieved=" + achieved + ", createBy=" + createBy + ", createTime="
-						+ createTime + ", createTimeStart=" + createTimeStart + ", createTimeEnd=" + createTimeEnd
-						+ ", empName=" + empName + ", creatorName=" + creatorName + "]";
+						+ ", goalMonthStart=" + goalMonthStart + ", goalMonthEnd=" + goalMonthEnd + ", userId=" + userId
+						+ ", userCode=" + userCode + ", shopId=" + shopId + ", shopCode=" + shopCode + ", shopName="
+						+ shopName + ", saleTarget=" + saleTarget + ", saleCurrent=" + saleCurrent + ", achieved="
+						+ achieved + ", createBy=" + createBy + ", createTime=" + createTime + ", createTimeStart="
+						+ createTimeStart + ", createTimeEnd=" + createTimeEnd + ", empName=" + empName
+						+ ", creatorName=" + creatorName + "]";
 	}
 
 

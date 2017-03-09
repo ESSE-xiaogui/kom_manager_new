@@ -650,4 +650,28 @@
 		imei_no = #{prototype.imeiNo} OR imei_list LIKE CONCAT('%',#{prototype.imeiNo},'%')
 	</select>
 	
+	<select id="listByPrototypeSettingDto" parameterType="PrototypeSettingDto" resultMap="PrototypeResultMapper">
+		SELECT pro.* FROM T_PROTOTYPE pro
+		left join T_SHOP s ON s.ID = pro.SHOP_ID
+		left join T_REGION r ON r.ID = s.COUNTRY
+		WHERE 1=1 
+			AND pro.STATUS = 1
+			<if test="prototypeSettingDto != null">
+				<if test="prototypeSettingDto.prototypeSettingModels!=null">
+					AND pro.MODEL_ID IN 
+					<foreach collection="prototypeSettingDto.modelIds" item="item"
+                    	index="index" open="(" close=")" separator=",">
+                    	#{item}
+                	</foreach>
+				</if>
+				<if test="prototypeSettingDto.prototypeSettingRegions!=null">
+					AND r.ID IN 
+					<foreach collection="prototypeSettingDto.regionIds" item="item"
+                    	index="index" open="(" close=")" separator=",">
+                    	#{item}
+                	</foreach>
+				</if>
+			</if>
+	</select>
+	
 </mapper>

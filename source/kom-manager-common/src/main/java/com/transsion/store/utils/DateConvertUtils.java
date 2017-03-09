@@ -1,5 +1,6 @@
 package com.transsion.store.utils;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,6 +45,41 @@ public class DateConvertUtils {
 		return list;
 	}
 	
+	/**
+	 * 根据开始日期,结束日期,得出区间内每天的日期
+	 * @author guihua.zhang on 2017-03-09
+	 * */
+	public static List<String> getSectionTime(String start,String end){
+		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date startDate = new Date();
+		try {
+			startDate = (Date)formatter.parse(start);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} 
+		Date endDate = new Date();;
+		try {
+			endDate = (Date)formatter.parse(end);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		long interval = 24*1000 * 60 * 60;
+		long endTime =endDate.getTime();
+		long curTime = startDate.getTime();
+		List<Date> dates = new ArrayList<Date>();
+		List<String> result = new ArrayList<String>();
+		while (curTime <= endTime) {
+		    dates.add(new Date(curTime));
+		    curTime += interval;
+		}
+		for(int i=0;i<dates.size();i++){
+		    Date lDate =(Date)dates.get(i);
+		    String ds = formatter.format(lDate); 
+		    result.add(ds);
+		}
+		return result;
+	}
+
 	//获取周的第一天日期
     public static String getWeekFirstDay(String date, int n) {
     	

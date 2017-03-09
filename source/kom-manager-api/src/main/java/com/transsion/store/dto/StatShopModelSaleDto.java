@@ -10,6 +10,10 @@ public class StatShopModelSaleDto {
 	
 	private java.lang.Long targetSaleQty;
 	
+	private java.lang.Long currentSaleQty;
+	
+	private java.lang.Long fourSaleQty;
+	
 	public long getShopId() {
 		return shopId;
 	}
@@ -45,10 +49,27 @@ public class StatShopModelSaleDto {
 		this.targetSaleQty = targetSaleQty;
 	}
 
+	public java.lang.Long getCurrentSaleQty() {
+		return currentSaleQty;
+	}
+
+	public void setCurrentSaleQty(java.lang.Long currentSaleQty) {
+		this.currentSaleQty = currentSaleQty;
+	}
+
+	public java.lang.Long getFourSaleQty() {
+		return fourSaleQty;
+	}
+
+	public void setFourSaleQty(java.lang.Long fourSaleQty) {
+		this.fourSaleQty = fourSaleQty;
+	}
+
 	@Override
 	public String toString() {
 		return "StatShopModelSaleDto [shopId=" + shopId + ", modelCode=" + modelCode + ", saleQty=" + saleQty
-				+ ", targetSaleQty=" + targetSaleQty + "]";
+				+ ", targetSaleQty=" + targetSaleQty + ", currentSaleQty=" + currentSaleQty + ", fourSaleQty="
+				+ fourSaleQty + "]";
 	}
-
+	
 }

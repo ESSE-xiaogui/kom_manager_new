@@ -85,35 +85,37 @@
 	</sql>
 	
 	<sql id="commonCondition">
-		<if test="id!= null and id!= ''"> 
-			AND ID=#{id}
+		<if test="prototypeSetting!= null">
+		<if test="prototypeSetting.id!= null and prototypeSetting.id!= ''"> 
+			AND ID=#{prototypeSetting.id}
 		</if>
-		<if test="companyId!= null and companyId!= ''"> 
-			AND COMPANY_ID=#{companyId}
+		<if test="prototypeSetting.companyId!= null and prototypeSetting.companyId!= ''"> 
+			AND COMPANY_ID=#{prototypeSetting.companyId}
 		</if>
-		<if test="effectiveMonth!= null and effectiveMonth!= ''"> 
-			AND EFFECTIVE_MONTH=#{effectiveMonth}
+		<if test="prototypeSetting.effectiveMonth!= null and prototypeSetting.effectiveMonth!= ''"> 
+			AND EFFECTIVE_MONTH=#{prototypeSetting.effectiveMonth}
 		</if>
-		<if test="isInactive!= null and isInactive!= ''"> 
-			AND IS_INACTIVE=#{isInactive}
+		<if test="prototypeSetting.isInactive!= null and prototypeSetting.isInactive!= ''"> 
+			AND IS_INACTIVE=#{prototypeSetting.isInactive}
 		</if>
-		<if test="remark!= null and remark!= ''"> 
-			AND REMARK=#{remark}
+		<if test="prototypeSetting.remark!= null and prototypeSetting.remark!= ''"> 
+			AND REMARK=#{prototypeSetting.remark}
 		</if>
-		<if test="createBy!= null and createBy!= ''"> 
-			AND CREATE_BY=#{createBy}
+		<if test="prototypeSetting.createBy!= null and prototypeSetting.createBy!= ''"> 
+			AND CREATE_BY=#{prototypeSetting.createBy}
 		</if>
-		<if test="createDate!= null and createDate!= ''"> 
-			AND CREATE_DATE=str_to_date(#{createDate},'%Y-%m-%d %H:%i:%s')
+		<if test="prototypeSetting.createDate!= null and prototypeSetting.createDate!= ''"> 
+			AND CREATE_DATE=str_to_date(#{prototypeSetting.createDate},'%Y-%m-%d %H:%i:%s')
 		</if>
-		<if test="updateBy!= null and updateBy!= ''"> 
-			AND UPDATE_BY=#{updateBy}
+		<if test="prototypeSetting.updateBy!= null and prototypeSetting.updateBy!= ''"> 
+			AND UPDATE_BY=#{prototypeSetting.updateBy}
 		</if>
-		<if test="updateDate!= null and updateDate!= ''"> 
-			AND UPDATE_DATE=str_to_date(#{updateDate},'%Y-%m-%d %H:%i:%s')
+		<if test="prototypeSetting.updateDate!= null and prototypeSetting.updateDate!= ''"> 
+			AND UPDATE_DATE=str_to_date(#{prototypeSetting.updateDate},'%Y-%m-%d %H:%i:%s')
 		</if>
-		<if test="version!= null and version!= ''"> 
-			AND VERSION=#{version}
+		<if test="prototypeSetting.version!= null and prototypeSetting.version!= ''"> 
+			AND VERSION=#{prototypeSetting.version}
+		</if>
 		</if>
 	</sql>
 
@@ -310,6 +312,14 @@
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderSpeByClause" />
 	</select>
+	
+	<select id="listByProperty" parameterType="PrototypeSetting" resultMap="PrototypeSettingResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_PROTOTYPE_SETTING WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	
 	<select id="findByCount" parameterType="PrototypeSetting" resultType="int">
 		SELECT count(1) AS totalcount FROM T_PROTOTYPE_SETTING WHERE 1=1 
 		<include refid="commonCondition"/>
