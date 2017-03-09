@@ -25,12 +25,16 @@ import com.transsion.store.bo.ReportSaleWeek;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.ReportSaleWeekFacade;
+import com.transsion.store.manager.ReportSaleWeekManager;
 import com.transsion.store.service.ReportSaleWeekService;
 
 @Component("reportSaleWeekFacade")
 public class ReportSaleWeekFacadeImpl implements ReportSaleWeekFacade {
 
 	private ReportSaleWeekService reportSaleWeekService;
+	
+	@Autowired
+	private ReportSaleWeekManager reportSaleWeekManager;
 	
 	@Autowired
 	public void setReportSaleWeekService(ReportSaleWeekService reportSaleWeekService)
@@ -164,5 +168,10 @@ public class ReportSaleWeekFacadeImpl implements ReportSaleWeekFacade {
 	public int findByCount(ReportSaleWeek reportSaleWeek) throws ServiceException
 	{
 		return reportSaleWeekService.findByCount(reportSaleWeek);
+	}
+
+	@Override
+	public byte[] getReportSaleWeekListByExcel(ReportSaleWeek reportSaleWeek) throws ServiceException {
+		return reportSaleWeekManager.getReportSaleWeekListByExcel(reportSaleWeek);
 	}
 }

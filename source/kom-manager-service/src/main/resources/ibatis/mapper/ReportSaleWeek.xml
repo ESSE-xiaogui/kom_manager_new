@@ -693,4 +693,11 @@
 				LEFT join
 			T_SHOP_GRADE sg on sg.id = ts.GRADE_ID
 	</select>
+	
+	<select id="queryListByProperty" parameterType="ReportSaleWeek" resultMap="ReportSaleWeekResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_REPORT_SALE_WEEK WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+	</select>
 </mapper>
