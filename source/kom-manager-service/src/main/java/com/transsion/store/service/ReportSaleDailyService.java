@@ -16,6 +16,7 @@
 **/
 package com.transsion.store.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,10 @@ import org.springframework.stereotype.Service;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.ReportSaleDaily;
+import com.transsion.store.dto.PrototypeCountingDto;
 import com.transsion.store.dto.ReportSaleDailyDto;
 import com.transsion.store.mapper.ReportSaleDailyMapper;
+import com.transsion.store.utils.ExcelUtils;
 
 @Service("reportSaleDailyService")
 public class ReportSaleDailyService {
@@ -168,5 +171,25 @@ public class ReportSaleDailyService {
 	public int findByCount(ReportSaleDaily reportSaleDaily) throws ServiceException
 	{
 		return reportSaleDailyMapper.findByCount(reportSaleDaily);
+	}
+	
+	public byte[] getReportSaleDailyByExcel(ReportSaleDailyDto reportSaleDailyDto) throws ServiceException {
+
+		String[] headers = {"序号","事业部","品牌","日期","周","大区","国家","区域","省份","城市","门店编码","门店名称",
+		"门店等级","用户名", "员工姓名","机型", "销量", "库存"};
+		List<ReportSaleDailyDto> list = reportSaleDailyMapper.listPaginationByProperty(null, reportSaleDailyDto, null);
+		
+		List<Object[]> dataset = new ArrayList<Object[]>();
+		int i=1;
+		for(ReportSaleDailyDto reportSaleDailyDtoTemp :list){
+			dataset.add(new Object[]{i++,reportSaleDailyDtoTemp.getCompanyName(), reportSaleDailyDtoTemp.getBrandCode(), 
+					reportSaleDailyDtoTemp.getSaleDate(), reportSaleDailyDtoTemp.getWeek(), null, reportSaleDailyDtoTemp.getCountryName(), 
+					null, null, reportSaleDailyDtoTemp.getCityName(), reportSaleDailyDtoTemp.getShopCode(), 
+					reportSaleDailyDtoTemp.getShopName(), reportSaleDailyDtoTemp.getGradeName(),
+					reportSaleDailyDtoTemp.getUserCode(), reportSaleDailyDtoTemp.getEmpName(), 
+					reportSaleDailyDtoTemp.getModelCode(), reportSaleDailyDtoTemp.getSaleQty(), reportSaleDailyDtoTemp.getStockQty()});
+		}
+		String title = "库存销量日报表";
+		return ExcelUtils.exportExcel(title, headers, dataset);
 	}
 }

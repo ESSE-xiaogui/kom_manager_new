@@ -139,6 +139,43 @@
 		<result column="GRADE_NAME" property="gradeName" />
 	</resultMap>
 	
+	<resultMap id="ShopResponseInfoDtoMapper" type="ShopResponseInfoDto">
+		<result column="ID" property="Id"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="OPEN_DATE" property="shopDate"/>
+		<result column="COUNTRY" property="country"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY" property="city"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="ADDRESS" property="address"/>
+	</resultMap>
+	
+	<resultMap id="ShopParamDtoMapper" type="ShopParamDto">
+		<result column="ID" property="id"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="COUNTRY" property="country"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY" property="city"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="ADDRESS" property="address"/>
+		<result column="OWNER_NAME" property="ownerName"/>
+		<result column="OWNER_PHONE" property="ownerPhone"/>
+		<result column="PROMOTER" property="itelPromoter"/>
+		<result column="SUPERVISOR" property="shopAssistant"/>
+		<result column="MATERIEL_ID" property="materielId"/>
+		<result column="NAME_EN" property="materielName"/>
+		<result column="GRADE_ID" property="gradeId"/>
+		<result column="GRADE_NAME" property="gradeName"/>
+		<result column="SALE_TOTAL_QTY" property="totalnum"/>
+		<result column="SALE_BRANDSP_QTY" property="currentnum"/>
+		<result column="BIZ_ID" property="bizId"/>
+		<result column="BIZ_NAME" property="bizName"/>
+		<result column="BRAND_ONE" property="brandsFirst"/>
+		<result column="BRAND_TWO" property="brandsTwo"/>
+		<result column="BRAND_THREE" property="brandsThree"/>
+		<result column="REMARK" property="remark"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, SHOP_ID
@@ -1078,5 +1115,33 @@
 		WHERE 1=1
 		AND p.IS_INACTIVE = 1 
 		AND up.USER_ID = #{userId}
+	</select>
+	<select id="findShopList" parameterType="java.lang.Long" resultMap="ShopResponseInfoDtoMapper">
+	SELECT
+		p.ID,p.SHOP_NAME,p.OPEN_DATE,p.PARENT_ID AS COUNTRY,c.REGION_NAME AS
+		COUNTRY_NAME,p.REGION_ID AS CITY,r.REGION_NAME AS CITY_NAME,p.ADDRESS
+		FROM T_SHOP p
+		LEFT JOIN T_USER_SHOP up ON up.SHOP_ID = p.ID
+		LEFT JOIN T_REGION r ON r.ID = p.REGION_ID
+		LEFT JOIN T_REGION c ON c.ID = r.PARENT_ID
+		WHERE up.USER_ID = #{userId} AND p.STATUS = 1
+		ORDER BY p.OPEN_DATE DESC
+	</select>
+	<select id="findShopByParam" parameterType="java.lang.Long" resultMap="ShopParamDtoMapper">
+	SELECT p.ID, p.SHOP_NAME, p.COUNTRY,c.REGION_NAME AS COUNTY_NAME, p.CITY,
+		r.REGION_NAME AS CITY_NAME,	p.ADDRESS, p.OWNER_NAME, p.OWNER_PHONE, 
+		e.PROMOTER, e.SUPERVISOR,
+		sm.MATERIEL_ID, m.NAME_CN,m.NAME_EN, p.GRADE_ID, g.GRADE_NAME, p.BIZ_ID, b.BIZ_NAME,
+		e.SALE_TOTAL_QTY, e.SALE_BRANDSP_QTY,e.BRAND_ONE, e.BRAND_TWO, e.BRAND_THREE, p.REMARK
+		FROM T_SHOP p
+		LEFT JOIN T_REGION r ON r.ID = p.REGION_ID
+		LEFT JOIN T_REGION c ON c.ID = r.PARENT_ID
+		LEFT JOIN T_SHOP_EXTENSION e ON e.SHOP_ID = p.ID
+		LEFT JOIN T_SHOP_MATERIEL sm ON sm.SHOP_ID = p.ID
+		LEFT JOIN T_MATERIEL m ON m.ID = sm.MATERIEL_ID
+		LEFT JOIN T_SHOP_GRADE g ON g.ID = p.GRADE_ID
+		LEFT JOIN T_SHOP_BIZ b ON b.ID = p.BIZ_ID
+		LEFT JOIN T_USER_SHOP up ON up.SHOP_ID = p.ID
+		WHERE p.ID= #{id} AND USER_ID = #{userId}
 	</select>
 </mapper>

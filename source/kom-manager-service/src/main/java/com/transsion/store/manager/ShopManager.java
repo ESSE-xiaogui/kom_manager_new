@@ -28,6 +28,7 @@ import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.ShopLoginDto;
 import com.transsion.store.dto.ShopParamDto;
 import com.transsion.store.dto.ShopResponseDto;
+import com.transsion.store.dto.ShopResponseInfoDto;
 import com.transsion.store.dto.ShopUploadDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.transsion.store.dto.UserDto;
@@ -654,5 +655,32 @@ public class ShopManager {
 		shopDto.setStatus(1);
 		}
 		return shopDto;
+	}
+	
+	public List<ShopResponseInfoDto> findShopList(String token) throws ServiceException{
+		if (UtilHelper.isEmpty(token)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getCompanyId()) 
+						|| UtilHelper.isEmpty(userContext.getUser()) 
+						|| UtilHelper.isEmpty(userContext.getUser().getId())){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		return shopMapper.findShopList(userContext.getUser().getId());
+	}
+	public ShopParamDto findShopDetails(String token,ShopParamDto shopParamDto) throws ServiceException{
+		if (UtilHelper.isEmpty(token)){			
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		if(UtilHelper.isEmpty(shopParamDto) || UtilHelper.isEmpty(shopParamDto.getId())){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUser()) 
+						|| UtilHelper.isEmpty(userContext.getUser().getId())){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		 return shopMapper.findShopByParam(shopParamDto.getId(),new Long(userContext.getUser().getId()));
 	}
 }

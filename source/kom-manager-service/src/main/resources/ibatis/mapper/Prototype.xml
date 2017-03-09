@@ -305,6 +305,9 @@
             <if test="prototypeDto.unpublishBy!= null and prototypeDto.unpublishBy!= ''">
 				AND pro.UNPUBLISH_BY=#{prototypeDto.unpublishBy}
             </if>
+            <if test="prototypeDto.countingTime!= null and prototypeDto.countingTime!= ''">
+				AND proCount.COUNTING_TIME <![CDATA[ <= ]]> #{prototypeDto.countingTime}
+            </if>
             
             <!-- 
             
@@ -635,6 +638,12 @@
 		left join T_EMPLOYEE emp1 on user1.ID = emp1.U_ID
 		left join T_USER user2 on pro.PUBLISH_BY = user2.USER_CODE
 		left join T_EMPLOYEE emp2 on user2.ID = emp2.U_ID
+		<if test="prototypeDto != null">
+			<if test="prototypeDto.countingTime!=null">
+			inner join T_PROTOTYPE_COUNTING proCount ON pro.ID = proCount.PROTOTYPE_ID
+			</if>
+		</if>
+		
 		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderSpeByClause" />
