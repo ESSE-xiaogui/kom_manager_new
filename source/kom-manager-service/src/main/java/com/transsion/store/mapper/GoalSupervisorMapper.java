@@ -30,7 +30,7 @@ public interface GoalSupervisorMapper extends GenericIBatisMapper<GoalSupervisor
 
     public List<GoalSupervisorInfoDto> listPaginationByProperty(Pagination<GoalSupervisorInfoDto> pagination, @Param("goalSupervisorInfoDto")GoalSupervisorInfoDto goalSupervisorInfoDto, @Param("orderBy") Map<String, String> orderBy,@Param("companyId")Long companyId) throws DataAccessFailureException;
     
-    public Long querySaleTargetByShopId(GoalSupervisor goalSupervisor);
+    public GoalSupervisor querySaleTargetByShopId(GoalSupervisor goalSupervisor);
     
     public List<GoalSupervisor> queryShopIdListByGoalMonth(String goalMonth);
     

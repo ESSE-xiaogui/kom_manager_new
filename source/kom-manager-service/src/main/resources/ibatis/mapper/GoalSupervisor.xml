@@ -445,7 +445,15 @@
 		<include refid="commonCondition"/>
 	</select>
 	
-	<select id="querySaleTargetByShopId" parameterType="GoalSupervisor" resultType="java.lang.Long">
-		SELECT SALE_TARGET FROM T_GOAL_SUPERVISOR WHERE SHOP_ID = #{shopId} AND SUBSTRING(GOAL_MONTH, 1, 7) = #{goalMonth}
+	<select id="querySaleTargetByShopId" parameterType="GoalSupervisor" resultMap="GoalSupervisorResultMapper">
+		SELECT SALE_TARGET, SALE_CURRENT FROM T_GOAL_SUPERVISOR WHERE SHOP_ID = #{shopId} AND SUBSTRING(GOAL_MONTH, 1, 7) = #{goalMonth}
 	</select>
+	
+	<select id="queryShopIdListByGoalMonth" parameterType="java.lang.String" resultMap="GoalSupervisorResultMapper">
+		SELECT ID, SHOP_ID, SALE_TARGET, SALE_CURRENT, ACHIEVED FROM T_GOAL_SUPERVISOR WHERE SUBSTRING(GOAL_MONTH, 1, 7) = #{goalMonth} ORDER BY SHOP_ID ASC
+	</select>
+	
+	<update id="updateGoalSupervisorByShopId" parameterType="GoalSupervisor">
+		UPDATE T_GOAL_SUPERVISOR SET SALE_CURRENT = #{saleCurrent}, ACHIEVED = #{achieved} WHERE ID = #{id}
+	</update>
 </mapper>
