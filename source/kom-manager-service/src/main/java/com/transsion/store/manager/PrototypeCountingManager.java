@@ -71,19 +71,27 @@ public class PrototypeCountingManager {
 						int i = sdf.parse(prototype.getPublishTime()).compareTo(sdf.parse(prototypeSettingTime.getCountDate()));
 						// 样机上样时间小于样机样机盘点日期设置的参数，则插入到prototypeCounting表
 						if (i < 0) {
-							PrototypeCounting prototypeCounting = new PrototypeCounting();
+							// 每月只能新增一条盘点计划，要先去数据库中判断
+							PrototypeCounting prototypeCountingExp = new PrototypeCounting();
+							prototypeCountingExp.setPrototypeId(prototype.getId());
+							prototypeCountingExp.setCountingTime(prototypeSettingTime.getCountDate());
 							
-							prototypeCounting.setPrototypeId(prototype.getId());
-							prototypeCounting.setCountingTime(prototypeSettingTime.getCountDate());
-							prototypeCounting.setShopId(prototype.getShopId());
-							prototypeCounting.setCompanyId(prototype.getCompanyId());
-							prototypeCounting.setStatus(1);		// 未盘
-							prototypeCounting.setCreateBy(userContext.getUserCode());
-							prototypeCounting.setCreateTime(systemDateService.getCurrentDate());
+							List<PrototypeCounting> prototypeCountings = prototypeCountingMapper.listByProperty(prototypeCountingExp);
 							
-							prototypeCountingMapper.save(prototypeCounting);
+							if (prototypeCountings.size() == 0) {
+								PrototypeCounting prototypeCounting = new PrototypeCounting();
+								
+								prototypeCounting.setPrototypeId(prototype.getId());
+								prototypeCounting.setCountingTime(prototypeSettingTime.getCountDate());
+								prototypeCounting.setShopId(prototype.getShopId());
+								prototypeCounting.setCompanyId(prototype.getCompanyId());
+								prototypeCounting.setStatus(1);		// 未盘
+								prototypeCounting.setCreateBy(userContext.getUserCode());
+								prototypeCounting.setCreateTime(systemDateService.getCurrentDate());
+								
+								prototypeCountingMapper.save(prototypeCounting);
+							}
 						}
-						
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
