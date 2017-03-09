@@ -1,6 +1,10 @@
 insert into T_REPORT_SALE_WEEK (
 	COMPANY_ID,
 	SHOP_ID,
+    GRADE_ID,
+    COUNTRY_ID,
+    CITY_ID,
+    REGION_ID,
 	USER_CODE,
     SHOP_CODE,
 	BRAND_CODE,
@@ -9,8 +13,10 @@ insert into T_REPORT_SALE_WEEK (
 	WEEK,
     COMPANY_NAME,
 	SHOP_NAME,
-	COUNTRY_NAME,
-	CITY_NAME,
+	GRADE_NAME,
+    COUNTRY_NAME,
+    CITY_NAME,
+    REGION_NAME,
     EMP_NAME,
 	SALE_QTY,
 	STOCK_QTY
@@ -18,6 +24,10 @@ insert into T_REPORT_SALE_WEEK (
 SELECT 
     sale.COMPANY_ID,
     sale.SHOP_ID,
+    ts.GRADE_ID,
+    ts.COUNTRY COUNTRY_ID,
+    ts.CITY CITY_ID,
+    ts.REGION_ID,
     sale.USER_CODE,
     ts.SHOP_CODE,
     sale.BRAND_CODE,
@@ -26,8 +36,10 @@ SELECT
     sale.week WEEK,
     tc.COMPANY_NAME,
     ts.shop_name SHOP_NAME,
+    sg.GRADE_NAME,
     r1.REGION_NAME COUNTRY_NAME,
     r2.REGION_NAME CITY_NAME,
+    r2.REGION_NAME REGION_NAME,
     te.EMP_NAME,
     sale.SALE_QTY,
     stock.stock_qty STOCK_QTY
@@ -77,3 +89,7 @@ FROM
     T_REGION r1 ON r1.ID = ts.COUNTRY
         LEFT JOIN
     T_REGION r2 ON r2.ID = ts.CITY
+		LEFT JOIN
+    T_REGION r3 ON r3.ID = ts.REGION_ID
+		LEFT join
+	T_SHOP_GRADE sg on sg.id = ts.GRADE_ID 

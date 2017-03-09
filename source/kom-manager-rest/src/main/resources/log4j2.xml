@@ -41,13 +41,17 @@
         </logger>
         <logger name="com.rest" level="debug">
         </logger>
+        <logger name="com.transsion.store.controller" level="debug">
+        </logger>
+        <logger name="org.mybatis.caches" level="debug">
+        </logger>
         <!-- Game Stat  logger -->
         <!--<logger name="com.u9.global.service.log" level="info"
                 additivity="false">
             <appender-ref ref="ProductLog"/>
         </logger>-->
         <!-- Root Logger -->
-        <root level="info">
+        <root level="debug">
             <!--<appender-ref ref="DevLog"/>-->
             <appender-ref ref="Console"/>
         </root>
