@@ -445,7 +445,7 @@
 	<select id="listGoalPromoterByProperty" parameterType="GoalPromoterInfoDto" resultMap="GoalPromoterInfoDtoResultMapper">
 		SELECT 
 		<include refid="commonProcessDateColumn"/>
-		FROM T_GOAL_SUPERVISOR gs
+		FROM T_GOAL_PROMOTER gs
 		LEFT JOIN T_COMPANY c ON c.ID = gs.COMPANY_ID
 		LEFT JOIN T_SHOP s ON s.ID = gs.SHOP_ID
 		LEFT JOIN T_REGION r1 ON r1.ID = s.COUNTRY
