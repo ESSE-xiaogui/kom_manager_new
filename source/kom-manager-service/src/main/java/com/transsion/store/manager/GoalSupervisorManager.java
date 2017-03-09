@@ -173,7 +173,7 @@ public class GoalSupervisorManager {
 							goalSupervisorInfoDto1.getAchieved(),goalSupervisorInfoDto1.getCreateBy(),
 							goalSupervisorInfoDto1.getCreatorName(),goalSupervisorInfoDto1.getCreateTime()});
 		}
-		String title = "巡店员销量目标报表";
+		String title = "巡店员销量目标设定报表";
 		return ExcelUtils.exportExcel(title, headers, dataset);
 	}
 }

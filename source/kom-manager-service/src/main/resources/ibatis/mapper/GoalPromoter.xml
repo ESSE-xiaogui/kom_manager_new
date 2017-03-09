@@ -37,6 +37,31 @@
 		<result column="UPDATE_TIME" property="updateTime"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
+	<resultMap id="GoalPromoterInfoDtoResultMapper" type="GoalPromoterInfoDto">
+		<result column="ID" property="id"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="GOAL_MONTH" property="goalMonth"/>
+		<result column="COMPANY_CODE" property="companyCode"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="DUTY_NAME" property="dutyName"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="CREATOR_NAME" property="creatorName"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="USER_CODE" property="userCode"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="SHOP_CODE" property="shopCode"/>
+		<result column="SALE_TARGET" property="saleTarget"/>
+		<result column="SALE_CURRENT" property="saleCurrent"/>
+		<result column="ACHIEVED" property="achieved"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
 	
 	<sql id="commonColumns">
 		 ID
@@ -93,6 +118,24 @@
 		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
 		, VERSION
 	</sql>
+	<sql id="commonProcessDateColumn">
+		gs.ID,
+		c.COMPANY_CODE,
+		r1.REGION_NAME AS COUNTRY_NAME,
+		r2.REGION_NAME AS CITY_NAME,
+		date_format(GOAL_MONTH,'%Y-%m') GOAL_MONTH,
+		gs.USER_CODE,
+		e1.EMP_NAME,
+		d.DUTY_NAME,
+		s.SHOP_CODE,
+		s.SHOP_NAME,
+		gs.SALE_TARGET,
+		SALE_CURRENT,
+		ACHIEVED,
+		gs.CREATE_BY,
+		e2.EMP_NAME AS CREATOR_NAME,
+		gs.CREATE_TIME
+	</sql>
 	
 	<sql id="commonCondition">
 		<if test="id!= null and id!= ''"> 
@@ -146,55 +189,82 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="goalPromoter != null">
-            <if test="goalPromoter.id!= null and goalPromoter.id!= ''">
-				AND ID=#{goalPromoter.id}
+		<if test="goalPromoterInfoDto != null">
+            <if test="goalPromoterInfoDto.id!= null and goalPromoterInfoDto.id!= ''">
+				AND ID=#{goalPromoterInfoDto.id}
             </if>
-            <if test="goalPromoter.companyId!= null and goalPromoter.companyId!= ''">
-				AND COMPANY_ID=#{goalPromoter.companyId}
+            <if test="goalPromoterInfoDto.companyId!= null and goalPromoterInfoDto.companyId!= ''">
+				AND gs.COMPANY_ID=#{goalPromoterInfoDto.companyId}
             </if>
-            <if test="goalPromoter.goalMonth!= null and goalPromoter.goalMonth!= ''">
-				AND GOAL_MONTH=str_to_date(#{goalPromoter.goalMonth},'%Y-%m-%d %H:%i:%s')
+            <if test="goalPromoterInfoDto.goalMonth!= null and goalPromoterInfoDto.goalMonth!= ''">
+				AND GOAL_MONTH=str_to_date(#{goalPromoterInfoDto.goalMonth},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="goalPromoter.userId!= null and goalPromoter.userId!= ''">
-				AND USER_ID=#{goalPromoter.userId}
+            <if test="goalPromoterInfoDto.goalMonthStart!= null and goalPromoterInfoDto.goalMonthStart!= ''">
+				AND DATE_FORMAT(GOAL_MONTH,'%Y-%m-%d')&gt;=str_to_date(#{goalPromoterInfoDto.goalMonthStart},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="goalPromoter.userCode!= null and goalPromoter.userCode!= ''">
-				AND USER_CODE=#{goalPromoter.userCode}
+            <if test="goalPromoterInfoDto.goalMonthEnd!= null and goalPromoterInfoDto.goalMonthEnd!= ''">
+				AND DATE_FORMAT(GOAL_MONTH,'%Y-%m-%d')&lt;=str_to_date(#{goalPromoterInfoDto.goalMonthEnd},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="goalPromoter.shopId!= null and goalPromoter.shopId!= ''">
-				AND SHOP_ID=#{goalPromoter.shopId}
+            <if test="goalPromoterInfoDto.userId!= null and goalPromoterInfoDto.userId!= ''">
+				AND USER_ID=#{goalPromoterInfoDto.userId}
             </if>
-            <if test="goalPromoter.shopCode!= null and goalPromoter.shopCode!= ''">
-				AND SHOP_CODE=#{goalPromoter.shopCode}
+           	<if test="goalPromoterInfoDto.userCode!= null and goalPromoterInfoDto.userCode!= ''">
+				AND gs.USER_CODE=#{goalPromoterInfoDto.userCode}
             </if>
-            <if test="goalPromoter.saleTarget!= null and goalPromoter.saleTarget!= ''">
-				AND SALE_TARGET=#{goalPromoter.saleTarget}
+            <if test="goalPromoterInfoDto.empName!= null and goalPromoterInfoDto.empName!= ''">
+				AND e1.EMP_NAME=#{goalPromoterInfoDto.empName}
             </if>
-            <if test="goalPromoter.saleCurrent!= null and goalPromoter.saleCurrent!= ''">
-				AND SALE_CURRENT=#{goalPromoter.saleCurrent}
+            <if test="goalPromoterInfoDto.shopId!= null and goalPromoterInfoDto.shopId!= ''">
+				AND SHOP_ID=#{goalPromoterInfoDto.shopId}
             </if>
-            <if test="goalPromoter.achieved!= null and goalPromoter.achieved!= ''">
-				AND ACHIEVED=#{goalPromoter.achieved}
+            <if test="goalPromoterInfoDto.shopCode!= null and goalPromoterInfoDto.shopCode!= ''">
+				AND s.SHOP_CODE=#{goalPromoterInfoDto.shopCode}
             </if>
-            <if test="goalPromoter.remark!= null and goalPromoter.remark!= ''">
-				AND REMARK=#{goalPromoter.remark}
+            <if test="goalPromoterInfoDto.shopName!= null and goalPromoterInfoDto.shopName!= ''">
+				AND s.SHOP_NAME=#{goalPromoterInfoDto.shopName}
             </if>
-            <if test="goalPromoter.createBy!= null and goalPromoter.createBy!= ''">
-				AND CREATE_BY=#{goalPromoter.createBy}
+            <if test="goalPromoterInfoDto.saleTarget!= null and goalPromoterInfoDto.saleTarget!= ''">
+				AND SALE_TARGET=#{goalPromoterInfoDto.saleTarget}
             </if>
-            <if test="goalPromoter.createTime!= null and goalPromoter.createTime!= ''">
-				AND CREATE_TIME=str_to_date(#{goalPromoter.createTime},'%Y-%m-%d %H:%i:%s')
+            <if test="goalPromoterInfoDto.saleCurrent!= null and goalPromoterInfoDto.saleCurrent!= ''">
+				AND SALE_CURRENT=#{goalPromoterInfoDto.saleCurrent}
             </if>
-            <if test="goalPromoter.updateBy!= null and goalPromoter.updateBy!= ''">
-				AND UPDATE_BY=#{goalPromoter.updateBy}
+            <if test="goalPromoterInfoDto.achieved!= null and goalPromoterInfoDto.achieved!= ''">
+				AND ACHIEVED=#{goalPromoterInfoDto.achieved}
             </if>
-            <if test="goalPromoter.updateTime!= null and goalPromoter.updateTime!= ''">
-				AND UPDATE_TIME=str_to_date(#{goalPromoter.updateTime},'%Y-%m-%d %H:%i:%s')
+          	<!-- <if test="goalPromoterInfoDto.remark!= null and goalPromoterInfoDto.remark!= ''">
+				AND REMARK=#{goalPromoterInfoDto.remark}
+            </if> -->
+            <if test="goalPromoterInfoDto.createBy!= null and goalPromoterInfoDto.createBy!= ''">
+				AND gs.CREATE_BY=#{goalPromoterInfoDto.createBy}
             </if>
-            <if test="goalPromoter.version!= null and goalPromoter.version!= ''">
-				AND VERSION=#{goalPromoter.version}
+            <if test="goalPromoterInfoDto.creatorName!= null and goalPromoterInfoDto.creatorName!= ''">
+				AND e2.EMP_NAME=#{goalPromoterInfoDto.creatorName}
             </if>
+            <if test="goalPromoterInfoDto.regionId!= null and goalPromoterInfoDto.regionId!= '' and goalPromoterInfoDto.regionType==2">
+				AND r1.ID=#{goalPromoterInfoDto.regionId}
+            </if>
+            <if test="goalPromoterInfoDto.regionId!= null and goalPromoterInfoDto.regionId!= '' and goalPromoterInfoDto.regionType==4">
+				AND r2.ID=#{goalPromoterInfoDto.regionId}
+            </if>
+            <if test="goalPromoterInfoDto.createTime!= null and goalPromoterInfoDto.createTime!= ''">
+				AND CREATE_TIME=str_to_date(#{goalPromoterInfoDto.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="goalPromoterInfoDto.createTimeStart!= null and goalPromoterInfoDto.createTimeStart!= ''">
+				AND DATE_FORMAT(gs.CREATE_TIME, '%Y-%m-%d') &gt;=str_to_date(#{goalPromoterInfoDto.createTimeStart},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="goalPromoterInfoDto.createTimeEnd!= null and goalPromoterInfoDto.createTimeEnd!= ''">
+				AND DATE_FORMAT(gs.CREATE_TIME, '%Y-%m-%d') &lt;=str_to_date(#{goalPromoterInfoDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
+            </if>
+           <!--  <if test="goalPromoterInfoDto.updateBy!= null and goalPromoterInfoDto.updateBy!= ''">
+				AND UPDATE_BY=#{goalPromoterInfoDto.updateBy}
+            </if>
+            <if test="goalPromoterInfoDto.updateTime!= null and goalPromoterInfoDto.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{goalPromoterInfoDto.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="goalPromoterInfoDto.version!= null and goalPromoterInfoDto.version!= ''">
+				AND VERSION=#{goalPromoterInfoDto.version}
+            </if> -->
         </if>
     </sql>
 
@@ -213,22 +283,43 @@
 				ID ${value}
             </when>
         	<when test="key == 'companyId'">
-				COMPANY_ID ${value}
+				gs.COMPANY_ID ${value}
             </when>
         	<when test="key == 'goalMonth'">
-				GOAL_MONTH ${value}
+				gs.GOAL_MONTH ${value}
+            </when>
+            <when test="key == 'companyCode'">
+				c.COMPANY_CODE ${value}
+            </when>
+            <when test="key == 'countryName'">
+				r1.REGION_NAME ${value}
+            </when>
+            <when test="key == 'cityName'">
+				r2.REGION_NAME ${value}
+            </when>
+            <when test="key == 'empName'">
+				e1.EMP_NAME ${value}
+            </when>
+            <when test="key == 'creatorName'">
+				e2.EMP_NAME ${value}
+            </when>
+            <when test="key == 'dutyName'">
+				d.DUTY_NAME ${value}
             </when>
         	<when test="key == 'userId'">
 				USER_ID ${value}
             </when>
         	<when test="key == 'userCode'">
-				USER_CODE ${value}
+				gs.USER_CODE ${value}
             </when>
         	<when test="key == 'shopId'">
 				SHOP_ID ${value}
             </when>
         	<when test="key == 'shopCode'">
 				SHOP_CODE ${value}
+            </when>
+            <when test="key == 'shopName'">
+				SHOP_NAME ${value}
             </when>
         	<when test="key == 'saleTarget'">
 				SALE_TARGET ${value}
@@ -243,10 +334,10 @@
 				REMARK ${value}
             </when>
         	<when test="key == 'createBy'">
-				CREATE_BY ${value}
+				gs.CREATE_BY ${value}
             </when>
         	<when test="key == 'createTime'">
-				CREATE_TIME ${value}
+				gs.CREATE_TIME ${value}
             </when>
         	<when test="key == 'updateBy'">
 				UPDATE_BY ${value}
@@ -259,14 +350,14 @@
             </when>
 		</choose>
 	</sql>
-
+	
 	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="GoalPromoter">
 		<![CDATA[ INSERT INTO T_GOAL_PROMOTER ( ]]>
 		<include refid="commonColumnsNotPK"/>
 		<![CDATA[
 			) VALUES ( 
 			 #{companyId}
-			, str_to_date(#{goalMonth},'%Y-%m-%d %H:%i:%s')
+			, str_to_date(#{goalMonth},'%Y-%m-%d')
 			, #{userId}
 			, #{userCode}
 			, #{shopId}
@@ -286,7 +377,7 @@
 		<![CDATA[ UPDATE T_GOAL_PROMOTER SET 
 			 ID=#{id} 
 			, COMPANY_ID=#{companyId} 
-			, GOAL_MONTH=str_to_date(#{goalMonth},'%Y-%m-%d %H:%i:%s')
+			, GOAL_MONTH=str_to_date(#{goalMonth},'%Y-%m-%d')
 			, USER_ID=#{userId} 
 			, USER_CODE=#{userCode} 
 			, SHOP_ID=#{shopId} 
@@ -332,12 +423,40 @@
 		FROM T_GOAL_PROMOTER WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="GoalPromoter" resultMap="GoalPromoterResultMapper">
+	<select id="listPaginationByProperty" parameterType="GoalPromoterInfoDto" resultMap="GoalPromoterInfoDtoResultMapper">
 		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_GOAL_PROMOTER WHERE 1=1
+		<include refid="commonProcessDateColumn"/>
+		FROM T_GOAL_PROMOTER gs
+		LEFT JOIN T_COMPANY c ON c.ID = gs.COMPANY_ID
+		LEFT JOIN T_SHOP s ON s.ID = gs.SHOP_ID
+		LEFT JOIN T_REGION r1 ON r1.ID = s.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = s.CITY
+		LEFT JOIN T_EMPLOYEE e1 ON e1.U_ID = gs.USER_ID
+		LEFT JOIN T_DUTY d ON d.ID = e1.DUTY_ID
+		LEFT JOIN T_USER u ON u.USER_CODE = gs.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e2 ON e2.U_ID = u.ID 
+		WHERE 1=1
+		<if test="companyId!= null and companyId!= ''"> 
+			AND gs.COMPANY_ID =#{companyId}
+		</if>
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
+	</select>
+	<select id="listGoalPromoterByProperty" parameterType="GoalPromoterInfoDto" resultMap="GoalPromoterInfoDtoResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumn"/>
+		FROM T_GOAL_SUPERVISOR gs
+		LEFT JOIN T_COMPANY c ON c.ID = gs.COMPANY_ID
+		LEFT JOIN T_SHOP s ON s.ID = gs.SHOP_ID
+		LEFT JOIN T_REGION r1 ON r1.ID = s.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = s.CITY
+		LEFT JOIN T_EMPLOYEE e1 ON e1.U_ID = gs.USER_ID
+		LEFT JOIN T_DUTY d ON d.ID = e1.DUTY_ID
+		LEFT JOIN T_USER u ON u.USER_CODE = gs.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e2 ON e2.U_ID = u.ID 
+		WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	ORDER BY gs.CREATE_TIME DESC
 	</select>
 	<select id="findByCount" parameterType="GoalPromoter" resultType="int">
 		SELECT count(1) AS totalcount FROM T_GOAL_PROMOTER WHERE 1=1 

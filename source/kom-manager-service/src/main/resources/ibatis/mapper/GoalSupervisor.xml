@@ -257,7 +257,7 @@
             <if test="goalSupervisorInfoDto.createTimeEnd!= null and goalSupervisorInfoDto.createTimeEnd!= ''">
 				AND DATE_FORMAT(gs.CREATE_TIME, '%Y-%m-%d') &lt;=str_to_date(#{goalSupervisorInfoDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="goalSupervisorInfoDto.updateBy!= null and goalSupervisorInfoDto.updateBy!= ''">
+         <!--    <if test="goalSupervisorInfoDto.updateBy!= null and goalSupervisorInfoDto.updateBy!= ''">
 				AND UPDATE_BY=#{goalSupervisorInfoDto.updateBy}
             </if>
             <if test="goalSupervisorInfoDto.updateTime!= null and goalSupervisorInfoDto.updateTime!= ''">
@@ -265,7 +265,7 @@
             </if>
             <if test="goalSupervisorInfoDto.version!= null and goalSupervisorInfoDto.version!= ''">
 				AND VERSION=#{goalSupervisorInfoDto.version}
-            </if>
+            </if> -->
         </if>
     </sql>
 

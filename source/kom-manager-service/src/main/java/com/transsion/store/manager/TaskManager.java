@@ -83,6 +83,8 @@ public class TaskManager {
 			msg.setName(Type.TASK_GOAL_SUPERVISOR_IMPORT.getDesc());
 		}else if(task.getTaskType().equals(Type.TASK_GOAL_MODEL_IMPORT.getDesc())){
 			msg.setName(Type.TASK_GOAL_MODEL_IMPORT.getDesc());
+		}else if(task.getTaskType().equals(Type.TASK_GOAL_PROMOTER_IMPORT.getDesc())){
+			msg.setName(Type.TASK_GOAL_PROMOTER_IMPORT.getDesc());
 		}
 		msg.setInvokerType(TaskInvokerInfo.Type.REST);
 		msg.setKey(task.getId());

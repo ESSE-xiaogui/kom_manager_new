@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.transsion.store.bo.GoalPromoter;
+import com.transsion.store.dto.GoalPromoterInfoDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
@@ -27,5 +28,8 @@ import org.apache.ibatis.annotations.Param;
 
 public interface GoalPromoterMapper extends GenericIBatisMapper<GoalPromoter, java.lang.Long> {
 
-    public List<GoalPromoter> listPaginationByProperty(Pagination<GoalPromoter> pagination, @Param("goalPromoter")GoalPromoter goalPromoter, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<GoalPromoterInfoDto> listPaginationByProperty(Pagination<GoalPromoterInfoDto> pagination, @Param("goalPromoterInfoDto")GoalPromoterInfoDto goalPromoterInfoDto, @Param("orderBy") Map<String, String> orderBy,@Param("companyId")Long companyId) throws DataAccessFailureException;
+
+	public List<GoalPromoterInfoDto> listGoalPromoterByProperty(@Param("goalPromoterInfoDto")GoalPromoterInfoDto goalPromoterInfoDto)throws DataAccessFailureException;
+
 }

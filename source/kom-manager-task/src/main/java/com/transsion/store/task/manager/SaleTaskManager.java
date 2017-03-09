@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
-
-import org.apache.poi.ss.formula.functions.Mode;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +15,7 @@ import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Currency;
 import com.transsion.store.bo.GoalModel;
+import com.transsion.store.bo.GoalPromoter;
 import com.transsion.store.bo.GoalSupervisor;
 import com.transsion.store.bo.Model;
 import com.transsion.store.bo.Region;
@@ -28,6 +27,7 @@ import com.transsion.store.bo.TaskDetail;
 import com.transsion.store.dto.SaleTaskDto;
 import com.transsion.store.dto.ScanValidateDto;
 import com.transsion.store.dto.TaskGoalModelDto;
+import com.transsion.store.dto.TaskGoalPromoterDto;
 import com.transsion.store.dto.TaskGoalSupervisorDto;
 import com.transsion.store.dto.TaskSaleDto;
 import com.transsion.store.dto.UserDto;
@@ -35,6 +35,7 @@ import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.manager.ScanValidateManager;
 import com.transsion.store.mapper.CurrencyMapper;
 import com.transsion.store.mapper.GoalModelMapper;
+import com.transsion.store.mapper.GoalPromoterMapper;
 import com.transsion.store.mapper.GoalSupervisorMapper;
 import com.transsion.store.mapper.ModelMapper;
 import com.transsion.store.mapper.RegionMapper;
@@ -91,6 +92,9 @@ public class SaleTaskManager {
 	
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private GoalPromoterMapper goalPromoterMapper;
 
 	/**
 	 * excel解析 转成实体
@@ -117,6 +121,8 @@ public class SaleTaskManager {
 				arrayConverGoalSupervisorDto(task,dataArr);
 			}else if(task.getTaskType().equals(Type.TASK_GOAL_MODEL_IMPORT.getDesc())){
 				arrayConverGoalModelDto(task,dataArr);
+			}else if(task.getTaskType().equals(Type.TASK_GOAL_PROMOTER_IMPORT.getDesc())){
+				arrayConverGoalPromoterDto(task,dataArr);
 			}
 
 		} catch (Exception e) {
@@ -124,6 +130,7 @@ public class SaleTaskManager {
 		}
 
 	}
+
 
 	/**
 	 * 批量上传销量
@@ -333,6 +340,56 @@ public class SaleTaskManager {
 					}	
 				}
 				String context = taskGoalSupervisorDto.getContext();
+				Long taskId = task.getId();
+				this.saveTaskDetail(taskId,context,taskDetail);
+			}
+		}
+	}
+	
+	private void arrayConverGoalPromoterDto(Task task, String[][] dataArr) throws ServiceException {
+		TaskDetail taskDetail = new TaskDetail();
+		List<Map<String, Object>> list = TaskUtil.formatArr(dataArr,TaskGoalPromoterDto.IMPORT_HEADERS);
+		if (UtilHelper.isEmpty(list)) {
+			throw new ServiceException(ExceptionDef.ERROR_TASK_FILE_FORMATERROR.getName());
+		} else {
+			for (Map<String, Object> map : list) {
+				TaskGoalPromoterDto taskGoalPromoterDto = new TaskGoalPromoterDto();
+				taskGoalPromoterDto.copyFormMap(map);
+				boolean flag = validate(map, taskDetail);
+				if(flag){
+					UserDto user = userMapper.findByName(taskGoalPromoterDto.getUserCode());
+					if (UtilHelper.isEmpty(user)) {
+						taskDetail.setMessage("User is null");
+						taskDetail.setStatus(2);
+					}
+					Shop shop = shopMapper.findShopId(taskGoalPromoterDto.getShopCode());
+					if (UtilHelper.isEmpty(shop)){
+						taskDetail.setMessage("Shop is null");
+						taskDetail.setStatus(2);
+					}
+					if (!UtilHelper.isEmpty(shop) && !UtilHelper.isEmpty(user) 
+									&& !UtilHelper.isEmpty(user.getCompanyId())){
+						taskGoalPromoterDto.setCompanyId(user.getCompanyId());
+						taskGoalPromoterDto.setUserId(user.getId());
+						taskGoalPromoterDto.setShopId(shop.getId());
+						//TODO:创建人  更新人
+						GoalPromoter goalPromoter = new GoalPromoter();
+						goalPromoter.setGoalMonth(taskGoalPromoterDto.getGoalMonth());
+						goalPromoter.setShopId(taskGoalPromoterDto.getShopId());
+						List<GoalPromoter> goalPromoterList = goalPromoterMapper.listByProperty(goalPromoter);		
+						BeanUtils.copyProperties(taskGoalPromoterDto, goalPromoter);
+						goalPromoter.setSaleTarget(Long.parseLong(taskGoalPromoterDto.getSaleTarget()));
+						if(!UtilHelper.isEmpty(goalPromoterList)){
+							goalPromoter.setId(goalPromoterList.get(0).getId());
+							goalPromoterMapper.update(goalPromoter);
+						}else{
+							goalPromoterMapper.save(goalPromoter);
+						}
+						taskDetail.setMessage("ok");
+						taskDetail.setStatus(1);
+					}	
+				}
+				String context = taskGoalPromoterDto.getContext();
 				Long taskId = task.getId();
 				this.saveTaskDetail(taskId,context,taskDetail);
 			}

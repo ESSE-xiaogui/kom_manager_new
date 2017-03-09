@@ -24,13 +24,17 @@ import org.springframework.stereotype.Component;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.GoalPromoter;
+import com.transsion.store.dto.GoalPromoterInfoDto;
 import com.transsion.store.facade.GoalPromoterFacade;
+import com.transsion.store.manager.GoalPromoterManager;
 import com.transsion.store.service.GoalPromoterService;
 
 @Component("goalPromoterFacade")
 public class GoalPromoterFacadeImpl implements GoalPromoterFacade {
 
 	private GoalPromoterService goalPromoterService;
+	@Autowired
+	private GoalPromoterManager goalPromoterManager;
 	
 	@Autowired
 	public void setGoalPromoterService(GoalPromoterService goalPromoterService)
@@ -75,10 +79,10 @@ public class GoalPromoterFacadeImpl implements GoalPromoterFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<GoalPromoter> listPaginationByProperty(Pagination<GoalPromoter> pagination, GoalPromoter goalPromoter)
+	public Pagination<GoalPromoterInfoDto> listPaginationByProperty(Pagination<GoalPromoterInfoDto> pagination, GoalPromoterInfoDto goalPromoterInfoDto,String token)
 			throws ServiceException
 	{
-		return goalPromoterService.listPaginationByProperty(pagination, goalPromoter);
+		return goalPromoterService.listPaginationByProperty(pagination, goalPromoterInfoDto,token);
 	}
 
 	/**
@@ -144,5 +148,10 @@ public class GoalPromoterFacadeImpl implements GoalPromoterFacade {
 	public int findByCount(GoalPromoter goalPromoter) throws ServiceException
 	{
 		return goalPromoterService.findByCount(goalPromoter);
+	}
+
+	@Override
+	public byte[] getGoalPromoterByExcel(GoalPromoterInfoDto goalPromoterInfoDto) throws ServiceException {
+		return goalPromoterManager.getGoalPromoterByExcel(goalPromoterInfoDto);
 	}
 }

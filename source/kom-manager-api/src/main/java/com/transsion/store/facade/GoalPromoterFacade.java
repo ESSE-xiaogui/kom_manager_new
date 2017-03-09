@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.GoalPromoter;
+import com.transsion.store.dto.GoalPromoterInfoDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -96,10 +97,13 @@ public interface GoalPromoterFacade {
 	
 	/**
 	 * 根据查询条件查询分页记录
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<GoalPromoter> listPaginationByProperty(Pagination<GoalPromoter> pagination, GoalPromoter goalPromoter)
+	public Pagination<GoalPromoterInfoDto> listPaginationByProperty(Pagination<GoalPromoterInfoDto> pagination, GoalPromoterInfoDto goalPromoterInfoDto, String token)
 			throws ServiceException;
+
+	public byte[] getGoalPromoterByExcel(GoalPromoterInfoDto goalPromoterInfoDto)throws ServiceException;
 
 }
