@@ -26,6 +26,8 @@ import com.transsion.store.dto.ShopDetailDto;
 import com.transsion.store.dto.ShopExtensionDto;
 import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.ShopLoginDto;
+import com.transsion.store.dto.ShopParamDto;
+import com.transsion.store.dto.ShopResponseDto;
 import com.transsion.store.dto.ShopUploadDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.transsion.store.dto.UserDto;
@@ -33,8 +35,10 @@ import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.MaterielMapper;
 import com.transsion.store.mapper.RegionMapper;
 import com.transsion.store.mapper.ShopBizMapper;
+import com.transsion.store.mapper.ShopExtensionMapper;
 import com.transsion.store.mapper.ShopGradeMapper;
 import com.transsion.store.mapper.ShopMapper;
+import com.transsion.store.mapper.ShopMaterielMapper;
 import com.transsion.store.mapper.UserMapper;
 import com.transsion.store.mapper.UserShopMapper;
 import com.transsion.store.service.AttributeService;
@@ -82,6 +86,12 @@ public class ShopManager {
 	
 	@Autowired
 	private SystemDateService systemDateService;
+	
+	@Autowired
+	private ShopExtensionMapper shopExtensionMapper;
+	
+	@Autowired
+	private ShopMaterielMapper shopMaterielMapper;
  
 	/**
 	 * 用户已绑定的店铺
@@ -547,5 +557,102 @@ public class ShopManager {
 		}
 		String title = "门店报表";
 		return ExcelUtils.exportExcel(title, headers, dataset);
+	}
+	
+	public ShopResponseDto saveShop(String token,ShopParamDto shopParamDto) throws ServiceException{
+		if (UtilHelper.isEmpty(token)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		if(UtilHelper.isEmpty(shopParamDto)){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getCompanyId()) 
+						|| UtilHelper.isEmpty(userContext.getUserCode())){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		ShopResponseDto shopDto = new ShopResponseDto();
+		/**
+		 * 1、缓存中是否有存在店铺名称重复数据
+		 * */
+		if(CacheUtils.getSupporter().exists(shopParamDto.getShopName())){
+			shopDto.setId(shopParamDto.getId());
+			shopDto.setShopName(shopParamDto.getShopName());
+			shopDto.setDay(systemDateService.getCurrentDate());
+			shopDto.setStatus(3);
+		}
+		/**
+		 * 2、查询数据库中是否存在此店铺名称
+		 * */
+		Shop shops = new Shop();
+		shops.setShopName(shopParamDto.getShopName());
+		int shopNameCount = shopMapper.findByCount(shops);
+		if(shopNameCount>0){
+			shopDto.setId(shopParamDto.getId());
+			shopDto.setShopName(shopParamDto.getShopName());
+			shopDto.setDay(systemDateService.getCurrentDate());
+			shopDto.setStatus(2);
+		}else{
+			/**
+			 * 3、保存数据。
+			 * */
+		//1.保存店铺主表
+		Shop shop = new Shop();
+		shop.setShopCode("1");
+		shop.setShopName(shopParamDto.getShopName());
+		shop.setCompanyId(userContext.getCompanyId().intValue());
+		shop.setCountry(shopParamDto.getCountry().intValue());
+		shop.setParentId(shopParamDto.getCountry());
+		shop.setRegionId(shopParamDto.getCity());
+		shop.setCity(shopParamDto.getCity().intValue());
+		shop.setShopIcon("");
+		shop.setAddress(shopParamDto.getAddress());
+		shop.setGradeId(shopParamDto.getGradeId());
+		shop.setBizId(shopParamDto.getBizId());		
+		shop.setOwnerName(shopParamDto.getOwnerName());
+		shop.setOwnerPhone(shopParamDto.getOwnerPhone());
+		shop.setPurchasChannel("");
+		shop.setOpenDate(systemDateService.getCurrentDate());
+		//申请中
+		shop.setStatus(2);
+		shop.setIsInactive(1);
+		shop.setRemark(shopParamDto.getRemark());
+		shop.setCreateBy(userContext.getUserCode());
+		shop.setCreateDate(systemDateService.getCurrentDate());
+		shop.setUpdateBy(userContext.getUserCode());
+		shop.setUpdateDate(systemDateService.getCurrentDate());
+		shopMapper.save(shop);
+		
+		//2.保存店铺扩展信息
+		ShopExtension shopExtension = new ShopExtension();
+		shopExtension.setShopId(shop.getId());
+		shopExtension.setBrandOne(shopParamDto.getBrandsFirst());
+		shopExtension.setBrandTwo(shopParamDto.getBrandsTwo());
+		shopExtension.setBrandThree(shopParamDto.getBrandsThree());
+		
+		//促销员
+		shopExtension.setPromoter(shopParamDto.getItelPromoter());
+		//督导
+		shopExtension.setSupervisor(shopParamDto.getShopAssistant());
+		//总销售量
+		shopExtension.setSaleTotalQty(new Long(shopParamDto.getTotalnum()));
+		//itel 当前销售数量
+		shopExtension.setSaleBrandspQty(new Long(shopParamDto.getCurrentnum()));
+		
+		shopExtensionMapper.save(shopExtension);
+		
+		//3.保存物料信息
+		ShopMateriel sm = new ShopMateriel();
+		sm.setMaterielId(shopParamDto.getMaterielId());
+		sm.setShopId(shop.getId());
+		sm.setMaterielQty(1);
+		shopMaterielMapper.save(sm);
+		
+		shopDto.setId(shopParamDto.getId());
+		shopDto.setShopName(shopDto.getShopName());
+		shopDto.setDay(systemDateService.getCurrentDate());
+		shopDto.setStatus(1);
+		}
+		return shopDto;
 	}
 }

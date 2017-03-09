@@ -22,6 +22,8 @@ import com.transsion.store.dto.ShopDefinitionDto;
 import com.transsion.store.dto.ShopDetailDto;
 import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.ShopLoginDto;
+import com.transsion.store.dto.ShopParamDto;
+import com.transsion.store.dto.ShopResponseDto;
 import com.transsion.store.dto.ShopUploadDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.shangkang.core.dto.RequestModel;
@@ -336,4 +338,18 @@ public class ShopController extends AbstractController {
             this.inputStream = inputStream;
         }
     }
+	
+	/**
+	 * itel app 新建门店
+	 * @author guihua.zhang
+	 * @throws ServiceException
+	 * */
+	@POST
+	@Path("/saveShop")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON })
+	public ShopResponseDto saveShop(ShopParamDto shopParamDto) throws ServiceException{
+		String token = this.getAuthorization();
+		return shopFacade.saveShop(token,shopParamDto);
+	}
 }
