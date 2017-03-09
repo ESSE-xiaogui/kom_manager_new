@@ -26,6 +26,7 @@ import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.transsion.store.bo.Prototype;
 import com.transsion.store.dto.PrototypeDto;
+import com.transsion.store.dto.PrototypeSettingDto;
 
 public interface PrototypeMapper extends GenericIBatisMapper<Prototype, java.lang.Long> {
 
@@ -34,4 +35,6 @@ public interface PrototypeMapper extends GenericIBatisMapper<Prototype, java.lan
     public PrototypeDto getPrototypeDtoById(Long id);
     
     public int checkImeiOnly(@Param("prototype")Prototype prototype);
+    
+    public List<Prototype> listByPrototypeSettingDto(@Param("prototypeSettingDto")PrototypeSettingDto prototypeSettingDto);
 }

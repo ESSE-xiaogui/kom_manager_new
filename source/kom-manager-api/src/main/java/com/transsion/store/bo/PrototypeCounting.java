@@ -68,7 +68,7 @@ public class PrototypeCounting extends Model{
 	/**
 	  *	
 	  */
-	private java.lang.String coutingBy;
+	private java.lang.String countingBy;
 
 	/**
 	  *	
@@ -236,17 +236,17 @@ public class PrototypeCounting extends Model{
 	/**
 	  *	
 	  */
-	public java.lang.String getCoutingBy() 
+	public java.lang.String getCountingBy() 
 	{
-		return coutingBy;
+		return countingBy;
 	}
 	
 	/**
 	  *	
 	  */
-	public void setCoutingBy(java.lang.String coutingBy) 
+	public void setCountingBy(java.lang.String countingBy) 
 	{
-		this.coutingBy = coutingBy;
+		this.countingBy = countingBy;
 	}
 	
 	/**
@@ -372,7 +372,7 @@ public class PrototypeCounting extends Model{
 					", imgShopUrl=" + imgShopUrl + 
 					", imgImeiUrl=" + imgImeiUrl + 
 					", status=" + status + 
-					", coutingBy=" + coutingBy + 
+					", countingBy=" + countingBy + 
 					", countingTime=" + countingTime + 
 					", remark=" + remark + 
 					", createBy=" + createBy + 

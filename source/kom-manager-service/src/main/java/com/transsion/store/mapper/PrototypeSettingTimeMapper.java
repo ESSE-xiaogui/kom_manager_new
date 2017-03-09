@@ -28,4 +28,6 @@ import org.apache.ibatis.annotations.Param;
 public interface PrototypeSettingTimeMapper extends GenericIBatisMapper<PrototypeSettingTime, java.lang.Long> {
 
     public List<PrototypeSettingTime> listPaginationByProperty(Pagination<PrototypeSettingTime> pagination, @Param("prototypeSettingTime")PrototypeSettingTime prototypeSettingTime, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    
+    public List<PrototypeSettingTime> listByProperty(@Param("prototypeSettingTime")PrototypeSettingTime prototypeSettingTime) throws DataAccessFailureException;
 }

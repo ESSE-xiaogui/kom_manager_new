@@ -120,14 +120,13 @@ public class PrototypeCountingFacadeImpl implements PrototypeCountingFacade {
 
 	/**
 	 * 保存记录
-	 * @param prototypeCounting
 	 * @param token
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(PrototypeCounting prototypeCounting, String token) throws ServiceException
+	public void save(String token) throws ServiceException
 	{
-		prototypeCountingManager.savePrototypeCounting(prototypeCounting, token);
+		prototypeCountingManager.savePrototypeCounting(token);
 	}
 
 	/**

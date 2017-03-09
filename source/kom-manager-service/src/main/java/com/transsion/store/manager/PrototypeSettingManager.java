@@ -18,7 +18,6 @@ import com.transsion.store.bo.PrototypeSettingModel;
 import com.transsion.store.bo.PrototypeSettingRegion;
 import com.transsion.store.bo.PrototypeSettingTime;
 import com.transsion.store.context.UserContext;
-import com.transsion.store.dto.PrototypeDto;
 import com.transsion.store.dto.PrototypeSettingDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.PrototypeSettingMapper;
@@ -286,7 +285,7 @@ public class PrototypeSettingManager {
 		
         // 启用状态且当前日期上一个月时间小于计划日期，说明当前日期与计划日期同月或之前，则不能修改，抛出异常
 		if (countDatesStrs != null && countDatesStrs.length > 0 && 
-				"1".equals(prototypeSettingTemp.getIsInactive()) && calendar.getTime().getTime() < date.getTime()) {
+				prototypeSettingTemp.getIsInactive() == 1 && calendar.getTime().getTime() < date.getTime()) {
 			throw new ServiceException(ExceptionDef.ERROR_PROTOTYPESETTING_DATE_INVALID.getName());
 		}
 		
@@ -359,6 +358,54 @@ public class PrototypeSettingManager {
 				prototypeSettingTimeMapper.save(prototypeSettingTime);
 			}
 		}
+	}
+	
+	/**
+	 * 根据当前日期，盘点日期设置获取要盘点的所有样机盘点参数设置
+	 * @param curDate
+	 * @return
+	 */
+	public List<PrototypeSettingDto> getPrototypeSettingDtosByCurDate(Date curDate) throws ServiceException {
+		
+		PrototypeSetting prototypeSettingExp = new PrototypeSetting();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM"); // 设置时间格式
+		String curDateStr = sdf.format(curDate);
+		
+		prototypeSettingExp.setEffectiveMonth(curDateStr);
+		prototypeSettingExp.setIsInactive(1); 	// 启用
+		
+		List<PrototypeSetting> prototypeSettings = prototypeSettingMapper.listByProperty(prototypeSettingExp);
+		
+		PrototypeSettingModel prototypeSettingModelExp = new PrototypeSettingModel();
+		PrototypeSettingRegion prototypeSettingRegionExp = new PrototypeSettingRegion();
+		PrototypeSettingTime prototypeSettingTimeExp = new PrototypeSettingTime();
+
+		PrototypeSettingDto prototypeSettingDto = new PrototypeSettingDto();
+		List<PrototypeSettingDto> prototypeSettingDtos = new ArrayList<PrototypeSettingDto>();
+		
+		if (prototypeSettings != null && !prototypeSettings.isEmpty()) {
+			
+			for (PrototypeSetting prototypeSetting : prototypeSettings) {
+				
+				prototypeSettingDto.setCompanyId(prototypeSetting.getCompanyId());
+				prototypeSettingDto.setId(prototypeSetting.getId());
+				
+				prototypeSettingModelExp.setSettingId(prototypeSetting.getId());
+				prototypeSettingRegionExp.setSettingId(prototypeSetting.getId());
+				
+				List<PrototypeSettingModel> prototypeSettingModels = prototypeSettingModelMapper.listByProperty(prototypeSettingModelExp);
+				List<PrototypeSettingRegion> prototypeSettingRegions = prototypeSettingRegionMapper.listByProperty(prototypeSettingRegionExp);
+				List<PrototypeSettingTime> prototypeSettingTimes = prototypeSettingTimeMapper.listByProperty(prototypeSettingTimeExp);
+				
+				prototypeSettingDto.setPrototypeSettingModels(prototypeSettingModels);
+				prototypeSettingDto.setPrototypeSettingRegions(prototypeSettingRegions);
+				prototypeSettingDto.setPrototypeSettingTimes(prototypeSettingTimes);
+				
+				prototypeSettingDtos.add(prototypeSettingDto);
+			}
+		}
+
+		return prototypeSettingDtos;
 	}
 	
 	/**

@@ -63,29 +63,29 @@
 	</sql>
 	
 	<sql id="commonCondition">
-		<if test="id!= null and id!= ''"> 
-			AND ID=#{id}
+		<if test="prototypeSettingTime.id!= null and prototypeSettingTime.id!= ''"> 
+			AND ID=#{prototypeSettingTime.id}
 		</if>
-		<if test="settingId!= null and settingId!= ''"> 
-			AND SETTING_ID=#{settingId}
+		<if test="prototypeSettingTime.settingId!= null and prototypeSettingTime.settingId!= ''"> 
+			AND SETTING_ID=#{prototypeSettingTime.settingId}
 		</if>
-		<if test="countDate!= null and countDate!= ''"> 
-			AND COUNT_DATE=str_to_date(#{countDate},'%Y-%m-%d %H:%i:%s')
+		<if test="prototypeSettingTime.countDate!= null and prototypeSettingTime.countDate!= ''"> 
+			AND COUNT_DATE=str_to_date(#{prototypeSettingTime.countDate},'%Y-%m-%d %H:%i:%s')
 		</if>
-		<if test="createBy!= null and createBy!= ''"> 
-			AND CREATE_BY=#{createBy}
+		<if test="prototypeSettingTime.createBy!= null and prototypeSettingTime.createBy!= ''"> 
+			AND CREATE_BY=#{prototypeSettingTime.createBy}
 		</if>
-		<if test="createTime!= null and createTime!= ''"> 
-			AND CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+		<if test="prototypeSettingTime.createTime!= null and prototypeSettingTime.createTime!= ''"> 
+			AND CREATE_TIME=str_to_date(#{prototypeSettingTime.createTime},'%Y-%m-%d %H:%i:%s')
 		</if>
-		<if test="updateBy!= null and updateBy!= ''"> 
-			AND UPDATE_BY=#{updateBy}
+		<if test="prototypeSettingTime.updateBy!= null and prototypeSettingTime.updateBy!= ''"> 
+			AND UPDATE_BY=#{prototypeSettingTime.updateBy}
 		</if>
-		<if test="updateTime!= null and updateTime!= ''"> 
-			AND UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		<if test="prototypeSettingTime.updateTime!= null and prototypeSettingTime.updateTime!= ''"> 
+			AND UPDATE_TIME=str_to_date(#{prototypeSettingTime.updateTime},'%Y-%m-%d %H:%i:%s')
 		</if>
-		<if test="version!= null and version!= ''"> 
-			AND VERSION=#{version}
+		<if test="prototypeSettingTime.version!= null and prototypeSettingTime.version!= ''"> 
+			AND VERSION=#{prototypeSettingTime.version}
 		</if>
 	</sql>
 

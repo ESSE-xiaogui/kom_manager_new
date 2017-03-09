@@ -1,5 +1,6 @@
 package com.transsion.store.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,12 @@ import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Brand;
 import com.transsion.store.bo.Model;
 import com.transsion.store.bo.Prototype;
+import com.transsion.store.bo.PrototypeSettingModel;
+import com.transsion.store.bo.PrototypeSettingRegion;
 import com.transsion.store.bo.Tac;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.PrototypeDto;
+import com.transsion.store.dto.PrototypeSettingDto;
 import com.transsion.store.dto.ScanValidateDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.BrandMapper;
@@ -213,5 +217,45 @@ public class PrototypeManager {
 		}
 		
 		return prototypeMapper.update(prototype);
+	}
+	
+	/**
+	 * 根据盘点参数获取要盘点的样机
+	 * @param prototypeSettingDto
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<Prototype> getPrototypesByPrototypeSettings(List<PrototypeSettingDto> prototypeSettingDtos) throws ServiceException {
+		
+		List<Prototype> prototypes = new ArrayList<Prototype>();
+		
+		// 每个月只能新增一条prototypeSettingDto. 所以取get(0)
+		if (prototypeSettingDtos != null && !prototypeSettingDtos.isEmpty()) {
+			PrototypeSettingDto prototypeSettingDto = prototypeSettingDtos.get(0);
+			
+			if (prototypeSettingDto != null && prototypeSettingDto.getPrototypeSettingModels() != null) {
+				Long modelId = 0L;
+				List<Long> modelIds = new ArrayList<Long>();
+				for (PrototypeSettingModel prototypeSettingModel : prototypeSettingDto.getPrototypeSettingModels()) {
+					modelId = prototypeSettingModel.getModelId();
+					modelIds.add(modelId);
+				}
+				prototypeSettingDto.setModelIds(modelIds);
+			}
+			
+			if (prototypeSettingDto != null && prototypeSettingDto.getPrototypeSettingRegions() != null) {
+				Long regionId = 0L;
+				List<Long> regionIds = new ArrayList<Long>();
+				for (PrototypeSettingRegion prototypeSettingRegion : prototypeSettingDto.getPrototypeSettingRegions()) {
+					regionId = prototypeSettingRegion.getRegionId();
+					regionIds.add(regionId);
+				}
+				prototypeSettingDto.setRegionIds(regionIds);
+			}
+			
+			prototypes = prototypeMapper.listByPrototypeSettingDto(prototypeSettingDto);
+		}
+		
+		return prototypes;
 	}
 }
