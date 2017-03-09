@@ -230,8 +230,11 @@ public class ShopFacadeImpl implements ShopFacade {
 	public ShopResponseDto saveShop(String token,ShopParamDto shopParamDto) throws ServiceException{
 		return shopManager.saveShop(token, shopParamDto);
 	}
-	public List<ShopResponseInfoDto> findShopDetail(String token) throws ServiceException{
-		return shopManager.findShopDetail(token);
+	public List<ShopResponseInfoDto> findShopList(String token) throws ServiceException{
+		return shopManager.findShopList(token);
+	}
+	public ShopParamDto findShopDetails(String token,ShopParamDto shopParamDto) throws ServiceException{
+		return shopManager.findShopDetails(token, shopParamDto);
 	}
 }
 

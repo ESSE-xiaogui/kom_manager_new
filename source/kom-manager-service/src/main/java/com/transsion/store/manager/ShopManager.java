@@ -657,7 +657,7 @@ public class ShopManager {
 		return shopDto;
 	}
 	
-	public List<ShopResponseInfoDto> findShopDetail(String token) throws ServiceException{
+	public List<ShopResponseInfoDto> findShopList(String token) throws ServiceException{
 		if (UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
@@ -667,6 +667,20 @@ public class ShopManager {
 						|| UtilHelper.isEmpty(userContext.getUser().getId())){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
-		return shopMapper.findShopDetail(userContext.getUser().getId());
+		return shopMapper.findShopList(userContext.getUser().getId());
+	}
+	public ShopParamDto findShopDetails(String token,ShopParamDto shopParamDto) throws ServiceException{
+		if (UtilHelper.isEmpty(token)){			
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		if(UtilHelper.isEmpty(shopParamDto) || UtilHelper.isEmpty(shopParamDto.getId())){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUser()) 
+						|| UtilHelper.isEmpty(userContext.getUser().getId())){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		 return shopMapper.findShopByParam(shopParamDto.getId(),new Long(userContext.getUser().getId()));
 	}
 }

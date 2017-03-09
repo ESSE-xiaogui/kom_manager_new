@@ -361,10 +361,25 @@ public class ShopController extends AbstractController {
 	 * @throws ServiceException
 	 * */
 	@GET
-	@Path("/findShopDetail")
+	@Path("/findShopList")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public List<ShopResponseInfoDto> findShopDetail() throws ServiceException{
+	public List<ShopResponseInfoDto> findShopList() throws ServiceException{
 		String token = this.getAuthorization();
-		return shopFacade.findShopDetail(token);
+		return shopFacade.findShopList(token);
+	}
+	
+	/**
+	 * itel app 查询门店详情
+	 * @author guihua.zhang
+	 * @return
+	 * @throws ServiceException
+	 * */
+	@POST
+	@Path("/findShopDetails")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON })
+	public ShopParamDto findShopDetails(ShopParamDto shopParamDto) throws ServiceException{
+		String token = this.getAuthorization();
+		return shopFacade.findShopDetails(token,shopParamDto);
 	}
 }

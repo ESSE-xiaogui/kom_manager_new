@@ -176,5 +176,6 @@ public interface ShopFacade {
 	public List<ShopLoginDto> findShopListByUser(String token)throws ServiceException;
 	
 	public ShopResponseDto saveShop(String token,ShopParamDto shopParamDto) throws ServiceException;
-	public List<ShopResponseInfoDto> findShopDetail(String token) throws ServiceException;
+	public List<ShopResponseInfoDto> findShopList(String token) throws ServiceException;
+	public ShopParamDto findShopDetails(String token,ShopParamDto shopParamDto) throws ServiceException;
 }
