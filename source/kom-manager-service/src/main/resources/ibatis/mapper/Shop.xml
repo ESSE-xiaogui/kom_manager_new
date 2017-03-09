@@ -139,6 +139,17 @@
 		<result column="GRADE_NAME" property="gradeName" />
 	</resultMap>
 	
+	<resultMap id="ShopResponseInfoDtoMapper" type="ShopResponseInfoDto">
+		<result column="ID" property="Id"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="OPEN_DATE" property="shopDate"/>
+		<result column="COUNTRY" property="country"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY" property="city"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="ADDRESS" property="address"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, SHOP_ID
@@ -1078,5 +1089,16 @@
 		WHERE 1=1
 		AND p.IS_INACTIVE = 1 
 		AND up.USER_ID = #{userId}
+	</select>
+	<select id="findShopDetail" parameterType="java.lang.Long" resultMap="ShopResponseInfoDtoMapper">
+	SELECT
+		p.ID,p.SHOP_NAME,p.OPEN_DATE,p.PARENT_ID AS COUNTRY,c.REGION_NAME AS
+		COUNTRY_NAME,p.REGION_ID AS CITY,r.REGION_NAME AS CITY_NAME,p.ADDRESS
+		FROM T_SHOP p
+		LEFT JOIN T_USER_SHOP up ON up.SHOP_ID = p.ID
+		LEFT JOIN T_REGION r ON r.ID = p.REGION_ID
+		LEFT JOIN T_REGION c ON c.ID = r.PARENT_ID
+		WHERE up.USER_ID = #{userId} AND p.STATUS = 1
+		ORDER BY p.OPEN_DATE DESC
 	</select>
 </mapper>

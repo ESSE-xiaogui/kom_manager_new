@@ -24,6 +24,7 @@ import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.ShopLoginDto;
 import com.transsion.store.dto.ShopParamDto;
 import com.transsion.store.dto.ShopResponseDto;
+import com.transsion.store.dto.ShopResponseInfoDto;
 import com.transsion.store.dto.ShopUploadDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.shangkang.core.dto.RequestModel;
@@ -351,5 +352,19 @@ public class ShopController extends AbstractController {
 	public ShopResponseDto saveShop(ShopParamDto shopParamDto) throws ServiceException{
 		String token = this.getAuthorization();
 		return shopFacade.saveShop(token,shopParamDto);
+	}
+	
+	/**
+	 * itel app 查询门店
+	 * @return
+	 * @author guihua.zhang
+	 * @throws ServiceException
+	 * */
+	@GET
+	@Path("/findShopDetail")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<ShopResponseInfoDto> findShopDetail() throws ServiceException{
+		String token = this.getAuthorization();
+		return shopFacade.findShopDetail(token);
 	}
 }

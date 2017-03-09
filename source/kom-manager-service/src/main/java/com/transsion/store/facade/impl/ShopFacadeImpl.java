@@ -30,6 +30,7 @@ import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.ShopLoginDto;
 import com.transsion.store.dto.ShopParamDto;
 import com.transsion.store.dto.ShopResponseDto;
+import com.transsion.store.dto.ShopResponseInfoDto;
 import com.transsion.store.dto.ShopUploadDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.transsion.store.facade.ShopFacade;
@@ -228,6 +229,9 @@ public class ShopFacadeImpl implements ShopFacade {
 	
 	public ShopResponseDto saveShop(String token,ShopParamDto shopParamDto) throws ServiceException{
 		return shopManager.saveShop(token, shopParamDto);
+	}
+	public List<ShopResponseInfoDto> findShopDetail(String token) throws ServiceException{
+		return shopManager.findShopDetail(token);
 	}
 }
 

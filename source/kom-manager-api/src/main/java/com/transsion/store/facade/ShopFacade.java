@@ -27,6 +27,7 @@ import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.ShopLoginDto;
 import com.transsion.store.dto.ShopParamDto;
 import com.transsion.store.dto.ShopResponseDto;
+import com.transsion.store.dto.ShopResponseInfoDto;
 import com.transsion.store.dto.ShopUploadDto;
 import com.transsion.store.dto.ShopUserDto;
 
@@ -175,4 +176,5 @@ public interface ShopFacade {
 	public List<ShopLoginDto> findShopListByUser(String token)throws ServiceException;
 	
 	public ShopResponseDto saveShop(String token,ShopParamDto shopParamDto) throws ServiceException;
+	public List<ShopResponseInfoDto> findShopDetail(String token) throws ServiceException;
 }
