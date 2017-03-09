@@ -152,7 +152,7 @@ public class GoalPromoterController extends AbstractController{
 		byte[] bytes = goalPromoterFacade.getGoalPromoterByExcel(goalPromoterInfoDto);       
 		InputStream inputStream = new ByteArrayInputStream(bytes);          
 		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));          
-		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"巡店员销售目标设定报表.xlsx";
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"促销员销售目标设定报表.xlsx";
 		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));         
 		//根据自己文件类型修改         
 		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");          
