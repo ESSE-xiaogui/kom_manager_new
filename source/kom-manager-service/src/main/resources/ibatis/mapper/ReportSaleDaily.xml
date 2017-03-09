@@ -23,6 +23,10 @@
 		<result column="REPORT_SALE_DAILY_ID" property="reportSaleDailyId"/>
 		<result column="COMPANY_ID" property="companyId"/>
 		<result column="SHOP_ID" property="shopId"/>
+		<result column="REGION_ID" property="regionId"/>
+		<result column="COUNTRY_ID" property="countryId"/>
+		<result column="CITY_ID" property="cityId"/>
+		<result column="GRADE_ID" property="gradeId"/>
 		<result column="SHOP_CODE" property="shopCode"/>
 		<result column="USER_CODE" property="userCode"/>
 		<result column="BRAND_CODE" property="brandCode"/>
@@ -31,7 +35,9 @@
 		<result column="WEEK" property="week"/>
 		<result column="COMPANY_NAME" property="companyName"/>
 		<result column="SHOP_NAME" property="shopName"/>
+		<result column="GRADE_NAME" property="gradeName"/>
 		<result column="EMP_NAME" property="empName"/>
+		<result column="REGION_NAME" property="regionName"/>
 		<result column="COUNTRY_NAME" property="countryName"/>
 		<result column="CITY_NAME" property="cityName"/>
 		<result column="SALE_QTY" property="saleQty"/>
@@ -72,6 +78,10 @@
 		 REPORT_SALE_DAILY_ID
 		, COMPANY_ID
 		, SHOP_ID
+		, REGION_ID
+		, COUNTRY_ID
+		, CITY_ID
+		, GRADE_ID
 		, SHOP_CODE
 		, USER_CODE
 		, BRAND_CODE
@@ -80,7 +90,9 @@
 		, WEEK
 		, COMPANY_NAME
 		, SHOP_NAME
+		, GRADE_NAME
 		, EMP_NAME
+		, REGION_NAME
 		, COUNTRY_NAME
 		, CITY_NAME
 		, SALE_QTY
@@ -94,6 +106,10 @@
 	<sql id="commonColumnsNotPK">
 		 COMPANY_ID
 		, SHOP_ID
+		, REGION_ID
+		, COUNTRY_ID
+		, CITY_ID
+		, GRADE_ID
 		, SHOP_CODE
 		, USER_CODE
 		, BRAND_CODE
@@ -102,7 +118,9 @@
 		, WEEK
 		, COMPANY_NAME
 		, SHOP_NAME
+		, GRADE_NAME
 		, EMP_NAME
+		, REGION_NAME
 		, COUNTRY_NAME
 		, CITY_NAME
 		, SALE_QTY
@@ -117,6 +135,10 @@
 		 REPORT_SALE_DAILY_ID
 		, COMPANY_ID
 		, SHOP_ID
+		, REGION_ID
+		, COUNTRY_ID
+		, CITY_ID
+		, GRADE_ID
 		, SHOP_CODE
 		, USER_CODE
 		, BRAND_CODE
@@ -125,7 +147,9 @@
 		, WEEK
 		, COMPANY_NAME
 		, SHOP_NAME
+		, GRADE_NAME
 		, EMP_NAME
+		, REGION_NAME
 		, COUNTRY_NAME
 		, CITY_NAME
 		, SALE_QTY
@@ -170,6 +194,18 @@
 		<if test="shopId!= null and shopId!= ''"> 
 			AND SHOP_ID = #{shopId}
 		</if>
+		<if test="regionId!= null and regionId!= ''"> 
+			AND REGION_ID = #{regionId}
+		</if>
+		<if test="countryId!= null and countryId!= ''"> 
+			AND COUNTRY_ID = #{countryId}
+		</if>
+		<if test="cityId!= null and cityId!= ''"> 
+			AND CITY_ID = #{cityId}
+		</if>
+		<if test="gradeId!= null and gradeId!= ''"> 
+			AND GRADE_ID = #{gradeId}
+		</if>
 		<if test="shopCode!= null and shopCode!= ''"> 
 			AND SHOP_CODE = #{shopCode}
 		</if>
@@ -194,8 +230,14 @@
 		<if test="shopName!= null and shopName!= ''"> 
 			AND SHOP_NAME = #{shopName}
 		</if>
+		<if test="gradeName!= null and gradeName!= ''"> 
+			AND GRADE_NAME = #{gradeName}
+		</if>
 		<if test="empName!= null and empName!= ''"> 
 			AND EMP_NAME = #{empName}
+		</if>
+		<if test="regionName!= null and regionName!= ''"> 
+			AND REGION_NAME = #{regionName}
 		</if>
 		<if test="countryName!= null and countryName!= ''"> 
 			AND COUNTRY_NAME = #{countryName}
@@ -325,6 +367,18 @@
         	<when test="key == 'shopId'">
 				SHOP_ID ${value}
             </when>
+        	<when test="key == 'regionId'">
+				REGION_ID ${value}
+            </when>
+        	<when test="key == 'countryId'">
+				COUNTRY_ID ${value}
+            </when>
+        	<when test="key == 'cityId'">
+				CITY_ID ${value}
+            </when>
+        	<when test="key == 'gradeId'">
+				GRADE_ID ${value}
+            </when>
         	<when test="key == 'shopCode'">
 				SHOP_CODE ${value}
             </when>
@@ -349,8 +403,14 @@
         	<when test="key == 'shopName'">
 				SHOP_NAME ${value}
             </when>
+        	<when test="key == 'gradeName'">
+				GRADE_NAME ${value}
+            </when>
         	<when test="key == 'empName'">
 				EMP_NAME ${value}
+            </when>
+        	<when test="key == 'regionName'">
+				REGION_NAME ${value}
             </when>
         	<when test="key == 'countryName'">
 				COUNTRY_NAME ${value}
@@ -386,6 +446,10 @@
 			) VALUES ( 
 			 #{companyId}
 			, #{shopId}
+			, #{regionId}
+			, #{countryId}
+			, #{cityId}
+			, #{gradeId}
 			, #{shopCode}
 			, #{userCode}
 			, #{brandCode}
@@ -394,7 +458,9 @@
 			, #{week}
 			, #{companyName}
 			, #{shopName}
+			, #{gradeName}
 			, #{empName}
+			, #{regionName}
 			, #{countryName}
 			, #{cityName}
 			, #{saleQty}
@@ -410,6 +476,10 @@
 			 REPORT_SALE_DAILY_ID = #{reportSaleDailyId}
 			, COMPANY_ID = #{companyId}
 			, SHOP_ID = #{shopId}
+			, REGION_ID = #{regionId}
+			, COUNTRY_ID = #{countryId}
+			, CITY_ID = #{cityId}
+			, GRADE_ID = #{gradeId}
 			, SHOP_CODE = #{shopCode}
 			, USER_CODE = #{userCode}
 			, BRAND_CODE = #{brandCode}
@@ -418,7 +488,9 @@
 			, WEEK = #{week}
 			, COMPANY_NAME = #{companyName}
 			, SHOP_NAME = #{shopName}
+			, GRADE_NAME = #{gradeName}
 			, EMP_NAME = #{empName}
+			, REGION_NAME = #{regionName}
 			, COUNTRY_NAME = #{countryName}
 			, CITY_NAME = #{cityName}
 			, SALE_QTY = #{saleQty}
@@ -437,6 +509,10 @@
 			 #{reportSaleDailyId}
 			, #{companyId}
 			, #{shopId}
+			, #{regionId}
+			, #{countryId}
+			, #{cityId}
+			, #{gradeId}
 			, #{shopCode}
 			, #{userCode}
 			, #{brandCode}
@@ -445,7 +521,9 @@
 			, #{week}
 			, #{companyName}
 			, #{shopName}
+			, #{gradeName}
 			, #{empName}
+			, #{regionName}
 			, #{countryName}
 			, #{cityName}
 			, #{saleQty}
@@ -458,6 +536,10 @@
 			 REPORT_SALE_DAILY_ID = VALUES(REPORT_SALE_DAILY_ID)
 			, COMPANY_ID = VALUES(COMPANY_ID)
 			, SHOP_ID = VALUES(SHOP_ID)
+			, REGION_ID = VALUES(REGION_ID)
+			, COUNTRY_ID = VALUES(COUNTRY_ID)
+			, CITY_ID = VALUES(CITY_ID)
+			, GRADE_ID = VALUES(GRADE_ID)
 			, SHOP_CODE = VALUES(SHOP_CODE)
 			, USER_CODE = VALUES(USER_CODE)
 			, BRAND_CODE = VALUES(BRAND_CODE)
@@ -466,7 +548,9 @@
 			, WEEK = VALUES(WEEK)
 			, COMPANY_NAME = VALUES(COMPANY_NAME)
 			, SHOP_NAME = VALUES(SHOP_NAME)
+			, GRADE_NAME = VALUES(GRADE_NAME)
 			, EMP_NAME = VALUES(EMP_NAME)
+			, REGION_NAME = VALUES(REGION_NAME)
 			, COUNTRY_NAME = VALUES(COUNTRY_NAME)
 			, CITY_NAME = VALUES(CITY_NAME)
 			, SALE_QTY = VALUES(SALE_QTY)
@@ -486,6 +570,10 @@
 			 #{item.reportSaleDailyId}
 			, #{item.companyId}
 			, #{item.shopId}
+			, #{item.regionId}
+			, #{item.countryId}
+			, #{item.cityId}
+			, #{item.gradeId}
 			, #{item.shopCode}
 			, #{item.userCode}
 			, #{item.brandCode}
@@ -494,7 +582,9 @@
 			, #{item.week}
 			, #{item.companyName}
 			, #{item.shopName}
+			, #{item.gradeName}
 			, #{item.empName}
+			, #{item.regionName}
 			, #{item.countryName}
 			, #{item.cityName}
 			, #{item.saleQty}
@@ -509,6 +599,10 @@
 		 REPORT_SALE_DAILY_ID = VALUES(REPORT_SALE_DAILY_ID)
 		, COMPANY_ID = VALUES(COMPANY_ID)
 		, SHOP_ID = VALUES(SHOP_ID)
+		, REGION_ID = VALUES(REGION_ID)
+		, COUNTRY_ID = VALUES(COUNTRY_ID)
+		, CITY_ID = VALUES(CITY_ID)
+		, GRADE_ID = VALUES(GRADE_ID)
 		, SHOP_CODE = VALUES(SHOP_CODE)
 		, USER_CODE = VALUES(USER_CODE)
 		, BRAND_CODE = VALUES(BRAND_CODE)
@@ -517,7 +611,9 @@
 		, WEEK = VALUES(WEEK)
 		, COMPANY_NAME = VALUES(COMPANY_NAME)
 		, SHOP_NAME = VALUES(SHOP_NAME)
+		, GRADE_NAME = VALUES(GRADE_NAME)
 		, EMP_NAME = VALUES(EMP_NAME)
+		, REGION_NAME = VALUES(REGION_NAME)
 		, COUNTRY_NAME = VALUES(COUNTRY_NAME)
 		, CITY_NAME = VALUES(CITY_NAME)
 		, SALE_QTY = VALUES(SALE_QTY)
@@ -592,8 +688,14 @@
 		sale.week WEEK,
 		tc.COMPANY_NAME,
 		ts.shop_name SHOP_NAME,
+		ts.COUNTRY COUNTRY_ID,
 		r1.REGION_NAME COUNTRY_NAME,
+		ts.CITY CITY_ID,
 		r2.REGION_NAME CITY_NAME,
+		ts.REGION_ID,
+		r2.REGION_NAME REGION_NAME,
+		ts.GRADE_ID,
+		sg.GRADE_NAME,
 		te.EMP_NAME,
 		sale.sale_qty SALE_QTY,
 		stock.stock_qty STOCK_QTY
@@ -644,5 +746,9 @@
 		T_REGION r1 ON r1.ID = ts.COUNTRY
 			LEFT JOIN
 		T_REGION r2 ON r2.ID = ts.CITY
+			LEFT JOIN
+		T_REGION r3 ON r3.ID = ts.REGION_ID
+			LEFT join
+		T_SHOP_GRADE sg on sg.id = ts.GRADE_ID
 	</select>
 </mapper>

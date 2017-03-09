@@ -41,6 +41,26 @@ public class ReportSaleDaily extends Model{
 	private java.lang.Long shopId;
 
 	/**
+	  *	
+	  */
+	private java.lang.Long regionId;
+
+	/**
+	  *	
+	  */
+	private java.lang.Long countryId;
+
+	/**
+	  *	
+	  */
+	private java.lang.Long cityId;
+
+	/**
+	  *	
+	  */
+	private java.lang.Long gradeId;
+
+	/**
 	  *	生成方式：国家简称加六位数的序号。
 	  */
 	private java.lang.String shopCode;
@@ -81,9 +101,19 @@ public class ReportSaleDaily extends Model{
 	private java.lang.String shopName;
 
 	/**
+	  *	店铺等级
+	  */
+	private java.lang.String gradeName;
+
+	/**
 	  *	
 	  */
 	private java.lang.String empName;
+
+	/**
+	  *	
+	  */
+	private java.lang.String regionName;
 
 	/**
 	  *	
@@ -171,6 +201,70 @@ public class ReportSaleDaily extends Model{
 	public void setShopId(java.lang.Long shopId) 
 	{
 		this.shopId = shopId;
+	}
+	
+	/**
+	  *	
+	  */
+	public java.lang.Long getRegionId() 
+	{
+		return regionId;
+	}
+	
+	/**
+	  *	
+	  */
+	public void setRegionId(java.lang.Long regionId) 
+	{
+		this.regionId = regionId;
+	}
+	
+	/**
+	  *	
+	  */
+	public java.lang.Long getCountryId() 
+	{
+		return countryId;
+	}
+	
+	/**
+	  *	
+	  */
+	public void setCountryId(java.lang.Long countryId) 
+	{
+		this.countryId = countryId;
+	}
+	
+	/**
+	  *	
+	  */
+	public java.lang.Long getCityId() 
+	{
+		return cityId;
+	}
+	
+	/**
+	  *	
+	  */
+	public void setCityId(java.lang.Long cityId) 
+	{
+		this.cityId = cityId;
+	}
+	
+	/**
+	  *	
+	  */
+	public java.lang.Long getGradeId() 
+	{
+		return gradeId;
+	}
+	
+	/**
+	  *	
+	  */
+	public void setGradeId(java.lang.Long gradeId) 
+	{
+		this.gradeId = gradeId;
 	}
 	
 	/**
@@ -302,6 +396,22 @@ public class ReportSaleDaily extends Model{
 	}
 	
 	/**
+	  *	店铺等级
+	  */
+	public java.lang.String getGradeName() 
+	{
+		return gradeName;
+	}
+	
+	/**
+	  *	店铺等级
+	  */
+	public void setGradeName(java.lang.String gradeName) 
+	{
+		this.gradeName = gradeName;
+	}
+	
+	/**
 	  *	
 	  */
 	public java.lang.String getEmpName() 
@@ -315,6 +425,22 @@ public class ReportSaleDaily extends Model{
 	public void setEmpName(java.lang.String empName) 
 	{
 		this.empName = empName;
+	}
+	
+	/**
+	  *	
+	  */
+	public java.lang.String getRegionName() 
+	{
+		return regionName;
+	}
+	
+	/**
+	  *	
+	  */
+	public void setRegionName(java.lang.String regionName) 
+	{
+		this.regionName = regionName;
 	}
 	
 	/**
@@ -451,6 +577,10 @@ public class ReportSaleDaily extends Model{
 					"reportSaleDailyId=" + reportSaleDailyId + 
 					", companyId=" + companyId + 
 					", shopId=" + shopId + 
+					", regionId=" + regionId + 
+					", countryId=" + countryId + 
+					", cityId=" + cityId + 
+					", gradeId=" + gradeId + 
 					", shopCode=" + shopCode + 
 					", userCode=" + userCode + 
 					", brandCode=" + brandCode + 
@@ -459,7 +589,9 @@ public class ReportSaleDaily extends Model{
 					", week=" + week + 
 					", companyName=" + companyName + 
 					", shopName=" + shopName + 
+					", gradeName=" + gradeName + 
 					", empName=" + empName + 
+					", regionName=" + regionName + 
 					", countryName=" + countryName + 
 					", cityName=" + cityName + 
 					", saleQty=" + saleQty + 
