@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.ShopDamage;
+import com.transsion.store.dto.ShopDamageDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.ShopDamageMapper;
@@ -74,10 +75,10 @@ public class ShopDamageService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<ShopDamage> listPaginationByProperty(Pagination<ShopDamage> pagination, ShopDamage shopDamage)
+	public Pagination<ShopDamageDto> listPaginationByProperty(Pagination<ShopDamageDto> pagination, ShopDamageDto shopDamageDto)
 			throws ServiceException
 	{
-		List<ShopDamage> list = shopDamageMapper.listPaginationByProperty(pagination, shopDamage, pagination.getOrderBy());
+		List<ShopDamageDto> list = shopDamageMapper.listPaginationByProperty(pagination, shopDamageDto, pagination.getOrderBy());
 		
 		pagination.setResultList(list);
 		
@@ -167,5 +168,9 @@ public class ShopDamageService {
 	public int findByCount(ShopDamage shopDamage) throws ServiceException
 	{
 		return shopDamageMapper.findByCount(shopDamage);
+	}
+	
+	public ShopDamageDto queryDetailById(Long damageId) throws ServiceException {
+		return shopDamageMapper.queryDetailById(damageId);
 	}
 }

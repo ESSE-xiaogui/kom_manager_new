@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.ShopDamage;
+import com.transsion.store.dto.ShopDamageDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.ShopDamageFacade;
@@ -75,10 +76,10 @@ public class ShopDamageFacadeImpl implements ShopDamageFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<ShopDamage> listPaginationByProperty(Pagination<ShopDamage> pagination, ShopDamage shopDamage)
+	public Pagination<ShopDamageDto> listPaginationByProperty(Pagination<ShopDamageDto> pagination, ShopDamageDto shopDamageDto)
 			throws ServiceException
 	{
-		return shopDamageService.listPaginationByProperty(pagination, shopDamage);
+		return shopDamageService.listPaginationByProperty(pagination, shopDamageDto);
 	}
 
 	/**
@@ -164,5 +165,10 @@ public class ShopDamageFacadeImpl implements ShopDamageFacade {
 	public int findByCount(ShopDamage shopDamage) throws ServiceException
 	{
 		return shopDamageService.findByCount(shopDamage);
+	}
+
+	@Override
+	public ShopDamageDto queryDetailById(Long damageId) throws ServiceException {
+		return shopDamageService.queryDetailById(damageId);
 	}
 }

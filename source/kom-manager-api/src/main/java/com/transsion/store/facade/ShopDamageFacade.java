@@ -18,9 +18,10 @@ package com.transsion.store.facade;
 
 import java.util.List;
 
-import com.transsion.store.bo.ShopDamage;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.transsion.store.bo.ShopDamage;
+import com.transsion.store.dto.ShopDamageDto;
 
 public interface ShopDamageFacade {
 
@@ -115,7 +116,8 @@ public interface ShopDamageFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<ShopDamage> listPaginationByProperty(Pagination<ShopDamage> pagination, ShopDamage shopDamage)
+	public Pagination<ShopDamageDto> listPaginationByProperty(Pagination<ShopDamageDto> pagination, ShopDamageDto shopDamageDto)
 			throws ServiceException;
-
+	
+	public ShopDamageDto queryDetailById(Long damageId) throws ServiceException;
 }

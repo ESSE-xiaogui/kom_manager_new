@@ -36,6 +36,25 @@
 		<result column="VERSION" property="version"/>
 	</resultMap>
 	
+	<resultMap id="ShopDamageDtoResultMapper" type="ShopDamageDto">
+		<result column="DAMAGE_ID" property="damageId"/>
+		<result column="COMPANY_NAME" property="companyName"/>
+		<result column="DAMAGE_TIME" property="damageTime"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="SHOP_CODE" property="shopCode"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="DUTY_NAME" property="dutyName"/>
+		<result column="NAME_CN" property="nameCn"/>
+		<result column="NAME_EN" property="nameEn"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="IMG_FIRST_URL" property="imgFirstUrl"/>
+		<result column="IMG_SECOND_URL" property="imgSecondUrl"/>
+		<result column="IMG_THIRD_URL" property="imgThirdUrl"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 DAMAGE_ID
 		, SHOP_ID
@@ -132,48 +151,42 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="shopDamage != null">
-            <if test="shopDamage.damageId!= null and shopDamage.damageId!= ''">
-				AND DAMAGE_ID = #{shopDamage.damageId}
+		<if test="shopDamageDto != null">
+			<if test="shopDamageDto.damageStartDate!= null and shopDamageDto.damageStartDate!= ''">
+				AND SUBSTRING(d.DAMAGE_TIME, 1, 10) &gt;= #{shopDamageDto.damageStartDate}
             </if>
-            <if test="shopDamage.shopId!= null and shopDamage.shopId!= ''">
-				AND SHOP_ID = #{shopDamage.shopId}
+            <if test="shopDamageDto.damageEndDate!= null and shopDamageDto.damageEndDate!= ''">
+				AND SUBSTRING(d.DAMAGE_TIME, 1, 10) &lt;= #{shopDamageDto.damageEndDate}
             </if>
-            <if test="shopDamage.materielId!= null and shopDamage.materielId!= ''">
-				AND MATERIEL_ID = #{shopDamage.materielId}
+            <if test="shopDamageDto.createStartDate!= null and shopDamageDto.createStartDate!= ''">
+				AND SUBSTRING(d.CREATE_TIME, 1, 10) &gt;= #{shopDamageDto.createStartDate}
             </if>
-            <if test="shopDamage.damageTime!= null and shopDamage.damageTime!= ''">
-				AND DAMAGE_TIME = str_to_date(#{shopDamage.damageTime},'%Y-%m-%d %H:%i:%s')
+             <if test="shopDamageDto.createEndDate!= null and shopDamageDto.createEndDate!= ''">
+				AND SUBSTRING(d.CREATE_TIME, 1, 10) &lt;= #{shopDamageDto.createEndDate}
             </if>
-            <if test="shopDamage.description!= null and shopDamage.description!= ''">
-				AND DESCRIPTION = #{shopDamage.description}
+            <if test="shopDamageDto.damageId!= null and shopDamageDto.damageId!= ''">
+				AND d.DAMAGE_ID = #{shopDamageDto.damageId}
             </if>
-            <if test="shopDamage.imgFirstUrl!= null and shopDamage.imgFirstUrl!= ''">
-				AND IMG_FIRST_URL = #{shopDamage.imgFirstUrl}
+            <if test="shopDamageDto.shopCode!= null and shopDamageDto.shopCode!= ''">
+				AND s.SHOP_CODE = #{shopDamageDto.shopCode}
             </if>
-            <if test="shopDamage.imgSecondUrl!= null and shopDamage.imgSecondUrl!= ''">
-				AND IMG_SECOND_URL = #{shopDamage.imgSecondUrl}
+            <if test="shopDamageDto.shopName!= null and shopDamageDto.shopName!= ''">
+				AND s.SHOP_NAME = #{shopDamageDto.shopName}
             </if>
-            <if test="shopDamage.imgThirdUrl!= null and shopDamage.imgThirdUrl!= ''">
-				AND IMG_THIRD_URL = #{shopDamage.imgThirdUrl}
+            <if test="shopDamageDto.createBy!= null and shopDamageDto.createBy!= ''">
+				AND d.CREATE_BY = #{shopDamageDto.createBy}
             </if>
-            <if test="shopDamage.remark!= null and shopDamage.remark!= ''">
-				AND REMARK = #{shopDamage.remark}
+            <if test="shopDamageDto.empName!= null and shopDamageDto.empName!= ''">
+				AND m.EMP_NAME = #{shopDamageDto.empName}
             </if>
-            <if test="shopDamage.createBy!= null and shopDamage.createBy!= ''">
-				AND CREATE_BY = #{shopDamage.createBy}
+            <if test="shopDamageDto.nameEn!= null and shopDamageDto.nameEn!= ''">
+				AND a.NAME_EN = #{shopDamageDto.nameEn}
             </if>
-            <if test="shopDamage.createTime!= null and shopDamage.createTime!= ''">
-				AND CREATE_TIME = str_to_date(#{shopDamage.createTime},'%Y-%m-%d %H:%i:%s')
+            <if test="shopDamageDto.companyId!= null and shopDamageDto.companyId!= ''">
+				AND c.ID = #{shopDamageDto.companyId}
             </if>
-            <if test="shopDamage.updateBy!= null and shopDamage.updateBy!= ''">
-				AND UPDATE_BY = #{shopDamage.updateBy}
-            </if>
-            <if test="shopDamage.updateTime!= null and shopDamage.updateTime!= ''">
-				AND UPDATE_TIME = str_to_date(#{shopDamage.updateTime},'%Y-%m-%d %H:%i:%s')
-            </if>
-            <if test="shopDamage.version!= null and shopDamage.version!= ''">
-				AND VERSION = #{shopDamage.version}
+            <if test="shopDamageDto.regionId!= null and shopDamageDto.regionId!= ''">
+				AND r.ID = #{shopDamageDto.regionId}
             </if>
         </if>
     </sql>
@@ -190,9 +203,9 @@
 	<sql id="orderBy">
 		<choose>
         	<when test="key == 'damageId'">
-				DAMAGE_ID ${value}
+				d.DAMAGE_ID ${value}
             </when>
-        	<when test="key == 'shopId'">
+        <!-- 	<when test="key == 'shopId'">
 				SHOP_ID ${value}
             </when>
         	<when test="key == 'materielId'">
@@ -215,14 +228,14 @@
             </when>
         	<when test="key == 'remark'">
 				REMARK ${value}
-            </when>
+            </when> -->
         	<when test="key == 'createBy'">
-				CREATE_BY ${value}
+				d.CREATE_BY ${value}
             </when>
         	<when test="key == 'createTime'">
-				CREATE_TIME ${value}
+				d.CREATE_TIME ${value}
             </when>
-        	<when test="key == 'updateBy'">
+        	<!-- <when test="key == 'updateBy'">
 				UPDATE_BY ${value}
             </when>
         	<when test="key == 'updateTime'">
@@ -230,7 +243,7 @@
             </when>
         	<when test="key == 'version'">
 				VERSION ${value}
-            </when>
+            </when> -->
 		</choose>
 	</sql>
 
@@ -377,15 +390,53 @@
 		FROM T_SHOP_DAMAGE WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="ShopDamage" resultMap="ShopDamageResultMapper">
+	<select id="listPaginationByProperty" parameterType="ShopDamageDto" resultMap="ShopDamageDtoResultMapper">
 		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_SHOP_DAMAGE WHERE 1=1
+			c.COMPANY_NAME,
+			d.DAMAGE_ID,
+			d.DAMAGE_TIME,
+			r.REGION_NAME AS COUNTRY_NAME,
+			e.REGION_NAME AS CITY_NAME,
+			s.SHOP_CODE,
+			s.SHOP_NAME,
+			d.CREATE_BY,
+			m.EMP_NAME,
+			t.DUTY_NAME,
+			a.NAME_CN,
+			a.NAME_EN,
+			d.CREATE_TIME
+		FROM T_SHOP_DAMAGE d LEFT JOIN T_SHOP s ON d.SHOP_ID = s.ID 
+		LEFT JOIN T_COMPANY c ON s.COMPANY_ID = c.ID 
+		LEFT JOIN T_REGION r ON s.COUNTRY = r.ID 
+		LEFT JOIN T_REGION e ON s.CITY = e.ID
+		LEFT JOIN T_USER u ON d.CREATE_BY = u.USER_CODE 
+		LEFT JOIN T_EMPLOYEE m ON u.ID = m.U_ID 
+		LEFT JOIN T_DUTY t ON m.DUTY_ID = t.ID 
+		LEFT JOIN T_MATERIEL a ON d.MATERIEL_ID = a.ID 
+		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>
 	<select id="findByCount" parameterType="ShopDamage" resultType="int">
 		SELECT count(1) AS totalcount FROM T_SHOP_DAMAGE WHERE 1=1 
 		<include refid="commonCondition"/>
+	</select>
+	
+	<select id="queryDetailById" parameterType="java.lang.Long" resultMap="ShopDamageDtoResultMapper">
+		SELECT 
+			s.SHOP_NAME,
+			e.EMP_NAME,
+			m.NAME_EN,
+			m.NAME_CN,
+			d.DAMAGE_TIME,
+			d.DESCRIPTION,
+			d.IMG_FIRST_URL,
+			d.IMG_SECOND_URL,
+			d.IMG_THIRD_URL
+		FROM T_SHOP_DAMAGE d 
+		LEFT JOIN T_SHOP s ON d.SHOP_ID = s.ID 
+		LEFT JOIN T_USER u ON d.CREATE_BY = u.USER_CODE 
+		LEFT JOIN T_EMPLOYEE e ON u.ID = e.U_ID 
+		LEFT JOIN T_MATERIEL m ON d.MATERIEL_ID = m.ID WHERE d.DAMAGE_ID = #{damageId}
 	</select>
 </mapper>

@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.ShopDamage;
+import com.transsion.store.dto.ShopDamageDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.ShopDamageFacade;
 import com.shangkang.core.bo.Pagination;
@@ -59,9 +60,9 @@ public class ShopDamageController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<ShopDamage> listPgShopDamage(RequestModel<ShopDamage> requestModel) throws ServiceException
+	public Pagination<ShopDamageDto> listPgShopDamage(RequestModel<ShopDamageDto> requestModel) throws ServiceException
 	{
-		Pagination<ShopDamage> pagination = new Pagination<ShopDamage>();
+		Pagination<ShopDamageDto> pagination = new Pagination<ShopDamageDto>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());
@@ -109,5 +110,13 @@ public class ShopDamageController extends AbstractController{
 	public void update(ShopDamage shopDamage) throws ServiceException
 	{
 		shopDamageFacade.update(shopDamage);
+	}
+	
+	@GET
+	@Path("queryDetailById")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public ShopDamageDto queryDetailById(@QueryParam("damageId")Long damageId) throws ServiceException {
+		return shopDamageFacade.queryDetailById(damageId);
 	}
 }
