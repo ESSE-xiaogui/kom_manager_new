@@ -3,15 +3,21 @@ package com.transsion.store.task.manager;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Currency;
+import com.transsion.store.bo.GoalSupervisor;
 import com.transsion.store.bo.Region;
 import com.transsion.store.bo.Sale;
 import com.transsion.store.bo.SaleItem;
@@ -20,10 +26,13 @@ import com.transsion.store.bo.Task;
 import com.transsion.store.bo.TaskDetail;
 import com.transsion.store.dto.SaleTaskDto;
 import com.transsion.store.dto.ScanValidateDto;
+import com.transsion.store.dto.TaskGoalSupervisorDto;
+import com.transsion.store.dto.TaskSaleDto;
 import com.transsion.store.dto.UserDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.manager.ScanValidateManager;
 import com.transsion.store.mapper.CurrencyMapper;
+import com.transsion.store.mapper.GoalSupervisorMapper;
 import com.transsion.store.mapper.RegionMapper;
 import com.transsion.store.mapper.SaleItemMapper;
 import com.transsion.store.mapper.SaleMapper;
@@ -69,6 +78,9 @@ public class SaleTaskManager {
 	
 	@Autowired
 	private RegionMapper regionMapper;
+	
+	@Autowired
+	private GoalSupervisorMapper goalSupervisorMapper;
 
 	/**
 	 * excel解析 转成实体
@@ -91,6 +103,8 @@ public class SaleTaskManager {
 				arrayConvertSaleDto(task, dataArr);
 			} else if (task.getTaskType().equals(Type.TASK_CURRENCY_IMPORT.getDesc())) {
 				arrayConverCurrencyDto(task, dataArr);
+			}else if(task.getTaskType().equals(Type.TASK_GOAL_SUPERVISOR_IMPORT.getDesc())){
+				arrayConverGoalSupervisorDto(task,dataArr);
 			}
 
 		} catch (Exception e) {
@@ -98,6 +112,7 @@ public class SaleTaskManager {
 		}
 
 	}
+
 
 	/**
 	 * 批量上传销量
@@ -162,81 +177,99 @@ public class SaleTaskManager {
 
 	public void arrayConvertSaleDto(Task task, String[][] dataArr) throws ServiceException {
 		TaskDetail taskDetail = new TaskDetail();
-		List<Map<String, Object>> list = TaskUtil.formatArr(dataArr,
-						new String[] { "Sales date", "Shop code", "User ID", "IMEI code", "Price" });
+		List<Map<String, Object>> list = TaskUtil.formatArr(dataArr,TaskSaleDto.IMPORT_HEADERS);
 		if (UtilHelper.isEmpty(list)) {
 			throw new ServiceException(ExceptionDef.ERROR_TASK_FILE_FORMATERROR.getName());
 		} else {
 			for (Map<String, Object> map : list) {
 				SaleTaskDto saleTaskDto = new SaleTaskDto();
-				String saleDate = (String) map.get("Sales date");
-				String shopCode = (String) map.get("Shop code");
-				String userCode = (String) map.get("User ID");
-				String imeiNo = (String) map.get("IMEI code");
-				String price = (String) map.get("Price");
-				if (UtilHelper.isEmpty(saleDate)) {
-					taskDetail.setMessage("Sales date is null");
-					taskDetail.setStatus(2);
-				}
-				if (UtilHelper.isEmpty(shopCode)) {
-					taskDetail.setMessage("Shop code is null");
-					taskDetail.setStatus(2);
-				}
-				if (UtilHelper.isEmpty(userCode)) {
-					taskDetail.setMessage("User ID is null");
-					taskDetail.setStatus(2);
-				}
-				if (UtilHelper.isEmpty(imeiNo)) {
-					taskDetail.setMessage("IMEI code is null");
-					taskDetail.setStatus(2);
-				}
-				if (UtilHelper.isEmpty(price)) {
-					taskDetail.setMessage("Price is null");
-					taskDetail.setStatus(2);
-				}
-
-				if (!UtilHelper.isEmpty(saleDate) && !UtilHelper.isEmpty(shopCode) && !UtilHelper.isEmpty(userCode)
-								&& !UtilHelper.isEmpty(imeiNo) && !UtilHelper.isEmpty(price)) {
-					UserDto user = userMapper.findByName(userCode);
-					if (UtilHelper.isEmpty(user) || UtilHelper.isEmpty(user.getId())) {
+				TaskSaleDto taskSaleDto = new TaskSaleDto();
+				taskSaleDto.copyFormMap(map);
+				Boolean flag = validate(map, taskDetail);
+				if(flag){
+					UserDto user = userMapper.findByName(taskSaleDto.getUserCode());
+					if (UtilHelper.isEmpty(user)) {
 						taskDetail.setMessage("User ID is null");
 						taskDetail.setStatus(2);
 					}
-					Shop shop = shopMapper.findShopId(shopCode);
+					Shop shop = shopMapper.findShopId(taskSaleDto.getShopCode());
 					if (UtilHelper.isEmpty(shop) || UtilHelper.isEmpty(shop.getId())
 									|| UtilHelper.isEmpty(shop.getCompanyId())) {
 						taskDetail.setMessage("Shop code is null");
 						taskDetail.setStatus(2);
 					}
-					if (!UtilHelper.isEmpty(shop) && !UtilHelper.isEmpty(shop.getId()) 
-									&& !UtilHelper.isEmpty(shop.getCompanyId())
-									&& !UtilHelper.isEmpty(user) 
-									&& !UtilHelper.isEmpty(user.getId())) {
+					if (!UtilHelper.isEmpty(shop) && !UtilHelper.isEmpty(shop.getCompanyId())
+						&& !UtilHelper.isEmpty(user) && !UtilHelper.isEmpty(user.getId())) {
 						saleTaskDto.setShopId(shop.getId().intValue());
 						saleTaskDto.setCompanyId(shop.getCompanyId());
-						saleTaskDto.setSaleDate(saleDate);
-						saleTaskDto.setShopCode(shopCode);
+						saleTaskDto.setSaleDate(taskSaleDto.getSaleDate());
+						saleTaskDto.setShopCode(taskSaleDto.getShopCode());
 						saleTaskDto.setUserId(user.getId().intValue());
-						saleTaskDto.setUserCode(userCode);
-						saleTaskDto.setImeiNo(imeiNo);
-						BigDecimal bd = new BigDecimal(price);
+						saleTaskDto.setUserCode(taskSaleDto.getUserCode());
+						saleTaskDto.setImeiNo(taskSaleDto.getImeiNo());
+						BigDecimal bd = new BigDecimal(taskSaleDto.getPrice());
 						saleTaskDto.setPrice(bd);
 						taskDetail = this.taskSales(saleTaskDto);
 					}
 				}
-
-				taskDetail.setTaskId(task.getId());
-				String context = "Sales date:" + saleTaskDto.getSaleDate() + "\r" + "Shop code:"
-								+ saleTaskDto.getShopCode() + "\r" + "User ID:" + saleTaskDto.getUserCode() + "\r"
-								+ "IMEI code:" + saleTaskDto.getImeiNo() + "\r" + "Price:" + saleTaskDto.getPrice();
-				taskDetail.setContext(context);
-				taskDetail.setCreateTime(systemDateService.getCurrentDate());
-				taskDetailMapper.saveTaskDetail(taskDetail);
+				String context = taskSaleDto.getContext();
+				Long taskId = task.getId();
+				this.saveTaskDetail(taskId,context,taskDetail);
 			}
-
 		}
 	}
 
+	private void arrayConverGoalSupervisorDto(Task task, String[][] dataArr) throws ServiceException {
+		TaskDetail taskDetail = new TaskDetail();
+		List<Map<String, Object>> list = TaskUtil.formatArr(dataArr,TaskGoalSupervisorDto.IMPORT_HEADERS);
+		if (UtilHelper.isEmpty(list)) {
+			throw new ServiceException(ExceptionDef.ERROR_TASK_FILE_FORMATERROR.getName());
+		} else {
+			for (Map<String, Object> map : list) {
+				TaskGoalSupervisorDto taskGoalSupervisorDto = new TaskGoalSupervisorDto();
+				taskGoalSupervisorDto.copyFormMap(map);
+				boolean flag = validate(map, taskDetail);
+				if(flag){
+					UserDto user = userMapper.findByName(taskGoalSupervisorDto.getUserCode());
+					if (UtilHelper.isEmpty(user)) {
+						taskDetail.setMessage("User is null");
+						taskDetail.setStatus(2);
+					}
+					Shop shop = shopMapper.findShopId(taskGoalSupervisorDto.getShopCode());
+					if (UtilHelper.isEmpty(shop)){
+						taskDetail.setMessage("Shop is null");
+						taskDetail.setStatus(2);
+					}
+					if (!UtilHelper.isEmpty(shop) && !UtilHelper.isEmpty(user) 
+									&& !UtilHelper.isEmpty(user.getCompanyId())){
+						taskGoalSupervisorDto.setCompanyId(user.getCompanyId());
+						taskGoalSupervisorDto.setUserId(user.getId());
+						taskGoalSupervisorDto.setShopId(shop.getId());
+						//TODO:创建人  更新人
+						GoalSupervisor goalSupervisor = new GoalSupervisor();
+						goalSupervisor.setGoalMonth(taskGoalSupervisorDto.getGoalMonth());
+						goalSupervisor.setShopId(taskGoalSupervisorDto.getShopId());
+						List<GoalSupervisor> goalSupervisorList = goalSupervisorMapper.listByProperty(goalSupervisor);
+						BeanUtils.copyProperties(taskGoalSupervisorDto, goalSupervisor);
+						if(!UtilHelper.isEmpty(goalSupervisorList)){
+							goalSupervisor.setId(goalSupervisorList.get(0).getId());
+							goalSupervisorMapper.update(goalSupervisor);
+						}else{
+							goalSupervisorMapper.save(goalSupervisor);
+						}
+						taskDetail.setMessage("ok");
+						taskDetail.setStatus(1);
+					}	
+				}
+				String context = taskGoalSupervisorDto.getContext();
+				Long taskId = task.getId();
+				this.saveTaskDetail(taskId,context,taskDetail);
+			}
+		}
+	}
+	
+	
+	
 	public void arrayConverCurrencyDto(Task task, String[][] dataArr) throws ServiceException {
 		TaskDetail taskDetail = new TaskDetail();
 		List<Map<String, Object>> list = TaskUtil.formatArr(dataArr,
@@ -339,5 +372,44 @@ public class SaleTaskManager {
 			}
 		}
 
+	}
+	
+	/**
+	 * 更新task表
+	 * @param taskId
+	 * @param context
+	 * @param taskDetail
+	 * @throws ServiceException
+	 */
+	private void saveTaskDetail(Long taskId, String context,TaskDetail taskDetail) throws ServiceException {
+		taskDetail.setTaskId(taskId);
+		taskDetail.setContext(context);
+		taskDetail.setCreateTime(systemDateService.getCurrentDate());
+		taskDetailMapper.saveTaskDetail(taskDetail);
+	}
+	
+	/**
+	 * 验证数据是否为空
+	 * @param importMap
+	 * @param taskDetail
+	 * @return
+	 */
+	public boolean validate(Map<String, Object> importMap,TaskDetail taskDetail)
+	{
+		boolean flag = true;
+		Set<Entry<String, Object>> entry = importMap.entrySet();  
+        Iterator<Entry<String, Object>> it = entry.iterator();  
+        while (it.hasNext())  
+        {  
+            Entry<String, Object>  me = it.next();  
+            String key = me.getKey();  
+            String value = (String)me.getValue();
+            if(UtilHelper.isEmpty(value)){
+            	taskDetail.setMessage(key+" is null");
+				taskDetail.setStatus(2);
+				flag = false;
+            }    
+        }
+        return flag;
 	}
 }

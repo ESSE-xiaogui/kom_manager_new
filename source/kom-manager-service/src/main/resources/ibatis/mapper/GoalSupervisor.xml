@@ -120,10 +120,11 @@
 	</sql>
 	
 	<sql id="commonProcessDateColumn">
+		gs.ID,
 		c.COMPANY_CODE,
 		r1.REGION_NAME AS COUNTRY_NAME,
 		r2.REGION_NAME AS CITY_NAME,
-		GOAL_MONTH,
+		date_format(GOAL_MONTH,'%Y-%m') GOAL_MONTH,
 		gs.USER_CODE,
 		e1.EMP_NAME,
 		d.DUTY_NAME,
@@ -194,22 +195,34 @@
 				AND ID=#{goalSupervisorInfoDto.id}
             </if>
             <if test="goalSupervisorInfoDto.companyId!= null and goalSupervisorInfoDto.companyId!= ''">
-				AND COMPANY_ID=#{goalSupervisorInfoDto.companyId}
+				AND gs.COMPANY_ID=#{goalSupervisorInfoDto.companyId}
             </if>
             <if test="goalSupervisorInfoDto.goalMonth!= null and goalSupervisorInfoDto.goalMonth!= ''">
 				AND GOAL_MONTH=str_to_date(#{goalSupervisorInfoDto.goalMonth},'%Y-%m-%d %H:%i:%s')
             </if>
+            <if test="goalSupervisorInfoDto.goalMonthStart!= null and goalSupervisorInfoDto.goalMonthStart!= ''">
+				AND DATE_FORMAT(GOAL_MONTH,'%Y-%m-%d')&gt;=str_to_date(#{goalSupervisorInfoDto.goalMonthStart},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="goalSupervisorInfoDto.goalMonthEnd!= null and goalSupervisorInfoDto.goalMonthEnd!= ''">
+				AND DATE_FORMAT(GOAL_MONTH,'%Y-%m-%d')&lt;=str_to_date(#{goalSupervisorInfoDto.goalMonthEnd},'%Y-%m-%d %H:%i:%s')
+            </if>
             <if test="goalSupervisorInfoDto.userId!= null and goalSupervisorInfoDto.userId!= ''">
 				AND USER_ID=#{goalSupervisorInfoDto.userId}
             </if>
-            <if test="goalSupervisorInfoDto.userCode!= null and goalSupervisorInfoDto.userCode!= ''">
-				AND USER_CODE=#{goalSupervisorInfoDto.userCode}
+           	<if test="goalSupervisorInfoDto.userCode!= null and goalSupervisorInfoDto.userCode!= ''">
+				AND gs.USER_CODE=#{goalSupervisorInfoDto.userCode}
+            </if>
+            <if test="goalSupervisorInfoDto.empName!= null and goalSupervisorInfoDto.empName!= ''">
+				AND e1.EMP_NAME=#{goalSupervisorInfoDto.empName}
             </if>
             <if test="goalSupervisorInfoDto.shopId!= null and goalSupervisorInfoDto.shopId!= ''">
 				AND SHOP_ID=#{goalSupervisorInfoDto.shopId}
             </if>
             <if test="goalSupervisorInfoDto.shopCode!= null and goalSupervisorInfoDto.shopCode!= ''">
-				AND SHOP_CODE=#{goalSupervisorInfoDto.shopCode}
+				AND s.SHOP_CODE=#{goalSupervisorInfoDto.shopCode}
+            </if>
+            <if test="goalSupervisorInfoDto.shopName!= null and goalSupervisorInfoDto.shopName!= ''">
+				AND s.SHOP_NAME=#{goalSupervisorInfoDto.shopName}
             </if>
             <if test="goalSupervisorInfoDto.saleTarget!= null and goalSupervisorInfoDto.saleTarget!= ''">
 				AND SALE_TARGET=#{goalSupervisorInfoDto.saleTarget}
@@ -220,14 +233,29 @@
             <if test="goalSupervisorInfoDto.achieved!= null and goalSupervisorInfoDto.achieved!= ''">
 				AND ACHIEVED=#{goalSupervisorInfoDto.achieved}
             </if>
-            <if test="goalSupervisorInfoDto.remark!= null and goalSupervisorInfoDto.remark!= ''">
+          	<!-- <if test="goalSupervisorInfoDto.remark!= null and goalSupervisorInfoDto.remark!= ''">
 				AND REMARK=#{goalSupervisorInfoDto.remark}
-            </if>
+            </if> -->
             <if test="goalSupervisorInfoDto.createBy!= null and goalSupervisorInfoDto.createBy!= ''">
-				AND CREATE_BY=#{goalSupervisorInfoDto.createBy}
+				AND gs.CREATE_BY=#{goalSupervisorInfoDto.createBy}
+            </if>
+            <if test="goalSupervisorInfoDto.creatorName!= null and goalSupervisorInfoDto.creatorName!= ''">
+				AND e2.EMP_NAME=#{goalSupervisorInfoDto.creatorName}
+            </if>
+            <if test="goalSupervisorInfoDto.regionId!= null and goalSupervisorInfoDto.regionId!= '' and goalSupervisorInfoDto.regionType==2">
+				AND r1.ID=#{goalSupervisorInfoDto.regionId}
+            </if>
+            <if test="goalSupervisorInfoDto.regionId!= null and goalSupervisorInfoDto.regionId!= '' and goalSupervisorInfoDto.regionType==4">
+				AND r2.ID=#{goalSupervisorInfoDto.regionId}
             </if>
             <if test="goalSupervisorInfoDto.createTime!= null and goalSupervisorInfoDto.createTime!= ''">
 				AND CREATE_TIME=str_to_date(#{goalSupervisorInfoDto.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="goalSupervisorInfoDto.createTimeStart!= null and goalSupervisorInfoDto.createTimeStart!= ''">
+				AND DATE_FORMAT(gs.CREATE_TIME, '%Y-%m-%d') &gt;=str_to_date(#{goalSupervisorInfoDto.createTimeStart},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="goalSupervisorInfoDto.createTimeEnd!= null and goalSupervisorInfoDto.createTimeEnd!= ''">
+				AND DATE_FORMAT(gs.CREATE_TIME, '%Y-%m-%d') &lt;=str_to_date(#{goalSupervisorInfoDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="goalSupervisorInfoDto.updateBy!= null and goalSupervisorInfoDto.updateBy!= ''">
 				AND UPDATE_BY=#{goalSupervisorInfoDto.updateBy}
@@ -256,22 +284,43 @@
 				ID ${value}
             </when>
         	<when test="key == 'companyId'">
-				COMPANY_ID ${value}
+				gs.COMPANY_ID ${value}
             </when>
         	<when test="key == 'goalMonth'">
-				GOAL_MONTH ${value}
+				gs.GOAL_MONTH ${value}
+            </when>
+            <when test="key == 'companyCode'">
+				c.COMPANY_CODE ${value}
+            </when>
+            <when test="key == 'countryName'">
+				r1.REGION_NAME ${value}
+            </when>
+            <when test="key == 'cityName'">
+				r2.REGION_NAME ${value}
+            </when>
+            <when test="key == 'empName'">
+				e1.EMP_NAME ${value}
+            </when>
+            <when test="key == 'creatorName'">
+				e2.EMP_NAME ${value}
+            </when>
+            <when test="key == 'dutyName'">
+				d.DUTY_NAME ${value}
             </when>
         	<when test="key == 'userId'">
 				USER_ID ${value}
             </when>
         	<when test="key == 'userCode'">
-				USER_CODE ${value}
+				gs.USER_CODE ${value}
             </when>
         	<when test="key == 'shopId'">
 				SHOP_ID ${value}
             </when>
         	<when test="key == 'shopCode'">
 				SHOP_CODE ${value}
+            </when>
+            <when test="key == 'shopName'">
+				SHOP_NAME ${value}
             </when>
         	<when test="key == 'saleTarget'">
 				SALE_TARGET ${value}
@@ -286,10 +335,10 @@
 				REMARK ${value}
             </when>
         	<when test="key == 'createBy'">
-				CREATE_BY ${value}
+				gs.CREATE_BY ${value}
             </when>
         	<when test="key == 'createTime'">
-				CREATE_TIME ${value}
+				gs.CREATE_TIME ${value}
             </when>
         	<when test="key == 'updateBy'">
 				UPDATE_BY ${value}
@@ -309,7 +358,7 @@
 		<![CDATA[
 			) VALUES ( 
 			 #{companyId}
-			, str_to_date(#{goalMonth},'%Y-%m-%d %H:%i:%s')
+			, str_to_date(#{goalMonth},'%Y-%m-%d')
 			, #{userId}
 			, #{userCode}
 			, #{shopId}
@@ -329,7 +378,7 @@
 		<![CDATA[ UPDATE T_GOAL_SUPERVISOR SET 
 			 ID=#{id} 
 			, COMPANY_ID=#{companyId} 
-			, GOAL_MONTH=str_to_date(#{goalMonth},'%Y-%m-%d %H:%i:%s')
+			, GOAL_MONTH=str_to_date(#{goalMonth},'%Y-%m-%d')
 			, USER_ID=#{userId} 
 			, USER_CODE=#{userCode} 
 			, SHOP_ID=#{shopId} 
@@ -399,12 +448,4 @@
 	<select id="querySaleTargetByShopId" parameterType="GoalSupervisor" resultType="java.lang.Long">
 		SELECT SALE_TARGET FROM T_GOAL_SUPERVISOR WHERE SHOP_ID = #{shopId} AND SUBSTRING(GOAL_MONTH, 1, 7) = #{goalMonth}
 	</select>
-	
-	<select id="queryShopIdListByGoalMonth" parameterType="java.lang.String" resultMap="GoalSupervisorResultMapper">
-		SELECT ID, SHOP_ID, SALE_TARGET, SALE_CURRENT, ACHIEVED FROM T_GOAL_SUPERVISOR WHERE SUBSTRING(GOAL_MONTH, 1, 7) = #{goalMonth} ORDER BY SHOP_ID ASC
-	</select>
-	
-	<update id="updateGoalSupervisorByShopId" parameterType="GoalSupervisor">
-		UPDATE T_GOAL_SUPERVISOR SET SALE_CURRENT = #{saleCurrent}, ACHIEVED = #{achieved} WHERE ID = #{id}
-	</update>
 </mapper>

@@ -44,7 +44,13 @@ public class FileTemplate extends Model{
 		P("P", "促销员销量目标"),
 
 		//门店
-		T("T", "门店模板");
+		T("T", "门店模板"),
+		
+		//巡店员销量目标
+		X("X","巡店员销量目标"),
+		
+		//重点机型销量目标
+		M("M","重点机型销量目标");
 
 		private String key;
 		private String value;

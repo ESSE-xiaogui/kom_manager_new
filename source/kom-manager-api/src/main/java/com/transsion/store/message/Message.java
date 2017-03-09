@@ -10,9 +10,12 @@ public interface Message {
 		//task group
 		TASK_SALE_IMPORT(100,"TASK_SALE_IMPORT"),
 		TASK_GOAL_IMPORT(101,"TASK_GOAL_IMPORT"),
+		TASK_GOAL_SUPERVISOR_IMPORT(103,"TASK_GOAL_SUPERVISOR_IMPORT"),
 		//user
 		//currency
 		TASK_CURRENCY_IMPORT(102,"TASK_CURRENCY_IMPORT");
+		
+		
 		private int value;
 		private String desc;
 

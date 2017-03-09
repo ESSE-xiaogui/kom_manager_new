@@ -79,6 +79,8 @@ public class TaskManager {
 			msg.setName(Type.TASK_CURRENCY_IMPORT.getDesc());
 		}else if(task.getTaskType().equals(Type.TASK_SALE_IMPORT.getDesc())){
 			msg.setName(Type.TASK_SALE_IMPORT.getDesc());
+		}else if(task.getTaskType().equals(Type.TASK_GOAL_SUPERVISOR_IMPORT.getDesc())){
+			msg.setName(Type.TASK_GOAL_SUPERVISOR_IMPORT.getDesc());
 		}
 		msg.setInvokerType(TaskInvokerInfo.Type.REST);
 		msg.setKey(task.getId());
