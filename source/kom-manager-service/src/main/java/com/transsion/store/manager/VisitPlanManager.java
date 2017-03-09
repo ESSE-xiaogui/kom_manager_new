@@ -187,15 +187,10 @@ public class VisitPlanManager {
 						|| UtilHelper.isEmpty(userContext.getCompanyId())) {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
-		List<String> currencyDates = DateConvertUtils.getAllWeekDays(startDate);
-		String result = DateConvertUtils.getWeekFirstDay(endDate,-1);
-		List<String> nextWerkDates = DateConvertUtils.getAllWeekDays(result);
-		List<String> nextTwoWerkDates = DateConvertUtils.getAllWeekDays(endDate);
-		currencyDates.addAll(nextWerkDates);
-		currencyDates.addAll(nextTwoWerkDates);
+		List<String> result = DateConvertUtils.getSectionTime(startDate,endDate);
 		List<VisitPlanDetailSummaryDto> visitList = new ArrayList<VisitPlanDetailSummaryDto>();
-		if(!UtilHelper.isEmpty(currencyDates)){
-			for(String visitPlanDate:currencyDates){
+		if(!UtilHelper.isEmpty(result)){
+			for(String visitPlanDate:result){
 			VisitPlanDetailSummaryDto vp = new VisitPlanDetailSummaryDto();
 			vp.setVisitPlanDate(visitPlanDate);
 			vp.setVisitPlanQty(0);
