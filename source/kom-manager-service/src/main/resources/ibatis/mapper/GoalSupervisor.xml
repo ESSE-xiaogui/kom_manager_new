@@ -437,8 +437,27 @@
 		LEFT JOIN T_USER u ON u.USER_CODE = gs.CREATE_BY
 		LEFT JOIN T_EMPLOYEE e2 ON e2.U_ID = u.ID 
 		WHERE 1=1
+		<if test="companyId!= null and companyId!= ''"> 
+			AND gs.COMPANY_ID =#{companyId}
+		</if>
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
+	</select>
+	<select id="listGoalSupervisorByProperty" parameterType="GoalSupervisorInfoDto" resultMap="GoalSupervisorInfoDtoResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumn"/>
+		FROM T_GOAL_SUPERVISOR gs
+		LEFT JOIN T_COMPANY c ON c.ID = gs.COMPANY_ID
+		LEFT JOIN T_SHOP s ON s.ID = gs.SHOP_ID
+		LEFT JOIN T_REGION r1 ON r1.ID = s.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = s.CITY
+		LEFT JOIN T_EMPLOYEE e1 ON e1.U_ID = gs.USER_ID
+		LEFT JOIN T_DUTY d ON d.ID = e1.DUTY_ID
+		LEFT JOIN T_USER u ON u.USER_CODE = gs.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e2 ON e2.U_ID = u.ID 
+		WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	ORDER BY gs.CREATE_TIME DESC
 	</select>
 	<select id="findByCount" parameterType="GoalSupervisor" resultType="int">
 		SELECT count(1) AS totalcount FROM T_GOAL_SUPERVISOR WHERE 1=1 

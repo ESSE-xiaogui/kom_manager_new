@@ -35,4 +35,6 @@ public interface GoalSupervisorMapper extends GenericIBatisMapper<GoalSupervisor
     public List<GoalSupervisor> queryShopIdListByGoalMonth(String goalMonth);
     
     public void updateGoalSupervisorByShopId(GoalSupervisor goalSupervisor);
+
+	public List<GoalSupervisorInfoDto> listGoalSupervisorByProperty(@Param("goalSupervisorInfoDto")GoalSupervisorInfoDto goalSupervisorInfoDto)throws DataAccessFailureException;
 }

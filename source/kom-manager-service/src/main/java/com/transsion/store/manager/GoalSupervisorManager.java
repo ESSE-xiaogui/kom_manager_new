@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.GoalModel;
 import com.transsion.store.bo.GoalSupervisor;
@@ -156,7 +157,7 @@ public class GoalSupervisorManager {
 		}
 	}
 
-	public byte[] getGoalSupervisorByExcel(GoalSupervisorInfoDto goalSupervisorInfoDto) {
+	public byte[] getGoalSupervisorByExcel(GoalSupervisorInfoDto goalSupervisorInfoDto) throws ServiceException {
 		String[] headers = {"序号","事业部","国家","城市","年/月","用户名","员工姓名","职位","门店编码","门店名称","销售目标","实际销量"
 						,"完成率","创建用户","创建用户姓名","创建时间"};
 		List<GoalSupervisorInfoDto> list = goalSupervisorMapper.listGoalSupervisorByProperty(goalSupervisorInfoDto);
