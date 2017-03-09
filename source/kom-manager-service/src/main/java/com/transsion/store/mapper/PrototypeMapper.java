@@ -37,4 +37,7 @@ public interface PrototypeMapper extends GenericIBatisMapper<Prototype, java.lan
     public int checkImeiOnly(@Param("prototype")Prototype prototype);
     
     public List<Prototype> listByPrototypeSettingDto(@Param("prototypeSettingDto")PrototypeSettingDto prototypeSettingDto);
+    
+    // APP端查看样机
+    public List<PrototypeDto> listByProperty(@Param("prototypeDto")PrototypeDto prototypeDto);
 }

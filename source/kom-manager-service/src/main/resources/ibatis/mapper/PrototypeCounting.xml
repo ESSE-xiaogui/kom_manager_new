@@ -470,4 +470,18 @@
 		SELECT count(1) AS totalcount FROM T_PROTOTYPE_COUNTING WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
+	
+	<update id="specialUpdate" parameterType="String">
+		update T_PROTOTYPE_COUNTING
+		set STATUS = 4
+		where STATUS = 1 AND DATE_FORMAT(COUNTING_TIME, "%Y-%m") = #{date}
+	</update>
+	
+	<select id="listPrototypeCountingByPrototypeDto" parameterType="prototypeDto" resultMap="PrototypeCountingResultMapper">
+		select pc.*
+		from T_PROTOTYPE_COUNTING pc
+		left join T_PROTOTYPE pro on pc.PROTOTYPE_ID = pro.ID
+		where DATE_FORMAT(pc.COUNTING_TIME, "%Y-%m") = #{prototypeDto.countingTime}
+	</select>
+	
 </mapper>

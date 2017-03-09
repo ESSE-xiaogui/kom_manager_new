@@ -90,8 +90,8 @@ public class PrototypeController extends AbstractController{
 	@Path("/list")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public List<PrototypeDto> listPrototype(RequestModel<PrototypeDto> requestModel) throws ServiceException {
-		return null;
+	public List<PrototypeDto> listPrototype(PrototypeDto prototypeDto) throws ServiceException {
+		return prototypeFacade.listByProperty(prototypeDto);
 	}
 
 	/**

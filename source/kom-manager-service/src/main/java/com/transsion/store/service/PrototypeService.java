@@ -16,6 +16,12 @@
 **/
 package com.transsion.store.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +30,18 @@ import org.springframework.stereotype.Service;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Prototype;
+import com.transsion.store.bo.PrototypeCounting;
 import com.transsion.store.dto.PrototypeDto;
 import com.transsion.store.exception.ExceptionDef;
+import com.transsion.store.mapper.PrototypeCountingMapper;
 import com.transsion.store.mapper.PrototypeMapper;
 
 @Service("prototypeService")
 public class PrototypeService {
 
 	private PrototypeMapper	prototypeMapper;
+	@Autowired
+	private PrototypeCountingMapper prototypeCountingMapper;
 
 	@Autowired
 	public void setPrototypeMapper(PrototypeMapper prototypeMapper)
@@ -65,10 +75,84 @@ public class PrototypeService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<Prototype> listByProperty(Prototype prototype)
+	public List<PrototypeDto> listByProperty(PrototypeDto prototypeDto)
 			throws ServiceException
 	{
-		return prototypeMapper.listByProperty(prototype);
+		// app端
+		if (prototypeDto != null && prototypeDto.getCountingTime() != null) {
+			prototypeDto.setBeginCountingTime(prototypeDto.getCountingTime());
+			prototypeDto.setEndCountingTime(getLatestDate(prototypeDto));
+		}
+		
+		return prototypeMapper.listByProperty(prototypeDto);
+	}
+	
+	/**
+	 * 根据prototypeDto获取盘点参数中的最近的日期
+	 * @return
+	 */
+	private String getLatestDate(PrototypeDto prototypeDto) {
+
+		// 临时存储盘点日期
+		String countingTime = "";
+		String latestDate = "";
+		
+		if (prototypeDto != null) {
+			countingTime = prototypeDto.getCountingTime();
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM");
+			SimpleDateFormat sdfTemp=new SimpleDateFormat("yyyy-MM-dd");
+			
+			try {
+				prototypeDto.setCountingTime(sdf.format(sdf.parse(prototypeDto.getCountingTime())));
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			List<PrototypeCounting> prototypeCountings = new ArrayList<PrototypeCounting>();
+			
+			prototypeCountings = prototypeCountingMapper.listPrototypeCountingByPrototypeDto(prototypeDto);
+			
+			if (prototypeCountings != null && !prototypeCountings.isEmpty()) {
+				int i ;
+				List<Date> countingTimes = new ArrayList<Date>();
+				for (PrototypeCounting prototypeCounting : prototypeCountings) {
+					try {
+						i = sdfTemp.parse(countingTime).compareTo(sdfTemp.parse(prototypeCounting.getCountingTime()));
+						// 样机当前盘点时间大于等于盘点参数设置时间
+						if (i >= 0) {
+							countingTimes.add(sdfTemp.parse(prototypeCounting.getCountingTime()));
+						}
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+				if (!countingTimes.isEmpty() && countingTimes.size() == 1) {
+					latestDate = sdf.format(countingTimes.get(0));
+				} else {
+					ComparatorDate c = new ComparatorDate(); 
+					Collections.sort(countingTimes,c);
+					latestDate = sdfTemp.format(countingTimes.get(0));
+				}
+			}
+
+			prototypeDto.setCountingTime(countingTime);
+		}
+		
+		return latestDate;
+	}
+	
+	class ComparatorDate implements Comparator {
+	    public int compare(Object obj1, Object obj2) {
+	        Date begin = (Date) obj1;
+	        Date end = (Date) obj2;  
+	        if (begin.before(end)) {  
+	            return 1;
+	        } else {
+	            return -1;  
+	        }
+	    }
 	}
 	
 	/**

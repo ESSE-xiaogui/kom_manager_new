@@ -160,5 +160,12 @@ public class PrototypeCountingFacadeImpl implements PrototypeCountingFacade {
 	public PrototypeCountingDto getByPKey(Long primaryKey) throws ServiceException {
 		return prototypeCountingService.getByPKey(primaryKey);
 	}
-
+	
+	/**
+	 * 后台JOB根据时间更新Counting状态
+	 * @throws ServiceException
+	 */
+	public void specialUpdate() throws ServiceException {
+		prototypeCountingManager.specialUpdate();
+	}
 }

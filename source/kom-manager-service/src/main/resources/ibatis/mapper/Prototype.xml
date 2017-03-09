@@ -76,6 +76,7 @@
 		<result column="UNPUBLISH_TIME" property="unpublishTime"/>
 		<result column="COMPANY_ID" property="companyId"/>
 		<result column="COMPANY_CODE" property="companyCode"/>
+		<result column="PROTOTYPECOUNTING_ID" property="prototypeCountingId"/>
 	</resultMap>
 	
 	<sql id="commonColumns">
@@ -306,7 +307,10 @@
 				AND pro.UNPUBLISH_BY=#{prototypeDto.unpublishBy}
             </if>
             <if test="prototypeDto.countingTime!= null and prototypeDto.countingTime!= ''">
-				AND proCount.COUNTING_TIME <![CDATA[ <= ]]> #{prototypeDto.countingTime}
+				AND proCount.COUNTING_TIME <![CDATA[ <= ]]> str_to_date(#{prototypeDto.beginCountingTime},'%Y-%m-%d
+				%H:%i:%s')
+				AND proCount.COUNTING_TIME <![CDATA[ >= ]]> str_to_date(#{prototypeDto.endCountingTime},'%Y-%m-%d
+				%H:%i:%s')
             </if>
             
             <!-- 
@@ -610,12 +614,45 @@
 			 <include refid="commonProcessDateColumns"/>
  		FROM T_PROTOTYPE
 	</select>
-	<select id="listByProperty" parameterType="Prototype" resultMap="PrototypeResultMapper">
-		<![CDATA[ SELECT ]]>
-			<include refid="commonProcessDateColumns"/>
-		FROM T_PROTOTYPE WHERE 1=1 
-		<include refid="commonCondition"/>
+	
+	
+	<select id="listByProperty" parameterType="PrototypeDto" resultMap="PrototypeDtoResultMapper">
+		SELECT 
+		pro.ID, pro.BRAND_CODE, brand.ID AS BRAND_ID, brand.BRAND_NAME, 
+		pro.SHOP_ID, shop.SHOP_NAME,shop.SHOP_CODE,
+		pro.MODEL_ID,pro.MODEL_CODE, model.MODEL_NAME, 
+		r1.REGION_NAME as COUNTRY_NAME, r2.REGION_NAME AS CITY_NAME,
+		pro.IMEI_NO, pro.IMEI_LIST,
+		pro.IMG_PROTOTYPE_URL, pro.IMG_SHOP_URL, pro.IMG_IMEI_URL,
+		pro.STATUS, pro.REMARK, pro.UNPUBLISH_CAUSE,company.COMPANY_CODE, pro.COMPANY_ID,
+		pro.PUBLISH_BY,  pro.PUBLISH_TIME,
+		pro.UNPUBLISH_BY, pro.UNPUBLISH_TIME, emp1.EMP_NAME AS PUBLISH_NAME, emp2.EMP_NAME AS UNPUBLISH_NAME
+		<if test="prototypeDto != null">
+			<if test="prototypeDto.countingTime!=null">
+			proCount.ID AS PROTOTYPECOUNTING_ID
+			</if>
+		</if>
+		
+		FROM T_PROTOTYPE pro
+		left join T_BRAND brand on pro.BRAND_ID = brand.ID
+		left join T_SHOP shop on pro.SHOP_ID = shop.SHOP_ID
+		left join T_MODEL model on pro.MODEL_ID = model.ID
+		left join T_REGION r1 on r1.ID = shop.COUNTRY
+		left join T_REGION r2 on r2.ID = shop.CITY
+		left join T_COMPANY company on pro.COMPANY_ID = company.ID
+		left join T_USER user1 on pro.PUBLISH_BY = user1.USER_CODE
+		left join T_EMPLOYEE emp1 on user1.ID = emp1.U_ID
+		left join T_USER user2 on pro.PUBLISH_BY = user2.USER_CODE
+		left join T_EMPLOYEE emp2 on user2.ID = emp2.U_ID
+		<if test="prototypeDto != null">
+			<if test="prototypeDto.countingTime!=null">
+			Left join T_PROTOTYPE_COUNTING proCount ON pro.ID = proCount.PROTOTYPE_ID
+			</if>
+		</if>
+		WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
 	</select>
+	
 	<select id="listPaginationByPropertyDto" parameterType="PrototypeDto" resultMap="PrototypeDtoResultMapper">
 		SELECT 
 		pro.ID, pro.BRAND_CODE, brand.ID AS BRAND_ID, brand.BRAND_NAME, 
@@ -638,11 +675,6 @@
 		left join T_EMPLOYEE emp1 on user1.ID = emp1.U_ID
 		left join T_USER user2 on pro.PUBLISH_BY = user2.USER_CODE
 		left join T_EMPLOYEE emp2 on user2.ID = emp2.U_ID
-		<if test="prototypeDto != null">
-			<if test="prototypeDto.countingTime!=null">
-			inner join T_PROTOTYPE_COUNTING proCount ON pro.ID = proCount.PROTOTYPE_ID
-			</if>
-		</if>
 		
 		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>

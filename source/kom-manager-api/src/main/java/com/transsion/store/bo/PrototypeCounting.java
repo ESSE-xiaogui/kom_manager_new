@@ -61,7 +61,7 @@ public class PrototypeCounting extends Model{
 	private java.lang.String imgImeiUrl;
 
 	/**
-	  *	1,undo; 2,done; 3,expired
+	  *	1,undo; 2,done; 3,delay;4,expired
 	  */
 	private java.lang.Integer status;
 

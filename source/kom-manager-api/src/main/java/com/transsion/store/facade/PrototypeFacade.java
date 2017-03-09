@@ -45,7 +45,7 @@ public interface PrototypeFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<Prototype> listByProperty(Prototype prototype)
+	public List<PrototypeDto> listByProperty(PrototypeDto prototypeDto)
 			throws ServiceException;
 
 	/**

@@ -130,6 +130,16 @@ public class PrototypeCountingController extends AbstractController{
 	}
 	
 	/**
+	 * 后台JOB根据时间更新Counting状态
+	 * @throws ServiceException
+	 */
+	@PUT
+	@Path("/specialUpdate")
+	public void specialUpdate() throws ServiceException {
+		prototypeCountingFacade.specialUpdate();
+	}
+	
+	/**
 	 * 样机盘点与追踪导出Excel
 	 * @param createTimeStart
 	 * @param createTimeEnd

@@ -28,6 +28,8 @@ public class PrototypeDto implements Serializable {
 	private String remark;				// 备注
 	private String unpublishCause;		// 下架原因
 	private String countingTime;		// 计划盘点时间
+	private String beginCountingTime;	// 计划盘点开始时间
+	private String endCountingTime;		// 计划盘点结束时间
 	
 	private String publishBy;			// 上架人CODE
 	private String publishName;			// 上架人名字
@@ -42,6 +44,8 @@ public class PrototypeDto implements Serializable {
 	private String endUnpublishTime;	// 下架结束时间
 	private Long companyId;				// 事业部ID
 	private String companyCode;			// 事业部名称
+	
+	private Long prototypeCountingId;	// 盘点计划ID
 	
 	public Long getId() {
 		return id;
@@ -179,6 +183,19 @@ public class PrototypeDto implements Serializable {
 	public void setCountingTime(String countingTime) {
 		this.countingTime = countingTime;
 	}
+	
+	public String getBeginCountingTime() {
+		return beginCountingTime;
+	}
+	public void setBeginCountingTime(String beginCountingTime) {
+		this.beginCountingTime = beginCountingTime;
+	}
+	public String getEndCountingTime() {
+		return endCountingTime;
+	}
+	public void setEndCountingTime(String endCountingTime) {
+		this.endCountingTime = endCountingTime;
+	}
 	public String getPublishBy() {
 		return publishBy;
 	}
@@ -254,5 +271,12 @@ public class PrototypeDto implements Serializable {
 	}
 	public void setCompanyCode(String companyCode) {
 		this.companyCode = companyCode;
+	}
+	
+	public Long getPrototypeCountingId() {
+		return prototypeCountingId;
+	}
+	public void setPrototypeCountingId(Long prototypeCountingId) {
+		this.prototypeCountingId = prototypeCountingId;
 	}
 }

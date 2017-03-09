@@ -107,5 +107,11 @@ public interface PrototypeCountingFacade {
 	public byte[] getPrototypeCountingByExcel(PrototypeCountingDto prototypeCountingDto)throws ServiceException;
 
 	public PrototypeCountingDto getByPKey(Long primaryKey)throws ServiceException;
+	
+	/**
+	 * 后台JOB根据时间更新Counting状态
+	 * @throws ServiceException
+	 */
+	public void specialUpdate() throws ServiceException;
 
 }

@@ -92,6 +92,61 @@ public class PrototypeCountingManager {
 			}
 		}
 	}
+	
+	/**
+	 * 后台JOB根据时间更新Counting状态(每个月月底跑一次)
+	 * @param prototypeCounting
+	 * @throws ServiceException
+	 */
+	public void specialUpdate() throws ServiceException {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM"); // 设置时间格式
+
+		Date date = new Date();
+		// 每个月底把未盘点的样机状态置为过期
+		prototypeCountingMapper.specialUpdate(sdf.format(date));
+		
+		
+	}
+	/**
+	 * APP端样机盘点
+	 * @param prototypeCounting
+	 * @param token
+	 */
+	public void prototypeCountinged(PrototypeCounting prototypeCounting, String token)  throws ServiceException{
+		// 是否登录
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		// 登录信息是否为空
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getUser())){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		
+		if (prototypeCounting != null ) {
+			PrototypeCounting prototypeCountingDB = prototypeCountingMapper.getByPK(prototypeCounting.getId());
+			
+			SimpleDateFormat sdfTemp=new SimpleDateFormat("yyyy-MM-dd");
+			
+			try {
+				int i = sdfTemp.parse(prototypeCountingDB.getCountingTime()).compareTo(new Date());
+				// 计划盘点时间小于当前时间，延迟
+				if (i < 0) {
+					prototypeCounting.setStatus(3);	// 延迟
+				} else if (i ==0 ) {
+					prototypeCounting.setStatus(2);	// 正常
+				}
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			prototypeCounting.setCountingBy(userContext.getUserCode());
+			
+			prototypeCountingMapper.update(prototypeCounting);
+		}
+	}
 
 	public byte[] getPrototypeCountingByExcel(PrototypeCountingDto prototypeCountingDto)throws ServiceException  {
 		String[] headers = {"序号","事业部","品牌","上传批次号","国家","城市","门店代码","门店名称","IMEI号","样机机型","计划盘点日期","上传时间",

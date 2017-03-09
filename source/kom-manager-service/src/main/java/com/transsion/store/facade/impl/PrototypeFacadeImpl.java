@@ -66,14 +66,14 @@ public class PrototypeFacadeImpl implements PrototypeFacade {
 	}
 
 	/**
-	 * 根据查询条件查询所有记录
+	 * 根据查询条件查询
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<Prototype> listByProperty(Prototype prototype)
+	public List<PrototypeDto> listByProperty(PrototypeDto prototypeDto)
 			throws ServiceException
 	{
-		return prototypeService.listByProperty(prototype);
+		return prototypeService.listByProperty(prototypeDto);
 	}
 	
 	/**
