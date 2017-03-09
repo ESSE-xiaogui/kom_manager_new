@@ -482,4 +482,11 @@
 	<select id="queryShopExtensionByShopId" parameterType="java.lang.Long" resultMap="ShopExtensionResultMapper">
 		SELECT s.*, a.NAME_EN AS bizCategoryName , t.NAME_EN AS relationshipName FROM T_SHOP_EXTENSION s LEFT JOIN T_ATTRIBUTE a ON s.BIZ_CATEGORY = a.ID LEFT JOIN T_ATTRIBUTE t ON s.RELATIONSHIP = t.ID WHERE s.SHOP_ID = #{shopId}
 	</select>
+
+	<select id="findShopExtensionByParam" parameterType="java.lang.Long" resultMap="ShopExtensionResultMapper">
+		SELECT e.ID FROM T_SHOP_EXTENSION e
+		LEFT JOIN T_SHOP p ON p.ID = e.SHOP_ID
+		LEFT JOIN T_USER_SHOP us ON us.SHOP_ID = p.ID
+		WHERE p.ID = #{shopId} AND us.USER_ID = #{userId}  
+	</select>
 </mapper>

@@ -36,4 +36,7 @@ public interface ShopMaterielMapper extends GenericIBatisMapper<ShopMateriel, ja
     public List<ShopMateriel> queryShopMaterielListByShopId(Long shopId) throws DataAccessFailureException;
 
 	public List<ShopMaterielDto> listShopMaterielByProperty(@Param("shopMaterielDto")ShopMaterielDto shopMaterielDto)throws DataAccessFailureException;
+
+	public ShopMateriel findShopMaterielByParam(@Param("shopId")Long shopId,@Param("userId")Long userId)throws DataAccessFailureException;
+
 }

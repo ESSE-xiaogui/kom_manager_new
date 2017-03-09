@@ -1144,4 +1144,11 @@
 		LEFT JOIN T_USER_SHOP up ON up.SHOP_ID = p.ID
 		WHERE p.ID= #{id} AND USER_ID = #{userId}
 	</select>
+	<select id="findShopExist" parameterType="ShopQueryDto"	resultType="int">
+		SELECT COUNT(*) FROM T_SHOP p
+		LEFT JOIN T_USER_SHOP up ON up.SHOP_ID = p.ID
+		WHERE 1=1
+		AND p.SHOP_NAME = #{shopName} 
+		AND up.USER_ID = #{userId}
+	</select>
 </mapper>

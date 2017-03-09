@@ -29,6 +29,7 @@ import com.transsion.store.dto.ShopChildrenDto;
 import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.ShopLoginDto;
 import com.transsion.store.dto.ShopParamDto;
+import com.transsion.store.dto.ShopQueryDto;
 import com.transsion.store.dto.ShopResponseInfoDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.transsion.store.dto.VisitPlanInfoDto;
@@ -59,5 +60,6 @@ public interface ShopMapper extends GenericIBatisMapper<Shop, java.lang.Long> {
 	public List<VisitPlanInfoDto> findShops(@Param("userId")Long userId) throws DataAccessFailureException;
 	public List<ShopResponseInfoDto> findShopList(@Param("userId")Long userId) throws DataAccessFailureException;
 	public ShopParamDto findShopByParam(@Param("id")Long id,@Param("userId")Long userId)throws DataAccessFailureException;
+	public int findShopExist(ShopQueryDto sq) throws DataAccessFailureException;
 	
 }

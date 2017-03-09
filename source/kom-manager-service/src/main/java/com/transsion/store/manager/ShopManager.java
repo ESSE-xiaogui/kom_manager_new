@@ -27,6 +27,7 @@ import com.transsion.store.dto.ShopExtensionDto;
 import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.ShopLoginDto;
 import com.transsion.store.dto.ShopParamDto;
+import com.transsion.store.dto.ShopQueryDto;
 import com.transsion.store.dto.ShopResponseDto;
 import com.transsion.store.dto.ShopResponseInfoDto;
 import com.transsion.store.dto.ShopUploadDto;
@@ -585,10 +586,11 @@ public class ShopManager {
 		/**
 		 * 2、查询数据库中是否存在此店铺名称
 		 * */
-		Shop shops = new Shop();
-		shops.setShopName(shopParamDto.getShopName());
-		int shopNameCount = shopMapper.findByCount(shops);
-		if(shopNameCount>0){
+		ShopQueryDto sq = new ShopQueryDto();
+		sq.setUserId(userContext.getUser().getId());
+		sq.setShopName(shopParamDto.getShopName());
+		int count = shopMapper.findShopExist(sq);
+		if(count>0){
 			shopDto.setId(shopParamDto.getId());
 			shopDto.setShopName(shopParamDto.getShopName());
 			shopDto.setDay(systemDateService.getCurrentDate());
@@ -682,5 +684,87 @@ public class ShopManager {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		 return shopMapper.findShopByParam(shopParamDto.getId(),new Long(userContext.getUser().getId()));
+	}
+	
+	public Boolean updateShopDetails(String token,ShopParamDto shopParamDto) throws ServiceException{
+		if(UtilHelper.isEmpty(token)){			
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		if(UtilHelper.isEmpty(shopParamDto)){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext)
+						|| UtilHelper.isEmpty(userContext.getUser())
+						|| UtilHelper.isEmpty(userContext.getUser().getId())){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		ShopQueryDto sq = new ShopQueryDto();
+		sq.setUserId(userContext.getUser().getId());
+		sq.setShopName(shopParamDto.getShopName());
+		int count = shopMapper.findShopExist(sq);
+		if(count>0){
+			throw new ServiceException(ExceptionDef.ERROR_SHOP_ALREADY_EXIST.getName());
+		}
+		//1.更新店铺信息
+		Shop shop = new Shop();
+		shop.setId(shopParamDto.getId());
+		shop.setShopCode("1");
+		shop.setShopName(shopParamDto.getShopName());
+		shop.setCompanyId(userContext.getCompanyId().intValue());
+		shop.setCountry(shopParamDto.getCountry().intValue());
+		shop.setParentId(shopParamDto.getCountry());
+		shop.setRegionId(shopParamDto.getCity());
+		shop.setCity(shopParamDto.getCity().intValue());
+		shop.setShopIcon("");
+		shop.setAddress(shopParamDto.getAddress());
+		shop.setGradeId(shopParamDto.getGradeId());
+		shop.setBizId(shopParamDto.getBizId());		
+		shop.setOwnerName(shopParamDto.getOwnerName());
+		shop.setOwnerPhone(shopParamDto.getOwnerPhone());
+		shop.setPurchasChannel("");
+		shop.setOpenDate(systemDateService.getCurrentDate());
+		//申请中
+		shop.setStatus(2);
+		shop.setIsInactive(1);
+		shop.setRemark(shopParamDto.getRemark());
+		shop.setCreateBy(userContext.getUserCode());
+		shop.setCreateDate(systemDateService.getCurrentDate());
+		shop.setUpdateBy(userContext.getUserCode());
+		shop.setUpdateDate(systemDateService.getCurrentDate());
+		shopMapper.update(shop);
+		
+		//2.更新店铺扩展信息
+		ShopExtension shope = shopExtensionMapper.findShopExtensionByParam(shop.getId(),userContext.getUser().getId());
+		if(!UtilHelper.isEmpty(shope)){
+		ShopExtension shopExtension = new ShopExtension();
+		shopExtension.setId(shope.getId());
+		shopExtension.setShopId(shop.getId());
+		shopExtension.setBrandOne(shopParamDto.getBrandsFirst());
+		shopExtension.setBrandTwo(shopParamDto.getBrandsTwo());
+		shopExtension.setBrandThree(shopParamDto.getBrandsThree());
+		
+		//促销员
+		shopExtension.setPromoter(shopParamDto.getItelPromoter());
+		//督导
+		shopExtension.setSupervisor(shopParamDto.getShopAssistant());
+		//总销售量
+		shopExtension.setSaleTotalQty(new Long(shopParamDto.getTotalnum()));
+		//itel 当前销售数量
+		shopExtension.setSaleBrandspQty(new Long(shopParamDto.getCurrentnum()));
+		shopExtensionMapper.update(shopExtension);
+		}
+		
+		//3.更新物料信息
+		ShopMateriel shopm = shopMaterielMapper.findShopMaterielByParam(shop.getId(),userContext.getUser().getId());
+		ShopMateriel sm = new ShopMateriel();
+		if(!UtilHelper.isEmpty(shopm)){
+			sm.setId(shopm.getId());
+			sm.setMaterielId(shopParamDto.getMaterielId());
+			sm.setShopId(shop.getId());
+			sm.setMaterielQty(1);
+			shopMaterielMapper.update(sm);
+		}
+		return Boolean.TRUE;
 	}
 }
