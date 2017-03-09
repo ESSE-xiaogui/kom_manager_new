@@ -65,6 +65,8 @@
 	<resultMap id="StatShopModelSaleDtoResultMapper" type="StatShopModelSaleDto">
 		<result column="MODEL_CODE" property="modelCode"/>
 		<result column="SALE_TARGET" property="targetSaleQty"/>
+		<result column="SALE_CURRENT" property="currentSaleQty"/>
+		<result column="SALE_FOURWEEKS" property="fourSaleQty"/>
 	</resultMap>
 	
 	<sql id="commonColumns">
@@ -296,8 +298,14 @@
         	<when test="key == 'shopId'">
 				SHOP_ID ${value}
             </when>
+            <when test="key == 'modelId'">
+				MODEL_ID ${value}
+            </when>
         	<when test="key == 'shopCode'">
 				gm.SHOP_CODE ${value}
+            </when>
+            <when test="key == 'modelCode'">
+				MODEL_CODE ${value}
             </when>
             <when test="key == 'shopName'">
 				SHOP_NAME ${value}
@@ -441,7 +449,7 @@
 	</select>
 	
 	<select id="queryModelSaleTargetByShopId" resultMap="StatShopModelSaleDtoResultMapper">
-		SELECT MODEL_CODE, SALE_TARGET FROM T_GOAL_MODEL WHERE SHOP_ID = #{shopId} AND GOAL_MONTH = #{goalMonth} 
+		SELECT MODEL_CODE, SALE_TARGET, SALE_CURRENT, SALE_FOURWEEKS FROM T_GOAL_MODEL WHERE SHOP_ID = #{shopId} AND SUBSTRING(GOAL_MONTH, 1, 7) = #{goalMonth} 
 		AND MODEL_CODE IN 
 		 <foreach item="modelCode" collection="modelCodeList" separator="," open="("
 			close=")" index="">

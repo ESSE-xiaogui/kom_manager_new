@@ -10,7 +10,7 @@ public class GoalSupervisorInfoDto implements Serializable{
 	private static final long serialVersionUID = 5573819082519566803L;
 	
 	/**
-	  *	促销员目标销量表,ID自动增长
+	  *	巡店员目标销量表,ID自动增长
 	  */
 	private java.lang.Long id;
 
