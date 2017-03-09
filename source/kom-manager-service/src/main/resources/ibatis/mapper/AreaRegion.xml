@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2017 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2017-3-9 15:06:14
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.AreaRegionMapper">
+	<resultMap id="AreaRegionResultMapper" type="AreaRegion">
+		<result column="RECORD_ID" property="recordId"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="AREA_ID" property="areaId"/>
+		<result column="REGION_ID" property="regionId"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 RECORD_ID
+		, COMPANY_ID
+		, AREA_ID
+		, REGION_ID
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 COMPANY_ID
+		, AREA_ID
+		, REGION_ID
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 RECORD_ID
+		, COMPANY_ID
+		, AREA_ID
+		, REGION_ID
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, date_format(CREATED_TIME, '%Y-%m-%d %H:%i:%s') CREATED_TIME
+		, UPDATED_BY
+		, date_format(UPDATED_TIME, '%Y-%m-%d %H:%i:%s') UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="recordId!= null and recordId!= ''"> 
+			AND RECORD_ID = #{recordId}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID = #{companyId}
+		</if>
+		<if test="areaId!= null and areaId!= ''"> 
+			AND AREA_ID = #{areaId}
+		</if>
+		<if test="regionId!= null and regionId!= ''"> 
+			AND REGION_ID = #{regionId}
+		</if>
+		<if test="isInactive!= null and isInactive!= ''"> 
+			AND IS_INACTIVE = #{isInactive}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK = #{remark}
+		</if>
+		<if test="createdBy!= null and createdBy!= ''"> 
+			AND CREATED_BY = #{createdBy}
+		</if>
+		<if test="createdTime!= null and createdTime!= ''"> 
+			AND CREATED_TIME = str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updatedBy!= null and updatedBy!= ''"> 
+			AND UPDATED_BY = #{updatedBy}
+		</if>
+		<if test="updatedTime!= null and updatedTime!= ''"> 
+			AND UPDATED_TIME = str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION = #{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="areaRegion != null">
+            <if test="areaRegion.recordId!= null and areaRegion.recordId!= ''">
+				AND RECORD_ID = #{areaRegion.recordId}
+            </if>
+            <if test="areaRegion.companyId!= null and areaRegion.companyId!= ''">
+				AND COMPANY_ID = #{areaRegion.companyId}
+            </if>
+            <if test="areaRegion.areaId!= null and areaRegion.areaId!= ''">
+				AND AREA_ID = #{areaRegion.areaId}
+            </if>
+            <if test="areaRegion.regionId!= null and areaRegion.regionId!= ''">
+				AND REGION_ID = #{areaRegion.regionId}
+            </if>
+            <if test="areaRegion.isInactive!= null and areaRegion.isInactive!= ''">
+				AND IS_INACTIVE = #{areaRegion.isInactive}
+            </if>
+            <if test="areaRegion.remark!= null and areaRegion.remark!= ''">
+				AND REMARK = #{areaRegion.remark}
+            </if>
+            <if test="areaRegion.createdBy!= null and areaRegion.createdBy!= ''">
+				AND CREATED_BY = #{areaRegion.createdBy}
+            </if>
+            <if test="areaRegion.createdTime!= null and areaRegion.createdTime!= ''">
+				AND CREATED_TIME = str_to_date(#{areaRegion.createdTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="areaRegion.updatedBy!= null and areaRegion.updatedBy!= ''">
+				AND UPDATED_BY = #{areaRegion.updatedBy}
+            </if>
+            <if test="areaRegion.updatedTime!= null and areaRegion.updatedTime!= ''">
+				AND UPDATED_TIME = str_to_date(#{areaRegion.updatedTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="areaRegion.version!= null and areaRegion.version!= ''">
+				AND VERSION = #{areaRegion.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'recordId'">
+				RECORD_ID ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'areaId'">
+				AREA_ID ${value}
+            </when>
+        	<when test="key == 'regionId'">
+				REGION_ID ${value}
+            </when>
+        	<when test="key == 'isInactive'">
+				IS_INACTIVE ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createdBy'">
+				CREATED_BY ${value}
+            </when>
+        	<when test="key == 'createdTime'">
+				CREATED_TIME ${value}
+            </when>
+        	<when test="key == 'updatedBy'">
+				UPDATED_BY ${value}
+            </when>
+        	<when test="key == 'updatedTime'">
+				UPDATED_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="recordId" parameterType="AreaRegion">
+		<![CDATA[ INSERT INTO T_AREA_REGION ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{companyId}
+			, #{areaId}
+			, #{regionId}
+			, #{isInactive}
+			, #{remark}
+			, #{createdBy}
+			, str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="AreaRegion">
+		<![CDATA[ UPDATE T_AREA_REGION SET 
+			 RECORD_ID = #{recordId}
+			, COMPANY_ID = #{companyId}
+			, AREA_ID = #{areaId}
+			, REGION_ID = #{regionId}
+			, IS_INACTIVE = #{isInactive}
+			, REMARK = #{remark}
+			, CREATED_BY = #{createdBy}
+			, CREATED_TIME = str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATED_BY = #{updatedBy}
+			, UPDATED_TIME = str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION = #{version}
+		WHERE RECORD_ID = #{recordId}  ]]>
+	</update>
+	<insert id="saveOrUpdate" parameterType="Brand">
+		<![CDATA[ INSERT INTO T_AREA_REGION ( ]]>
+		<include refid="commonColumns"/>
+		<![CDATA[
+		) VALUES (
+			 #{recordId}
+			, #{companyId}
+			, #{areaId}
+			, #{regionId}
+			, #{isInactive}
+			, #{remark}
+			, #{createdBy}
+			, str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+		) ON DUPLICATE KEY UPDATE
+			 RECORD_ID = VALUES(RECORD_ID)
+			, COMPANY_ID = VALUES(COMPANY_ID)
+			, AREA_ID = VALUES(AREA_ID)
+			, REGION_ID = VALUES(REGION_ID)
+			, IS_INACTIVE = VALUES(IS_INACTIVE)
+			, REMARK = VALUES(REMARK)
+			, CREATED_BY = VALUES(CREATED_BY)
+			, CREATED_TIME = VALUES(CREATED_TIME)
+			, UPDATED_BY = VALUES(UPDATED_BY)
+			, UPDATED_TIME = VALUES(UPDATED_TIME)
+			, VERSION = VALUES(VERSION)
+		]]>
+	</insert>
+	<insert id="batchSaveOrUpdate" parameterType="List">
+		<![CDATA[ INSERT INTO T_AREA_REGION ( ]]>
+		<include refid="commonColumns"/>
+		<![CDATA[ ) VALUES ]]>
+        <foreach collection="list" item="item" index="index" separator=",">
+			(
+			 #{item.recordId}
+			, #{item.companyId}
+			, #{item.areaId}
+			, #{item.regionId}
+			, #{item.isInactive}
+			, #{item.remark}
+			, #{item.createdBy}
+			, str_to_date(#{item.createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{item.updatedBy}
+			, str_to_date(#{item.updatedTime},'%Y-%m-%d %H:%i:%s')
+			, #{item.version}
+        	)
+        </foreach>
+        <![CDATA[ ON DUPLICATE KEY UPDATE
+		 RECORD_ID = VALUES(RECORD_ID)
+		, COMPANY_ID = VALUES(COMPANY_ID)
+		, AREA_ID = VALUES(AREA_ID)
+		, REGION_ID = VALUES(REGION_ID)
+		, IS_INACTIVE = VALUES(IS_INACTIVE)
+		, REMARK = VALUES(REMARK)
+		, CREATED_BY = VALUES(CREATED_BY)
+		, CREATED_TIME = VALUES(CREATED_TIME)
+		, UPDATED_BY = VALUES(UPDATED_BY)
+		, UPDATED_TIME = VALUES(UPDATED_TIME)
+		, VERSION = VALUES(VERSION)
+		]]>
+	</insert>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_AREA_REGION WHERE RECORD_ID = #{recordId}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_AREA_REGION WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" RECORD_ID IN(" separator="," close=") ">
+			#{id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="AreaRegion">
+		DELETE FROM T_AREA_REGION WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="AreaRegionResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_AREA_REGION WHERE RECORD_ID = #{recordId}  
+	</select>
+	<select id="list" resultMap="AreaRegionResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_AREA_REGION
+	</select>
+	<select id="listByProperty" parameterType="AreaRegion" resultMap="AreaRegionResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_AREA_REGION WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="AreaRegion" resultMap="AreaRegionResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_AREA_REGION WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="AreaRegion" resultType="int">
+		SELECT count(1) AS totalcount FROM T_AREA_REGION WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

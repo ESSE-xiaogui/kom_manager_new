@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2017 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2017-3-9 15:06:14
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.AreaMapper">
+	<resultMap id="AreaResultMapper" type="Area">
+		<result column="AREA_ID" property="areaId"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="AREA_NAME" property="areaName"/>
+		<result column="AREA_TYPE" property="areaType"/>
+		<result column="PARENT_ID" property="parentId"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 AREA_ID
+		, COMPANY_ID
+		, AREA_NAME
+		, AREA_TYPE
+		, PARENT_ID
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 COMPANY_ID
+		, AREA_NAME
+		, AREA_TYPE
+		, PARENT_ID
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 AREA_ID
+		, COMPANY_ID
+		, AREA_NAME
+		, AREA_TYPE
+		, PARENT_ID
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, date_format(CREATED_TIME, '%Y-%m-%d %H:%i:%s') CREATED_TIME
+		, UPDATED_BY
+		, date_format(UPDATED_TIME, '%Y-%m-%d %H:%i:%s') UPDATED_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="areaId!= null and areaId!= ''"> 
+			AND AREA_ID = #{areaId}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID = #{companyId}
+		</if>
+		<if test="areaName!= null and areaName!= ''"> 
+			AND AREA_NAME = #{areaName}
+		</if>
+		<if test="areaType!= null and areaType!= ''"> 
+			AND AREA_TYPE = #{areaType}
+		</if>
+		<if test="parentId!= null and parentId!= ''"> 
+			AND PARENT_ID = #{parentId}
+		</if>
+		<if test="isInactive!= null and isInactive!= ''"> 
+			AND IS_INACTIVE = #{isInactive}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK = #{remark}
+		</if>
+		<if test="createdBy!= null and createdBy!= ''"> 
+			AND CREATED_BY = #{createdBy}
+		</if>
+		<if test="createdTime!= null and createdTime!= ''"> 
+			AND CREATED_TIME = str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updatedBy!= null and updatedBy!= ''"> 
+			AND UPDATED_BY = #{updatedBy}
+		</if>
+		<if test="updatedTime!= null and updatedTime!= ''"> 
+			AND UPDATED_TIME = str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION = #{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="area != null">
+            <if test="area.areaId!= null and area.areaId!= ''">
+				AND AREA_ID = #{area.areaId}
+            </if>
+            <if test="area.companyId!= null and area.companyId!= ''">
+				AND COMPANY_ID = #{area.companyId}
+            </if>
+            <if test="area.areaName!= null and area.areaName!= ''">
+				AND AREA_NAME = #{area.areaName}
+            </if>
+            <if test="area.areaType!= null and area.areaType!= ''">
+				AND AREA_TYPE = #{area.areaType}
+            </if>
+            <if test="area.parentId!= null and area.parentId!= ''">
+				AND PARENT_ID = #{area.parentId}
+            </if>
+            <if test="area.isInactive!= null and area.isInactive!= ''">
+				AND IS_INACTIVE = #{area.isInactive}
+            </if>
+            <if test="area.remark!= null and area.remark!= ''">
+				AND REMARK = #{area.remark}
+            </if>
+            <if test="area.createdBy!= null and area.createdBy!= ''">
+				AND CREATED_BY = #{area.createdBy}
+            </if>
+            <if test="area.createdTime!= null and area.createdTime!= ''">
+				AND CREATED_TIME = str_to_date(#{area.createdTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="area.updatedBy!= null and area.updatedBy!= ''">
+				AND UPDATED_BY = #{area.updatedBy}
+            </if>
+            <if test="area.updatedTime!= null and area.updatedTime!= ''">
+				AND UPDATED_TIME = str_to_date(#{area.updatedTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="area.version!= null and area.version!= ''">
+				AND VERSION = #{area.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'areaId'">
+				AREA_ID ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'areaName'">
+				AREA_NAME ${value}
+            </when>
+        	<when test="key == 'areaType'">
+				AREA_TYPE ${value}
+            </when>
+        	<when test="key == 'parentId'">
+				PARENT_ID ${value}
+            </when>
+        	<when test="key == 'isInactive'">
+				IS_INACTIVE ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createdBy'">
+				CREATED_BY ${value}
+            </when>
+        	<when test="key == 'createdTime'">
+				CREATED_TIME ${value}
+            </when>
+        	<when test="key == 'updatedBy'">
+				UPDATED_BY ${value}
+            </when>
+        	<when test="key == 'updatedTime'">
+				UPDATED_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="areaId" parameterType="Area">
+		<![CDATA[ INSERT INTO T_AREA ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{companyId}
+			, #{areaName}
+			, #{areaType}
+			, #{parentId}
+			, #{isInactive}
+			, #{remark}
+			, #{createdBy}
+			, str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="Area">
+		<![CDATA[ UPDATE T_AREA SET 
+			 AREA_ID = #{areaId}
+			, COMPANY_ID = #{companyId}
+			, AREA_NAME = #{areaName}
+			, AREA_TYPE = #{areaType}
+			, PARENT_ID = #{parentId}
+			, IS_INACTIVE = #{isInactive}
+			, REMARK = #{remark}
+			, CREATED_BY = #{createdBy}
+			, CREATED_TIME = str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATED_BY = #{updatedBy}
+			, UPDATED_TIME = str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION = #{version}
+		WHERE AREA_ID = #{areaId}  ]]>
+	</update>
+	<insert id="saveOrUpdate" parameterType="Brand">
+		<![CDATA[ INSERT INTO T_AREA ( ]]>
+		<include refid="commonColumns"/>
+		<![CDATA[
+		) VALUES (
+			 #{areaId}
+			, #{companyId}
+			, #{areaName}
+			, #{areaType}
+			, #{parentId}
+			, #{isInactive}
+			, #{remark}
+			, #{createdBy}
+			, str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+		) ON DUPLICATE KEY UPDATE
+			 AREA_ID = VALUES(AREA_ID)
+			, COMPANY_ID = VALUES(COMPANY_ID)
+			, AREA_NAME = VALUES(AREA_NAME)
+			, AREA_TYPE = VALUES(AREA_TYPE)
+			, PARENT_ID = VALUES(PARENT_ID)
+			, IS_INACTIVE = VALUES(IS_INACTIVE)
+			, REMARK = VALUES(REMARK)
+			, CREATED_BY = VALUES(CREATED_BY)
+			, CREATED_TIME = VALUES(CREATED_TIME)
+			, UPDATED_BY = VALUES(UPDATED_BY)
+			, UPDATED_TIME = VALUES(UPDATED_TIME)
+			, VERSION = VALUES(VERSION)
+		]]>
+	</insert>
+	<insert id="batchSaveOrUpdate" parameterType="List">
+		<![CDATA[ INSERT INTO T_AREA ( ]]>
+		<include refid="commonColumns"/>
+		<![CDATA[ ) VALUES ]]>
+        <foreach collection="list" item="item" index="index" separator=",">
+			(
+			 #{item.areaId}
+			, #{item.companyId}
+			, #{item.areaName}
+			, #{item.areaType}
+			, #{item.parentId}
+			, #{item.isInactive}
+			, #{item.remark}
+			, #{item.createdBy}
+			, str_to_date(#{item.createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{item.updatedBy}
+			, str_to_date(#{item.updatedTime},'%Y-%m-%d %H:%i:%s')
+			, #{item.version}
+        	)
+        </foreach>
+        <![CDATA[ ON DUPLICATE KEY UPDATE
+		 AREA_ID = VALUES(AREA_ID)
+		, COMPANY_ID = VALUES(COMPANY_ID)
+		, AREA_NAME = VALUES(AREA_NAME)
+		, AREA_TYPE = VALUES(AREA_TYPE)
+		, PARENT_ID = VALUES(PARENT_ID)
+		, IS_INACTIVE = VALUES(IS_INACTIVE)
+		, REMARK = VALUES(REMARK)
+		, CREATED_BY = VALUES(CREATED_BY)
+		, CREATED_TIME = VALUES(CREATED_TIME)
+		, UPDATED_BY = VALUES(UPDATED_BY)
+		, UPDATED_TIME = VALUES(UPDATED_TIME)
+		, VERSION = VALUES(VERSION)
+		]]>
+	</insert>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_AREA WHERE AREA_ID = #{areaId}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_AREA WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" AREA_ID IN(" separator="," close=") ">
+			#{id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="Area">
+		DELETE FROM T_AREA WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="AreaResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_AREA WHERE AREA_ID = #{areaId}  
+	</select>
+	<select id="list" resultMap="AreaResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_AREA
+	</select>
+	<select id="listByProperty" parameterType="Area" resultMap="AreaResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_AREA WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="Area" resultMap="AreaResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_AREA WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="Area" resultType="int">
+		SELECT count(1) AS totalcount FROM T_AREA WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

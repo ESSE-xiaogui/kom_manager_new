@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2017 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2017-3-9 15:06:14
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.ShopDamageMapper">
+	<resultMap id="ShopDamageResultMapper" type="ShopDamage">
+		<result column="DAMAGE_ID" property="damageId"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="MATERIEL_ID" property="materielId"/>
+		<result column="DAMAGE_TIME" property="damageTime"/>
+		<result column="DESCRIPTION" property="description"/>
+		<result column="IMG_FIRST_URL" property="imgFirstUrl"/>
+		<result column="IMG_SECOND_URL" property="imgSecondUrl"/>
+		<result column="IMG_THIRD_URL" property="imgThirdUrl"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 DAMAGE_ID
+		, SHOP_ID
+		, MATERIEL_ID
+		, DAMAGE_TIME
+		, DESCRIPTION
+		, IMG_FIRST_URL
+		, IMG_SECOND_URL
+		, IMG_THIRD_URL
+		, REMARK
+		, CREATE_BY
+		, CREATE_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 SHOP_ID
+		, MATERIEL_ID
+		, DAMAGE_TIME
+		, DESCRIPTION
+		, IMG_FIRST_URL
+		, IMG_SECOND_URL
+		, IMG_THIRD_URL
+		, REMARK
+		, CREATE_BY
+		, CREATE_TIME
+		, UPDATE_BY
+		, UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 DAMAGE_ID
+		, SHOP_ID
+		, MATERIEL_ID
+		, date_format(DAMAGE_TIME, '%Y-%m-%d %H:%i:%s') DAMAGE_TIME
+		, DESCRIPTION
+		, IMG_FIRST_URL
+		, IMG_SECOND_URL
+		, IMG_THIRD_URL
+		, REMARK
+		, CREATE_BY
+		, date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+		, UPDATE_BY
+		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
+		, VERSION
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="damageId!= null and damageId!= ''"> 
+			AND DAMAGE_ID = #{damageId}
+		</if>
+		<if test="shopId!= null and shopId!= ''"> 
+			AND SHOP_ID = #{shopId}
+		</if>
+		<if test="materielId!= null and materielId!= ''"> 
+			AND MATERIEL_ID = #{materielId}
+		</if>
+		<if test="damageTime!= null and damageTime!= ''"> 
+			AND DAMAGE_TIME = str_to_date(#{damageTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="description!= null and description!= ''"> 
+			AND DESCRIPTION = #{description}
+		</if>
+		<if test="imgFirstUrl!= null and imgFirstUrl!= ''"> 
+			AND IMG_FIRST_URL = #{imgFirstUrl}
+		</if>
+		<if test="imgSecondUrl!= null and imgSecondUrl!= ''"> 
+			AND IMG_SECOND_URL = #{imgSecondUrl}
+		</if>
+		<if test="imgThirdUrl!= null and imgThirdUrl!= ''"> 
+			AND IMG_THIRD_URL = #{imgThirdUrl}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK = #{remark}
+		</if>
+		<if test="createBy!= null and createBy!= ''"> 
+			AND CREATE_BY = #{createBy}
+		</if>
+		<if test="createTime!= null and createTime!= ''"> 
+			AND CREATE_TIME = str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updateBy!= null and updateBy!= ''"> 
+			AND UPDATE_BY = #{updateBy}
+		</if>
+		<if test="updateTime!= null and updateTime!= ''"> 
+			AND UPDATE_TIME = str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="version!= null and version!= ''"> 
+			AND VERSION = #{version}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="shopDamage != null">
+            <if test="shopDamage.damageId!= null and shopDamage.damageId!= ''">
+				AND DAMAGE_ID = #{shopDamage.damageId}
+            </if>
+            <if test="shopDamage.shopId!= null and shopDamage.shopId!= ''">
+				AND SHOP_ID = #{shopDamage.shopId}
+            </if>
+            <if test="shopDamage.materielId!= null and shopDamage.materielId!= ''">
+				AND MATERIEL_ID = #{shopDamage.materielId}
+            </if>
+            <if test="shopDamage.damageTime!= null and shopDamage.damageTime!= ''">
+				AND DAMAGE_TIME = str_to_date(#{shopDamage.damageTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="shopDamage.description!= null and shopDamage.description!= ''">
+				AND DESCRIPTION = #{shopDamage.description}
+            </if>
+            <if test="shopDamage.imgFirstUrl!= null and shopDamage.imgFirstUrl!= ''">
+				AND IMG_FIRST_URL = #{shopDamage.imgFirstUrl}
+            </if>
+            <if test="shopDamage.imgSecondUrl!= null and shopDamage.imgSecondUrl!= ''">
+				AND IMG_SECOND_URL = #{shopDamage.imgSecondUrl}
+            </if>
+            <if test="shopDamage.imgThirdUrl!= null and shopDamage.imgThirdUrl!= ''">
+				AND IMG_THIRD_URL = #{shopDamage.imgThirdUrl}
+            </if>
+            <if test="shopDamage.remark!= null and shopDamage.remark!= ''">
+				AND REMARK = #{shopDamage.remark}
+            </if>
+            <if test="shopDamage.createBy!= null and shopDamage.createBy!= ''">
+				AND CREATE_BY = #{shopDamage.createBy}
+            </if>
+            <if test="shopDamage.createTime!= null and shopDamage.createTime!= ''">
+				AND CREATE_TIME = str_to_date(#{shopDamage.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="shopDamage.updateBy!= null and shopDamage.updateBy!= ''">
+				AND UPDATE_BY = #{shopDamage.updateBy}
+            </if>
+            <if test="shopDamage.updateTime!= null and shopDamage.updateTime!= ''">
+				AND UPDATE_TIME = str_to_date(#{shopDamage.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="shopDamage.version!= null and shopDamage.version!= ''">
+				AND VERSION = #{shopDamage.version}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'damageId'">
+				DAMAGE_ID ${value}
+            </when>
+        	<when test="key == 'shopId'">
+				SHOP_ID ${value}
+            </when>
+        	<when test="key == 'materielId'">
+				MATERIEL_ID ${value}
+            </when>
+        	<when test="key == 'damageTime'">
+				DAMAGE_TIME ${value}
+            </when>
+        	<when test="key == 'description'">
+				DESCRIPTION ${value}
+            </when>
+        	<when test="key == 'imgFirstUrl'">
+				IMG_FIRST_URL ${value}
+            </when>
+        	<when test="key == 'imgSecondUrl'">
+				IMG_SECOND_URL ${value}
+            </when>
+        	<when test="key == 'imgThirdUrl'">
+				IMG_THIRD_URL ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createBy'">
+				CREATE_BY ${value}
+            </when>
+        	<when test="key == 'createTime'">
+				CREATE_TIME ${value}
+            </when>
+        	<when test="key == 'updateBy'">
+				UPDATE_BY ${value}
+            </when>
+        	<when test="key == 'updateTime'">
+				UPDATE_TIME ${value}
+            </when>
+        	<when test="key == 'version'">
+				VERSION ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="damageId" parameterType="ShopDamage">
+		<![CDATA[ INSERT INTO T_SHOP_DAMAGE ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{shopId}
+			, #{materielId}
+			, str_to_date(#{damageTime},'%Y-%m-%d %H:%i:%s')
+			, #{description}
+			, #{imgFirstUrl}
+			, #{imgSecondUrl}
+			, #{imgThirdUrl}
+			, #{remark}
+			, #{createBy}
+			, str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, #{updateBy}
+			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="ShopDamage">
+		<![CDATA[ UPDATE T_SHOP_DAMAGE SET 
+			 DAMAGE_ID = #{damageId}
+			, SHOP_ID = #{shopId}
+			, MATERIEL_ID = #{materielId}
+			, DAMAGE_TIME = str_to_date(#{damageTime},'%Y-%m-%d %H:%i:%s')
+			, DESCRIPTION = #{description}
+			, IMG_FIRST_URL = #{imgFirstUrl}
+			, IMG_SECOND_URL = #{imgSecondUrl}
+			, IMG_THIRD_URL = #{imgThirdUrl}
+			, REMARK = #{remark}
+			, CREATE_BY = #{createBy}
+			, CREATE_TIME = str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATE_BY = #{updateBy}
+			, UPDATE_TIME = str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, VERSION = #{version}
+		WHERE DAMAGE_ID = #{damageId}  ]]>
+	</update>
+	<insert id="saveOrUpdate" parameterType="Brand">
+		<![CDATA[ INSERT INTO T_SHOP_DAMAGE ( ]]>
+		<include refid="commonColumns"/>
+		<![CDATA[
+		) VALUES (
+			 #{damageId}
+			, #{shopId}
+			, #{materielId}
+			, str_to_date(#{damageTime},'%Y-%m-%d %H:%i:%s')
+			, #{description}
+			, #{imgFirstUrl}
+			, #{imgSecondUrl}
+			, #{imgThirdUrl}
+			, #{remark}
+			, #{createBy}
+			, str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, #{updateBy}
+			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+			, #{version}
+		) ON DUPLICATE KEY UPDATE
+			 DAMAGE_ID = VALUES(DAMAGE_ID)
+			, SHOP_ID = VALUES(SHOP_ID)
+			, MATERIEL_ID = VALUES(MATERIEL_ID)
+			, DAMAGE_TIME = VALUES(DAMAGE_TIME)
+			, DESCRIPTION = VALUES(DESCRIPTION)
+			, IMG_FIRST_URL = VALUES(IMG_FIRST_URL)
+			, IMG_SECOND_URL = VALUES(IMG_SECOND_URL)
+			, IMG_THIRD_URL = VALUES(IMG_THIRD_URL)
+			, REMARK = VALUES(REMARK)
+			, CREATE_BY = VALUES(CREATE_BY)
+			, CREATE_TIME = VALUES(CREATE_TIME)
+			, UPDATE_BY = VALUES(UPDATE_BY)
+			, UPDATE_TIME = VALUES(UPDATE_TIME)
+			, VERSION = VALUES(VERSION)
+		]]>
+	</insert>
+	<insert id="batchSaveOrUpdate" parameterType="List">
+		<![CDATA[ INSERT INTO T_SHOP_DAMAGE ( ]]>
+		<include refid="commonColumns"/>
+		<![CDATA[ ) VALUES ]]>
+        <foreach collection="list" item="item" index="index" separator=",">
+			(
+			 #{item.damageId}
+			, #{item.shopId}
+			, #{item.materielId}
+			, str_to_date(#{item.damageTime},'%Y-%m-%d %H:%i:%s')
+			, #{item.description}
+			, #{item.imgFirstUrl}
+			, #{item.imgSecondUrl}
+			, #{item.imgThirdUrl}
+			, #{item.remark}
+			, #{item.createBy}
+			, str_to_date(#{item.createTime},'%Y-%m-%d %H:%i:%s')
+			, #{item.updateBy}
+			, str_to_date(#{item.updateTime},'%Y-%m-%d %H:%i:%s')
+			, #{item.version}
+        	)
+        </foreach>
+        <![CDATA[ ON DUPLICATE KEY UPDATE
+		 DAMAGE_ID = VALUES(DAMAGE_ID)
+		, SHOP_ID = VALUES(SHOP_ID)
+		, MATERIEL_ID = VALUES(MATERIEL_ID)
+		, DAMAGE_TIME = VALUES(DAMAGE_TIME)
+		, DESCRIPTION = VALUES(DESCRIPTION)
+		, IMG_FIRST_URL = VALUES(IMG_FIRST_URL)
+		, IMG_SECOND_URL = VALUES(IMG_SECOND_URL)
+		, IMG_THIRD_URL = VALUES(IMG_THIRD_URL)
+		, REMARK = VALUES(REMARK)
+		, CREATE_BY = VALUES(CREATE_BY)
+		, CREATE_TIME = VALUES(CREATE_TIME)
+		, UPDATE_BY = VALUES(UPDATE_BY)
+		, UPDATE_TIME = VALUES(UPDATE_TIME)
+		, VERSION = VALUES(VERSION)
+		]]>
+	</insert>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_SHOP_DAMAGE WHERE DAMAGE_ID = #{damageId}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_SHOP_DAMAGE WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" DAMAGE_ID IN(" separator="," close=") ">
+			#{id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="ShopDamage">
+		DELETE FROM T_SHOP_DAMAGE WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="ShopDamageResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_SHOP_DAMAGE WHERE DAMAGE_ID = #{damageId}  
+	</select>
+	<select id="list" resultMap="ShopDamageResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_SHOP_DAMAGE
+	</select>
+	<select id="listByProperty" parameterType="ShopDamage" resultMap="ShopDamageResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_SHOP_DAMAGE WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="ShopDamage" resultMap="ShopDamageResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_SHOP_DAMAGE WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="ShopDamage" resultType="int">
+		SELECT count(1) AS totalcount FROM T_SHOP_DAMAGE WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>
