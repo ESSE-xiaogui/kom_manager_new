@@ -16,17 +16,20 @@
 **/
 package com.transsion.store.facade.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.ReportSaleDaily;
+import com.transsion.store.dto.PrototypeCountingDto;
 import com.transsion.store.dto.ReportSaleDailyDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.ReportSaleDailyFacade;
 import com.transsion.store.service.ReportSaleDailyService;
+import com.transsion.store.utils.ExcelUtils;
 
 @Component("reportSaleDailyFacade")
 public class ReportSaleDailyFacadeImpl implements ReportSaleDailyFacade {
@@ -165,5 +168,16 @@ public class ReportSaleDailyFacadeImpl implements ReportSaleDailyFacade {
 	public int findByCount(ReportSaleDaily reportSaleDaily) throws ServiceException
 	{
 		return reportSaleDailyService.findByCount(reportSaleDaily);
+	}
+	
+	/**
+	 * 导出EXCEL
+	 * @param reportSaleDailyDto
+	 * @return
+	 * @throws ServiceException
+	 */
+	public byte[] getReportSaleDailyByExcel(ReportSaleDailyDto reportSaleDailyDto) throws ServiceException {
+		
+		return reportSaleDailyService.getReportSaleDailyByExcel(reportSaleDailyDto);
 	}
 }

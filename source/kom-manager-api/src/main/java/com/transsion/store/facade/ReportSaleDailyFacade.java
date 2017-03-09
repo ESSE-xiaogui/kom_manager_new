@@ -118,5 +118,13 @@ public interface ReportSaleDailyFacade {
 	 */
 	public Pagination<ReportSaleDailyDto> listPaginationByProperty(Pagination<ReportSaleDailyDto> pagination, ReportSaleDailyDto reportSaleDailyDto)
 			throws ServiceException;
+	
+	/**
+	 * 
+	 * @param reportSaleDailyDto
+	 * @return
+	 * @throws ServiceException
+	 */
+	public byte[] getReportSaleDailyByExcel(ReportSaleDailyDto reportSaleDailyDto) throws ServiceException;
 
 }

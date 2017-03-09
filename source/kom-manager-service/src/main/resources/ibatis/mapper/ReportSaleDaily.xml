@@ -181,7 +181,7 @@
 		, date_format(saleDaily.CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
 		, saleDaily.UPDATED_BY
 		, date_format(saleDaily.UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
-		, grade.GRADE_NAME
+		, saleDaily.GRADE_NAME
 	</sql>
 	
 	<sql id="commonCondition">
@@ -282,14 +282,8 @@
             <if test="reportSaleDailyDto.userCode!= null and reportSaleDailyDto.userCode!= ''">
 				AND saleDaily.USER_CODE = #{reportSaleDailyDto.userCode}
             </if>
-            <if test="reportSaleDailyDto.brandId!= null and reportSaleDailyDto.brandId!= ''">
-				AND brand.ID = #{reportSaleDailyDto.brandId}
-            </if>
             <if test="reportSaleDailyDto.brandCode!= null and reportSaleDailyDto.brandCode!= ''">
 				AND saleDaily.BRAND_CODE = #{reportSaleDailyDto.brandCode}
-            </if>
-            <if test="reportSaleDailyDto.modelId!= null and reportSaleDailyDto.modelId!= ''">
-				AND model.ID = #{reportSaleDailyDto.modelId}
             </if>
             <if test="reportSaleDailyDto.modelCode!= null and reportSaleDailyDto.modelCode!= ''">
 				AND saleDaily.MODEL_CODE = #{reportSaleDailyDto.modelCode}
@@ -312,7 +306,7 @@
 				AND saleDaily.SHOP_NAME = #{reportSaleDailyDto.shopName}
             </if>
             <if test="reportSaleDailyDto.grandId != null and reportSaleDailyDto.grandId!= ''">
-				AND shop.GRADE_ID = #{reportSaleDailyDto.grandId}
+				AND saleDaily.GRADE_ID = #{reportSaleDailyDto.grandId}
             </if>
             <if test="reportSaleDailyDto.empName!= null and reportSaleDailyDto.empName!= ''">
 				AND saleDaily.EMP_NAME = #{reportSaleDailyDto.empName}
@@ -324,8 +318,14 @@
 				AND saleDaily.CITY_NAME = #{reportSaleDailyDto.cityName}
             </if>
             <if test="reportSaleDailyDto.regionId!= null and reportSaleDailyDto.regionId!= ''">
-				AND r.ID = #{reportSaleDailyDto.regionId}
+				AND saleDaily.ID = #{reportSaleDailyDto.regionId}
             </if>
+            <if test="reportSaleDailyDto.regionType!= null and reportSaleDailyDto.regionType!= '' and reportSaleDailyDto.regionType == 2">
+				AND saleDaily.COUNTRY_NAME = #{reportSaleDailyDto.regionName}
+	        </if>
+			<if test="reportSaleDailyDto.regionType!= null and reportSaleDailyDto.regionType!= '' and reportSaleDailyDto.regionType == 4">
+				AND saleDaily.CITY_NAME = #{reportSaleDailyDto.regionName}
+	        </if>
             <if test="reportSaleDailyDto.saleQty!= null and reportSaleDaily.saleQty!= ''">
 				AND saleDaily.SALE_QTY = #{reportSaleDailyDto.saleQty}
             </if>
@@ -657,18 +657,6 @@
 	<select id="listPaginationByProperty" parameterType="ReportSaleDailyDto" resultMap="ReportSaleDailyResultMapper">
 		SELECT <include refid="commonSpeProcessDateColumns"/>
 		FROM T_REPORT_SALE_DAILY saleDaily 
-		left join T_SHOP shop on saleDaily.SHOP_ID = shop.ID
-		left join T_SHOP_GRADE grade on grade.ID = shop.GRADE_ID
-		left join T_BRAND brand on brand.BRAND_CODE = saleDaily.BRAND_CODE
-		left join T_MODEL model on model.MODEL_CODE = saleDaily.MODEL_CODE
-		<if test="reportSaleDailyDto != null">
-			<if test="reportSaleDailyDto.regionType!= null and reportSaleDailyDto.regionType!= '' and reportSaleDailyDto.regionType == 2">
-			left join T_REGION r on r.REGION_NAME = saleDaily.COUNTRY_NAME
-	        </if>
-			<if test="reportSaleDailyDto.regionType!= null and reportSaleDailyDto.regionType!= '' and reportSaleDailyDto.regionType == 4">
-			left join T_REGION r on r.REGION_NAME = saleDaily.CITY_NAME
-	        </if>
-        </if>
 		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
 	</select>

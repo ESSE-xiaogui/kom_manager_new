@@ -110,10 +110,24 @@ public class PrototypeSettingManager {
 			throw new ServiceException(ExceptionDef.ERROR_PROTOTYPESETTING_PARAM_NULL.getName());
 		}
 		
+		String effectiveMonth = formatDate(prototypeSettingDto);
+		
+		if (effectiveMonth != "") {
+			PrototypeSetting prototypeSettingExp = new PrototypeSetting();
+			prototypeSettingExp.setEffectiveMonth(effectiveMonth);
+			
+			List<PrototypeSetting> PrototypeSettings =  prototypeSettingMapper.listByProperty(prototypeSettingExp);
+			
+			// 每月只能生成一次盘点计划
+			if (PrototypeSettings != null && PrototypeSettings.size() > 0) {
+				throw new ServiceException(ExceptionDef.ERROR_PROTOTYPESETTING_TOO_MANY_RESULTS.getName());
+			}
+		}
+		
 		PrototypeSetting prototypeSetting = new PrototypeSetting();
 		
 		prototypeSetting.setCompanyId(prototypeSettingDto.getCompanyId());
-		prototypeSetting.setEffectiveMonth(formatDate(prototypeSettingDto));
+		prototypeSetting.setEffectiveMonth(effectiveMonth);
 		prototypeSetting.setIsInactive(prototypeSettingDto.getIsInactive());
 		prototypeSetting.setRemark(prototypeSettingDto.getRemark());
 		prototypeSetting.setVersion(prototypeSettingDto.getVersion());
