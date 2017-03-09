@@ -339,4 +339,12 @@
     	<!-- <include refid="orderByClause" /> -->
     	order by sm.CREATE_DATE
 	</select>
+	
+	<select id="findShopMaterielByParam" parameterType="java.lang.Long" resultMap="ShopMaterielResultMapper">
+		SELECT m.ID FROM T_SHOP_MATERIEL m
+		LEFT JOIN T_SHOP p ON p.ID = m.SHOP_ID
+		LEFT JOIN T_USER_SHOP us ON
+		us.SHOP_ID = p.ID
+		WHERE p.ID = #{shopId} AND us.USER_ID = #{userId}
+	</select>
 </mapper>

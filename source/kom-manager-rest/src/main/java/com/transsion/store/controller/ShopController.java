@@ -382,4 +382,19 @@ public class ShopController extends AbstractController {
 		String token = this.getAuthorization();
 		return shopFacade.findShopDetails(token,shopParamDto);
 	}
+	
+	/**
+	 * itel app 编辑门店详情
+	 * @author guihua.zhang
+	 * @return
+	 * @throws ServiceException
+	 * */
+	@POST
+	@Path("/udpateShopDetails")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Boolean updateShopDetails(ShopParamDto shopParamDto) throws ServiceException{
+		String token = this.getAuthorization();
+		return shopFacade.updateShopDetails(token,shopParamDto);
+	}
 }

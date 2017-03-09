@@ -236,6 +236,9 @@ public class ShopFacadeImpl implements ShopFacade {
 	public ShopParamDto findShopDetails(String token,ShopParamDto shopParamDto) throws ServiceException{
 		return shopManager.findShopDetails(token, shopParamDto);
 	}
+	public Boolean updateShopDetails(String token,ShopParamDto shopParamDto) throws ServiceException{
+		return shopManager.updateShopDetails(token, shopParamDto);
+	}
 }
 
 
