@@ -24,7 +24,7 @@ public class UserRoleManager {
 	 * 
 	 * @throws ServiceException
 	 */
-	public void addUserRole(UserRoleDto userRoleDto) throws ServiceException {
+	public void saveUserRole(UserRoleDto userRoleDto) throws ServiceException {
 		if (UtilHelper.isEmpty(userRoleDto) || UtilHelper.isEmpty(userRoleDto.getUserId())) {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}

@@ -24,7 +24,7 @@ public class RoleResourceManager {
 	@Autowired
 	private SystemDateService systemDateService;
 
-	public void addResRole(String token, RoleResourceDto roleResourceDto) throws ServiceException {
+	public void saveResRole(String token, RoleResourceDto roleResourceDto) throws ServiceException {
 		if (UtilHelper.isEmpty(token)) {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}

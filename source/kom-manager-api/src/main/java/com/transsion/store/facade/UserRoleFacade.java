@@ -106,6 +106,6 @@ public interface UserRoleFacade {
 	 * 用户角色权限绑定
 	 * @throws ServiceException
 	 * */
-	public void addUserRole(UserRoleDto userRoleDto) throws ServiceException;
+	public void saveUserRole(UserRoleDto userRoleDto) throws ServiceException;
 
 }

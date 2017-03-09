@@ -119,7 +119,7 @@ public class UserRoleController extends AbstractController{
 	@POST
 	@Path("addUserRole")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void addUserRole(UserRoleDto userRoleDto) throws ServiceException{
-		userRoleFacade.addUserRole(userRoleDto);
+	public void saveUserRole(UserRoleDto userRoleDto) throws ServiceException{
+		userRoleFacade.saveUserRole(userRoleDto);
 	}
 }

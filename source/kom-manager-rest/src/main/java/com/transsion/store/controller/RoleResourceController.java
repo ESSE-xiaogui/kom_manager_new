@@ -120,7 +120,7 @@ public class RoleResourceController extends AbstractController{
 	@POST
 	@Path("/addResRole")
 	@Consumes({MediaType.APPLICATION_JSON}) 
-	public void addResRole(RoleResourceDto roleResourceDto) throws ServiceException {
-		roleResourceFacade.addResRole(this.getAuthorization(), roleResourceDto);
+	public void saveResRole(RoleResourceDto roleResourceDto) throws ServiceException {
+		roleResourceFacade.saveResRole(this.getAuthorization(), roleResourceDto);
 	}
 }

@@ -108,6 +108,6 @@ public interface RoleMenuFacade {
 	* @return
 	* @throws ServiceException
 	*/
-	public void addMenuRole(String token,RoleMenuDto roleMenuDto) throws ServiceException;
+	public void saveMenuRole(String token,RoleMenuDto roleMenuDto) throws ServiceException;
 
 }

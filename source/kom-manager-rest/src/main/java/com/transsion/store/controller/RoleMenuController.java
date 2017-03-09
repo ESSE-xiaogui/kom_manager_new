@@ -120,7 +120,7 @@ public class RoleMenuController extends AbstractController{
 	@POST
 	@Path("/addMenuRole")
 	@Consumes({MediaType.APPLICATION_JSON}) 
-	public void addMenuRole(RoleMenuDto roleMenuDto) throws ServiceException {
-		 roleMenuFacade.addMenuRole(this.getAuthorization(), roleMenuDto);
+	public void saveMenuRole(RoleMenuDto roleMenuDto) throws ServiceException {
+		 roleMenuFacade.saveMenuRole(this.getAuthorization(), roleMenuDto);
 	}
 }

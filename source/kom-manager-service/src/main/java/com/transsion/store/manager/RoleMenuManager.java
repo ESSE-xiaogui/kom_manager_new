@@ -23,7 +23,7 @@ public class RoleMenuManager {
 	@Autowired
 	private SystemDateService systemDateService;
 
-	public void addMenuRole(String token, RoleMenuDto roleMenuDto) throws ServiceException {
+	public void saveMenuRole(String token, RoleMenuDto roleMenuDto) throws ServiceException {
 		if (UtilHelper.isEmpty(token)) {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}

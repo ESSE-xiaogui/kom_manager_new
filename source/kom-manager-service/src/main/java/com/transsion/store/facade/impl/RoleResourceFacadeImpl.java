@@ -156,7 +156,7 @@ public class RoleResourceFacadeImpl implements RoleResourceFacade {
 	* @return
 	* @throws ServiceException
 	*/
-	public void addResRole(String token,RoleResourceDto roleResourceDto) throws ServiceException {
-		roleResourceManager.addResRole(token,roleResourceDto);
+	public void saveResRole(String token,RoleResourceDto roleResourceDto) throws ServiceException {
+		roleResourceManager.saveResRole(token,roleResourceDto);
 	}
 }

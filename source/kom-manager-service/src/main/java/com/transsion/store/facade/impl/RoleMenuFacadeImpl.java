@@ -156,7 +156,7 @@ public class RoleMenuFacadeImpl implements RoleMenuFacade {
 	* @return
 	* @throws ServiceException
 	*/ 
-	public void addMenuRole(String token,RoleMenuDto roleMenuDto) throws ServiceException {
-		roleMenuManager.addMenuRole(token,roleMenuDto);
+	public void saveMenuRole(String token,RoleMenuDto roleMenuDto) throws ServiceException {
+		roleMenuManager.saveMenuRole(token,roleMenuDto);
 	}
 }

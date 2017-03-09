@@ -152,7 +152,7 @@ public class UserRoleFacadeImpl implements UserRoleFacade {
 	 * 用户角色权限绑定
 	 * @throws ServiceException
 	 * */
-	public void addUserRole(UserRoleDto userRoleDto) throws ServiceException{
-		userRoleManager.addUserRole(userRoleDto);
+	public void saveUserRole(UserRoleDto userRoleDto) throws ServiceException{
+		userRoleManager.saveUserRole(userRoleDto);
 	}
 }

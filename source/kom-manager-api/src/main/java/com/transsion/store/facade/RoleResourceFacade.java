@@ -108,6 +108,6 @@ public interface RoleResourceFacade {
 	* @return
 	* @throws ServiceException
 	*/
-	public void addResRole(String token, RoleResourceDto roleResourceDto)throws ServiceException;
+	public void saveResRole(String token, RoleResourceDto roleResourceDto)throws ServiceException;
 
 }
