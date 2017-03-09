@@ -9,15 +9,16 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import org.apache.poi.ss.formula.functions.Mode;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Currency;
+import com.transsion.store.bo.GoalModel;
 import com.transsion.store.bo.GoalSupervisor;
+import com.transsion.store.bo.Model;
 import com.transsion.store.bo.Region;
 import com.transsion.store.bo.Sale;
 import com.transsion.store.bo.SaleItem;
@@ -26,13 +27,16 @@ import com.transsion.store.bo.Task;
 import com.transsion.store.bo.TaskDetail;
 import com.transsion.store.dto.SaleTaskDto;
 import com.transsion.store.dto.ScanValidateDto;
+import com.transsion.store.dto.TaskGoalModelDto;
 import com.transsion.store.dto.TaskGoalSupervisorDto;
 import com.transsion.store.dto.TaskSaleDto;
 import com.transsion.store.dto.UserDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.manager.ScanValidateManager;
 import com.transsion.store.mapper.CurrencyMapper;
+import com.transsion.store.mapper.GoalModelMapper;
 import com.transsion.store.mapper.GoalSupervisorMapper;
+import com.transsion.store.mapper.ModelMapper;
 import com.transsion.store.mapper.RegionMapper;
 import com.transsion.store.mapper.SaleItemMapper;
 import com.transsion.store.mapper.SaleMapper;
@@ -81,6 +85,12 @@ public class SaleTaskManager {
 	
 	@Autowired
 	private GoalSupervisorMapper goalSupervisorMapper;
+	
+	@Autowired
+	private GoalModelMapper goalModelMapper;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
 	/**
 	 * excel解析 转成实体
@@ -105,6 +115,8 @@ public class SaleTaskManager {
 				arrayConverCurrencyDto(task, dataArr);
 			}else if(task.getTaskType().equals(Type.TASK_GOAL_SUPERVISOR_IMPORT.getDesc())){
 				arrayConverGoalSupervisorDto(task,dataArr);
+			}else if(task.getTaskType().equals(Type.TASK_GOAL_MODEL_IMPORT.getDesc())){
+				arrayConverGoalModelDto(task,dataArr);
 			}
 
 		} catch (Exception e) {
@@ -112,7 +124,6 @@ public class SaleTaskManager {
 		}
 
 	}
-
 
 	/**
 	 * 批量上传销量
@@ -219,6 +230,65 @@ public class SaleTaskManager {
 		}
 	}
 
+	private void arrayConverGoalModelDto(Task task, String[][] dataArr) throws ServiceException {
+		TaskDetail taskDetail = new TaskDetail();
+		List<Map<String, Object>> list = TaskUtil.formatArr(dataArr,TaskGoalModelDto.IMPORT_HEADERS);
+		if (UtilHelper.isEmpty(list)) {
+			throw new ServiceException(ExceptionDef.ERROR_TASK_FILE_FORMATERROR.getName());
+		} else {
+			for (Map<String, Object> map : list) {
+				TaskGoalModelDto taskGoalModelDto = new TaskGoalModelDto();
+				taskGoalModelDto.copyFormMap(map);
+				boolean flag = validate(map, taskDetail);
+				if(flag){
+					UserDto user = userMapper.findByName(taskGoalModelDto.getUserCode());
+					if (UtilHelper.isEmpty(user)) {
+						taskDetail.setMessage("User is null");
+						taskDetail.setStatus(2);
+					}
+					Shop shop = shopMapper.findShopId(taskGoalModelDto.getShopCode());
+					if (UtilHelper.isEmpty(shop)){
+						taskDetail.setMessage("Shop is null");
+						taskDetail.setStatus(2);
+					}
+					Model model = new Model();
+					model.setModelCode(taskGoalModelDto.getModelCode());
+					List<Model> modelList = modelMapper.listByProperty(model);
+					if(UtilHelper.isEmpty(modelList)){
+						taskDetail.setMessage("Model is null");
+						taskDetail.setStatus(2);
+					}
+					if (!UtilHelper.isEmpty(shop) && !UtilHelper.isEmpty(user) 
+						&& !UtilHelper.isEmpty(user.getCompanyId())
+						&& !UtilHelper.isEmpty(modelList)){
+						taskGoalModelDto.setCompanyId(user.getCompanyId());
+						taskGoalModelDto.setShopId(shop.getId());
+						taskGoalModelDto.setModelId(modelList.get(0).getId());
+						//TODO:创建人  更新人
+						GoalModel goalModel = new GoalModel();
+						goalModel.setGoalMonth(taskGoalModelDto.getGoalMonth());
+						goalModel.setShopId(taskGoalModelDto.getShopId());
+						goalModel.setModelCode(taskGoalModelDto.getModelCode());
+						List<GoalModel> goalModelList = goalModelMapper.listByProperty(goalModel);
+						BeanUtils.copyProperties(taskGoalModelDto, goalModel);
+						goalModel.setSaleTarget(Long.parseLong(taskGoalModelDto.getSaleTarget()));
+						if(!UtilHelper.isEmpty(goalModelList)){
+							goalModel.setId(goalModelList.get(0).getId());
+							goalModelMapper.update(goalModel);
+						}else{
+							goalModelMapper.save(goalModel);
+						}
+						taskDetail.setMessage("ok");
+						taskDetail.setStatus(1);
+					}	
+				}
+				String context = taskGoalModelDto.getContext();
+				Long taskId = task.getId();
+				this.saveTaskDetail(taskId,context,taskDetail);
+			}
+		}
+	}
+	
 	private void arrayConverGoalSupervisorDto(Task task, String[][] dataArr) throws ServiceException {
 		TaskDetail taskDetail = new TaskDetail();
 		List<Map<String, Object>> list = TaskUtil.formatArr(dataArr,TaskGoalSupervisorDto.IMPORT_HEADERS);
@@ -249,8 +319,9 @@ public class SaleTaskManager {
 						GoalSupervisor goalSupervisor = new GoalSupervisor();
 						goalSupervisor.setGoalMonth(taskGoalSupervisorDto.getGoalMonth());
 						goalSupervisor.setShopId(taskGoalSupervisorDto.getShopId());
-						List<GoalSupervisor> goalSupervisorList = goalSupervisorMapper.listByProperty(goalSupervisor);
+						List<GoalSupervisor> goalSupervisorList = goalSupervisorMapper.listByProperty(goalSupervisor);		
 						BeanUtils.copyProperties(taskGoalSupervisorDto, goalSupervisor);
+						goalSupervisor.setSaleTarget(Long.parseLong(taskGoalSupervisorDto.getSaleTarget()));
 						if(!UtilHelper.isEmpty(goalSupervisorList)){
 							goalSupervisor.setId(goalSupervisorList.get(0).getId());
 							goalSupervisorMapper.update(goalSupervisor);

@@ -25,11 +25,12 @@ import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.transsion.store.bo.GoalModel;
+import com.transsion.store.dto.GoalModelInfoDto;
 import com.transsion.store.dto.StatShopModelSaleDto;
 
 public interface GoalModelMapper extends GenericIBatisMapper<GoalModel, java.lang.Long> {
 
-    public List<GoalModel> listPaginationByProperty(Pagination<GoalModel> pagination, @Param("goalModel")GoalModel goalModel, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<GoalModelInfoDto> listPaginationByProperty(Pagination<GoalModelInfoDto> pagination, @Param("goalModelInfoDto")GoalModelInfoDto goalModelInfoDto, @Param("orderBy") Map<String, String> orderBy,@Param("companyId") Long companyId) throws DataAccessFailureException;
     
     public List<StatShopModelSaleDto> queryModelSaleTargetByShopId(@Param("shopId")Long shopId, @Param("goalMonth")String goalMonth, @Param("modelCodeList")List<String> modelCodeList) throws DataAccessFailureException;
     
@@ -38,4 +39,6 @@ public interface GoalModelMapper extends GenericIBatisMapper<GoalModel, java.lan
     public List<GoalModel> queryModelCodeListByShopId(Long shopId);
     
     public void updateGoalModelByShopId(GoalModel goalModel);
+
+	public List<GoalModelInfoDto> listGoalModelByProperty(@Param("goalModelInfoDto")GoalModelInfoDto goalModelInfoDto);
 }

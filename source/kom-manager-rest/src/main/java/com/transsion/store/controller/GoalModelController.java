@@ -18,15 +18,28 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.GoalModel;
+import com.transsion.store.controller.GoalSupervisorController.BigFileOutputStream;
+import com.transsion.store.dto.GoalModelInfoDto;
+import com.transsion.store.dto.GoalSupervisorInfoDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.GoalModelFacade;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
@@ -59,9 +72,9 @@ public class GoalModelController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<GoalModel> listPgGoalModel(RequestModel<GoalModel> requestModel) throws ServiceException
+	public Pagination<GoalModelInfoDto> listPgGoalModel(RequestModel<GoalModelInfoDto> requestModel) throws ServiceException
 	{
-		Pagination<GoalModel> pagination = new Pagination<GoalModel>();
+		Pagination<GoalModelInfoDto> pagination = new Pagination<GoalModelInfoDto>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());
@@ -69,7 +82,7 @@ public class GoalModelController extends AbstractController{
 		pagination.setParams(requestModel.getParams());
 		pagination.setOrderBy(requestModel.getOrderBy());
 
-		return goalModelFacade.listPaginationByProperty(pagination, requestModel.getParams());
+		return goalModelFacade.listPaginationByProperty(pagination, requestModel.getParams(),this.getAuthorization());
 	}
 
 	/**
@@ -116,4 +129,59 @@ public class GoalModelController extends AbstractController{
 	public void calcShopModelSaleQty() throws ServiceException {
 		goalModelFacade.calcShopModelSaleQty();
 	}
+	
+	@GET
+	@Path("/exportExcel") 
+	@Produces({MediaType.TEXT_PLAIN})  
+	public Response getGoalModelByExcel (@QueryParam("goalMonthStart") String goalMonthStart,
+		@QueryParam("goalMonthEnd") String goalMonthEnd,@QueryParam("shopCode") String shopCode,
+		@QueryParam("shopName") String shopName,@QueryParam("regionId")String regionId,
+		@QueryParam("modelCode")String modelCode,@QueryParam("createBy") String createBy,
+		@QueryParam("companyId") String companyId,@QueryParam("creatorName") String creatorName) throws ServiceException,IOException {
+		
+		GoalModelInfoDto goalModelInfoDto = new GoalModelInfoDto();
+		goalModelInfoDto.setGoalMonthStart(goalMonthStart);
+		goalModelInfoDto.setGoalMonthEnd(goalMonthEnd);
+		goalModelInfoDto.setShopCode(shopCode);
+		goalModelInfoDto.setShopName(shopName);
+		goalModelInfoDto.setModelCode(modelCode);
+		goalModelInfoDto.setCreateBy(createBy);
+		goalModelInfoDto.setCreatorName(creatorName);
+		if(!UtilHelper.isEmpty(regionId)){
+			goalModelInfoDto.setRegionId(Long.parseLong(regionId));
+		}
+		if(!UtilHelper.isEmpty(companyId)){
+			goalModelInfoDto.setCompanyId(Long.parseLong(companyId));
+		}
+		byte[] bytes = goalModelFacade.getGoalModelByExcel(goalModelInfoDto);       
+		InputStream inputStream = new ByteArrayInputStream(bytes);          
+		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));          
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"重点机型销售目标设定报表.xlsx";
+		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));         
+		//根据自己文件类型修改         
+		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");          
+		return response.build();      	
+	}
+	class BigFileOutputStream implements javax.ws.rs.core.StreamingOutput {
+        private InputStream inputStream;
+        public BigFileOutputStream(){}
+        public BigFileOutputStream(InputStream inputStream)
+        {
+            this.inputStream = inputStream;
+        }
+
+        @Override
+        public void write(OutputStream output) throws IOException,
+                WebApplicationException {
+            // TODO Auto-generated method stub
+            IOUtils.copy(inputStream, output);
+        }
+
+        public InputStream getInputStream() {
+            return inputStream;
+        }
+        public void setInputStream(InputStream inputStream) {
+            this.inputStream = inputStream;
+        }
+    }
 }

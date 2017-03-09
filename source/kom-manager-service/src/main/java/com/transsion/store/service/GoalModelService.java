@@ -22,9 +22,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.GoalModel;
+import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.GoalModelInfoDto;
+import com.transsion.store.exception.ExceptionDef;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
 import com.transsion.store.mapper.GoalModelMapper;
+import com.transsion.store.utils.CacheUtils;
 
 @Service("goalModelService")
 public class GoalModelService {
@@ -71,13 +76,19 @@ public class GoalModelService {
 	
 	/**
 	 * 根据查询条件查询分页记录
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<GoalModel> listPaginationByProperty(Pagination<GoalModel> pagination, GoalModel goalModel)
+	public Pagination<GoalModelInfoDto> listPaginationByProperty(Pagination<GoalModelInfoDto> pagination, GoalModelInfoDto goalModelInfoDto, String token)
 			throws ServiceException
 	{
-		List<GoalModel> list = goalModelMapper.listPaginationByProperty(pagination, goalModel, pagination.getOrderBy());
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		Long companyId = userContext.isAdmin()?null:userContext.getCompanyId();
+		List<GoalModelInfoDto> list = goalModelMapper.listPaginationByProperty(pagination, goalModelInfoDto, pagination.getOrderBy(),companyId);
 		
 		pagination.setResultList(list);
 		

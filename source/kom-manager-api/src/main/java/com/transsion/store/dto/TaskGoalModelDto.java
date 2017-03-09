@@ -1,11 +1,9 @@
 package com.transsion.store.dto;
 
 import java.io.Serializable;
-
 import java.util.Map;
 
-
-public class TaskGoalSupervisorDto implements Serializable{
+public class TaskGoalModelDto implements Serializable{
 
 	/**
 	 * 
@@ -16,20 +14,22 @@ public class TaskGoalSupervisorDto implements Serializable{
 	public static final String HEADER_GOAL_MONTH = "年/月";
 	public static final String HEADER_USER_CODE = "用户名";
 	public static final String HEADER_SHOP_CODE = "门店编码";
+	public static final String HEADER_MODEL_CODE = "重点机型";
 	public static final String HEADER_SALE_TARGET = "销量目标";
 	
-	public static String[]  IMPORT_HEADERS= {HEADER_COMPANY_CODE,HEADER_GOAL_MONTH,HEADER_USER_CODE,HEADER_SHOP_CODE,HEADER_SALE_TARGET};
+	public static String[]  IMPORT_HEADERS= {HEADER_COMPANY_CODE,HEADER_GOAL_MONTH,HEADER_USER_CODE,HEADER_SHOP_CODE,HEADER_MODEL_CODE,HEADER_SALE_TARGET};
 	
 	//Excel中字段
 	private String companyCode;
 	private String goalMonth;
 	private String userCode;
 	private String shopCode;
+	private String modelCode;
 	private String saleTarget;
 	
 	//额外字段
 	private Long companyId;
-	private Long userId;
+	private Long modelId;
 	private Long shopId;
 	
 	//task表
@@ -41,14 +41,14 @@ public class TaskGoalSupervisorDto implements Serializable{
 		goalMonth = (String) importMap.get(HEADER_GOAL_MONTH);
 		userCode = (String) importMap.get(HEADER_USER_CODE);
 		shopCode = (String) importMap.get(HEADER_SHOP_CODE);
+		modelCode = (String) importMap.get(HEADER_MODEL_CODE);
 		saleTarget = (String)importMap.get(HEADER_SALE_TARGET); 
 	}
 
-	
+
 	public String getCompanyCode() {
 		return companyCode;
 	}
-
 
 
 	public void setCompanyCode(String companyCode) {
@@ -56,11 +56,9 @@ public class TaskGoalSupervisorDto implements Serializable{
 	}
 
 
-
 	public String getGoalMonth() {
 		return goalMonth;
 	}
-
 
 
 	public void setGoalMonth(String goalMonth) {
@@ -68,11 +66,9 @@ public class TaskGoalSupervisorDto implements Serializable{
 	}
 
 
-
 	public String getUserCode() {
 		return userCode;
 	}
-
 
 
 	public void setUserCode(String userCode) {
@@ -80,15 +76,23 @@ public class TaskGoalSupervisorDto implements Serializable{
 	}
 
 
-
 	public String getShopCode() {
 		return shopCode;
 	}
 
 
-
 	public void setShopCode(String shopCode) {
 		this.shopCode = shopCode;
+	}
+
+
+	public String getModelCode() {
+		return modelCode;
+	}
+
+
+	public void setModelCode(String modelCode) {
+		this.modelCode = modelCode;
 	}
 
 	public String getSaleTarget() {
@@ -111,13 +115,13 @@ public class TaskGoalSupervisorDto implements Serializable{
 	}
 
 
-	public Long getUserId() {
-		return userId;
+	public Long getModelId() {
+		return modelId;
 	}
 
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setModelId(Long modelId) {
+		this.modelId = modelId;
 	}
 
 
@@ -135,11 +139,14 @@ public class TaskGoalSupervisorDto implements Serializable{
 		this.context = context;
 	}
 
+
 	public String getContext(){
 		context = HEADER_COMPANY_CODE +":" +companyCode + "\r" + HEADER_GOAL_MONTH+":"
 						+ goalMonth + "\r" + HEADER_USER_CODE+":" + userCode + "\r"
-						+ HEADER_SHOP_CODE+":"+ shopCode+ "\r" + HEADER_SALE_TARGET+":"+saleTarget;
+						+ HEADER_SHOP_CODE+":"+ shopCode+ "\r" +HEADER_MODEL_CODE+":"+modelCode+"\r"+
+						HEADER_SALE_TARGET+":"+saleTarget;
 		return context;
 	}
+
 
 }

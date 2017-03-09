@@ -155,4 +155,9 @@ public class GoalSupervisorFacadeImpl implements GoalSupervisorFacade {
 	public void calcShopSaleQty() throws ServiceException {
 		goalSupervisorManager.calcShopSaleQty();
 	}
+
+	@Override
+	public byte[] getGoalSupervisorByExcel(GoalSupervisorInfoDto goalSupervisorInfoDto) throws ServiceException {
+		return goalSupervisorManager.getGoalSupervisorByExcel(goalSupervisorInfoDto);
+	}
 }

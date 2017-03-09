@@ -13,11 +13,13 @@ import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.GoalModel;
 import com.transsion.store.bo.GoalSupervisor;
 import com.transsion.store.bo.Sale;
+import com.transsion.store.dto.GoalSupervisorInfoDto;
 import com.transsion.store.dto.StatShopModelSaleDto;
 import com.transsion.store.mapper.GoalModelMapper;
 import com.transsion.store.mapper.GoalSupervisorMapper;
 import com.transsion.store.mapper.SaleMapper;
 import com.transsion.store.utils.CalendarUtils;
+import com.transsion.store.utils.ExcelUtils;
 
 @Service("goalSupervisorManager")
 public class GoalSupervisorManager {
@@ -152,5 +154,25 @@ public class GoalSupervisorManager {
 				}
 			}
 		}
+	}
+
+	public byte[] getGoalSupervisorByExcel(GoalSupervisorInfoDto goalSupervisorInfoDto) {
+		String[] headers = {"序号","事业部","国家","城市","年/月","用户名","员工姓名","职位","门店编码","门店名称","销售目标","实际销量"
+						,"完成率","创建用户","创建用户姓名","创建时间"};
+		List<GoalSupervisorInfoDto> list = goalSupervisorMapper.listGoalSupervisorByProperty(goalSupervisorInfoDto);
+		List<Object[]> dataset = new ArrayList<Object[]>();
+		int i=1;
+		for(GoalSupervisorInfoDto goalSupervisorInfoDto1 :list){
+			dataset.add(new Object[]{i++,goalSupervisorInfoDto1.getCompanyCode(),
+							goalSupervisorInfoDto1.getCountryName(),goalSupervisorInfoDto1.getCityName(),
+							goalSupervisorInfoDto1.getGoalMonth(),goalSupervisorInfoDto1.getUserCode(),
+							goalSupervisorInfoDto1.getEmpName(),goalSupervisorInfoDto1.getDutyName(),
+							goalSupervisorInfoDto1.getShopCode(),goalSupervisorInfoDto1.getShopName(),
+							goalSupervisorInfoDto1.getSaleTarget(),goalSupervisorInfoDto1.getSaleCurrent(),
+							goalSupervisorInfoDto1.getAchieved(),goalSupervisorInfoDto1.getCreateBy(),
+							goalSupervisorInfoDto1.getCreatorName(),goalSupervisorInfoDto1.getCreateTime()});
+		}
+		String title = "巡店员销量目标报表";
+		return ExcelUtils.exportExcel(title, headers, dataset);
 	}
 }

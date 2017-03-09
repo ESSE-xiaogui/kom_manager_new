@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.GoalModel;
+import com.transsion.store.dto.GoalModelInfoDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -99,8 +100,10 @@ public interface GoalModelFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<GoalModel> listPaginationByProperty(Pagination<GoalModel> pagination, GoalModel goalModel)
+	public Pagination<GoalModelInfoDto> listPaginationByProperty(Pagination<GoalModelInfoDto> pagination, GoalModelInfoDto goalModelInfoDto,String token)
 			throws ServiceException;
 	
 	public void calcShopModelSaleQty() throws ServiceException;
+
+	public byte[] getGoalModelByExcel(GoalModelInfoDto goalModelInfoDto)throws ServiceException;
 }

@@ -24,7 +24,9 @@ import org.springframework.stereotype.Component;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.GoalModel;
+import com.transsion.store.dto.GoalModelInfoDto;
 import com.transsion.store.facade.GoalModelFacade;
+import com.transsion.store.manager.GoalModelManager;
 import com.transsion.store.manager.GoalSupervisorManager;
 import com.transsion.store.service.GoalModelService;
 
@@ -35,6 +37,9 @@ public class GoalModelFacadeImpl implements GoalModelFacade {
 	
 	@Autowired
 	private GoalSupervisorManager goalSupervisorManager;
+	
+	@Autowired
+	private GoalModelManager goalModelManager;
 	
 	@Autowired
 	public void setGoalModelService(GoalModelService goalModelService)
@@ -79,10 +84,10 @@ public class GoalModelFacadeImpl implements GoalModelFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<GoalModel> listPaginationByProperty(Pagination<GoalModel> pagination, GoalModel goalModel)
+	public Pagination<GoalModelInfoDto> listPaginationByProperty(Pagination<GoalModelInfoDto> pagination, GoalModelInfoDto goalModelInfoDto,String token)
 			throws ServiceException
 	{
-		return goalModelService.listPaginationByProperty(pagination, goalModel);
+		return goalModelService.listPaginationByProperty(pagination, goalModelInfoDto,token);
 	}
 
 	/**
@@ -153,5 +158,10 @@ public class GoalModelFacadeImpl implements GoalModelFacade {
 	@Override
 	public void calcShopModelSaleQty() throws ServiceException {
 		goalSupervisorManager.calcShopModelSaleQty();
+	}
+
+	@Override
+	public byte[] getGoalModelByExcel(GoalModelInfoDto goalModelInfoDto) throws ServiceException {
+		return goalModelManager.getGoalModelByExcel(goalModelInfoDto);
 	}
 }

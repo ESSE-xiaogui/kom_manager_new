@@ -105,4 +105,6 @@ public interface GoalSupervisorFacade {
 			throws ServiceException;
 	
 	public void calcShopSaleQty() throws ServiceException;
+
+	public byte[] getGoalSupervisorByExcel(GoalSupervisorInfoDto goalSupervisorInfoDto)throws ServiceException;
 }

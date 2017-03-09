@@ -36,15 +36,35 @@
 		<result column="UPDATE_BY" property="updateBy"/>
 		<result column="UPDATE_TIME" property="updateTime"/>
 		<result column="VERSION" property="version"/>
-		
 		<result column="SALE_FOURWEEKS" property="saleFourWeeks"/>
+	</resultMap>
+	<resultMap id="GoalModelInfoDtoResultMapper" type="GoalModelInfoDto">
+		<result column="ID" property="id"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="GOAL_MONTH" property="goalMonth"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="SHOP_CODE" property="shopCode"/>
+		<result column="COMPANY_CODE" property="companyCode"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="CREATOR_NAME" property="creatorName"/>
+		<result column="MODEL_ID" property="modelId"/>
+		<result column="MODEL_CODE" property="modelCode"/>
+		<result column="SALE_TARGET" property="saleTarget"/>
+		<result column="SALE_CURRENT" property="saleCurrent"/>
+		<result column="ACHIEVED" property="achieved"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
 	</resultMap>
 	
 	<resultMap id="StatShopModelSaleDtoResultMapper" type="StatShopModelSaleDto">
 		<result column="MODEL_CODE" property="modelCode"/>
 		<result column="SALE_TARGET" property="targetSaleQty"/>
-		<result column="SALE_CURRENT" property="currentSaleQty"/>
-		<result column="SALE_FOURWEEKS" property="fourSaleQty"/>
 	</resultMap>
 	
 	<sql id="commonColumns">
@@ -102,6 +122,22 @@
 		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
 		, VERSION
 	</sql>
+	<sql id="commonProcessDateColumn">
+		gm.ID,
+		c.COMPANY_CODE,
+		r1.REGION_NAME AS COUNTRY_NAME,
+		r2.REGION_NAME AS CITY_NAME,
+		date_format(GOAL_MONTH,'%Y-%m') GOAL_MONTH,
+		gm.SHOP_CODE,
+		s.SHOP_NAME,
+		gm.MODEL_CODE,
+		gm.SALE_TARGET,
+		SALE_CURRENT,
+		ACHIEVED,
+		gm.CREATE_BY,
+		e.EMP_NAME AS CREATOR_NAME,
+		gm.CREATE_TIME
+	</sql>
 	
 	<sql id="commonCondition">
 		<if test="id!= null and id!= ''"> 
@@ -155,55 +191,73 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="goalModel != null">
-            <if test="goalModel.id!= null and goalModel.id!= ''">
-				AND ID=#{goalModel.id}
+		<if test="goalModelInfoDto != null">
+            <if test="goalModelInfoDto.id!= null and goalModelInfoDto.id!= ''">
+				AND ID=#{goalModelInfoDto.id}
             </if>
-            <if test="goalModel.companyId!= null and goalModel.companyId!= ''">
-				AND COMPANY_ID=#{goalModel.companyId}
+            <if test="goalModelInfoDto.companyId!= null and goalModelInfoDto.companyId!= ''">
+				AND gm.COMPANY_ID=#{goalModelInfoDto.companyId}
             </if>
-            <if test="goalModel.goalMonth!= null and goalModel.goalMonth!= ''">
-				AND GOAL_MONTH=str_to_date(#{goalModel.goalMonth},'%Y-%m-%d %H:%i:%s')
+            <if test="goalModelInfoDto.goalMonth!= null and goalModelInfoDto.goalMonth!= ''">
+				AND GOAL_MONTH=str_to_date(#{goalModelInfoDto.goalMonth},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="goalModel.shopId!= null and goalModel.shopId!= ''">
-				AND SHOP_ID=#{goalModel.shopId}
+            <if test="goalModelInfoDto.goalMonthStart!= null and goalModelInfoDto.goalMonthStart!= ''">
+				AND DATE_FORMAT(GOAL_MONTH,'%Y-%m-%d')&gt;=str_to_date(#{goalModelInfoDto.goalMonthStart},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="goalModel.shopCode!= null and goalModel.shopCode!= ''">
-				AND SHOP_CODE=#{goalModel.shopCode}
+            <if test="goalModelInfoDto.goalMonthEnd!= null and goalModelInfoDto.goalMonthEnd!= ''">
+				AND DATE_FORMAT(GOAL_MONTH,'%Y-%m-%d')&lt;=str_to_date(#{goalModelInfoDto.goalMonthEnd},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="goalModel.modelId!= null and goalModel.modelId!= ''">
-				AND MODEL_ID=#{goalModel.modelId}
+            <if test="goalModelInfoDto.shopId!= null and goalModelInfoDto.shopId!= ''">
+				AND SHOP_ID=#{goalModelInfoDto.shopId}
             </if>
-            <if test="goalModel.modelCode!= null and goalModel.modelCode!= ''">
-				AND MODEL_CODE=#{goalModel.modelCode}
+             <if test="goalModelInfoDto.shopName!= null and goalModelInfoDto.shopName!= ''">
+				AND s.SHOP_NAME=#{goalModelInfoDto.shopName}
             </if>
-            <if test="goalModel.saleTarget!= null and goalModel.saleTarget!= ''">
-				AND SALE_TARGET=#{goalModel.saleTarget}
+            <if test="goalModelInfoDto.shopCode!= null and goalModelInfoDto.shopCode!= ''">
+				AND gm.SHOP_CODE=#{goalModelInfoDto.shopCode}
             </if>
-            <if test="goalModel.saleCurrent!= null and goalModel.saleCurrent!= ''">
-				AND SALE_CURRENT=#{goalModel.saleCurrent}
+            <if test="goalModelInfoDto.modelId!= null and goalModelInfoDto.modelId!= ''">
+				AND MODEL_ID=#{goalModelInfoDto.modelId}
             </if>
-            <if test="goalModel.achieved!= null and goalModel.achieved!= ''">
-				AND ACHIEVED=#{goalModel.achieved}
+            <if test="goalModelInfoDto.modelCode!= null and goalModelInfoDto.modelCode!= ''">
+				AND MODEL_CODE=#{goalModelInfoDto.modelCode}
             </if>
-            <if test="goalModel.remark!= null and goalModel.remark!= ''">
-				AND REMARK=#{goalModel.remark}
+            <if test="goalModelInfoDto.saleTarget!= null and goalModelInfoDto.saleTarget!= ''">
+				AND SALE_TARGET=#{goalModelInfoDto.saleTarget}
             </if>
-            <if test="goalModel.createBy!= null and goalModel.createBy!= ''">
-				AND CREATE_BY=#{goalModel.createBy}
+            <if test="goalModelInfoDto.saleCurrent!= null and goalModelInfoDto.saleCurrent!= ''">
+				AND SALE_CURRENT=#{goalModelInfoDto.saleCurrent}
             </if>
-            <if test="goalModel.createTime!= null and goalModel.createTime!= ''">
-				AND CREATE_TIME=str_to_date(#{goalModel.createTime},'%Y-%m-%d %H:%i:%s')
+            <if test="goalModelInfoDto.achieved!= null and goalModelInfoDto.achieved!= ''">
+				AND ACHIEVED=#{goalModelInfoDto.achieved}
             </if>
-            <if test="goalModel.updateBy!= null and goalModel.updateBy!= ''">
-				AND UPDATE_BY=#{goalModel.updateBy}
+           <!--  <if test="goalModelInfoDto.remark!= null and goalModelInfoDto.remark!= ''">
+				AND REMARK=#{goalModelInfoDto.remark}
+            </if> -->
+            <if test="goalModelInfoDto.createBy!= null and goalModelInfoDto.createBy!= ''">
+				AND gm.CREATE_BY=#{goalModelInfoDto.createBy}
             </if>
-            <if test="goalModel.updateTime!= null and goalModel.updateTime!= ''">
-				AND UPDATE_TIME=str_to_date(#{goalModel.updateTime},'%Y-%m-%d %H:%i:%s')
+            <if test="goalModelInfoDto.createTime!= null and goalModelInfoDto.createTime!= ''">
+				AND gm.CREATE_TIME=str_to_date(#{goalModelInfoDto.createTime},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="goalModel.version!= null and goalModel.version!= ''">
-				AND VERSION=#{goalModel.version}
+            <if test="goalModelInfoDto.creatorName!= null and goalModelInfoDto.creatorName!= ''">
+				AND e.EMP_NAME=#{goalModelInfoDto.creatorName}
             </if>
+            <if test="goalModelInfoDto.regionId!= null and goalModelInfoDto.regionId!= '' and goalModelInfoDto.regionType==2">
+				AND r1.ID=#{goalModelInfoDto.regionId}
+            </if>
+            <if test="goalModelInfoDto.regionId!= null and goalModelInfoDto.regionId!= '' and goalModelInfoDto.regionType==4">
+				AND r2.ID=#{goalModelInfoDto.regionId}
+            </if>
+          <!--   <if test="goalModelInfoDto.updateBy!= null and goalModelInfoDto.updateBy!= ''">
+				AND UPDATE_BY=#{goalModelInfoDto.updateBy}
+            </if>
+            <if test="goalModelInfoDto.updateTime!= null and goalModelInfoDto.updateTime!= ''">
+				AND UPDATE_TIME=str_to_date(#{goalModelInfoDto.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="goalModelInfoDto.version!= null and goalModelInfoDto.version!= ''">
+				AND VERSION=#{goalModelInfoDto.version}
+            </if> -->
         </if>
     </sql>
 
@@ -221,23 +275,32 @@
         	<when test="key == 'id'">
 				ID ${value}
             </when>
-        	<when test="key == 'companyId'">
-				COMPANY_ID ${value}
-            </when>
+        	<!-- <when test="key == 'companyId'">
+				gm.COMPANY_ID ${value}
+            </when> -->
         	<when test="key == 'goalMonth'">
-				GOAL_MONTH ${value}
+				gm.GOAL_MONTH ${value}
+            </when>
+            <when test="key == 'companyCode'">
+				c.COMPANY_CODE ${value}
+            </when>
+            <when test="key == 'countryName'">
+				r1.REGION_NAME ${value}
+            </when>
+            <when test="key == 'cityName'">
+				r2.REGION_NAME ${value}
+            </when>
+            <when test="key == 'creatorName'">
+				e.EMP_NAME ${value}
             </when>
         	<when test="key == 'shopId'">
 				SHOP_ID ${value}
             </when>
         	<when test="key == 'shopCode'">
-				SHOP_CODE ${value}
+				gm.SHOP_CODE ${value}
             </when>
-        	<when test="key == 'modelId'">
-				MODEL_ID ${value}
-            </when>
-        	<when test="key == 'modelCode'">
-				MODEL_CODE ${value}
+            <when test="key == 'shopName'">
+				SHOP_NAME ${value}
             </when>
         	<when test="key == 'saleTarget'">
 				SALE_TARGET ${value}
@@ -252,10 +315,10 @@
 				REMARK ${value}
             </when>
         	<when test="key == 'createBy'">
-				CREATE_BY ${value}
+				gm.CREATE_BY ${value}
             </when>
         	<when test="key == 'createTime'">
-				CREATE_TIME ${value}
+				gm.CREATE_TIME ${value}
             </when>
         	<when test="key == 'updateBy'">
 				UPDATE_BY ${value}
@@ -275,7 +338,7 @@
 		<![CDATA[
 			) VALUES ( 
 			 #{companyId}
-			, str_to_date(#{goalMonth},'%Y-%m-%d %H:%i:%s')
+			, str_to_date(#{goalMonth},'%Y-%m-%d')
 			, #{shopId}
 			, #{shopCode}
 			, #{modelId}
@@ -295,7 +358,7 @@
 		<![CDATA[ UPDATE T_GOAL_MODEL SET 
 			 ID=#{id} 
 			, COMPANY_ID=#{companyId} 
-			, GOAL_MONTH=str_to_date(#{goalMonth},'%Y-%m-%d %H:%i:%s')
+			, GOAL_MONTH=str_to_date(#{goalMonth},'%Y-%m-%d')
 			, SHOP_ID=#{shopId} 
 			, SHOP_CODE=#{shopCode} 
 			, MODEL_ID=#{modelId} 
@@ -341,12 +404,36 @@
 		FROM T_GOAL_MODEL WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="GoalModel" resultMap="GoalModelResultMapper">
+	<select id="listPaginationByProperty" parameterType="GoalModelInfoDto" resultMap="GoalModelInfoDtoResultMapper">
 		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_GOAL_MODEL WHERE 1=1
+		<include refid="commonProcessDateColumn"/>
+		FROM T_GOAL_MODEL gm
+		LEFT JOIN T_COMPANY c ON c.ID = gm.COMPANY_ID
+		LEFT JOIN T_SHOP s ON s.ID = gm.SHOP_ID
+		LEFT JOIN T_REGION r1 ON r1.ID = s.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = s.CITY
+		LEFT JOIN T_USER u ON u.USER_CODE = gm.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID 
+		WHERE 1=1
+		<if test="companyId!= null and companyId!= ''"> 
+			AND gm.COMPANY_ID =#{companyId}
+		</if>
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
+	</select>
+	<select id="listGoalModelByProperty" parameterType="GoalModelInfoDto" resultMap="GoalModelInfoDtoResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumn"/>
+		FROM T_GOAL_MODEL gm
+		LEFT JOIN T_COMPANY c ON c.ID = gm.COMPANY_ID
+		LEFT JOIN T_SHOP s ON s.ID = gm.SHOP_ID
+		LEFT JOIN T_REGION r1 ON r1.ID = s.COUNTRY
+		LEFT JOIN T_REGION r2 ON r2.ID = s.CITY
+		LEFT JOIN T_USER u ON u.USER_CODE = gm.CREATE_BY
+		LEFT JOIN T_EMPLOYEE e ON e.U_ID = u.ID 
+		WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	ORDER BY gm.CREATE_TIME DESC
 	</select>
 	<select id="findByCount" parameterType="GoalModel" resultType="int">
 		SELECT count(1) AS totalcount FROM T_GOAL_MODEL WHERE 1=1 
@@ -354,7 +441,7 @@
 	</select>
 	
 	<select id="queryModelSaleTargetByShopId" resultMap="StatShopModelSaleDtoResultMapper">
-		SELECT MODEL_CODE, SALE_TARGET, SALE_CURRENT, SALE_FOURWEEKS FROM T_GOAL_MODEL WHERE SHOP_ID = #{shopId} AND SUBSTRING(GOAL_MONTH, 1, 7) = #{goalMonth} 
+		SELECT MODEL_CODE, SALE_TARGET FROM T_GOAL_MODEL WHERE SHOP_ID = #{shopId} AND GOAL_MONTH = #{goalMonth} 
 		AND MODEL_CODE IN 
 		 <foreach item="modelCode" collection="modelCodeList" separator="," open="("
 			close=")" index="">
