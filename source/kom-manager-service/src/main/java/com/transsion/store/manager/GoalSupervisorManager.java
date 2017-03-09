@@ -45,16 +45,29 @@ public class GoalSupervisorManager {
 			List<Sale> list = saleMapper.calcShopSaleQty(shopIdList, firstDayOfMonth, currentDate);
 			if (list != null && list.size() > 0) {
 				for (int i = 0; i < list.size(); i++) {
-					if (list.get(i).getShopId().longValue() == goalSupervisorList.get(i).getShopId()) {
-						Long saleTarget = goalSupervisorList.get(i).getSaleTarget();
-						Long saleCurrent = list.get(i).getSaleQty().longValue();
-						BigDecimal achieved = null;
-						if (saleTarget != 0){
-							achieved = list.get(i).getSaleQty().divide(BigDecimal.valueOf(saleTarget)).setScale(2, BigDecimal.ROUND_HALF_UP);
+//					if (list.get(i).getShopId().longValue() == goalSupervisorList.get(i).getShopId()) {
+//						Long saleTarget = goalSupervisorList.get(i).getSaleTarget();
+//						Long saleCurrent = list.get(i).getSaleQty().longValue();
+//						BigDecimal achieved = null;
+//						if (saleTarget != 0){
+//							achieved = list.get(i).getSaleQty().divide(BigDecimal.valueOf(saleTarget)).setScale(2, BigDecimal.ROUND_HALF_UP);
+//						}
+//						goalSupervisorList.get(i).setSaleCurrent(saleCurrent);
+//						goalSupervisorList.get(i).setAchieved(achieved);
+//					}
+					for (int j = 0; j < goalSupervisorList.size(); j++) {
+						if (list.get(i).getShopId().longValue() == goalSupervisorList.get(j).getShopId()) {
+							Long saleTarget = goalSupervisorList.get(j).getSaleTarget();
+							Long saleCurrent = list.get(i).getSaleQty().longValue();
+							BigDecimal achieved = null;
+							if (saleTarget != 0){
+								achieved = list.get(i).getSaleQty().divide(BigDecimal.valueOf(saleTarget)).setScale(2, BigDecimal.ROUND_HALF_UP);
+							}
+							goalSupervisorList.get(j).setSaleCurrent(saleCurrent);
+							goalSupervisorList.get(j).setAchieved(achieved);
 						}
-						goalSupervisorList.get(i).setSaleCurrent(saleCurrent);
-						goalSupervisorList.get(i).setAchieved(achieved);
 					}
+					
 				}
 				
 				for (GoalSupervisor goalSupervisor : goalSupervisorList) {
@@ -86,14 +99,26 @@ public class GoalSupervisorManager {
 						
 						if (list != null && list.size() > 0) {
 							for (int j = 0; j < list.size(); j++) {
-								if (list.get(j).getShopId() == goalModelList.get(j).getShopId() && list.get(j).getModelCode().equals(goalModelList.get(j).getModelCode())) {
-									Long saleCurrent = list.get(j).getSaleQty().longValue();
-									goalModelList.get(j).setSaleCurrent(saleCurrent);
-									BigDecimal achieved = null;
-									if (saleCurrent != 0) {
-										achieved = list.get(j).getSaleQty().divide(BigDecimal.valueOf(goalModelList.get(j).getSaleTarget())).setScale(2, BigDecimal.ROUND_HALF_UP);
+//								if (list.get(j).getShopId() == goalModelList.get(j).getShopId() && list.get(j).getModelCode().equals(goalModelList.get(j).getModelCode())) {
+//									Long saleCurrent = list.get(j).getSaleQty().longValue();
+//									goalModelList.get(j).setSaleCurrent(saleCurrent);
+//									BigDecimal achieved = null;
+//									if (saleCurrent != 0) {
+//										achieved = list.get(j).getSaleQty().divide(BigDecimal.valueOf(goalModelList.get(j).getSaleTarget())).setScale(2, BigDecimal.ROUND_HALF_UP);
+//									}
+//									goalModelList.get(j).setAchieved(achieved);
+//								}
+								
+								for (int k = 0; k < goalModelList.size(); k++) {
+									if (list.get(j).getShopId() == goalModelList.get(k).getShopId() && list.get(j).getModelCode().equals(goalModelList.get(k).getModelCode())) {
+										Long saleCurrent = list.get(j).getSaleQty().longValue();
+										goalModelList.get(k).setSaleCurrent(saleCurrent);
+										BigDecimal achieved = null;
+										if (saleCurrent != 0) {
+											achieved = list.get(j).getSaleQty().divide(BigDecimal.valueOf(goalModelList.get(k).getSaleTarget())).setScale(2, BigDecimal.ROUND_HALF_UP);
+										}
+										goalModelList.get(k).setAchieved(achieved);
 									}
-									goalModelList.get(j).setAchieved(achieved);
 								}
 							}
 						}
@@ -101,10 +126,18 @@ public class GoalSupervisorManager {
 						List<StatShopModelSaleDto> shopModelWeekAvgSaleList = saleMapper.calcShopModelSaleQty(shopId, modelCodeList, fourWeekBefore, currentDate);
 						if (shopModelWeekAvgSaleList != null && shopModelWeekAvgSaleList.size() > 0) {
 							for (int j = 0; j < list.size(); j++) {
-								if (shopModelWeekAvgSaleList.get(j).getShopId() == goalModelList.get(j).getShopId() && shopModelWeekAvgSaleList.get(j).getModelCode().equals(goalModelList.get(j).getModelCode())) {
-									Long saleQty = shopModelWeekAvgSaleList.get(j).getSaleQty().longValue();
-									if (saleQty != 0) {
-										goalModelList.get(j).setSaleFourWeeks(saleQty / 4);
+//								if (shopModelWeekAvgSaleList.get(j).getShopId() == goalModelList.get(j).getShopId() && shopModelWeekAvgSaleList.get(j).getModelCode().equals(goalModelList.get(j).getModelCode())) {
+//									Long saleQty = shopModelWeekAvgSaleList.get(j).getSaleQty().longValue();
+//									if (saleQty != 0) {
+//										goalModelList.get(j).setSaleFourWeeks(saleQty / 4);
+//									}
+//								}
+								for (int m = 0; m < shopModelWeekAvgSaleList.size(); m++) {
+									if (shopModelWeekAvgSaleList.get(m).getShopId() == goalModelList.get(j).getShopId() && shopModelWeekAvgSaleList.get(m).getModelCode().equals(goalModelList.get(j).getModelCode())) {
+										Long saleQty = shopModelWeekAvgSaleList.get(m).getSaleQty().longValue();
+										if (saleQty != 0) {
+											goalModelList.get(j).setSaleFourWeeks(saleQty / 4);
+										}
 									}
 								}
 							}
