@@ -1,5 +1,6 @@
 package com.transsion.store.manager;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ import com.transsion.store.mapper.ModelMapper;
 import com.transsion.store.mapper.SaleGoalMapper;
 import com.transsion.store.mapper.ShopMapper;
 import com.transsion.store.utils.CacheUtils;
+import com.transsion.store.utils.CalendarUtils;
 
 /**
  * @author guihua.zhang
@@ -37,8 +39,8 @@ public class SaleGoalManager {
 	private SaleGoalMapper saleGoalMapper;
 	
 	
-//	@Autowired
-//	private SalesManager salesMannager;
+	@Autowired
+	private SalesManager salesMannager;
 	
 	@Autowired
 	private ShopMapper shopMapper;
@@ -98,11 +100,12 @@ public class SaleGoalManager {
 		GoalSupervisor supervisor = goalSupervisorMapper.querySaleTargetByShopId(goalSupervisor);
 		visitShopInfoDto.setTargetSaleQty(supervisor.getSaleTarget());
 		visitShopInfoDto.setPlanDate(saleDate);
-		// 获取销量信息
-		visitShopInfoDto.setCurrentSaleQty(supervisor.getSaleCurrent());
 		
-//		long currentSaleQty = salesMannager.calcShopSaleQty(shopId, (new SimpleDateFormat("yyyy-MM-dd").format(CalendarUtils.getFirstDayOfMonth(saleDate))), saleDate);
-//		visitShopInfoDto.setCurrentSaleQty(currentSaleQty);
+		// 获取销量信息
+//		visitShopInfoDto.setCurrentSaleQty(supervisor.getSaleCurrent());
+		
+		long currentSaleQty = salesMannager.calcShopSaleQty(shopId, (new SimpleDateFormat("yyyy-MM-dd").format(CalendarUtils.getFirstDayOfMonth(saleDate))), saleDate);
+		visitShopInfoDto.setCurrentSaleQty(currentSaleQty);
 		return visitShopInfoDto;
 	}
 
@@ -137,44 +140,48 @@ public class SaleGoalManager {
 		storeShopModelTargetSaleQty(visitStockInfoList, saleTargetList);
 
 		// 获取月销量信息
-//		List<StatShopModelSaleDto> shopModelMonthSaleList = salesMannager.calcShopModelSaleQty(shopId, modelCodeList,
-//				(new SimpleDateFormat("yyyy-MM-dd").format(CalendarUtils.getFirstDayOfMonth(saleDate))), saleDate);
-//		storeShopModelMonthSale(visitStockInfoList, shopModelMonthSaleList);
+		List<StatShopModelSaleDto> shopModelMonthSaleList = salesMannager.calcShopModelSaleQty(shopId, modelCodeList,
+				(new SimpleDateFormat("yyyy-MM-dd").format(CalendarUtils.getFirstDayOfMonth(saleDate))), saleDate);
+		storeShopModelMonthSale(visitStockInfoList, shopModelMonthSaleList);
 
 		// 前四周平均销量信息
-//		List<StatShopModelSaleDto> shopModelWeekAvgSaleList = salesMannager.calcShopModelSaleQty(shopId, modelCodeList,
-//				new SimpleDateFormat("yyyy-MM-dd").format(CalendarUtils.getDayBeforeNDate(saleDate, 28)), saleDate);
-//		storeShopModelWeekAvgSale(visitStockInfoList, shopModelWeekAvgSaleList);
+		List<StatShopModelSaleDto> shopModelWeekAvgSaleList = salesMannager.calcShopModelSaleQty(shopId, modelCodeList,
+				new SimpleDateFormat("yyyy-MM-dd").format(CalendarUtils.getDayBeforeNDate(saleDate, 28)), saleDate);
+		storeShopModelWeekAvgSale(visitStockInfoList, shopModelWeekAvgSaleList);
 
 		return visitStockInfoList;
 	}
 	
 	
-//	private void storeShopModelMonthSale(List<VisitStockInfoDto> visitStockInfoList,
-//			List<StatShopModelSaleDto> statShopModelSaleList) {
-//		for(VisitStockInfoDto visitStockInfo:visitStockInfoList )
-//		{
-//			String modeCode = visitStockInfo.getModelCode();
-//			StatShopModelSaleDto statShopModelSaleDto = getStatShopModelSale(modeCode, statShopModelSaleList);
-//			if(statShopModelSaleDto!=null)
-//			{
-//				visitStockInfo.setCurrentSaleQty(new Long(statShopModelSaleDto.getSaleQty().longValue()));
-//			}
-//		}
-//	}
+	private void storeShopModelMonthSale(List<VisitStockInfoDto> visitStockInfoList,
+			List<StatShopModelSaleDto> statShopModelSaleList) {
+		for(VisitStockInfoDto visitStockInfo:visitStockInfoList )
+		{
+			String modeCode = visitStockInfo.getModelCode();
+			StatShopModelSaleDto statShopModelSaleDto = getStatShopModelSale(modeCode, statShopModelSaleList);
+			if(statShopModelSaleDto!=null)
+			{
+				visitStockInfo.setCurrentSaleQty(new Long(statShopModelSaleDto.getSaleQty().longValue()));
+			} else {
+				visitStockInfo.setCurrentSaleQty((long)0);
+			}
+		}
+	}
 
-//	private void storeShopModelWeekAvgSale(List<VisitStockInfoDto> visitStockInfoList,
-//			List<StatShopModelSaleDto> statShopModelSaleList) {
-//		for(VisitStockInfoDto visitStockInfo:visitStockInfoList )
-//		{
-//			String modeCode = visitStockInfo.getModelCode();
-//			StatShopModelSaleDto statShopModelSaleDto = getStatShopModelSale(modeCode, statShopModelSaleList);
-//			if(statShopModelSaleDto!=null)
-//			{
-//				visitStockInfo.setSaleAvg((new BigDecimal(statShopModelSaleDto.getSaleQty().longValue() / 4)));
-//			}
-//		}
-//	}
+	private void storeShopModelWeekAvgSale(List<VisitStockInfoDto> visitStockInfoList,
+			List<StatShopModelSaleDto> statShopModelSaleList) {
+		for(VisitStockInfoDto visitStockInfo:visitStockInfoList )
+		{
+			String modeCode = visitStockInfo.getModelCode();
+			StatShopModelSaleDto statShopModelSaleDto = getStatShopModelSale(modeCode, statShopModelSaleList);
+			if(statShopModelSaleDto!=null)
+			{
+				visitStockInfo.setSaleAvg((new BigDecimal(statShopModelSaleDto.getSaleQty().longValue() / 4)));
+			} else {
+				visitStockInfo.setSaleAvg(BigDecimal.valueOf(0));
+			}
+		}
+	}
 
 	private StatShopModelSaleDto getStatShopModelSale(String modelCode,
 			List<StatShopModelSaleDto> statShopModelSaleList) {
@@ -199,8 +206,10 @@ public class SaleGoalManager {
 			if(statShopModelSaleDto!=null)
 			{
 				visitStockInfo.setTargetSaleQty(statShopModelSaleDto.getTargetSaleQty());
-				visitStockInfo.setCurrentSaleQty(statShopModelSaleDto.getCurrentSaleQty());
-				visitStockInfo.setSaleAvg(BigDecimal.valueOf(statShopModelSaleDto.getFourSaleQty()));
+//				visitStockInfo.setCurrentSaleQty(statShopModelSaleDto.getCurrentSaleQty());
+//				visitStockInfo.setSaleAvg(BigDecimal.valueOf(statShopModelSaleDto.getFourSaleQty()));
+			} else {
+				visitStockInfo.setTargetSaleQty((long)0);
 			}
 		}
 	}
