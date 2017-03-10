@@ -251,10 +251,10 @@
 				AND COUNTING_TIME=str_to_date(#{prototypeCountingDto.countingTime},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="prototypeCountingDto.countingTimeStart!= null and prototypeCountingDto.countingTimeStart!= ''">
-				AND DATE_FORMAT(pc.COUNTING_TIME, '%Y-%m-%d')&gt;=str_to_date(#{prototypeCountingDto.countingTimeStart},'%Y-%m-%d %H:%i:%s')
+				AND DATE_FORMAT(pc.COUNTING_TIME, '%Y-%m')&gt;=#{prototypeCountingDto.countingTimeStart}
             </if>
             <if test="prototypeCountingDto.countingTimeEnd!= null and prototypeCountingDto.countingTimeEnd!= ''">
-				AND DATE_FORMAT(pc.COUNTING_TIME, '%Y-%m-%d')&lt;=str_to_date(#{prototypeCountingDto.countingTimeEnd},'%Y-%m-%d %H:%i:%s')
+				AND DATE_FORMAT(pc.COUNTING_TIME, '%Y-%m')&lt;=#{prototypeCountingDto.countingTimeEnd}
             </if>
             <if test="prototypeCountingDto.remark!= null and prototypeCountingDto.remark!= ''">
 				AND REMARK=#{prototypeCountingDto.remark}
@@ -266,10 +266,10 @@
 				AND CREATE_TIME=str_to_date(#{prototypeCountingDto.createTime},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="prototypeCountingDto.createTimeStart!= null and prototypeCountingDto.createTimeStart!= ''">
-				AND DATE_FORMAT(pc.CREATE_TIME, '%Y-%m-%d') &gt;=str_to_date(#{prototypeCountingDto.createTimeStart},'%Y-%m-%d %H:%i:%s')
+				AND pc.CREATE_TIME &gt;=str_to_date(#{prototypeCountingDto.createTimeStart},'%Y-%m-%d %H:%i:%s')
             </if>
             <if test="prototypeCountingDto.createTimeEnd!= null and prototypeCountingDto.createTimeEnd!= ''">
-				AND DATE_FORMAT(pc.CREATE_TIME, '%Y-%m-%d') &lt;=str_to_date(#{prototypeCountingDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
+				AND pc.CREATE_TIME &lt;=str_to_date(#{prototypeCountingDto.createTimeEnd},'%Y-%m-%d %H:%i:%s')
             </if>
            <!--  <if test="prototypeCountingDto.updateBy!= null and prototypeCountingDto.updateBy!= ''">
 				AND UPDATE_BY=#{prototypeCountingDto.updateBy}

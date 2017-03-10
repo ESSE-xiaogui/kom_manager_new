@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.ReportSaleDaily;
-import com.transsion.store.dto.PrototypeCountingDto;
 import com.transsion.store.dto.ReportSaleDailyDto;
 import com.transsion.store.mapper.ReportSaleDailyMapper;
 import com.transsion.store.utils.ExcelUtils;
