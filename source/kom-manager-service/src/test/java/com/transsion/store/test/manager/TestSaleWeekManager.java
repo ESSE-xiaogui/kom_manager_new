@@ -66,4 +66,14 @@ public class TestSaleWeekManager extends GenericTestCase {
         System.out.println(pagination.getTotalPage());
         System.out.println(pagination);
     }
+
+    @Test
+    public void testGetWeeksBefore() throws ServiceException {
+        List<Integer> weeks = reportSaleWeekManager.getWeeksBefore(4);
+
+        for (Integer week: weeks) {
+            System.out.println(week);
+        }
+
+    }
 }

@@ -21,20 +21,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.transsion.store.dto.ReportSaleWeek4CityDto;
+import com.transsion.store.utils.CalendarUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -231,5 +226,29 @@ public class ReportSaleWeekController extends AbstractController{
 		pagination.setOrderBy(requestModel.getOrderBy());
 
 		return reportSaleWeekFacade.listPaginationCityWeekDataByRange(pagination, requestModel.getParams());
+	}
+
+	/**
+	 * 获取当前日期所在年中的周数
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("/getWeekOfYear")
+	@Produces({MediaType.APPLICATION_JSON})
+	public int getWeekOfYear() throws ServiceException {
+		return CalendarUtils.getWeekOfYear(new Date());
+	}
+
+	/**
+	 * 根据输入周获取前8周列表
+	 * @param week
+	 * @return
+	 */
+	@GET
+	@Path("/getWeeksBefore/{week}")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<Integer> getWeeksBefore(@PathParam("week") Integer week) throws ServiceException {
+		return reportSaleWeekFacade.getWeeksBefore(week);
 	}
 }

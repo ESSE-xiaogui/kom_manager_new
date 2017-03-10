@@ -187,4 +187,14 @@ public class ReportSaleWeekFacadeImpl implements ReportSaleWeekFacade {
 	public Pagination<ReportSaleWeek4CityDto> listPaginationCityWeekDataByRange(Pagination<ReportSaleWeek4CityDto> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException {
 		return reportSaleWeekManager.listPaginationCityWeekDataByRange(pagination, reportSaleWeek);
 	}
+
+	/**
+	 * 根据输入周获取前8周列表
+	 * @param week
+	 * @return
+	 */
+	@Override
+	public List<Integer> getWeeksBefore(Integer week) throws ServiceException {
+		return reportSaleWeekManager.getWeeksBefore(week);
+	}
 }

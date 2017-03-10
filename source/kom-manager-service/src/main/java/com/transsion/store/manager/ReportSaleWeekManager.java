@@ -101,4 +101,20 @@ public class ReportSaleWeekManager {
 		return Integer.parseInt(new StringBuilder().append(year).append(String.format("%02d", tmp)).toString());
 	}
 
+	/**
+	 * 根据输入周获取前8周列表
+	 * @param week
+	 * @return
+	 */
+	public List<Integer> getWeeksBefore(Integer week) throws ServiceException{
+		List<Integer> weeks = new ArrayList<>();
+		int tmp;
+		for(int i = 7; i >= 0; i--) {
+			tmp = (week - i > 0) ? (week - i) : (week - i + 52);
+			weeks.add(tmp);
+		}
+
+		return weeks;
+	}
+
 }

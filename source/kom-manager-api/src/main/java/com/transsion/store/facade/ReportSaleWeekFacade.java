@@ -130,4 +130,11 @@ public interface ReportSaleWeekFacade {
      * @throws ServiceException
      */
     Pagination<ReportSaleWeek4CityDto> listPaginationCityWeekDataByRange(Pagination<ReportSaleWeek4CityDto> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException;
+
+	/**
+	 * 根据输入周获取前8周列表
+	 * @param week
+	 * @return
+	 */
+	List<Integer> getWeeksBefore(Integer week) throws ServiceException;
 }
