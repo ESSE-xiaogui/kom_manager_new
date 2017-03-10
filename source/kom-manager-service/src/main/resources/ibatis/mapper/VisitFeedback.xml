@@ -185,8 +185,8 @@
             <if test="visitFeedBackInfoDto.id!= null and visitFeedBackInfoDto.id!= ''">
 				AND v.ID=#{visitFeedBackInfoDto.id}
             </if>
-            <if test="visitFeedBackInfoDto.visitId!= null and visitFeedBackInfoDto.visitId!= ''">
-				AND VISIT_ID=#{visitFeedBackInfoDto.visitId}
+            <if test="visitFeedBackInfoDto.visitNo!= null and visitFeedBackInfoDto.visitNo!= ''">
+				AND VISIT_ID=#{visitFeedBackInfoDto.visitNo}
             </if>
             <if test="visitFeedBackInfoDto.companyId!= null and visitFeedBackInfoDto.companyId!= ''">
 				AND v.COMPANY_ID=#{visitFeedBackInfoDto.companyId}

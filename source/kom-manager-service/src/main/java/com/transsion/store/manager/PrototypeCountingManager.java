@@ -162,12 +162,13 @@ public class PrototypeCountingManager {
 		List<Object[]> dataset = new ArrayList<Object[]>();
 		int i=1;
 		for(PrototypeCountingDto prototypeCountingDto1 :list){
+			Integer status = prototypeCountingDto1.getStatus();
 			dataset.add(new Object[]{i++,prototypeCountingDto1.getCompanyCode(),prototypeCountingDto1.getBrandName(),
 							prototypeCountingDto1.getPrototypeId(),prototypeCountingDto1.getCountryName(),
 							prototypeCountingDto1.getCityName(),prototypeCountingDto1.getShopCode(),
 							prototypeCountingDto1.getShopName(),prototypeCountingDto1.getImeiNo(),
 							prototypeCountingDto1.getModelName(),prototypeCountingDto1.getCountingTime(),
-							prototypeCountingDto1.getCreateTime(),prototypeCountingDto1.getStatus(),
+							prototypeCountingDto1.getCreateTime(),status==1?"未盘":(status==2?"正常":(status==3?"延迟":"过期")),
 							prototypeCountingDto1.getCreateBy(),prototypeCountingDto1.getEmpName(),
 							prototypeCountingDto1.getRemark()});
 		}

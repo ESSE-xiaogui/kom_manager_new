@@ -291,6 +291,9 @@
 		SELECT 
 		<include refid="commonProcessDateColumns"/>
 		FROM T_MATERIEL WHERE 1=1
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID =#{companyId}
+		</if>
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>

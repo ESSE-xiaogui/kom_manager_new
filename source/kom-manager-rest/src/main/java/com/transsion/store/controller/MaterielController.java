@@ -69,7 +69,7 @@ public class MaterielController extends AbstractController{
 		pagination.setParams(requestModel.getParams());
 		pagination.setOrderBy(requestModel.getOrderBy());
 
-		return materielFacade.listPaginationByProperty(pagination, requestModel.getParams());
+		return materielFacade.listPaginationByProperty(pagination, requestModel.getParams(),this.getAuthorization());
 	}
 
 	/**

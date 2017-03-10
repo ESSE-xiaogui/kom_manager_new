@@ -98,10 +98,11 @@ public interface MaterielFacade {
 	
 	/**
 	 * 根据查询条件查询分页记录
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Materiel> listPaginationByProperty(Pagination<Materiel> pagination, Materiel materiel)
+	public Pagination<Materiel> listPaginationByProperty(Pagination<Materiel> pagination, Materiel materiel, String token)
 			throws ServiceException;
 
 	/**

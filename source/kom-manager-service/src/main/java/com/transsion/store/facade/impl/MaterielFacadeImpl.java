@@ -79,10 +79,10 @@ public class MaterielFacadeImpl implements MaterielFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Materiel> listPaginationByProperty(Pagination<Materiel> pagination, Materiel materiel)
+	public Pagination<Materiel> listPaginationByProperty(Pagination<Materiel> pagination, Materiel materiel,String token)
 			throws ServiceException
 	{
-		return materielService.listPaginationByProperty(pagination, materiel);
+		return materielService.listPaginationByProperty(pagination, materiel,token);
 	}
 
 	/**

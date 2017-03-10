@@ -22,9 +22,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.Materiel;
+import com.transsion.store.context.UserContext;
+import com.transsion.store.exception.ExceptionDef;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
 import com.transsion.store.mapper.MaterielMapper;
+import com.transsion.store.utils.CacheUtils;
 
 @Service("materielService")
 public class MaterielService {
@@ -71,13 +75,19 @@ public class MaterielService {
 	
 	/**
 	 * 根据查询条件查询分页记录
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Materiel> listPaginationByProperty(Pagination<Materiel> pagination, Materiel materiel)
+	public Pagination<Materiel> listPaginationByProperty(Pagination<Materiel> pagination, Materiel materiel, String token)
 			throws ServiceException
 	{
-		List<Materiel> list = materielMapper.listPaginationByProperty(pagination, materiel, pagination.getOrderBy());
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext)){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		Long companyId = userContext.isAdmin()?null:userContext.getCompanyId();
+		List<Materiel> list = materielMapper.listPaginationByProperty(pagination, materiel, pagination.getOrderBy(),companyId);
 		
 		pagination.setResultList(list);
 		

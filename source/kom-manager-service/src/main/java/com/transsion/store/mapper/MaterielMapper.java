@@ -28,5 +28,5 @@ import com.transsion.store.bo.Materiel;
 
 public interface MaterielMapper extends GenericIBatisMapper<Materiel, java.lang.Long> {
 
-    public List<Materiel> listPaginationByProperty(Pagination<Materiel> pagination, @Param("materiel")Materiel materiel, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<Materiel> listPaginationByProperty(Pagination<Materiel> pagination, @Param("materiel")Materiel materiel, @Param("orderBy") Map<String, String> orderBy, @Param("companyId")Long companyId) throws DataAccessFailureException;
 }
