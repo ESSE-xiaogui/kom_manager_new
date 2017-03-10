@@ -72,7 +72,22 @@ public class VisitPlanManager {
 						|| UtilHelper.isEmpty(userContext.getCompanyId())) {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
-
+		//删除根据日期加用户名删除数据,再添加.
+		List<VisitPlan> visitPlans = new ArrayList<VisitPlan>();
+		for(VisitPlanDto VisitPlanDto:visitPlanDtoList){
+			if(UtilHelper.isEmpty(VisitPlanDto.getPlanDate())){
+				throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+			}
+			VisitPlan visitPlan = new VisitPlan();
+			visitPlan.setPlanDate(VisitPlanDto.getPlanDate());
+			visitPlan.setPlanner(userContext.getUserCode());
+			visitPlans.add(visitPlan);
+		}
+		if(visitPlans.size()>0){
+			visitPlanMapper.deleteVisitPlans(visitPlans);
+		}
+		//app传入所有需要上传的计划日期和店铺id进行保存 注:不需要保存的计划app不要上传
+		List<VisitPlan> visitPlanList = new ArrayList<VisitPlan>();
 		for (VisitPlanDto visitPlanDto : visitPlanDtoList) {
 			VisitPlan visitPlan = new VisitPlan();
 			visitPlan.setCompanyId(userContext.getCompanyId());
@@ -84,13 +99,11 @@ public class VisitPlanManager {
 			} else {
 				visitPlan.setPlanner(visitPlanDto.getPlanner());
 			}
-			if (!UtilHelper.isEmpty(visitPlanDto.getIsDelete())) {
-				visitPlanMapper.deleteByPK(visitPlanDto.getId());
-			}
 			visitPlan.setCreateBy(userContext.getUserCode());
 			visitPlan.setCreateTime(systemDateService.getCurrentDate());
-			visitPlanMapper.save(visitPlan);
+			visitPlanList.add(visitPlan);
 		}
+		visitPlanMapper.saveVisitPlans(visitPlanList);
 		int success = undo;
 		return success;
 	}

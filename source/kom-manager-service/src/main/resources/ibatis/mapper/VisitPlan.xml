@@ -376,7 +376,7 @@
 		<include refid="commonColumnsNotPK"/>
 		<![CDATA[
 			) VALUES ( 
-			 str_to_date(#{planDate},'%Y-%m-%d %H:%i:%s')
+			 str_to_date(#{planDate},'%Y-%m-%d')
 			, str_to_date(#{visitDate},'%Y-%m-%d %H:%i:%s')
 			, #{planner}
 			, #{companyId}
@@ -389,6 +389,28 @@
 			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
 			, #{version}
   ) ]]>
+	</insert>
+	<insert id="saveVisitPlans" parameterType="java.util.List">
+		INSERT INTO T_VISIT_PLAN (
+		<include refid="commonColumnsNotPK" />
+		) VALUES
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(
+			 str_to_date(#{item.planDate},'%Y-%m-%d')
+			, str_to_date(#{item.visitDate},'%Y-%m-%d %H:%i:%s')
+			, #{item.planner}
+			, #{item.companyId}
+			, #{item.shopId}
+			, #{item.status}
+			, #{item.remark}
+			, #{item.createBy}
+			, str_to_date(#{item.createTime},'%Y-%m-%d %H:%i:%s')
+			, #{item.updateBy}
+			, str_to_date(#{item.updateTime},'%Y-%m-%d %H:%i:%s')
+			, #{item.version}
+			)
+		</foreach>
 	</insert>
 	<update id="update" parameterType="VisitPlan">
 		<![CDATA[ UPDATE T_VISIT_PLAN SET 
@@ -407,6 +429,19 @@
 			, VERSION=#{version} 
 		WHERE ID = #{id}  ]]>
 	</update>
+	<delete id="deleteVisitPlans" parameterType="VisitPlan">
+		DELETE FROM T_VISIT_PLAN WHERE 1=1
+			AND PLAN_DATE IN
+			<foreach collection="list" index="index" item="item" open="("
+				separator="," close=") ">
+				#{item.planDate}
+			</foreach>
+			AND PLANNER IN
+			<foreach collection="list" index="index" item="item" open="("
+				separator="," close=") ">
+				#{item.planner}
+			</foreach>
+	</delete>
 	<delete id="deleteByPK" parameterType="java.lang.Long">
 		<![CDATA[ DELETE FROM T_VISIT_PLAN WHERE ID = #{id}  ]]>
 	</delete>

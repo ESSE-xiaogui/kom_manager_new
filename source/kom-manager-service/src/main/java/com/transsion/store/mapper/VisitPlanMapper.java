@@ -55,4 +55,8 @@ public interface VisitPlanMapper extends GenericIBatisMapper<VisitPlan, java.lan
 	
 	//根据店铺ID和日期update状态为已巡店
 	public void updateStatusByShopIdAndPlanDate(VisitPlan visitPlan);
+	
+	public void saveVisitPlans(List<VisitPlan> visitPlanList);
+	
+	public void deleteVisitPlans(List<VisitPlan> visitPlans);
 }
