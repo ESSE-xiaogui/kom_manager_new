@@ -47,6 +47,17 @@
 		<result column="UPDATED_BY" property="updatedBy"/>
 		<result column="UPDATE_TIME" property="updateTime"/>
 	</resultMap>
+
+	<resultMap id="ReportSaleWeek4CityDtoResultMapper" type="ReportSaleWeek4CityDto" extends="ReportSaleWeekResultMapper">
+		<result column="SALE_QTY_0" property="saleQty0"/>
+		<result column="SALE_QTY_1" property="saleQty1"/>
+		<result column="SALE_QTY_2" property="saleQty2"/>
+		<result column="SALE_QTY_3" property="saleQty3"/>
+		<result column="SALE_QTY_4" property="saleQty4"/>
+		<result column="SALE_QTY_5" property="saleQty5"/>
+		<result column="SALE_QTY_6" property="saleQty6"/>
+		<result column="SALE_QTY_7" property="saleQty7"/>
+	</resultMap>
 	
 	<sql id="commonColumns">
 		 REPORT_SALE_WEEK_ID
@@ -298,6 +309,83 @@
         </if>
     </sql>
 
+	<sql id="commonConditionByPrefix4CityWeek">
+		<if test="reportSaleWeek != null">
+			<if test="reportSaleWeek.reportSaleWeekId!= null and reportSaleWeek.reportSaleWeekId!= ''">
+				AND REPORT_SALE_WEEK_ID = #{reportSaleWeek.reportSaleWeekId}
+			</if>
+			<if test="reportSaleWeek.companyId!= null and reportSaleWeek.companyId!= ''">
+				AND COMPANY_ID = #{reportSaleWeek.companyId}
+			</if>
+			<if test="reportSaleWeek.shopId!= null and reportSaleWeek.shopId!= ''">
+				AND SHOP_ID = #{reportSaleWeek.shopId}
+			</if>
+			<if test="reportSaleWeek.regionId!= null and reportSaleWeek.regionId!= ''">
+				AND REGION_ID = #{reportSaleWeek.regionId}
+			</if>
+			<if test="reportSaleWeek.countryId!= null and reportSaleWeek.countryId!= ''">
+				AND COUNTRY_ID = #{reportSaleWeek.countryId}
+			</if>
+			<if test="reportSaleWeek.cityId!= null and reportSaleWeek.cityId!= ''">
+				AND CITY_ID = #{reportSaleWeek.cityId}
+			</if>
+			<if test="reportSaleWeek.gradeId!= null and reportSaleWeek.gradeId!= ''">
+				AND GRADE_ID = #{reportSaleWeek.gradeId}
+			</if>
+			<if test="reportSaleWeek.userCode!= null and reportSaleWeek.userCode!= ''">
+				AND USER_CODE = #{reportSaleWeek.userCode}
+			</if>
+			<if test="reportSaleWeek.shopCode!= null and reportSaleWeek.shopCode!= ''">
+				AND SHOP_CODE = #{reportSaleWeek.shopCode}
+			</if>
+			<if test="reportSaleWeek.brandCode!= null and reportSaleWeek.brandCode!= ''">
+				AND BRAND_CODE = #{reportSaleWeek.brandCode}
+			</if>
+			<if test="reportSaleWeek.modelCode!= null and reportSaleWeek.modelCode!= ''">
+				AND MODEL_CODE = #{reportSaleWeek.modelCode}
+			</if>
+			<if test="reportSaleWeek.companyName!= null and reportSaleWeek.companyName!= ''">
+				AND COMPANY_NAME = #{reportSaleWeek.companyName}
+			</if>
+			<if test="reportSaleWeek.shopName!= null and reportSaleWeek.shopName!= ''">
+				AND SHOP_NAME = #{reportSaleWeek.shopName}
+			</if>
+			<if test="reportSaleWeek.gradeName!= null and reportSaleWeek.gradeName!= ''">
+				AND GRADE_NAME = #{reportSaleWeek.gradeName}
+			</if>
+			<if test="reportSaleWeek.empName!= null and reportSaleWeek.empName!= ''">
+				AND EMP_NAME = #{reportSaleWeek.empName}
+			</if>
+			<if test="reportSaleWeek.regionName!= null and reportSaleWeek.regionName!= ''">
+				AND REGION_NAME = #{reportSaleWeek.regionName}
+			</if>
+			<if test="reportSaleWeek.countryName!= null and reportSaleWeek.countryName!= ''">
+				AND COUNTRY_NAME = #{reportSaleWeek.countryName}
+			</if>
+			<if test="reportSaleWeek.cityName!= null and reportSaleWeek.cityName!= ''">
+				AND CITY_NAME = #{reportSaleWeek.cityName}
+			</if>
+			<if test="reportSaleWeek.saleQty!= null and reportSaleWeek.saleQty!= ''">
+				AND SALE_QTY = #{reportSaleWeek.saleQty}
+			</if>
+			<if test="reportSaleWeek.stockQty!= null and reportSaleWeek.stockQty!= ''">
+				AND STOCK_QTY = #{reportSaleWeek.stockQty}
+			</if>
+			<if test="reportSaleWeek.createdBy!= null and reportSaleWeek.createdBy!= ''">
+				AND CREATED_BY = #{reportSaleWeek.createdBy}
+			</if>
+			<if test="reportSaleWeek.createTime!= null and reportSaleWeek.createTime!= ''">
+				AND CREATE_TIME = str_to_date(#{reportSaleWeek.createTime},'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="reportSaleWeek.updatedBy!= null and reportSaleWeek.updatedBy!= ''">
+				AND UPDATED_BY = #{reportSaleWeek.updatedBy}
+			</if>
+			<if test="reportSaleWeek.updateTime!= null and reportSaleWeek.updateTime!= ''">
+				AND UPDATE_TIME = str_to_date(#{reportSaleWeek.updateTime},'%Y-%m-%d %H:%i:%s')
+			</if>
+		</if>
+	</sql>
+
 	<sql id="orderByClause">
 		<if test="orderBy != null">
 			<foreach collection="orderBy" index="key" item="value"
@@ -387,6 +475,110 @@
         	<when test="key == 'updateTime'">
 				UPDATE_TIME ${value}
             </when>
+		</choose>
+	</sql>
+
+	<sql id="orderByClause4CityWeek">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=", " separator="" close=" ">
+				<include refid="orderBy4CityWeek" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy4CityWeek">
+		<choose>
+			<when test="key == 'reportSaleWeekId'">
+				REPORT_SALE_WEEK_ID ${value}
+			</when>
+			<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+			</when>
+			<when test="key == 'shopId'">
+				SHOP_ID ${value}
+			</when>
+			<when test="key == 'regionId'">
+				REGION_ID ${value}
+			</when>
+			<when test="key == 'countryId'">
+				COUNTRY_ID ${value}
+			</when>
+			<when test="key == 'cityId'">
+				CITY_ID ${value}
+			</when>
+			<when test="key == 'gradeId'">
+				GRADE_ID ${value}
+			</when>
+			<when test="key == 'userCode'">
+				USER_CODE ${value}
+			</when>
+			<when test="key == 'shopCode'">
+				SHOP_CODE ${value}
+			</when>
+			<when test="key == 'brandCode'">
+				BRAND_CODE ${value}
+			</when>
+			<when test="key == 'modelCode'">
+				MODEL_CODE ${value}
+			</when>
+			<when test="key == 'companyName'">
+				COMPANY_NAME ${value}
+			</when>
+			<when test="key == 'shopName'">
+				SHOP_NAME ${value}
+			</when>
+			<when test="key == 'gradeName'">
+				GRADE_NAME ${value}
+			</when>
+			<when test="key == 'empName'">
+				EMP_NAME ${value}
+			</when>
+			<when test="key == 'regionName'">
+				REGION_NAME ${value}
+			</when>
+			<when test="key == 'countryName'">
+				COUNTRY_NAME ${value}
+			</when>
+			<when test="key == 'cityName'">
+				CITY_NAME ${value}
+			</when>
+			<when test="key == 'saleQty0'">
+				SALE_QTY_0 ${value}
+			</when>
+			<when test="key == 'saleQty1'">
+				SALE_QTY_1 ${value}
+			</when>
+			<when test="key == 'saleQty2'">
+				SALE_QTY_2 ${value}
+			</when>
+			<when test="key == 'saleQty3'">
+				SALE_QTY_3 ${value}
+			</when>
+			<when test="key == 'saleQty4'">
+				SALE_QTY_4 ${value}
+			</when>
+			<when test="key == 'saleQty5'">
+				SALE_QTY_5 ${value}
+			</when>
+			<when test="key == 'saleQty6'">
+				SALE_QTY_6 ${value}
+			</when>
+			<when test="key == 'saleQty7'">
+				SALE_QTY_7 ${value}
+			</when>
+			<when test="key == 'createdBy'">
+				CREATED_BY ${value}
+			</when>
+			<when test="key == 'createTime'">
+				CREATE_TIME ${value}
+			</when>
+			<when test="key == 'updatedBy'">
+				UPDATED_BY ${value}
+			</when>
+			<when test="key == 'updateTime'">
+				UPDATE_TIME ${value}
+			</when>
 		</choose>
 	</sql>
 
@@ -699,5 +891,66 @@
 		<include refid="commonProcessDateColumns"/>
 		FROM T_REPORT_SALE_WEEK WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
+	</select>
+
+	<sql id="sumCityWeek">
+		<foreach collection="dates" index="index" item="item"
+				 open="" separator="," close="">
+			<![CDATA[ sum(case CONCAT(year, LPAD(week, 2, 0)) when ${item} then SALE_QTY else 0 end) SALE_QTY_${index} ]]>
+		</foreach>
+	</sql>
+
+	<select id="listPaginationCityWeekDataByRange" resultMap="ReportSaleWeek4CityDtoResultMapper">
+		<![CDATA[
+		select distinct CITY_ID, BRAND_CODE,
+		COMPANY_ID,
+		COUNTRY_ID,
+		REGION_ID,
+		COMPANY_NAME,
+		CITY_NAME,
+		COUNTRY_NAME,
+		REGION_NAME,
+		YEAR ,
+		]]>
+		<include refid="sumCityWeek"/>
+		<![CDATA[
+		from
+		(
+		SELECT
+		rw.COMPANY_ID,
+		rw.city_id,
+		rw.COUNTRY_ID,
+		rw.REGION_ID,
+		rw.COMPANY_NAME,
+		rw.CITY_NAME,
+		rw.COUNTRY_NAME,
+		rw.REGION_NAME,
+		rw.brand_code,
+		rw.year,
+		rw.week,
+		sum(rw.SALE_QTY) SALE_QTY
+		FROM
+		T_REPORT_SALE_WEEK rw
+		where CONCAT(year, LPAD(week, 2, 0)) >= #{start} and CONCAT(year, LPAD(week, 2, 0)) <= #{end}]]>
+		<include refid="commonConditionByPrefix4CityWeek"/>
+		<![CDATA[
+		GROUP BY rw.year , rw.week, rw.brand_code, rw.COMPANY_ID, rw.city_id,
+		rw.COUNTRY_ID,
+		rw.REGION_ID,
+		rw.COMPANY_NAME,
+		rw.CITY_NAME,
+		rw.COUNTRY_NAME,
+		rw.REGION_NAME
+		) tp group by tp.year , tp.brand_code, tp.city_id,
+		tp.COMPANY_ID,
+		tp.COUNTRY_ID,
+		tp.REGION_ID,
+		tp.COMPANY_NAME,
+		tp.CITY_NAME,
+		tp.COUNTRY_NAME,
+		tp.REGION_NAME
+		order by year desc
+		]]>
+		<include refid="orderByClause4CityWeek" />
 	</select>
 </mapper>

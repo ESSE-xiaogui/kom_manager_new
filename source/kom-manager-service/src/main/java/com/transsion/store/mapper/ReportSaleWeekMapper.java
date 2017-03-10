@@ -23,6 +23,7 @@ import com.transsion.store.bo.ReportSaleWeek;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
+import com.transsion.store.dto.ReportSaleWeek4CityDto;
 import org.apache.ibatis.annotations.Param;
 
 public interface ReportSaleWeekMapper extends GenericIBatisMapper<ReportSaleWeek, java.lang.Long> {
@@ -32,4 +33,6 @@ public interface ReportSaleWeekMapper extends GenericIBatisMapper<ReportSaleWeek
     public List<ReportSaleWeek> findUnStatisticsDataByDate(String date) throws DataAccessFailureException;
     
     public List<ReportSaleWeek> queryListByProperty(@Param("reportSaleWeek")ReportSaleWeek reportSaleWeek);
+
+    public List<ReportSaleWeek4CityDto> listPaginationCityWeekDataByRange(Pagination<ReportSaleWeek4CityDto> pagination, @Param("reportSaleWeek")ReportSaleWeek reportSaleWeek, @Param("dates")List<Integer> dates, @Param("start")Integer start, @Param("end")Integer end, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
 }

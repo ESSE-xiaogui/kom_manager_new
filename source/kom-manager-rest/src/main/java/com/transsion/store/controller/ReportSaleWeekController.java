@@ -34,6 +34,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.transsion.store.dto.ReportSaleWeek4CityDto;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -208,4 +209,27 @@ public class ReportSaleWeekController extends AbstractController{
             this.inputStream = inputStream;
         }
     }
+
+	/**
+	 * 获取销量城市周报表
+	 * @param requestModel
+	 * @return
+	 * @throws ServiceException
+	 */
+	@POST
+	@Path("/listPg4City")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public Pagination<ReportSaleWeek4CityDto> listPaginationCityWeekDataByRange(RequestModel<ReportSaleWeek4CityDto> requestModel) throws ServiceException {
+
+		Pagination<ReportSaleWeek4CityDto> pagination = new Pagination<ReportSaleWeek4CityDto>();
+
+		pagination.setPaginationFlag(requestModel.isPaginationFlag());
+		pagination.setPageNo(requestModel.getPageNo());
+		pagination.setPageSize(requestModel.getPageSize());
+		pagination.setParams(requestModel.getParams());
+		pagination.setOrderBy(requestModel.getOrderBy());
+
+		return reportSaleWeekFacade.listPaginationCityWeekDataByRange(pagination, requestModel.getParams());
+	}
 }

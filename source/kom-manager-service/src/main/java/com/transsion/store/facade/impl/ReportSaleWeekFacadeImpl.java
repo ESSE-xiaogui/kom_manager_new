@@ -18,6 +18,7 @@ package com.transsion.store.facade.impl;
 
 import java.util.List;
 
+import com.transsion.store.dto.ReportSaleWeek4CityDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -173,5 +174,17 @@ public class ReportSaleWeekFacadeImpl implements ReportSaleWeekFacade {
 	@Override
 	public byte[] getReportSaleWeekListByExcel(ReportSaleWeek reportSaleWeek) throws ServiceException {
 		return reportSaleWeekManager.getReportSaleWeekListByExcel(reportSaleWeek);
+	}
+
+	/**
+	 * 获取销量城市周报表
+	 * @param pagination
+	 * @param reportSaleWeek
+	 * @return
+	 * @throws ServiceException
+	 */
+	@Override
+	public Pagination<ReportSaleWeek4CityDto> listPaginationCityWeekDataByRange(Pagination<ReportSaleWeek4CityDto> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException {
+		return reportSaleWeekManager.listPaginationCityWeekDataByRange(pagination, reportSaleWeek);
 	}
 }
