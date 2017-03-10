@@ -98,7 +98,7 @@ public class SaleGoalManager {
 		goalSupervisor.setShopId(shopId);
 		goalSupervisor.setGoalMonth(saleDate.substring(0, 7));
 		GoalSupervisor supervisor = goalSupervisorMapper.querySaleTargetByShopId(goalSupervisor);
-		visitShopInfoDto.setTargetSaleQty(supervisor.getSaleTarget());
+		visitShopInfoDto.setTargetSaleQty(supervisor == null ? 0 : supervisor.getSaleTarget());
 		visitShopInfoDto.setPlanDate(saleDate);
 		
 		// 获取销量信息
