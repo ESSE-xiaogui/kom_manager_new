@@ -53,6 +53,7 @@
 		<result column="IMG_FIRST_URL" property="imgFirstUrl"/>
 		<result column="IMG_SECOND_URL" property="imgSecondUrl"/>
 		<result column="IMG_THIRD_URL" property="imgThirdUrl"/>
+		<result column="DESCRIPTION" property="description"/>
 	</resultMap>
 	
 	<sql id="commonColumns">
@@ -394,7 +395,7 @@
 		SELECT 
 			c.COMPANY_NAME,
 			d.DAMAGE_ID,
-			SUBSTRING(d.DAMAGE_TIME,1,10),
+			SUBSTRING(d.DAMAGE_TIME,1,10) AS DAMAGE_TIME,
 			r.REGION_NAME AS COUNTRY_NAME,
 			e.REGION_NAME AS CITY_NAME,
 			s.SHOP_CODE,
@@ -428,7 +429,7 @@
 			e.EMP_NAME,
 			m.NAME_EN,
 			m.NAME_CN,
-			SUBSTRING(d.DAMAGE_TIME,1,10),
+			SUBSTRING(d.DAMAGE_TIME,1,10) AS DAMAGE_TIME,
 			d.DESCRIPTION,
 			d.IMG_FIRST_URL,
 			d.IMG_SECOND_URL,
@@ -444,7 +445,7 @@
 		SELECT 
 			c.COMPANY_NAME,
 			d.DAMAGE_ID,
-			SUBSTRING(d.DAMAGE_TIME,1,10),
+			SUBSTRING(d.DAMAGE_TIME,1,10) AS DAMAGE_TIME,
 			r.REGION_NAME AS COUNTRY_NAME,
 			e.REGION_NAME AS CITY_NAME,
 			s.SHOP_CODE,

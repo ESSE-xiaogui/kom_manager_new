@@ -30,6 +30,8 @@ public class ShopDamageDto implements Serializable{
 	private String imgSecondUrl;
 	private String imgThirdUrl;
 	
+	private String description;
+	
 	public Long getDamageId() {
 		return damageId;
 	}
@@ -163,6 +165,12 @@ public class ShopDamageDto implements Serializable{
 	public void setImgThirdUrl(String imgThirdUrl) {
 		this.imgThirdUrl = imgThirdUrl;
 	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	
 	@Override
 	public String toString() {
@@ -172,7 +180,8 @@ public class ShopDamageDto implements Serializable{
 				+ nameCn + ", nameEn=" + nameEn + ", createTime=" + createTime + ", damageStartDate=" + damageStartDate
 				+ ", damageEndDate=" + damageEndDate + ", createStartDate=" + createStartDate + ", createEndDate="
 				+ createEndDate + ", companyId=" + companyId + ", regionId=" + regionId + ", imgFirstUrl=" + imgFirstUrl
-				+ ", imgSecondUrl=" + imgSecondUrl + ", imgThirdUrl=" + imgThirdUrl + "]";
+				+ ", imgSecondUrl=" + imgSecondUrl + ", imgThirdUrl=" + imgThirdUrl + ", description=" + description
+				+ "]";
 	}
 	
 }
