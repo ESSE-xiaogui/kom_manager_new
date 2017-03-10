@@ -280,6 +280,7 @@ public class ShopManager {
 		shopService.save(shop);
 		
 		Long shopId = shop.getId();
+		shopMapper.updateShopCodeById(shopId);
 		
 		ShopExtensionDto shopExtensionDto = shopDetailDto.getShopExtensionDto();
 		if (shopExtensionDto != null) {

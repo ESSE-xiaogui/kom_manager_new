@@ -1151,4 +1151,8 @@
 		AND p.SHOP_NAME = #{shopName} 
 		AND up.USER_ID = #{userId}
 	</select>
+	
+	<update id="updateShopCodeById" parameterType="java.lang.Long">
+		UPDATE T_SHOP  SET SHOP_CODE = ID WHERE ID = #{id}
+	</update>
 </mapper>
