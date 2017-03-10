@@ -394,7 +394,7 @@
 		SELECT 
 			c.COMPANY_NAME,
 			d.DAMAGE_ID,
-			d.DAMAGE_TIME,
+			SUBSTRING(d.DAMAGE_TIME,1,10),
 			r.REGION_NAME AS COUNTRY_NAME,
 			e.REGION_NAME AS CITY_NAME,
 			s.SHOP_CODE,
@@ -428,7 +428,7 @@
 			e.EMP_NAME,
 			m.NAME_EN,
 			m.NAME_CN,
-			d.DAMAGE_TIME,
+			SUBSTRING(d.DAMAGE_TIME,1,10),
 			d.DESCRIPTION,
 			d.IMG_FIRST_URL,
 			d.IMG_SECOND_URL,
@@ -438,5 +438,32 @@
 		LEFT JOIN T_USER u ON d.CREATE_BY = u.USER_CODE 
 		LEFT JOIN T_EMPLOYEE e ON u.ID = e.U_ID 
 		LEFT JOIN T_MATERIEL m ON d.MATERIEL_ID = m.ID WHERE d.DAMAGE_ID = #{damageId}
+	</select>
+	
+	<select id="queryListByProperty" parameterType="ShopDamageDto" resultMap="ShopDamageDtoResultMapper">
+		SELECT 
+			c.COMPANY_NAME,
+			d.DAMAGE_ID,
+			SUBSTRING(d.DAMAGE_TIME,1,10),
+			r.REGION_NAME AS COUNTRY_NAME,
+			e.REGION_NAME AS CITY_NAME,
+			s.SHOP_CODE,
+			s.SHOP_NAME,
+			d.CREATE_BY,
+			m.EMP_NAME,
+			t.DUTY_NAME,
+			a.NAME_CN,
+			a.NAME_EN,
+			d.CREATE_TIME
+		FROM T_SHOP_DAMAGE d LEFT JOIN T_SHOP s ON d.SHOP_ID = s.ID 
+		LEFT JOIN T_COMPANY c ON s.COMPANY_ID = c.ID 
+		LEFT JOIN T_REGION r ON s.COUNTRY = r.ID 
+		LEFT JOIN T_REGION e ON s.CITY = e.ID
+		LEFT JOIN T_USER u ON d.CREATE_BY = u.USER_CODE 
+		LEFT JOIN T_EMPLOYEE m ON u.ID = m.U_ID 
+		LEFT JOIN T_DUTY t ON m.DUTY_ID = t.ID 
+		LEFT JOIN T_MATERIEL a ON d.MATERIEL_ID = a.ID 
+		WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
 	</select>
 </mapper>

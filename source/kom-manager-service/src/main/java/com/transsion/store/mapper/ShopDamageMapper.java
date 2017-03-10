@@ -31,4 +31,6 @@ public interface ShopDamageMapper extends GenericIBatisMapper<ShopDamage, java.l
     public List<ShopDamageDto> listPaginationByProperty(Pagination<ShopDamageDto> pagination, @Param("shopDamageDto")ShopDamageDto shopDamageDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     
     public ShopDamageDto queryDetailById(Long damageId) throws DataAccessFailureException;
+    
+    public List<ShopDamageDto> queryListByProperty(@Param("shopDamageDto")ShopDamageDto shopDamageDto);
 }

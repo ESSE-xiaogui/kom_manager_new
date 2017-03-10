@@ -120,4 +120,6 @@ public interface ShopDamageFacade {
 			throws ServiceException;
 	
 	public ShopDamageDto queryDetailById(Long damageId) throws ServiceException;
+	
+	public byte[] getShopDamageListByExcel(ShopDamageDto shopDamageDto)throws ServiceException;
 }

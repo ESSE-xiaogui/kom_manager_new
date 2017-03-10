@@ -26,12 +26,16 @@ import com.transsion.store.dto.ShopDamageDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.ShopDamageFacade;
+import com.transsion.store.manager.ShopDamageManager;
 import com.transsion.store.service.ShopDamageService;
 
 @Component("shopDamageFacade")
 public class ShopDamageFacadeImpl implements ShopDamageFacade {
 
 	private ShopDamageService shopDamageService;
+	
+	@Autowired
+	private ShopDamageManager shopDamageManager;
 	
 	@Autowired
 	public void setShopDamageService(ShopDamageService shopDamageService)
@@ -170,5 +174,10 @@ public class ShopDamageFacadeImpl implements ShopDamageFacade {
 	@Override
 	public ShopDamageDto queryDetailById(Long damageId) throws ServiceException {
 		return shopDamageService.queryDetailById(damageId);
+	}
+
+	@Override
+	public byte[] getShopDamageListByExcel(ShopDamageDto shopDamageDto) throws ServiceException {
+		return shopDamageManager.getShopDamageListByExcel(shopDamageDto);
 	}
 }
