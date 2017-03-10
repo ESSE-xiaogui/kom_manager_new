@@ -25,6 +25,7 @@ import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.transsion.store.bo.VisitPlan;
+import com.transsion.store.dto.VisitHistorySummaryDto;
 import com.transsion.store.dto.VisitInfoDto;
 import com.transsion.store.dto.VisitPlanDetailInfoDto;
 import com.transsion.store.dto.VisitPlanDetailSummaryDto;
@@ -40,23 +41,25 @@ public interface VisitPlanMapper extends GenericIBatisMapper<VisitPlan, java.lan
 	public List<VisitInfoDto> queryWeekPlanCount(VisitInfoDto visitInfoDto) throws DataAccessFailureException;
 	
 	//查询一周巡店计划数
-	public int findWeekQtry(VisitPlanParamDto visitPlanParamDto);
+	public int findWeekQtry(VisitPlanParamDto visitPlanParamDto) throws DataAccessFailureException;
 
 	public List<VisitPlanDetailInfoDto> listVisitPlanByProperty(@Param("visitPlanDetailInfoDto")VisitPlanDetailInfoDto visitPlanDetailInfoDto)throws DataAccessFailureException;
 
 	//查询两周的巡店计划
-	public List<VisitPlanDetailSummaryDto> findTwoWeekQty(VisitPlanParamDto visitPlanParamDto);
+	public List<VisitPlanDetailSummaryDto> findTwoWeekQty(VisitPlanParamDto visitPlanParamDto) throws DataAccessFailureException;
 	
 	//查询巡店计划详情信息
-	public List<VisitPlanInfoDto> queryPlanInfo(VisitPlanParamDto visitPlanParamDto);
+	public List<VisitPlanInfoDto> queryPlanInfo(VisitPlanParamDto visitPlanParamDto) throws DataAccessFailureException;
 	
 	//查询督导所有店铺某天巡店计划详情 暂时不用/zgh
-	public List<VisitPlanInfoDto> querySelfShopPlanInfo(VisitPlanParamDto visitPlanParamDto);
+	public List<VisitPlanInfoDto> querySelfShopPlanInfo(VisitPlanParamDto visitPlanParamDto)throws DataAccessFailureException;
 	
 	//根据店铺ID和日期update状态为已巡店
-	public void updateStatusByShopIdAndPlanDate(VisitPlan visitPlan);
+	public void updateStatusByShopIdAndPlanDate(VisitPlan visitPlan)throws DataAccessFailureException;
 	
-	public void saveVisitPlans(List<VisitPlan> visitPlanList);
+	public void saveVisitPlans(List<VisitPlan> visitPlanList)throws DataAccessFailureException;
 	
-	public void deleteVisitPlans(List<VisitPlan> visitPlans);
+	public void deleteVisitPlans(List<VisitPlan> visitPlans)throws DataAccessFailureException;
+	
+	public List<VisitHistorySummaryDto> queryVisitPlanHistory(VisitPlanParamDto visitPlanParamDto)throws DataAccessFailureException;
 }

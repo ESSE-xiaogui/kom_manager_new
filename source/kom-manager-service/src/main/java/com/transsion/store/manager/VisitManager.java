@@ -3,6 +3,7 @@ package com.transsion.store.manager;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,7 @@ import com.transsion.store.dto.VisitStockDto;
 import com.transsion.store.dto.VisitStockInfoDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.VisitMapper;
+import com.transsion.store.mapper.VisitPlanMapper;
 import com.transsion.store.mapper.VisitScoreSettingMapper;
 import com.transsion.store.service.VisitFeedbackService;
 import com.transsion.store.service.VisitModelSettingService;
@@ -90,6 +92,9 @@ public class VisitManager {
 	
 	@Autowired
 	private VisitPlanManager visitPlanManager;
+	
+	@Autowired
+	private VisitPlanMapper visitPlanMapper;
 	
 	public List<VisitInfoDto> queryPlanedVisitList(String token, String planDate) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
@@ -353,12 +358,33 @@ public class VisitManager {
 						|| UtilHelper.isEmpty(userContext.getCompanyId())) {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
+		List<VisitHistorySummaryDto> resultList = new LinkedList<VisitHistorySummaryDto>();
 		VisitPlanParamDto visit = new VisitPlanParamDto();
 		visit.setCompanyId(userContext.getCompanyId());
 		visit.setPlanner(userContext.getUserCode());
 		visit.setBeginDate(startDate);
 		visit.setEndDate(endDate);
-		return visitMapper.queryVisitSummaryHistory(visit);
+		List<VisitHistorySummaryDto> visitList = visitMapper.queryVisitSummaryHistory(visit);
+		List<VisitHistorySummaryDto> visitPlanList = visitPlanMapper.queryVisitPlanHistory(visit);
+		if(!UtilHelper.isEmpty(visitList) && !UtilHelper.isEmpty(visitPlanList)){
+			resultList.addAll(visitList);
+			for(VisitHistorySummaryDto hisPlanDto: visitPlanList)
+			{
+				if (!resultList.contains(hisPlanDto)) {
+					resultList.add(hisPlanDto);
+				} else {
+					int index = resultList.indexOf(hisPlanDto);
+					if (index != -1) {
+						VisitHistorySummaryDto visitDto = resultList.get(index);
+						visitDto.setVisitStoreQty(visitDto.getVisitStoreQty() + hisPlanDto.getVisitStoreQty());
+					}
+				}
+			}
+		}else{
+		resultList.addAll(visitList);
+		resultList.addAll(visitPlanList);
+		}
+		return resultList;
 	}
 	
 	public VisitShopDetailDto queryVisitHistoryDataByVisitId(Long visitId) throws ServiceException { 

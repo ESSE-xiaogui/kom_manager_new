@@ -80,6 +80,10 @@
 		<result column="REGION_NAME" property="cityName"/>
 		<result column="SHOP_QTY" property="weekPlansQty"/>
 	</resultMap>
+	<resultMap id="VisitHistorySummaryDtoResultMapper" type="VisitHistorySummaryDto">
+		<result column="PLAN_DATE" property="visitDate"/>
+		<result column="VISIT_QTY" property="visitStoreQty"/>
+	</resultMap>
 	
 <!-- 	
 	<resultMap id="VisitPlanParamDtoResultMapper" type="VisitPlanParamDto">
@@ -577,4 +581,13 @@
 		WHERE 1=1
 		<include refid="commonCondition" />
 	</update>
+	<select id="queryVisitPlanHistory" parameterType="VisitPlanParamDto"
+		resultMap="VisitHistorySummaryDtoResultMapper">
+		SELECT PLAN_DATE,COUNT(*) AS VISIT_QTY FROM T_VISIT_PLAN
+		WHERE 1=1
+		<include refid="commonConditionByParam"/>
+		AND STATUS != 2
+		GROUP BY PLAN_DATE
+		ORDER BY PLAN_DATE DESC
+	</select>
 </mapper>
