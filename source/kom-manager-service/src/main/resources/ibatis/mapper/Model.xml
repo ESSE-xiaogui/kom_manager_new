@@ -459,6 +459,12 @@
 		#{brandId}
 	</select>
 	
+	<select id="queryModelListByBrandCode" parameterType="java.lang.String"
+		resultMap="ModelResultMapper">
+		SELECT ID, MODEL_NAME, MODEL_CODE FROM T_MODEL WHERE BRAND_CODE =
+		#{brandCode}
+	</select>
+	
 	<select id="queryModelListByModelCode" resultMap="ModelResultMapper">
 		SELECT BRAND_ID, ID, MODEL_CODE, MODEL_NAME FROM T_MODEL 
 		WHERE MODEL_CODE IN

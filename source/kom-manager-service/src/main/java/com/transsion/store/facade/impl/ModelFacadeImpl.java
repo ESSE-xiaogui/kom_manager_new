@@ -178,4 +178,14 @@ public class ModelFacadeImpl implements ModelFacade {
 	public List<Model> queryModelListByBrandId(Long brandId) throws ServiceException {
 		return modelService.queryModelListByBrandId(brandId);
 	}
+	
+	/**
+	 * 根据BrandCode获取机型
+	 * @param brandCode
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<Model> queryModelListByBrandCode(String brandCode) throws ServiceException {
+		return modelService.queryModelListByBrandCode(brandCode);
+	}
 }

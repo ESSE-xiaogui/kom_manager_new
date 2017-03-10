@@ -147,6 +147,14 @@ public class ModelController extends AbstractController{
 	}
 	
 	@GET
+	@Path("/queryModelListByBrandCode")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<Model> queryModelListByBrandCode(@QueryParam("brandCode")String brandCode) throws ServiceException{
+		return modelFacade.queryModelListByBrandCode(brandCode);
+	}
+	
+	@GET
 	@Path("/findModelListByCompanyId")
 	@Produces({MediaType.APPLICATION_JSON})
 	public List<Model> findModelListByCompanyId(@QueryParam("companyId")Long companyId) throws ServiceException{

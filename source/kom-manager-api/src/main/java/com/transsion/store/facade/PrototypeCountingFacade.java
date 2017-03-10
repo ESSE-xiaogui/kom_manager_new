@@ -86,7 +86,7 @@ public interface PrototypeCountingFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(PrototypeCounting prototypeCounting) throws ServiceException;
+	public int update(PrototypeCounting prototypeCounting, String token) throws ServiceException;
 
 	/**
 	 * 根据条件查询记录条数

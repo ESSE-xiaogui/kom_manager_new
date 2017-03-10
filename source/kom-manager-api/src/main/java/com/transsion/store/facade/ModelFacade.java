@@ -18,11 +18,11 @@ package com.transsion.store.facade;
 
 import java.util.List;
 
+import com.shangkang.core.bo.Pagination;
+import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Model;
 import com.transsion.store.dto.ModelDto;
 import com.transsion.store.dto.ModelListDto;
-import com.shangkang.core.bo.Pagination;
-import com.shangkang.core.exception.ServiceException;
 
 public interface ModelFacade {
 
@@ -124,4 +124,12 @@ public interface ModelFacade {
 	public List<String> findModelName(String token) throws ServiceException;
 
 	public List<Model> queryModelListByBrandId(Long brandId) throws ServiceException;
+	
+	/**
+	 * 根据BrandCode获取机型
+	 * @param brandCode
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<Model> queryModelListByBrandCode(String brandCode) throws ServiceException;
 }

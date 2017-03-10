@@ -126,7 +126,7 @@ public class PrototypeCountingController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void update(PrototypeCounting prototypeCounting) throws ServiceException
 	{
-		prototypeCountingFacade.update(prototypeCounting);
+		prototypeCountingFacade.update(prototypeCounting, this.getAuthorization());
 	}
 	
 	/**

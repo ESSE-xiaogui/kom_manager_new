@@ -163,4 +163,8 @@ public class ModelService {
 	public List<Model> queryModelListByBrandId(Long brandId) throws ServiceException {
 		return modelMapper.queryModelListByBrandId(brandId);
 	}
+	
+	public List<Model> queryModelListByBrandCode(String brandCode) throws ServiceException {
+		return modelMapper.queryModelListByBrandCode(brandCode);
+	}
 }

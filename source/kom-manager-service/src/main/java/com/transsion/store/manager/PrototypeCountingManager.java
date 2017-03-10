@@ -121,7 +121,7 @@ public class PrototypeCountingManager {
 	 * @param prototypeCounting
 	 * @param token
 	 */
-	public void prototypeCountinged(PrototypeCounting prototypeCounting, String token)  throws ServiceException{
+	public int prototypeCountinged(PrototypeCounting prototypeCounting, String token)  throws ServiceException{
 		// 是否登录
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
@@ -151,9 +151,8 @@ public class PrototypeCountingManager {
 			}
 			
 			prototypeCounting.setCountingBy(userContext.getUserCode());
-			
-			prototypeCountingMapper.update(prototypeCounting);
 		}
+		return prototypeCountingMapper.update(prototypeCounting);
 	}
 
 	public byte[] getPrototypeCountingByExcel(PrototypeCountingDto prototypeCountingDto)throws ServiceException  {

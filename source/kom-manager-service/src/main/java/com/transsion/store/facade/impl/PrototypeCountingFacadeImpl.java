@@ -135,9 +135,10 @@ public class PrototypeCountingFacadeImpl implements PrototypeCountingFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(PrototypeCounting prototypeCounting) throws ServiceException
+	public int update(PrototypeCounting prototypeCounting, String token) throws ServiceException
 	{
-		return prototypeCountingService.update(prototypeCounting);
+		return prototypeCountingManager.prototypeCountinged(prototypeCounting, token);
+		// return prototypeCountingService.update(prototypeCounting);
 	}
 
 	/**

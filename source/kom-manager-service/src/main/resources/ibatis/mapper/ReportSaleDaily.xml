@@ -289,11 +289,11 @@
 				AND saleDaily.MODEL_CODE = #{reportSaleDailyDto.modelCode}
             </if>
             <if test="reportSaleDailyDto.beginSaleTime != null and reportSaleDailyDto.beginSaleTime !=''">
-				AND saleDaily.SALE_DATE <![CDATA[ >= ]]> str_to_date(#{prototypeDto.beginSaleTime},'%Y-%m-%d
+				AND saleDaily.SALE_DATE <![CDATA[ >= ]]> str_to_date(#{reportSaleDailyDto.beginSaleTime},'%Y-%m-%d
 				%H:%i:%s')
 			</if>
 			<if test="reportSaleDailyDto.endSaleTime != null and reportSaleDailyDto.endSaleTime !=''">
-				AND saleDaily.SALE_DATE <![CDATA[ <= ]]> str_to_date(#{prototypeDto.endSaleTime},'%Y-%m-%d
+				AND saleDaily.SALE_DATE <![CDATA[ <= ]]> str_to_date(#{reportSaleDailyDto.endSaleTime},'%Y-%m-%d
 				%H:%i:%s')
 			</if>
             <if test="reportSaleDailyDto.week!= null and reportSaleDailyDto.week!= ''">
@@ -305,7 +305,7 @@
             <if test="reportSaleDailyDto.shopName!= null and reportSaleDailyDto.shopName!= ''">
 				AND saleDaily.SHOP_NAME = #{reportSaleDailyDto.shopName}
             </if>
-            <if test="reportSaleDailyDto.grandId != null and reportSaleDailyDto.grandId!= ''">
+            <if test="reportSaleDailyDto.gradeId != null and reportSaleDailyDto.gradeId!= ''">
 				AND saleDaily.GRADE_ID = #{reportSaleDailyDto.grandId}
             </if>
             <if test="reportSaleDailyDto.empName!= null and reportSaleDailyDto.empName!= ''">
