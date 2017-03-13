@@ -44,6 +44,30 @@ public class TestSaleWeekManager extends GenericTestCase {
     }
 
     @Test
+    public void  testListPgShopWeekData() throws ServiceException {
+        ReportSaleWeek reportSaleWeek = new ReportSaleWeek();
+        Map<String, String> orderBy = new HashMap<>();
+
+        orderBy.put("year", "desc");
+
+        reportSaleWeek.setYear(2017);
+        reportSaleWeek.setWeek(2);
+
+        reportSaleWeek.setCompanyId(1L);
+        Pagination<ReportSaleWeek> pagination = new Pagination<>();
+
+        pagination.setPaginationFlag(true);
+        pagination.setPageNo(1);
+        pagination.setOrderBy(orderBy);
+
+        pagination = reportSaleWeekManager.listPaginationShopWeekData(pagination, reportSaleWeek);
+
+        System.out.println(pagination.getResultList().size());
+        System.out.println(pagination.getTotalPage());
+        System.out.println(pagination);
+    }
+
+    @Test
     public void testListPaginationCityWeekDataByRange() throws ServiceException {
         ReportSaleWeek reportSaleWeek = new ReportSaleWeek();
         Map<String, String> orderBy = new HashMap<>();
