@@ -97,6 +97,8 @@ public class VisitInfoDto implements Serializable {
 	  *	备注
 	  */
 	private String remark;
+	
+	private Integer status;
 
 	public Long getId() {
 		return id;
@@ -209,13 +211,20 @@ public class VisitInfoDto implements Serializable {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
 	@Override
 	public String toString() {
 		return "VisitInfoDto [id=" + id + ", planDate=" + planDate + ", shopId=" + shopId + ", shopName=" + shopName
 				+ ", gradeId=" + gradeId + ", gradeName=" + gradeName + ", weekPlanQty=" + weekPlanQty + ", isPlaned="
 				+ isPlaned + ", isFinished=" + isFinished + ", cityName=" + cityName + ", planner=" + planner
-				+ ", beginDate=" + beginDate + ", endDate=" + endDate + ", remark=" + remark + "]";
+				+ ", beginDate=" + beginDate + ", endDate=" + endDate + ", remark=" + remark + ", status=" + status
+				+ "]";
 	}
-	
 }

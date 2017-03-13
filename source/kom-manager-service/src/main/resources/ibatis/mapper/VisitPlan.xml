@@ -45,6 +45,7 @@
 		<result column="REGION_NAME" property="cityName"/>
 		<result column="PLANNER" property="planner"/>
 		<result column="weekPlanQty" property="weekPlanQty"/>
+		<result column="STATUS" property="status"/>
 	</resultMap>
 	
 	<resultMap id="VisitPlanDetailInfoDtoResultMapper" type="VisitPlanDetailInfoDto">

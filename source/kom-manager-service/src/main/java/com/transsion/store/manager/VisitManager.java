@@ -110,6 +110,12 @@ public class VisitManager {
 		visitInfoDto.setPlanner(userContext.getUserCode());
 		
 		List<VisitInfoDto> list = visitPlanService.queryPlanedVisitList(visitInfoDto);
+		for (VisitInfoDto visitInfo : list) {
+			visitInfo.setPlaned(true);
+			if (visitInfo.getStatus() == 2) {
+				visitInfo.setFinished(true);
+			}
+		}
 		
 		List<VisitInfoDto> weekPlanCountList = null;
 		String dateList = DateConvertUtils.getWeekDays(planDate);
