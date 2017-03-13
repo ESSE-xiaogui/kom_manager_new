@@ -629,7 +629,7 @@
 		pro.UNPUBLISH_BY, pro.UNPUBLISH_TIME, emp1.EMP_NAME AS PUBLISH_NAME, emp2.EMP_NAME AS UNPUBLISH_NAME
 		<if test="prototypeDto != null">
 			<if test="prototypeDto.countingTime!=null">
-			proCount.ID AS PROTOTYPECOUNTING_ID
+			,proCount.ID AS PROTOTYPECOUNTING_ID
 			</if>
 		</if>
 		

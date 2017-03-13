@@ -41,11 +41,11 @@ public interface PrototypeFacade {
 	public List<Prototype> list() throws ServiceException;
 
 	/**
-	 * 根据查询条件查询所有记录
+	 * APP端根据查询条件查询所有记录
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<PrototypeDto> listByProperty(PrototypeDto prototypeDto)
+	public List<PrototypeDto> listByProperty(Long shopId, String countingTime)
 			throws ServiceException;
 
 	/**

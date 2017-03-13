@@ -75,13 +75,15 @@ public class PrototypeService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<PrototypeDto> listByProperty(PrototypeDto prototypeDto)
-			throws ServiceException
-	{
+	public List<PrototypeDto> listByProperty(Long shopId, String countingTime) throws ServiceException {
+		PrototypeDto prototypeDto = new PrototypeDto();
+		prototypeDto.setShopId(shopId);
 		// app端
-		if (prototypeDto != null && prototypeDto.getCountingTime() != null) {
+		if (countingTime != null && countingTime != "") {
+			prototypeDto.setCountingTime(countingTime);
 			prototypeDto.setBeginCountingTime(prototypeDto.getCountingTime());
 			prototypeDto.setEndCountingTime(getLatestDate(prototypeDto));
+			prototypeDto.setStatus(1);	// 上架样机
 		}
 		
 		return prototypeMapper.listByProperty(prototypeDto);

@@ -70,10 +70,10 @@ public class PrototypeFacadeImpl implements PrototypeFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<PrototypeDto> listByProperty(PrototypeDto prototypeDto)
+	public List<PrototypeDto> listByProperty(Long shopId, String countingTime)
 			throws ServiceException
 	{
-		return prototypeService.listByProperty(prototypeDto);
+		return prototypeService.listByProperty(shopId, countingTime);
 	}
 	
 	/**

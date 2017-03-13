@@ -86,12 +86,13 @@ public class PrototypeController extends AbstractController{
 	 * @return
 	 * @throws ServiceException
 	 */
-	@POST
+	@GET
 	@Path("/list")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public List<PrototypeDto> listPrototype(PrototypeDto prototypeDto) throws ServiceException {
-		return prototypeFacade.listByProperty(prototypeDto);
+	public List<PrototypeDto> listPrototype(@QueryParam("shopId") Long shopId, 
+			@QueryParam("countingTime") String countingTime) throws ServiceException {
+		return prototypeFacade.listByProperty(shopId, countingTime);
 	}
 
 	/**
