@@ -6,6 +6,8 @@
 
 <!--     <context:property-placeholder location="classpath:**/redis.properties"/> -->
 
+    <beans:bean id="springBeanHelper" class="com.shangkang.core.util.SpringBeanHelper"/>
+
     <beans:bean id="jedisConnFactory"
           class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
           p:usePool="true"

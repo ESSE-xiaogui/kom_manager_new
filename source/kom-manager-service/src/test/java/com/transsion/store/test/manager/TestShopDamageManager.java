@@ -3,6 +3,7 @@ package com.transsion.store.test.manager;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.transsion.store.context.UserContext;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,12 +17,13 @@ public class TestShopDamageManager extends GenericTestCase {
 	
 	@Before
     protected void setUp() throws Exception {
+		super.setUp();
 		shopDamageManager = this.getBean("shopDamageManager");
     }
 	
 	@Test
 	public void  testSaveOrUpdateShopDamage() throws ServiceException {
-		String token = "eyJhbGciOiJIUzI1NiIsImNhbGciOiJHWklQIn0.H4sIAAAAAAAAAKtWKi5NUrJS8nM3MDK2UNJRSq0oULIyNLGwNLEwtzA2qAUACpjF6yEAAAA.eKoALd56L1_PPkw3H-7f6Q_NadRszPSN9rO2xIzX908";
+		UserContext userContext = this.getUserContext("NG0238", "123456");
 		ShopDamageInfoDto shopDamageInfoDto = new ShopDamageInfoDto();
 		shopDamageInfoDto.setShopId((long)1);
 		shopDamageInfoDto.setMaterielId((long)1);
@@ -31,6 +33,6 @@ public class TestShopDamageManager extends GenericTestCase {
 		shopDamageInfoDto.setImgSecondUrl("/second.jpg");
 		shopDamageInfoDto.setImgThirdUrl("/third.jpg");
 		shopDamageInfoDto.setRemark("ok");
-		shopDamageManager.saveOrUpdateShopDamage(token, shopDamageInfoDto);
+		shopDamageManager.saveOrUpdateShopDamage(userContext.getToken(), shopDamageInfoDto);
 	}
 }
