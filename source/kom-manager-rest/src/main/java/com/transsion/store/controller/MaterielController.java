@@ -18,6 +18,7 @@ package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Materiel;
+import com.transsion.store.dto.MaterialInfoDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.MaterielFacade;
 import com.shangkang.core.bo.Pagination;
@@ -126,5 +127,17 @@ public class MaterielController extends AbstractController{
 					throws ServiceException{
 		String token = this.getAuthorization();
 		return materielFacade.getMaterielListByBrandCode(brandCode,token);
+	}
+	
+	/**
+	 * app Promotion Materials 页面
+	 * 查询所有物料和店铺绑定的物料
+	 * @author guihua.zhang on 2017-03-13
+	 * */
+	@GET
+	@Path("findMateriel")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<MaterialInfoDto> findMateriel() throws ServiceException{
+		return null;
 	}
 }

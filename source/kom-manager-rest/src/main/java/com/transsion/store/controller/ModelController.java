@@ -19,6 +19,7 @@ package com.transsion.store.controller;
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.Model;
 import com.transsion.store.dto.ModelDto;
+import com.transsion.store.dto.ModelInfoDto;
 import com.transsion.store.dto.ModelListDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.ModelFacade;
@@ -162,4 +163,30 @@ public class ModelController extends AbstractController{
 		model.setCompanyId(Integer.parseInt(companyId.toString()));
 		return modelFacade.listByProperty(model);
 	}
+	
+	/**
+	 * app Models Displayed 页面
+	 * 查询机型和已绑定的机型
+	 * @author guihua.zhang on 2017-03-13
+	 * */
+	@GET
+	@Path("/findModelList")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<ModelInfoDto> findModelList() throws ServiceException{
+		return null;
+	}
+	
+	
+	/**
+	 * app Sales Collecting 页面
+	 * 根据城市ID和当月时间查询所有重点机型
+	 * @author guihua.zhang on 2017-03-13
+	 * */
+	@GET
+	@Path("findVisitModel")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<ModelInfoDto> findVisitModel(@QueryParam("cityId")Long cityId,@QueryParam("currencyDate")String currencyDate) throws ServiceException{
+		return null;
+	}
+	
 }
