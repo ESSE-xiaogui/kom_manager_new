@@ -35,4 +35,7 @@ public interface ReportSaleWeekMapper extends GenericIBatisMapper<ReportSaleWeek
     public List<ReportSaleWeek> queryListByProperty(@Param("reportSaleWeek")ReportSaleWeek reportSaleWeek);
 
     public List<ReportSaleWeek4CityDto> listPaginationCityWeekDataByRange(Pagination<ReportSaleWeek4CityDto> pagination, @Param("reportSaleWeek")ReportSaleWeek reportSaleWeek, @Param("dates")List<Integer> dates, @Param("start")Integer start, @Param("end")Integer end, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+
+    public List<ReportSaleWeek> listPaginationShopWeekData(Pagination<ReportSaleWeek> pagination, @Param("reportSaleWeek")ReportSaleWeek reportSaleWeek, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+
 }

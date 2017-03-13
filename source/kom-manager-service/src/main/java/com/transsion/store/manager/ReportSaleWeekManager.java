@@ -73,6 +73,22 @@ public class ReportSaleWeekManager {
 	}
 
 	/**
+	 * 获取销量店铺周报表
+	 * @param pagination
+	 * @param reportSaleWeek
+	 * @return
+	 * @throws ServiceException
+	 */
+	public Pagination<ReportSaleWeek> listPaginationShopWeekData(Pagination<ReportSaleWeek> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException {
+
+		List<ReportSaleWeek> list = reportSaleWeekMapper.listPaginationShopWeekData(pagination, reportSaleWeek, pagination.getOrderBy());
+
+		pagination.setResultList(list);
+
+		return pagination;
+	}
+
+	/**
 	 * 根据输入年份和周数获取前8周日期和周（包括当前周），如果前9周则可将7改为8
 	 * @param year
 	 * @param week

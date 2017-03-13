@@ -189,6 +189,17 @@ public class ReportSaleWeekFacadeImpl implements ReportSaleWeekFacade {
 	}
 
 	/**
+	 * 获取销量店铺周报表
+	 * @param pagination
+	 * @param reportSaleWeek
+	 * @return
+	 * @throws ServiceException
+	 */
+	@Override
+	public Pagination<ReportSaleWeek> listPaginationShopWeekData(Pagination<ReportSaleWeek> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException {
+		return reportSaleWeekManager.listPaginationShopWeekData(pagination, reportSaleWeek);
+	}
+	/**
 	 * 根据输入周获取前8周列表
 	 * @param week
 	 * @return

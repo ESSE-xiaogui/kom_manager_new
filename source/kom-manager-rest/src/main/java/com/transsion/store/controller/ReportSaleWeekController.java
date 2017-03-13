@@ -229,6 +229,27 @@ public class ReportSaleWeekController extends AbstractController{
 	}
 
 	/**
+	 * 获取销量店铺周报表
+	 * @return
+	 * @throws ServiceException
+	 */
+	@POST
+	@Path("/listPg4Shop")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public Pagination<ReportSaleWeek> listPaginationShopWeekData(RequestModel<ReportSaleWeek> requestModel) throws ServiceException {
+		Pagination<ReportSaleWeek> pagination = new Pagination<ReportSaleWeek>();
+
+		pagination.setPaginationFlag(requestModel.isPaginationFlag());
+		pagination.setPageNo(requestModel.getPageNo());
+		pagination.setPageSize(requestModel.getPageSize());
+		pagination.setParams(requestModel.getParams());
+		pagination.setOrderBy(requestModel.getOrderBy());
+
+		return reportSaleWeekFacade.listPaginationShopWeekData(pagination, requestModel.getParams());
+
+	}
+	/**
 	 * 获取当前日期所在年中的周数
 	 * @return
 	 * @throws ServiceException
