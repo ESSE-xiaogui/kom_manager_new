@@ -56,6 +56,27 @@
 		<result column="DESCRIPTION" property="description"/>
 	</resultMap>
 	
+	<resultMap id="ShopDamageInfoDtoResultMapper" type="ShopDamageInfoDto">
+		<result column="DAMAGE_ID" property="damageId"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="MATERIEL_ID" property="materielId"/>
+		<result column="DAMAGE_TIME" property="damageTime"/>
+		<result column="DESCRIPTION" property="description"/>
+		<result column="IMG_FIRST_URL" property="imgFirstUrl"/>
+		<result column="IMG_SECOND_URL" property="imgSecondUrl"/>
+		<result column="IMG_THIRD_URL" property="imgThirdUrl"/>
+		
+		<result column="REMARK" property="remark"/>
+		<result column="CREATE_BY" property="createBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_BY" property="updateBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="VERSION" property="version"/>
+		
+		<result column="SHOP_NAME" property="shopName"/>
+		<result column="NAME_EN" property="nameEn"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 DAMAGE_ID
 		, SHOP_ID
@@ -466,5 +487,23 @@
 		LEFT JOIN T_MATERIEL a ON d.MATERIEL_ID = a.ID 
 		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
+	</select>
+	
+	<select id="queryShopDamageList" parameterType="java.lang.Long" resultMap="ShopDamageInfoDtoResultMapper">
+		SELECT 
+			d.DAMAGE_ID,
+			d.SHOP_ID,
+			d.MATERIEL_ID,
+			SUBSTRING(d.DAMAGE_TIME,1,10),
+			d.DESCRIPTION,
+			d.IMG_FIRST_URL,
+			d.IMG_SECOND_URL,
+			d.IMG_THIRD_URL,
+			s.SHOP_NAME,
+			m.NAME_EN
+		FROM T_SHOP_DAMAGE d 
+		LEFT JOIN T_SHOP s ON d.SHOP_ID = s.ID 
+		LEFT JOIN T_MATERIEL m ON d.MATERIEL_ID = m.ID
+		WHERE d.SHOP_ID = #{shopId}
 	</select>
 </mapper>

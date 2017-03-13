@@ -22,6 +22,7 @@ import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.ShopDamage;
 import com.transsion.store.dto.ShopDamageDto;
+import com.transsion.store.dto.ShopDamageInfoDto;
 
 public interface ShopDamageFacade {
 
@@ -122,4 +123,14 @@ public interface ShopDamageFacade {
 	public ShopDamageDto queryDetailById(Long damageId) throws ServiceException;
 	
 	public byte[] getShopDamageListByExcel(ShopDamageDto shopDamageDto)throws ServiceException;
+	
+	/*
+	 * 历史报修报损列表(History List)
+	 */
+	public List<ShopDamageInfoDto> queryShopDamageList(Long shopId) throws ServiceException;
+	
+	/*
+	 * 报修报损(upload)(Damage List)
+	 */
+	public void saveShopDamage(String token, ShopDamageInfoDto shopDamageInfoDto) throws ServiceException;
 }

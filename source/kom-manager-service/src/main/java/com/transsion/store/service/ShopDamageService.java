@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import com.transsion.store.bo.ShopDamage;
 import com.transsion.store.dto.ShopDamageDto;
+import com.transsion.store.dto.ShopDamageInfoDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.ShopDamageMapper;
@@ -172,5 +173,9 @@ public class ShopDamageService {
 	
 	public ShopDamageDto queryDetailById(Long damageId) throws ServiceException {
 		return shopDamageMapper.queryDetailById(damageId);
+	}
+	
+	public List<ShopDamageInfoDto> queryShopDamageList(Long shopId) throws ServiceException {
+		return shopDamageMapper.queryShopDamageList(shopId);
 	}
 }

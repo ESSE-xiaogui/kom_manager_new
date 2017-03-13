@@ -21,6 +21,7 @@ import java.util.Map;
 
 import com.transsion.store.bo.ShopDamage;
 import com.transsion.store.dto.ShopDamageDto;
+import com.transsion.store.dto.ShopDamageInfoDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
@@ -33,4 +34,6 @@ public interface ShopDamageMapper extends GenericIBatisMapper<ShopDamage, java.l
     public ShopDamageDto queryDetailById(Long damageId) throws DataAccessFailureException;
     
     public List<ShopDamageDto> queryListByProperty(@Param("shopDamageDto")ShopDamageDto shopDamageDto);
+    
+    public List<ShopDamageInfoDto> queryShopDamageList(Long shopId) throws DataAccessFailureException;
 }

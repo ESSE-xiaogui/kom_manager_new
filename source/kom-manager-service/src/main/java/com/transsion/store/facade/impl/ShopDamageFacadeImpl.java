@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.ShopDamage;
 import com.transsion.store.dto.ShopDamageDto;
+import com.transsion.store.dto.ShopDamageInfoDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.ShopDamageFacade;
@@ -31,7 +32,7 @@ import com.transsion.store.service.ShopDamageService;
 
 @Component("shopDamageFacade")
 public class ShopDamageFacadeImpl implements ShopDamageFacade {
-
+	
 	private ShopDamageService shopDamageService;
 	
 	@Autowired
@@ -179,5 +180,15 @@ public class ShopDamageFacadeImpl implements ShopDamageFacade {
 	@Override
 	public byte[] getShopDamageListByExcel(ShopDamageDto shopDamageDto) throws ServiceException {
 		return shopDamageManager.getShopDamageListByExcel(shopDamageDto);
+	}
+
+	@Override
+	public List<ShopDamageInfoDto> queryShopDamageList(Long shopId) throws ServiceException {
+		return shopDamageService.queryShopDamageList(shopId);
+	}
+
+	@Override
+	public void saveShopDamage(String token, ShopDamageInfoDto shopDamageInfoDto) throws ServiceException {
+		shopDamageManager.saveOrUpdateShopDamage(token, shopDamageInfoDto);
 	}
 }

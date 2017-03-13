@@ -45,6 +45,7 @@ import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.ShopDamage;
 import com.transsion.store.dto.ShopDamageDto;
+import com.transsion.store.dto.ShopDamageInfoDto;
 import com.transsion.store.facade.ShopDamageFacade;
 
 @Controller
@@ -225,4 +226,31 @@ public class ShopDamageController extends AbstractController{
             this.inputStream = inputStream;
         }
     }
+	
+	/**
+	 * 历史报修报损列表(History List)
+	 * @param shopId
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("queryShopDamageList")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<ShopDamageInfoDto> queryShopDamageList(@QueryParam("shopId")Long shopId) throws ServiceException {
+		return shopDamageFacade.queryShopDamageList(shopId);
+	}
+	
+	/**
+	 * 报修报损(upload)(Damage List)
+	 * @param shopDamageInfoDto
+	 * @throws ServiceException
+	 */
+	@POST
+	@Path("/saveShopDamage")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	public void saveShopDamage(ShopDamageInfoDto shopDamageInfoDto) throws ServiceException {
+		String token = this.getAuthorization();
+		shopDamageFacade.saveShopDamage(token, shopDamageInfoDto);
+	}
 }
