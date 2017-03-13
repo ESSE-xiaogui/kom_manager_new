@@ -80,6 +80,7 @@
 		<result column="GRADE_NAME" property="gradeName"/>
 		<result column="REGION_NAME" property="cityName"/>
 		<result column="SHOP_QTY" property="weekPlansQty"/>
+		<result column="GRADE_ID" property="gradeId"/>
 	</resultMap>
 	<resultMap id="VisitHistorySummaryDtoResultMapper" type="VisitHistorySummaryDto">
 		<result column="PLAN_DATE" property="visitDate"/>
@@ -547,6 +548,7 @@
 		SELECT 
 		vp.SHOP_ID,
 		p.SHOP_NAME,
+		g.ID AS GRADE_ID,
 		g.GRADE_NAME,		
 		r.REGION_NAME,
 		count(vp.SHOP_ID) AS SHOP_QTY
@@ -564,6 +566,7 @@
 		SELECT 
 		p.ID AS SHOP_ID,
 		p.SHOP_NAME,
+		g.ID AS GRADE_ID,
 		g.GRADE_NAME,
 		r.REGION_NAME,
 		count(vp.SHOP_ID) AS SHOP_QTY FROM T_SHOP p

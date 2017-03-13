@@ -59,6 +59,8 @@ public class VisitPlanInfoDto implements Serializable {
 	  */
 	private int weekPlansQty;
 	
+	private java.lang.Long gradeId;
+	
 	/**
 	 * 店铺Id
 	 * */
@@ -144,12 +146,19 @@ public class VisitPlanInfoDto implements Serializable {
 	public void setWeekPlansQty(int weekPlansQty) {
 		this.weekPlansQty = weekPlansQty;
 	}
+	
+	public java.lang.Long getGradeId() {
+		return gradeId;
+	}
+
+	public void setGradeId(java.lang.Long gradeId) {
+		this.gradeId = gradeId;
+	}
 
 	@Override
 	public String toString() {
 		return "VisitPlanInfoDto [shopId=" + shopId + ", shopName=" + shopName + ", gradeName=" + gradeName
-						+ ", cityName=" + cityName + ", isTheDayPlanned=" + isTheDayPlanned + ", weekPlansQty="
-						+ weekPlansQty + "]";
+				+ ", cityName=" + cityName + ", isTheDayPlanned=" + isTheDayPlanned + ", weekPlansQty=" + weekPlansQty
+				+ ", gradeId=" + gradeId + "]";
 	}
-
 }
