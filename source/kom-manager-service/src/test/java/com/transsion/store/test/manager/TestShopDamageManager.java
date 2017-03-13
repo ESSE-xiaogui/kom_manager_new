@@ -14,6 +14,7 @@ import com.transsion.store.test.base.GenericTestCase;
 
 public class TestShopDamageManager extends GenericTestCase {
 	private ShopDamageManager shopDamageManager;
+	private UserContext userContext;
 	
 	@Before
     protected void setUp() throws Exception {
