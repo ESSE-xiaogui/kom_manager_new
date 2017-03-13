@@ -64,7 +64,7 @@ public class VisitInfoDto implements Serializable {
 	private Long weekPlanQty;
 
 	/**
-	 * 是否巡店计划之内 true 是 false 不是
+	 * 是否巡店计划之内  true:是   false:不是
 	 * */
 	private boolean isPlaned;
 	
@@ -73,12 +73,24 @@ public class VisitInfoDto implements Serializable {
 	 * */
 	private boolean isFinished;
 	
+	/**
+	 * 城市名称
+	 */
 	private String cityName;
 	
+	/**
+	 * 计划巡店人
+	 * */
 	private String planner;
 	
+	/**
+	 * 计划巡店日期
+	 * */
 	private String beginDate;
 	
+	/**
+	 * 计划巡店日期
+	 * */
 	private String endDate;
 
 	/**
