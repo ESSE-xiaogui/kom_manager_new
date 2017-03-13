@@ -13,6 +13,7 @@ import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.GoalSupervisor;
 import com.transsion.store.bo.Model;
+import com.transsion.store.bo.Sale;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.SaleGoalDto;
 import com.transsion.store.dto.ShopInfoDto;
@@ -104,8 +105,13 @@ public class SaleGoalManager {
 		// 获取销量信息
 //		visitShopInfoDto.setCurrentSaleQty(supervisor.getSaleCurrent());
 		
-		long currentSaleQty = salesMannager.calcShopSaleQty(shopId, (new SimpleDateFormat("yyyy-MM-dd").format(CalendarUtils.getFirstDayOfMonth(saleDate))), saleDate);
-		visitShopInfoDto.setCurrentSaleQty(currentSaleQty);
+//		long currentSaleQty = salesMannager.calcShopSaleQty(shopId, (new SimpleDateFormat("yyyy-MM-dd").format(CalendarUtils.getFirstDayOfMonth(saleDate))), saleDate);
+		List<Long> shopIdList = new ArrayList<Long>();
+		shopIdList.add(shopId);
+		List<Sale> list = salesMannager.calcShopSaleQty(shopIdList, (new SimpleDateFormat("yyyy-MM-dd").format(CalendarUtils.getFirstDayOfMonth(saleDate))), saleDate);
+		if (list != null && list.size() > 0) {
+			visitShopInfoDto.setCurrentSaleQty(list.get(0).getSaleQty().longValue());
+		}
 		return visitShopInfoDto;
 	}
 

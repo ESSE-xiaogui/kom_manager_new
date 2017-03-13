@@ -169,11 +169,19 @@ public class VisitManager {
 		}
 		
 		
-		for (int i = 0; i < list.size(); i++) {
+		/*for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getShopId().equals(weekPlanCountList.get(i).getShopId())) {
 				list.get(i).setWeekPlanQty(weekPlanCountList.get(i).getWeekPlanQty());
 			}
+		}*/
+		for (int i = 0; i < list.size(); i++) {
+			for (int j = 0; j < weekPlanCountList.size(); j++) {
+				if (list.get(i).getShopId().equals(weekPlanCountList.get(j).getShopId())) {
+					list.get(i).setWeekPlanQty(weekPlanCountList.get(j).getWeekPlanQty());
+				}
+			}
 		}
+		
 		return list;
 	}
 	

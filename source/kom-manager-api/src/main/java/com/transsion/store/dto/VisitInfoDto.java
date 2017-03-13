@@ -66,12 +66,12 @@ public class VisitInfoDto implements Serializable {
 	/**
 	 * 是否巡店计划之内  true:是   false:不是
 	 * */
-	private boolean isPlaned;
+	private boolean planed;
 	
 	/**
 	 * 是否完成 1未巡店 2 已巡店
 	 * */
-	private boolean isFinished;
+	private boolean finished;
 	
 	/**
 	 * 城市名称
@@ -155,21 +155,21 @@ public class VisitInfoDto implements Serializable {
 	public void setWeekPlanQty(Long weekPlanQty) {
 		this.weekPlanQty = weekPlanQty;
 	}
-
+	
 	public boolean isPlaned() {
-		return isPlaned;
+		return planed;
 	}
 
-	public void setPlaned(boolean isPlaned) {
-		this.isPlaned = isPlaned;
+	public void setPlaned(boolean planed) {
+		this.planed = planed;
 	}
 
 	public boolean isFinished() {
-		return isFinished;
+		return finished;
 	}
 
-	public void setFinished(boolean isFinished) {
-		this.isFinished = isFinished;
+	public void setFinished(boolean finished) {
+		this.finished = finished;
 	}
 
 	public String getRemark() {
@@ -222,9 +222,8 @@ public class VisitInfoDto implements Serializable {
 	@Override
 	public String toString() {
 		return "VisitInfoDto [id=" + id + ", planDate=" + planDate + ", shopId=" + shopId + ", shopName=" + shopName
-				+ ", gradeId=" + gradeId + ", gradeName=" + gradeName + ", weekPlanQty=" + weekPlanQty + ", isPlaned="
-				+ isPlaned + ", isFinished=" + isFinished + ", cityName=" + cityName + ", planner=" + planner
-				+ ", beginDate=" + beginDate + ", endDate=" + endDate + ", remark=" + remark + ", status=" + status
-				+ "]";
+				+ ", gradeId=" + gradeId + ", gradeName=" + gradeName + ", weekPlanQty=" + weekPlanQty + ", planed="
+				+ planed + ", finished=" + finished + ", cityName=" + cityName + ", planner=" + planner + ", beginDate="
+				+ beginDate + ", endDate=" + endDate + ", remark=" + remark + ", status=" + status + "]";
 	}
 }
