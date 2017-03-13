@@ -39,4 +39,6 @@ public interface ModelMapper extends GenericIBatisMapper<Model, java.lang.Long> 
     public List<Model> queryModelListByBrandCode(String brandCode) throws DataAccessFailureException;
     
     public List<Model> queryModelListByModelCode(List<String> list) throws DataAccessFailureException;
+    
+    public Model queryVisitModelByModelCode(@Param("model")Model model)throws DataAccessFailureException;
 }

@@ -260,17 +260,18 @@ public class SaleTaskManager {
 					}
 					Model model = new Model();
 					model.setModelCode(taskGoalModelDto.getModelCode());
-					List<Model> modelList = modelMapper.listByProperty(model);
-					if(UtilHelper.isEmpty(modelList)){
+					model.setCompanyId(user.getCompanyId().intValue());
+					Model mod = modelMapper.queryVisitModelByModelCode(model);
+					if(UtilHelper.isEmpty(mod)){
 						taskDetail.setMessage("Model is null");
 						taskDetail.setStatus(2);
 					}
 					if (!UtilHelper.isEmpty(shop) && !UtilHelper.isEmpty(user) 
 						&& !UtilHelper.isEmpty(user.getCompanyId())
-						&& !UtilHelper.isEmpty(modelList)){
+						&& !UtilHelper.isEmpty(mod)){
 						taskGoalModelDto.setCompanyId(user.getCompanyId());
 						taskGoalModelDto.setShopId(shop.getId());
-						taskGoalModelDto.setModelId(modelList.get(0).getId());
+						taskGoalModelDto.setModelId(mod.getId());
 						//TODO:创建人  更新人
 						GoalModel goalModel = new GoalModel();
 						goalModel.setGoalMonth(taskGoalModelDto.getGoalMonth());

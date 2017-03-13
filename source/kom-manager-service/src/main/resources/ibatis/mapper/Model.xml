@@ -60,7 +60,7 @@
 		<result column="IS_INACTIVE" property="isInactive" />
 		<result column="REMARK" property="remark" />
 	</resultMap>
-
+	
 	<sql id="commonColumns">
 		ID
 		, BRAND_ID
@@ -472,5 +472,12 @@
 			close=")" index="">
 			#{modelCodeList}
 		</foreach>
+	</select>
+	
+	<select id="queryVisitModelByModelCode" parameterType="Model" resultMap="ModelResultMapper">
+		SELECT m.ID FROM T_MODEL m
+		LEFT JOIN T_VISIT_MODEL_SETTING v ON v.MODEL_ID = m.ID
+		WHERE v.COMPANY_ID = #{companyId}
+		AND m.MODEL_CODE = #{modelCode}
 	</select>
 </mapper>
