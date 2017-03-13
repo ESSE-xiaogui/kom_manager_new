@@ -25,6 +25,7 @@ public class TestShopDamageManager extends GenericTestCase {
 	
 	@Test
 	public void  testSaveOrUpdateShopDamage() throws ServiceException {
+		// save
 		ShopDamageInfoDto shopDamageInfoDto = new ShopDamageInfoDto();
 		shopDamageInfoDto.setShopId((long)1);
 		shopDamageInfoDto.setMaterielId((long)1);
@@ -35,5 +36,18 @@ public class TestShopDamageManager extends GenericTestCase {
 		shopDamageInfoDto.setImgThirdUrl("/third.jpg");
 		shopDamageInfoDto.setRemark("ok");
 		shopDamageManager.saveOrUpdateShopDamage(userContext.getToken(), shopDamageInfoDto);
+		
+		// update
+		ShopDamageInfoDto infoDto = new ShopDamageInfoDto();
+		infoDto.setDamageId((long)1);
+		infoDto.setShopId((long)1);
+		infoDto.setMaterielId((long)1);
+		infoDto.setDamageTime(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+		infoDto.setDescription("This materiel is bad.");
+		infoDto.setImgFirstUrl("/first.jpg");
+		infoDto.setImgSecondUrl("/second.jpg");
+		infoDto.setImgThirdUrl("/third.jpg");
+		infoDto.setRemark("success");
+		shopDamageManager.saveOrUpdateShopDamage(userContext.getToken(), infoDto);
 	}
 }
