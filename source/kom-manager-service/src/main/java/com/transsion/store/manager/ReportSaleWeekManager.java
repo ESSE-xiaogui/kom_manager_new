@@ -1,10 +1,12 @@
 package com.transsion.store.manager;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import com.shangkang.core.bo.Pagination;
 import com.transsion.store.dto.ReportSaleWeek4CityDto;
+import com.transsion.store.utils.CalendarUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,10 +59,21 @@ public class ReportSaleWeekManager {
 	 */
 	public Pagination<ReportSaleWeek4CityDto> listPaginationCityWeekDataByRange(Pagination<ReportSaleWeek4CityDto> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException {
 
-		Integer year = reportSaleWeek.getYear();
-		Integer week = reportSaleWeek.getWeek();
+		Integer year;
+		Integer week;
 
-		List<Integer> dates = getDates(reportSaleWeek.getYear(), reportSaleWeek.getWeek());
+		Calendar calendar = Calendar.getInstance();
+
+		//当年份或月份为空时，默认为当前年或当前时间所在的周数
+		if(reportSaleWeek == null || reportSaleWeek.getYear() == null)
+			year = CalendarUtils.getYear();
+		else year = reportSaleWeek.getYear();
+
+		if(reportSaleWeek == null || reportSaleWeek.getWeek() == null)
+			week = CalendarUtils.getWeekOfYear(calendar.getTime());
+		else week = reportSaleWeek.getWeek();
+
+		List<Integer> dates = getDates(year, week);
 
 		Integer start = getDate4YearWeek(year, week, 7);
 		Integer end = getDate4YearWeek(year, week, 0);
