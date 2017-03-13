@@ -20,11 +20,11 @@ public class TestShopDamageManager extends GenericTestCase {
     protected void setUp() throws Exception {
 		super.setUp();
 		shopDamageManager = this.getBean("shopDamageManager");
+		userContext = this.getUserContext("NG0238", "123456");
     }
 	
 	@Test
 	public void  testSaveOrUpdateShopDamage() throws ServiceException {
-		UserContext userContext = this.getUserContext("NG0238", "123456");
 		ShopDamageInfoDto shopDamageInfoDto = new ShopDamageInfoDto();
 		shopDamageInfoDto.setShopId((long)1);
 		shopDamageInfoDto.setMaterielId((long)1);
