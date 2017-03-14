@@ -8,6 +8,14 @@
 		<result column="BRAND_CODE" property="brandCode"/>
 		<result column="MODEL_CODE" property="modelCode"/>
 	</resultMap>
+	
+	<resultMap id="ImeiTacResultMapper" type="TacDto">
+	  <result column="ID" property="id"/>
+		<result column="TAC" property="tac"/>
+		<result column="IMEI" property="imei"/>
+		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="MODEL_CODE" property="modelMatCode"/>
+	</resultMap>
 
   	<select id="findAllTac" resultMap="TacResultMapper">
     	SELECT ID, TAC, BRAND_CODE, MODEL_CODE FROM T_TAC 
@@ -18,5 +26,24 @@
 		WHERE m.TAC=#{tac}
 		LIMIT 1
 	</select>
+	
+	
+	<select id="findTacDto" parameterType="java.lang.String" resultMap="ImeiTacResultMapper">
+		SELECT m.ID, m.TAC, m.BRAND_CODE, m.MODEL_CODE FROM T_TAC m
+		WHERE m.TAC=#{tac}
+	</select>
 
+  	<select id="findAllTacDto" resultMap="ImeiTacResultMapper">
+    	SELECT m.ID, m.TAC, m.BRAND_CODE, m.MODEL_CODE FROM T_TAC m
+  	</select>
+	
+	<select id="queryTotalCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM T_TAC
+	</select>
+	<delete id="deleteAllTac">
+		TRUNCATE TABLE T_TAC
+	</delete>
+	<insert id="save" parameterType="TacDto">
+		INSERT INTO T_TAC(TAC,IMEI,BRAND_CODE,MODEL_CODE) VALUES(#{tac}, #{imei}, #{brandCode}, #{modelMatCode})
+	</insert>
 </mapper>
