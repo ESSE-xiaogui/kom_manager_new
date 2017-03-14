@@ -93,6 +93,7 @@ public class SaleGoalManager {
 		visitShopInfoDto.setGradeId(shopInfoDto.getGradeId());
 		visitShopInfoDto.setGradeName(shopInfoDto.getGradeName());
 		visitShopInfoDto.setCityName(shopInfoDto.getCityName());
+		visitShopInfoDto.setSortIndex(shopInfoDto.getSortIndex());
 
 		// 获取绩效信息
 		GoalSupervisor goalSupervisor = new GoalSupervisor();

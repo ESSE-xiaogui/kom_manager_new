@@ -156,7 +156,7 @@ public class ShopInfoDto implements Serializable{
 	
 	private ShopExtension shopExtension;
 	
-
+	
 //---------------------------------------------------------------
 	/**
 	  *	
@@ -271,6 +271,8 @@ public class ShopInfoDto implements Serializable{
 	  *	
 	  */
 	private java.lang.Long saleBrandQty;
+	
+	private java.lang.Integer sortIndex;
 
 	/**
 	  *	
@@ -781,31 +783,35 @@ public class ShopInfoDto implements Serializable{
 	public void setMaterielType(java.lang.String materielType) {
 		this.materielType = materielType;
 	}
+	public java.lang.Integer getSortIndex() {
+		return sortIndex;
+	}
+
+	public void setSortIndex(java.lang.Integer sortIndex) {
+		this.sortIndex = sortIndex;
+	}
 
 	@Override
 	public String toString() {
 		return "ShopInfoDto [id=" + id + ", countryName=" + countryName + ", cityName=" + cityName + ", regionName="
-						+ regionName + ", companyCode=" + companyCode + ", gradeName=" + gradeName + ", bizName="
-						+ bizName + ", isInactive=" + isInactive + ", createDateStart=" + createDateStart
-						+ ", createDateEnd=" + createDateEnd + ", updateDateStart=" + updateDateStart
-						+ ", updateDateEnd=" + updateDateEnd + ", materielId=" + materielId + ", materielType="
-						+ materielType + ", shopId=" + shopId + ", shopCode=" + shopCode + ", shopName=" + shopName
-						+ ", companyId=" + companyId + ", parentId=" + parentId + ", regionId=" + regionId
-						+ ", country=" + country + ", city=" + city + ", shopIcon=" + shopIcon + ", address=" + address
-						+ ", gradeId=" + gradeId + ", bizId=" + bizId + ", ownerName=" + ownerName + ", ownerPhone="
-						+ ownerPhone + ", purchasChannel=" + purchasChannel + ", openDate=" + openDate + ", status="
-						+ status + ", remark=" + remark + ", createBy=" + createBy + ", createDate=" + createDate
-						+ ", updateBy=" + updateBy + ", updateDate=" + updateDate + ", version=" + version
-						+ ", shopExtension=" + shopExtension + ", shopArea=" + shopArea + ", clerkTotalQty="
-						+ clerkTotalQty + ", clerkBrandQty=" + clerkBrandQty + ", relationship=" + relationship
-						+ ", relationshipName=" + relationshipName + ", bizCategory=" + bizCategory
-						+ ", bizCategoryName=" + bizCategoryName + ", brandOne=" + brandOne + ", brandTwo=" + brandTwo
-						+ ", brandThree=" + brandThree + ", brandFour=" + brandFour + ", brandFive=" + brandFive
-						+ ", brandSix=" + brandSix + ", clerkOneQty=" + clerkOneQty + ", clerkTwoQty=" + clerkTwoQty
-						+ ", clerkThreeQty=" + clerkThreeQty + ", clerkFourQty=" + clerkFourQty + ", clerkFiveQty="
-						+ clerkFiveQty + ", clerkSixQty=" + clerkSixQty + ", supervisor=" + supervisor + ", promoter="
-						+ promoter + ", saleTotalQty=" + saleTotalQty + ", saleSpQty=" + saleSpQty + ", saleBrandQty="
-						+ saleBrandQty + ", saleBrandspQty=" + saleBrandspQty + "]";
+				+ regionName + ", companyCode=" + companyCode + ", gradeName=" + gradeName + ", bizName=" + bizName
+				+ ", isInactive=" + isInactive + ", createDateStart=" + createDateStart + ", createDateEnd="
+				+ createDateEnd + ", updateDateStart=" + updateDateStart + ", updateDateEnd=" + updateDateEnd
+				+ ", materielId=" + materielId + ", materielType=" + materielType + ", shopId=" + shopId + ", shopCode="
+				+ shopCode + ", shopName=" + shopName + ", companyId=" + companyId + ", parentId=" + parentId
+				+ ", regionId=" + regionId + ", country=" + country + ", city=" + city + ", shopIcon=" + shopIcon
+				+ ", address=" + address + ", gradeId=" + gradeId + ", bizId=" + bizId + ", ownerName=" + ownerName
+				+ ", ownerPhone=" + ownerPhone + ", purchasChannel=" + purchasChannel + ", openDate=" + openDate
+				+ ", status=" + status + ", remark=" + remark + ", createBy=" + createBy + ", createDate=" + createDate
+				+ ", updateBy=" + updateBy + ", updateDate=" + updateDate + ", version=" + version + ", shopExtension="
+				+ shopExtension + ", shopArea=" + shopArea + ", clerkTotalQty=" + clerkTotalQty + ", clerkBrandQty="
+				+ clerkBrandQty + ", relationship=" + relationship + ", relationshipName=" + relationshipName
+				+ ", bizCategory=" + bizCategory + ", bizCategoryName=" + bizCategoryName + ", brandOne=" + brandOne
+				+ ", brandTwo=" + brandTwo + ", brandThree=" + brandThree + ", brandFour=" + brandFour + ", brandFive="
+				+ brandFive + ", brandSix=" + brandSix + ", clerkOneQty=" + clerkOneQty + ", clerkTwoQty=" + clerkTwoQty
+				+ ", clerkThreeQty=" + clerkThreeQty + ", clerkFourQty=" + clerkFourQty + ", clerkFiveQty="
+				+ clerkFiveQty + ", clerkSixQty=" + clerkSixQty + ", supervisor=" + supervisor + ", promoter="
+				+ promoter + ", saleTotalQty=" + saleTotalQty + ", saleSpQty=" + saleSpQty + ", saleBrandQty="
+				+ saleBrandQty + ", sortIndex=" + sortIndex + ", saleBrandspQty=" + saleBrandspQty + "]";
 	}
-
 }
