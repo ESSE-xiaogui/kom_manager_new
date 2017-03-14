@@ -117,7 +117,7 @@ public class VisitModelSettingController extends AbstractController{
 	/**
 	 * app Sales Collecting 页面
 	 * 根据城市ID和当月时间查询所有重点机型
-	 * 入参:currentDate 日期格式:20170301
+	 * 入参:currentDate 日期格式:2017-03-01
 	 * @author guihua.zhang on 2017-03-13
 	 * */
 	@GET
