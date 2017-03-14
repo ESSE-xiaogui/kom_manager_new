@@ -190,7 +190,12 @@ public class ModelFacadeImpl implements ModelFacade {
 		return modelService.queryModelListByBrandCode(brandCode);
 	}
 	
+	/**
+	 * 查询机型和已绑定的机型
+	 * @author guihua.zhang on 2017-03-14
+	 * */
 	public List<ModelInfoDto> findModelList(String token) throws ServiceException{
 		return modelManager.findModelList(token);
 	}
+	
 }

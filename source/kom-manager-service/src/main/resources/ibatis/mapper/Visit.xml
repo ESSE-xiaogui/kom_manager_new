@@ -598,13 +598,14 @@
 	<select id="querySalePbQtyByVisitId" parameterType="java.lang.Long" resultType="java.lang.Integer">
 		SELECT SALE_PB_QTY FROM T_VISIT WHERE ID = #{visitId}
 	</select>
-	<select id="findCurrencyDateModel" resultMap="ModelInfoDtoResultMapper">
+		<select id="findLastDateModel" resultMap="ModelInfoDtoResultMapper">
 		SELECT m.ID AS MODEL_ID,m.SERIES_CODE,m.MODEL_CODE,m.MODEL_NAME FROM T_VISIT v
 			LEFT JOIN T_VISIT_MODEL vm ON vm.VISIT_ID = v.ID
 			LEFT JOIN T_MODEL m ON m.ID = vm.MODEL_ID
 			WHERE 1=1
 			AND v.VISTOR = #{visitor} 
 			AND m.COMPANY_ID = #{companyId}
+			AND m.IS_INACTIVE = 1
 			AND v.ID in (SELECT MAX(ID) FROM T_VISIT WHERE VISTOR = #{visitor} AND COMPANY_ID = #{companyId})
 	</select>
 </mapper>

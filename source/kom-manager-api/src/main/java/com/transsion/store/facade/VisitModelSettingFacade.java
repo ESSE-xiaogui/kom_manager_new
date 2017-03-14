@@ -20,6 +20,7 @@ import java.util.List;
 
 import com.transsion.store.bo.VisitModelSetting;
 import com.transsion.store.dto.VisitModelSettingInfoDto;
+import com.transsion.store.dto.VisitModelSettingListDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -103,5 +104,10 @@ public interface VisitModelSettingFacade {
 	 */
 	public Pagination<VisitModelSettingInfoDto> listPaginationByProperty(String token,Pagination<VisitModelSettingInfoDto> pagination, VisitModelSettingInfoDto visitModelSettingInfoDto)
 			throws ServiceException;
+	/**
+	 * 根据城市ID和当月时间查询所有重点机型
+	 * @author guihua.zhang on 2017-03-14
+	 * */
+	public List<VisitModelSettingListDto> findVisitModel(String token,Long cityId,String currentDate) throws ServiceException;
 
 }

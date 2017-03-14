@@ -14,6 +14,7 @@ import com.transsion.store.bo.Model;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.ModelDto;
 import com.transsion.store.dto.ModelInfoDto;
+import com.transsion.store.dto.VisitModelSettingListDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.BrandMapper;
 import com.transsion.store.mapper.ModelMapper;
@@ -167,7 +168,7 @@ public class ModelManager {
 		// 查询所有机型
 		List<ModelInfoDto> modelInfoList = modelMapper.findModelList(userContext.getCompanyId());
 		// 查询当前登录人最新的巡店机型
-		List<ModelInfoDto> visitList = visitMapper.findCurrencyDateModel(userContext.getUserCode(),
+		List<ModelInfoDto> visitList = visitMapper.findLastDateModel(userContext.getUserCode(),
 						userContext.getCompanyId());
 		List<ModelInfoDto> result = new ArrayList<ModelInfoDto>();
 		/**
@@ -192,5 +193,4 @@ public class ModelManager {
 		}
 		return result;
 	}
-		
 }

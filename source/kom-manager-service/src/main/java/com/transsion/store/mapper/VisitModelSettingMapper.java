@@ -27,6 +27,7 @@ import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.transsion.store.bo.VisitModelSetting;
 import com.transsion.store.dto.VisitModelSettingDto;
 import com.transsion.store.dto.VisitModelSettingInfoDto;
+import com.transsion.store.dto.VisitModelSettingListDto;
 
 public interface VisitModelSettingMapper extends GenericIBatisMapper<VisitModelSetting, java.lang.Long> {
 
@@ -35,4 +36,8 @@ public interface VisitModelSettingMapper extends GenericIBatisMapper<VisitModelS
     public List<VisitModelSettingDto> queryVisitModelSettingList() throws DataAccessFailureException;
     
     public List<String> queryModeCodeListByCompanyId(VisitModelSetting visitModelSetting) throws DataAccessFailureException;
+    
+    //itel 查询当前城市当前月设置的重点机型
+    public List<VisitModelSettingListDto> findVisitModel(@Param("companyId")Long companyId,@Param("regionId")Long regionId,@Param("currentDate")String currentDate) 
+    				throws DataAccessFailureException;
 }

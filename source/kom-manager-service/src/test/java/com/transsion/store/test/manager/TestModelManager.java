@@ -27,6 +27,7 @@ public class TestModelManager extends GenericTestCase{
     	userContext = this.getUserContext("NG0238", "123456");
     }
 
+    //查询机型和已绑定的机型
     @Test
     public void testFindModelList() throws ServiceException {
     	List<ModelInfoDto> list = modelManager.findModelList(userContext.getToken());

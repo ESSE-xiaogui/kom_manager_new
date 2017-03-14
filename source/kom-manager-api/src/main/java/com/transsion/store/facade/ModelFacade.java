@@ -134,5 +134,10 @@ public interface ModelFacade {
 	 */
 	public List<Model> queryModelListByBrandCode(String brandCode) throws ServiceException;
 	
+	/**
+	 * 查询机型和已绑定的机型
+	 * @author guihua.zhang on 2017-03-14
+	 * */
 	public List<ModelInfoDto> findModelList(String token) throws ServiceException;
+	
 }

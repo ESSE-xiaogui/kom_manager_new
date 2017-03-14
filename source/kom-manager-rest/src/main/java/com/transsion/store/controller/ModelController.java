@@ -177,17 +177,4 @@ public class ModelController extends AbstractController{
 		return modelFacade.findModelList(token);
 	}
 	
-	
-	/**
-	 * app Sales Collecting 页面
-	 * 根据城市ID和当月时间查询所有重点机型
-	 * @author guihua.zhang on 2017-03-13
-	 * */
-	@GET
-	@Path("findVisitModel")
-	@Produces({MediaType.APPLICATION_JSON})
-	public List<ModelInfoDto> findVisitModel(@QueryParam("cityId")Long cityId,@QueryParam("currencyDate")String currencyDate) throws ServiceException{
-		return null;
-	}
-	
 }

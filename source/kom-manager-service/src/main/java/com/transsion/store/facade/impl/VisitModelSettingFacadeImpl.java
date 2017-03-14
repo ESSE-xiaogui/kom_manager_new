@@ -25,6 +25,7 @@ import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.VisitModelSetting;
 import com.transsion.store.dto.VisitModelSettingInfoDto;
+import com.transsion.store.dto.VisitModelSettingListDto;
 import com.transsion.store.facade.VisitModelSettingFacade;
 import com.transsion.store.manager.VisitModeSettingManager;
 import com.transsion.store.service.VisitModelSettingService;
@@ -149,5 +150,12 @@ public class VisitModelSettingFacadeImpl implements VisitModelSettingFacade {
 	public int findByCount(VisitModelSetting visitModelSetting) throws ServiceException
 	{
 		return visitModelSettingService.findByCount(visitModelSetting);
+	}
+	/**
+	 * 根据城市ID和当月时间查询所有重点机型
+	 * @author guihua.zhang on 2017-03-14
+	 * */
+	public List<VisitModelSettingListDto> findVisitModel(String token,Long cityId,String currentDate) throws ServiceException{
+		return visitModeSettingManager.findVisitModel(token, cityId, currentDate);
 	}
 }

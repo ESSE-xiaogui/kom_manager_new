@@ -19,6 +19,7 @@ package com.transsion.store.controller;
 import com.rest.service.controller.AbstractController;
 import com.transsion.store.bo.VisitModelSetting;
 import com.transsion.store.dto.VisitModelSettingInfoDto;
+import com.transsion.store.dto.VisitModelSettingListDto;
 import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.VisitModelSettingFacade;
 import com.shangkang.core.bo.Pagination;
@@ -113,5 +114,17 @@ public class VisitModelSettingController extends AbstractController{
 		visitModelSettingFacade.update(visitModelSetting,token);
 	}
 	
-	
+	/**
+	 * app Sales Collecting 页面
+	 * 根据城市ID和当月时间查询所有重点机型
+	 * 入参:currentDate 日期格式:20170301
+	 * @author guihua.zhang on 2017-03-13
+	 * */
+	@GET
+	@Path("findVisitModel")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<VisitModelSettingListDto> findVisitModel(@QueryParam("cityId")Long cityId,@QueryParam("currentDate")String currentDate) throws ServiceException{
+		String token=this.getAuthorization();
+		return visitModelSettingFacade.findVisitModel(token, cityId, currentDate);
+	}
 }

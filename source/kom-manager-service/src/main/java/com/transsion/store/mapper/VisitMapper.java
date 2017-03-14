@@ -71,5 +71,5 @@ public interface VisitMapper extends GenericIBatisMapper<Visit, java.lang.Long> 
 	public Integer querySalePbQtyByVisitId(Long visitId);
 	
 	//查询当前登录人巡店下最新一次的上柜机型
-	public List<ModelInfoDto> findCurrencyDateModel(@Param("visitor")String visitor,@Param("companyId")Long companyId) throws DataAccessFailureException;
+	public List<ModelInfoDto> findLastDateModel(@Param("visitor")String visitor,@Param("companyId")Long companyId) throws DataAccessFailureException;
 }

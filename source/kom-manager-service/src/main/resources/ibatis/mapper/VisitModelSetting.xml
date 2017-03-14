@@ -61,6 +61,12 @@
 		<result column="REMARK" property="remark"/>
 	</resultMap>
 	
+	<resultMap id="VisitModelSettingListDtoResultMapper" type="VisitModelSettingListDto">
+		<result column="ID" property="visitModelSettingId"/>
+		<result column="MODEL_ID" property="modelId"/>
+		<result column="MODEL_NAME" property="modelName"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, ACTION_DATE
@@ -335,5 +341,14 @@
 	<select id="queryModeCodeListByCompanyId" parameterType="VisitModelSetting" resultType="java.lang.String">
 		SELECT m.MODEL_CODE FROM T_VISIT_MODEL_SETTING v LEFT JOIN T_MODEL m ON v.MODEL_ID = m.ID 
 		WHERE v.COMPANY_ID = #{companyId} AND v.ACTION_DATE = #{actionDate}
+	</select>
+	
+	<select id="findVisitModel" resultMap="VisitModelSettingListDtoResultMapper">
+		SELECT s.ID AS ID,m.ID AS MODEL_ID,m.MODEL_NAME FROM T_VISIT_MODEL_SETTING s
+			LEFT JOIN T_MODEL m ON m.ID = s.MODEL_ID
+			WHERE 1=1
+			AND s.COMPANY_ID = #{companyId}
+			AND s.REGION_ID = #{regionId}
+			AND s.ACTION_DATE = #{currentDate}
 	</select>
 </mapper>

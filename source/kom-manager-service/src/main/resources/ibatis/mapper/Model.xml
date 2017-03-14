@@ -489,5 +489,8 @@
 
 	<select id="findModelList" parameterType="Long"	resultMap="ModelInfoDtoResultMapper">
 		SELECT ID,SERIES_CODE,MODEL_CODE,MODEL_NAME FROM T_MODEL
+		WHERE 1=1
+		AND COMPANY_ID = #{companyId}
+		AND IS_INACTIVE = 1
 	</select>
 </mapper>
