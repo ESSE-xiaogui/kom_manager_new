@@ -347,6 +347,9 @@
         	<when test="key == 'version'">
 				v.VERSION ${value}
             </when>
+            <when test="key == 'shopCode'">
+				s.SHOP_CODE ${value}
+            </when>
 		</choose>
 	</sql>
 
