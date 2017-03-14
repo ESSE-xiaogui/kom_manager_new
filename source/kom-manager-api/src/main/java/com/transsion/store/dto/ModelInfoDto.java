@@ -76,6 +76,34 @@ public class ModelInfoDto implements Serializable{
 	public void setSelected(boolean isSelected) {
 		this.isSelected = isSelected;
 	}
+	
+	@Override
+	public int hashCode(){
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((modelId == null) ? 0 : modelId.hashCode());
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj){
+		if(this == obj)
+			return true;
+		if(obj == null)
+			return false;
+		
+		if(getClass() != obj.getClass())
+			return false;
+		ModelInfoDto other = (ModelInfoDto)obj;
+		if(modelId == null || modelId == 0){
+			if(other.getModelId() != null){
+				return false;
+			}
+		}else if(!modelId.equals(other.getModelId()))
+				return false;
+			
+			return true;
+	}
 
 	@Override
 	public String toString() {

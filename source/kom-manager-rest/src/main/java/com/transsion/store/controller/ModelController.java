@@ -173,7 +173,8 @@ public class ModelController extends AbstractController{
 	@Path("/findModelList")
 	@Produces({MediaType.APPLICATION_JSON})
 	public List<ModelInfoDto> findModelList() throws ServiceException{
-		return null;
+		String token = this.getAuthorization();
+		return modelFacade.findModelList(token);
 	}
 	
 	

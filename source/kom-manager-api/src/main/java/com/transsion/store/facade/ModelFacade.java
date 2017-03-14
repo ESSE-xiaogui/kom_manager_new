@@ -22,6 +22,7 @@ import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Model;
 import com.transsion.store.dto.ModelDto;
+import com.transsion.store.dto.ModelInfoDto;
 import com.transsion.store.dto.ModelListDto;
 
 public interface ModelFacade {
@@ -132,4 +133,6 @@ public interface ModelFacade {
 	 * @throws ServiceException
 	 */
 	public List<Model> queryModelListByBrandCode(String brandCode) throws ServiceException;
+	
+	public List<ModelInfoDto> findModelList(String token) throws ServiceException;
 }

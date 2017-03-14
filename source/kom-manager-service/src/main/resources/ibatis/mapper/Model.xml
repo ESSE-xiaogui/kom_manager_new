@@ -60,6 +60,12 @@
 		<result column="IS_INACTIVE" property="isInactive" />
 		<result column="REMARK" property="remark" />
 	</resultMap>
+	<resultMap id="ModelInfoDtoResultMapper" type="ModelInfoDto">
+		<result column="ID" property="modelId" />
+		<result column="SERIES_CODE" property="seriesCode" />
+		<result column="MODEL_CODE" property="modelCode" />
+		<result column="MODEL_NAME" property="modelName" />
+	</resultMap>
 	
 	<sql id="commonColumns">
 		ID
@@ -479,5 +485,9 @@
 		LEFT JOIN T_VISIT_MODEL_SETTING v ON v.MODEL_ID = m.ID
 		WHERE v.COMPANY_ID = #{companyId}
 		AND m.MODEL_CODE = #{modelCode}
+	</select>
+
+	<select id="findModelList" parameterType="Long"	resultMap="ModelInfoDtoResultMapper">
+		SELECT ID,SERIES_CODE,MODEL_CODE,MODEL_NAME FROM T_MODEL
 	</select>
 </mapper>

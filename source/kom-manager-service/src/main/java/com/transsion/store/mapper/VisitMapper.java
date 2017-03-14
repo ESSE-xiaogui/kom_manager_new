@@ -25,6 +25,7 @@ import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.transsion.store.bo.Visit;
+import com.transsion.store.dto.ModelInfoDto;
 import com.transsion.store.dto.VisitCompetitorInfoDto;
 import com.transsion.store.dto.VisitDto;
 import com.transsion.store.dto.VisitHistorySummaryDto;
@@ -68,4 +69,7 @@ public interface VisitMapper extends GenericIBatisMapper<Visit, java.lang.Long> 
 	public List<Visit> listShopHistoryByProperty(@Param("visit")Visit visit)throws DataAccessFailureException;
 	
 	public Integer querySalePbQtyByVisitId(Long visitId);
+	
+	//查询当前登录人巡店下最新一次的上柜机型
+	public List<ModelInfoDto> findCurrencyDateModel(@Param("visitor")String visitor,@Param("companyId")Long companyId) throws DataAccessFailureException;
 }

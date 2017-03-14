@@ -1,5 +1,6 @@
 package com.transsion.store.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -12,9 +13,11 @@ import com.transsion.store.bo.Brand;
 import com.transsion.store.bo.Model;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.ModelDto;
+import com.transsion.store.dto.ModelInfoDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.BrandMapper;
 import com.transsion.store.mapper.ModelMapper;
+import com.transsion.store.mapper.VisitMapper;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 
@@ -29,6 +32,9 @@ public class ModelManager {
 	
 	@Autowired
 	private BrandMapper brandMapper;
+	
+	@Autowired
+	private VisitMapper visitMapper;
 	/**
 	 * 新增机型
 	 * @return
@@ -144,4 +150,47 @@ public class ModelManager {
 		}
 		return modelMapper.findModelName(userContext.getCompanyId());
 	}
+	
+	/**
+	 * @author guihua.zhang on 2017-03-14
+	 * 查询机型和已绑定的机型
+	 * */
+	public List<ModelInfoDto> findModelList(String token) throws ServiceException {
+		if (UtilHelper.isEmpty(token)) {
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getCompanyId())
+						|| UtilHelper.isEmpty(userContext.getUserCode())) {
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		// 查询所有机型
+		List<ModelInfoDto> modelInfoList = modelMapper.findModelList(userContext.getCompanyId());
+		// 查询当前登录人最新的巡店机型
+		List<ModelInfoDto> visitList = visitMapper.findCurrencyDateModel(userContext.getUserCode(),
+						userContext.getCompanyId());
+		List<ModelInfoDto> result = new ArrayList<ModelInfoDto>();
+		/**
+		 * 1.所有机型为空,直接返回result
+		 * 2.所有机型不为空,巡店机型为空,返回所有机型,isSelect为false
+		 * 3.所有机型不为空,巡店机型不为空,如果巡店机型和所有机型比较有相同的,isSelect为true
+		 * */
+		if (!UtilHelper.isEmpty(modelInfoList)) {
+			result.addAll(modelInfoList);
+			if (!UtilHelper.isEmpty(visitList)) {
+				// 将巡店机型设置为true
+				for (ModelInfoDto mDto : visitList) {
+					if (result.contains(mDto)) {
+						int index = modelInfoList.indexOf(mDto);
+						if (index != -1) {
+							ModelInfoDto modelInfoDto = modelInfoList.get(index);
+							modelInfoDto.setSelected(true);
+						}
+					}
+				}
+			}
+		}
+		return result;
+	}
+		
 }

@@ -21,6 +21,7 @@ import java.util.Map;
 
 import com.transsion.store.bo.Model;
 import com.transsion.store.dto.ModelDto;
+import com.transsion.store.dto.ModelInfoDto;
 import com.transsion.store.dto.ModelListDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
@@ -41,4 +42,6 @@ public interface ModelMapper extends GenericIBatisMapper<Model, java.lang.Long> 
     public List<Model> queryModelListByModelCode(List<String> list) throws DataAccessFailureException;
     
     public Model queryVisitModelByModelCode(@Param("model")Model model)throws DataAccessFailureException;
+    
+    public List<ModelInfoDto> findModelList(@Param("companyId")Long companyId) throws DataAccessFailureException;
 }

@@ -25,6 +25,7 @@ import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Model;
 import com.transsion.store.dto.ModelDto;
+import com.transsion.store.dto.ModelInfoDto;
 import com.transsion.store.dto.ModelListDto;
 import com.transsion.store.facade.ModelFacade;
 import com.transsion.store.manager.ModelManager;
@@ -187,5 +188,9 @@ public class ModelFacadeImpl implements ModelFacade {
 	 */
 	public List<Model> queryModelListByBrandCode(String brandCode) throws ServiceException {
 		return modelService.queryModelListByBrandCode(brandCode);
+	}
+	
+	public List<ModelInfoDto> findModelList(String token) throws ServiceException{
+		return modelManager.findModelList(token);
 	}
 }

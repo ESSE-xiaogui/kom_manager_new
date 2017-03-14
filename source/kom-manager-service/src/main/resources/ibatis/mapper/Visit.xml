@@ -129,7 +129,12 @@
 		<result column="NAME_EN" property="nameEn"/>
 		<result column="TYPE" property="type"/>
 	</resultMap>
-	
+	<resultMap id="ModelInfoDtoResultMapper" type="ModelInfoDto">
+		<result column="MODEL_ID" property="modelId" />
+		<result column="SERIES_CODE" property="seriesCode" />
+		<result column="MODEL_CODE" property="modelCode" />
+		<result column="MODEL_NAME" property="modelName" />
+	</resultMap>
 	<sql id="commonColumns">
 		 ID
 		, VISIT_DATE
@@ -589,5 +594,14 @@
 	</select>
 	<select id="querySalePbQtyByVisitId" parameterType="java.lang.Long" resultType="java.lang.Integer">
 		SELECT SALE_PB_QTY FROM T_VISIT WHERE ID = #{visitId}
+	</select>
+	<select id="findCurrencyDateModel" resultMap="ModelInfoDtoResultMapper">
+		SELECT m.ID AS MODEL_ID,m.SERIES_CODE,m.MODEL_CODE,m.MODEL_NAME FROM T_VISIT v
+			LEFT JOIN T_VISIT_MODEL vm ON vm.VISIT_ID = v.ID
+			LEFT JOIN T_MODEL m ON m.ID = vm.MODEL_ID
+			WHERE 1=1
+			AND v.VISTOR = #{visitor} 
+			AND m.COMPANY_ID = #{companyId}
+			AND v.ID in (SELECT MAX(ID) FROM T_VISIT WHERE VISTOR = #{visitor} AND COMPANY_ID = #{companyId})
 	</select>
 </mapper>
