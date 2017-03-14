@@ -81,7 +81,6 @@
 		<result column="GRADE_NAME" property="gradeName"/>
 		<result column="REGION_NAME" property="cityName"/>
 		<result column="SHOP_QTY" property="weekPlansQty"/>
-		<result column="GRADE_ID" property="gradeId"/>
 	</resultMap>
 	<resultMap id="VisitHistorySummaryDtoResultMapper" type="VisitHistorySummaryDto">
 		<result column="PLAN_DATE" property="visitDate"/>
