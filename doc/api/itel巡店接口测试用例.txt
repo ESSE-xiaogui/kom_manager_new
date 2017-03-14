@@ -1,0 +1,30 @@
+登录:
+Authorization
+http://127.0.0.1:9101/user/login?userCode=NG0238&password=3E2D3E1D3D300F
+eyJhbGciOiJIUzI1NiIsImNhbGciOiJHWklQIn0.H4sIAAAAAAAAAKtWKi5NUrJS8nM3MDK2UNJRSq0oULIyNLGwNDUzMzUxrwUA4YO88iEAAAA.bELT0Q3Xt7I4b7hE-Sbl7mphRI51hlZyTrCrbwMhzCc
+
+1.Models Displayed页面
+
+查询机型和巡店绑定的机型接口
+controller名:model
+方法名:findModelList
+入参:
+出参:List<ModelInfoDto>
+请求方式:GET
+
+demo:
+http://127.0.0.1:9101/model/findModelList
+
+2.Sales Collecting页面
+
+根据城市ID和当月时间查询所有重点机型
+controller名:visitModelSetting
+方法名:findVisitModel
+入参:Long cityId,String currentDate(格式:2017-03-01)
+出参:List<VisitModelSettingListDto>
+请求方式:GET
+
+demo:
+http://127.0.0.1:9101/visitModelSetting/findVisitModel?cityId=51&currentDate=2017-02-01
+
+
