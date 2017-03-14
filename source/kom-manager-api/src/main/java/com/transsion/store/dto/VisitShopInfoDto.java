@@ -27,6 +27,8 @@ public class VisitShopInfoDto implements Serializable {
 	private java.lang.Long targetSaleQty;
 	
 	private java.lang.String planDate;
+	
+	private java.lang.Integer sortIndex;
 
 	public java.lang.Long getShopId() {
 		return shopId;
@@ -91,12 +93,19 @@ public class VisitShopInfoDto implements Serializable {
 	public void setPlanDate(java.lang.String planDate) {
 		this.planDate = planDate;
 	}
+	
+	public java.lang.Integer getSortIndex() {
+		return sortIndex;
+	}
+
+	public void setSortIndex(java.lang.Integer sortIndex) {
+		this.sortIndex = sortIndex;
+	}
 
 	@Override
 	public String toString() {
 		return "VisitShopInfoDto [shopId=" + shopId + ", shopName=" + shopName + ", gradeId=" + gradeId + ", gradeName="
 				+ gradeName + ", cityName=" + cityName + ", currentSaleQty=" + currentSaleQty + ", targetSaleQty="
-				+ targetSaleQty + ", planDate=" + planDate + "]";
+				+ targetSaleQty + ", planDate=" + planDate + ", sortIndex=" + sortIndex + "]";
 	}
-
 }

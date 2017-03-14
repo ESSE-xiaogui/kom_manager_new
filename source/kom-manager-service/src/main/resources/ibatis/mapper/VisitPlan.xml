@@ -81,6 +81,7 @@
 		<result column="GRADE_NAME" property="gradeName"/>
 		<result column="REGION_NAME" property="cityName"/>
 		<result column="SHOP_QTY" property="weekPlansQty"/>
+		<result column="SORT_INDEX" property="sortIndex"/>
 	</resultMap>
 	<resultMap id="VisitHistorySummaryDtoResultMapper" type="VisitHistorySummaryDto">
 		<result column="PLAN_DATE" property="visitDate"/>
@@ -549,6 +550,7 @@
 		vp.SHOP_ID,
 		p.SHOP_NAME,
 		g.ID AS GRADE_ID,
+		g.SORT_INDEX,
 		g.GRADE_NAME,		
 		r.REGION_NAME,
 		count(vp.SHOP_ID) AS SHOP_QTY
@@ -559,13 +561,14 @@
 		LEFT JOIN T_REGION r ON r.ID = p.REGION_ID
 		WHERE 1=1
 		<include refid="commonConditionByParam1" />
-		GROUP BY vp.SHOP_ID
+		GROUP BY vp.SHOP_ID ORDER BY g.SORT_INDEX, p.SHOP_NAME
 	</select>
 
 	<select id="querySelfShopPlanInfo" parameterType="VisitPlanParamDto" resultMap="VisitPlanInfoDtoResultMapper">
 		SELECT 
 		p.ID AS SHOP_ID,
 		p.SHOP_NAME,
+		g.SORT_INDEX,
 		g.ID AS GRADE_ID,
 		g.GRADE_NAME,
 		r.REGION_NAME,
@@ -577,7 +580,7 @@
 		WHERE 1=1
 		AND p.IS_INACTIVE = 1
 		<include refid="commonConditionByParam1" />
-		GROUP BY p.ID,p.SHOP_NAME,g.GRADE_NAME,r.REGION_NAME
+		GROUP BY p.ID,p.SHOP_NAME,g.GRADE_NAME,r.REGION_NAME ORDER BY g.SORT_INDEX, p.SHOP_NAME
 	</select>
 
 	<update id="updateStatusByShopIdAndPlanDate" parameterType="VisitPlan">

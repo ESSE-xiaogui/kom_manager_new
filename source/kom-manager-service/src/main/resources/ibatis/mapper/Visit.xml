@@ -50,6 +50,7 @@
 		<result column="GRADE_ID" property="gradeId"/>
 		<result column="GRADE_NAME" property="gradeName"/>
 		<result column="VISTOR" property="planner"/>
+		<result column="SORT_INDEX" property="sortIndex"/>
 	</resultMap>
 	
 	<resultMap id="VisitDtoResultMapper" type="VisitDto">
@@ -492,9 +493,9 @@
 		<include refid="commonCondition"/>
 	</select>	
 	<select id="queryUnplanedVisitList" parameterType="VisitInfoDto" resultMap="VisitInfoDtoResultMapper">
-		SELECT v.*, s.SHOP_NAME, s.GRADE_ID, g.GRADE_NAME FROM T_VISIT v LEFT JOIN T_SHOP s ON v.SHOP_ID = s.ID 
+		SELECT v.*, s.SHOP_NAME, s.GRADE_ID, g.GRADE_NAME, g.SORT_INDEX FROM T_VISIT v LEFT JOIN T_SHOP s ON v.SHOP_ID = s.ID 
 		LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID 
-		WHERE v.VISIT_DATE = #{planDate} AND v.VISTOR = #{planner}
+		WHERE v.VISIT_DATE = #{planDate} AND v.VISTOR = #{planner} ORDER BY g.SORT_INDEX, s.SHOP_NAME
 	</select>
 	
 	<select id="queryVisitShopInfo" parameterType="VisitShopInfoDto" resultMap="VisitShopInfoDtoResultMapper">

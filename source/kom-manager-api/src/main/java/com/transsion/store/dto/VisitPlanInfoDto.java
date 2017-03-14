@@ -63,7 +63,7 @@ public class VisitPlanInfoDto implements Serializable {
 	  */
 	private int weekPlansQty;
 	
-	
+	private Integer sortIndex;
 	
 	/**
 	 * 店铺Id
@@ -158,11 +158,18 @@ public class VisitPlanInfoDto implements Serializable {
 	public void setGradeId(java.lang.Long gradeId) {
 		this.gradeId = gradeId;
 	}
+	public Integer getSortIndex() {
+		return sortIndex;
+	}
+
+	public void setSortIndex(Integer sortIndex) {
+		this.sortIndex = sortIndex;
+	}
 
 	@Override
 	public String toString() {
-		return "VisitPlanInfoDto [shopId=" + shopId + ", shopName=" + shopName + ", gradeName=" + gradeName
-				+ ", cityName=" + cityName + ", isTheDayPlanned=" + isTheDayPlanned + ", weekPlansQty=" + weekPlansQty
-				+ ", gradeId=" + gradeId + "]";
+		return "VisitPlanInfoDto [shopId=" + shopId + ", shopName=" + shopName + ", gradeId=" + gradeId + ", gradeName="
+				+ gradeName + ", cityName=" + cityName + ", isTheDayPlanned=" + isTheDayPlanned + ", weekPlansQty="
+				+ weekPlansQty + ", sortIndex=" + sortIndex + "]";
 	}
 }

@@ -113,6 +113,7 @@
 		<result column="COUNTRY_NAME" property="countryName"/>
 		<result column="CITY_NAME" property="cityName"/>
 		<result column="WERKS" property="werks"/>
+		<result column="SORT_INDEX" property="sortIndex"/>
 	</resultMap>
 	<resultMap id="ShopDtoResultMapper" type="ShopUserDto">
 		<result column="ID" property="id"/>
@@ -1076,10 +1077,10 @@
 	</select>
 	
 	<select id="queryShopInfoByShopId" parameterType="java.lang.Long" resultMap="ShopInfoDtoResultMapper">
-		SELECT s.SHOP_NAME, s.GRADE_ID, g.GRADE_NAME, r.REGION_NAME AS cityName FROM T_SHOP s 
+		SELECT s.SHOP_NAME, s.GRADE_ID, g.GRADE_NAME, g.SORT_INDEX, r.REGION_NAME AS cityName FROM T_SHOP s 
 		LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID 
 		LEFT JOIN T_REGION r ON s.REGION_ID = r.ID 
-		WHERE s.ID = #{shopId}
+		WHERE s.ID = #{shopId} ORDER BY g.SORT_INDEX, s.SHOP_NAME
 	</select>
 
 	<select id="findShopDetails" resultMap="VisitPlanInfoDtoMapper">

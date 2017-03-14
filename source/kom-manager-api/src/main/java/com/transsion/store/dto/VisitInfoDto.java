@@ -99,6 +99,8 @@ public class VisitInfoDto implements Serializable {
 	private String remark;
 	
 	private Integer status;
+	
+	private Integer sortIndex;
 
 	public Long getId() {
 		return id;
@@ -218,12 +220,20 @@ public class VisitInfoDto implements Serializable {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	public Integer getSortIndex() {
+		return sortIndex;
+	}
+
+	public void setSortIndex(Integer sortIndex) {
+		this.sortIndex = sortIndex;
+	}
 
 	@Override
 	public String toString() {
 		return "VisitInfoDto [id=" + id + ", planDate=" + planDate + ", shopId=" + shopId + ", shopName=" + shopName
 				+ ", gradeId=" + gradeId + ", gradeName=" + gradeName + ", weekPlanQty=" + weekPlanQty + ", planed="
 				+ planed + ", finished=" + finished + ", cityName=" + cityName + ", planner=" + planner + ", beginDate="
-				+ beginDate + ", endDate=" + endDate + ", remark=" + remark + ", status=" + status + "]";
+				+ beginDate + ", endDate=" + endDate + ", remark=" + remark + ", status=" + status + ", sortIndex="
+				+ sortIndex + "]";
 	}
 }
