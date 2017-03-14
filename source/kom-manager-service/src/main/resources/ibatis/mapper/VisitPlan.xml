@@ -77,6 +77,7 @@
 	<resultMap id="VisitPlanInfoDtoResultMapper" type="VisitPlanInfoDto">
 		<result column="SHOP_ID" property="shopId"/>
 		<result column="SHOP_NAME" property="shopName"/>
+		<result column="GRADE_ID" property="gradeId"/>
 		<result column="GRADE_NAME" property="gradeName"/>
 		<result column="REGION_NAME" property="cityName"/>
 		<result column="SHOP_QTY" property="weekPlansQty"/>

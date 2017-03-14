@@ -38,6 +38,10 @@ public class VisitPlanInfoDto implements Serializable {
 	  */
 	private String shopName;
 	
+	/**
+	 * 等级Id
+	 * */
+	private Long gradeId;
 	
 	/**
 	  *	readonly 等级名称
@@ -59,7 +63,7 @@ public class VisitPlanInfoDto implements Serializable {
 	  */
 	private int weekPlansQty;
 	
-	private java.lang.Long gradeId;
+	
 	
 	/**
 	 * 店铺Id
