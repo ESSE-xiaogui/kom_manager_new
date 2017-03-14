@@ -3,7 +3,7 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.shangkang.core.exception.ServiceException;
-import com.transsion.store.bo.TStockCurrent;
+import com.transsion.store.bo.StockCurrent;
 import com.transsion.store.dto.StockDto;
 
 public interface TStockCurrentFacade {
@@ -13,7 +13,7 @@ public interface TStockCurrentFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<TStockCurrent> queryByProperty(TStockCurrent tCurrentStock)
+	public List<StockCurrent> queryByProperty(StockCurrent tCurrentStock)
 			throws ServiceException;
 	
 	/**
@@ -21,12 +21,12 @@ public interface TStockCurrentFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<TStockCurrent> listByProperty(TStockCurrent tCurrentStock)
+	public List<StockCurrent> listByProperty(StockCurrent tCurrentStock)
 			throws ServiceException;
 	
-	public void saveTCurrentStockList(List<TStockCurrent> list) throws ServiceException;
+	public void saveTCurrentStockList(List<StockCurrent> list) throws ServiceException;
 	
-	public int updateByPorp(TStockCurrent tCurrentStock) throws ServiceException;
+	public int updateByPorp(StockCurrent tCurrentStock) throws ServiceException;
 	
 	public List<StockDto> findCurrentStockByProp(String token, Integer dealerId) throws ServiceException;
 }

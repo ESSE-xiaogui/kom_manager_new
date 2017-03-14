@@ -6,23 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.shangkang.core.exception.ServiceException;
-import com.transsion.store.bo.TStockCurrent;
+import com.transsion.store.bo.StockCurrent;
 import com.transsion.store.dto.StockDto;
 import com.transsion.store.facade.TStockCurrentFacade;
 import com.transsion.store.manager.StockManager;
-import com.transsion.store.service.TStockCurrentService;
+import com.transsion.store.service.StockCurrentService;
 
 
 @Component("tCurrentStockFacade")
-public class TStockCurrentFacadeImpl implements TStockCurrentFacade {
+public class StockCurrentFacadeImpl implements TStockCurrentFacade {
 	
 	@Autowired
 	private StockManager stockManager;
 	
-	private TStockCurrentService tStockCurrentService;
+	private StockCurrentService tStockCurrentService;
 	
 	@Autowired
-	public void settCurrentStockService(TStockCurrentService tStockCurrentService) {
+	public void settCurrentStockService(StockCurrentService tStockCurrentService) {
 		this.tStockCurrentService = tStockCurrentService;
 	}
 	
@@ -31,7 +31,7 @@ public class TStockCurrentFacadeImpl implements TStockCurrentFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<TStockCurrent> queryByProperty(TStockCurrent tCurrentStock)
+	public List<StockCurrent> queryByProperty(StockCurrent tCurrentStock)
 			throws ServiceException
 	{
 		return tStockCurrentService.queryByProperty(tCurrentStock);
@@ -42,19 +42,19 @@ public class TStockCurrentFacadeImpl implements TStockCurrentFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<TStockCurrent> listByProperty(TStockCurrent tCurrentStock)
+	public List<StockCurrent> listByProperty(StockCurrent tCurrentStock)
 			throws ServiceException
 	{
 		return tStockCurrentService.listByProperty(tCurrentStock);
 	}
 	
 	@Override
-	public void saveTCurrentStockList(List<TStockCurrent> list) throws ServiceException {
+	public void saveTCurrentStockList(List<StockCurrent> list) throws ServiceException {
 		tStockCurrentService.saveTCurrentStockList(list);
 	}
 
 	@Override
-	public int updateByPorp(TStockCurrent tCurrentStock) throws ServiceException {
+	public int updateByPorp(StockCurrent tCurrentStock) throws ServiceException {
 		return tStockCurrentService.updateByPorp(tCurrentStock);
 	}
 

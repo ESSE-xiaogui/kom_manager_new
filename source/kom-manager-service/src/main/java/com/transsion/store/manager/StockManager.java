@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Stock;
+import com.transsion.store.bo.StockCurrent;
 import com.transsion.store.bo.StockItem;
-import com.transsion.store.bo.TStockCurrent;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.StockDto;
 import com.transsion.store.dto.StockInfoDto;
@@ -25,8 +25,8 @@ import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.CurrencyMapper;
 import com.transsion.store.mapper.StockItemMapper;
 import com.transsion.store.mapper.StockMapper;
+import com.transsion.store.service.StockCurrentService;
 import com.transsion.store.service.SystemDateService;
-import com.transsion.store.service.TStockCurrentService;
 import com.transsion.store.utils.CacheUtils;
 import com.transsion.store.utils.ExcelUtils;
 
@@ -51,7 +51,7 @@ public class StockManager {
 	private CurrencyMapper currencyMapper;
 	
 	@Autowired
-	private TStockCurrentService tStockCurrentService;
+	private StockCurrentService stockCurrentService;
 	
 	/**
 	 * 保存库存上报记录
@@ -195,9 +195,9 @@ public class StockManager {
 			// not in db
 			List<StockItem> stockDetails = new ArrayList<StockItem>();
 			int lineId = 1;
-			List<TStockCurrent> currentStockList = new ArrayList<TStockCurrent>();
+			List<StockCurrent> currentStockList = new ArrayList<StockCurrent>();
 			for (StockDto stockDto : stockDtoList) {
-				TStockCurrent tCurrentStock = new TStockCurrent();
+				StockCurrent tCurrentStock = new StockCurrent();
 				tCurrentStock.setBrandCode(stockDto.getBrandCode().toUpperCase());
 				tCurrentStock.setModelMatCode(stockDto.getModelMatCode());
 				tCurrentStock.setDealerId(dealerId);
@@ -205,19 +205,19 @@ public class StockManager {
 				tCurrentStock.setfQty(stockDto.getFqty());
 				tCurrentStock.setFdate(dateStr);
 				
-				List<TStockCurrent> list = tStockCurrentService.queryByProperty(tCurrentStock);
+				List<StockCurrent> list = stockCurrentService.queryByProperty(tCurrentStock);
 				if (list != null && list.size() > 0) {
 					for (int i = 0; i < list.size(); i++) {
 						if (stockDto.getIsDelete() != null) { // 删除库存
 							tCurrentStock.setIsDelete(stockDto.getIsDelete());
 							tCurrentStock.setUpdateBy(userId);
 							tCurrentStock.setUpdateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-							tStockCurrentService.updateByPorp(tCurrentStock);
+							stockCurrentService.updateByPorp(tCurrentStock);
 						} else {
 							tCurrentStock.setIsDelete(0);
 							tCurrentStock.setUpdateBy(userId);
 							tCurrentStock.setUpdateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-							tStockCurrentService.updateByPorp(tCurrentStock);
+							stockCurrentService.updateByPorp(tCurrentStock);
 						}
 					}
 				} else {
@@ -290,7 +290,7 @@ public class StockManager {
 //			tShopstockDetailService.saveStockDetailUpload(stockDetails);
 
 			if (currentStockList != null && currentStockList.size() > 0) {
-				tStockCurrentService.saveTCurrentStockList(currentStockList);
+				stockCurrentService.saveTCurrentStockList(currentStockList);
 			}
 			
 			// send message to job

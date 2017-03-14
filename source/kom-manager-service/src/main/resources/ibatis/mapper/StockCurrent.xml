@@ -18,8 +18,8 @@
  **
  -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.transsion.store.mapper.TStockCurrentMapper">
-	<resultMap id="TStockCurrentMapper" type="TStockCurrent">
+<mapper namespace="com.transsion.store.mapper.StockCurrentMapper">
+	<resultMap id="StockCurrentMapper" type="StockCurrent">
 		<result column="ID" property="id"/>
 		<result column="DEALER_ID" property="dealerId"/>
 		<result column="FDATE" property="fdate"/>
@@ -40,15 +40,15 @@
 		<result column="DEALER_ID" property="dealerId"/>
 	</resultMap>
 	
-	<select id="queryByProperty" parameterType="TStockCurrent" resultMap="TStockCurrentMapper">
+	<select id="queryByProperty" parameterType="StockCurrent" resultMap="StockCurrentMapper">
 		SELECT * FROM T_STOCK_CURRENT WHERE DEALER_ID = #{dealerId} AND BRAND_CODE = #{brandCode} AND MODEL_MAT_CODE = #{modelMatCode} 
 	</select>
 	
-	<select id="listByProperty" parameterType="TStockCurrent" resultMap="TStockCurrentMapper">
+	<select id="listByProperty" parameterType="StockCurrent" resultMap="StockCurrentMapper">
 		SELECT COUNT(*) FROM T_STOCK_CURRENT WHERE DEALER_ID = #{dealerId} AND BRAND_CODE = #{brandCode} AND MODEL_MAT_CODE = #{modelMatCode} 
 	</select>
 	
-	<update id="updateByProp" parameterType="TStockCurrent">
+	<update id="updateByProp" parameterType="StockCurrent">
 		UPDATE T_STOCK_CURRENT SET FDATE = #{fdate}, USER_ID = #{userId}, FQTY = #{fQty}, UPDATED_BY = #{updateBy}, UPDATED_TIME = #{updateTime}, IS_DELETE = #{isDelete} WHERE DEALER_ID = #{dealerId} AND BRAND_CODE = #{brandCode} AND MODEL_MAT_CODE = #{modelMatCode}
 	</update>
 	
@@ -85,7 +85,7 @@
 		AND BRAND_CODE = 'TECNO' AND IS_DELETE = 0 GROUP BY FDATE, BRAND_CODE, MODEL_MAT_CODE ORDER BY FDATE DESC
 	</select>
 	
-	<select id="queryCurrentStockFromTShopStockDetail" parameterType="java.lang.String" resultMap="TStockCurrentMapper">
+	<select id="queryCurrentStockFromTShopStockDetail" parameterType="java.lang.String" resultMap="StockCurrentMapper">
 		SELECT 
 			d.ID,
 			d.DEALER_ID, 

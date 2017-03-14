@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import com.shangkang.core.bo.Model;
 
-public class TStockCurrent extends Model {
+public class StockCurrent extends Model {
 
 	/**
 	 * 
