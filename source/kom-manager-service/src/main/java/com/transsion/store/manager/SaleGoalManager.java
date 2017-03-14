@@ -182,7 +182,8 @@ public class SaleGoalManager {
 			StatShopModelSaleDto statShopModelSaleDto = getStatShopModelSale(modeCode, statShopModelSaleList);
 			if(statShopModelSaleDto!=null)
 			{
-				visitStockInfo.setSaleAvg((new BigDecimal(statShopModelSaleDto.getSaleQty().longValue() / 4)));
+//				visitStockInfo.setSaleAvg((new BigDecimal(statShopModelSaleDto.getSaleQty().longValue() / 4)));
+				visitStockInfo.setSaleAvg(statShopModelSaleDto.getSaleQty().divide(BigDecimal.valueOf(4)).setScale(2, BigDecimal.ROUND_HALF_UP));
 			} else {
 				visitStockInfo.setSaleAvg(BigDecimal.valueOf(0));
 			}

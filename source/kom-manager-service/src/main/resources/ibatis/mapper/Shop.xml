@@ -137,6 +137,7 @@
 		<result column="SHOP_NAME" property="shopName" />
 		<result column="CITY_NAME" property="cityName" />
 		<result column="GRADE_NAME" property="gradeName" />
+		<result column="GRADE_ID" property="gradeId"/>
 	</resultMap>
 	
 	<resultMap id="ShopResponseInfoDtoMapper" type="ShopResponseInfoDto">
@@ -1106,6 +1107,7 @@
 		p.ID,
 		p.SHOP_NAME,
 		r.REGION_NAME AS CITY_NAME,
+		g.ID AS GRADE_ID,
 		g.GRADE_NAME 
 		FROM 
 		T_SHOP	p
