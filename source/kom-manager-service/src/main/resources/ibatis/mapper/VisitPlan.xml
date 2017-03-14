@@ -46,6 +46,7 @@
 		<result column="PLANNER" property="planner"/>
 		<result column="weekPlanQty" property="weekPlanQty"/>
 		<result column="STATUS" property="status"/>
+		<result column="SORT_INDEX" property="sortIndex"/>
 	</resultMap>
 	
 	<resultMap id="VisitPlanDetailInfoDtoResultMapper" type="VisitPlanDetailInfoDto">
@@ -504,9 +505,9 @@
 	</select>
 	
 	<select id="queryPlanedVisitList" parameterType="VisitInfoDto" resultMap="VisitInfoDtoResultMapper">
-		SELECT v.*, s.SHOP_NAME, g.GRADE_NAME, r.REGION_NAME FROM T_VISIT_PLAN v LEFT JOIN T_SHOP s ON v.SHOP_ID = s.ID 
+		SELECT v.*, s.SHOP_NAME, g.GRADE_NAME, g.SORT_INDEX, r.REGION_NAME FROM T_VISIT_PLAN v LEFT JOIN T_SHOP s ON v.SHOP_ID = s.ID 
 		LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID LEFT JOIN T_REGION r ON s.REGION_ID = r.ID 
-		WHERE SUBSTRING(v.PLAN_DATE, 1, 10) = #{planDate} AND PLANNER = #{planner}
+		WHERE SUBSTRING(v.PLAN_DATE, 1, 10) = #{planDate} AND PLANNER = #{planner} ORDER BY g.SORT_INDEX, s.SHOP_NAME
 	</select>
 	
 	<select id="queryWeekPlanCount" parameterType="VisitInfoDto" resultMap="VisitInfoDtoResultMapper">
