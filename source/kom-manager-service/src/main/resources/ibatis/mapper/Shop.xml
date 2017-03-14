@@ -139,6 +139,7 @@
 		<result column="CITY_NAME" property="cityName" />
 		<result column="GRADE_NAME" property="gradeName" />
 		<result column="GRADE_ID" property="gradeId"/>
+		<result column="SORT_INDEX" property="sortIndex"/>
 	</resultMap>
 	
 	<resultMap id="ShopResponseInfoDtoMapper" type="ShopResponseInfoDto">
@@ -1108,6 +1109,7 @@
 		p.ID,
 		p.SHOP_NAME,
 		r.REGION_NAME AS CITY_NAME,
+		g.SORT_INDEX,
 		g.ID AS GRADE_ID,
 		g.GRADE_NAME 
 		FROM 
@@ -1117,7 +1119,7 @@
 		LEFT JOIN T_SHOP_GRADE g ON g.ID = p.GRADE_ID
 		WHERE 1=1
 		AND p.IS_INACTIVE = 1 
-		AND up.USER_ID = #{userId}
+		AND up.USER_ID = #{userId} ORDER BY g.SORT_INDEX, p.SHOP_NAME
 	</select>
 	<select id="findShopList" parameterType="java.lang.Long" resultMap="ShopResponseInfoDtoMapper">
 	SELECT
