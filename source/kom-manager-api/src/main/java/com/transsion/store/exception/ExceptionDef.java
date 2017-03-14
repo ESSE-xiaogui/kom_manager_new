@@ -92,7 +92,7 @@ public enum ExceptionDef {
 	//汇率
 	ERROR_CURRENCY_IS_EXIST(1601,"ERROR_CURRENCY_IS_EXIST"),//此汇率已存在
 	
-	ERROR_UNDEFINE(9999, "ERROR_UNDEFINE");
+	ERROR_UNDEFINE(9999, "ERROR_UNDEFINE");//未定义错误
 	
 	private int code;
 	private String name;

@@ -141,7 +141,7 @@ public class ShopExtension extends Model{
 	private java.lang.Long saleTotalQty;
 
 	/**
-	  *	
+	  *	智能机销量
 	  */
 	private java.lang.Long saleSpQty;
 
@@ -151,7 +151,7 @@ public class ShopExtension extends Model{
 	private java.lang.Long saleBrandQty;
 
 	/**
-	  *	
+	  *	自有品牌智能机销量
 	  */
 	private java.lang.Long saleBrandspQty;
 	
