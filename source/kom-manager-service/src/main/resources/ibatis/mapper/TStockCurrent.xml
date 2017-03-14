@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2016-5-27 15:55:53
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.TStockCurrentMapper">
+	<resultMap id="TStockCurrentMapper" type="TStockCurrent">
+		<result column="ID" property="id"/>
+		<result column="DEALER_ID" property="dealerId"/>
+		<result column="FDATE" property="fdate"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="MODEL_MAT_CODE" property="modelMatCode"/>
+		<result column="FQTY" property="fQty"/>
+		<result column="CREATED_BY" property="createBy"/>
+		<result column="CREATED_TIME" property="createTime"/>
+		<result column="UPDATED_BY" property="updateBy"/>
+		<result column="UPDATED_TIME" property="updateTime"/>
+		<result column="IS_DELETE" property="isDelete"/>
+	</resultMap>
+	<resultMap id="PromoterStockResultMapper" type="StockDto">
+		<result column="BRAND_CODE" property="brandCode" />
+		<result column="MODEL_MAT_CODE" property="modelMatCode" />
+		<result column="FQTY" property="fqty" />
+		<result column="DEALER_ID" property="dealerId"/>
+	</resultMap>
+	
+	<select id="queryByProperty" parameterType="TStockCurrent" resultMap="TStockCurrentMapper">
+		SELECT * FROM T_STOCK_CURRENT WHERE DEALER_ID = #{dealerId} AND BRAND_CODE = #{brandCode} AND MODEL_MAT_CODE = #{modelMatCode} 
+	</select>
+	
+	<select id="listByProperty" parameterType="TStockCurrent" resultMap="TStockCurrentMapper">
+		SELECT COUNT(*) FROM T_STOCK_CURRENT WHERE DEALER_ID = #{dealerId} AND BRAND_CODE = #{brandCode} AND MODEL_MAT_CODE = #{modelMatCode} 
+	</select>
+	
+	<update id="updateByProp" parameterType="TStockCurrent">
+		UPDATE T_STOCK_CURRENT SET FDATE = #{fdate}, USER_ID = #{userId}, FQTY = #{fQty}, UPDATED_BY = #{updateBy}, UPDATED_TIME = #{updateTime}, IS_DELETE = #{isDelete} WHERE DEALER_ID = #{dealerId} AND BRAND_CODE = #{brandCode} AND MODEL_MAT_CODE = #{modelMatCode}
+	</update>
+	
+	<insert id="saveTCurrentStockList" parameterType="java.util.List">
+		INSERT INTO T_STOCK_CURRENT (
+			DEALER_ID,
+			FDATE,
+			USER_ID,
+			BRAND_CODE,
+			MODEL_MAT_CODE,
+			FQTY,
+			CREATED_BY,
+			CREATED_TIME,
+			IS_DELETE
+		) VALUES
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(
+			#{item.dealerId}
+			,#{item.fdate}
+			,#{item.userId}
+			,#{item.brandCode}
+			,#{item.modelMatCode}
+			,#{item.fQty}
+			,#{item.createBy}
+			,#{item.createTime}
+			,#{item.isDelete}
+			)
+		</foreach>
+	</insert>
+	
+	<select id="findCurrentStockByProp" resultMap="PromoterStockResultMapper">
+		SELECT FDATE, UPPER(BRAND_CODE) AS BRAND_CODE, MODEL_MAT_CODE, DEALER_ID, MAX(FQTY) AS FQTY, FDATE FROM T_STOCK_CURRENT WHERE DEALER_ID = #{dealerId}  
+		AND BRAND_CODE = 'TECNO' AND IS_DELETE = 0 GROUP BY FDATE, BRAND_CODE, MODEL_MAT_CODE ORDER BY FDATE DESC
+	</select>
+	
+	<select id="queryCurrentStockFromTShopStockDetail" parameterType="java.lang.String" resultMap="TStockCurrentMapper">
+		SELECT 
+			d.ID,
+			d.DEALER_ID, 
+			d.FDATE,
+			d.EMP_ID AS USER_ID,
+			UPPER(e.BRAND_CODE) AS BRAND_CODE,
+			e.MODEL_MAT_CODE,
+			e.FQTY,
+			d.EMP_ID AS CREATED_BY,
+			d.CREATED_TIME AS CREATED_TIME
+		FROM  T_SHOPSTOCK_MAIN d , T_SHOPSTOCK_DETAIL e where d.ID=e.STOCK_ID AND e.ISHISTORY=0 AND SUBSTRING(d.CREATED_TIME, 1, 7)=#{createTime}
+		and (d.DEALER_ID, d.EMP_ID)
+		in(
+		select c.DEALER_ID , c.EMP_ID from T_SHOPSTOCK_MAIN c WHERE c.ID in (
+		SELECT  MAX(a.ID) FROM  T_SHOPSTOCK_MAIN a , T_SHOPSTOCK_DETAIL b where a.ID=b.STOCK_ID AND b.ISHISTORY=0 
+		GROUP BY  a.DEALER_ID ORDER BY a.DEALER_ID) ORDER BY c.DEALER_ID )
+	</select>
+</mapper>

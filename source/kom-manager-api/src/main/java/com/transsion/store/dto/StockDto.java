@@ -23,6 +23,10 @@ public class StockDto implements java.io.Serializable {
 
 	private java.math.BigDecimal fprice;
 	
+	private Integer dealerId;
+	
+	private Integer isDelete;
+	
 	public String getShopId() {
 		return shopId;
 	}
@@ -71,11 +75,27 @@ public class StockDto implements java.io.Serializable {
 		this.fdate = fdate;
 	}
 
+	public Integer getDealerId() {
+		return dealerId;
+	}
+
+	public void setDealerId(Integer dealerId) {
+		this.dealerId = dealerId;
+	}
+
+	public Integer getIsDelete() {
+		return isDelete;
+	}
+
+	public void setIsDelete(Integer isDelete) {
+		this.isDelete = isDelete;
+	}
+
 	@Override
 	public String toString() {
 		return "StockDto [shopId=" + shopId + ", brandCode=" + brandCode + ", modelMatCode=" + modelMatCode + ", fqty="
-						+ fqty + ", fdate=" + fdate + ", fprice=" + fprice + "]";
+				+ fqty + ", fdate=" + fdate + ", fprice=" + fprice + ", dealerId=" + dealerId + ", isDelete=" + isDelete
+				+ "]";
 	}
-
 
 }
