@@ -768,4 +768,21 @@ public class ShopManager {
 		}
 		return Boolean.TRUE;
 	}
+	
+	/**
+	 * 查询用户店铺信息和店铺巡店的最后时间 注:如果用户店铺为巡店的 最后巡店时间为NULL
+	 * @author guihua.zhang on 2017-03-15
+	 * */
+	public List<ShopUserDto> findShopByUserId(String token) throws ServiceException{
+		if(UtilHelper.isEmpty(token)){			
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext)
+						|| UtilHelper.isEmpty(userContext.getUser())
+						|| UtilHelper.isEmpty(userContext.getUser().getId())){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		return shopMapper.findShopByUserId(userContext.getUser().getId());
+	}
 }

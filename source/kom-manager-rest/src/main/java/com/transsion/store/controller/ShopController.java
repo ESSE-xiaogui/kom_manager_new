@@ -397,4 +397,20 @@ public class ShopController extends AbstractController {
 		String token = this.getAuthorization();
 		return shopFacade.updateShopDetails(token,shopParamDto);
 	}
+	
+	/**
+	 * itel app 巡店
+	 * Select Shop 页面
+	 * 查询用户店铺信息和店铺巡店的最后时间 注:如果用户店铺为巡店的 最后巡店时间为NULL
+	 * @author guihua.zhang on 2017-03-15
+	 * @return
+	 * @throws ServiceException
+	 * */
+	@GET
+	@Path("findShopByUserId")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<ShopUserDto> findShopByUserId() throws ServiceException{
+		String token = this.getAuthorization();
+		return shopFacade.findShopByUserId(token);
+	}
 }

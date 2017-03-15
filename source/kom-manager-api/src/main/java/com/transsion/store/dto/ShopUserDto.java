@@ -2,20 +2,44 @@ package com.transsion.store.dto;
 
 import java.io.Serializable;
 
+/**
+ * update by guihua.zhang on 2017-03-15
+ * */
 public class ShopUserDto implements Serializable{
 
 	
 	private static final long serialVersionUID = 1L;
 	
-	
+	/**
+	 * 店铺Id
+	 * */
 	private Long id;
 
+	/**
+	 * 店铺编码
+	 * */
 	private Long shopId;
 
+	/**
+	 * 店铺名称
+	 * */
 	private String shopName;
 	
-	private String cityName;		// 店铺所在城市
-	private String lastVisitTime;	// 店铺最后次访问日期
+	/**
+	 * 城市Id 注:上传时候用
+	 * */
+	private Long cityId;  
+	
+	/**
+	 * 店铺所在城市名称
+	 * */
+	private String cityName;
+	
+	/**
+	 * 店铺最后访问时间
+	 * */
+	private String lastVisitDate;
+
 
 	public Long getId() {
 		return id;
@@ -36,9 +60,17 @@ public class ShopUserDto implements Serializable{
 	public String getShopName() {
 		return shopName;
 	}
-	
+
 	public void setShopName(String shopName) {
 		this.shopName = shopName;
+	}
+
+	public Long getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(Long cityId) {
+		this.cityId = cityId;
 	}
 
 	public String getCityName() {
@@ -49,17 +81,17 @@ public class ShopUserDto implements Serializable{
 		this.cityName = cityName;
 	}
 
-	public String getLastVisitTime() {
-		return lastVisitTime;
+	public String getLastVisitDate() {
+		return lastVisitDate;
 	}
 
-	public void setLastVisitTime(String lastVisitTime) {
-		this.lastVisitTime = lastVisitTime;
+	public void setLastVisitDate(String lastVisitDate) {
+		this.lastVisitDate = lastVisitDate;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "ShopUserDto [id=" + id + ", shopId=" + shopId + ", shopName=" + shopName + "]";
-	} 
-
+		return "ShopUserDto [id=" + id + ", shopId=" + shopId + ", shopName=" + shopName + ", cityId=" + cityId
+						+ ", cityName=" + cityName + ", lastVisitDate=" + lastVisitDate + "]";
+	}
 }
