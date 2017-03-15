@@ -508,7 +508,7 @@
 	<select id="queryUnplanedVisitList" parameterType="VisitInfoDto" resultMap="VisitInfoDtoResultMapper">
 		SELECT v.*, s.SHOP_NAME, s.GRADE_ID, g.GRADE_NAME, g.SORT_INDEX FROM T_VISIT v LEFT JOIN T_SHOP s ON v.SHOP_ID = s.ID 
 		LEFT JOIN T_SHOP_GRADE g ON s.GRADE_ID = g.ID 
-		WHERE v.VISIT_DATE = #{planDate} AND v.VISTOR = #{planner} ORDER BY g.SORT_INDEX, s.SHOP_NAME
+		WHERE v.PLAN_TYPE = 2 AND v.VISIT_DATE = #{planDate} AND v.VISTOR = #{planner} ORDER BY g.SORT_INDEX, s.SHOP_NAME
 	</select>
 	
 	<select id="queryVisitShopInfo" parameterType="VisitShopInfoDto" resultMap="VisitShopInfoDtoResultMapper">
