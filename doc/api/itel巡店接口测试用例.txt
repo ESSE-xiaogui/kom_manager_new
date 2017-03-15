@@ -39,4 +39,16 @@ controller名:materiel
 demo:
 http://127.0.0.1:9101/materiel/findMateriel
 
+4.Select Shop 页面
+
+查询用户店铺信息和店铺巡店的最后时间 注:如果用户店铺为巡店的 最后巡店时间为NULL
+
+controller名:shop
+方法名:findShopByUserId
+入参:
+出参:List<ShopUserDto>
+请求方式:GET
+demo:
+http://127.0.0.1:9101/shop/findShopByUserId
+
 
