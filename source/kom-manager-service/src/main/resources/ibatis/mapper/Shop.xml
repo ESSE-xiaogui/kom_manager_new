@@ -123,7 +123,11 @@
 		<result column="CITY_NAME" property="cityName"/>
 		<result column="LAST_VISIT_DATE" property="lastVisitDate"/>
 	</resultMap>
-	
+	<resultMap id="AreaShopChildrenDtoMapper" type="AreaShopChildrenDto">
+		<result column="ID" property="shopId"/>
+		<result column="AREA_ID" property="areaId"/>
+		<result column="SHOP_NAME" property="shopName"/>
+	</resultMap>
 	<resultMap id="ShopChildrenDtoMapper" type="ShopChildrenDto">
 		<result column="ID" property="shopId"/>
 		<result column="REGION_ID" property="regionId"/>
