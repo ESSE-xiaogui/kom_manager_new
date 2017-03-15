@@ -34,6 +34,7 @@ import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -412,5 +413,12 @@ public class ShopController extends AbstractController {
 	public List<ShopUserDto> findShopByUserId() throws ServiceException{
 		String token = this.getAuthorization();
 		return shopFacade.findShopByUserId(token);
+	}
+	
+	@GET
+	@Path("/findShopByAreaId")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<Long> findShopByAreaId(@Param("areaId")Long areaId)throws ServiceException{
+		return shopFacade.findShopByAreaId(areaId);
 	}
 }

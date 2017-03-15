@@ -6,7 +6,7 @@
  * recording, or otherwise, without the prior written permission of Liuzh.
  *
  * Created By: Liuzh
- * Created On: 2017-3-9 15:06:14
+ * Created On: 2017-3-14 13:59:40
  *
  * Amendment History:
  * 
@@ -17,25 +17,24 @@
 package com.transsion.store.controller;
 
 import com.rest.service.controller.AbstractController;
-import com.transsion.store.dto.AreaDto;
-import com.transsion.store.dto.AreaShopDto;
-import com.transsion.store.dto.ShopAreaDto;
+import com.transsion.store.bo.AreaShop;
 import com.shangkang.core.dto.RequestModel;
-import com.transsion.store.facade.AreaFacade;
+import com.transsion.store.facade.AreaShopFacade;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 @Controller
-@Path("area")
-public class AreaController extends AbstractController{
+@Path("areaShop")
+public class AreaShopController extends AbstractController{
 
 	@Autowired
-	private AreaFacade areaFacade;
+	private AreaShopFacade areaShopFacade;
 	
 	/**
 	 * 通过主键查询实体对象
@@ -46,9 +45,9 @@ public class AreaController extends AbstractController{
 	@GET
 	@Path("/getByPK")
 	@Produces({MediaType.APPLICATION_JSON})
-	public AreaDto getByPKey(@QueryParam("key") java.lang.Long primaryKey) throws ServiceException
+	public AreaShop getByPK(@QueryParam("key") java.lang.Long primaryKey) throws ServiceException
 	{
-		return areaFacade.getByPKey(primaryKey);
+		return areaShopFacade.getByPK(primaryKey);
 	}
 
 	/**
@@ -60,9 +59,9 @@ public class AreaController extends AbstractController{
 	@Path("/listPg")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<AreaDto> listPgArea(RequestModel<AreaDto> requestModel) throws ServiceException
+	public Pagination<AreaShop> listPgAreaShop(RequestModel<AreaShop> requestModel) throws ServiceException
 	{
-		Pagination<AreaDto> pagination = new Pagination<AreaDto>();
+		Pagination<AreaShop> pagination = new Pagination<AreaShop>();
 
 		pagination.setPaginationFlag(requestModel.isPaginationFlag());
 		pagination.setPageNo(requestModel.getPageNo());
@@ -70,7 +69,7 @@ public class AreaController extends AbstractController{
 		pagination.setParams(requestModel.getParams());
 		pagination.setOrderBy(requestModel.getOrderBy());
 
-		return areaFacade.listPaginationByProperty(pagination, requestModel.getParams());
+		return areaShopFacade.listPaginationByProperty(pagination, requestModel.getParams());
 	}
 
 	/**
@@ -81,10 +80,9 @@ public class AreaController extends AbstractController{
 	@POST
 	@Path("/add")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void add(AreaDto areaDto) throws ServiceException
-	
+	public void add(AreaShop areaShop) throws ServiceException
 	{
-		areaFacade.save(areaDto,this.getAuthorization());
+		areaShopFacade.save(areaShop);
 	}
 
 	/**
@@ -97,7 +95,7 @@ public class AreaController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	public void delete(List<java.lang.Long> primaryKeys) throws ServiceException
 	{
-		areaFacade.deleteByPKeys(primaryKeys,this.getAuthorization());
+		areaShopFacade.deleteByPKeys(primaryKeys);
 	}
 
 	/**
@@ -108,46 +106,8 @@ public class AreaController extends AbstractController{
 	@PUT
 	@Path("/update")
 	@Consumes({MediaType.APPLICATION_JSON})
-	public void update(AreaDto areaDto) throws ServiceException
+	public void update(AreaShop areaShop) throws ServiceException
 	{
-		areaFacade.update(areaDto,this.getAuthorization());
+		areaShopFacade.update(areaShop);
 	}
-	
-	/**
-	 * 查询销售大区树
-	 * @throws ServiceException
-	 */
-	@GET
-	@Path("/findAreaTreeList")
-	@Produces({MediaType.APPLICATION_JSON})
-	public List<AreaDto> findAreaTreeList()throws ServiceException{
-		return areaFacade.findAreaTreeList(this.getAuthorization());
-	}
-	
-	/**
-	 * 查询销售区域下所有店铺
-	 * @param areaId
-	 * @return
-	 * @throws ServiceException
-	 */
-	@GET
-	@Path("/findAreaShopList")
-	@Produces({MediaType.APPLICATION_JSON})
-	public List<AreaShopDto> findAreaShopList()throws ServiceException{
-		return areaFacade.findAreaShopList(this.getAuthorization());
-	}
-	
-	/**
-	 * 销售大区门店绑定
-	 * @param shopAreaDto
-	 * @throws ServiceException
-	 */
-	@POST
-	@Path("/saveShopArea")
-	@Consumes({MediaType.APPLICATION_JSON})
-	public void saveShopArea(ShopAreaDto shopAreaDto)throws ServiceException{
-		 areaFacade.saveShopArea(shopAreaDto,this.getAuthorization());
-	}
-	
-	
 }

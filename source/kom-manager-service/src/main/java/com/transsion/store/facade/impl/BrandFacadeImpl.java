@@ -201,8 +201,8 @@ public class BrandFacadeImpl implements BrandFacade {
 	}
 
 	@Override
-	public List<Brand> queryBrandListByCompanyId(Long companyId) throws ServiceException {
-		return brandService.queryBrandListByCompanyId(companyId);
+	public List<Brand> queryBrandListByCompanyId(Long companyId,String token) throws ServiceException {
+		return brandManager.queryBrandListByCompanyId(companyId,token);
 	}
 
 }

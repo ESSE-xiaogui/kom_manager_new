@@ -181,4 +181,6 @@ public interface ShopFacade {
 	public Boolean updateShopDetails(String token,ShopParamDto shopParamDto) throws ServiceException;
 	
 	public List<ShopUserDto> findShopByUserId(String token) throws ServiceException;
+
+	public List<Long> findShopByAreaId(Long areaId)throws ServiceException;
 }

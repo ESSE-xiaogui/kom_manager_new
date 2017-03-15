@@ -18,8 +18,9 @@ package com.transsion.store.mapper;
 
 import java.util.List;
 import java.util.Map;
-
 import com.transsion.store.bo.Area;
+import com.transsion.store.dto.AreaDto;
+import com.transsion.store.dto.AreaShopDto;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
@@ -27,5 +28,13 @@ import org.apache.ibatis.annotations.Param;
 
 public interface AreaMapper extends GenericIBatisMapper<Area, java.lang.Long> {
 
-    public List<Area> listPaginationByProperty(Pagination<Area> pagination, @Param("area")Area area, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    public List<AreaDto> listPaginationByProperty(Pagination<AreaDto> pagination, @Param("areaDto")AreaDto areaDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+
+	public Long getLatestId()throws DataAccessFailureException;
+
+	public List<AreaDto> findAreaList(@Param("companyId")Long companyId,@Param("parentId")Long parentId)throws DataAccessFailureException;
+
+	public AreaDto getByPKey(Long primaryKey)throws DataAccessFailureException;
+
+	public List<AreaShopDto> findArea(@Param("companyId")Long companyId,@Param("parentId")Long parentId);
 }

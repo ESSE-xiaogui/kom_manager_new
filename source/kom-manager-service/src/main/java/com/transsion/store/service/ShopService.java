@@ -174,4 +174,13 @@ public class ShopService {
 
 		return shopMapper.findByPromoters(userId,companyId);
 	}
+
+	/**
+	 * 查询销售大区绑定的店铺
+	 * @param areaId
+	 * @return
+	 */
+	public List<Long> findShopByAreaId(Long areaId)throws ServiceException{
+		return shopMapper.findShopByAreaId(areaId);
+	}
 }

@@ -25,6 +25,7 @@ import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.transsion.store.bo.Shop;
+import com.transsion.store.dto.AreaShopChildrenDto;
 import com.transsion.store.dto.ShopChildrenDto;
 import com.transsion.store.dto.ShopInfoDto;
 import com.transsion.store.dto.ShopLoginDto;
@@ -74,4 +75,8 @@ public interface ShopMapper extends GenericIBatisMapper<Shop, java.lang.Long> {
 	 * @throws DataAccessFailureException
 	 */
 	public List<ShopUserDto> findShopByUserId(@Param("userId")Long userId) throws DataAccessFailureException;
+	
+	public List<AreaShopChildrenDto> findAreaShop(@Param("areaId")Long areaId)throws DataAccessFailureException;
+
+	public List<Long> findShopByAreaId(@Param("areaId")Long areaId)throws DataAccessFailureException;
 }

@@ -22,15 +22,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.transsion.store.bo.Area;
+import com.transsion.store.dto.AreaDto;
+import com.transsion.store.dto.AreaShopDto;
+import com.transsion.store.dto.ShopAreaDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.AreaFacade;
+import com.transsion.store.manager.AreaManager;
 import com.transsion.store.service.AreaService;
 
 @Component("areaFacade")
 public class AreaFacadeImpl implements AreaFacade {
 
 	private AreaService areaService;
+	
+	@Autowired
+	private AreaManager areaManager;
 	
 	@Autowired
 	public void setAreaService(AreaService areaService)
@@ -75,10 +82,10 @@ public class AreaFacadeImpl implements AreaFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Area> listPaginationByProperty(Pagination<Area> pagination, Area area)
+	public Pagination<AreaDto> listPaginationByProperty(Pagination<AreaDto> pagination, AreaDto areaDto)
 			throws ServiceException
 	{
-		return areaService.listPaginationByProperty(pagination, area);
+		return areaService.listPaginationByProperty(pagination, areaDto);
 	}
 
 	/**
@@ -97,9 +104,9 @@ public class AreaFacadeImpl implements AreaFacade {
 	 * @param primaryKeys
 	 * @throws ServiceException
 	 */
-	public void deleteByPKeys(List<java.lang.Long> primaryKeys) throws ServiceException
+	public void deleteByPKeys(List<java.lang.Long> primaryKeys,String token) throws ServiceException
 	{
-		areaService.deleteByPKeys(primaryKeys);
+		areaManager.deleteByPKeys(primaryKeys,token);
 	}
 	
 	/**
@@ -119,9 +126,9 @@ public class AreaFacadeImpl implements AreaFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(Area area) throws ServiceException
+	public void save(AreaDto areaDto,String token) throws ServiceException
 	{
-		areaService.save(area);
+		areaManager.save(areaDto,token);
 	}
 
 	/**
@@ -130,9 +137,9 @@ public class AreaFacadeImpl implements AreaFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(Area area) throws ServiceException
+	public int update(AreaDto areaDto,String token) throws ServiceException
 	{
-		return areaService.update(area);
+		return areaManager.update(areaDto,token);
 	}
 
 	/**
@@ -164,5 +171,21 @@ public class AreaFacadeImpl implements AreaFacade {
 	public int findByCount(Area area) throws ServiceException
 	{
 		return areaService.findByCount(area);
+	}
+
+	public List<AreaDto> findAreaTreeList(String token) throws ServiceException {
+		return areaManager.findAreaTreeList(token);
+	}
+
+	public AreaDto getByPKey(Long primaryKey) throws ServiceException {
+		return areaService.getByPKey(primaryKey);
+	}
+
+	public List<AreaShopDto> findAreaShopList(String token) throws ServiceException {
+		return areaManager.findAreaShopList(token);
+	}
+
+	public void saveShopArea(ShopAreaDto shopAreaDto, String token) throws ServiceException {
+		areaManager.saveShopArea(shopAreaDto,token);
 	}
 }

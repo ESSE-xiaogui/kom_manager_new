@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2017 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2017-3-14 13:59:39
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.AreaShopMapper">
+	<resultMap id="AreaShopResultMapper" type="AreaShop">
+		<result column="AREA_SHOP_ID" property="areaShopId"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="AREA_ID" property="areaId"/>
+		<result column="SHOP_ID" property="shopId"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 AREA_SHOP_ID
+		, COMPANY_ID
+		, AREA_ID
+		, SHOP_ID
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 COMPANY_ID
+		, AREA_ID
+		, SHOP_ID
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 AREA_SHOP_ID
+		, COMPANY_ID
+		, AREA_ID
+		, SHOP_ID
+		, IS_INACTIVE
+		, REMARK
+		, CREATED_BY
+		, date_format(CREATED_TIME, '%Y-%m-%d %H:%i:%s') CREATED_TIME
+		, UPDATED_BY
+		, date_format(UPDATED_TIME, '%Y-%m-%d %H:%i:%s') UPDATED_TIME
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="areaShopId!= null and areaShopId!= ''"> 
+			AND AREA_SHOP_ID = #{areaShopId}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID = #{companyId}
+		</if>
+		<if test="areaId!= null and areaId!= ''"> 
+			AND AREA_ID = #{areaId}
+		</if>
+		<if test="shopId!= null and shopId!= ''"> 
+			AND SHOP_ID = #{shopId}
+		</if>
+		<if test="isInactive!= null and isInactive!= ''"> 
+			AND IS_INACTIVE = #{isInactive}
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			AND REMARK = #{remark}
+		</if>
+		<if test="createdBy!= null and createdBy!= ''"> 
+			AND CREATED_BY = #{createdBy}
+		</if>
+		<if test="createdTime!= null and createdTime!= ''"> 
+			AND CREATED_TIME = str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updatedBy!= null and updatedBy!= ''"> 
+			AND UPDATED_BY = #{updatedBy}
+		</if>
+		<if test="updatedTime!= null and updatedTime!= ''"> 
+			AND UPDATED_TIME = str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="areaShop != null">
+            <if test="areaShop.areaShopId!= null and areaShop.areaShopId!= ''">
+				AND AREA_SHOP_ID = #{areaShop.areaShopId}
+            </if>
+            <if test="areaShop.companyId!= null and areaShop.companyId!= ''">
+				AND COMPANY_ID = #{areaShop.companyId}
+            </if>
+            <if test="areaShop.areaId!= null and areaShop.areaId!= ''">
+				AND AREA_ID = #{areaShop.areaId}
+            </if>
+            <if test="areaShop.shopId!= null and areaShop.shopId!= ''">
+				AND SHOP_ID = #{areaShop.shopId}
+            </if>
+            <if test="areaShop.isInactive!= null and areaShop.isInactive!= ''">
+				AND IS_INACTIVE = #{areaShop.isInactive}
+            </if>
+            <if test="areaShop.remark!= null and areaShop.remark!= ''">
+				AND REMARK = #{areaShop.remark}
+            </if>
+            <if test="areaShop.createdBy!= null and areaShop.createdBy!= ''">
+				AND CREATED_BY = #{areaShop.createdBy}
+            </if>
+            <if test="areaShop.createdTime!= null and areaShop.createdTime!= ''">
+				AND CREATED_TIME = str_to_date(#{areaShop.createdTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="areaShop.updatedBy!= null and areaShop.updatedBy!= ''">
+				AND UPDATED_BY = #{areaShop.updatedBy}
+            </if>
+            <if test="areaShop.updatedTime!= null and areaShop.updatedTime!= ''">
+				AND UPDATED_TIME = str_to_date(#{areaShop.updatedTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'areaShopId'">
+				AREA_SHOP_ID ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'areaId'">
+				AREA_ID ${value}
+            </when>
+        	<when test="key == 'shopId'">
+				SHOP_ID ${value}
+            </when>
+        	<when test="key == 'isInactive'">
+				IS_INACTIVE ${value}
+            </when>
+        	<when test="key == 'remark'">
+				REMARK ${value}
+            </when>
+        	<when test="key == 'createdBy'">
+				CREATED_BY ${value}
+            </when>
+        	<when test="key == 'createdTime'">
+				CREATED_TIME ${value}
+            </when>
+        	<when test="key == 'updatedBy'">
+				UPDATED_BY ${value}
+            </when>
+        	<when test="key == 'updatedTime'">
+				UPDATED_TIME ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="areaShopId" parameterType="AreaShop">
+		<![CDATA[ INSERT INTO T_AREA_SHOP ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{companyId}
+			, #{areaId}
+			, #{shopId}
+			, #{isInactive}
+			, #{remark}
+			, #{createdBy}
+			, str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="AreaShop">
+		<![CDATA[ UPDATE T_AREA_SHOP SET 
+			 AREA_SHOP_ID = #{areaShopId}
+			, COMPANY_ID = #{companyId}
+			, AREA_ID = #{areaId}
+			, SHOP_ID = #{shopId}
+			, IS_INACTIVE = #{isInactive}
+			, REMARK = #{remark}
+			, CREATED_BY = #{createdBy}
+			, CREATED_TIME = str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATED_BY = #{updatedBy}
+			, UPDATED_TIME = str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+		WHERE AREA_SHOP_ID = #{areaShopId}  ]]>
+	</update>
+	<insert id="saveOrUpdate" parameterType="Brand">
+		<![CDATA[ INSERT INTO T_AREA_SHOP ( ]]>
+		<include refid="commonColumns"/>
+		<![CDATA[
+		) VALUES (
+			 #{areaShopId}
+			, #{companyId}
+			, #{areaId}
+			, #{shopId}
+			, #{isInactive}
+			, #{remark}
+			, #{createdBy}
+			, str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+		) ON DUPLICATE KEY UPDATE
+			 AREA_SHOP_ID = VALUES(AREA_SHOP_ID)
+			, COMPANY_ID = VALUES(COMPANY_ID)
+			, AREA_ID = VALUES(AREA_ID)
+			, SHOP_ID = VALUES(SHOP_ID)
+			, IS_INACTIVE = VALUES(IS_INACTIVE)
+			, REMARK = VALUES(REMARK)
+			, CREATED_BY = VALUES(CREATED_BY)
+			, CREATED_TIME = VALUES(CREATED_TIME)
+			, UPDATED_BY = VALUES(UPDATED_BY)
+			, UPDATED_TIME = VALUES(UPDATED_TIME)
+		]]>
+	</insert>
+	<insert id="batchSaveOrUpdate" parameterType="List">
+		<![CDATA[ INSERT INTO T_AREA_SHOP ( ]]>
+		<include refid="commonColumns"/>
+		<![CDATA[ ) VALUES ]]>
+        <foreach collection="list" item="item" index="index" separator=",">
+			(
+			 #{item.areaShopId}
+			, #{item.companyId}
+			, #{item.areaId}
+			, #{item.shopId}
+			, #{item.isInactive}
+			, #{item.remark}
+			, #{item.createdBy}
+			, str_to_date(#{item.createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{item.updatedBy}
+			, str_to_date(#{item.updatedTime},'%Y-%m-%d %H:%i:%s')
+        	)
+        </foreach>
+        <![CDATA[ ON DUPLICATE KEY UPDATE
+		 AREA_SHOP_ID = VALUES(AREA_SHOP_ID)
+		, COMPANY_ID = VALUES(COMPANY_ID)
+		, AREA_ID = VALUES(AREA_ID)
+		, SHOP_ID = VALUES(SHOP_ID)
+		, IS_INACTIVE = VALUES(IS_INACTIVE)
+		, REMARK = VALUES(REMARK)
+		, CREATED_BY = VALUES(CREATED_BY)
+		, CREATED_TIME = VALUES(CREATED_TIME)
+		, UPDATED_BY = VALUES(UPDATED_BY)
+		, UPDATED_TIME = VALUES(UPDATED_TIME)
+		]]>
+	</insert>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_AREA_SHOP WHERE AREA_SHOP_ID = #{areaShopId}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_AREA_SHOP WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" AREA_SHOP_ID IN(" separator="," close=") ">
+			#{id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="AreaShop">
+		DELETE FROM T_AREA_SHOP WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="AreaShopResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_AREA_SHOP WHERE AREA_SHOP_ID = #{areaShopId}  
+	</select>
+	<select id="list" resultMap="AreaShopResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_AREA_SHOP
+	</select>
+	<select id="listByProperty" parameterType="AreaShop" resultMap="AreaShopResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_AREA_SHOP WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="AreaShop" resultMap="AreaShopResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_AREA_SHOP WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="AreaShop" resultType="int">
+		SELECT count(1) AS totalcount FROM T_AREA_SHOP WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>

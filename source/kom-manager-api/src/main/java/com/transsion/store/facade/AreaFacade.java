@@ -19,6 +19,9 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.Area;
+import com.transsion.store.dto.AreaDto;
+import com.transsion.store.dto.AreaShopDto;
+import com.transsion.store.dto.ShopAreaDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -60,7 +63,7 @@ public interface AreaFacade {
 	 * @param primaryKeys
 	 * @throws ServiceException
 	 */
-	public void deleteByPKeys(List<java.lang.Long> primaryKeys) throws ServiceException;
+	public void deleteByPKeys(List<java.lang.Long> primaryKeys,String token) throws ServiceException;
 
 	/**
 	 * 根据传入参数删除记录
@@ -76,7 +79,7 @@ public interface AreaFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void save(Area area) throws ServiceException;
+	public void save(AreaDto areaDto,String token) throws ServiceException;
 
 	/**
 	 * 更新记录
@@ -84,7 +87,7 @@ public interface AreaFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public int update(Area area) throws ServiceException;
+	public int update(AreaDto areaDto,String token) throws ServiceException;
 
 	/**
 	 * 保存或更新记录
@@ -115,7 +118,21 @@ public interface AreaFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public Pagination<Area> listPaginationByProperty(Pagination<Area> pagination, Area area)
+	public Pagination<AreaDto> listPaginationByProperty(Pagination<AreaDto> pagination, AreaDto areaDto)
 			throws ServiceException;
+
+	/**
+	 * 查询销售大区树
+	 * @param token 
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<AreaDto> findAreaTreeList(String token)throws ServiceException;
+
+	public AreaDto getByPKey(Long primaryKey)throws ServiceException;
+
+	public List<AreaShopDto> findAreaShopList(String token)throws ServiceException;
+
+	public void saveShopArea(ShopAreaDto shopAreaDto, String token)throws ServiceException;
 
 }

@@ -1,6 +1,7 @@
 package com.transsion.store.manager;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,12 +153,18 @@ public class CompanyManager {
 		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
+		List<Company> list = new ArrayList<Company>();
 		Company company = new Company();
 		if(userContext.isAdmin()){
+			Company comp = new Company();
+			comp.setCompanyCode("All");
+			list.add(comp);
 			company.setId(null);
 		}else{
 			company.setId(userContext.getCompanyId());
 		}
-		return companyMapper.listByProperty(company);
+		List<Company> companyList = companyMapper.listByProperty(company);
+		list.addAll(companyList);
+		return list;
 	}
 }

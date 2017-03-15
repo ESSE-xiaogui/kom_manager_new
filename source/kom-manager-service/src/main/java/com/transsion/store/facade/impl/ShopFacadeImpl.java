@@ -242,6 +242,9 @@ public class ShopFacadeImpl implements ShopFacade {
 	public List<ShopUserDto> findShopByUserId(String token) throws ServiceException{
 		return shopManager.findShopByUserId(token);
 	}
+	public List<Long> findShopByAreaId(Long areaId) throws ServiceException {
+		return shopService.findShopByAreaId(areaId);
+	}
 }
 
 

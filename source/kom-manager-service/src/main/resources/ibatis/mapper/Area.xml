@@ -33,6 +33,36 @@
 		<result column="UPDATED_TIME" property="updatedTime"/>
 		<result column="VERSION" property="version"/>
 	</resultMap>
+	<resultMap id="AreaDtoResultMapper" type="AreaDto">
+		<result column="AREA_ID" property="areaId"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="PARENT_AREA_NAME" property="pAreaName"/>
+		<result column="AREA_NAME" property="areaName"/>
+		<result column="AREA_TYPE" property="areaType"/>
+		<result column="PARENT_ID" property="parentId"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
+	<resultMap id="AreaShopDtoResultMapper" type="AreaShopDto">
+		<result column="AREA_ID" property="areaId"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="PARENT_AREA_NAME" property="pAreaName"/>
+		<result column="AREA_NAME" property="areaName"/>
+		<result column="AREA_TYPE" property="areaType"/>
+		<result column="PARENT_ID" property="parentId"/>
+		<result column="IS_INACTIVE" property="isInactive"/>
+		<result column="REMARK" property="remark"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
+		<result column="VERSION" property="version"/>
+	</resultMap>
 	
 	<sql id="commonColumns">
 		 AREA_ID
@@ -77,6 +107,17 @@
 		, date_format(UPDATED_TIME, '%Y-%m-%d %H:%i:%s') UPDATED_TIME
 		, VERSION
 	</sql>
+	<sql id="commonProcessDateColumn">
+		a1.AREA_ID
+		, a1.AREA_NAME
+		, a2.AREA_NAME AS PARENT_AREA_NAME
+		, a1.IS_INACTIVE
+		, a1.REMARK
+		, a1.CREATED_BY
+		, date_format(a1.CREATED_TIME, '%Y-%m-%d %H:%i:%s') CREATED_TIME
+		, a1.UPDATED_BY
+		, date_format(a1.UPDATED_TIME, '%Y-%m-%d %H:%i:%s') UPDATED_TIME
+	</sql>
 	
 	<sql id="commonCondition">
 		<if test="areaId!= null and areaId!= ''"> 
@@ -118,42 +159,45 @@
 	</sql>
 
 	<sql id="commonConditionByPrefix">
-		<if test="area != null">
-            <if test="area.areaId!= null and area.areaId!= ''">
-				AND AREA_ID = #{area.areaId}
+		<if test="areaDto != null">
+            <if test="areaDto.areaId!= null and areaDto.areaId!= ''">
+				AND AREA_ID = #{areaDto.areaId}
             </if>
-            <if test="area.companyId!= null and area.companyId!= ''">
-				AND COMPANY_ID = #{area.companyId}
+            <if test="areaDto.companyId!= null and areaDto.companyId!= ''">
+				AND COMPANY_ID = #{areaDto.companyId}
             </if>
-            <if test="area.areaName!= null and area.areaName!= ''">
-				AND AREA_NAME = #{area.areaName}
+            <if test="areaDto.areaName!= null and areaDto.areaName!= ''">
+				AND a1.AREA_NAME = #{areaDto.areaName}
             </if>
-            <if test="area.areaType!= null and area.areaType!= ''">
-				AND AREA_TYPE = #{area.areaType}
+            <if test="areaDto.pAreaName!= null and areaDto.pAreaName!= ''">
+				AND a2.AREA_NAME = #{areaDto.pAreaName}
             </if>
-            <if test="area.parentId!= null and area.parentId!= ''">
-				AND PARENT_ID = #{area.parentId}
+            <if test="areaDto.areaType!= null and areaDto.areaType!= ''">
+				AND AREA_TYPE = #{areaDto.areaType}
             </if>
-            <if test="area.isInactive!= null and area.isInactive!= ''">
-				AND IS_INACTIVE = #{area.isInactive}
+            <if test="areaDto.parentId!= null and areaDto.parentId!= ''">
+				AND PARENT_ID = #{areaDto.parentId}
             </if>
-            <if test="area.remark!= null and area.remark!= ''">
-				AND REMARK = #{area.remark}
+            <if test="areaDto.isInactive!= null and areaDto.isInactive!= ''">
+				AND a1.IS_INACTIVE = #{areaDto.isInactive}
             </if>
-            <if test="area.createdBy!= null and area.createdBy!= ''">
-				AND CREATED_BY = #{area.createdBy}
+            <if test="areaDto.remark!= null and areaDto.remark!= ''">
+				AND a1.REMARK = #{areaDto.remark}
             </if>
-            <if test="area.createdTime!= null and area.createdTime!= ''">
-				AND CREATED_TIME = str_to_date(#{area.createdTime},'%Y-%m-%d %H:%i:%s')
+            <if test="areaDto.createdBy!= null and areaDto.createdBy!= ''">
+				AND a1.CREATED_BY = #{areaDto.createdBy}
             </if>
-            <if test="area.updatedBy!= null and area.updatedBy!= ''">
-				AND UPDATED_BY = #{area.updatedBy}
+            <if test="areaDto.createdTime!= null and areaDto.createdTime!= ''">
+				AND a1.CREATED_TIME = str_to_date(#{areaDto.createdTime},'%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="area.updatedTime!= null and area.updatedTime!= ''">
-				AND UPDATED_TIME = str_to_date(#{area.updatedTime},'%Y-%m-%d %H:%i:%s')
+            <if test="areaDto.updatedBy!= null and areaDto.updatedBy!= ''">
+				AND a1.UPDATED_BY = #{areaDto.updatedBy}
             </if>
-            <if test="area.version!= null and area.version!= ''">
-				AND VERSION = #{area.version}
+            <if test="areaDto.updatedTime!= null and areaDto.updatedTime!= ''">
+				AND a1.UPDATED_TIME = str_to_date(#{areaDto.updatedTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="areaDto.version!= null and areaDto.version!= ''">
+				AND VERSION = #{areaDto.version}
             </if>
         </if>
     </sql>
@@ -176,7 +220,10 @@
 				COMPANY_ID ${value}
             </when>
         	<when test="key == 'areaName'">
-				AREA_NAME ${value}
+				a1.AREA_NAME ${value}
+            </when>
+            <when test="key == 'pAreaName'">
+				a2.AREA_NAME ${value}
             </when>
         	<when test="key == 'areaType'">
 				AREA_TYPE ${value}
@@ -185,22 +232,22 @@
 				PARENT_ID ${value}
             </when>
         	<when test="key == 'isInactive'">
-				IS_INACTIVE ${value}
+				a1.IS_INACTIVE ${value}
             </when>
         	<when test="key == 'remark'">
-				REMARK ${value}
+				a1.REMARK ${value}
             </when>
         	<when test="key == 'createdBy'">
-				CREATED_BY ${value}
+				a1.CREATED_BY ${value}
             </when>
         	<when test="key == 'createdTime'">
-				CREATED_TIME ${value}
+				a1.CREATED_TIME ${value}
             </when>
         	<when test="key == 'updatedBy'">
-				UPDATED_BY ${value}
+				a1.UPDATED_BY ${value}
             </when>
         	<when test="key == 'updatedTime'">
-				UPDATED_TIME ${value}
+				a1.UPDATED_TIME ${value}
             </when>
         	<when test="key == 'version'">
 				VERSION ${value}
@@ -328,6 +375,13 @@
 			 <include refid="commonProcessDateColumns"/>
 		FROM T_AREA WHERE AREA_ID = #{areaId}  
 	</select>
+	<select id="getByPKey" parameterType="java.lang.Long" resultMap="AreaDtoResultMapper">
+		SELECT a2.AREA_NAME AS PARENT_AREA_NAME,a1.AREA_ID,a1.PARENT_ID,
+		a1.AREA_NAME,a1.IS_INACTIVE
+		FROM T_AREA a1 
+		LEFT JOIN T_AREA a2 ON a1.PARENT_ID = a2.AREA_ID
+		WHERE a1.AREA_ID = #{primaryKey}  
+	</select>
 	<select id="list" resultMap="AreaResultMapper">
 		<![CDATA[ SELECT ]]>
 			 <include refid="commonProcessDateColumns"/>
@@ -339,15 +393,38 @@
 		FROM T_AREA WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="listPaginationByProperty" parameterType="Area" resultMap="AreaResultMapper">
+	<select id="listPaginationByProperty" parameterType="AreaDto" resultMap="AreaDtoResultMapper">
 		SELECT 
-		<include refid="commonProcessDateColumns"/>
-		FROM T_AREA WHERE 1=1
+		<include refid="commonProcessDateColumn"/>
+		FROM T_AREA a1
+		LEFT JOIN T_AREA a2 ON a1.PARENT_ID = a2.AREA_ID
+		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderByClause" />
 	</select>
 	<select id="findByCount" parameterType="Area" resultType="int">
 		SELECT count(1) AS totalcount FROM T_AREA WHERE 1=1 
 		<include refid="commonCondition"/>
+	</select>
+	
+	<select id="getLatestId"  resultType="long">
+		SELECT Max(AREA_ID) FROM T_AREA 
+	</select>
+	
+	<select id="findAreaList"  resultMap="AreaDtoResultMapper">
+		SELECT AREA_ID,AREA_NAME,PARENT_ID FROM T_AREA 
+		WHERE PARENT_ID = #{parentId}
+		AND IS_INACTIVE = 1
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID = #{companyId}
+		</if>
+	</select>
+	<select id="findArea"  resultMap="AreaShopDtoResultMapper">
+		SELECT AREA_ID,AREA_NAME,PARENT_ID FROM T_AREA 
+		WHERE PARENT_ID = #{parentId}
+		AND IS_INACTIVE = 1
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID = #{companyId}
+		</if>
 	</select>
 </mapper>

@@ -77,8 +77,10 @@ public class RegionManager {
 		for (RegionDto region : regionList) {
 			Integer pid = region.getId().intValue();
 			List<RegionDto> list = regionService.findRegionsList(pid);
-			List<RegionDto> children = getChildrenRegion(list);
-			region.setChildren(children);
+			if(!UtilHelper.isEmpty(list)){
+				List<RegionDto> children = getChildrenRegion(list);
+				region.setChildren(children);
+			}
 		}
 		return regionList;
 	}

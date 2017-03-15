@@ -159,4 +159,21 @@ public class BrandManager {
 			}
 		}
 	}
+	
+	public List<Brand> queryBrandListByCompanyId(Long companyId, String token) throws ServiceException {
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		
+		List<Brand> list = new ArrayList<Brand>();
+		if(userContext.isAdmin()){
+			Brand brand = new Brand();
+			brand.setBrandName("All");
+			list.add(brand);
+		}
+		List<Brand> brandList = brandMapper.queryBrandListByCompanyId(companyId);
+		list.addAll(brandList);
+		return list;
+	}
 }

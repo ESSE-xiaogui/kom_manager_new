@@ -152,6 +152,6 @@ public class BrandController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({ MediaType.APPLICATION_JSON })
 	public List<Brand> queryBrandListByCompanyId(@QueryParam("companyId") Long companyId) throws ServiceException {
-		return brandFacade.queryBrandListByCompanyId(companyId);
+		return brandFacade.queryBrandListByCompanyId(companyId,this.getAuthorization());
 	}
 }

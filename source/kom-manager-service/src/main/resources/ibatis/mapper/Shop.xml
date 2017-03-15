@@ -1001,6 +1001,11 @@
 	<select id="findShopId" parameterType="java.lang.String" resultMap="ShopResultMapper">
 	SELECT COMPANY_ID,ID,SHOP_ID FROM T_SHOP WHERE SHOP_CODE=#{shopCode}
 	</select>
+	<select id="findShopByAreaId" resultType = "Long">
+		SELECT s.ID FROM T_SHOP s
+		LEFT JOIN T_AREA_SHOP a ON s.ID = a.SHOP_ID
+		WHERE a.AREA_ID =#{areaId}				
+	</select>
 	<select id="findShopByRegionId" resultMap="ShopChildrenDtoMapper">
 		SELECT p.ID,p.REGION_ID,p.SHOP_NAME FROM T_SHOP p
 		<if test="userName!= null and userName!= ''">
@@ -1159,7 +1164,12 @@
 		AND p.SHOP_NAME = #{shopName} 
 		AND up.USER_ID = #{userId}
 	</select>
-	
+	<select id="findAreaShop" parameterType="long"	resultMap="AreaShopChildrenDtoMapper">
+		SELECT SHOP_NAME,s.ID,a.AREA_ID 
+		FROM T_SHOP s 
+		LEFT JOIN T_AREA_SHOP a ON s.ID = a.SHOP_ID
+		WHERE a.AREA_ID = #{areaId} 
+	</select>
 	<update id="updateShopCodeById" parameterType="java.lang.Long">
 		UPDATE T_SHOP  SET SHOP_CODE = ID WHERE ID = #{id}
 	</update>
