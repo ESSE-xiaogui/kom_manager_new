@@ -138,9 +138,9 @@ public class PrototypeCountingManager {
 			SimpleDateFormat sdfTemp=new SimpleDateFormat("yyyy-MM-dd");
 			
 			try {
-				int i = sdfTemp.parse(prototypeCountingDB.getCountingTime()).compareTo(new Date());
+				int i = sdfTemp.parse(prototypeCountingDB.getCountingTime()).compareTo(sdfTemp.parse(prototypeCounting.getCountingTime()));
 				// 计划盘点时间小于当前时间，延迟
-				if (i < 0) {
+				if (i == -1) {
 					prototypeCounting.setStatus(3);	// 延迟
 				} else if (i ==0 ) {
 					prototypeCounting.setStatus(2);	// 正常
@@ -149,8 +149,15 @@ public class PrototypeCountingManager {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
+			// 计划盘点时间不变，所以要改成原先数据库中的日期
+			prototypeCounting.setCountingTime(prototypeCountingDB.getCountingTime());
+			prototypeCounting.setPrototypeId(prototypeCountingDB.getPrototypeId());
+			prototypeCounting.setShopId(prototypeCountingDB.getShopId());
+			prototypeCounting.setCompanyId(prototypeCountingDB.getCompanyId());
 			prototypeCounting.setCountingBy(userContext.getUserCode());
+			prototypeCounting.setCreateBy(prototypeCountingDB.getCountingBy());
+			prototypeCounting.setCreateTime(prototypeCountingDB.getCreateTime());
 		}
 		return prototypeCountingMapper.update(prototypeCounting);
 	}

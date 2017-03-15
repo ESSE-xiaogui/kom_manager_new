@@ -233,6 +233,78 @@
 			AND VERSION=#{version}
 		</if>
 	</sql>
+	
+	<sql id="commonConditionUpdate">
+		<if test="companyId!= null and companyId!= ''"> 
+			COMPANY_ID=#{companyId},
+		</if>
+		<if test="shopId!= null and shopId!= ''"> 
+			SHOP_ID=#{shopId},
+		</if>
+		<if test="brandId!= null and brandId!= ''"> 
+			BRAND_ID=#{brandId},
+		</if>
+		<if test="brandCode!= null and brandCode!= ''"> 
+			BRAND_CODE=#{brandCode},
+		</if>
+		<if test="modelId!= null and modelId!= ''"> 
+			MODEL_ID=#{modelId},
+		</if>
+		<if test="modelCode!= null and modelCode!= ''"> 
+			MODEL_CODE=#{modelCode},
+		</if>
+		<if test="imeiNo!= null and imeiNo!= ''"> 
+			IMEI_NO=#{imeiNo},
+		</if>
+		<if test="imeiList!= null and imeiList!= ''"> 
+			IMEI_LIST like CONCAT('%',#{imeiList},'%'),
+		</if>
+		<if test="imgPrototypeUrl!= null and imgPrototypeUrl!= ''"> 
+			IMG_PROTOTYPE_URL=#{imgPrototypeUrl},
+		</if>
+		<if test="imgShopUrl!= null and imgShopUrl!= ''"> 
+			IMG_SHOP_URL=#{imgShopUrl},
+		</if>
+		<if test="imgImeiUrl!= null and imgImeiUrl!= ''"> 
+			IMG_IMEI_URL=#{imgImeiUrl},
+		</if>
+		<if test="status!= null and status!= ''"> 
+			STATUS=#{status},
+		</if>
+		<if test="publishBy!= null and publishBy!= ''"> 
+			PUBLISH_BY=#{publishBy},
+		</if>
+		<if test="publishTime!= null and publishTime!= ''"> 
+			PUBLISH_TIME=str_to_date(#{publishTime},'%Y-%m-%d %H:%i:%s'),
+		</if>
+		<if test="unpublishBy!= null and unpublishBy!= ''"> 
+			UNPUBLISH_BY=#{unpublishBy},
+		</if>
+		<if test="unpublishTime!= null and unpublishTime!= ''"> 
+			UNPUBLISH_TIME=str_to_date(#{unpublishTime},'%Y-%m-%d %H:%i:%s'),
+		</if>
+		<if test="unpublishCause!= null and unpublishCause!= ''"> 
+			UNPUBLISH_CAUSE=#{unpublishCause},
+		</if>
+		<if test="remark!= null and remark!= ''"> 
+			REMARK=#{remark},
+		</if>
+		<if test="createBy!= null and createBy!= ''"> 
+			CREATE_BY=#{createBy},
+		</if>
+		<if test="createTime!= null and createTime!= ''"> 
+			CREATE_TIME=str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s'),
+		</if>
+		<if test="updateBy!= null and updateBy!= ''"> 
+			UPDATE_BY=#{updateBy},
+		</if>
+		<if test="updateTime!= null and updateTime!= ''"> 
+			UPDATE_TIME=str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s'),
+		</if>
+		<if test="version!= null and version!= ''"> 
+			VERSION=#{version}
+		</if>
+	</sql>
 
 	<sql id="commonConditionByPrefix">
 		<if test="prototypeDto != null">
@@ -546,9 +618,9 @@
 	
 	<update id="update" parameterType="Prototype">
 		UPDATE T_PROTOTYPE 
-		<set >
-			<include refid="commonCondition"/>
-		</set>
+		<trim prefix="SET" suffixOverrides=",">
+			<include refid="commonConditionUpdate"/>
+		</trim>
 		where ID = #{id}
 	</update>
 	
@@ -629,13 +701,13 @@
 		pro.UNPUBLISH_BY, pro.UNPUBLISH_TIME, emp1.EMP_NAME AS PUBLISH_NAME, emp2.EMP_NAME AS UNPUBLISH_NAME
 		<if test="prototypeDto != null">
 			<if test="prototypeDto.countingTime!=null">
-			,proCount.ID AS PROTOTYPECOUNTING_ID
+			,proCount.ID AS PROTOTYPECOUNTING_ID, proCount.COUNTING_TIME
 			</if>
 		</if>
 		
 		FROM T_PROTOTYPE pro
 		left join T_BRAND brand on pro.BRAND_ID = brand.ID
-		left join T_SHOP shop on pro.SHOP_ID = shop.SHOP_ID
+		left join T_SHOP shop on pro.SHOP_ID = shop.ID
 		left join T_MODEL model on pro.MODEL_ID = model.ID
 		left join T_REGION r1 on r1.ID = shop.COUNTRY
 		left join T_REGION r2 on r2.ID = shop.CITY
@@ -666,7 +738,7 @@
 		pro.UNPUBLISH_BY, pro.UNPUBLISH_TIME, emp1.EMP_NAME AS PUBLISH_NAME, emp2.EMP_NAME AS UNPUBLISH_NAME
 		FROM T_PROTOTYPE pro
 		left join T_BRAND brand on pro.BRAND_ID = brand.ID
-		left join T_SHOP shop on pro.SHOP_ID = shop.SHOP_ID
+		left join T_SHOP shop on pro.SHOP_ID = shop.ID
 		left join T_MODEL model on pro.MODEL_ID = model.ID
 		left join T_REGION r1 on r1.ID = shop.COUNTRY
 		left join T_REGION r2 on r2.ID = shop.CITY

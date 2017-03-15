@@ -157,7 +157,7 @@ public class PrototypeManager {
 		Prototype prototype = prototypeMapper.getByPK(prototypeDto.getId());
 		
 		if (prototype != null) {
-			if (!"".equals(prototypeDto.getImeiNo())) {
+			if (!"".equals(prototypeDto.getImeiNo()) && prototypeDto.getImeiNo() != null) {
 				ScanValidateDto scanValidateDto = scanValidateManager.scanValidate(prototypeDto.getImeiNo(), "");
 				
 				String[] imeis = scanValidateDto.getImeis();
@@ -206,7 +206,7 @@ public class PrototypeManager {
 			prototype.setStatus(prototypeDto.getStatus());
 			
 			// 下架
-			if ("2".equals(prototypeDto.getStatus())) {
+			if (prototypeDto.getStatus() == 2) {
 				prototype.setUnpublishBy(userContext.getUserCode());
 				prototype.setUnpublishTime(systemDateService.getCurrentDate());
 				prototype.setUnpublishCause(prototypeDto.getUnpublishCause());

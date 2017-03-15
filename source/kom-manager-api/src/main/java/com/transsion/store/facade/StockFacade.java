@@ -17,12 +17,14 @@
 package com.transsion.store.facade;
 
 import java.util.List;
+
+import com.shangkang.core.bo.Pagination;
+import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Stock;
+import com.transsion.store.dto.SaleDto;
 import com.transsion.store.dto.StockDto;
 import com.transsion.store.dto.StockInfoDto;
 import com.transsion.store.dto.StockResponseDto;
-import com.shangkang.core.bo.Pagination;
-import com.shangkang.core.exception.ServiceException;
 
 public interface StockFacade {
 
@@ -130,5 +132,14 @@ public interface StockFacade {
 	public List<StockDto> findCurrentStockByProp(String token, Integer shopId)throws ServiceException;
 
 	public byte[] getStockByExcel(StockInfoDto stockInfoDto)throws ServiceException;
+	
+	/**
+	 * 根据销量减库存
+	 * @param tshopSaleDto
+	 * @param token
+	 * @return
+	 * @throws ServiceException
+	 */
+	public void updateCurStockBySale(SaleDto saleDto, String token) throws ServiceException;
 
 }

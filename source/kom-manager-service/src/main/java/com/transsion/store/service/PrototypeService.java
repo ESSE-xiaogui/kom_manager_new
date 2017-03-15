@@ -78,12 +78,12 @@ public class PrototypeService {
 	public List<PrototypeDto> listByProperty(Long shopId, String countingTime) throws ServiceException {
 		PrototypeDto prototypeDto = new PrototypeDto();
 		prototypeDto.setShopId(shopId);
+		prototypeDto.setStatus(1);	// 上架样机
 		// app端
 		if (countingTime != null && countingTime != "") {
 			prototypeDto.setCountingTime(countingTime);
 			prototypeDto.setBeginCountingTime(prototypeDto.getCountingTime());
 			prototypeDto.setEndCountingTime(getLatestDate(prototypeDto));
-			prototypeDto.setStatus(1);	// 上架样机
 		}
 		
 		return prototypeMapper.listByProperty(prototypeDto);

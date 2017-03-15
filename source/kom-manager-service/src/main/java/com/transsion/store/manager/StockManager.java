@@ -12,17 +12,22 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.batch.task.msg.api.ProducerService;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
+import com.transsion.store.bo.Sale;
+import com.transsion.store.bo.SaleItem;
 import com.transsion.store.bo.Stock;
 import com.transsion.store.bo.StockCurrent;
 import com.transsion.store.bo.StockItem;
 import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.SaleDto;
 import com.transsion.store.dto.StockDto;
 import com.transsion.store.dto.StockInfoDto;
 import com.transsion.store.dto.StockResponseDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.CurrencyMapper;
+import com.transsion.store.mapper.StockCurrentMapper;
 import com.transsion.store.mapper.StockItemMapper;
 import com.transsion.store.mapper.StockMapper;
 import com.transsion.store.service.StockCurrentService;
@@ -52,6 +57,10 @@ public class StockManager {
 	
 	@Autowired
 	private StockCurrentService stockCurrentService;
+	@Autowired
+	private StockCurrentMapper stockCurrentMapper;
+	@Autowired
+	private ProducerService producerService;
 	
 	/**
 	 * 保存库存上报记录
@@ -309,6 +318,56 @@ public class StockManager {
 		return stockResponseDto;
 	}
 	
+	/**
+	 * 根据销量减库存
+	 * @param tshopSaleDto
+	 * @param token
+	 * @return
+	 * @throws ServiceException
+	 */
+	public void updateCurStockBySale(SaleDto saleDto, String token) throws ServiceException {
+		
+		/*1.根据sale得到对应的stock，stock减少，时间戳更新stockdate, 
+		 * 2.根据 表T_SALE_ITEM: SHOP_ID, BRAND_CODE, MODEL_CODE查询stockcurrent记录
+		 * SHOP_IDT_STOCK_CURRENT 表：DEALER_ID， BRAND_CODE， MODEL_MAT_CODE获取
+		 * 更新T_STOCK_CURRENT表.发送库存消息
+		*/
+		
+		if (saleDto != null) {
+			Sale sale = saleDto.getSale();
+			List<SaleItem> shopItems = saleDto.getSaleItems();
+			
+			if (sale != null && shopItems != null) {
+				List<StockCurrent> stockCurrents = new ArrayList<StockCurrent>();
+				StockCurrent stockCurrentExp = new StockCurrent();
+				stockCurrentExp.setDealerId(sale.getShopId());
+				
+				stockCurrents = stockCurrentMapper.listByProperty(stockCurrentExp);
+				
+				for (StockCurrent stockCurrent : stockCurrents) {
+					for (SaleItem saleItem :shopItems) {
+						// 销量品牌，机型与库存品牌，机型一致，则修改库存
+						if (stockCurrent.getBrandCode().equals(saleItem.getBrandCode()) 
+								&& stockCurrent.getModelMatCode().equals(saleItem.getModelCode())) {
+							stockCurrent.setfQty(stockCurrent.getfQty().subtract(saleItem.getSaleQty()));
+						}
+					}
+					stockCurrent.setUpdateTime(systemDateService.getCurrentDate());
+				}
+
+				stockCurrentMapper.batchSaveOrUpdate(stockCurrents);
+				/*// 发送消息
+				HashMap<String, Object> messages = new HashMap<String, Object>();
+				messages.put("method", "kom.updateCurStockBySale");
+				messages.put("stockCurrent", stockCurrents);
+				logger.info("stockCurrentUpdate  start message...");
+				
+				TaskMessage msg = new TaskMessage();
+				msg.setParams(messages);
+				producerService.sendMessage(msg);*/
+			}
+		}
+	}
 	
 	/**
 	 * 查询促销员库存记录
