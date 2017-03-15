@@ -74,11 +74,13 @@ public class BrandManager {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
-		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getCompanyId())){
+		if(UtilHelper.isEmpty(userContext)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		Brand brand = new Brand();
-		brand.setCompanyId(userContext.getCompanyId().intValue());
+		if (!UtilHelper.isEmpty(userContext.getCompanyId())) {
+			brand.setCompanyId(userContext.getCompanyId().intValue());
+		}
 		List<Brand> brandList = brandMapper.listByProperty(brand);
 		if(UtilHelper.isEmpty(brandList)){
 			return null;
