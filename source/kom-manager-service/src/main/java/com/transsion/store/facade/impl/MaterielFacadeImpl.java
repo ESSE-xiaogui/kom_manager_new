@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Materiel;
+import com.transsion.store.dto.MaterialInfoDto;
 import com.transsion.store.facade.MaterielFacade;
 import com.transsion.store.manager.MaterielManager;
 import com.transsion.store.service.MaterielService;
@@ -170,5 +171,13 @@ public class MaterielFacadeImpl implements MaterielFacade {
 	 */
 	public List<Materiel> getMaterielListByBrandCode(String brandCode, String token) throws ServiceException {
 		return materielManager.getMaterielListByBrandCode(brandCode,token);
+	}
+	
+	/**
+	 * 查询所有物料和店铺绑定的物料
+	 * @author guihua.zhang on 2017-03-15
+	 * */
+	public List<MaterialInfoDto> findMateriel(String token) throws ServiceException{
+		return materielManager.findMateriel(token);
 	}
 }

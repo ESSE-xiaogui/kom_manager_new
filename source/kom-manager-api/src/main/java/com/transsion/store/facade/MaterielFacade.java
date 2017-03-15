@@ -19,6 +19,7 @@ package com.transsion.store.facade;
 import java.util.List;
 
 import com.transsion.store.bo.Materiel;
+import com.transsion.store.dto.MaterialInfoDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 
@@ -113,4 +114,9 @@ public interface MaterielFacade {
 	 */
 	public List<Materiel> getMaterielListByBrandCode(String brandCode, String token)throws ServiceException;
 
+	/**
+	 * 查询所有物料和店铺绑定的物料
+	 * @author guihua.zhang on 2017-03-15
+	 * */
+	public List<MaterialInfoDto> findMateriel(String token) throws ServiceException;
 }

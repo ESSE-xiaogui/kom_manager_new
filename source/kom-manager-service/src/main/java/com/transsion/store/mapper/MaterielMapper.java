@@ -25,8 +25,11 @@ import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.mapper.GenericIBatisMapper;
 import com.transsion.store.bo.Materiel;
+import com.transsion.store.dto.MaterialInfoDto;
 
 public interface MaterielMapper extends GenericIBatisMapper<Materiel, java.lang.Long> {
 
     public List<Materiel> listPaginationByProperty(Pagination<Materiel> pagination, @Param("materiel")Materiel materiel, @Param("orderBy") Map<String, String> orderBy, @Param("companyId")Long companyId) throws DataAccessFailureException;
+
+    public List<MaterialInfoDto> findMateriel(@Param("companyId")Long companyId) throws DataAccessFailureException;
 }

@@ -135,6 +135,11 @@
 		<result column="MODEL_CODE" property="modelCode" />
 		<result column="MODEL_NAME" property="modelName" />
 	</resultMap>
+	
+	<resultMap id="MaterialInfoDtoResultMapper" type="MaterialInfoDto">
+		<result column="ID" property="materialId"/>
+		<result column="NAME_EN" property="materialName"/>
+	</resultMap>
 	<sql id="commonColumns">
 		 ID
 		, VISIT_DATE
@@ -598,7 +603,7 @@
 	<select id="querySalePbQtyByVisitId" parameterType="java.lang.Long" resultType="java.lang.Integer">
 		SELECT SALE_PB_QTY FROM T_VISIT WHERE ID = #{visitId}
 	</select>
-		<select id="findLastDateModel" resultMap="ModelInfoDtoResultMapper">
+	<select id="findLastDateModel" resultMap="ModelInfoDtoResultMapper">
 		SELECT m.ID AS MODEL_ID,m.SERIES_CODE,m.MODEL_CODE,m.MODEL_NAME FROM T_VISIT v
 			LEFT JOIN T_VISIT_MODEL vm ON vm.VISIT_ID = v.ID
 			LEFT JOIN T_MODEL m ON m.ID = vm.MODEL_ID
@@ -607,5 +612,15 @@
 			AND m.COMPANY_ID = #{companyId}
 			AND m.IS_INACTIVE = 1
 			AND v.ID in (SELECT MAX(ID) FROM T_VISIT WHERE VISTOR = #{visitor} AND COMPANY_ID = #{companyId})
+	</select>
+	<select id="findLastDateMaterial" resultMap="MaterialInfoDtoResultMapper">
+		SELECT m.ID,m.NAME_EN FROM T_VISIT v
+			LEFT JOIN T_VISIT_MATERIEL vm ON vm.VISIT_ID = v.ID
+			LEFT JOIN T_MATERIEL m ON vm.MATERIEL_ID = m.ID
+			WHERE 1=1
+			AND v.VISTOR = #{visitor}
+			AND m.COMPANY_ID = #{companyId}
+			AND m.IS_INACTIVE = 1
+			AND  v.ID in (SELECT MAX(ID) FROM T_VISIT WHERE VISTOR = #{visitor} AND COMPANY_ID = #{companyId})
 	</select>
 </mapper>

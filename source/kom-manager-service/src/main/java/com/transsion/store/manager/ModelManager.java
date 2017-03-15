@@ -14,7 +14,6 @@ import com.transsion.store.bo.Model;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.ModelDto;
 import com.transsion.store.dto.ModelInfoDto;
-import com.transsion.store.dto.VisitModelSettingListDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.BrandMapper;
 import com.transsion.store.mapper.ModelMapper;

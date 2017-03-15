@@ -35,6 +35,11 @@
 		<result column="VERSION" property="version"/>
 	</resultMap>
 	
+	<resultMap id="MaterialInfoDtoResultMapper" type="MaterialInfoDto">
+		<result column="ID" property="materialId"/>
+		<result column="NAME_EN" property="materialName"/>
+	</resultMap>
+	
 	<sql id="commonColumns">
 		 ID
 		, NAME_EN
@@ -300,5 +305,12 @@
 	<select id="findByCount" parameterType="Materiel" resultType="int">
 		SELECT count(1) AS totalcount FROM T_MATERIEL WHERE 1=1 
 		<include refid="commonCondition"/>
+	</select>
+	
+	<select id="findMateriel" parameterType="Long" resultMap="MaterialInfoDtoResultMapper">
+		SELECT ID,NAME_EN FROM T_MATERIEL
+		WHERE 1=1 
+		AND COMPANY_ID = #{companyId} 
+		AND IS_INACTIVE = 1
 	</select>
 </mapper>

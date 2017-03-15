@@ -138,6 +138,7 @@ public class MaterielController extends AbstractController{
 	@Path("findMateriel")
 	@Produces({MediaType.APPLICATION_JSON})
 	public List<MaterialInfoDto> findMateriel() throws ServiceException{
-		return null;
+		String token=this.getAuthorization();
+		return materielFacade.findMateriel(token);
 	}
 }

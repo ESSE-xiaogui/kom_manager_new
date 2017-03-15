@@ -1,5 +1,6 @@
 package com.transsion.store.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,10 @@ import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Materiel;
 import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.MaterialInfoDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.MaterielMapper;
+import com.transsion.store.mapper.VisitMapper;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 
@@ -21,6 +24,9 @@ public class MaterielManager {
 	
 	@Autowired
 	private SystemDateService systemDateService;
+	
+	@Autowired
+	private VisitMapper visitMapper;
 	
 	public List<Materiel> getMaterielListByBrandCode(String brandCode, String token) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
@@ -135,5 +141,43 @@ public class MaterielManager {
 //			materielMapper.deleteByPK(primaryKey);
 //		}
 //	}
+	
+	/**
+	 * 查询所有物料和店铺绑定的物料
+	 * @author guihua.zhang on 2017-03-15
+	 * */
+	public List<MaterialInfoDto> findMateriel(String token) throws ServiceException{
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		if(UtilHelper.isEmpty(userContext) || UtilHelper.isEmpty(userContext.getCompanyId())
+						|| UtilHelper.isEmpty(userContext.getUserCode())){
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		List<MaterialInfoDto> findAll = materielMapper.findMateriel(userContext.getCompanyId());
+		List<MaterialInfoDto> lastMaterial =visitMapper.findLastDateMaterial(userContext.getUserCode(), userContext.getCompanyId());
+		List<MaterialInfoDto> result = new ArrayList<MaterialInfoDto>();
+		/**
+		 * 1.所有物料为空,直接返回result
+		 * 2.所有物料不为空,巡店物料为空,返回所有物料,isSelect为false
+		 * 3.所有物料不为空,巡店物料不为空,如果巡店物料和所有物料比较有相同的,isSelect为true
+		 * */
+		if(!UtilHelper.isEmpty(findAll)){
+			result.addAll(findAll);
+			if(!UtilHelper.isEmpty(lastMaterial)){
+				for(MaterialInfoDto m:lastMaterial){
+					if(result.contains(m)){
+						int index = findAll.indexOf(m);
+						if(index != -1){
+							MaterialInfoDto m2 = findAll.get(index);
+							m2.setSelected(true);
+						}
+					}
+				}
+			}
+		}
+		return result;
+	}
 
 }

@@ -49,6 +49,34 @@ public class MaterialInfoDto implements Serializable{
 	public void setSelected(boolean isSelected) {
 		this.isSelected = isSelected;
 	}
+	
+	@Override
+	public int hashCode(){
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((materialId == null) ? 0 : materialId.hashCode());
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj){
+		if(this == obj)
+			return true;
+		if(obj == null)
+			return false;
+		
+		if(getClass() != obj.getClass())
+			return false;
+		MaterialInfoDto other = (MaterialInfoDto)obj;
+		if(materialId == null || materialId == 0){
+			if(other.getMaterialId() != null){
+				return false;
+			}
+		}else if(!materialId.equals(other.getMaterialId()))
+				return false;
+			
+			return true;
+	}
 
 	@Override
 	public String toString() {
