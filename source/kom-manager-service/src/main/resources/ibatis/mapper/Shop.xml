@@ -1163,6 +1163,10 @@
 	<update id="updateShopCodeById" parameterType="java.lang.Long">
 		UPDATE T_SHOP  SET SHOP_CODE = ID WHERE ID = #{id}
 	</update>
+	
+	<update id="updateShopMaterialId" parameterType="java.lang.Long">
+		UPDATE T_SHOP SET MATERIEL_ID = #{materielId} WHERE ID = #{id}
+	</update>
 
 	<select id="findShopByUserId" parameterType="java.lang.Long"
 		resultMap="ShopDtoResultMapper">

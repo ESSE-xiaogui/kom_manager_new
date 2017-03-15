@@ -602,13 +602,12 @@ public class ShopManager {
 			 * */
 		//1.保存店铺主表
 		Shop shop = new Shop();
-		shop.setShopCode("1");
 		shop.setShopName(shopParamDto.getShopName());
 		shop.setCompanyId(userContext.getCompanyId().intValue());
 		shop.setCountry(shopParamDto.getCountry().intValue());
 		shop.setParentId(shopParamDto.getCountry());
-		shop.setRegionId(shopParamDto.getCity());
 		shop.setCity(shopParamDto.getCity().intValue());
+		shop.setRegionId(shopParamDto.getCity());
 		shop.setShopIcon("");
 		shop.setAddress(shopParamDto.getAddress());
 		shop.setGradeId(shopParamDto.getGradeId());
@@ -626,7 +625,7 @@ public class ShopManager {
 		shop.setUpdateBy(userContext.getUserCode());
 		shop.setUpdateDate(systemDateService.getCurrentDate());
 		shopMapper.save(shop);
-		
+		shopMapper.updateShopCodeById(shop.getId());
 		//2.保存店铺扩展信息
 		ShopExtension shopExtension = new ShopExtension();
 		shopExtension.setShopId(shop.getId());
@@ -651,6 +650,7 @@ public class ShopManager {
 		sm.setShopId(shop.getId());
 		sm.setMaterielQty(1);
 		shopMaterielMapper.save(sm);
+		shopMapper.updateShopMaterialId(shop.getId(),sm.getId());
 		
 		shopDto.setId(shopParamDto.getId());
 		shopDto.setShopName(shopDto.getShopName());
