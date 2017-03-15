@@ -27,4 +27,16 @@ controller名:visitModelSetting
 demo:
 http://127.0.0.1:9101/visitModelSetting/findVisitModel?cityId=51&currentDate=2017-02-01
 
+3.Promotion Materials 页面
+
+查询所有物料和店铺绑定的物料
+controller名:materiel
+方法名:findMateriel
+入参:
+出参:List<MaterialInfoDto>
+请求方式:GET
+
+demo:
+http://127.0.0.1:9101/materiel/findMateriel
+
 
