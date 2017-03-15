@@ -357,8 +357,12 @@ public class VisitPlanManager {
 		}
 		VisitPlan visitPlan = new VisitPlan();
 		visitPlan.setCompanyId(visit.getCompanyId());
-		visitPlan.setPlanDate(visit.getVisitDate());
+		if (visit.getVisitDate() != null && !"".equals(visit.getVisitDate())) {
+			visitPlan.setPlanDate(visit.getVisitDate().substring(0, 10));
+		}
 		visitPlan.setShopId(visit.getShopId());
+		visitPlan.setVisitId(visit.getId());
+		visitPlan.setVisitDate(visit.getVisitDate());
 		visitPlan.setStatus(done);
 		visitPlanMapper.updateStatusByShopIdAndPlanDate(visitPlan);
 	}

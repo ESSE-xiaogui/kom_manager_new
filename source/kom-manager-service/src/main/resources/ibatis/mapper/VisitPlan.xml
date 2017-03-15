@@ -585,9 +585,10 @@
 	</select>
 
 	<update id="updateStatusByShopIdAndPlanDate" parameterType="VisitPlan">
-		UPDATE T_VISIT_PLAN SET STATUS = #{status}
-		WHERE 1=1
-		<include refid="commonCondition" />
+		UPDATE T_VISIT_PLAN SET VISIT_ID = #{visitId}, VISIT_DATE = #{visitDate}, STATUS = #{status} 
+		WHERE COMPANY_ID = #{companyId} AND PLAN_DATE = #{planDate} AND SHOP_ID = #{shopId}
+		<!-- WHERE 1=1 
+		<include refid="commonCondition" /> -->
 	</update>
 	<select id="queryVisitPlanHistory" parameterType="VisitPlanParamDto"
 		resultMap="VisitHistorySummaryDtoResultMapper">
