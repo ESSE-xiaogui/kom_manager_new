@@ -119,6 +119,8 @@
 		<result column="ID" property="id"/>
 		<result column="SHOP_ID" property="shopId"/>
 		<result column="SHOP_NAME" property="shopName"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="LASTVISIT_TIME" property="lastVisitTime"/>
 	</resultMap>
 	
 	<resultMap id="ShopChildrenDtoMapper" type="ShopChildrenDto">
@@ -1160,4 +1162,22 @@
 	<update id="updateShopCodeById" parameterType="java.lang.Long">
 		UPDATE T_SHOP  SET SHOP_CODE = ID WHERE ID = #{id}
 	</update>
+	
+	<select id="findShopByUserId" parameterType="java.lang.Long" resultMap="ShopDtoResultMapper">
+		SELECT p.ID, p.SHOP_ID, r.REGION_NAME AS CITY_NAME, p.SHOP_NAME, t.VISIT_DATE AS LASTVISIT_TIME
+		FROM T_SHOP p
+		LEFT JOIN T_USER_SHOP us ON us.SHOP_ID = p.ID
+		LEFT JOIN T_USER u ON us.USER_ID = u.ID
+		LEFT JOIN T_REGION r ON p.CITY = r.REGION_NAME 
+		LEFT JOIN ( 
+			SELECT 
+			  MAX(v.VISIT_DATE) AS VISIT_DATE,
+			  p.ID
+			from
+			  T_VISIT v,
+			  T_SHOP p 
+			WHERE p.ID = v.SHOP_ID group by p.ID ) t ON t.ID = p.ID
+		WHERE u.USER_ID = #{userId}
+	</select>
+	
 </mapper>

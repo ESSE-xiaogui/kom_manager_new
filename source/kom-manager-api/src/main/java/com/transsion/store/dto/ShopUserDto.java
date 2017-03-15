@@ -13,6 +13,9 @@ public class ShopUserDto implements Serializable{
 	private Long shopId;
 
 	private String shopName;
+	
+	private String cityName;		// 店铺所在城市
+	private String lastVisitTime;	// 店铺最后次访问日期
 
 	public Long getId() {
 		return id;
@@ -33,9 +36,25 @@ public class ShopUserDto implements Serializable{
 	public String getShopName() {
 		return shopName;
 	}
-
+	
 	public void setShopName(String shopName) {
 		this.shopName = shopName;
+	}
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+
+	public String getLastVisitTime() {
+		return lastVisitTime;
+	}
+
+	public void setLastVisitTime(String lastVisitTime) {
+		this.lastVisitTime = lastVisitTime;
 	}
 
 	@Override
