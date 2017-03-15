@@ -374,7 +374,7 @@ public class VisitPlanManager {
 		visitPlan.setPlanDate(visit.getVisitDate());
 		visitPlan.setShopId(visit.getShopId());
 		int count = visitPlanMapper.findByCount(visitPlan);
-		if(count<0){
+		if(count > 0){
 			return true;
 		}
 		return false;

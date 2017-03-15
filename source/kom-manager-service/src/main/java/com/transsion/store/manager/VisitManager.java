@@ -276,9 +276,12 @@ public class VisitManager {
 		visit.setUpdateBy(userContext.getUserCode());
 		visit.setUpdateTime(currentDate);
 		visit.setVistor(userContext.getUserCode());
+		
 		if(!visitPlanManager.isVisitPlanned(visit))
 		{
 			visit.setPlanType(Visit.State.UNPLANNED.getVal());
+		} else {
+			visit.setPlanType(Visit.State.PLANNED.getVal());
 		}
 		visitService.save(visit);
 		
