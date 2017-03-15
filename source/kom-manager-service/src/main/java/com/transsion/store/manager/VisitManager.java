@@ -153,6 +153,11 @@ public class VisitManager {
 		
 		
 		List<VisitInfoDto> list = visitService.queryUnplanedVisitList(visitInfoDto);
+		for (VisitInfoDto visitInfoDto_ : list) {
+			if (!visitInfoDto_.isPlaned()) {
+				visitInfoDto_.setFinished(true);
+			}
+		}
 		
 		List<VisitInfoDto> weekPlanCountList = null;
 		String dateList = DateConvertUtils.getWeekDays(planDate);
