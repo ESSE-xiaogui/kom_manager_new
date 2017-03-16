@@ -74,6 +74,8 @@ public class AreaDto implements Serializable{
 	
 	private java.lang.Long countryId;
 	
+	private AreaDto parent;
+	
 	private List<AreaDto> children;
 
 	public java.lang.Long getAreaId() {
@@ -106,6 +108,14 @@ public class AreaDto implements Serializable{
 
 	public void setAreaType(java.lang.Integer areaType) {
 		this.areaType = areaType;
+	}
+	
+	public AreaDto getParent() {
+		return parent;
+	}
+
+	public void setParent(AreaDto parent) {
+		this.parent = parent;
 	}
 
 	public java.lang.Long getParentId() {

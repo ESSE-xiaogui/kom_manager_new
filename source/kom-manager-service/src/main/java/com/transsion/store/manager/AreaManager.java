@@ -1,13 +1,13 @@
 package com.transsion.store.manager;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.omg.PortableInterceptor.ACTIVE;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Area;
@@ -131,6 +131,40 @@ public class AreaManager {
 	}
 
 
+	/*
+	 * 查询销售区域
+	 * @param areaId
+	 * @param token
+	 * 返回 Map(areaId->areaDto)
+	 */
+	public Map<Long, AreaDto> queryAreaMap(Long companyId, Long parentId) throws ServiceException{
+		Map<Long, AreaDto> areaMap = new HashMap<Long, AreaDto>();
+		List<AreaDto> areaList = areaMapper.findAreaList(companyId, parentId);
+		if (areaList != null) {
+			for (AreaDto areaDto : areaList) {
+				areaMap.put(areaDto.getAreaId(), areaDto);
+			}
+			queryChildrenAreaMap(areaList,areaMap);
+		}
+		return areaMap;
+	}
+	
+	private void queryChildrenAreaMap(List<AreaDto> areaList, Map<Long, AreaDto> areaMap)
+			throws ServiceException {
+		for (AreaDto areaDto : areaList) {
+			Long pid = areaDto.getAreaId();
+			List<AreaDto> list = areaMapper.findAreaList(null, pid);
+			if (!UtilHelper.isEmpty(list)) {
+				areaDto.setChildren(list);
+				for (AreaDto childArea : list) {
+					childArea.setParent(areaDto);
+					areaMap.put(childArea.getAreaId(), childArea);
+				}
+				queryChildrenAreaMap(list, areaMap);
+			}
+		}
+	}
+	
 	/**
 	 * 查询销售区域下所有店铺
 	 * @param areaId
