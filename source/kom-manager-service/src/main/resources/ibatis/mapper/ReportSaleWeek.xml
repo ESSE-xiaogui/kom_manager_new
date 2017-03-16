@@ -996,6 +996,8 @@
 		tp.COMPANY_ID,
 		tp.COUNTRY_ID,
 		tp.REGION_ID,
+		tp.AREA_ID,
+    	tp.AREA_NAME,
 		tp.COMPANY_NAME,
 		tp.CITY_NAME,
 		tp.COUNTRY_NAME,
