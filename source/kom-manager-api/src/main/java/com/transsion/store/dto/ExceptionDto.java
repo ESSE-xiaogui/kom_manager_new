@@ -11,6 +11,8 @@ public class ExceptionDto implements Serializable {
 	private int code;
 
 	private String name;
+	
+	private String comment;
 
 	public ExceptionDto() {
 	}
@@ -18,6 +20,7 @@ public class ExceptionDto implements Serializable {
 	public ExceptionDto(ExceptionDef excepDef) {
 		this.code = excepDef.getCode();
 		this.name=excepDef.getName();
+		this.comment=excepDef.getComment();
 	}
 
 	public int getCode() {
@@ -36,9 +39,17 @@ public class ExceptionDto implements Serializable {
 		this.name = name;
 	}
 
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
 	@Override
 	public String toString() {
-		return "ExceptionDto [code=" + code + ", name=" + name + "]";
+		return "ExceptionDto [code=" + code + ", name=" + name + ", comment=" + comment + "]";
 	}
 
 }
