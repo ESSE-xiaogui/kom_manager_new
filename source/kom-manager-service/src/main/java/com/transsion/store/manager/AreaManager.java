@@ -1,5 +1,6 @@
 package com.transsion.store.manager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -130,6 +131,19 @@ public class AreaManager {
 		return areaList;
 	}
 
+	public List<AreaDto> queryAreaPath(Long areaId, Map<Long, AreaDto> areaMap) {
+		List<AreaDto> areaList = new ArrayList<AreaDto>();
+		AreaDto areaDto = areaMap.get(areaId);
+		if (areaDto != null) {
+			areaList.add(0, areaDto);
+			AreaDto parentAreaDto = areaDto.getParent();
+			while (parentAreaDto != null) {
+				areaList.add(0, parentAreaDto);
+				parentAreaDto = parentAreaDto.getParent();
+			}
+		}
+		return areaList;
+	}
 
 	/*
 	 * 查询销售区域
