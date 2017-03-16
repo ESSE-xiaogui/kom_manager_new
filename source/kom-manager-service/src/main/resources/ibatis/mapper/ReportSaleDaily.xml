@@ -778,4 +778,236 @@
 		T_AREA ar ON ar.COMPANY_ID = sale.COMPANY_ID
 			AND ar.AREA_ID = ars.AREA_ID
 	</select>
+	
+	<select id="listPaginationByShop" resultMap="ReportSaleDailyResultMapper">
+		SELECT 
+		    SHOP_ID,
+		    SHOP_CODE,
+		    COMPANY_ID,
+		    CITY_ID,
+		    COUNTRY_ID,
+		    REGION_ID,
+		    GRADE_ID,
+		    SHOP_NAME,
+		    COMPANY_NAME,
+		    CITY_NAME,
+		    COUNTRY_NAME,
+		    REGION_NAME,
+		    GRADE_NAME,
+		    sum(SALE_QTY) SALE_QTY,
+		    BRAND_CODE,
+			AREA_NAME
+		FROM
+		    T_REPORT_SALE_DAILY
+		WHERE 1=1
+		<if test="reportSaleDaily != null">
+			<if test="reportSaleDaily.startDate != null and reportSaleDaily.startDate != ''">
+			 AND SALE_DATE &gt;= STR_TO_DATE(#{reportSaleDaily.startDate}, '%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="reportSaleDaily.endDate != null and reportSaleDaily.endDate != ''">
+				 AND SALE_DATE &lt;= STR_TO_DATE(#{reportSaleDaily.endDate}, '%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="reportSaleDaily.companyId != null and reportSaleDaily.companyId != ''">
+				AND COMPANY_ID = #{reportSaleDaily.companyId}
+			</if>
+			<if test="reportSaleDaily.brandCode != null and reportSaleDaily.brandCode != ''">
+				AND BRAND_CODE = #{reportSaleDaily.brandCode}
+			</if>
+			<if test="reportSaleDaily.areaId != null and reportSaleDaily.areaId != ''">
+				AND AREA_ID = #{reportSaleDaily.areaId}
+			</if>
+		</if>
+		GROUP BY SHOP_ID , SHOP_CODE, COMPANY_ID , CITY_ID , COUNTRY_ID , REGION_ID , GRADE_ID , SHOP_NAME , 
+		COMPANY_NAME , CITY_NAME , COUNTRY_NAME , REGION_NAME , GRADE_NAME, BRAND_CODE, AREA_NAME
+		<include refid="orderByClause" />
+	</select>
+	<select id="queryReportSaleDailyListByShop" parameterType="ReportSaleDaily" resultMap="ReportSaleDailyResultMapper">
+		SELECT 
+		    SHOP_ID,
+		    SHOP_CODE,
+		    COMPANY_ID,
+		    CITY_ID,
+		    COUNTRY_ID,
+		    REGION_ID,
+		    GRADE_ID,
+		    SHOP_NAME,
+		    COMPANY_NAME,
+		    CITY_NAME,
+		    COUNTRY_NAME,
+		    REGION_NAME,
+		    GRADE_NAME,
+		    sum(SALE_QTY) SALE_QTY,
+		    BRAND_CODE,
+			AREA_NAME
+		FROM
+		    T_REPORT_SALE_DAILY
+		WHERE 1=1
+		<if test="startDate != null and startDate != ''">
+		 AND SALE_DATE &gt;= STR_TO_DATE(#{startDate}, '%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="endDate != null and endDate != ''">
+			 AND SALE_DATE &lt;= STR_TO_DATE(#{endDate}, '%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="companyId != null and companyId != ''">
+			AND COMPANY_ID = #{companyId}
+		</if>
+		<if test="brandCode != null and brandCode != ''">
+			AND BRAND_CODE = #{brandCode}
+		</if>
+		<if test="areaId != null and areaId != ''">
+			AND AREA_ID = #{areaId}
+		</if>
+		GROUP BY SHOP_ID , SHOP_CODE, COMPANY_ID , CITY_ID , COUNTRY_ID , REGION_ID , GRADE_ID , SHOP_NAME , 
+		COMPANY_NAME , CITY_NAME , COUNTRY_NAME , REGION_NAME , GRADE_NAME, BRAND_CODE, AREA_NAME
+	</select>
+	
+	<select id="listPaginationBySale" resultMap="ReportSaleDailyResultMapper">
+		SELECT 
+		    USER_CODE,
+		    COMPANY_ID,
+		    CITY_ID,
+		    COUNTRY_ID,
+		    REGION_ID,
+		    BRAND_CODE,
+		    EMP_NAME,
+		    CITY_NAME,
+		    COUNTRY_NAME,
+		    REGION_NAME,
+		    SUM(SALE_QTY) SALE_QTY,
+		    COMPANY_NAME,
+			AREA_NAME
+		FROM
+		    T_REPORT_SALE_DAILY
+		WHERE 1=1
+		<if test="reportSaleDaily != null">
+			<if test="reportSaleDaily.startDate != null and reportSaleDaily.startDate != ''">
+			 AND SALE_DATE &gt;= STR_TO_DATE(#{reportSaleDaily.startDate}, '%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="reportSaleDaily.endDate != null and reportSaleDaily.endDate != ''">
+				 AND SALE_DATE &lt;= STR_TO_DATE(#{reportSaleDaily.endDate}, '%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="reportSaleDaily.companyId != null and reportSaleDaily.companyId != ''">
+				AND COMPANY_ID = #{reportSaleDaily.companyId}
+			</if>
+			<if test="reportSaleDaily.brandCode != null and reportSaleDaily.brandCode != ''">
+				AND BRAND_CODE = #{reportSaleDaily.brandCode}
+			</if>
+			<if test="reportSaleDaily.areaId != null and reportSaleDaily.areaId != ''">
+				AND AREA_ID = #{reportSaleDaily.areaId}
+			</if>
+		</if>
+		GROUP BY USER_CODE , COMPANY_ID , CITY_ID , COUNTRY_ID , REGION_ID , BRAND_CODE, EMP_NAME , CITY_NAME , 
+		COUNTRY_NAME , REGION_NAME, COMPANY_NAME, AREA_NAME
+		<include refid="orderByClause" />
+	</select>
+	<select id="queryReportSaleDailyListBySale" parameterType="ReportSaleDaily" resultMap="ReportSaleDailyResultMapper">
+		SELECT 
+		    USER_CODE,
+		    COMPANY_ID,
+		    CITY_ID,
+		    COUNTRY_ID,
+		    REGION_ID,
+		    BRAND_CODE,
+		    EMP_NAME,
+		    CITY_NAME,
+		    COUNTRY_NAME,
+		    REGION_NAME,
+		    SUM(SALE_QTY) SALE_QTY,
+		    COMPANY_NAME,
+			AREA_NAME
+		FROM
+		    T_REPORT_SALE_DAILY
+		WHERE 1=1
+		<if test="startDate != null and startDate != ''">
+		 AND SALE_DATE &gt;= STR_TO_DATE(#{startDate}, '%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="endDate != null and endDate != ''">
+			 AND SALE_DATE &lt;= STR_TO_DATE(#{endDate}, '%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="companyId != null and companyId != ''">
+			AND COMPANY_ID = #{companyId}
+		</if>
+		<if test="brandCode != null and brandCode != ''">
+			AND BRAND_CODE = #{brandCode}
+		</if>
+		<if test="areaId != null and areaId != ''">
+			AND AREA_ID = #{areaId}
+		</if>
+		GROUP BY USER_CODE , COMPANY_ID , CITY_ID , COUNTRY_ID , REGION_ID , BRAND_CODE, EMP_NAME , CITY_NAME , 
+		COUNTRY_NAME , REGION_NAME, COMPANY_NAME, AREA_NAME
+	</select>
+	
+	<select id="listPaginationByModel" resultMap="ReportSaleDailyResultMapper">
+		SELECT 
+		    COMPANY_ID,
+		    CITY_ID,
+		    COUNTRY_ID,
+		    REGION_ID,
+		    COMPANY_NAME,
+		    CITY_NAME,
+		    COUNTRY_NAME,
+		    REGION_NAME,
+		    BRAND_CODE,
+		    MODEL_CODE,
+		    SUM(SALE_QTY) SALE_QTY,
+		    AREA_NAME
+		FROM
+		    T_REPORT_SALE_DAILY
+		WHERE 1=1
+		<if test="reportSaleDaily != null">
+			<if test="reportSaleDaily.startDate != null and reportSaleDaily.startDate != ''">
+			 AND SALE_DATE &gt;= STR_TO_DATE(#{reportSaleDaily.startDate}, '%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="reportSaleDaily.endDate != null and reportSaleDaily.endDate != ''">
+				 AND SALE_DATE &lt;= STR_TO_DATE(#{reportSaleDaily.endDate}, '%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="reportSaleDaily.companyId != null and reportSaleDaily.companyId != ''">
+				AND COMPANY_ID = #{reportSaleDaily.companyId}
+			</if>
+			<if test="reportSaleDaily.brandCode != null and reportSaleDaily.brandCode != ''">
+				AND BRAND_CODE = #{reportSaleDaily.brandCode}
+			</if>
+			<if test="reportSaleDaily.areaId != null and reportSaleDaily.areaId != ''">
+				AND AREA_ID = #{reportSaleDaily.areaId}
+			</if>
+		</if>
+		GROUP BY BRAND_CODE , MODEL_CODE , CITY_ID , CITY_NAME , COMPANY_ID , COMPANY_NAME , COUNTRY_ID , COUNTRY_NAME , 
+		REGION_ID , REGION_NAME, AREA_NAME
+		<include refid="orderByClause" />
+	</select>
+	<select id="queryReportSaleDailyListByModel" parameterType="ReportSaleDaily" resultMap="ReportSaleDailyResultMapper">
+		SELECT 
+		    COMPANY_ID,
+		    CITY_ID,
+		    COUNTRY_ID,
+		    REGION_ID,
+		    COMPANY_NAME,
+		    CITY_NAME,
+		    COUNTRY_NAME,
+		    REGION_NAME,
+		    BRAND_CODE,
+		    MODEL_CODE,
+		    SUM(SALE_QTY) SALE_QTY,
+		    AREA_NAME
+		FROM
+		    T_REPORT_SALE_DAILY
+		WHERE 1=1
+		<if test="startDate != null and startDate != ''">
+		 AND SALE_DATE &gt;= STR_TO_DATE(#{startDate}, '%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="endDate != null and endDate != ''">
+			 AND SALE_DATE &lt;= STR_TO_DATE(#{endDate}, '%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="companyId != null and companyId != ''">
+			AND COMPANY_ID = #{companyId}
+		</if>
+		<if test="brandCode != null and brandCode != ''">
+			AND BRAND_CODE = #{brandCode}
+		</if>
+		<if test="areaId != null and areaId != ''">
+			AND AREA_ID = #{areaId}
+		</if>
+		GROUP BY BRAND_CODE , MODEL_CODE , CITY_ID , CITY_NAME , COMPANY_ID , COMPANY_NAME , COUNTRY_ID , COUNTRY_NAME , 
+		REGION_ID , REGION_NAME, AREA_NAME
+	</select>
 </mapper>

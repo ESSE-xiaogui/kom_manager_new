@@ -164,6 +164,10 @@ public class ReportSaleDaily extends Model{
 	  *	
 	  */
 	private java.lang.String updateTime;
+	
+	private java.lang.String startDate;
+	
+	private java.lang.String endDate;
 
 	/**
 	  *	
@@ -611,6 +615,22 @@ public class ReportSaleDaily extends Model{
 	public void setUpdateTime(java.lang.String updateTime) 
 	{
 		this.updateTime = updateTime;
+	}
+	
+	public java.lang.String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(java.lang.String startDate) {
+		this.startDate = startDate;
+	}
+
+	public java.lang.String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(java.lang.String endDate) {
+		this.endDate = endDate;
 	}
 	
 	public String toString()

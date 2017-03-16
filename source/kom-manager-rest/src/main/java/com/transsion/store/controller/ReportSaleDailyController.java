@@ -42,6 +42,7 @@ import com.rest.service.controller.AbstractController;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.dto.RequestModel;
 import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.ReportSaleDaily;
 import com.transsion.store.dto.ReportSaleDailyDto;
 import com.transsion.store.facade.ReportSaleDailyFacade;
@@ -165,4 +166,199 @@ public class ReportSaleDailyController extends AbstractController{
             this.inputStream = inputStream;
         }
     }
+	
+	/**
+	 * TOP 门店查询(分页)
+	 * @param requestModel
+	 * @return
+	 * @throws ServiceException
+	 */
+	@POST
+	@Path("/listPgTopShop")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public Pagination<ReportSaleDaily> listPaginationByShop(RequestModel<ReportSaleDaily> requestModel) throws ServiceException
+	{
+		Pagination<ReportSaleDaily> pagination = new Pagination<ReportSaleDaily>();
+
+		pagination.setPaginationFlag(requestModel.isPaginationFlag());
+		pagination.setPageNo(requestModel.getPageNo());
+		pagination.setPageSize(requestModel.getPageSize());
+		pagination.setParams(requestModel.getParams());
+		pagination.setOrderBy(requestModel.getOrderBy());
+
+		return reportSaleDailyFacade.listPaginationByShop(pagination, requestModel.getParams());
+	}
+	
+	/**
+	 * TOP 门店查询(导出)
+	 * @param startDate
+	 * @param endDate
+	 * @param companyId
+	 * @param brandCode
+	 * @param areaId
+	 * @return
+	 * @throws ServiceException
+	 * @throws IOException
+	 */
+	@GET
+	@Path("/exportExcelByShop") 
+	@Produces({MediaType.TEXT_PLAIN}) 
+	public Response queryReportSaleDailyListByShop(
+			@QueryParam("startDate") String startDate,
+			@QueryParam("endDate") String endDate,
+			@QueryParam("companyId") String companyId,
+			@QueryParam("brandCode") String brandCode,
+			@QueryParam("areaId") String areaId
+		) throws ServiceException,IOException {
+		ReportSaleDaily reportSaleDaily = new ReportSaleDaily();
+		reportSaleDaily.setStartDate(startDate);
+		reportSaleDaily.setEndDate(endDate);
+		if(!UtilHelper.isEmpty(companyId)){
+			reportSaleDaily.setCompanyId(Long.parseLong(companyId));
+		}
+		reportSaleDaily.setBrandCode(brandCode);
+		if(!UtilHelper.isEmpty(areaId)){
+			reportSaleDaily.setAreaId(Long.parseLong(areaId));
+		}
+		
+		byte[] bytes = reportSaleDailyFacade.queryReportSaleDailyListByShop(reportSaleDaily);
+		InputStream inputStream = new ByteArrayInputStream(bytes);
+		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"TOP门店报表.xlsx";
+		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));   
+		//根据自己文件类型修改
+		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");  
+		return response.build();
+	}
+	
+	/**
+	 * TOP 促销员查询(分页)
+	 * @param requestModel
+	 * @return
+	 * @throws ServiceException
+	 */
+	@POST
+	@Path("/listPgTopSale")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public Pagination<ReportSaleDaily> listPaginationBySale(RequestModel<ReportSaleDaily> requestModel) throws ServiceException
+	{
+		Pagination<ReportSaleDaily> pagination = new Pagination<ReportSaleDaily>();
+
+		pagination.setPaginationFlag(requestModel.isPaginationFlag());
+		pagination.setPageNo(requestModel.getPageNo());
+		pagination.setPageSize(requestModel.getPageSize());
+		pagination.setParams(requestModel.getParams());
+		pagination.setOrderBy(requestModel.getOrderBy());
+
+		return reportSaleDailyFacade.listPaginationBySale(pagination, requestModel.getParams());
+	}
+	
+	/**
+	 * TOP 促销员查询(导出)
+	 * @param startDate
+	 * @param endDate
+	 * @param companyId
+	 * @param brandCode
+	 * @param areaId
+	 * @return
+	 * @throws ServiceException
+	 * @throws IOException
+	 */
+	@GET
+	@Path("/exportExcelBySale") 
+	@Produces({MediaType.TEXT_PLAIN}) 
+	public Response queryReportSaleDailyListBySale(
+			@QueryParam("startDate") String startDate,
+			@QueryParam("endDate") String endDate,
+			@QueryParam("companyId") String companyId,
+			@QueryParam("brandCode") String brandCode,
+			@QueryParam("areaId") String areaId
+		) throws ServiceException,IOException {
+		ReportSaleDaily reportSaleDaily = new ReportSaleDaily();
+		reportSaleDaily.setStartDate(startDate);
+		reportSaleDaily.setEndDate(endDate);
+		if(!UtilHelper.isEmpty(companyId)){
+			reportSaleDaily.setCompanyId(Long.parseLong(companyId));
+		}
+		reportSaleDaily.setBrandCode(brandCode);
+		if(!UtilHelper.isEmpty(areaId)){
+			reportSaleDaily.setAreaId(Long.parseLong(areaId));
+		}
+		
+		byte[] bytes = reportSaleDailyFacade.queryReportSaleDailyListBySale(reportSaleDaily);
+		InputStream inputStream = new ByteArrayInputStream(bytes);
+		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"TOP促销员报表.xlsx";
+		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));   
+		//根据自己文件类型修改
+		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");  
+		return response.build();
+	}
+	
+	/**
+	 * TOP 机型查询(分页)
+	 * @param requestModel
+	 * @return
+	 * @throws ServiceException
+	 */
+	@POST
+	@Path("/listPgTopModel")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public Pagination<ReportSaleDaily> listPaginationByModel(RequestModel<ReportSaleDaily> requestModel) throws ServiceException
+	{
+		Pagination<ReportSaleDaily> pagination = new Pagination<ReportSaleDaily>();
+
+		pagination.setPaginationFlag(requestModel.isPaginationFlag());
+		pagination.setPageNo(requestModel.getPageNo());
+		pagination.setPageSize(requestModel.getPageSize());
+		pagination.setParams(requestModel.getParams());
+		pagination.setOrderBy(requestModel.getOrderBy());
+
+		return reportSaleDailyFacade.listPaginationByModel(pagination, requestModel.getParams());
+	}
+	
+	/**
+	 * TOP 机型查询(导出)
+	 * @param startDate
+	 * @param endDate
+	 * @param companyId
+	 * @param brandCode
+	 * @param areaId
+	 * @return
+	 * @throws ServiceException
+	 * @throws IOException
+	 */
+	@GET
+	@Path("/exportExcelByModel") 
+	@Produces({MediaType.TEXT_PLAIN}) 
+	public Response queryReportSaleDailyListByModel(
+			@QueryParam("startDate") String startDate,
+			@QueryParam("endDate") String endDate,
+			@QueryParam("companyId") String companyId,
+			@QueryParam("brandCode") String brandCode,
+			@QueryParam("areaId") String areaId
+		) throws ServiceException,IOException {
+		ReportSaleDaily reportSaleDaily = new ReportSaleDaily();
+		reportSaleDaily.setStartDate(startDate);
+		reportSaleDaily.setEndDate(endDate);
+		if(!UtilHelper.isEmpty(companyId)){
+			reportSaleDaily.setCompanyId(Long.parseLong(companyId));
+		}
+		reportSaleDaily.setBrandCode(brandCode);
+		if(!UtilHelper.isEmpty(areaId)){
+			reportSaleDaily.setAreaId(Long.parseLong(areaId));
+		}
+		
+		byte[] bytes = reportSaleDailyFacade.queryReportSaleDailyListByModel(reportSaleDaily);
+		InputStream inputStream = new ByteArrayInputStream(bytes);
+		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"TOP机型报表.xlsx";
+		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));   
+		//根据自己文件类型修改
+		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");  
+		return response.build();
+	}
 }

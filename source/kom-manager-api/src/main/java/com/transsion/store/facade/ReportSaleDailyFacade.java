@@ -126,5 +126,58 @@ public interface ReportSaleDailyFacade {
 	 * @throws ServiceException
 	 */
 	public byte[] getReportSaleDailyByExcel(ReportSaleDailyDto reportSaleDailyDto) throws ServiceException;
-
+	
+	/**
+	 * TOP 门店查询(分页)
+	 * @param pagination
+	 * @param reportSaleDaily
+	 * @return
+	 * @throws ServiceException
+	 */
+	public Pagination<ReportSaleDaily> listPaginationByShop(Pagination<ReportSaleDaily> pagination, ReportSaleDaily reportSaleDaily)
+			throws ServiceException;
+	
+	/**
+	 * TOP 门店查询(导出)
+	 * @param reportSaleDaily
+	 * @return
+	 * @throws ServiceException
+	 */
+	public byte[] queryReportSaleDailyListByShop(ReportSaleDaily reportSaleDaily) throws ServiceException;
+	
+	/**
+	 * TOP 促销员查询(分页)
+	 * @param pagination
+	 * @param reportSaleDaily
+	 * @return
+	 * @throws ServiceException
+	 */
+	public Pagination<ReportSaleDaily> listPaginationBySale(Pagination<ReportSaleDaily> pagination, ReportSaleDaily reportSaleDaily)
+			throws ServiceException;
+	
+	/**
+	 * TOP 促销员查询(导出)
+	 * @param reportSaleDaily
+	 * @return
+	 * @throws ServiceException
+	 */
+	public byte[] queryReportSaleDailyListBySale(ReportSaleDaily reportSaleDaily) throws ServiceException;
+	
+	/**
+	 * TOP 促销员查询(分页)
+	 * @param pagination
+	 * @param reportSaleDaily
+	 * @return
+	 * @throws ServiceException
+	 */
+	public Pagination<ReportSaleDaily> listPaginationByModel(Pagination<ReportSaleDaily> pagination, ReportSaleDaily reportSaleDaily)
+			throws ServiceException;
+	
+	/**
+	 * TOP 促销员查询(导出)
+	 * @param reportSaleDaily
+	 * @return
+	 * @throws ServiceException
+	 */
+	public byte[] queryReportSaleDailyListByModel(ReportSaleDaily reportSaleDaily) throws ServiceException;
 }

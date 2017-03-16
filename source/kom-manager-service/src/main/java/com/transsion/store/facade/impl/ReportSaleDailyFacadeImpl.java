@@ -16,25 +16,26 @@
 **/
 package com.transsion.store.facade.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.transsion.store.bo.ReportSaleDaily;
-import com.transsion.store.dto.PrototypeCountingDto;
-import com.transsion.store.dto.ReportSaleDailyDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.transsion.store.bo.ReportSaleDaily;
+import com.transsion.store.dto.ReportSaleDailyDto;
 import com.transsion.store.facade.ReportSaleDailyFacade;
+import com.transsion.store.manager.ReportSaleDailyManager;
 import com.transsion.store.service.ReportSaleDailyService;
-import com.transsion.store.utils.ExcelUtils;
 
 @Component("reportSaleDailyFacade")
 public class ReportSaleDailyFacadeImpl implements ReportSaleDailyFacade {
 
 	private ReportSaleDailyService reportSaleDailyService;
+	
+	@Autowired
+	private ReportSaleDailyManager reportSaleDailyManager;
 	
 	@Autowired
 	public void setReportSaleDailyService(ReportSaleDailyService reportSaleDailyService)
@@ -177,7 +178,39 @@ public class ReportSaleDailyFacadeImpl implements ReportSaleDailyFacade {
 	 * @throws ServiceException
 	 */
 	public byte[] getReportSaleDailyByExcel(ReportSaleDailyDto reportSaleDailyDto) throws ServiceException {
-		
 		return reportSaleDailyService.getReportSaleDailyByExcel(reportSaleDailyDto);
+	}
+
+	@Override
+	public Pagination<ReportSaleDaily> listPaginationByShop(Pagination<ReportSaleDaily> pagination,
+			ReportSaleDaily reportSaleDaily) throws ServiceException {
+		return reportSaleDailyManager.listPaginationByShop(pagination, reportSaleDaily);
+	}
+
+	@Override
+	public byte[] queryReportSaleDailyListByShop(ReportSaleDaily reportSaleDaily) throws ServiceException {
+		return reportSaleDailyManager.queryReportSaleDailyListByShop(reportSaleDaily);
+	}
+
+	@Override
+	public Pagination<ReportSaleDaily> listPaginationBySale(Pagination<ReportSaleDaily> pagination,
+			ReportSaleDaily reportSaleDaily) throws ServiceException {
+		return reportSaleDailyManager.listPaginationBySale(pagination, reportSaleDaily);
+	}
+
+	@Override
+	public byte[] queryReportSaleDailyListBySale(ReportSaleDaily reportSaleDaily) throws ServiceException {
+		return reportSaleDailyManager.queryReportSaleDailyListBySale(reportSaleDaily);
+	}
+
+	@Override
+	public Pagination<ReportSaleDaily> listPaginationByModel(Pagination<ReportSaleDaily> pagination,
+			ReportSaleDaily reportSaleDaily) throws ServiceException {
+		return reportSaleDailyManager.listPaginationByModel(pagination, reportSaleDaily);
+	}
+
+	@Override
+	public byte[] queryReportSaleDailyListByModel(ReportSaleDaily reportSaleDaily) throws ServiceException {
+		return reportSaleDailyManager.queryReportSaleDailyListByModel(reportSaleDaily);
 	}
 }

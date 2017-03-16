@@ -32,4 +32,19 @@ public interface ReportSaleDailyMapper extends GenericIBatisMapper<ReportSaleDai
     public List<ReportSaleDailyDto> listPaginationByProperty(Pagination<ReportSaleDailyDto> pagination, @Param("reportSaleDailyDto")ReportSaleDailyDto reportSaleDailyDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
 
     public List<ReportSaleDaily> findUnStatisticsDataByDate(String date) throws DataAccessFailureException;
+    
+    // TOP 门店查询(分页)
+    public List<ReportSaleDaily> listPaginationByShop(Pagination<ReportSaleDaily> pagination, @Param("reportSaleDaily")ReportSaleDaily reportSaleDaily, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    // TOP 门店查询(导出)
+    public List<ReportSaleDaily> queryReportSaleDailyListByShop(ReportSaleDaily reportSaleDaily) throws DataAccessFailureException;
+    
+    // TOP 促销员查询(分页)
+    public List<ReportSaleDaily> listPaginationBySale(Pagination<ReportSaleDaily> pagination, @Param("reportSaleDaily")ReportSaleDaily reportSaleDaily, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    // TOP 促销员查询(导出)
+    public List<ReportSaleDaily> queryReportSaleDailyListBySale(ReportSaleDaily reportSaleDaily) throws DataAccessFailureException;
+    
+ // TOP 机型查询(分页)
+    public List<ReportSaleDaily> listPaginationByModel(Pagination<ReportSaleDaily> pagination, @Param("reportSaleDaily")ReportSaleDaily reportSaleDaily, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    // TOP 机型查询(导出)
+    public List<ReportSaleDaily> queryReportSaleDailyListByModel(ReportSaleDaily reportSaleDaily) throws DataAccessFailureException;
 }
