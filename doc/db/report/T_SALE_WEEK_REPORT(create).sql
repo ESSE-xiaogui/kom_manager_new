@@ -5,6 +5,8 @@ insert into T_REPORT_SALE_WEEK (
     COUNTRY_ID,
     CITY_ID,
     REGION_ID,
+    AREA_ID,
+    AREA_NAME,
 	USER_CODE,
     SHOP_CODE,
 	BRAND_CODE,
@@ -28,6 +30,8 @@ SELECT
     ts.COUNTRY COUNTRY_ID,
     ts.CITY CITY_ID,
     ts.REGION_ID,
+    ar.AREA_ID,
+    ar.AREA_NAME,
     sale.USER_CODE,
     ts.SHOP_CODE,
     sale.BRAND_CODE,
@@ -93,3 +97,8 @@ FROM
     T_REGION r3 ON r3.ID = ts.REGION_ID
 		LEFT join
 	T_SHOP_GRADE sg on sg.id = ts.GRADE_ID 
+		left join
+    T_AREA_SHOP ars ON sale.SHOP_ID = ars.SHOP_ID
+        LEFT JOIN
+    T_AREA ar ON ar.COMPANY_ID = sale.COMPANY_ID
+        AND ar.AREA_ID = ars.AREA_ID

@@ -26,6 +26,7 @@
 		<result column="REGION_ID" property="regionId"/>
 		<result column="COUNTRY_ID" property="countryId"/>
 		<result column="CITY_ID" property="cityId"/>
+		<result column="AREA_ID" property="areaId"/>
 		<result column="GRADE_ID" property="gradeId"/>
 		<result column="SHOP_CODE" property="shopCode"/>
 		<result column="USER_CODE" property="userCode"/>
@@ -40,6 +41,7 @@
 		<result column="REGION_NAME" property="regionName"/>
 		<result column="COUNTRY_NAME" property="countryName"/>
 		<result column="CITY_NAME" property="cityName"/>
+		<result column="AREA_NAME" property="areaName"/>
 		<result column="SALE_QTY" property="saleQty"/>
 		<result column="STOCK_QTY" property="stockQty"/>
 		<result column="CREATED_BY" property="createdBy"/>
@@ -81,6 +83,7 @@
 		, REGION_ID
 		, COUNTRY_ID
 		, CITY_ID
+		, AREA_ID
 		, GRADE_ID
 		, SHOP_CODE
 		, USER_CODE
@@ -95,6 +98,7 @@
 		, REGION_NAME
 		, COUNTRY_NAME
 		, CITY_NAME
+		, AREA_NAME
 		, SALE_QTY
 		, STOCK_QTY
 		, CREATED_BY
@@ -109,6 +113,7 @@
 		, REGION_ID
 		, COUNTRY_ID
 		, CITY_ID
+		, AREA_ID
 		, GRADE_ID
 		, SHOP_CODE
 		, USER_CODE
@@ -123,6 +128,7 @@
 		, REGION_NAME
 		, COUNTRY_NAME
 		, CITY_NAME
+		, AREA_NAME
 		, SALE_QTY
 		, STOCK_QTY
 		, CREATED_BY
@@ -138,6 +144,7 @@
 		, REGION_ID
 		, COUNTRY_ID
 		, CITY_ID
+		, AREA_ID
 		, GRADE_ID
 		, SHOP_CODE
 		, USER_CODE
@@ -152,6 +159,7 @@
 		, REGION_NAME
 		, COUNTRY_NAME
 		, CITY_NAME
+		, AREA_NAME
 		, SALE_QTY
 		, STOCK_QTY
 		, CREATED_BY
@@ -203,6 +211,9 @@
 		<if test="cityId!= null and cityId!= ''"> 
 			AND CITY_ID = #{cityId}
 		</if>
+		<if test="areaId!= null and areaId!= ''"> 
+			AND AREA_ID = #{areaId}
+		</if>
 		<if test="gradeId!= null and gradeId!= ''"> 
 			AND GRADE_ID = #{gradeId}
 		</if>
@@ -244,6 +255,9 @@
 		</if>
 		<if test="cityName!= null and cityName!= ''"> 
 			AND CITY_NAME = #{cityName}
+		</if>
+		<if test="areaName!= null and areaName!= ''"> 
+			AND AREA_NAME = #{areaName}
 		</if>
 		<if test="saleQty!= null and saleQty!= ''"> 
 			AND SALE_QTY = #{saleQty}
@@ -376,6 +390,9 @@
         	<when test="key == 'cityId'">
 				CITY_ID ${value}
             </when>
+        	<when test="key == 'areaId'">
+				AREA_ID ${value}
+            </when>
         	<when test="key == 'gradeId'">
 				GRADE_ID ${value}
             </when>
@@ -418,6 +435,9 @@
         	<when test="key == 'cityName'">
 				CITY_NAME ${value}
             </when>
+        	<when test="key == 'areaName'">
+				AREA_NAME ${value}
+            </when>
         	<when test="key == 'saleQty'">
 				SALE_QTY ${value}
             </when>
@@ -449,6 +469,7 @@
 			, #{regionId}
 			, #{countryId}
 			, #{cityId}
+			, #{areaId}
 			, #{gradeId}
 			, #{shopCode}
 			, #{userCode}
@@ -463,6 +484,7 @@
 			, #{regionName}
 			, #{countryName}
 			, #{cityName}
+			, #{areaName}
 			, #{saleQty}
 			, #{stockQty}
 			, #{createdBy}
@@ -479,6 +501,7 @@
 			, REGION_ID = #{regionId}
 			, COUNTRY_ID = #{countryId}
 			, CITY_ID = #{cityId}
+			, AREA_ID = #{areaId}
 			, GRADE_ID = #{gradeId}
 			, SHOP_CODE = #{shopCode}
 			, USER_CODE = #{userCode}
@@ -493,6 +516,7 @@
 			, REGION_NAME = #{regionName}
 			, COUNTRY_NAME = #{countryName}
 			, CITY_NAME = #{cityName}
+			, AREA_NAME = #{areaName}
 			, SALE_QTY = #{saleQty}
 			, STOCK_QTY = #{stockQty}
 			, CREATED_BY = #{createdBy}
@@ -512,6 +536,7 @@
 			, #{regionId}
 			, #{countryId}
 			, #{cityId}
+			, #{areaId}
 			, #{gradeId}
 			, #{shopCode}
 			, #{userCode}
@@ -526,6 +551,7 @@
 			, #{regionName}
 			, #{countryName}
 			, #{cityName}
+			, #{areaName}
 			, #{saleQty}
 			, #{stockQty}
 			, #{createdBy}
@@ -539,6 +565,7 @@
 			, REGION_ID = VALUES(REGION_ID)
 			, COUNTRY_ID = VALUES(COUNTRY_ID)
 			, CITY_ID = VALUES(CITY_ID)
+			, AREA_ID = VALUES(AREA_ID)
 			, GRADE_ID = VALUES(GRADE_ID)
 			, SHOP_CODE = VALUES(SHOP_CODE)
 			, USER_CODE = VALUES(USER_CODE)
@@ -553,6 +580,7 @@
 			, REGION_NAME = VALUES(REGION_NAME)
 			, COUNTRY_NAME = VALUES(COUNTRY_NAME)
 			, CITY_NAME = VALUES(CITY_NAME)
+			, AREA_NAME = VALUES(AREA_NAME)
 			, SALE_QTY = VALUES(SALE_QTY)
 			, STOCK_QTY = VALUES(STOCK_QTY)
 			, CREATED_BY = VALUES(CREATED_BY)
@@ -573,6 +601,7 @@
 			, #{item.regionId}
 			, #{item.countryId}
 			, #{item.cityId}
+			, #{item.areaId}
 			, #{item.gradeId}
 			, #{item.shopCode}
 			, #{item.userCode}
@@ -587,6 +616,7 @@
 			, #{item.regionName}
 			, #{item.countryName}
 			, #{item.cityName}
+			, #{item.areaName}
 			, #{item.saleQty}
 			, #{item.stockQty}
 			, #{item.createdBy}
@@ -602,6 +632,7 @@
 		, REGION_ID = VALUES(REGION_ID)
 		, COUNTRY_ID = VALUES(COUNTRY_ID)
 		, CITY_ID = VALUES(CITY_ID)
+		, AREA_ID = VALUES(AREA_ID)
 		, GRADE_ID = VALUES(GRADE_ID)
 		, SHOP_CODE = VALUES(SHOP_CODE)
 		, USER_CODE = VALUES(USER_CODE)
@@ -616,6 +647,7 @@
 		, REGION_NAME = VALUES(REGION_NAME)
 		, COUNTRY_NAME = VALUES(COUNTRY_NAME)
 		, CITY_NAME = VALUES(CITY_NAME)
+		, AREA_NAME = VALUES(AREA_NAME)
 		, SALE_QTY = VALUES(SALE_QTY)
 		, STOCK_QTY = VALUES(STOCK_QTY)
 		, CREATED_BY = VALUES(CREATED_BY)
@@ -672,6 +704,8 @@
 		ts.COUNTRY COUNTRY_ID,
 		ts.CITY CITY_ID,
 		ts.REGION_ID,
+		ar.AREA_ID,
+    	ar.AREA_NAME,
 		sale.USER_CODE,
 		ts.SHOP_CODE,
 		sale.brand_code BRAND_CODE,
@@ -738,5 +772,10 @@
 		T_REGION r3 ON r3.ID = ts.REGION_ID
 			LEFT join
 		T_SHOP_GRADE sg on sg.id = ts.GRADE_ID
+			left join
+		T_AREA_SHOP ars ON sale.SHOP_ID = ars.SHOP_ID
+			LEFT JOIN
+		T_AREA ar ON ar.COMPANY_ID = sale.COMPANY_ID
+			AND ar.AREA_ID = ars.AREA_ID
 	</select>
 </mapper>
