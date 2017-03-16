@@ -468,7 +468,9 @@
 	</select>
 	
 	<select id="queryVisitStockByVisitId" parameterType="java.lang.Long" resultMap="VisitStockInfoDtoDtoMapper">
-		SELECT * FROM T_VISIT_STOCK WHERE VISIT_ID = #{visitId}
+		SELECT v.*, m.MODEL_NAME FROM T_VISIT_STOCK v 
+		LEFT JOIN T_MODEL m ON m.ID = v.MODEL_ID
+		WHERE VISIT_ID = #{visitId}
 	</select>
 	
 	<select id="queryVisitModelStockListByVisitId" parameterType="java.lang.Long" resultMap="VisitModelStockDtoResultMapper">
