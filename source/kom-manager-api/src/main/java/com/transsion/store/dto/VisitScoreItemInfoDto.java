@@ -134,11 +134,18 @@ public class VisitScoreItemInfoDto implements Serializable {
 		this.remark = remark;
 	}
 
+	public java.lang.String getDescEn() {
+		return descEn;
+	}
+
+	public void setDescEn(java.lang.String descEn) {
+		this.descEn = descEn;
+	}
+
 	@Override
 	public String toString() {
-		return "VisitScoreItem [id=" + id + ", visitId=" + visitId + ", scoreSettingId=" + scoreSettingId + ", score="
-				+ score + ", remark=" + remark + "]";
+		return "VisitScoreItemInfoDto [id=" + id + ", visitId=" + visitId + ", scoreSettingId=" + scoreSettingId
+				+ ", descEn=" + descEn + ", score=" + score + ", remark=" + remark + "]";
 	}
-	
 }
 

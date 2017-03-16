@@ -268,6 +268,8 @@
 	</select>
 	
 	<select id="queryVisitScoreItemByVisitId" parameterType="java.lang.Long" resultMap="VisitScoreItemInfoDtoResultMapper">
-		SELECT * FROM T_VISIT_SCORE_ITEM WHERE VISIT_ID = #{visitId}
+		SELECT v.*, s.DESC_EN FROM T_VISIT_SCORE_ITEM v
+		LEFT JOIN T_VISIT_SCORE_SETTING s ON s.ID = v.SCORE_SETTING_ID
+		WHERE v.VISIT_ID = #{visitId}
 	</select>
 </mapper>

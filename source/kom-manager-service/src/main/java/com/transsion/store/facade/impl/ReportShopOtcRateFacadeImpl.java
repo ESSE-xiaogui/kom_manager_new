@@ -25,12 +25,15 @@ import com.transsion.store.bo.ReportShopOtcRate;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.facade.ReportShopOtcRateFacade;
+import com.transsion.store.manager.ReportShopOtcRateManager;
 import com.transsion.store.service.ReportShopOtcRateService;
 
 @Component("reportShopOtcRateFacade")
 public class ReportShopOtcRateFacadeImpl implements ReportShopOtcRateFacade {
 
 	private ReportShopOtcRateService reportShopOtcRateService;
+	
+	private ReportShopOtcRateManager reportShopOtcRateManager;
 	
 	@Autowired
 	public void setReportShopOtcRateService(ReportShopOtcRateService reportShopOtcRateService)
@@ -164,5 +167,10 @@ public class ReportShopOtcRateFacadeImpl implements ReportShopOtcRateFacade {
 	public int findByCount(ReportShopOtcRate reportShopOtcRate) throws ServiceException
 	{
 		return reportShopOtcRateService.findByCount(reportShopOtcRate);
+	}
+
+	@Override
+	public byte[] queryReportShopOtcRateList(ReportShopOtcRate reportShopOtcRate) throws ServiceException {
+		return reportShopOtcRateManager.queryReportShopOtcRateList(reportShopOtcRate);
 	}
 }

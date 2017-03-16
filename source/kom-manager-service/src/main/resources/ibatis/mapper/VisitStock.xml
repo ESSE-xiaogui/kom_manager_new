@@ -75,7 +75,7 @@
 		<result column="MODEL_NAME" property="modelName"/>
 		<result column="STOCK_QTY" property="stockQty"/>
 		<result column="SALE_CURRENT" property="currentSaleQty"/>
-		<result column="targetSaleQty" property="SALE_TARGET"/>
+		<result column="SALE_TARGET" property="targetSaleQty"/>
 		<result column="SALE_AVG" property="saleAvg"/>
 		<result column="STOCK_ITO" property="stockIto"/>
 		<result column="REMARK" property="remark"/>

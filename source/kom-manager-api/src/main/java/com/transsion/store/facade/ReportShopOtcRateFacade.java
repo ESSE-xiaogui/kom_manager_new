@@ -18,9 +18,9 @@ package com.transsion.store.facade;
 
 import java.util.List;
 
-import com.transsion.store.bo.ReportShopOtcRate;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.transsion.store.bo.ReportShopOtcRate;
 
 public interface ReportShopOtcRateFacade {
 
@@ -117,5 +117,6 @@ public interface ReportShopOtcRateFacade {
 	 */
 	public Pagination<ReportShopOtcRate> listPaginationByProperty(Pagination<ReportShopOtcRate> pagination, ReportShopOtcRate reportShopOtcRate)
 			throws ServiceException;
-
+	
+	public byte[] queryReportShopOtcRateList(ReportShopOtcRate reportShopOtcRate) throws ServiceException;
 }

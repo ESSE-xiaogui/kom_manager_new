@@ -540,4 +540,11 @@
 		SELECT count(1) AS totalcount FROM T_REPORT_SHOP_OTC_RATE WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
+	
+	<select id="queryReportShopOtcRateList" >
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_REPORT_SHOP_OTC_RATE WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+	</select>
 </mapper>

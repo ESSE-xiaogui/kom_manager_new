@@ -28,4 +28,6 @@ import org.apache.ibatis.annotations.Param;
 public interface ReportShopOtcRateMapper extends GenericIBatisMapper<ReportShopOtcRate, java.lang.Long> {
 
     public List<ReportShopOtcRate> listPaginationByProperty(Pagination<ReportShopOtcRate> pagination, @Param("reportShopOtcRate")ReportShopOtcRate reportShopOtcRate, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    
+    public List<ReportShopOtcRate> queryReportShopOtcRateList(ReportShopOtcRate reportShopOtcRate) throws DataAccessFailureException;
 }
