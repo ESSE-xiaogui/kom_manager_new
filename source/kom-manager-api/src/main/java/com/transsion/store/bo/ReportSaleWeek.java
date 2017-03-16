@@ -56,6 +56,11 @@ public class ReportSaleWeek extends Model{
 	private java.lang.Long cityId;
 
 	/**
+	  *	区域索引
+	  */
+	private java.lang.Long areaId;
+
+	/**
 	  *	
 	  */
 	private java.lang.Long gradeId;
@@ -124,6 +129,11 @@ public class ReportSaleWeek extends Model{
 	  *	
 	  */
 	private java.lang.String cityName;
+
+	/**
+	  *	区域名称
+	  */
+	private java.lang.String areaName;
 
 	/**
 	  *	
@@ -249,6 +259,22 @@ public class ReportSaleWeek extends Model{
 	public void setCityId(java.lang.Long cityId) 
 	{
 		this.cityId = cityId;
+	}
+	
+	/**
+	  *	区域索引
+	  */
+	public java.lang.Long getAreaId() 
+	{
+		return areaId;
+	}
+	
+	/**
+	  *	区域索引
+	  */
+	public void setAreaId(java.lang.Long areaId) 
+	{
+		this.areaId = areaId;
 	}
 	
 	/**
@@ -476,6 +502,22 @@ public class ReportSaleWeek extends Model{
 	}
 	
 	/**
+	  *	区域名称
+	  */
+	public java.lang.String getAreaName() 
+	{
+		return areaName;
+	}
+	
+	/**
+	  *	区域名称
+	  */
+	public void setAreaName(java.lang.String areaName) 
+	{
+		this.areaName = areaName;
+	}
+	
+	/**
 	  *	
 	  */
 	public java.lang.Integer getSaleQty() 
@@ -580,6 +622,7 @@ public class ReportSaleWeek extends Model{
 					", regionId=" + regionId + 
 					", countryId=" + countryId + 
 					", cityId=" + cityId + 
+					", areaId=" + areaId + 
 					", gradeId=" + gradeId + 
 					", userCode=" + userCode + 
 					", shopCode=" + shopCode + 
@@ -594,6 +637,7 @@ public class ReportSaleWeek extends Model{
 					", regionName=" + regionName + 
 					", countryName=" + countryName + 
 					", cityName=" + cityName + 
+					", areaName=" + areaName + 
 					", saleQty=" + saleQty + 
 					", stockQty=" + stockQty + 
 					", createdBy=" + createdBy + 

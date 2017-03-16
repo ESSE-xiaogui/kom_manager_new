@@ -56,6 +56,11 @@ public class ReportSaleDaily extends Model{
 	private java.lang.Long cityId;
 
 	/**
+	  *	区域索引
+	  */
+	private java.lang.Long areaId;
+
+	/**
 	  *	
 	  */
 	private java.lang.Long gradeId;
@@ -96,7 +101,7 @@ public class ReportSaleDaily extends Model{
 	private java.lang.String companyName;
 
 	/**
-	  *	
+	  *	店铺名
 	  */
 	private java.lang.String shopName;
 
@@ -116,7 +121,7 @@ public class ReportSaleDaily extends Model{
 	private java.lang.String regionName;
 
 	/**
-	  *	
+	  *	国家名
 	  */
 	private java.lang.String countryName;
 
@@ -124,6 +129,11 @@ public class ReportSaleDaily extends Model{
 	  *	
 	  */
 	private java.lang.String cityName;
+
+	/**
+	  *	区域名称
+	  */
+	private java.lang.String areaName;
 
 	/**
 	  *	
@@ -249,6 +259,22 @@ public class ReportSaleDaily extends Model{
 	public void setCityId(java.lang.Long cityId) 
 	{
 		this.cityId = cityId;
+	}
+	
+	/**
+	  *	区域索引
+	  */
+	public java.lang.Long getAreaId() 
+	{
+		return areaId;
+	}
+	
+	/**
+	  *	区域索引
+	  */
+	public void setAreaId(java.lang.Long areaId) 
+	{
+		this.areaId = areaId;
 	}
 	
 	/**
@@ -380,7 +406,7 @@ public class ReportSaleDaily extends Model{
 	}
 	
 	/**
-	  *	
+	  *	店铺名
 	  */
 	public java.lang.String getShopName() 
 	{
@@ -388,7 +414,7 @@ public class ReportSaleDaily extends Model{
 	}
 	
 	/**
-	  *	
+	  *	店铺名
 	  */
 	public void setShopName(java.lang.String shopName) 
 	{
@@ -444,7 +470,7 @@ public class ReportSaleDaily extends Model{
 	}
 	
 	/**
-	  *	
+	  *	国家名
 	  */
 	public java.lang.String getCountryName() 
 	{
@@ -452,7 +478,7 @@ public class ReportSaleDaily extends Model{
 	}
 	
 	/**
-	  *	
+	  *	国家名
 	  */
 	public void setCountryName(java.lang.String countryName) 
 	{
@@ -473,6 +499,22 @@ public class ReportSaleDaily extends Model{
 	public void setCityName(java.lang.String cityName) 
 	{
 		this.cityName = cityName;
+	}
+	
+	/**
+	  *	区域名称
+	  */
+	public java.lang.String getAreaName() 
+	{
+		return areaName;
+	}
+	
+	/**
+	  *	区域名称
+	  */
+	public void setAreaName(java.lang.String areaName) 
+	{
+		this.areaName = areaName;
 	}
 	
 	/**
@@ -580,6 +622,7 @@ public class ReportSaleDaily extends Model{
 					", regionId=" + regionId + 
 					", countryId=" + countryId + 
 					", cityId=" + cityId + 
+					", areaId=" + areaId + 
 					", gradeId=" + gradeId + 
 					", shopCode=" + shopCode + 
 					", userCode=" + userCode + 
@@ -594,6 +637,7 @@ public class ReportSaleDaily extends Model{
 					", regionName=" + regionName + 
 					", countryName=" + countryName + 
 					", cityName=" + cityName + 
+					", areaName=" + areaName + 
 					", saleQty=" + saleQty + 
 					", stockQty=" + stockQty + 
 					", createdBy=" + createdBy + 
