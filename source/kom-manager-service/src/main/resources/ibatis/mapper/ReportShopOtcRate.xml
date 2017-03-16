@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 
+ **
+ * COPYRIGHT (C) 2017 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2017-3-16 14:43:27
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ************     ***********     *********************************************
+ *
+ **
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transsion.store.mapper.ReportShopOtcRateMapper">
+	<resultMap id="ReportShopOtcRateResultMapper" type="ReportShopOtcRate">
+		<result column="REPORT_SOTC_RATE_ID" property="reportSotcRateId"/>
+		<result column="COMPANY_ID" property="companyId"/>
+		<result column="BRAND_CODE" property="brandCode"/>
+		<result column="MODEL_CODE" property="modelCode"/>
+		<result column="USER_CODE" property="userCode"/>
+		<result column="VISIT_DATE" property="visitDate"/>
+		<result column="VISIT_SHOP" property="visitShop"/>
+		<result column="TOTAL_SHOP" property="totalShop"/>
+		<result column="OTC_RATE" property="otcRate"/>
+		<result column="COUNTRY_ID" property="countryId"/>
+		<result column="CITY_ID" property="cityId"/>
+		<result column="REGION_ID" property="regionId"/>
+		<result column="AREA_ID" property="areaId"/>
+		<result column="AREA_NAME" property="areaName"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="REGION_NAME" property="regionName"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+	</resultMap>
+	
+	<sql id="commonColumns">
+		 REPORT_SOTC_RATE_ID
+		, COMPANY_ID
+		, BRAND_CODE
+		, MODEL_CODE
+		, USER_CODE
+		, VISIT_DATE
+		, VISIT_SHOP
+		, TOTAL_SHOP
+		, OTC_RATE
+		, COUNTRY_ID
+		, CITY_ID
+		, REGION_ID
+		, AREA_ID
+		, AREA_NAME
+		, COUNTRY_NAME
+		, CITY_NAME
+		, REGION_NAME
+		, EMP_NAME
+		, CREATED_BY
+		, CREATE_TIME
+		, UPDATED_BY
+		, UPDATE_TIME
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 COMPANY_ID
+		, BRAND_CODE
+		, MODEL_CODE
+		, USER_CODE
+		, VISIT_DATE
+		, VISIT_SHOP
+		, TOTAL_SHOP
+		, OTC_RATE
+		, COUNTRY_ID
+		, CITY_ID
+		, REGION_ID
+		, AREA_ID
+		, AREA_NAME
+		, COUNTRY_NAME
+		, CITY_NAME
+		, REGION_NAME
+		, EMP_NAME
+		, CREATED_BY
+		, CREATE_TIME
+		, UPDATED_BY
+		, UPDATE_TIME
+	</sql>
+	
+	<sql id="commonProcessDateColumns">
+		 REPORT_SOTC_RATE_ID
+		, COMPANY_ID
+		, BRAND_CODE
+		, MODEL_CODE
+		, USER_CODE
+		, VISIT_DATE
+		, VISIT_SHOP
+		, TOTAL_SHOP
+		, OTC_RATE
+		, COUNTRY_ID
+		, CITY_ID
+		, REGION_ID
+		, AREA_ID
+		, AREA_NAME
+		, COUNTRY_NAME
+		, CITY_NAME
+		, REGION_NAME
+		, EMP_NAME
+		, CREATED_BY
+		, date_format(CREATE_TIME, '%Y-%m-%d %H:%i:%s') CREATE_TIME
+		, UPDATED_BY
+		, date_format(UPDATE_TIME, '%Y-%m-%d %H:%i:%s') UPDATE_TIME
+	</sql>
+	
+	<sql id="commonCondition">
+		<if test="reportSotcRateId!= null and reportSotcRateId!= ''"> 
+			AND REPORT_SOTC_RATE_ID = #{reportSotcRateId}
+		</if>
+		<if test="companyId!= null and companyId!= ''"> 
+			AND COMPANY_ID = #{companyId}
+		</if>
+		<if test="brandCode!= null and brandCode!= ''"> 
+			AND BRAND_CODE = #{brandCode}
+		</if>
+		<if test="modelCode!= null and modelCode!= ''"> 
+			AND MODEL_CODE = #{modelCode}
+		</if>
+		<if test="userCode!= null and userCode!= ''"> 
+			AND USER_CODE = #{userCode}
+		</if>
+		<if test="visitDate!= null and visitDate!= ''"> 
+			AND VISIT_DATE = #{visitDate}
+		</if>
+		<if test="visitShop!= null and visitShop!= ''"> 
+			AND VISIT_SHOP = #{visitShop}
+		</if>
+		<if test="totalShop!= null and totalShop!= ''"> 
+			AND TOTAL_SHOP = #{totalShop}
+		</if>
+		<if test="otcRate!= null and otcRate!= ''"> 
+			AND OTC_RATE = #{otcRate}
+		</if>
+		<if test="countryId!= null and countryId!= ''"> 
+			AND COUNTRY_ID = #{countryId}
+		</if>
+		<if test="cityId!= null and cityId!= ''"> 
+			AND CITY_ID = #{cityId}
+		</if>
+		<if test="regionId!= null and regionId!= ''"> 
+			AND REGION_ID = #{regionId}
+		</if>
+		<if test="areaId!= null and areaId!= ''"> 
+			AND AREA_ID = #{areaId}
+		</if>
+		<if test="areaName!= null and areaName!= ''"> 
+			AND AREA_NAME = #{areaName}
+		</if>
+		<if test="countryName!= null and countryName!= ''"> 
+			AND COUNTRY_NAME = #{countryName}
+		</if>
+		<if test="cityName!= null and cityName!= ''"> 
+			AND CITY_NAME = #{cityName}
+		</if>
+		<if test="regionName!= null and regionName!= ''"> 
+			AND REGION_NAME = #{regionName}
+		</if>
+		<if test="empName!= null and empName!= ''"> 
+			AND EMP_NAME = #{empName}
+		</if>
+		<if test="createdBy!= null and createdBy!= ''"> 
+			AND CREATED_BY = #{createdBy}
+		</if>
+		<if test="createTime!= null and createTime!= ''"> 
+			AND CREATE_TIME = str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updatedBy!= null and updatedBy!= ''"> 
+			AND UPDATED_BY = #{updatedBy}
+		</if>
+		<if test="updateTime!= null and updateTime!= ''"> 
+			AND UPDATE_TIME = str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="reportShopOtcRate != null">
+            <if test="reportShopOtcRate.reportSotcRateId!= null and reportShopOtcRate.reportSotcRateId!= ''">
+				AND REPORT_SOTC_RATE_ID = #{reportShopOtcRate.reportSotcRateId}
+            </if>
+            <if test="reportShopOtcRate.companyId!= null and reportShopOtcRate.companyId!= ''">
+				AND COMPANY_ID = #{reportShopOtcRate.companyId}
+            </if>
+            <if test="reportShopOtcRate.brandCode!= null and reportShopOtcRate.brandCode!= ''">
+				AND BRAND_CODE = #{reportShopOtcRate.brandCode}
+            </if>
+            <if test="reportShopOtcRate.modelCode!= null and reportShopOtcRate.modelCode!= ''">
+				AND MODEL_CODE = #{reportShopOtcRate.modelCode}
+            </if>
+            <if test="reportShopOtcRate.userCode!= null and reportShopOtcRate.userCode!= ''">
+				AND USER_CODE = #{reportShopOtcRate.userCode}
+            </if>
+            <if test="reportShopOtcRate.visitDate!= null and reportShopOtcRate.visitDate!= ''">
+				AND VISIT_DATE = #{reportShopOtcRate.visitDate}
+            </if>
+            <if test="reportShopOtcRate.visitShop!= null and reportShopOtcRate.visitShop!= ''">
+				AND VISIT_SHOP = #{reportShopOtcRate.visitShop}
+            </if>
+            <if test="reportShopOtcRate.totalShop!= null and reportShopOtcRate.totalShop!= ''">
+				AND TOTAL_SHOP = #{reportShopOtcRate.totalShop}
+            </if>
+            <if test="reportShopOtcRate.otcRate!= null and reportShopOtcRate.otcRate!= ''">
+				AND OTC_RATE = #{reportShopOtcRate.otcRate}
+            </if>
+            <if test="reportShopOtcRate.countryId!= null and reportShopOtcRate.countryId!= ''">
+				AND COUNTRY_ID = #{reportShopOtcRate.countryId}
+            </if>
+            <if test="reportShopOtcRate.cityId!= null and reportShopOtcRate.cityId!= ''">
+				AND CITY_ID = #{reportShopOtcRate.cityId}
+            </if>
+            <if test="reportShopOtcRate.regionId!= null and reportShopOtcRate.regionId!= ''">
+				AND REGION_ID = #{reportShopOtcRate.regionId}
+            </if>
+            <if test="reportShopOtcRate.areaId!= null and reportShopOtcRate.areaId!= ''">
+				AND AREA_ID = #{reportShopOtcRate.areaId}
+            </if>
+            <if test="reportShopOtcRate.areaName!= null and reportShopOtcRate.areaName!= ''">
+				AND AREA_NAME = #{reportShopOtcRate.areaName}
+            </if>
+            <if test="reportShopOtcRate.countryName!= null and reportShopOtcRate.countryName!= ''">
+				AND COUNTRY_NAME = #{reportShopOtcRate.countryName}
+            </if>
+            <if test="reportShopOtcRate.cityName!= null and reportShopOtcRate.cityName!= ''">
+				AND CITY_NAME = #{reportShopOtcRate.cityName}
+            </if>
+            <if test="reportShopOtcRate.regionName!= null and reportShopOtcRate.regionName!= ''">
+				AND REGION_NAME = #{reportShopOtcRate.regionName}
+            </if>
+            <if test="reportShopOtcRate.empName!= null and reportShopOtcRate.empName!= ''">
+				AND EMP_NAME = #{reportShopOtcRate.empName}
+            </if>
+            <if test="reportShopOtcRate.createdBy!= null and reportShopOtcRate.createdBy!= ''">
+				AND CREATED_BY = #{reportShopOtcRate.createdBy}
+            </if>
+            <if test="reportShopOtcRate.createTime!= null and reportShopOtcRate.createTime!= ''">
+				AND CREATE_TIME = str_to_date(#{reportShopOtcRate.createTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="reportShopOtcRate.updatedBy!= null and reportShopOtcRate.updatedBy!= ''">
+				AND UPDATED_BY = #{reportShopOtcRate.updatedBy}
+            </if>
+            <if test="reportShopOtcRate.updateTime!= null and reportShopOtcRate.updateTime!= ''">
+				AND UPDATE_TIME = str_to_date(#{reportShopOtcRate.updateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'reportSotcRateId'">
+				REPORT_SOTC_RATE_ID ${value}
+            </when>
+        	<when test="key == 'companyId'">
+				COMPANY_ID ${value}
+            </when>
+        	<when test="key == 'brandCode'">
+				BRAND_CODE ${value}
+            </when>
+        	<when test="key == 'modelCode'">
+				MODEL_CODE ${value}
+            </when>
+        	<when test="key == 'userCode'">
+				USER_CODE ${value}
+            </when>
+        	<when test="key == 'visitDate'">
+				VISIT_DATE ${value}
+            </when>
+        	<when test="key == 'visitShop'">
+				VISIT_SHOP ${value}
+            </when>
+        	<when test="key == 'totalShop'">
+				TOTAL_SHOP ${value}
+            </when>
+        	<when test="key == 'otcRate'">
+				OTC_RATE ${value}
+            </when>
+        	<when test="key == 'countryId'">
+				COUNTRY_ID ${value}
+            </when>
+        	<when test="key == 'cityId'">
+				CITY_ID ${value}
+            </when>
+        	<when test="key == 'regionId'">
+				REGION_ID ${value}
+            </when>
+        	<when test="key == 'areaId'">
+				AREA_ID ${value}
+            </when>
+        	<when test="key == 'areaName'">
+				AREA_NAME ${value}
+            </when>
+        	<when test="key == 'countryName'">
+				COUNTRY_NAME ${value}
+            </when>
+        	<when test="key == 'cityName'">
+				CITY_NAME ${value}
+            </when>
+        	<when test="key == 'regionName'">
+				REGION_NAME ${value}
+            </when>
+        	<when test="key == 'empName'">
+				EMP_NAME ${value}
+            </when>
+        	<when test="key == 'createdBy'">
+				CREATED_BY ${value}
+            </when>
+        	<when test="key == 'createTime'">
+				CREATE_TIME ${value}
+            </when>
+        	<when test="key == 'updatedBy'">
+				UPDATED_BY ${value}
+            </when>
+        	<when test="key == 'updateTime'">
+				UPDATE_TIME ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="reportSotcRateId" parameterType="ReportShopOtcRate">
+		<![CDATA[ INSERT INTO T_REPORT_SHOP_OTC_RATE ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{companyId}
+			, #{brandCode}
+			, #{modelCode}
+			, #{userCode}
+			, #{visitDate}
+			, #{visitShop}
+			, #{totalShop}
+			, #{otcRate}
+			, #{countryId}
+			, #{cityId}
+			, #{regionId}
+			, #{areaId}
+			, #{areaName}
+			, #{countryName}
+			, #{cityName}
+			, #{regionName}
+			, #{empName}
+			, #{createdBy}
+			, str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+  ) ]]>
+	</insert>
+	<update id="update" parameterType="ReportShopOtcRate">
+		<![CDATA[ UPDATE T_REPORT_SHOP_OTC_RATE SET 
+			 REPORT_SOTC_RATE_ID = #{reportSotcRateId}
+			, COMPANY_ID = #{companyId}
+			, BRAND_CODE = #{brandCode}
+			, MODEL_CODE = #{modelCode}
+			, USER_CODE = #{userCode}
+			, VISIT_DATE = #{visitDate}
+			, VISIT_SHOP = #{visitShop}
+			, TOTAL_SHOP = #{totalShop}
+			, OTC_RATE = #{otcRate}
+			, COUNTRY_ID = #{countryId}
+			, CITY_ID = #{cityId}
+			, REGION_ID = #{regionId}
+			, AREA_ID = #{areaId}
+			, AREA_NAME = #{areaName}
+			, COUNTRY_NAME = #{countryName}
+			, CITY_NAME = #{cityName}
+			, REGION_NAME = #{regionName}
+			, EMP_NAME = #{empName}
+			, CREATED_BY = #{createdBy}
+			, CREATE_TIME = str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATED_BY = #{updatedBy}
+			, UPDATE_TIME = str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		WHERE REPORT_SOTC_RATE_ID = #{reportSotcRateId}  ]]>
+	</update>
+	<insert id="saveOrUpdate" parameterType="Brand">
+		<![CDATA[ INSERT INTO T_REPORT_SHOP_OTC_RATE ( ]]>
+		<include refid="commonColumns"/>
+		<![CDATA[
+		) VALUES (
+			 #{reportSotcRateId}
+			, #{companyId}
+			, #{brandCode}
+			, #{modelCode}
+			, #{userCode}
+			, #{visitDate}
+			, #{visitShop}
+			, #{totalShop}
+			, #{otcRate}
+			, #{countryId}
+			, #{cityId}
+			, #{regionId}
+			, #{areaId}
+			, #{areaName}
+			, #{countryName}
+			, #{cityName}
+			, #{regionName}
+			, #{empName}
+			, #{createdBy}
+			, str_to_date(#{createTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
+		) ON DUPLICATE KEY UPDATE
+			 REPORT_SOTC_RATE_ID = VALUES(REPORT_SOTC_RATE_ID)
+			, COMPANY_ID = VALUES(COMPANY_ID)
+			, BRAND_CODE = VALUES(BRAND_CODE)
+			, MODEL_CODE = VALUES(MODEL_CODE)
+			, USER_CODE = VALUES(USER_CODE)
+			, VISIT_DATE = VALUES(VISIT_DATE)
+			, VISIT_SHOP = VALUES(VISIT_SHOP)
+			, TOTAL_SHOP = VALUES(TOTAL_SHOP)
+			, OTC_RATE = VALUES(OTC_RATE)
+			, COUNTRY_ID = VALUES(COUNTRY_ID)
+			, CITY_ID = VALUES(CITY_ID)
+			, REGION_ID = VALUES(REGION_ID)
+			, AREA_ID = VALUES(AREA_ID)
+			, AREA_NAME = VALUES(AREA_NAME)
+			, COUNTRY_NAME = VALUES(COUNTRY_NAME)
+			, CITY_NAME = VALUES(CITY_NAME)
+			, REGION_NAME = VALUES(REGION_NAME)
+			, EMP_NAME = VALUES(EMP_NAME)
+			, CREATED_BY = VALUES(CREATED_BY)
+			, CREATE_TIME = VALUES(CREATE_TIME)
+			, UPDATED_BY = VALUES(UPDATED_BY)
+			, UPDATE_TIME = VALUES(UPDATE_TIME)
+		]]>
+	</insert>
+	<insert id="batchSaveOrUpdate" parameterType="List">
+		<![CDATA[ INSERT INTO T_REPORT_SHOP_OTC_RATE ( ]]>
+		<include refid="commonColumns"/>
+		<![CDATA[ ) VALUES ]]>
+        <foreach collection="list" item="item" index="index" separator=",">
+			(
+			 #{item.reportSotcRateId}
+			, #{item.companyId}
+			, #{item.brandCode}
+			, #{item.modelCode}
+			, #{item.userCode}
+			, #{item.visitDate}
+			, #{item.visitShop}
+			, #{item.totalShop}
+			, #{item.otcRate}
+			, #{item.countryId}
+			, #{item.cityId}
+			, #{item.regionId}
+			, #{item.areaId}
+			, #{item.areaName}
+			, #{item.countryName}
+			, #{item.cityName}
+			, #{item.regionName}
+			, #{item.empName}
+			, #{item.createdBy}
+			, str_to_date(#{item.createTime},'%Y-%m-%d %H:%i:%s')
+			, #{item.updatedBy}
+			, str_to_date(#{item.updateTime},'%Y-%m-%d %H:%i:%s')
+        	)
+        </foreach>
+        <![CDATA[ ON DUPLICATE KEY UPDATE
+		 REPORT_SOTC_RATE_ID = VALUES(REPORT_SOTC_RATE_ID)
+		, COMPANY_ID = VALUES(COMPANY_ID)
+		, BRAND_CODE = VALUES(BRAND_CODE)
+		, MODEL_CODE = VALUES(MODEL_CODE)
+		, USER_CODE = VALUES(USER_CODE)
+		, VISIT_DATE = VALUES(VISIT_DATE)
+		, VISIT_SHOP = VALUES(VISIT_SHOP)
+		, TOTAL_SHOP = VALUES(TOTAL_SHOP)
+		, OTC_RATE = VALUES(OTC_RATE)
+		, COUNTRY_ID = VALUES(COUNTRY_ID)
+		, CITY_ID = VALUES(CITY_ID)
+		, REGION_ID = VALUES(REGION_ID)
+		, AREA_ID = VALUES(AREA_ID)
+		, AREA_NAME = VALUES(AREA_NAME)
+		, COUNTRY_NAME = VALUES(COUNTRY_NAME)
+		, CITY_NAME = VALUES(CITY_NAME)
+		, REGION_NAME = VALUES(REGION_NAME)
+		, EMP_NAME = VALUES(EMP_NAME)
+		, CREATED_BY = VALUES(CREATED_BY)
+		, CREATE_TIME = VALUES(CREATE_TIME)
+		, UPDATED_BY = VALUES(UPDATED_BY)
+		, UPDATE_TIME = VALUES(UPDATE_TIME)
+		]]>
+	</insert>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_REPORT_SHOP_OTC_RATE WHERE REPORT_SOTC_RATE_ID = #{reportSotcRateId}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_REPORT_SHOP_OTC_RATE WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" REPORT_SOTC_RATE_ID IN(" separator="," close=") ">
+			#{id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="ReportShopOtcRate">
+		DELETE FROM T_REPORT_SHOP_OTC_RATE WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="ReportShopOtcRateResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_REPORT_SHOP_OTC_RATE WHERE REPORT_SOTC_RATE_ID = #{reportSotcRateId}  
+	</select>
+	<select id="list" resultMap="ReportShopOtcRateResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_REPORT_SHOP_OTC_RATE
+	</select>
+	<select id="listByProperty" parameterType="ReportShopOtcRate" resultMap="ReportShopOtcRateResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_REPORT_SHOP_OTC_RATE WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="ReportShopOtcRate" resultMap="ReportShopOtcRateResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_REPORT_SHOP_OTC_RATE WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="ReportShopOtcRate" resultType="int">
+		SELECT count(1) AS totalcount FROM T_REPORT_SHOP_OTC_RATE WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+</mapper>
