@@ -186,8 +186,8 @@ public class ModelFacadeImpl implements ModelFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<Model> queryModelListByBrandCode(String brandCode) throws ServiceException {
-		return modelManager.queryModelListByBrandCode(brandCode);
+	public List<Model> queryModelListByBrandCode(String brandCode,String token) throws ServiceException {
+		return modelManager.queryModelListByBrandCode(brandCode,token);
 	}
 	
 	/**

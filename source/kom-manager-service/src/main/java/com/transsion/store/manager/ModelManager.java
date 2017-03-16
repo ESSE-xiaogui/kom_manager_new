@@ -194,16 +194,19 @@ public class ModelManager {
 		return result;
 	}
 
-	public List<Model> queryModelListByBrandCode(String brandCode) throws ServiceException {
+	public List<Model> queryModelListByBrandCode(String brandCode, String token) throws ServiceException {
+		if (UtilHelper.isEmpty(token)) {
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
 		List<Model> list = new ArrayList<Model>();
-		if("All".equals(brandCode)){
+		if(userContext.isAdmin()){
 			Model model = new Model();
 			model.setModelName("All");
 			model.setId(0l);
 			list.add(model);
-		}else{
-			list = modelMapper.queryModelListByBrandCode(brandCode);
 		}
+		list.addAll(modelMapper.queryModelListByBrandCode(brandCode));
 		return list;
 	}
 

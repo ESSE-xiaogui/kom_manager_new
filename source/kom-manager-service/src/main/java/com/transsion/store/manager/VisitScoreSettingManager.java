@@ -89,10 +89,11 @@ public class VisitScoreSettingManager {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		VisitScoreSettingDetailDto vss = new VisitScoreSettingDetailDto();
+		if(!UtilHelper.isEmpty(visitScoreSettingDetailDto)){
+			BeanUtils.copyProperties(vss, visitScoreSettingDetailDto);
+		}
 		if(!userContext.isAdmin()){
 			vss.setCompanyId(userContext.getCompanyId());
-		}else{
-			BeanUtils.copyProperties(vss, visitScoreSettingDetailDto);
 		}
 		List<VisitScoreSettingDetailDto> list = visitScoreSettingMapper.listPaginationByProperty(pagination, vss, pagination.getOrderBy());
 		pagination.setResultList(list);

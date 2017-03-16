@@ -152,7 +152,7 @@ public class ModelController extends AbstractController{
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public List<Model> queryModelListByBrandCode(@QueryParam("brandCode")String brandCode) throws ServiceException{
-		return modelFacade.queryModelListByBrandCode(brandCode);
+		return modelFacade.queryModelListByBrandCode(brandCode,this.getAuthorization());
 	}
 	
 	@GET

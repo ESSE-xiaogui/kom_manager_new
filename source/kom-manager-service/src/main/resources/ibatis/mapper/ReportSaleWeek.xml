@@ -245,7 +245,7 @@
             <if test="reportSaleWeek.reportSaleWeekId!= null and reportSaleWeek.reportSaleWeekId!= ''">
 				AND REPORT_SALE_WEEK_ID = #{reportSaleWeek.reportSaleWeekId}
             </if>
-            <if test="reportSaleWeek.companyId!= null and reportSaleWeek.companyId!= ''">
+            <if test="reportSaleWeek.companyId!= null and reportSaleWeek.companyId!= '' and reportSaleWeek.companyId!=0">
 				AND COMPANY_ID = #{reportSaleWeek.companyId}
             </if>
             <if test="reportSaleWeek.shopId!= null and reportSaleWeek.shopId!= ''">
@@ -272,10 +272,10 @@
             <if test="reportSaleWeek.shopCode!= null and reportSaleWeek.shopCode!= ''">
 				AND SHOP_CODE = #{reportSaleWeek.shopCode}
             </if>
-            <if test="reportSaleWeek.brandCode!= null and reportSaleWeek.brandCode!= ''">
+            <if test="reportSaleWeek.brandCode!= null and reportSaleWeek.brandCode!= '' and reportSaleWeek.brandCode!='All'">
 				AND BRAND_CODE = #{reportSaleWeek.brandCode}
             </if>
-            <if test="reportSaleWeek.modelCode!= null and reportSaleWeek.modelCode!= ''">
+            <if test="reportSaleWeek.modelCode!= null and reportSaleWeek.modelCode!= '' and reportSaleWeek.modelCode!='All'">
 				AND MODEL_CODE = #{reportSaleWeek.modelCode}
             </if>
             <if test="reportSaleWeek.year!= null and reportSaleWeek.year!= ''">
@@ -305,9 +305,9 @@
             <if test="reportSaleWeek.cityName!= null and reportSaleWeek.cityName!= ''">
 				AND CITY_NAME = #{reportSaleWeek.cityName}
             </if>
-            <if test="reportSaleWeek.areaName!= null and reportSaleWeek.areaName!= ''">
+            <!-- <if test="reportSaleWeek.areaName!= null and reportSaleWeek.areaName!= ''">
 				AND AREA_NAME = #{reportSaleWeek.areaName}
-            </if>
+            </if> -->
             <if test="reportSaleWeek.saleQty!= null and reportSaleWeek.saleQty!= ''">
 				AND SALE_QTY = #{reportSaleWeek.saleQty}
             </if>

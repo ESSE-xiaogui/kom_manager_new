@@ -129,10 +129,11 @@ public interface ModelFacade {
 	/**
 	 * 根据BrandCode获取机型
 	 * @param brandCode
+	 * @param token 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<Model> queryModelListByBrandCode(String brandCode) throws ServiceException;
+	public List<Model> queryModelListByBrandCode(String brandCode, String token) throws ServiceException;
 	
 	/**
 	 * 查询机型和已绑定的机型
