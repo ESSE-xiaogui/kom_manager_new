@@ -255,8 +255,6 @@ public class VisitDto implements Serializable {
 //		visit.setCompanyId();
 		visit.setShopId(this.getShopId());
 //		visit.setPlanType();
-		visit.setSaleTotalQty(this.getSaleTotalQty());
-		visit.setSalePbQty(this.getSalePbQty());
 		visit.setRemark(this.getRemark());
 		visit.setCreateBy(this.getCreateBy());
 		visit.setCreateTime(this.getCreateTime());
@@ -264,6 +262,12 @@ public class VisitDto implements Serializable {
 		visit.setUpdateTime(this.getUpdateTime());
 //		visit.setVersion();
 		visit.setPlanType(this.getPlanType());
+		
+		visit.setSaleCurrent(this.getCurrentSaleQty());
+		visit.setSaleTarget(this.getTargetSaleQty());
+		visit.setAchieved(this.getAchieved());
+		visit.setSaleTotalQty(this.getSaleTotalQty());
+		visit.setSalePbQty(this.getSalePbQty());
 		return visit;
 	}
 

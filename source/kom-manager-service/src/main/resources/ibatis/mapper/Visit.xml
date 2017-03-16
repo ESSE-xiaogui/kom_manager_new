@@ -40,6 +40,9 @@
 		<result column="COUNTRY_NAME" property="countryName"/>
 		<result column="CITY_NAME" property="cityName"/>
 		<result column="EMP_NAME" property="empName"/>
+		<result column="SALE_CURRENT" property="saleCurrent"/>
+		<result column="SALE_TARGET" property="saleTarget"/>
+		<result column="ACHIEVED" property="achieved"/>
 	</resultMap>
 	
 	<resultMap id="VisitInfoDtoResultMapper" type="VisitInfoDto">
@@ -171,6 +174,9 @@
 		, UPDATE_TIME
 		, VERSION
 		, VISTOR
+		, SALE_CURRENT
+		, SALE_TARGET
+		, ACHIEVED
 	</sql>
 	
 	<sql id="commonProcessDateColumns">
@@ -377,6 +383,9 @@
 			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
 			, #{version}
 			, #{vistor}
+			, #{saleCurrent}
+			, #{saleTarget}
+			, #{achieved}
   ) ]]>
 	</insert>
 	<update id="update" parameterType="Visit">

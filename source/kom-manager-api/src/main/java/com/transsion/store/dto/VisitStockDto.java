@@ -212,15 +212,17 @@ public class VisitStockDto implements Serializable {
 		visitStock.setVisitId(this.getVisitId());
 		visitStock.setBrandId(this.getBrandId());
 		visitStock.setModelId(this.getModelId());
-		visitStock.setStockQty(this.getStockQty());
-		visitStock.setSaleAvg(this.getSaleAvg());
-		visitStock.setStockIto(this.getStockIto());
 		visitStock.setRemark(this.getRemark());
 //		visitStock.setCreateBy();
 //		visitStock.setCreateTime();
 //		visitStock.setUpdateBy();
 //		visitStock.setUpdateTime();
 //		visitStock.setVersion();
+		visitStock.setStockQty(this.getStockQty());
+		visitStock.setSaleAvg(this.getSaleAvg());
+		visitStock.setStockIto(this.getStockIto());
+		visitStock.setSaleCurrent(this.getCurrentSaleQty());
+		visitStock.setSaleTarget(this.getTargetSaleQty());
 		return visitStock;
 	}
 

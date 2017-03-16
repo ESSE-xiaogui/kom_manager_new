@@ -34,6 +34,8 @@
 		<result column="UPDATE_BY" property="updateBy"/>
 		<result column="UPDATE_TIME" property="updateTime"/>
 		<result column="VERSION" property="version"/>
+		<result column="SALE_CURRENT" property="saleCurrent"/>
+		<result column="SALE_TARGET" property="saleTarget"/>
 	</resultMap>
 	
 	<resultMap id="VisitStockDetailDtoMapper" type="VisitStockDetailDto">
@@ -115,6 +117,8 @@
 		, UPDATE_BY
 		, UPDATE_TIME
 		, VERSION
+		, SALE_CURRENT
+		, SALE_TARGET
 	</sql>
 	
 	<sql id="commonProcessDateColumns">
@@ -314,6 +318,8 @@
 			, #{updateBy}
 			, str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s')
 			, #{version}
+			, #{saleCurrent}
+			, #{saleTarget}
   ) ]]>
 	</insert>
 	<update id="update" parameterType="VisitStock">

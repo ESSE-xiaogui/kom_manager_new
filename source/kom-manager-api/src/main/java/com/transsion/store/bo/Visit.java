@@ -16,6 +16,8 @@
  **/
 package com.transsion.store.bo;
 
+import java.math.BigDecimal;
+
 import com.shangkang.core.bo.Model;
 
 public class Visit extends Model{
@@ -127,6 +129,12 @@ public class Visit extends Model{
 	private java.lang.String startDate;
 	
 	private java.lang.String endDate;
+	
+	private java.lang.Long saleCurrent;
+	
+	private java.lang.Long saleTarget;
+	
+	private BigDecimal achieved;
 
 	/**
 	  *	
@@ -415,24 +423,41 @@ public class Visit extends Model{
 	public void setEndDate(java.lang.String endDate) {
 		this.endDate = endDate;
 	}
+	
+	public java.lang.Long getSaleCurrent() {
+		return saleCurrent;
+	}
 
-	public String toString()
-	{
-		return "Visit [" + 
-					"id=" + id + 
-					", visitDate=" + visitDate + 
-					", companyId=" + companyId + 
-					", shopId=" + shopId + 
-					", planType=" + planType + 
-					", saleTotalQty=" + saleTotalQty + 
-					", salePbQty=" + salePbQty + 
-					", remark=" + remark + 
-					", createBy=" + createBy + 
-					", createTime=" + createTime + 
-					", updateBy=" + updateBy + 
-					", updateTime=" + updateTime + 
-					", version=" + version + 
-				"]";
+	public void setSaleCurrent(java.lang.Long saleCurrent) {
+		this.saleCurrent = saleCurrent;
+	}
+
+	public java.lang.Long getSaleTarget() {
+		return saleTarget;
+	}
+
+	public void setSaleTarget(java.lang.Long saleTarget) {
+		this.saleTarget = saleTarget;
+	}
+
+	public BigDecimal getAchieved() {
+		return achieved;
+	}
+
+	public void setAchieved(BigDecimal achieved) {
+		this.achieved = achieved;
+	}
+
+	@Override
+	public String toString() {
+		return "Visit [id=" + id + ", visitDate=" + visitDate + ", companyId=" + companyId + ", shopId=" + shopId
+				+ ", planType=" + planType + ", saleTotalQty=" + saleTotalQty + ", salePbQty=" + salePbQty + ", remark="
+				+ remark + ", createBy=" + createBy + ", createTime=" + createTime + ", updateBy=" + updateBy
+				+ ", updateTime=" + updateTime + ", version=" + version + ", vistor=" + vistor + ", companyCode="
+				+ companyCode + ", shopCode=" + shopCode + ", shopName=" + shopName + ", countryName=" + countryName
+				+ ", cityName=" + cityName + ", empName=" + empName + ", regionId=" + regionId + ", startDate="
+				+ startDate + ", endDate=" + endDate + ", saleCurrent=" + saleCurrent + ", saleTarget=" + saleTarget
+				+ ", achieved=" + achieved + "]";
 	}
 }
 

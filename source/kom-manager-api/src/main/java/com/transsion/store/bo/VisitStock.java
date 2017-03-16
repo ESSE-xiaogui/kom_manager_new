@@ -94,6 +94,11 @@ public class VisitStock extends Model{
 	  *	
 	  */
 	private java.lang.Integer version;
+	
+	private java.lang.Long saleCurrent;
+	
+	private java.lang.Long saleTarget;
+	
 
 	/**
 	  *	
@@ -319,14 +324,30 @@ public class VisitStock extends Model{
 	{
 		this.version = version;
 	}
+	
+	public java.lang.Long getSaleCurrent() {
+		return saleCurrent;
+	}
+
+	public void setSaleCurrent(java.lang.Long saleCurrent) {
+		this.saleCurrent = saleCurrent;
+	}
+
+	public java.lang.Long getSaleTarget() {
+		return saleTarget;
+	}
+
+	public void setSaleTarget(java.lang.Long saleTarget) {
+		this.saleTarget = saleTarget;
+	}
 
 	@Override
 	public String toString() {
 		return "VisitStock [id=" + id + ", visitId=" + visitId + ", shopId=" + shopId + ", brandId=" + brandId
 				+ ", modelId=" + modelId + ", stockQty=" + stockQty + ", saleAvg=" + saleAvg + ", stockIto=" + stockIto
 				+ ", remark=" + remark + ", createBy=" + createBy + ", createTime=" + createTime + ", updateBy="
-				+ updateBy + ", updateTime=" + updateTime + ", version=" + version + "]";
+				+ updateBy + ", updateTime=" + updateTime + ", version=" + version + ", saleCurrent=" + saleCurrent
+				+ ", saleTarget=" + saleTarget + "]";
 	}
-	
 }
 
