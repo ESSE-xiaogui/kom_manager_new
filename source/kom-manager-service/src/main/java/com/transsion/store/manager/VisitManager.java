@@ -285,8 +285,6 @@ public class VisitManager {
 		if(!visitPlanManager.isVisitPlanned(visit))
 		{
 			visit.setPlanType(Visit.State.UNPLANNED.getVal());
-		} else {
-			visit.setPlanType(Visit.State.PLANNED.getVal());
 		}
 		visitService.save(visit);
 		
