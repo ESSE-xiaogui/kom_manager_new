@@ -541,7 +541,7 @@
 		<include refid="commonCondition"/>
 	</select>
 	
-	<select id="queryReportShopOtcRateList" >
+	<select id="queryReportShopOtcRateList" resultMap="ReportShopOtcRateResultMapper">
 		SELECT 
 		<include refid="commonProcessDateColumns"/>
 		FROM T_REPORT_SHOP_OTC_RATE WHERE 1=1

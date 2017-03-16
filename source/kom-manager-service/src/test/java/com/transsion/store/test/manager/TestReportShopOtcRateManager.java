@@ -5,35 +5,36 @@ import org.junit.Test;
 
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
-import com.transsion.store.bo.ReportSaleDaily;
+import com.transsion.store.bo.ReportShopOtcRate;
 import com.transsion.store.manager.ReportShopOtcRateManager;
+import com.transsion.store.service.ReportShopOtcRateService;
 import com.transsion.store.test.base.GenericTestCase;
 
 public class TestReportShopOtcRateManager extends GenericTestCase {
 	private ReportShopOtcRateManager reportShopOtcRateManager;
 	
+	private ReportShopOtcRateService reportShopOtcRateService;
+	
 	@Before
     protected void setUp() throws Exception {
 		super.setUp();
 		reportShopOtcRateManager = this.getBean("reportShopOtcRateManager");
+		reportShopOtcRateService = this.getBean("reportShopOtcRateService");
     }
 	
 	@Test
 	public void  testListPaginationByProperty() throws ServiceException {
-		Pagination<ReportSaleDaily> pagination = new Pagination<ReportSaleDaily>();
+		Pagination<ReportShopOtcRate> pagination = new Pagination<ReportShopOtcRate>();
 		pagination.setPaginationFlag(true);
         pagination.setPageNo(1);
-        ReportSaleDaily reportSaleDaily = new ReportSaleDaily();
-        reportSaleDaily.setStartDate("2016-01-02");
-        reportSaleDaily.setEndDate("2017-12-02");
+        ReportShopOtcRate reportShopOtcRate = new ReportShopOtcRate();
+        Pagination<ReportShopOtcRate> list = reportShopOtcRateService.listPaginationByProperty(pagination, reportShopOtcRate);
+        System.out.println(list.getTotal());
 	}
-	
 	
 	@Test
 	public void  testQueryReportSaleDailyListByProperty() throws ServiceException {
-        ReportSaleDaily reportSaleDaily = new ReportSaleDaily();
-        reportSaleDaily.setStartDate("2016-01-02");
-        reportSaleDaily.setEndDate("2017-12-02");
-        
+		 ReportShopOtcRate reportShopOtcRate = new ReportShopOtcRate();
+		 reportShopOtcRateManager.queryReportShopOtcRateList(reportShopOtcRate);
 	}
 }
