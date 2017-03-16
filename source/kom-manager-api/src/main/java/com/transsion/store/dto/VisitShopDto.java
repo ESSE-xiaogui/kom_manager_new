@@ -17,6 +17,7 @@
 package com.transsion.store.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 
 public class VisitShopDto implements Serializable {
@@ -47,28 +48,28 @@ public class VisitShopDto implements Serializable {
 	/**
 	  *	
 	  */
-	private java.lang.Long currentSaleQty;
+	private java.lang.Long currentSaleQty = (long)0;
 	
 	/**
 	  *	
 	  */
-	private java.lang.Long targetSaleQty;
+	private java.lang.Long targetSaleQty = (long) 0;
 	
 	/**
 	 * avg sale per four weeks
 	 */
-	private java.math.BigDecimal achieved;
+	private java.math.BigDecimal achieved = BigDecimal.valueOf(0);
 	
 	/**
 	  *itel requirement	
 	  */
-	private java.lang.Long saleTotalQty;
+	private java.lang.Long saleTotalQty = (long) 0;
 
 	/**
 	  *	itel requirement
 	  *private brand sale qty
 	  */
-	private java.lang.Long salePbQty;
+	private java.lang.Long salePbQty = (long) 0;
 
 	/**
 	  *	

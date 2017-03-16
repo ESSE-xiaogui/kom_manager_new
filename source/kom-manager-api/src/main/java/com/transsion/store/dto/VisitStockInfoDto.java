@@ -17,6 +17,7 @@
 package com.transsion.store.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class VisitStockInfoDto implements Serializable {
 
@@ -58,28 +59,28 @@ public class VisitStockInfoDto implements Serializable {
 	/**
 	  *	
 	  */
-	private java.lang.Long stockQty;
+	private java.lang.Long stockQty = (long) 0;
 
 	/**
 	  *	
 	  */
-	private java.lang.Long currentSaleQty;
+	private java.lang.Long currentSaleQty = (long) 0;
 	
 	/**
 	  *	
 	  */
-	private java.lang.Long targetSaleQty;
+	private java.lang.Long targetSaleQty = (long) 0;
 	
 	
 	/**
 	 * avg sale per four weeks
 	 */
-	private java.math.BigDecimal saleAvg;
+	private java.math.BigDecimal saleAvg = BigDecimal.valueOf(0);
 
 	/**
 	 * Inventory turn over, STOCK_QTY/SALE_AVG
 	 */
-	private java.math.BigDecimal stockIto;
+	private java.math.BigDecimal stockIto = BigDecimal.valueOf(0);
 
 	/**
 	  *	
