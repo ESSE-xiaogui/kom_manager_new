@@ -158,6 +158,7 @@ public class CompanyManager {
 		if(userContext.isAdmin()){
 			Company comp = new Company();
 			comp.setCompanyCode("All");
+			comp.setId(0l);
 			list.add(comp);
 			company.setId(null);
 		}else{

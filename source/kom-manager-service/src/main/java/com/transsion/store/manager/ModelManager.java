@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.shangkang.core.exception.DataAccessFailureException;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Brand;
@@ -192,4 +193,20 @@ public class ModelManager {
 		}
 		return result;
 	}
+
+	public List<Model> queryModelListByBrandCode(String brandCode) throws ServiceException {
+		List<Model> list = new ArrayList<Model>();
+		if("All".equals(brandCode)){
+			Model model = new Model();
+			model.setModelName("All");
+			model.setId(0l);
+			list.add(model);
+		}else{
+			list = modelMapper.queryModelListByBrandCode(brandCode);
+		}
+		return list;
+	}
+
+	
+
 }
