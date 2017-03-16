@@ -9,6 +9,7 @@ import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.ShopParamDto;
 import com.transsion.store.dto.ShopResponseDto;
+import com.transsion.store.dto.ShopResponseInfoDto;
 import com.transsion.store.dto.ShopUserDto;
 import com.transsion.store.manager.ShopManager;
 import com.transsion.store.test.base.GenericTestCase;
@@ -67,4 +68,19 @@ public class TestShopManager extends GenericTestCase{
 	    	System.out.println(result);
 	    }
 	    
+	    //查询门店详情
+	    @Test
+	    public void testFindShopDetails() throws ServiceException {
+	    	ShopParamDto s = new ShopParamDto();
+	    	s.setId(4499L);
+	    	ShopParamDto spDto = shopManager.findShopDetails(userContext.getToken(), s);
+	    	System.out.println(spDto);
+	    }
+	    
+	    //查询门店
+	    @Test
+	    public void testFindShopList() throws ServiceException {
+	    	List<ShopResponseInfoDto> list = shopManager.findShopList(userContext.getToken());
+	    	System.out.println(list);
+	    }
 }

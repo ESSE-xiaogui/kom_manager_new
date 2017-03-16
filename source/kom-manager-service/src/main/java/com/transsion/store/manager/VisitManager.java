@@ -1,9 +1,11 @@
 package com.transsion.store.manager;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -357,6 +359,7 @@ public class VisitManager {
 	 */
 	public List<VisitHistorySummaryDto> queryVisitSummaryHistory(String token, String startDate, String endDate)
 					throws ServiceException {
+
 		if (UtilHelper.isEmpty(token)) {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
@@ -368,7 +371,7 @@ public class VisitManager {
 						|| UtilHelper.isEmpty(userContext.getCompanyId())) {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
-		List<VisitHistorySummaryDto> resultList = new LinkedList<VisitHistorySummaryDto>();
+		List<VisitHistorySummaryDto> resultList = new ArrayList<VisitHistorySummaryDto>();
 		VisitPlanParamDto visit = new VisitPlanParamDto();
 		visit.setCompanyId(userContext.getCompanyId());
 		visit.setPlanner(userContext.getUserCode());
@@ -378,6 +381,7 @@ public class VisitManager {
 		List<VisitHistorySummaryDto> visitPlanList = visitPlanMapper.queryVisitPlanHistory(visit);
 		if(!UtilHelper.isEmpty(visitList) && !UtilHelper.isEmpty(visitPlanList)){
 			resultList.addAll(visitList);
+			
 			for(VisitHistorySummaryDto hisPlanDto: visitPlanList)
 			{
 				if (!resultList.contains(hisPlanDto)) {
@@ -394,8 +398,36 @@ public class VisitManager {
 		resultList.addAll(visitList);
 		resultList.addAll(visitPlanList);
 		}
+		if(!UtilHelper.isEmpty(resultList) && resultList.size()>1){
+			Collections.sort(resultList,new ComparatorDate());
+		}
 		return resultList;
 	}
+	class ComparatorDate implements Comparator {
+	    public int compare(Object obj1, Object obj2) {
+	    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    	VisitHistorySummaryDto v1 =(VisitHistorySummaryDto)obj1;
+	    	VisitHistorySummaryDto v2 = (VisitHistorySummaryDto)obj2;
+	        Date begin = new Date();
+				try {
+					begin = sdf.parse(v1.getVisitDate());
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+	        Date end = new Date();
+				try {
+					end = sdf.parse(v2.getVisitDate());
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+	        if (begin.before(end)) {  
+	            return 1;
+	        } else {
+	            return -1;  
+	        }
+	    }
+	}
+
 	
 	public VisitShopDetailDto queryVisitHistoryDataByVisitId(Long visitId) throws ServiceException { 
 		VisitShopDetailDto visitShopDetailDto = visitMapper.queryVisitScoreInfoByVisitId(visitId);
