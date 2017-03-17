@@ -318,7 +318,7 @@
 				AND pro.BRAND_ID=#{prototypeDto.brandId}
             </if>
             <if test="prototypeDto.brandCode!= null and prototypeDto.brandCode != ''">
-				AND brand.BRAND_CODE like CONCAT('%',#{prototypeDto.BRAND_CODE},'%')
+				AND brand.BRAND_CODE like CONCAT('%',#{prototypeDto.brandCode},'%')
             </if>
             <if test="prototypeDto.brandName!= null and prototypeDto.brandName!= ''">
 				AND brand.BRAND_NAME like CONCAT('%',#{prototypeDto.brandName},'%')
