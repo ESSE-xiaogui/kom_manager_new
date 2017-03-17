@@ -361,4 +361,74 @@ public class ReportSaleDailyController extends AbstractController{
 		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");  
 		return response.build();
 	}
+	
+	/**
+	 * 重点机型销量统计(分页查询)
+	 * @param requestModel
+	 * @return
+	 * @throws ServiceException
+	 */
+	@POST
+	@Path("/listPgSaleModelData")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public Pagination<ReportSaleDailyDto> listPgSaleModelData(RequestModel<ReportSaleDailyDto> requestModel) throws ServiceException
+	{
+		Pagination<ReportSaleDailyDto> pagination = new Pagination<ReportSaleDailyDto>();
+
+		pagination.setPaginationFlag(requestModel.isPaginationFlag());
+		pagination.setPageNo(requestModel.getPageNo());
+		pagination.setPageSize(requestModel.getPageSize());
+		pagination.setParams(requestModel.getParams());
+		pagination.setOrderBy(requestModel.getOrderBy());
+		return reportSaleDailyFacade.listPgSaleModelData(pagination, requestModel.getParams());
+	}
+	
+	/**
+	 * 重点机型销量统计(导出)
+	 * @param companyId
+	 * @param brandCode
+	 * @param week
+	 * @param modelCode
+	 * @param countryName
+	 * @param cityName
+	 * @param shopCode
+	 * @param gradeId
+	 * @param userCode
+	 * @param empName
+	 * @return
+	 * @throws ServiceException
+	 * @throws IOException
+	 */
+	@GET
+	@Path("/exportExcelBySaleModel") 
+	@Produces({MediaType.TEXT_PLAIN}) 
+	public Response getReportSaleModeListByExcel(
+			@QueryParam("beginSaleTime") String beginSaleTime,
+			@QueryParam("endSaleTime") String endSaleTime,
+			@QueryParam("companyId") String companyId,
+			@QueryParam("brandCode") String brandCode,
+			@QueryParam("areaId") String areaId,
+			@QueryParam("modelCode") String modelCode
+		) throws ServiceException,IOException {
+		ReportSaleDailyDto reportSaleDailyDto = new ReportSaleDailyDto();
+		reportSaleDailyDto.setBeginSaleTime(beginSaleTime);
+		reportSaleDailyDto.setEndSaleTime(endSaleTime);
+		if(!UtilHelper.isEmpty(companyId)){
+			reportSaleDailyDto.setCompanyId(Long.parseLong(companyId));
+		}
+		reportSaleDailyDto.setBrandCode(brandCode);
+		if(!UtilHelper.isEmpty(areaId)){
+			reportSaleDailyDto.setAreaId(Long.parseLong(areaId));
+		}
+		reportSaleDailyDto.setModelCode(modelCode);
+		byte[] bytes = reportSaleDailyFacade.getReportSaleModelListByExcel(reportSaleDailyDto);
+		InputStream inputStream = new ByteArrayInputStream(bytes);
+		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"重点机型销量统计报表.xlsx";
+		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));   
+		//根据自己文件类型修改
+		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");  
+		return response.build();
+	}
 }

@@ -43,7 +43,7 @@ public interface ReportSaleDailyMapper extends GenericIBatisMapper<ReportSaleDai
     // TOP 促销员查询(导出)
     public List<ReportSaleDaily> queryReportSaleDailyListBySale(ReportSaleDaily reportSaleDaily) throws DataAccessFailureException;
     
- // TOP 机型查询(分页)
+    // TOP 机型查询(分页)
     public List<ReportSaleDaily> listPaginationByModel(Pagination<ReportSaleDaily> pagination, @Param("reportSaleDaily")ReportSaleDaily reportSaleDaily, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     // TOP 机型查询(导出)
     public List<ReportSaleDaily> queryReportSaleDailyListByModel(ReportSaleDaily reportSaleDaily) throws DataAccessFailureException;
@@ -54,5 +54,9 @@ public interface ReportSaleDailyMapper extends GenericIBatisMapper<ReportSaleDai
      * @throws DataAccessFailureException
      */
     public List<Map> findShops4City() throws DataAccessFailureException;
-
+    
+    // 重点机型销量统计(分页查询)
+    public List<ReportSaleDailyDto> listPaginationSaleModelData(Pagination<ReportSaleDailyDto> pagination, @Param("reportSaleDailyDto")ReportSaleDailyDto reportSaleDailyDto, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    // 重点机型销量统计(导出)
+    public List<ReportSaleDailyDto> querySaleModelListByProperty(@Param("reportSaleDailyDto")ReportSaleDailyDto reportSaleDailyDto);
 }

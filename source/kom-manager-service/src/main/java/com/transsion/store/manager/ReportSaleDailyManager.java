@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.ReportSaleDaily;
+import com.transsion.store.dto.ReportSaleDailyDto;
 import com.transsion.store.mapper.ReportSaleDailyMapper;
 import com.transsion.store.utils.ExcelUtils;
 
@@ -145,6 +146,28 @@ public class ReportSaleDailyManager {
 				});
 		}
 		String title = "TOP机型报表";
+		return ExcelUtils.exportExcel(title, headers, dataset);
+	}
+	
+	public byte[] getReportSaleModelListByExcel(ReportSaleDailyDto reportSaleDailyDto) throws ServiceException {
+		String[] headers = {"排名","事业部","品牌","区域名称","国家","城市","重点机型","销量"};
+		List<ReportSaleDailyDto> list = reportSaleDailyMapper.querySaleModelListByProperty(reportSaleDailyDto);
+		List<Object[]> dataset = new ArrayList<Object[]>();
+		int i = 1;
+		for(ReportSaleDailyDto report :list){
+			dataset.add(
+					new Object[]{
+							i++,
+							report.getCompanyName(),
+							report.getBrandCode(),
+							report.getAreaName(),
+							report.getCountryName(),
+							report.getCityName(),
+							report.getBrandCode(),
+							report.getSaleQty()
+				});
+		}
+		String title = "重点机型销量统计报表";
 		return ExcelUtils.exportExcel(title, headers, dataset);
 	}
 }

@@ -16,19 +16,20 @@
 **/
 package com.transsion.store.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.ReportSaleDaily;
 import com.transsion.store.dto.ReportSaleDailyDto;
 import com.transsion.store.mapper.ReportSaleDailyMapper;
 import com.transsion.store.utils.ExcelUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Service("reportSaleDailyService")
 public class ReportSaleDailyService {
@@ -228,5 +229,15 @@ public class ReportSaleDailyService {
 		}
 
 		return resultMap;
+	}
+	
+	public Pagination<ReportSaleDailyDto> listPgSaleModelData(Pagination<ReportSaleDailyDto> pagination, ReportSaleDailyDto reportSaleDailyDto)
+			throws ServiceException
+	{
+		List<ReportSaleDailyDto> list = reportSaleDailyMapper.listPaginationSaleModelData(pagination, reportSaleDailyDto, pagination.getOrderBy());
+		
+		pagination.setResultList(list);
+		
+		return pagination;
 	}
 }

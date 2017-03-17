@@ -169,6 +169,10 @@ public class ReportSaleWeek extends Model{
 	  *	
 	  */
 	private java.lang.String updateTime;
+	
+	private java.lang.String startDate;
+	
+	private java.lang.String endDate;
 
 	/**
 	  *	
@@ -634,39 +638,33 @@ public class ReportSaleWeek extends Model{
 		this.updateTime = updateTime;
 	}
 	
-	public String toString()
-	{
-		return "ReportSaleWeek [" + 
-					"reportSaleWeekId=" + reportSaleWeekId + 
-					", companyId=" + companyId + 
-					", shopId=" + shopId + 
-					", regionId=" + regionId + 
-					", countryId=" + countryId + 
-					", cityId=" + cityId + 
-					", areaId=" + areaId + 
-					", gradeId=" + gradeId + 
-					", userCode=" + userCode + 
-					", shopCode=" + shopCode + 
-					", brandCode=" + brandCode + 
-					", modelCode=" + modelCode + 
-					", year=" + year + 
-					", week=" + week + 
-					", companyName=" + companyName + 
-					", shopName=" + shopName + 
-					", gradeName=" + gradeName + 
-					", empName=" + empName + 
-					", regionName=" + regionName + 
-					", countryName=" + countryName + 
-					", cityName=" + cityName + 
-					", areaName=" + areaName + 
-					", totalShop=" + totalShop + 
-					", saleQty=" + saleQty + 
-					", stockQty=" + stockQty + 
-					", createdBy=" + createdBy + 
-					", createTime=" + createTime + 
-					", updatedBy=" + updatedBy + 
-					", updateTime=" + updateTime + 
-				"]";
+	public java.lang.String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(java.lang.String startDate) {
+		this.startDate = startDate;
+	}
+
+	public java.lang.String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(java.lang.String endDate) {
+		this.endDate = endDate;
+	}
+
+	@Override
+	public String toString() {
+		return "ReportSaleWeek [reportSaleWeekId=" + reportSaleWeekId + ", companyId=" + companyId + ", shopId="
+				+ shopId + ", regionId=" + regionId + ", countryId=" + countryId + ", cityId=" + cityId + ", areaId="
+				+ areaId + ", gradeId=" + gradeId + ", userCode=" + userCode + ", shopCode=" + shopCode + ", brandCode="
+				+ brandCode + ", modelCode=" + modelCode + ", year=" + year + ", week=" + week + ", companyName="
+				+ companyName + ", shopName=" + shopName + ", gradeName=" + gradeName + ", empName=" + empName
+				+ ", regionName=" + regionName + ", countryName=" + countryName + ", cityName=" + cityName
+				+ ", areaName=" + areaName + ", totalShop=" + totalShop + ", saleQty=" + saleQty + ", stockQty="
+				+ stockQty + ", createdBy=" + createdBy + ", createTime=" + createTime + ", updatedBy=" + updatedBy
+				+ ", updateTime=" + updateTime + ", startDate=" + startDate + ", endDate=" + endDate + "]";
 	}
 }
 

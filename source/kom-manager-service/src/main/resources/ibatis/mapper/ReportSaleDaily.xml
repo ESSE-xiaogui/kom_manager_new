@@ -1034,4 +1034,51 @@
 		ORDER BY SALE_QTY DESC
 		limit 0, 10
 	</select>
+	
+	<!-- 重点机型销量统计 -->
+	<select id="listPaginationSaleModelData" parameterType="ReportSaleDailyDto" resultMap="ReportSaleDailyResultMapper">
+		SELECT 
+		    saleDaily.COMPANY_ID,
+		    saleDaily.CITY_ID,
+		    saleDaily.COUNTRY_ID,
+		    saleDaily.REGION_ID,
+		    saleDaily.COMPANY_NAME,
+		    saleDaily.CITY_NAME,
+		    saleDaily.COUNTRY_NAME,
+		    saleDaily.REGION_NAME,
+		    saleDaily.BRAND_CODE,
+		    saleDaily.MODEL_CODE,
+		    SUM(saleDaily.SALE_QTY) SALE_QTY,
+			saleDaily.AREA_NAME
+		FROM
+		    T_REPORT_SALE_DAILY saleDaily
+		WHERE 1=1
+		<include refid="commonConditionByPrefix"/>
+		GROUP BY saleDaily.BRAND_CODE , saleDaily.MODEL_CODE , saleDaily.CITY_ID , saleDaily.CITY_NAME , 
+		saleDaily.COMPANY_ID , saleDaily.COMPANY_NAME , saleDaily.COUNTRY_ID , saleDaily.COUNTRY_NAME , 
+		saleDaily.REGION_ID , saleDaily.REGION_NAME, saleDaily.AREA_NAME
+		<include refid="orderByClause" />
+	</select>
+	<select id="querySaleModelListByProperty" parameterType="ReportSaleDaily" resultMap="ReportSaleDailyResultMapper">
+		SELECT 
+		    saleDaily.COMPANY_ID,
+		    saleDaily.CITY_ID,
+		    saleDaily.COUNTRY_ID,
+		    saleDaily.REGION_ID,
+		    saleDaily.COMPANY_NAME,
+		    saleDaily.CITY_NAME,
+		    saleDaily.COUNTRY_NAME,
+		    saleDaily.REGION_NAME,
+		    saleDaily.BRAND_CODE,
+		    saleDaily.MODEL_CODE,
+		    SUM(saleDaily.SALE_QTY) SALE_QTY,
+			saleDaily.AREA_NAME
+		FROM
+		    T_REPORT_SALE_DAILY saleDaily
+		WHERE 1=1
+		<include refid="commonConditionByPrefix"/>
+		GROUP BY saleDaily.BRAND_CODE , saleDaily.MODEL_CODE , saleDaily.CITY_ID , saleDaily.CITY_NAME , 
+		saleDaily.COMPANY_ID , saleDaily.COMPANY_NAME , saleDaily.COUNTRY_ID , saleDaily.COUNTRY_NAME , 
+		saleDaily.REGION_ID , saleDaily.REGION_NAME, saleDaily.AREA_NAME
+	</select>
 </mapper>

@@ -213,4 +213,15 @@ public class ReportSaleDailyFacadeImpl implements ReportSaleDailyFacade {
 	public byte[] queryReportSaleDailyListByModel(ReportSaleDaily reportSaleDaily) throws ServiceException {
 		return reportSaleDailyManager.queryReportSaleDailyListByModel(reportSaleDaily);
 	}
+
+	@Override
+	public Pagination<ReportSaleDailyDto> listPgSaleModelData(Pagination<ReportSaleDailyDto> pagination,
+			ReportSaleDailyDto reportSaleDailyDto) throws ServiceException {
+		return reportSaleDailyService.listPgSaleModelData(pagination, reportSaleDailyDto);
+	}
+
+	@Override
+	public byte[] getReportSaleModelListByExcel(ReportSaleDailyDto reportSaleDailyDto) throws ServiceException {
+		return reportSaleDailyManager.getReportSaleModelListByExcel(reportSaleDailyDto);
+	}
 }

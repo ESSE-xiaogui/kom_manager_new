@@ -51,4 +51,10 @@ public class ReportSaleDailyDto extends ReportSaleDaily implements Serializable 
 	public void setRegionType(String regionType) {
 		this.regionType = regionType;
 	}
+	
+	@Override
+	public String toString() {
+		return "ReportSaleDailyDto [gradeName=" + gradeName + ", beginSaleTime=" + beginSaleTime + ", endSaleTime="
+				+ endSaleTime + ", regionId=" + regionId + ", regionType=" + regionType + "]";
+	}
 }

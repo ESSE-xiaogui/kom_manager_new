@@ -180,4 +180,22 @@ public interface ReportSaleDailyFacade {
 	 * @throws ServiceException
 	 */
 	public byte[] queryReportSaleDailyListByModel(ReportSaleDaily reportSaleDaily) throws ServiceException;
+	
+	/**
+	 * 重点机型销量统计(分页查询)
+	 * @param pagination
+	 * @param reportSaleDaily
+	 * @return
+	 * @throws ServiceException
+	 */
+	public Pagination<ReportSaleDailyDto> listPgSaleModelData(Pagination<ReportSaleDailyDto> pagination, ReportSaleDailyDto reportSaleDailyDto)
+			throws ServiceException;
+	
+	/**
+	 * 重点机型销量统计(导出)
+	 * @param reportSaleDaily
+	 * @return
+	 * @throws ServiceException
+	 */
+	public byte[] getReportSaleModelListByExcel(ReportSaleDailyDto reportSaleDailyDto)throws ServiceException;
 }
