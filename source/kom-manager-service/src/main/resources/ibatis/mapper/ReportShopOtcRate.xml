@@ -33,6 +33,7 @@
 		<result column="CITY_ID" property="cityId"/>
 		<result column="REGION_ID" property="regionId"/>
 		<result column="AREA_ID" property="areaId"/>
+		<result column="COMPANY_NAME" property="companyName"/>
 		<result column="AREA_NAME" property="areaName"/>
 		<result column="COUNTRY_NAME" property="countryName"/>
 		<result column="CITY_NAME" property="cityName"/>
@@ -58,6 +59,7 @@
 		, CITY_ID
 		, REGION_ID
 		, AREA_ID
+		, COMPANY_NAME
 		, AREA_NAME
 		, COUNTRY_NAME
 		, CITY_NAME
@@ -82,6 +84,7 @@
 		, CITY_ID
 		, REGION_ID
 		, AREA_ID
+		, COMPANY_NAME
 		, AREA_NAME
 		, COUNTRY_NAME
 		, CITY_NAME
@@ -107,6 +110,7 @@
 		, CITY_ID
 		, REGION_ID
 		, AREA_ID
+		, COMPANY_NAME
 		, AREA_NAME
 		, COUNTRY_NAME
 		, CITY_NAME
@@ -157,6 +161,9 @@
 		</if>
 		<if test="areaId!= null and areaId!= ''"> 
 			AND AREA_ID = #{areaId}
+		</if>
+		<if test="companyName!= null and companyName!= ''"> 
+			AND COMPANY_NAME = #{companyName}
 		</if>
 		<if test="areaName!= null and areaName!= ''"> 
 			AND AREA_NAME = #{areaName}
@@ -227,6 +234,9 @@
             </if>
             <if test="reportShopOtcRate.areaId!= null and reportShopOtcRate.areaId!= ''">
 				AND AREA_ID = #{reportShopOtcRate.areaId}
+            </if>
+            <if test="reportShopOtcRate.companyName!= null and reportShopOtcRate.companyName!= ''">
+				AND COMPANY_NAME = #{reportShopOtcRate.companyName}
             </if>
             <if test="reportShopOtcRate.areaName!= null and reportShopOtcRate.areaName!= ''">
 				AND AREA_NAME = #{reportShopOtcRate.areaName}
@@ -308,6 +318,9 @@
         	<when test="key == 'areaId'">
 				AREA_ID ${value}
             </when>
+        	<when test="key == 'companyName'">
+				COMPANY_NAME ${value}
+            </when>
         	<when test="key == 'areaName'">
 				AREA_NAME ${value}
             </when>
@@ -355,6 +368,7 @@
 			, #{cityId}
 			, #{regionId}
 			, #{areaId}
+			, #{companyName}
 			, #{areaName}
 			, #{countryName}
 			, #{cityName}
@@ -381,6 +395,7 @@
 			, CITY_ID = #{cityId}
 			, REGION_ID = #{regionId}
 			, AREA_ID = #{areaId}
+			, COMPANY_NAME = #{companyName}
 			, AREA_NAME = #{areaName}
 			, COUNTRY_NAME = #{countryName}
 			, CITY_NAME = #{cityName}
@@ -410,6 +425,7 @@
 			, #{cityId}
 			, #{regionId}
 			, #{areaId}
+			, #{companyName}
 			, #{areaName}
 			, #{countryName}
 			, #{cityName}
@@ -433,6 +449,7 @@
 			, CITY_ID = VALUES(CITY_ID)
 			, REGION_ID = VALUES(REGION_ID)
 			, AREA_ID = VALUES(AREA_ID)
+			, COMPANY_NAME = VALUES(COMPANY_NAME)
 			, AREA_NAME = VALUES(AREA_NAME)
 			, COUNTRY_NAME = VALUES(COUNTRY_NAME)
 			, CITY_NAME = VALUES(CITY_NAME)
@@ -463,6 +480,7 @@
 			, #{item.cityId}
 			, #{item.regionId}
 			, #{item.areaId}
+			, #{item.companyName}
 			, #{item.areaName}
 			, #{item.countryName}
 			, #{item.cityName}
@@ -488,6 +506,7 @@
 		, CITY_ID = VALUES(CITY_ID)
 		, REGION_ID = VALUES(REGION_ID)
 		, AREA_ID = VALUES(AREA_ID)
+		, COMPANY_NAME = VALUES(COMPANY_NAME)
 		, AREA_NAME = VALUES(AREA_NAME)
 		, COUNTRY_NAME = VALUES(COUNTRY_NAME)
 		, CITY_NAME = VALUES(CITY_NAME)

@@ -93,6 +93,11 @@ public class ReportShopOtcRate extends Model{
 	/**
 	  *	
 	  */
+	private java.lang.String companyName;
+
+	/**
+	  *	
+	  */
 	private java.lang.String areaName;
 
 	/**
@@ -346,6 +351,22 @@ public class ReportShopOtcRate extends Model{
 	/**
 	  *	
 	  */
+	public java.lang.String getCompanyName() 
+	{
+		return companyName;
+	}
+	
+	/**
+	  *	
+	  */
+	public void setCompanyName(java.lang.String companyName) 
+	{
+		this.companyName = companyName;
+	}
+	
+	/**
+	  *	
+	  */
 	public java.lang.String getAreaName() 
 	{
 		return areaName;
@@ -503,6 +524,7 @@ public class ReportShopOtcRate extends Model{
 					", cityId=" + cityId + 
 					", regionId=" + regionId + 
 					", areaId=" + areaId + 
+					", companyName=" + companyName + 
 					", areaName=" + areaName + 
 					", countryName=" + countryName + 
 					", cityName=" + cityName + 

@@ -21,7 +21,11 @@ insert into T_REPORT_SALE_DAILY (
     REGION_NAME,
     EMP_NAME,
     SALE_QTY,
-    STOCK_QTY
+    STOCK_QTY,
+    CREATED_BY,
+    CREATE_TIME,
+    UPDATED_BY,
+    UPDATE_TIME
 )
 SELECT 
     sale.COMPANY_ID,
@@ -46,7 +50,8 @@ SELECT
     r2.REGION_NAME REGION_NAME,
     te.EMP_NAME,
     sale.sale_qty SALE_QTY,
-    stock.stock_qty STOCK_QTY
+    stock.stock_qty STOCK_QTY,
+    'system', sysdate(), 'system', sysdate()
  FROM
     (SELECT 
         s.COMPANY_ID,
