@@ -47,4 +47,12 @@ public interface ReportSaleDailyMapper extends GenericIBatisMapper<ReportSaleDai
     public List<ReportSaleDaily> listPaginationByModel(Pagination<ReportSaleDaily> pagination, @Param("reportSaleDaily")ReportSaleDaily reportSaleDaily, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     // TOP 机型查询(导出)
     public List<ReportSaleDaily> queryReportSaleDailyListByModel(ReportSaleDaily reportSaleDaily) throws DataAccessFailureException;
+
+    /**
+     * 以companyId-cityId组合为Key按城市分组查出城市下总店铺数，如(1-2:20)
+     * @return
+     * @throws DataAccessFailureException
+     */
+    public List<Map> findShops4City() throws DataAccessFailureException;
+
 }

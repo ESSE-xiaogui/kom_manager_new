@@ -9,11 +9,13 @@ import com.transsion.store.mapper.ReportSaleDailyMapper;
 import com.transsion.store.mapper.ReportSaleWeekMapper;
 import com.transsion.store.mapper.SystemDateMapper;
 import com.transsion.store.service.ConfigurationService;
+import com.transsion.store.service.ReportSaleDailyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by liuzh on 17-3-8.
@@ -28,7 +30,7 @@ public class SalesReportTaskManager {
     private ConfigurationService configurationService;
 
     @Autowired
-    private ReportSaleDailyMapper reportSaleDailyMapper;
+    private ReportSaleDailyService reportSaleDailyService;
 
     @Autowired
     private ReportSaleWeekMapper reportSaleWeekMapper;
@@ -50,6 +52,7 @@ public class SalesReportTaskManager {
         configuration.setName(STATISTICS_DAILY_DATE);
 
         List<Configuration> configurations = configurationService.listByProperty(configuration);
+        Map<String, Integer> cityOfShops = reportSaleDailyService.findShops4City();
 
         String lastExecutedDate = null;
 
@@ -61,15 +64,15 @@ public class SalesReportTaskManager {
         if(UtilHelper.isEmpty(lastExecutedDate))
             lastExecutedDate = systemDate;
 
-        executeStatisticsDailyData(systemDate, lastExecutedDate);
-        executeStatisticsWeekData(systemDate, lastExecutedDate);
+        executeStatisticsDailyData(systemDate, lastExecutedDate, cityOfShops);
+        executeStatisticsWeekData(systemDate, lastExecutedDate, cityOfShops);
 
         configuration.setValue(systemDate);
         configurationService.saveOrUpdate(configuration);
     }
 
-    private void executeStatisticsDailyData(String systemDate, String lastExecutedDate) throws ServiceException {
-        List<ReportSaleDaily> reportSaleDailies = reportSaleDailyMapper.findUnStatisticsDataByDate(lastExecutedDate);
+    private void executeStatisticsDailyData(String systemDate, String lastExecutedDate, Map<String, Integer> cityOfShops) throws ServiceException {
+        List<ReportSaleDaily> reportSaleDailies = reportSaleDailyService.findUnStatisticsDataByDate(lastExecutedDate);
         ReportSaleDaily daily;
         List<ReportSaleDaily> rs = new ArrayList<>();
 
@@ -83,7 +86,7 @@ public class SalesReportTaskManager {
             daily.setBrandCode(reportSaleDaily.getBrandCode());
             daily.setModelCode(reportSaleDaily.getModelCode());
 
-            List<ReportSaleDaily> dailies = reportSaleDailyMapper.listByProperty(daily);
+            List<ReportSaleDaily> dailies = reportSaleDailyService.listByProperty(daily);
             if (!UtilHelper.isEmpty(dailies)) {
                 daily = dailies.get(0);
 
@@ -91,6 +94,7 @@ public class SalesReportTaskManager {
                 daily.setStockQty((daily.getStockQty() == null ? 0 : daily.getStockQty()) + (reportSaleDaily.getStockQty() == null ? 0 : reportSaleDaily.getStockQty()));
                 daily.setUpdatedBy(SYSTEM_USER);
                 daily.setUpdateTime(systemDate);
+                daily.setTotalShop(cityOfShops.get(daily.getCompanyId() + "-" + daily.getCityId()));
 
                 rs.add(daily);
             } else {
@@ -98,15 +102,16 @@ public class SalesReportTaskManager {
                 reportSaleDaily.setUpdatedBy(SYSTEM_USER);
                 reportSaleDaily.setCreateTime(systemDate);
                 reportSaleDaily.setUpdateTime(systemDate);
+                reportSaleDaily.setTotalShop(cityOfShops.get(reportSaleDaily.getCompanyId() + "-" + reportSaleDaily.getCityId()));
 
                 rs.add(reportSaleDaily);
             }
         }
 
-        reportSaleDailyMapper.batchSaveOrUpdate(rs);
+        reportSaleDailyService.batchSaveOrUpdate(rs);
     }
 
-    private void executeStatisticsWeekData(String systemDate, String lastExecutedDate) throws ServiceException {
+    private void executeStatisticsWeekData(String systemDate, String lastExecutedDate, Map<String, Integer> cityOfShops) throws ServiceException {
         List<ReportSaleWeek> reportSaleWeeks = reportSaleWeekMapper.findUnStatisticsDataByDate(lastExecutedDate);
         ReportSaleWeek week;
         List<ReportSaleWeek> rs = new ArrayList<>();
@@ -130,6 +135,7 @@ public class SalesReportTaskManager {
                 week.setStockQty((week.getStockQty() == null ? 0 : week.getStockQty()) + (reportSaleWeek.getStockQty() == null ? 0 : reportSaleWeek.getStockQty()));
                 week.setUpdatedBy(SYSTEM_USER);
                 week.setUpdateTime(systemDate);
+                week.setTotalShop(cityOfShops.get(week.getCompanyId() + "-" + week.getCityId()));
 
                 rs.add(week);
             } else {
@@ -137,6 +143,7 @@ public class SalesReportTaskManager {
                 reportSaleWeek.setUpdatedBy(SYSTEM_USER);
                 reportSaleWeek.setCreateTime(systemDate);
                 reportSaleWeek.setUpdateTime(systemDate);
+                reportSaleWeek.setTotalShop(cityOfShops.get(reportSaleWeek.getCompanyId() + "-" + reportSaleWeek.getCityId()));
 
                 rs.add(reportSaleWeek);
             }

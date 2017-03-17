@@ -16,18 +16,19 @@
 **/
 package com.transsion.store.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.ReportSaleDaily;
 import com.transsion.store.dto.ReportSaleDailyDto;
 import com.transsion.store.mapper.ReportSaleDailyMapper;
 import com.transsion.store.utils.ExcelUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service("reportSaleDailyService")
 public class ReportSaleDailyService {
@@ -190,5 +191,42 @@ public class ReportSaleDailyService {
 		}
 		String title = "库存销量日报表";
 		return ExcelUtils.exportExcel(title, headers, dataset);
+	}
+
+	/**
+	 * 根据时间获取未统计的记录进行统计
+	 * @param date
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<ReportSaleDaily> findUnStatisticsDataByDate(String date) throws ServiceException {
+		return reportSaleDailyMapper.findUnStatisticsDataByDate(date);
+	}
+	/**
+	 * 以companyId-cityId组合为Key按城市分组查出城市下总店铺数，如(1-2:20)
+	 * @return
+	 * @throws ServiceException
+	 */
+	public Map<String, Integer> findShops4City() throws ServiceException {
+		List<Map> list = reportSaleDailyMapper.findShops4City();
+		Map<String, Integer> resultMap = new HashMap<>();
+
+		String key;
+		Integer count;
+
+		for(Map<String, Object> map :  list) {
+			key = null;
+			count = 0;
+			for (Map.Entry<String, Object> entry : map.entrySet()) {
+				if ("K".equals(entry.getKey())) {
+					key = (String) entry.getValue();
+				} else if ("COUNT".equals(entry.getKey())) {
+					count =  ((Long) entry.getValue()).intValue();
+				}
+			}
+			resultMap.put(key, count);
+		}
+
+		return resultMap;
 	}
 }

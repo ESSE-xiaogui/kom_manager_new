@@ -1,5 +1,7 @@
 package com.transsion.store.test.manager;
 
+import com.transsion.store.mapper.ReportSaleDailyMapper;
+import com.transsion.store.service.ReportSaleDailyService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,13 +11,20 @@ import com.transsion.store.bo.ReportSaleDaily;
 import com.transsion.store.manager.ReportSaleDailyManager;
 import com.transsion.store.test.base.GenericTestCase;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class TestReportSaleDailyManager extends GenericTestCase {
 	private ReportSaleDailyManager reportSaleDailyManager;
-	
-	@Before
+    private ReportSaleDailyService reportSaleDailyService;
+
+    @Before
     protected void setUp() throws Exception {
 		super.setUp();
 		reportSaleDailyManager = this.getBean("reportSaleDailyManager");
+        reportSaleDailyService = this.getBean("reportSaleDailyService");
     }
 	
 	@Test
@@ -56,4 +65,16 @@ public class TestReportSaleDailyManager extends GenericTestCase {
         // TOP 机型报表导出
         reportSaleDailyManager.queryReportSaleDailyListByModel(reportSaleDaily);
 	}
+
+    /**
+     * @return
+     * @throws ServiceException
+     */
+    @Test
+    public void testFindShops4City() throws ServiceException {
+
+        Map<String, Integer> resultMap = reportSaleDailyService.findShops4City();
+
+        System.out.println(resultMap);
+    }
 }

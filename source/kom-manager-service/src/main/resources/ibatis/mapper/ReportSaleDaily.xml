@@ -712,6 +712,9 @@
 		SELECT count(1) AS totalcount FROM T_REPORT_SALE_DAILY WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
+	<select id="findShops4City" resultType="map">
+		select concat_ws('-', COMPANY_ID, CITY) K, count(1) COUNT from T_SHOP group by COMPANY_ID, CITY
+	</select>
 	<select id="findUnStatisticsDataByDate" resultMap="ReportSaleDailyResultMapper">
 	  SELECT
 		sale.COMPANY_ID,
@@ -726,7 +729,7 @@
 		ts.SHOP_CODE,
 		sale.brand_code BRAND_CODE,
 		sale.model_code MODEL_CODE,
-		sale.SALE_DATE,
+		date_format(sale.SALE_DATE,'%Y-%m-%d %H:%i:%s') SALE_DATE,
 		sale.week WEEK,
 		tc.COMPANY_NAME,
 		ts.shop_name SHOP_NAME,
