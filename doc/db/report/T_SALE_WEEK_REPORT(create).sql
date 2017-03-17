@@ -106,4 +106,8 @@ FROM
     T_AREA_SHOP ars ON sale.SHOP_ID = ars.SHOP_ID
         LEFT JOIN
     T_AREA ar ON ar.COMPANY_ID = sale.COMPANY_ID
-        AND ar.AREA_ID = ars.AREA_ID
+        AND ar.AREA_ID = ars.AREA_ID;
+        
+        
+        UPDATE T_REPORT_SALE_WEEK t set t.total_shop = (select count(1) from T_SHOP s where s.city = t.city_id and s.company_id = t.company_id)
+ where REPORT_SALE_WEEK_ID between 100000 and 200000;

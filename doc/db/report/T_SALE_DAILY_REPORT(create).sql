@@ -40,7 +40,7 @@ SELECT
     ts.SHOP_CODE,
     sale.brand_code BRAND_CODE,
     sale.model_code MODEL_CODE,
-    sale.SALE_DATE,
+    date_format(sale.SALE_DATE,'%Y-%m-%d %H:%i:%s') SALE_DATE,
     sale.week WEEK,
     tc.COMPANY_NAME,
     ts.shop_name SHOP_NAME,
@@ -106,4 +106,9 @@ SELECT
     T_AREA_SHOP ars ON sale.SHOP_ID = ars.SHOP_ID
         LEFT JOIN
     T_AREA ar ON ar.COMPANY_ID = sale.COMPANY_ID
-        AND ar.AREA_ID = ars.AREA_ID
+        AND ar.AREA_ID = ars.AREA_ID;
+        
+        
+        
+UPDATE T_REPORT_SALE_DAILY t set t.total_shop = (select count(1) from T_SHOP s where s.city = t.city_id and s.company_id = t.company_id)
+  where REPORT_SALE_DAILY_ID between 10000 and 100000;
