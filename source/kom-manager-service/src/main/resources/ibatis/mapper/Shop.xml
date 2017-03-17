@@ -1048,12 +1048,12 @@
 	<select id="findByPromoters" parameterType="java.lang.Long" resultMap="ShopLoginDtoDtoMapper">
 		SELECT p.ID,p.SHOP_NAME,r.REGION_NAME AS CITY_NAME,cc.WERKS
 		FROM T_SHOP p
-		LEFT JOIN T_REGION r ON r.ID = p.REGION_ID
-		LEFT JOIN T_CURRENCY cc ON cc.REGION_ID = r.PARENT_ID
+		LEFT JOIN T_REGION r ON r.ID = p.CITY
+		LEFT JOIN T_CURRENCY cc ON cc.REGION_ID = p.COUNTRY
 		LEFT JOIN T_USER_SHOP us ON us.SHOP_ID = p.ID
 		LEFT JOIN T_USER u ON u.ID = us.USER_ID
-		WHERE u.ID = #{userId} AND p.COMPANY_ID = #{companyId}
-		GROUP BY p.ID,p.SHOP_NAME,r.REGION_NAME,cc.WERKS	
+		WHERE u.ID = 1 AND p.COMPANY_ID = 1
+		GROUP BY p.ID,p.SHOP_NAME,r.REGION_NAME,cc.WERKS		
 	</select>
 	<select id="findShopListByUser" parameterType="java.lang.Integer" resultMap="ShopLoginDtoDtoMapper">
 		SELECT p.ID,p.SHOP_NAME,r.REGION_NAME as CITY_NAME,cc.WERKS,p.ADDRESS FROM T_SHOP p		
