@@ -149,5 +149,7 @@ public interface ReportSaleWeekFacade {
 	Pagination<ReportSaleWeek4CityDto> listPaginationModelWeekDataByRange(Pagination<ReportSaleWeek4CityDto> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException;
 	
 	public byte[] getReportModelWeekListByExcel(ReportSaleWeek reportSaleWeek)throws ServiceException;
+
+	public byte[] getReportSaleWeekCityByExcel(ReportSaleWeek reportSaleWeek)throws ServiceException;
 	
 }

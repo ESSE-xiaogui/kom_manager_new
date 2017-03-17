@@ -1,15 +1,12 @@
 package com.transsion.store.manager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Area;
@@ -21,7 +18,6 @@ import com.transsion.store.dto.AreaDto;
 import com.transsion.store.dto.AreaShopChildrenDto;
 import com.transsion.store.dto.AreaShopDto;
 import com.transsion.store.dto.ShopAreaDto;
-import com.transsion.store.dto.VisitStockDetailDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.AreaMapper;
 import com.transsion.store.mapper.AreaRegionMapper;

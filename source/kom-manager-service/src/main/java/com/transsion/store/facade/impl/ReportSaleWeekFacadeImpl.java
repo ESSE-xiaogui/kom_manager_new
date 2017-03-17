@@ -218,4 +218,9 @@ public class ReportSaleWeekFacadeImpl implements ReportSaleWeekFacade {
 	public byte[] getReportModelWeekListByExcel(ReportSaleWeek reportSaleWeek) throws ServiceException {
 		return reportSaleWeekManager.getReportModelWeekListByExcel(reportSaleWeek);
 	}
+
+	@Override
+	public byte[] getReportSaleWeekCityByExcel(ReportSaleWeek reportSaleWeek) throws ServiceException {
+		return reportSaleWeekManager.getReportSaleWeekCityByExcel(reportSaleWeek);
+	}
 }

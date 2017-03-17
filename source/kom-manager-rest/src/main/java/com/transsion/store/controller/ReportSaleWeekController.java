@@ -338,4 +338,47 @@ public class ReportSaleWeekController extends AbstractController{
 		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");  
 		return response.build();
 	}
+	
+	/**
+	 * 城市周销量报表
+	 * @param companyId
+	 * @param brandCode
+	 * @param week
+	 * @param year
+	 * @param areaId
+	 * @return
+	 * @throws ServiceException
+	 * @throws IOException
+	 */
+	@GET
+	@Path("/exportReportSaleWeekCityByExcel") 
+	@Produces({MediaType.TEXT_PLAIN}) 
+	public Response getReportSaleWeekCityByExcel(
+			@QueryParam("companyId") String companyId,
+			@QueryParam("brandCode") String brandCode,
+			@QueryParam("week") String week,
+			@QueryParam("year") String year,
+			@QueryParam("areaId") String areaId
+		) throws ServiceException,IOException {
+		ReportSaleWeek reportSaleWeek = new ReportSaleWeek();
+		if(!UtilHelper.isEmpty(companyId)){
+			reportSaleWeek.setCompanyId(Long.parseLong(companyId));
+		}
+		reportSaleWeek.setBrandCode(brandCode);
+		if(!UtilHelper.isEmpty(year)){
+			reportSaleWeek.setWeek(Integer.parseInt(year));
+		}
+		if(!UtilHelper.isEmpty(areaId)){
+			reportSaleWeek.setGradeId(Long.parseLong(areaId));
+		}
+		
+		byte[] bytes = reportSaleWeekFacade.getReportSaleWeekCityByExcel(reportSaleWeek);
+		InputStream inputStream = new ByteArrayInputStream(bytes);
+		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"城市周销量报表.xlsx";
+		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));   
+		//根据自己文件类型修改
+		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");  
+		return response.build();
+	}
 }
