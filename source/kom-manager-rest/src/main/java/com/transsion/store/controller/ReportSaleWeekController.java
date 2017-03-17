@@ -274,7 +274,7 @@ public class ReportSaleWeekController extends AbstractController{
 	}
 	
 	/**
-	 * 获取销量城市周报表
+	 * 重点机型销量周报报表
 	 * @param requestModel
 	 * @return
 	 * @throws ServiceException
@@ -296,6 +296,22 @@ public class ReportSaleWeekController extends AbstractController{
 		return reportSaleWeekFacade.listPaginationModelWeekDataByRange(pagination, requestModel.getParams());
 	}
 	
+	/**
+	 * 重点机型销量周报报表
+	 * @param companyId
+	 * @param brandCode
+	 * @param week
+	 * @param modelCode
+	 * @param countryName
+	 * @param cityName
+	 * @param shopCode
+	 * @param gradeId
+	 * @param userCode
+	 * @param empName
+	 * @return
+	 * @throws ServiceException
+	 * @throws IOException
+	 */
 	@GET
 	@Path("/exportExcelByModel") 
 	@Produces({MediaType.TEXT_PLAIN}) 
@@ -332,7 +348,7 @@ public class ReportSaleWeekController extends AbstractController{
 		byte[] bytes = reportSaleWeekFacade.getReportModelWeekListByExcel(reportSaleWeek);
 		InputStream inputStream = new ByteArrayInputStream(bytes);
 		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));
-		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"销量库存周报报表.xlsx";
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"重点机型销量周报报表.xlsx";
 		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));   
 		//根据自己文件类型修改
 		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");  
@@ -351,7 +367,7 @@ public class ReportSaleWeekController extends AbstractController{
 	 * @throws IOException
 	 */
 	@GET
-	@Path("/exportReportSaleWeekCityByExcel") 
+	@Path("/exportExcelByReportSaleWeekCity") 
 	@Produces({MediaType.TEXT_PLAIN}) 
 	public Response getReportSaleWeekCityByExcel(
 			@QueryParam("companyId") String companyId,

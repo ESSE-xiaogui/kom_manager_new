@@ -175,31 +175,68 @@ public class ReportSaleWeekManager {
 	}
 	
 	public byte[] getReportModelWeekListByExcel(ReportSaleWeek reportSaleWeek) throws ServiceException {
-		String[] headers = {"序号","事业部","品牌","重点机型","大区","国家","区域","省份","城市","门店编码","门店名称","用户名", "员工姓名", "销量", "库存"};
-		List<ReportSaleWeek4CityDto> list = reportSaleWeekMapper.queryListByModel(reportSaleWeek);
+		Integer year;
+		Integer week;
+
+		Calendar calendar = Calendar.getInstance();
+
+		//当年份或月份为空时，默认为当前年或当前时间所在的周数
+		if(reportSaleWeek == null || reportSaleWeek.getYear() == null)
+			year = CalendarUtils.getYear();
+		else year = reportSaleWeek.getYear();
+
+		if(reportSaleWeek == null || reportSaleWeek.getWeek() == null)
+			week = CalendarUtils.getWeekOfYear(calendar.getTime());
+		else week = reportSaleWeek.getWeek();
+
+		List<Integer> dates = getDates(year, week);
+
+		Integer start = getDate4YearWeek(year, week, 7);
+		Integer end = getDate4YearWeek(year, week, 0);
+		
+		List<Integer> weeks = getWeeksBefore(week);
+
+		List<String> headerList = new ArrayList<String>();
+		headerList.add("序号");
+		headerList.add("事业部");
+		headerList.add("品牌");
+		headerList.add("重点机型");
+		
+		for(int i=0;i<weeks.size();i++){
+			headerList.add("Week"+weeks.get(i));
+		}
+		
+		String[] headers = (String[])headerList.toArray(new String[0]);
+		List<ReportSaleWeek4CityDto> list = reportSaleWeekMapper.listPaginationModelWeekDataByRange(null, reportSaleWeek, dates, start, end, null);
 		List<Object[]> dataset = new ArrayList<Object[]>();
 		int i = 1;
-		for(ReportSaleWeek report :list){
+		for(ReportSaleWeek4CityDto reportSaleWeek4CityDto :list){
+			int qty1 = reportSaleWeek4CityDto.getSaleQty0();
+			int qty2 = reportSaleWeek4CityDto.getSaleQty1();
+			int qty3 = reportSaleWeek4CityDto.getSaleQty2();
+			int qty4 = reportSaleWeek4CityDto.getSaleQty3();
+			int qty5 = reportSaleWeek4CityDto.getSaleQty4();
+			int qty6 =reportSaleWeek4CityDto.getSaleQty5();
+            int qty7 =reportSaleWeek4CityDto.getSaleQty6();
+            int qty8 =reportSaleWeek4CityDto.getSaleQty7();
 			dataset.add(
 					new Object[]{
 							i++,
-							report.getCompanyName(),
-							report.getBrandCode(),
-							report.getWeek(),
-							null,
-							report.getCountryName(),
-							null,
-							null,
-							report.getCityName(),
-							report.getShopCode(),
-							report.getShopName(),
-							report.getUserCode(),
-							report.getEmpName(),
-							report.getSaleQty(),
-							report.getStockQty()
+							reportSaleWeek4CityDto.getCompanyName(),
+							reportSaleWeek4CityDto.getBrandCode(),
+							reportSaleWeek4CityDto.getModelCode(),
+							qty1,
+							qty2,
+							qty3,
+							qty4,
+							qty5,
+							qty6,
+							qty7,
+							qty8,
+							
 				});
 		}
-		String title = "销量库存周报报表";
+		String title = "重点机型销量周报报表";
 		return ExcelUtils.exportExcel(title, headers, dataset);
 	}
 	
