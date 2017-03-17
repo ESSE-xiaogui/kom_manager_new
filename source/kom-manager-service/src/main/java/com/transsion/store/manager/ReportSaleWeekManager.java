@@ -312,4 +312,77 @@ public class ReportSaleWeekManager {
 		String title = "城市周销量报表";
 		return ExcelUtils.exportExcel(title, headers, dataset);
 	}
+	
+	public byte[] getReportSaleModelListByExcel(ReportSaleWeek reportSaleWeek) throws ServiceException {
+		String[] headers = {"排名","事业部","品牌","区域名称","国家","城市","重点机型","销量"};
+		List<ReportSaleWeek> list = reportSaleWeekMapper.querySaleModelListByProperty(reportSaleWeek);
+		List<Object[]> dataset = new ArrayList<Object[]>();
+		int i = 1;
+		for(ReportSaleWeek report :list){
+			dataset.add(
+					new Object[]{
+							i++,
+							report.getCompanyName(),
+							report.getBrandCode(),
+							report.getAreaName(),
+							report.getCountryName(),
+							report.getCityName(),
+							report.getBrandCode(),
+							report.getSaleQty()
+				});
+		}
+		String title = "重点机型销量统计报表";
+		return ExcelUtils.exportExcel(title, headers, dataset);
+	}
+	
+	public Pagination<ReportSaleWeek4CityDto> listPaginationSRWeekDataByRange(Pagination<ReportSaleWeek4CityDto> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException {
+
+		Integer year;
+		Integer week;
+
+		Calendar calendar = Calendar.getInstance();
+
+		//当年份或月份为空时，默认为当前年或当前时间所在的周数
+		if(reportSaleWeek == null || reportSaleWeek.getYear() == null)
+			year = CalendarUtils.getYear();
+		else year = reportSaleWeek.getYear();
+
+		if(reportSaleWeek == null || reportSaleWeek.getWeek() == null)
+			week = CalendarUtils.getWeekOfYear(calendar.getTime());
+		else week = reportSaleWeek.getWeek();
+
+		List<Integer> dates = getDates(year, week);
+
+		Integer start = getDate4YearWeek(year, week, 7);
+		Integer end = getDate4YearWeek(year, week, 0);
+
+		List<ReportSaleWeek4CityDto> list = reportSaleWeekMapper.listPaginationSRWeekDataByRange(pagination, reportSaleWeek, dates, start, end, pagination.getOrderBy());
+
+		pagination.setResultList(list);
+
+		return pagination;
+	}
+	
+	public byte[] getReportSRWeekListByExcel(ReportSaleWeek reportSaleWeek) throws ServiceException {
+		String[] headers = {"序号","事业部","品牌","销售区域","国家","城市","用户名", "员工姓名", "职位", "门店数"};
+		List<ReportSaleWeek> list = reportSaleWeekMapper.queryListByProperty(reportSaleWeek);
+		List<Object[]> dataset = new ArrayList<Object[]>();
+		int i = 1;
+		for(ReportSaleWeek report :list){
+			dataset.add(
+					new Object[]{
+							i++,
+							report.getCompanyName(),
+							report.getBrandCode(),
+							report.getAreaName(),
+							report.getCountryName(),
+							report.getCityName(),
+							report.getUserCode(),
+							report.getEmpName(),
+							report.getTotalShop()
+				});
+		}
+		String title = "销量库存周报报表";
+		return ExcelUtils.exportExcel(title, headers, dataset);
+	}
 }

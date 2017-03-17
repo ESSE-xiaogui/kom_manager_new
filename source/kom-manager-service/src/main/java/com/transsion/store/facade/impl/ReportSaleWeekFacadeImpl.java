@@ -223,4 +223,26 @@ public class ReportSaleWeekFacadeImpl implements ReportSaleWeekFacade {
 	public byte[] getReportSaleWeekCityByExcel(ReportSaleWeek reportSaleWeek) throws ServiceException {
 		return reportSaleWeekManager.getReportSaleWeekCityByExcel(reportSaleWeek);
 	}
+	
+	@Override
+	public Pagination<ReportSaleWeek> listPgSaleModelData(Pagination<ReportSaleWeek> pagination,
+			ReportSaleWeek reportSaleWeek) throws ServiceException {
+		return reportSaleWeekService.listPgSaleModelData(pagination, reportSaleWeek);
+	}
+
+	@Override
+	public byte[] getReportSaleModelListByExcel(ReportSaleWeek reportSaleWeek) throws ServiceException {
+		return reportSaleWeekManager.getReportSaleModelListByExcel(reportSaleWeek);
+	}
+
+	@Override
+	public Pagination<ReportSaleWeek4CityDto> listPaginationSRWeekDataByRange(
+			Pagination<ReportSaleWeek4CityDto> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException {
+		return reportSaleWeekManager.listPaginationSRWeekDataByRange(pagination, reportSaleWeek);
+	}
+
+	@Override
+	public byte[] getReportSRWeekListByExcel(ReportSaleWeek reportSaleWeek) throws ServiceException {
+		return reportSaleWeekManager.getReportSRWeekListByExcel(reportSaleWeek);
+	}
 }

@@ -1108,4 +1108,137 @@
 		]]>
 		<include refid="orderByClause4CityWeek" />
 	</select>
+	
+	<!-- 重点机型销量统计 -->
+	<select id="listPaginationSaleModelData" parameterType="ReportSaleWeek" resultMap="ReportSaleWeekResultMapper">
+		SELECT 
+		    COMPANY_ID,
+		    CITY_ID,
+		    COUNTRY_ID,
+		    REGION_ID,
+		    COMPANY_NAME,
+		    CITY_NAME,
+		    COUNTRY_NAME,
+		    REGION_NAME,
+		    BRAND_CODE,
+		    MODEL_CODE,
+		    SUM(SALE_QTY) SALE_QTY,
+			AREA_NAME
+		FROM
+		    T_REPORT_SALE_DAILY
+		WHERE 1=1
+		<include refid="commonConditionByPrefix"/>
+		GROUP BY BRAND_CODE , MODEL_CODE , CITY_ID , CITY_NAME , COMPANY_ID , COMPANY_NAME , COUNTRY_ID , COUNTRY_NAME , REGION_ID , REGION_NAME, AREA_NAME
+		<include refid="orderByClause" />
+	</select>
+	<select id="querySaleModelListByProperty" parameterType="ReportSaleWeek" resultMap="ReportSaleWeekResultMapper">
+		SELECT 
+		    COMPANY_ID,
+		    CITY_ID,
+		    COUNTRY_ID,
+		    REGION_ID,
+		    COMPANY_NAME,
+		    CITY_NAME,
+		    COUNTRY_NAME,
+		    REGION_NAME,
+		    BRAND_CODE,
+		    MODEL_CODE,
+		    SUM(SALE_QTY) SALE_QTY,
+			AREA_NAME
+		FROM
+		    T_REPORT_SALE_DAILY
+		WHERE 1=1
+		<include refid="commonConditionByPrefix"/>
+		GROUP BY BRAND_CODE , MODEL_CODE , CITY_ID , CITY_NAME , COMPANY_ID , COMPANY_NAME , COUNTRY_ID , COUNTRY_NAME , REGION_ID , REGION_NAME, AREA_NAME
+	</select>
+	
+	<select id="listPaginationSRWeekDataByRange" resultMap="ReportSaleWeek4CityDtoResultMapper">
+		<![CDATA[
+		select distinct 
+		BRAND_CODE,
+		MODEL_CODE,
+    	COMPANY_NAME,
+		AREA_NAME,
+		COUNTRY_NAME,
+		CITY_NAME,
+		USER_CODE,
+		EMP_NAME,
+		TOTAL_SHOP,
+		YEAR ,
+		]]>
+		<include refid="sumCityWeek"/>
+		<![CDATA[
+		from
+		(
+		SELECT
+		rw.brand_code,
+		rw.MODEL_CODE,
+        rw.COMPANY_NAME,
+		rw.AREA_NAME,
+		rw.COUNTRY_NAME,
+		rw.CITY_NAME,
+		rw.USER_CODE,
+		rw.EMP_NAME,
+		rw.TOTAL_SHOP,
+        rw.year,
+		rw.week,
+		sum(rw.SALE_QTY) SALE_QTY
+		FROM
+		T_REPORT_SALE_WEEK rw
+		where CONCAT(year, LPAD(week, 2, 0)) >= #{start} and CONCAT(year, LPAD(week, 2, 0)) <= #{end}]]>
+		<include refid="commonConditionByPrefix4CityWeek"/>
+		<![CDATA[
+		GROUP BY rw.year , rw.week , rw.brand_code , rw.MODEL_CODE, rw.COMPANY_NAME,rw.AREA_NAME,rw.COUNTRY_NAME, 
+		rw.CITY_NAME, rw.USER_CODE, rw.EMP_NAME, rw.TOTAL_SHOP
+		) tp group by tp.year , tp.brand_code, tp.MODEL_CODE, tp.COMPANY_NAME, tp.AREA_NAME, tp.COUNTRY_NAME, tp.CITY_NAME,
+		tp.USER_CODE, tp.EMP_NAME, tp.TOTAL_SHOP
+		order by year desc
+		]]>
+		<include refid="orderByClause4CityWeek" />
+	</select>
+	
+	<select id="querySRWeekListByProperty">
+		<![CDATA[
+		select distinct 
+		BRAND_CODE,
+		MODEL_CODE,
+    	COMPANY_NAME,
+		AREA_NAME,
+		COUNTRY_NAME,
+		CITY_NAME,
+		USER_CODE,
+		EMP_NAME,
+		TOTAL_SHOP,
+		YEAR ,
+		]]>
+		<include refid="sumCityWeek"/>
+		<![CDATA[
+		from
+		(
+		SELECT
+		rw.brand_code,
+		rw.MODEL_CODE,
+        rw.COMPANY_NAME,
+		rw.AREA_NAME,
+		rw.COUNTRY_NAME,
+		rw.CITY_NAME,
+		rw.USER_CODE,
+		rw.EMP_NAME,
+		rw.TOTAL_SHOP,
+        rw.year,
+		rw.week,
+		sum(rw.SALE_QTY) SALE_QTY
+		FROM
+		T_REPORT_SALE_WEEK rw
+		where CONCAT(year, LPAD(week, 2, 0)) >= #{start} and CONCAT(year, LPAD(week, 2, 0)) <= #{end}]]>
+		<include refid="commonConditionByPrefix4CityWeek"/>
+		<![CDATA[
+		GROUP BY rw.year , rw.week , rw.brand_code , rw.MODEL_CODE, rw.COMPANY_NAME,rw.AREA_NAME,rw.COUNTRY_NAME, 
+		rw.CITY_NAME, rw.USER_CODE, rw.EMP_NAME, rw.TOTAL_SHOP
+		) tp group by tp.year , tp.brand_code, tp.MODEL_CODE, tp.COMPANY_NAME, tp.AREA_NAME, tp.COUNTRY_NAME, tp.CITY_NAME,
+		tp.USER_CODE, tp.EMP_NAME, tp.TOTAL_SHOP
+		order by year desc
+		]]>
+		<include refid="orderByClause4CityWeek" />
+	</select>
 </mapper>

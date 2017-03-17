@@ -21,9 +21,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.transsion.store.bo.ReportSaleWeek;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.transsion.store.bo.ReportSaleWeek;
 import com.transsion.store.mapper.ReportSaleWeekMapper;
 
 @Service("reportSaleWeekService")
@@ -167,5 +167,15 @@ public class ReportSaleWeekService {
 	public int findByCount(ReportSaleWeek reportSaleWeek) throws ServiceException
 	{
 		return reportSaleWeekMapper.findByCount(reportSaleWeek);
+	}
+	
+	public Pagination<ReportSaleWeek> listPgSaleModelData(Pagination<ReportSaleWeek> pagination, ReportSaleWeek reportSaleWeek)
+			throws ServiceException
+	{
+		List<ReportSaleWeek> list = reportSaleWeekMapper.listPaginationSaleModelData(pagination, reportSaleWeek, pagination.getOrderBy());
+		
+		pagination.setResultList(list);
+		
+		return pagination;
 	}
 }

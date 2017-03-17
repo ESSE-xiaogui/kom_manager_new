@@ -152,4 +152,12 @@ public interface ReportSaleWeekFacade {
 
 	public byte[] getReportSaleWeekCityByExcel(ReportSaleWeek reportSaleWeek)throws ServiceException;
 	
+	public Pagination<ReportSaleWeek> listPgSaleModelData(Pagination<ReportSaleWeek> pagination, ReportSaleWeek reportSaleWeek)
+			throws ServiceException;
+	
+	public byte[] getReportSaleModelListByExcel(ReportSaleWeek reportSaleWeek)throws ServiceException;
+	
+	Pagination<ReportSaleWeek4CityDto> listPaginationSRWeekDataByRange(Pagination<ReportSaleWeek4CityDto> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException;
+	
+	public byte[] getReportSRWeekListByExcel(ReportSaleWeek reportSaleWeek)throws ServiceException;
 }
