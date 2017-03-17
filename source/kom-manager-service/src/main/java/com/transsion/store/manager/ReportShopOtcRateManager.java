@@ -53,8 +53,8 @@ public class ReportShopOtcRateManager {
 			dataset.add(
 					new Object[]{
 							i++,
-							null,
-							null,
+							report.getCompanyName(),
+							report.getBrandCode(),
 							report.getVisitDate(),
 							report.getCountryName(),
 							report.getRegionName(),

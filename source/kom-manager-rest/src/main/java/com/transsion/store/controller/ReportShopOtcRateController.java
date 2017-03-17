@@ -232,7 +232,8 @@ public class ReportShopOtcRateController extends AbstractController{
 			@QueryParam("brandCode") String brandCode,
 			@QueryParam("countryId") String countryId,
 			@QueryParam("regionId") String regionId,
-			@QueryParam("cityId") String cityId
+			@QueryParam("cityId") String cityId,
+			@QueryParam("regionType") String regionType
 		) throws ServiceException,IOException {
 		ReportShopOtcRate reportShopOtcRate = new ReportShopOtcRate();
 		reportShopOtcRate.setVisitDate(visitDate);
@@ -243,6 +244,9 @@ public class ReportShopOtcRateController extends AbstractController{
 		reportShopOtcRate.setBrandCode(brandCode);
 		if(!UtilHelper.isEmpty(countryId)){
 			reportShopOtcRate.setCompanyId(Long.parseLong(countryId));
+		}
+		if(!UtilHelper.isEmpty(regionType)){
+			reportShopOtcRate.setRegionType(Integer.parseInt(regionType));
 		}
 		if(!UtilHelper.isEmpty(regionId)){
 			reportShopOtcRate.setRegionId(Long.parseLong(regionId));
