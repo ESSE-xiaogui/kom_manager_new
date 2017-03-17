@@ -139,6 +139,8 @@ public class ReportShopOtcRate extends Model{
 	  *	
 	  */
 	private java.lang.String updateTime;
+	
+	private java.lang.Integer regionType;
 
 	/**
 	  *	
@@ -508,33 +510,24 @@ public class ReportShopOtcRate extends Model{
 		this.updateTime = updateTime;
 	}
 	
-	public String toString()
-	{
-		return "ReportShopOtcRate [" + 
-					"reportSotcRateId=" + reportSotcRateId + 
-					", companyId=" + companyId + 
-					", brandCode=" + brandCode + 
-					", modelCode=" + modelCode + 
-					", userCode=" + userCode + 
-					", visitDate=" + visitDate + 
-					", visitShop=" + visitShop + 
-					", totalShop=" + totalShop + 
-					", otcRate=" + otcRate + 
-					", countryId=" + countryId + 
-					", cityId=" + cityId + 
-					", regionId=" + regionId + 
-					", areaId=" + areaId + 
-					", companyName=" + companyName + 
-					", areaName=" + areaName + 
-					", countryName=" + countryName + 
-					", cityName=" + cityName + 
-					", regionName=" + regionName + 
-					", empName=" + empName + 
-					", createdBy=" + createdBy + 
-					", createTime=" + createTime + 
-					", updatedBy=" + updatedBy + 
-					", updateTime=" + updateTime + 
-				"]";
+	public java.lang.Integer getRegionType() {
+		return regionType;
+	}
+
+	public void setRegionType(java.lang.Integer regionType) {
+		this.regionType = regionType;
+	}
+
+	@Override
+	public String toString() {
+		return "ReportShopOtcRate [reportSotcRateId=" + reportSotcRateId + ", companyId=" + companyId + ", brandCode="
+				+ brandCode + ", modelCode=" + modelCode + ", userCode=" + userCode + ", visitDate=" + visitDate
+				+ ", visitShop=" + visitShop + ", totalShop=" + totalShop + ", otcRate=" + otcRate + ", countryId="
+				+ countryId + ", cityId=" + cityId + ", regionId=" + regionId + ", areaId=" + areaId + ", companyName="
+				+ companyName + ", areaName=" + areaName + ", countryName=" + countryName + ", cityName=" + cityName
+				+ ", regionName=" + regionName + ", empName=" + empName + ", createdBy=" + createdBy + ", createTime="
+				+ createTime + ", updatedBy=" + updatedBy + ", updateTime=" + updateTime + ", regionType=" + regionType
+				+ "]";
 	}
 }
 

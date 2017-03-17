@@ -30,4 +30,8 @@ public interface ReportShopOtcRateMapper extends GenericIBatisMapper<ReportShopO
     public List<ReportShopOtcRate> listPaginationByProperty(Pagination<ReportShopOtcRate> pagination, @Param("reportShopOtcRate")ReportShopOtcRate reportShopOtcRate, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     
     public List<ReportShopOtcRate> queryReportShopOtcRateList(@Param("reportShopOtcRate")ReportShopOtcRate reportShopOtcRate) throws DataAccessFailureException;
+    
+    public List<ReportShopOtcRate> listPgReportShopOtcRateByCity(Pagination<ReportShopOtcRate> pagination, @Param("reportShopOtcRate")ReportShopOtcRate reportShopOtcRate, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
+    
+    public List<ReportShopOtcRate> queryReportShopOtcRateListByCity(@Param("reportShopOtcRate")ReportShopOtcRate reportShopOtcRate) throws DataAccessFailureException;
 }

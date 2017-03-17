@@ -151,7 +151,8 @@ public class ReportShopOtcRateController extends AbstractController{
 			@QueryParam("brandCode") String brandCode,
 			@QueryParam("countryId") String countryId,
 			@QueryParam("regionId") String regionId,
-			@QueryParam("cityId") String cityId
+			@QueryParam("cityId") String cityId,
+			@QueryParam("regionType") String regionType
 		) throws ServiceException,IOException {
 		ReportShopOtcRate reportShopOtcRate = new ReportShopOtcRate();
 		reportShopOtcRate.setVisitDate(visitDate);
@@ -162,6 +163,9 @@ public class ReportShopOtcRateController extends AbstractController{
 		reportShopOtcRate.setBrandCode(brandCode);
 		if(!UtilHelper.isEmpty(countryId)){
 			reportShopOtcRate.setCompanyId(Long.parseLong(countryId));
+		}
+		if(!UtilHelper.isEmpty(regionType)){
+			reportShopOtcRate.setRegionType(Integer.parseInt(regionType));
 		}
 		if(!UtilHelper.isEmpty(regionId)){
 			reportShopOtcRate.setRegionId(Long.parseLong(regionId));
@@ -200,4 +204,59 @@ public class ReportShopOtcRateController extends AbstractController{
             this.inputStream = inputStream;
         }
     }
+	
+	@POST
+	@Path("/listPgReportShopOtcRateByCity")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public Pagination<ReportShopOtcRate> listPgReportShopOtcRateByCity(RequestModel<ReportShopOtcRate> requestModel) throws ServiceException
+	{
+		Pagination<ReportShopOtcRate> pagination = new Pagination<ReportShopOtcRate>();
+
+		pagination.setPaginationFlag(requestModel.isPaginationFlag());
+		pagination.setPageNo(requestModel.getPageNo());
+		pagination.setPageSize(requestModel.getPageSize());
+		pagination.setParams(requestModel.getParams());
+		pagination.setOrderBy(requestModel.getOrderBy());
+
+		return reportShopOtcRateFacade.listPgReportShopOtcRateByCity(pagination, requestModel.getParams());
+	}
+	
+	@GET
+	@Path("/exportExcelByCity") 
+	@Produces({MediaType.TEXT_PLAIN}) 
+	public Response queryReportShopOtcRateListByCity(
+			@QueryParam("visitDate") String visitDate,
+			@QueryParam("modelCode") String modelCode,
+			@QueryParam("companyId") String companyId,
+			@QueryParam("brandCode") String brandCode,
+			@QueryParam("countryId") String countryId,
+			@QueryParam("regionId") String regionId,
+			@QueryParam("cityId") String cityId
+		) throws ServiceException,IOException {
+		ReportShopOtcRate reportShopOtcRate = new ReportShopOtcRate();
+		reportShopOtcRate.setVisitDate(visitDate);
+		reportShopOtcRate.setModelCode(modelCode);
+		if(!UtilHelper.isEmpty(companyId)){
+			reportShopOtcRate.setCompanyId(Long.parseLong(companyId));
+		}
+		reportShopOtcRate.setBrandCode(brandCode);
+		if(!UtilHelper.isEmpty(countryId)){
+			reportShopOtcRate.setCompanyId(Long.parseLong(countryId));
+		}
+		if(!UtilHelper.isEmpty(regionId)){
+			reportShopOtcRate.setRegionId(Long.parseLong(regionId));
+		}
+		if(!UtilHelper.isEmpty(cityId)){
+			reportShopOtcRate.setCityId(Long.parseLong(cityId));
+		}
+		byte[] bytes = reportShopOtcRateFacade.queryReportShopOtcRateListByCity(reportShopOtcRate);
+		InputStream inputStream = new ByteArrayInputStream(bytes);
+		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"TOP机型报表.xlsx";
+		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));   
+		//根据自己文件类型修改
+		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");  
+		return response.build();
+	}
 }

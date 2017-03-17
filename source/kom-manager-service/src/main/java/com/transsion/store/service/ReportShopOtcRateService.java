@@ -168,4 +168,14 @@ public class ReportShopOtcRateService {
 	{
 		return reportShopOtcRateMapper.findByCount(reportShopOtcRate);
 	}
+	
+	public Pagination<ReportShopOtcRate> listPgReportShopOtcRateByCity(Pagination<ReportShopOtcRate> pagination, ReportShopOtcRate reportShopOtcRate)
+			throws ServiceException
+	{
+		List<ReportShopOtcRate> list = reportShopOtcRateMapper.listPgReportShopOtcRateByCity(pagination, reportShopOtcRate, pagination.getOrderBy());
+		
+		pagination.setResultList(list);
+		
+		return pagination;
+	}
 }

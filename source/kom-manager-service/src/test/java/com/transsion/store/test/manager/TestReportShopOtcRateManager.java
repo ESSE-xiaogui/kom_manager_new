@@ -28,13 +28,19 @@ public class TestReportShopOtcRateManager extends GenericTestCase {
 		pagination.setPaginationFlag(true);
         pagination.setPageNo(1);
         ReportShopOtcRate reportShopOtcRate = new ReportShopOtcRate();
-        Pagination<ReportShopOtcRate> list = reportShopOtcRateService.listPaginationByProperty(pagination, reportShopOtcRate);
-        System.out.println(list.getTotal());
+//        Pagination<ReportShopOtcRate> list = reportShopOtcRateService.listPaginationByProperty(pagination, reportShopOtcRate);
+//        System.out.println(list.getTotal());
+        
+        
+//        Pagination<ReportShopOtcRate> list1 = reportShopOtcRateService.listPgReportShopOtcRateByCity(pagination, reportShopOtcRate);
+//        System.out.println(list1.getTotal());
 	}
 	
 	@Test
 	public void  testQueryReportSaleDailyListByProperty() throws ServiceException {
 		 ReportShopOtcRate reportShopOtcRate = new ReportShopOtcRate();
-		 reportShopOtcRateManager.queryReportShopOtcRateList(reportShopOtcRate);
+//		 reportShopOtcRateManager.queryReportShopOtcRateList(reportShopOtcRate);
+		 
+		 reportShopOtcRateManager.queryReportShopOtcRateListByCity(reportShopOtcRate);
 	}
 }

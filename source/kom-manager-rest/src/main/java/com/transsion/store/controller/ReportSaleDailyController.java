@@ -181,7 +181,7 @@ public class ReportSaleDailyController extends AbstractController{
 	{
 		Pagination<ReportSaleDaily> pagination = new Pagination<ReportSaleDaily>();
 
-		pagination.setPaginationFlag(requestModel.isPaginationFlag());
+		pagination.setPaginationFlag(false);
 		pagination.setPageNo(requestModel.getPageNo());
 		pagination.setPageSize(requestModel.getPageSize());
 		pagination.setParams(requestModel.getParams());
@@ -246,7 +246,7 @@ public class ReportSaleDailyController extends AbstractController{
 	{
 		Pagination<ReportSaleDaily> pagination = new Pagination<ReportSaleDaily>();
 
-		pagination.setPaginationFlag(requestModel.isPaginationFlag());
+		pagination.setPaginationFlag(false);
 		pagination.setPageNo(requestModel.getPageNo());
 		pagination.setPageSize(requestModel.getPageSize());
 		pagination.setParams(requestModel.getParams());
@@ -311,7 +311,7 @@ public class ReportSaleDailyController extends AbstractController{
 	{
 		Pagination<ReportSaleDaily> pagination = new Pagination<ReportSaleDaily>();
 
-		pagination.setPaginationFlag(requestModel.isPaginationFlag());
+		pagination.setPaginationFlag(false);
 		pagination.setPageNo(requestModel.getPageNo());
 		pagination.setPageSize(requestModel.getPageSize());
 		pagination.setParams(requestModel.getParams());

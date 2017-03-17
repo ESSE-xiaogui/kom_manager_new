@@ -119,4 +119,9 @@ public interface ReportShopOtcRateFacade {
 			throws ServiceException;
 	
 	public byte[] queryReportShopOtcRateList(ReportShopOtcRate reportShopOtcRate) throws ServiceException;
+	
+	public Pagination<ReportShopOtcRate> listPgReportShopOtcRateByCity(Pagination<ReportShopOtcRate> pagination, ReportShopOtcRate reportShopOtcRate)
+			throws ServiceException;
+	
+	public byte[] queryReportShopOtcRateListByCity(ReportShopOtcRate reportShopOtcRate) throws ServiceException;
 }

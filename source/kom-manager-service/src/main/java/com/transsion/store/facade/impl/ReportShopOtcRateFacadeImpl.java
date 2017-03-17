@@ -33,6 +33,7 @@ public class ReportShopOtcRateFacadeImpl implements ReportShopOtcRateFacade {
 
 	private ReportShopOtcRateService reportShopOtcRateService;
 	
+	@Autowired
 	private ReportShopOtcRateManager reportShopOtcRateManager;
 	
 	@Autowired
@@ -169,8 +170,18 @@ public class ReportShopOtcRateFacadeImpl implements ReportShopOtcRateFacade {
 		return reportShopOtcRateService.findByCount(reportShopOtcRate);
 	}
 
-	@Override
 	public byte[] queryReportShopOtcRateList(ReportShopOtcRate reportShopOtcRate) throws ServiceException {
 		return reportShopOtcRateManager.queryReportShopOtcRateList(reportShopOtcRate);
+	}
+	
+	public Pagination<ReportShopOtcRate> listPgReportShopOtcRateByCity(Pagination<ReportShopOtcRate> pagination, ReportShopOtcRate reportShopOtcRate)
+			throws ServiceException
+	{
+		return reportShopOtcRateService.listPgReportShopOtcRateByCity(pagination, reportShopOtcRate);
+	}
+
+	@Override
+	public byte[] queryReportShopOtcRateListByCity(ReportShopOtcRate reportShopOtcRate) throws ServiceException {
+		return reportShopOtcRateManager.queryReportShopOtcRateListByCity(reportShopOtcRate);
 	}
 }

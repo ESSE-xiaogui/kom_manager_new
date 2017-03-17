@@ -199,13 +199,13 @@
             <if test="reportShopOtcRate.reportSotcRateId!= null and reportShopOtcRate.reportSotcRateId!= ''">
 				AND REPORT_SOTC_RATE_ID = #{reportShopOtcRate.reportSotcRateId}
             </if>
-            <if test="reportShopOtcRate.companyId!= null and reportShopOtcRate.companyId!= ''">
+            <if test="reportShopOtcRate.companyId!= null and reportShopOtcRate.companyId!= 0">
 				AND COMPANY_ID = #{reportShopOtcRate.companyId}
             </if>
-            <if test="reportShopOtcRate.brandCode!= null and reportShopOtcRate.brandCode!= ''">
+            <if test="reportShopOtcRate.brandCode!= null and reportShopOtcRate.brandCode!= '' and reportShopOtcRate.brandCode!= 'All'">
 				AND BRAND_CODE = #{reportShopOtcRate.brandCode}
             </if>
-            <if test="reportShopOtcRate.modelCode!= null and reportShopOtcRate.modelCode!= ''">
+            <if test="reportShopOtcRate.modelCode!= null and reportShopOtcRate.modelCode!= '' and reportShopOtcRate.modelCode!= 'All'">
 				AND MODEL_CODE = #{reportShopOtcRate.modelCode}
             </if>
             <if test="reportShopOtcRate.userCode!= null and reportShopOtcRate.userCode!= ''">
@@ -229,9 +229,23 @@
             <if test="reportShopOtcRate.cityId!= null and reportShopOtcRate.cityId!= ''">
 				AND CITY_ID = #{reportShopOtcRate.cityId}
             </if>
-            <if test="reportShopOtcRate.regionId!= null and reportShopOtcRate.regionId!= ''">
+            <!-- <if test="reportShopOtcRate.regionId!= null and reportShopOtcRate.regionId!= ''">
 				AND REGION_ID = #{reportShopOtcRate.regionId}
-            </if>
+            </if> -->
+            
+            
+            <if test="reportShopOtcRate.regionType!= null and reportShopOtcRate.regionType!= '' and reportShopOtcRate.regionType == 2">
+            	<if test="reportShopOtcRate.regionId!= null and reportShopOtcRate.regionId!= ''">
+					AND COUNTRY_ID = #{reportShopOtcRate.regionId}
+            	</if>
+	        </if>
+			<if test="reportShopOtcRate.regionType!= null and reportShopOtcRate.regionType!= '' and reportShopOtcRate.regionType == 4">
+				<if test="reportShopOtcRate.regionId!= null and reportShopOtcRate.regionId!= ''">
+					AND CITY_ID = #{reportShopOtcRate.regionId}
+            	</if>
+	        </if>
+            
+            
             <if test="reportShopOtcRate.areaId!= null and reportShopOtcRate.areaId!= ''">
 				AND AREA_ID = #{reportShopOtcRate.areaId}
             </if>
@@ -241,12 +255,12 @@
             <if test="reportShopOtcRate.areaName!= null and reportShopOtcRate.areaName!= ''">
 				AND AREA_NAME = #{reportShopOtcRate.areaName}
             </if>
-            <if test="reportShopOtcRate.countryName!= null and reportShopOtcRate.countryName!= ''">
+            <!-- <if test="reportShopOtcRate.countryName!= null and reportShopOtcRate.countryName!= ''">
 				AND COUNTRY_NAME = #{reportShopOtcRate.countryName}
             </if>
             <if test="reportShopOtcRate.cityName!= null and reportShopOtcRate.cityName!= ''">
 				AND CITY_NAME = #{reportShopOtcRate.cityName}
-            </if>
+            </if> -->
             <if test="reportShopOtcRate.regionName!= null and reportShopOtcRate.regionName!= ''">
 				AND REGION_NAME = #{reportShopOtcRate.regionName}
             </if>
@@ -565,5 +579,53 @@
 		<include refid="commonProcessDateColumns"/>
 		FROM T_REPORT_SHOP_OTC_RATE WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
+	</select>
+	
+	<select id="listPgReportShopOtcRateByCity" parameterType="ReportShopOtcRate" resultMap="ReportShopOtcRateResultMapper">
+		SELECT 
+		COMPANY_ID,
+		COUNTRY_ID,
+		CITY_ID,
+		REGION_ID,
+		BRAND_CODE,
+		VISIT_DATE,
+		COMPANY_NAME,
+		COUNTRY_NAME,
+		REGION_NAME,
+		CITY_NAME,
+		USER_CODE,
+		EMP_NAME,
+		TOTAL_SHOP,
+		MODEL_CODE,
+		SUM(VISIT_SHOP) VISIT_SHOP,
+		round(1.0*SUM(VISIT_SHOP)/TOTAL_SHOP,2) AS OTC_RATE
+		FROM T_REPORT_SHOP_OTC_RATE WHERE 1=1
+		<include refid="commonConditionByPrefix"/>
+		GROUP BY COMPANY_ID,COUNTRY_ID,CITY_ID,REGION_ID,COUNTRY_NAME,BRAND_CODE,VISIT_DATE,COMPANY_NAME,
+		REGION_NAME,CITY_NAME,USER_CODE,EMP_NAME,TOTAL_SHOP,MODEL_CODE,OTC_RATE
+    	<include refid="orderByClause" />
+	</select>
+	<select id="queryReportShopOtcRateListByCity" parameterType="ReportShopOtcRate" resultMap="ReportShopOtcRateResultMapper">
+		SELECT 
+			COMPANY_ID,
+			COUNTRY_ID,
+			CITY_ID,
+			REGION_ID,
+			BRAND_CODE,
+			VISIT_DATE,
+			COMPANY_NAME,
+			COUNTRY_NAME,
+			REGION_NAME,
+			CITY_NAME,
+			USER_CODE,
+			EMP_NAME,
+			TOTAL_SHOP,
+			MODEL_CODE,
+			SUM(VISIT_SHOP) VISIT_SHOP,
+			round(1.0*SUM(VISIT_SHOP)/TOTAL_SHOP,2) AS OTC_RATE
+		FROM T_REPORT_SHOP_OTC_RATE WHERE 1=1
+		<include refid="commonConditionByPrefix"/>
+		GROUP BY COMPANY_ID,COUNTRY_ID,CITY_ID,REGION_ID,COUNTRY_NAME,BRAND_CODE,VISIT_DATE,COMPANY_NAME,
+		REGION_NAME,CITY_NAME,USER_CODE,EMP_NAME,TOTAL_SHOP,MODEL_CODE,OTC_RATE
 	</select>
 </mapper>
