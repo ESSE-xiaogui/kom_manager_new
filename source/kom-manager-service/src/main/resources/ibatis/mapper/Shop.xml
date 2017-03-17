@@ -1200,5 +1200,5 @@
 		WHERE p.ID = v.SHOP_ID GROUP BY p.ID ) t ON t.ID = p.ID
 		WHERE u.ID = #{userId}
 	</select>
-	
+
 </mapper>

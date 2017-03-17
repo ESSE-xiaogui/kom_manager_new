@@ -383,6 +383,7 @@
 				%H:%i:%s')
 				AND proCount.COUNTING_TIME <![CDATA[ >= ]]> str_to_date(#{prototypeDto.endCountingTime},'%Y-%m-%d
 				%H:%i:%s')
+				AND proCount.STATUS = 1
             </if>
             
             <!-- 

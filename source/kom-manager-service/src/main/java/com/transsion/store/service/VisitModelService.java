@@ -21,11 +21,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.shangkang.core.bo.Pagination;
+import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.VisitModel;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.VisitModelDetailInfoDto;
-import com.shangkang.core.bo.Pagination;
-import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.mapper.VisitModelMapper;
 import com.transsion.store.utils.CacheUtils;
 
@@ -132,6 +132,15 @@ public class VisitModelService {
 	public void save(VisitModel visitModel) throws ServiceException
 	{
 		visitModelMapper.save(visitModel);
+	}
+	
+	/**
+	 * 批量保存修改
+	 * @param visitModel
+	 * @throws ServiceException
+	 */
+	public void batchSaveOrUpdate(List<VisitModel> visitModel) throws ServiceException {
+		visitModelMapper.batchSaveOrUpdate(visitModel);
 	}
 
 	/**

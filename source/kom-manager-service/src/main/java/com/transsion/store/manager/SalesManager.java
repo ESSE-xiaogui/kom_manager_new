@@ -47,6 +47,7 @@ import com.transsion.store.service.ConfigurationService;
 import com.transsion.store.service.SaleItemService;
 import com.transsion.store.utils.CacheUtils;
 import com.transsion.store.utils.ExcelUtils;
+import com.transsion.store.utils.JacksonUtil;
 import com.transsion.store.utils.PropertiesUtils;
 
 @Service("salesMannager")
@@ -619,14 +620,18 @@ public class SalesManager {
 			SaleDto saleDto = new SaleDto();
 			saleDto.setSale(tShopSales);
 			saleDto.setSaleItems(listTShopSaleitem);
+			saleDto.setAuthorization(token);
 			
 			String importTask = configurationService.getValueByName(UPDATE_CURSTOCK_URL);
 			
 			TaskMessage msg = new TaskMessage();
 			msg.setInvokerType(TaskInvokerInfo.Type.REST);
-			msg.setMethod(TaskInvokerInfo.RestMethod.PUT.toString());
-			msg.setParams(saleDto);
+			msg.setMethod(TaskInvokerInfo.RestMethod.POST.toString());
+			// DTO转成JSON
+			msg.setParams(JacksonUtil.toJSON(saleDto));
 			msg.setBeanName(importTask);
+			msg.setName("saveSalesUpload");
+			msg.setKey("saveSalesUpload_" + System.currentTimeMillis());
 			producerService.sendMessage(msg);
 			long mqEndTime = System.currentTimeMillis();
 			logger.debug("send mq message time is:" + (mqEndTime - mqStartTime));

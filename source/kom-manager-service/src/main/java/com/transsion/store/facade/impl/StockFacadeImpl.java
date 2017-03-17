@@ -24,7 +24,6 @@ import org.springframework.stereotype.Component;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Stock;
-import com.transsion.store.dto.SaleDto;
 import com.transsion.store.dto.StockDto;
 import com.transsion.store.dto.StockInfoDto;
 import com.transsion.store.dto.StockResponseDto;
@@ -207,12 +206,19 @@ public class StockFacadeImpl implements StockFacade {
 	/**
 	 * 根据销量减库存
 	 * @param tshopSaleDto
-	 * @param token
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void updateCurStockBySale(SaleDto saleDto, String token) throws ServiceException {
-		stockManager.updateCurStockBySale(saleDto, token);
+	public void updateCurStockBySale(String saleDtoJson) throws ServiceException {
+		stockManager.updateCurStockBySale(saleDtoJson);
 	}
 	
+	/**
+	 * 保存stock,stockItem
+	 * @param stockSpeDtoJson
+	 * @throws ServiceException
+	 */
+	public void saveStockSpeDto(String stockSpeDtoJson) throws ServiceException {
+		stockManager.saveStockSpeDto(stockSpeDtoJson);
+	}
 }

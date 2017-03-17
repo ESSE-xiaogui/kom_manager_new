@@ -12,6 +12,7 @@ public class SaleDto implements Serializable {
 	
 	private Sale sale;
 	private List<SaleItem> saleItems;
+	private String authorization;
 	
 	public Sale getSale() {
 		return sale;
@@ -25,6 +26,13 @@ public class SaleDto implements Serializable {
 	}
 	public void setSaleItems(List<SaleItem> saleItems) {
 		this.saleItems = saleItems;
+	}
+	
+	public String getAuthorization() {
+		return authorization;
+	}
+	public void setAuthorization(String authorization) {
+		this.authorization = authorization;
 	}
 
 }

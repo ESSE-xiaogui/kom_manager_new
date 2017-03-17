@@ -374,6 +374,51 @@
 			, str_to_date(#{item.updateTime},'%Y-%m-%d %H:%i:%s')
 			)
 		</foreach>
-
 	</insert>
+	
+	<insert id="batchSaveOrUpdate" parameterType="List">
+		<![CDATA[ INSERT INTO T_STOCK_ITEM ( ]]>
+		<include refid="commonColumns"/>
+		<![CDATA[ ) VALUES ]]>
+        <foreach collection="list" item="item" index="index" separator=",">
+			(
+			#{item.id}
+			, #{item.stockId}
+			, #{item.companyId}
+			, #{item.billno}
+			, #{item.lineId}
+			, #{item.brandCode}
+			, #{item.modelCode}
+			, #{item.qty}
+			, #{item.price}
+			, #{item.amount}
+			, #{item.ishistory}
+			, #{item.remark}
+			, #{item.createBy}
+			, str_to_date(#{item.createTime},'%Y-%m-%d %H:%i:%s')
+			, #{item.updateBy}
+			, str_to_date(#{item.updateTime},'%Y-%m-%d %H:%i:%s')
+        	)
+        </foreach>
+        <![CDATA[ ON DUPLICATE KEY UPDATE
+		 ID = VALUES(ID)
+		, STOCK_ID = VALUES(STOCK_ID)
+		, COMPANY_ID = VALUES(COMPANY_ID)
+		, BILLNO = VALUES(BILLNO)
+		, LINE_ID = VALUES(LINE_ID)
+		, BRAND_CODE = VALUES(BRAND_CODE)
+		, MODEL_CODE = VALUES(MODEL_CODE)
+		, QTY = VALUES(QTY)
+		, PRICE = VALUES(PRICE)
+		, AMOUNT = VALUES(AMOUNT)
+		, ISHISTORY = VALUES(ISHISTORY)
+		, REMARK = VALUES(REMARK)
+		, CREATE_BY = VALUES(CREATE_BY)
+		, CREATE_TIME = VALUES(CREATE_TIME)
+		, UPDATE_BY = VALUES(UPDATE_BY)
+		, UPDATE_TIME = VALUES(UPDATE_TIME)
+		]]>
+	</insert>
+	
+	
 </mapper>

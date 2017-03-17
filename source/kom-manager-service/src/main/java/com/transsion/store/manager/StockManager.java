@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -12,7 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.batch.task.api.TaskInvokerInfo;
 import com.batch.task.msg.api.ProducerService;
+import com.batch.task.msg.api.TaskMessage;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Sale;
@@ -25,21 +26,25 @@ import com.transsion.store.dto.SaleDto;
 import com.transsion.store.dto.StockDto;
 import com.transsion.store.dto.StockInfoDto;
 import com.transsion.store.dto.StockResponseDto;
+import com.transsion.store.dto.StockSpeDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.CurrencyMapper;
 import com.transsion.store.mapper.StockCurrentMapper;
 import com.transsion.store.mapper.StockItemMapper;
 import com.transsion.store.mapper.StockMapper;
+import com.transsion.store.service.ConfigurationService;
 import com.transsion.store.service.StockCurrentService;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
 import com.transsion.store.utils.ExcelUtils;
+import com.transsion.store.utils.JacksonUtil;
 
 @Service("stockManager")
 public class StockManager {
 	Logger logger = LoggerFactory.getLogger(StockManager.class);
 	
 	private static final String STOCK_UPLOAD_FLAG ="STOCK_UPLOAD_";
+	public static final String SAVE_STOCK_URL = "save.stock.url";
 	
 	private static final long STOCK_UPLOAD_CAHCE_TIME =600;
 	
@@ -61,6 +66,8 @@ public class StockManager {
 	private StockCurrentMapper stockCurrentMapper;
 	@Autowired
 	private ProducerService producerService;
+	@Autowired
+	private ConfigurationService configurationService;
 	
 	/**
 	 * 保存库存上报记录
@@ -211,22 +218,22 @@ public class StockManager {
 				tCurrentStock.setModelMatCode(stockDto.getModelMatCode());
 				tCurrentStock.setDealerId(dealerId);
 				tCurrentStock.setUserId(userId);
-				tCurrentStock.setfQty(stockDto.getFqty());
+				tCurrentStock.setFqty(stockDto.getFqty());
 				tCurrentStock.setFdate(dateStr);
 				
-				List<StockCurrent> list = stockCurrentService.queryByProperty(tCurrentStock);
+				List<StockCurrent> list = stockCurrentService.listByProperty(tCurrentStock);
 				if (list != null && list.size() > 0) {
 					for (int i = 0; i < list.size(); i++) {
 						if (stockDto.getIsDelete() != null) { // 删除库存
 							tCurrentStock.setIsDelete(stockDto.getIsDelete());
-							tCurrentStock.setUpdateBy(userId);
-							tCurrentStock.setUpdateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-							stockCurrentService.updateByPorp(tCurrentStock);
+							tCurrentStock.setUpdatedBy(userId);
+							tCurrentStock.setUpdatedTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+							stockCurrentService.update(tCurrentStock);
 						} else {
 							tCurrentStock.setIsDelete(0);
-							tCurrentStock.setUpdateBy(userId);
-							tCurrentStock.setUpdateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-							stockCurrentService.updateByPorp(tCurrentStock);
+							tCurrentStock.setUpdatedBy(userId);
+							tCurrentStock.setUpdatedTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+							stockCurrentService.update(tCurrentStock);
 						}
 					}
 				} else {
@@ -237,8 +244,8 @@ public class StockManager {
 							tCurrentStock.setFdate(stockDtoList.get(0).getFdate());
 						}
 						tCurrentStock.setIsDelete(0);
-						tCurrentStock.setCreateBy(userId);
-						tCurrentStock.setCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+						tCurrentStock.setCreatedBy(userId);
+						tCurrentStock.setCreatedTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 						currentStockList.add(tCurrentStock);
 					}
 				}
@@ -271,7 +278,7 @@ public class StockManager {
 			shopstockMain.setUpdatedBy(userId.toString());
 			shopstockMain.setUpdatedTime(dateStr);
 			shopstockMain.setVersion(0);
-			//tShopstockMainService.save(shopstockMain);
+			// stockMapper.save(shopstockMain);
 			
 			for (StockDto stockDto : stockDtoList) {
 				StockItem stockDetail = new StockItem();
@@ -296,20 +303,37 @@ public class StockManager {
 				stockDetails.add(stockDetail);
 				lineId++;
 			}
+			
+			// stockItemMapper.batchSaveOrUpdate(stockDetails);
+			
 //			tShopstockDetailService.saveStockDetailUpload(stockDetails);
 
 			if (currentStockList != null && currentStockList.size() > 0) {
-				stockCurrentService.saveTCurrentStockList(currentStockList);
+				stockCurrentService.batchSaveOrUpdate(currentStockList);
 			}
 			
-			// send message to job
-			HashMap<String, Object> messages = new HashMap<String, Object>();
-			messages.put("method", "kom.insertShopStock");
-			messages.put("stockDetails", stockDetails);
-			messages.put("stockMain", shopstockMain);
-			logger.info("stockSave  start message...");
-//			messageSevice.sendMessages(messages);
-			stockResponseDto.setStatus(1);
+			long mqStartTime = System.currentTimeMillis();
+			
+			StockSpeDto stockSpeDto = new StockSpeDto();
+			
+			stockSpeDto.setStock(shopstockMain);
+			stockSpeDto.setStockItems(stockDetails);
+			stockSpeDto.setAuthorization(token);
+			
+			String importTask = configurationService.getValueByName(SAVE_STOCK_URL);
+			
+			TaskMessage msg = new TaskMessage();
+			msg.setInvokerType(TaskInvokerInfo.Type.REST);
+			msg.setMethod(TaskInvokerInfo.RestMethod.POST.toString());
+			// DTO转成JSON
+			msg.setParams(JacksonUtil.toJSON(stockSpeDto));
+			msg.setBeanName(importTask);
+			msg.setName("saveStock");
+			msg.setKey("saveStock_" + System.currentTimeMillis());
+			producerService.sendMessage(msg);
+			long mqEndTime = System.currentTimeMillis();
+			logger.debug("send mq message time is:" + (mqEndTime - mqStartTime));
+			
 		}
 		logger.info("stockSave end:" + stockResponseDto);
 		
@@ -320,51 +344,176 @@ public class StockManager {
 	
 	/**
 	 * 根据销量减库存
-	 * @param tshopSaleDto
+	 * @param saleDtoJson
 	 * @param token
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void updateCurStockBySale(SaleDto saleDto, String token) throws ServiceException {
+	public void updateCurStockBySale(String saleDtoJson) throws ServiceException {
 		
 		/*1.根据sale得到对应的stock，stock减少，时间戳更新stockdate, 
 		 * 2.根据 表T_SALE_ITEM: SHOP_ID, BRAND_CODE, MODEL_CODE查询stockcurrent记录
 		 * SHOP_IDT_STOCK_CURRENT 表：DEALER_ID， BRAND_CODE， MODEL_MAT_CODE获取
 		 * 更新T_STOCK_CURRENT表.发送库存消息
 		*/
+		SaleDto saleDto = JacksonUtil.fromJSON(saleDtoJson, SaleDto.class);
 		
 		if (saleDto != null) {
-			Sale sale = saleDto.getSale();
-			List<SaleItem> shopItems = saleDto.getSaleItems();
 			
-			if (sale != null && shopItems != null) {
+			String token = saleDto.getAuthorization();
+			
+			validateToken(token);
+			UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+			if (UtilHelper.isEmpty(userContext)) {
+				throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+			}
+			if (UtilHelper.isEmpty(userContext.getUser())) {
+				throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+			}
+			if (UtilHelper.isEmpty(userContext.getShop())) {
+				throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+			}
+			
+			Sale sale = saleDto.getSale();
+			List<SaleItem> saleItems = saleDto.getSaleItems();
+			
+			if (sale != null && saleItems != null) {
 				List<StockCurrent> stockCurrents = new ArrayList<StockCurrent>();
 				StockCurrent stockCurrentExp = new StockCurrent();
 				stockCurrentExp.setDealerId(sale.getShopId());
 				
 				stockCurrents = stockCurrentMapper.listByProperty(stockCurrentExp);
 				
-				for (StockCurrent stockCurrent : stockCurrents) {
-					for (SaleItem saleItem :shopItems) {
-						// 销量品牌，机型与库存品牌，机型一致，则修改库存
-						if (stockCurrent.getBrandCode().equals(saleItem.getBrandCode()) 
-								&& stockCurrent.getModelMatCode().equals(saleItem.getModelCode())) {
-							stockCurrent.setfQty(stockCurrent.getfQty().subtract(saleItem.getSaleQty()));
+				if (stockCurrents != null && stockCurrents.size() > 0) {
+					for (StockCurrent stockCurrent : stockCurrents) {
+						for (SaleItem saleItem :saleItems) {
+							// 销量品牌，机型与库存品牌，机型一致，则修改库存
+							if (stockCurrent.getBrandCode() != null && saleItem.getBrandCode() != null
+									&& stockCurrent.getModelMatCode() != null && saleItem.getModelCode() != null
+									&& stockCurrent.getBrandCode().equals(saleItem.getBrandCode()) 
+									&& stockCurrent.getModelMatCode().equals(saleItem.getModelCode())) {
+								stockCurrent.setFqty(stockCurrent.getFqty().subtract(saleItem.getSaleQty()));
+							}
 						}
+						stockCurrent.setUpdatedTime(systemDateService.getCurrentDate());
 					}
-					stockCurrent.setUpdateTime(systemDateService.getCurrentDate());
+					
+					stockCurrentMapper.batchSaveOrUpdate(stockCurrents);
 				}
-
-				stockCurrentMapper.batchSaveOrUpdate(stockCurrents);
-				/*// 发送消息
-				HashMap<String, Object> messages = new HashMap<String, Object>();
-				messages.put("method", "kom.updateCurStockBySale");
-				messages.put("stockCurrent", stockCurrents);
-				logger.info("stockCurrentUpdate  start message...");
+				
+				// 发送MQ
+				long mqStartTime = System.currentTimeMillis();
+				StockSpeDto stockSpeDto = stockCurrTostockSpeDto(stockCurrents, token);
+				
+				String importTask = configurationService.getValueByName(SAVE_STOCK_URL);
 				
 				TaskMessage msg = new TaskMessage();
-				msg.setParams(messages);
-				producerService.sendMessage(msg);*/
+				msg.setInvokerType(TaskInvokerInfo.Type.REST);
+				msg.setMethod(TaskInvokerInfo.RestMethod.POST.toString());
+				// DTO转成JSON
+				msg.setParams(JacksonUtil.toJSON(stockSpeDto));
+				msg.setBeanName(importTask);
+				msg.setName("saveStock");
+				msg.setKey("saveStock_" + System.currentTimeMillis());
+				producerService.sendMessage(msg);
+				long mqEndTime = System.currentTimeMillis();
+				logger.debug("send mq message time is:" + (mqEndTime - mqStartTime));
+			}
+		}
+	}
+	
+	/**
+	 * stockCurrents转成stock, stockItems
+	 * @param stockCurrents
+	 * @param token
+	 * @return
+	 * @throws ServiceException 
+	 */
+	private StockSpeDto stockCurrTostockSpeDto(List<StockCurrent> stockCurrents, String token) throws ServiceException {
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		Integer companyId = userContext.getUser().getCompanyId();
+		Integer userId = userContext.getUser().getId().intValue();
+		String userCode = userContext.getUser().getUserCode();
+		StockSpeDto stockSpeDto = new StockSpeDto();
+		
+		if (stockCurrents != null && stockCurrents.size() > 0) {
+			Integer dealerId = stockCurrents.get(0).getDealerId();
+			Stock stock = new Stock();
+			
+			stock.setBillno("");
+			stock.setCompanyId(companyId);
+			stock.setShopId(dealerId);
+			stock.setStatus(24030005);
+			stock.setStockDate(systemDateService.getCurrentDate());
+			stock.setTrantype(24020005);
+			stock.setUserCode(userCode);
+			stock.setUserId(userId);
+			
+			String werks = userContext.getShop().getWerks();
+			if (!UtilHelper.isEmpty(werks)) {
+				stock.setWerks(werks);
+			}
+			BigDecimal ratio = currencyMapper.queryCurrencyRatio(dealerId.intValue(),companyId);
+			if (!UtilHelper.isEmpty(ratio)) {
+				stock.setCurrencyRatio(ratio);
+			}
+			
+			int lineId = 1;
+			List<StockItem> stockItems = new ArrayList<StockItem>();
+			for (StockCurrent stockCurrent : stockCurrents) {
+				StockItem stockItem = new StockItem();
+				
+				stockItem.setBillno(" ");
+				stockItem.setBrandCode(stockCurrent.getBrandCode());
+				stockItem.setCompanyId(companyId);
+				stockItem.setLineId(lineId);
+				stockItem.setModelCode(stockCurrent.getModelMatCode());
+				stockItem.setQty(stockCurrent.getFqty());
+				
+				lineId++;
+				stockItems.add(stockItem);
+			}
+			
+			stockSpeDto.setStock(stock);
+			stockSpeDto.setStockItems(stockItems);
+			stockSpeDto.setAuthorization(token);
+		}
+		
+		return stockSpeDto;
+	}
+	
+	/**
+	 * 保存stock,stockItem
+	 * @param stockSpeDtoJson
+	 * @param token
+	 * @throws ServiceException
+	 */
+	public void saveStockSpeDto(String stockSpeDtoJson) throws ServiceException {
+		StockSpeDto stockSpeDto = JacksonUtil.fromJSON(stockSpeDtoJson, StockSpeDto.class);
+		Stock stock = stockSpeDto.getStock();
+		List<StockItem> stockItems = stockSpeDto.getStockItems();
+		
+		if (stock != null) {
+			stockMapper.save(stock);
+			
+			StockItem stockItemExp = new StockItem();
+			stockItemExp.setStockId(stock.getId());
+			
+			List<StockItem> oldStockItems = stockItemMapper.listByProperty(stockItemExp);
+			// 现有items置成历史
+			if (oldStockItems != null && oldStockItems.size() > 0) {
+				for (StockItem stockItem : oldStockItems) {
+					stockItem.setIshistory(1);
+				}
+				stockItemMapper.batchSaveOrUpdate(oldStockItems);
+			}
+			// 插入新的items
+			if (stockItems != null && stockItems.size() > 0) {
+				for (StockItem stockItem : stockItems) {
+					stockItem.setStockId(stock.getId());
+					stockItem.setIshistory(0);
+				}
+				stockItemMapper.batchSaveOrUpdate(stockItems);
 			}
 		}
 	}
@@ -417,23 +566,23 @@ public class StockManager {
 	public List<StockDto> findStocksByProp(String token, Integer shopId, String startDate, String endDate,
 					String model) throws ServiceException {
 				validateToken(token);
-				if (UtilHelper.isEmpty(startDate)) {
-					throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
-				}
-				UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
-				if (UtilHelper.isEmpty(userContext)) {
-					throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
-				}
-				if (UtilHelper.isEmpty(userContext.getUser())) {
-					throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
-				}
-				// 获取token里的用户信息
-				Integer userId = userContext.getUser().getId().intValue();
-				if (UtilHelper.isEmpty(userId)) {
-					throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
-				}
-				return stockMapper.findStocksByProp(shopId, startDate, endDate, model, userId);
-			}
+		if (UtilHelper.isEmpty(startDate)) {
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		if (UtilHelper.isEmpty(userContext)) {
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		if (UtilHelper.isEmpty(userContext.getUser())) {
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		// 获取token里的用户信息
+		Integer userId = userContext.getUser().getId().intValue();
+		if (UtilHelper.isEmpty(userId)) {
+			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
+		}
+		return stockMapper.findStocksByProp(shopId, startDate, endDate, model, userId);
+	}
 	
 	public List<StockDto> findCurrentStockByProp(String token, Integer shopId) throws ServiceException {
 		validateToken(token);

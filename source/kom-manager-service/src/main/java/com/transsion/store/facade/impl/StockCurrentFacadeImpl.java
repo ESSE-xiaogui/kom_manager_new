@@ -34,7 +34,7 @@ public class StockCurrentFacadeImpl implements TStockCurrentFacade {
 	public List<StockCurrent> queryByProperty(StockCurrent tCurrentStock)
 			throws ServiceException
 	{
-		return tStockCurrentService.queryByProperty(tCurrentStock);
+		return tStockCurrentService.listByProperty(tCurrentStock);
 	}
 	
 	/**
@@ -50,12 +50,12 @@ public class StockCurrentFacadeImpl implements TStockCurrentFacade {
 	
 	@Override
 	public void saveTCurrentStockList(List<StockCurrent> list) throws ServiceException {
-		tStockCurrentService.saveTCurrentStockList(list);
+		tStockCurrentService.batchSaveOrUpdate(list);
 	}
 
 	@Override
 	public int updateByPorp(StockCurrent tCurrentStock) throws ServiceException {
-		return tStockCurrentService.updateByPorp(tCurrentStock);
+		return tStockCurrentService.update(tCurrentStock);
 	}
 
 	@Override

@@ -44,7 +44,6 @@ import com.shangkang.core.dto.RequestModel;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Stock;
-import com.transsion.store.dto.SaleDto;
 import com.transsion.store.dto.StockDto;
 import com.transsion.store.dto.StockInfoDto;
 import com.transsion.store.dto.StockResponseDto;
@@ -199,19 +198,29 @@ public class StockController extends AbstractController{
 		return stockFacade.findCurrentStockByProp(token, shopId);
 	}
 	
-	
 	/**
 	 * 根据销量减库存
-	 * 
-	 * @return
+	 * @param saleDtoJson
 	 * @throws ServiceException
 	 */
 	@POST
 	@Path("/updateCurStockBySale")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public void updateCurStockBySale(SaleDto saleDto) throws ServiceException {
-		stockFacade.updateCurStockBySale(saleDto, this.getAuthorization());
+	public void updateCurStockBySale(String saleDtoJson) throws ServiceException {
+		stockFacade.updateCurStockBySale(saleDtoJson);
+	}
+	/**
+	 * 保存stock,stockItem
+	 * @param stockSpeDtoJson
+	 * @throws ServiceException
+	 */
+	@POST
+	@Path("/saveStockSpeDto")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public void saveStockSpeDto(String stockSpeDtoJson) throws ServiceException {
+		stockFacade.saveStockSpeDto(stockSpeDtoJson);
 	}
 	
 	/**

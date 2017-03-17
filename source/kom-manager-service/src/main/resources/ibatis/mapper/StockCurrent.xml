@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <!-- 
  **
- * COPYRIGHT (C) 2016 Liuzh. ALL RIGHTS RESERVED.
+ * COPYRIGHT (C) 2017 Liuzh. ALL RIGHTS RESERVED.
  *
  * No part of this publication may be reproduced, stored in a retrieval system,
  * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
  * recording, or otherwise, without the prior written permission of Liuzh.
  *
  * Created By: Liuzh
- * Created On: 2016-5-27 15:55:53
+ * Created On: 2017-3-16 20:05:25
  *
  * Amendment History:
  * 
@@ -19,18 +19,18 @@
  -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.transsion.store.mapper.StockCurrentMapper">
-	<resultMap id="StockCurrentMapper" type="StockCurrent">
+	<resultMap id="StockCurrentResultMapper" type="StockCurrent">
 		<result column="ID" property="id"/>
 		<result column="DEALER_ID" property="dealerId"/>
 		<result column="FDATE" property="fdate"/>
 		<result column="USER_ID" property="userId"/>
 		<result column="BRAND_CODE" property="brandCode"/>
 		<result column="MODEL_MAT_CODE" property="modelMatCode"/>
-		<result column="FQTY" property="fQty"/>
-		<result column="CREATED_BY" property="createBy"/>
-		<result column="CREATED_TIME" property="createTime"/>
-		<result column="UPDATED_BY" property="updateBy"/>
-		<result column="UPDATED_TIME" property="updateTime"/>
+		<result column="FQTY" property="fqty"/>
+		<result column="CREATED_BY" property="createdBy"/>
+		<result column="CREATED_TIME" property="createdTime"/>
+		<result column="UPDATED_BY" property="updatedBy"/>
+		<result column="UPDATED_TIME" property="updatedTime"/>
 		<result column="IS_DELETE" property="isDelete"/>
 	</resultMap>
 	<resultMap id="PromoterStockResultMapper" type="StockDto">
@@ -40,52 +40,329 @@
 		<result column="DEALER_ID" property="dealerId"/>
 	</resultMap>
 	
-	<select id="queryByProperty" parameterType="StockCurrent" resultMap="StockCurrentMapper">
-		SELECT * FROM T_STOCK_CURRENT WHERE DEALER_ID = #{dealerId} AND BRAND_CODE = #{brandCode} AND MODEL_MAT_CODE = #{modelMatCode} 
-	</select>
+	<sql id="commonColumns">
+		 ID
+		, DEALER_ID
+		, FDATE
+		, USER_ID
+		, BRAND_CODE
+		, MODEL_MAT_CODE
+		, FQTY
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, IS_DELETE
+	</sql>
+
+	<sql id="commonColumnsNotPK">
+		 DEALER_ID
+		, FDATE
+		, USER_ID
+		, BRAND_CODE
+		, MODEL_MAT_CODE
+		, FQTY
+		, CREATED_BY
+		, CREATED_TIME
+		, UPDATED_BY
+		, UPDATED_TIME
+		, IS_DELETE
+	</sql>
 	
-	<select id="listByProperty" parameterType="StockCurrent" resultMap="StockCurrentMapper">
-		SELECT COUNT(*) FROM T_STOCK_CURRENT WHERE DEALER_ID = #{dealerId} AND BRAND_CODE = #{brandCode} AND MODEL_MAT_CODE = #{modelMatCode} 
-	</select>
+	<sql id="commonProcessDateColumns">
+		 ID
+		, DEALER_ID
+		, FDATE
+		, USER_ID
+		, BRAND_CODE
+		, MODEL_MAT_CODE
+		, FQTY
+		, CREATED_BY
+		, date_format(CREATED_TIME, '%Y-%m-%d %H:%i:%s') CREATED_TIME
+		, UPDATED_BY
+		, date_format(UPDATED_TIME, '%Y-%m-%d %H:%i:%s') UPDATED_TIME
+		, IS_DELETE
+	</sql>
 	
-	<update id="updateByProp" parameterType="StockCurrent">
-		UPDATE T_STOCK_CURRENT SET FDATE = #{fdate}, USER_ID = #{userId}, FQTY = #{fQty}, UPDATED_BY = #{updateBy}, UPDATED_TIME = #{updateTime}, IS_DELETE = #{isDelete} WHERE DEALER_ID = #{dealerId} AND BRAND_CODE = #{brandCode} AND MODEL_MAT_CODE = #{modelMatCode}
-	</update>
-	
-	<insert id="saveTCurrentStockList" parameterType="java.util.List">
-		INSERT INTO T_STOCK_CURRENT (
-			DEALER_ID,
-			FDATE,
-			USER_ID,
-			BRAND_CODE,
-			MODEL_MAT_CODE,
-			FQTY,
-			CREATED_BY,
-			CREATED_TIME,
-			IS_DELETE
-		) VALUES
-		<foreach collection="list" item="item" index="index"
-			separator=",">
-			(
-			#{item.dealerId}
-			,#{item.fdate}
-			,#{item.userId}
-			,#{item.brandCode}
-			,#{item.modelMatCode}
-			,#{item.fQty}
-			,#{item.createBy}
-			,#{item.createTime}
-			,#{item.isDelete}
-			)
-		</foreach>
+	<sql id="commonCondition">
+		<if test="id!= null and id!= ''"> 
+			AND ID = #{id}
+		</if>
+		<if test="dealerId!= null and dealerId!= ''"> 
+			AND DEALER_ID = #{dealerId}
+		</if>
+		<if test="fdate!= null and fdate!= ''"> 
+			AND FDATE = #{fdate}
+		</if>
+		<if test="userId!= null and userId!= ''"> 
+			AND USER_ID = #{userId}
+		</if>
+		<if test="brandCode!= null and brandCode!= ''"> 
+			AND BRAND_CODE = #{brandCode}
+		</if>
+		<if test="modelMatCode!= null and modelMatCode!= ''"> 
+			AND MODEL_MAT_CODE = #{modelMatCode}
+		</if>
+		<if test="fqty!= null and fqty!= ''"> 
+			AND FQTY = #{fqty}
+		</if>
+		<if test="createdBy!= null and createdBy!= ''"> 
+			AND CREATED_BY = #{createdBy}
+		</if>
+		<if test="createdTime!= null and createdTime!= ''"> 
+			AND CREATED_TIME = str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="updatedBy!= null and updatedBy!= ''"> 
+			AND UPDATED_BY = #{updatedBy}
+		</if>
+		<if test="updatedTime!= null and updatedTime!= ''"> 
+			AND UPDATED_TIME = str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="isDelete!= null and isDelete!= ''"> 
+			AND IS_DELETE = #{isDelete}
+		</if>
+	</sql>
+
+	<sql id="commonConditionByPrefix">
+		<if test="stockCurrent != null">
+            <if test="stockCurrent.id!= null and stockCurrent.id!= ''">
+				AND ID = #{stockCurrent.id}
+            </if>
+            <if test="stockCurrent.dealerId!= null and stockCurrent.dealerId!= ''">
+				AND DEALER_ID = #{stockCurrent.dealerId}
+            </if>
+            <if test="stockCurrent.fdate!= null and stockCurrent.fdate!= ''">
+				AND FDATE = #{stockCurrent.fdate}
+            </if>
+            <if test="stockCurrent.userId!= null and stockCurrent.userId!= ''">
+				AND USER_ID = #{stockCurrent.userId}
+            </if>
+            <if test="stockCurrent.brandCode!= null and stockCurrent.brandCode!= ''">
+				AND BRAND_CODE = #{stockCurrent.brandCode}
+            </if>
+            <if test="stockCurrent.modelMatCode!= null and stockCurrent.modelMatCode!= ''">
+				AND MODEL_MAT_CODE = #{stockCurrent.modelMatCode}
+            </if>
+            <if test="stockCurrent.fqty!= null and stockCurrent.fqty!= ''">
+				AND FQTY = #{stockCurrent.fqty}
+            </if>
+            <if test="stockCurrent.createdBy!= null and stockCurrent.createdBy!= ''">
+				AND CREATED_BY = #{stockCurrent.createdBy}
+            </if>
+            <if test="stockCurrent.createdTime!= null and stockCurrent.createdTime!= ''">
+				AND CREATED_TIME = str_to_date(#{stockCurrent.createdTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="stockCurrent.updatedBy!= null and stockCurrent.updatedBy!= ''">
+				AND UPDATED_BY = #{stockCurrent.updatedBy}
+            </if>
+            <if test="stockCurrent.updatedTime!= null and stockCurrent.updatedTime!= ''">
+				AND UPDATED_TIME = str_to_date(#{stockCurrent.updatedTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="stockCurrent.isDelete!= null and stockCurrent.isDelete!= ''">
+				AND IS_DELETE = #{stockCurrent.isDelete}
+            </if>
+        </if>
+    </sql>
+
+	<sql id="orderByClause">
+		<if test="orderBy != null">
+			<foreach collection="orderBy" index="key" item="value"
+					 open=" order by " separator="," close=" ">
+				<include refid="orderBy" />
+			</foreach>
+		</if>
+	</sql>
+
+	<sql id="orderBy">
+		<choose>
+        	<when test="key == 'id'">
+				ID ${value}
+            </when>
+        	<when test="key == 'dealerId'">
+				DEALER_ID ${value}
+            </when>
+        	<when test="key == 'fdate'">
+				FDATE ${value}
+            </when>
+        	<when test="key == 'userId'">
+				USER_ID ${value}
+            </when>
+        	<when test="key == 'brandCode'">
+				BRAND_CODE ${value}
+            </when>
+        	<when test="key == 'modelMatCode'">
+				MODEL_MAT_CODE ${value}
+            </when>
+        	<when test="key == 'fqty'">
+				FQTY ${value}
+            </when>
+        	<when test="key == 'createdBy'">
+				CREATED_BY ${value}
+            </when>
+        	<when test="key == 'createdTime'">
+				CREATED_TIME ${value}
+            </when>
+        	<when test="key == 'updatedBy'">
+				UPDATED_BY ${value}
+            </when>
+        	<when test="key == 'updatedTime'">
+				UPDATED_TIME ${value}
+            </when>
+        	<when test="key == 'isDelete'">
+				IS_DELETE ${value}
+            </when>
+		</choose>
+	</sql>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="StockCurrent">
+		<![CDATA[ INSERT INTO T_STOCK_CURRENT ( ]]>
+		<include refid="commonColumnsNotPK"/>
+		<![CDATA[
+			) VALUES ( 
+			 #{dealerId}
+			, #{fdate}
+			, #{userId}
+			, #{brandCode}
+			, #{modelMatCode}
+			, #{fqty}
+			, #{createdBy}
+			, str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, #{isDelete}
+  ) ]]>
 	</insert>
+	<update id="update" parameterType="StockCurrent">
+		<![CDATA[ UPDATE T_STOCK_CURRENT SET 
+			 ID = #{id}
+			, DEALER_ID = #{dealerId}
+			, FDATE = #{fdate}
+			, USER_ID = #{userId}
+			, BRAND_CODE = #{brandCode}
+			, MODEL_MAT_CODE = #{modelMatCode}
+			, FQTY = #{fqty}
+			, CREATED_BY = #{createdBy}
+			, CREATED_TIME = str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, UPDATED_BY = #{updatedBy}
+			, UPDATED_TIME = str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, IS_DELETE = #{isDelete}
+		WHERE ID = #{id}  ]]>
+	</update>
+	<insert id="saveOrUpdate" parameterType="Brand">
+		<![CDATA[ INSERT INTO T_STOCK_CURRENT ( ]]>
+		<include refid="commonColumns"/>
+		<![CDATA[
+		) VALUES (
+			 #{id}
+			, #{dealerId}
+			, #{fdate}
+			, #{userId}
+			, #{brandCode}
+			, #{modelMatCode}
+			, #{fqty}
+			, #{createdBy}
+			, str_to_date(#{createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{updatedBy}
+			, str_to_date(#{updatedTime},'%Y-%m-%d %H:%i:%s')
+			, #{isDelete}
+		) ON DUPLICATE KEY UPDATE
+			 ID = VALUES(ID)
+			, DEALER_ID = VALUES(DEALER_ID)
+			, FDATE = VALUES(FDATE)
+			, USER_ID = VALUES(USER_ID)
+			, BRAND_CODE = VALUES(BRAND_CODE)
+			, MODEL_MAT_CODE = VALUES(MODEL_MAT_CODE)
+			, FQTY = VALUES(FQTY)
+			, CREATED_BY = VALUES(CREATED_BY)
+			, CREATED_TIME = VALUES(CREATED_TIME)
+			, UPDATED_BY = VALUES(UPDATED_BY)
+			, UPDATED_TIME = VALUES(UPDATED_TIME)
+			, IS_DELETE = VALUES(IS_DELETE)
+		]]>
+	</insert>
+	<insert id="batchSaveOrUpdate" parameterType="List">
+		<![CDATA[ INSERT INTO T_STOCK_CURRENT ( ]]>
+		<include refid="commonColumns"/>
+		<![CDATA[ ) VALUES ]]>
+        <foreach collection="list" item="item" index="index" separator=",">
+			(
+			 #{item.id}
+			, #{item.dealerId}
+			, #{item.fdate}
+			, #{item.userId}
+			, #{item.brandCode}
+			, #{item.modelMatCode}
+			, #{item.fqty}
+			, #{item.createdBy}
+			, str_to_date(#{item.createdTime},'%Y-%m-%d %H:%i:%s')
+			, #{item.updatedBy}
+			, str_to_date(#{item.updatedTime},'%Y-%m-%d %H:%i:%s')
+			, #{item.isDelete}
+        	)
+        </foreach>
+        <![CDATA[ ON DUPLICATE KEY UPDATE
+		 ID = VALUES(ID)
+		, DEALER_ID = VALUES(DEALER_ID)
+		, FDATE = VALUES(FDATE)
+		, USER_ID = VALUES(USER_ID)
+		, BRAND_CODE = VALUES(BRAND_CODE)
+		, MODEL_MAT_CODE = VALUES(MODEL_MAT_CODE)
+		, FQTY = VALUES(FQTY)
+		, CREATED_BY = VALUES(CREATED_BY)
+		, CREATED_TIME = VALUES(CREATED_TIME)
+		, UPDATED_BY = VALUES(UPDATED_BY)
+		, UPDATED_TIME = VALUES(UPDATED_TIME)
+		, IS_DELETE = VALUES(IS_DELETE)
+		]]>
+	</insert>
+	<delete id="deleteByPK" parameterType="java.lang.Long">
+		<![CDATA[ DELETE FROM T_STOCK_CURRENT WHERE ID = #{id}  ]]>
+	</delete>
+	<delete id="deleteByPKeys" parameterType="map">
+		DELETE FROM T_STOCK_CURRENT WHERE
+		<foreach collection="primaryKeys" index="index" item="id"
+			open=" ID IN(" separator="," close=") ">
+			#{id}
+		</foreach>
+	</delete>
+	<delete id="deleteByProperty" parameterType="StockCurrent">
+		DELETE FROM T_STOCK_CURRENT WHERE 1 = 1
+		<include refid="commonCondition"/>
+	</delete>
+	<select id="getByPK" parameterType="java.lang.Long" resultMap="StockCurrentResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+		FROM T_STOCK_CURRENT WHERE ID = #{id}  
+	</select>
+	<select id="list" resultMap="StockCurrentResultMapper">
+		<![CDATA[ SELECT ]]>
+			 <include refid="commonProcessDateColumns"/>
+ 		FROM T_STOCK_CURRENT
+	</select>
+	<select id="listByProperty" parameterType="StockCurrent" resultMap="StockCurrentResultMapper">
+		<![CDATA[ SELECT ]]>
+			<include refid="commonProcessDateColumns"/>
+		FROM T_STOCK_CURRENT WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
+	<select id="listPaginationByProperty" parameterType="StockCurrent" resultMap="StockCurrentResultMapper">
+		SELECT 
+		<include refid="commonProcessDateColumns"/>
+		FROM T_STOCK_CURRENT WHERE 1=1
+    	<include refid="commonConditionByPrefix"/>
+    	<include refid="orderByClause" />
+	</select>
+	<select id="findByCount" parameterType="StockCurrent" resultType="int">
+		SELECT count(1) AS totalcount FROM T_STOCK_CURRENT WHERE 1=1 
+		<include refid="commonCondition"/>
+	</select>
 	
 	<select id="findCurrentStockByProp" resultMap="PromoterStockResultMapper">
 		SELECT FDATE, UPPER(BRAND_CODE) AS BRAND_CODE, MODEL_MAT_CODE, DEALER_ID, MAX(FQTY) AS FQTY, FDATE FROM T_STOCK_CURRENT WHERE DEALER_ID = #{dealerId}  
 		AND BRAND_CODE = 'TECNO' AND IS_DELETE = 0 GROUP BY FDATE, BRAND_CODE, MODEL_MAT_CODE ORDER BY FDATE DESC
 	</select>
 	
-	<select id="queryCurrentStockFromTShopStockDetail" parameterType="java.lang.String" resultMap="StockCurrentMapper">
+	<select id="queryCurrentStockFromTShopStockDetail" parameterType="java.lang.String" resultMap="StockCurrentResultMapper">
 		SELECT 
 			d.ID,
 			d.DEALER_ID, 

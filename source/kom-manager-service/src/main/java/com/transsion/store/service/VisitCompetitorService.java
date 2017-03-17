@@ -132,6 +132,16 @@ public class VisitCompetitorService {
 	{
 		visitCompetitorMapper.save(visitCompetitor);
 	}
+	
+	/**
+	 * 批量新增修改
+	 * @param visitCompetitors
+	 * @return
+	 * @throws ServiceException
+	 */
+	public int batchSaveOrUpdate(List<VisitCompetitor> visitCompetitors) throws ServiceException {
+		return visitCompetitorMapper.batchSaveOrUpdate(visitCompetitors);
+	}
 
 	/**
 	 * 更新记录

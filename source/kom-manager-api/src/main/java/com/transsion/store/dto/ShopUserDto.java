@@ -39,7 +39,11 @@ public class ShopUserDto implements Serializable{
 	 * 店铺最后访问时间
 	 * */
 	private String lastVisitDate;
-
+	
+	/**
+	 * 当前月访问次数
+	 * */
+	private Integer monthVisitCount;
 
 	public Long getId() {
 		return id;
@@ -89,6 +93,14 @@ public class ShopUserDto implements Serializable{
 		this.lastVisitDate = lastVisitDate;
 	}
 	
+	public Integer getMonthVisitCount() {
+		return monthVisitCount;
+	}
+
+	public void setMonthVisitCount(Integer monthVisitCount) {
+		this.monthVisitCount = monthVisitCount;
+	}
+
 	@Override
 	public String toString() {
 		return "ShopUserDto [id=" + id + ", shopId=" + shopId + ", shopName=" + shopName + ", cityId=" + cityId

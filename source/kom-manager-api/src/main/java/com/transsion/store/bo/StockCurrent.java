@@ -1,107 +1,298 @@
+/**
+ * COPYRIGHT (C) 2017 Liuzh. ALL RIGHTS RESERVED.
+ *
+ * No part of this publication may be reproduced, stored in a retrieval system,
+ * or transmitted, on any form or by any means, electronic, mechanical, photocopying,
+ * recording, or otherwise, without the prior written permission of Liuzh.
+ *
+ * Created By: Liuzh
+ * Created On: 2017-3-16 20:05:25
+ *
+ * Amendment History:
+ * 
+ * Amended By       Amended On      Amendment Description
+ * ------------     -----------     ---------------------------------------------
+ *
+ **/
 package com.transsion.store.bo;
-
-import java.math.BigDecimal;
 
 import com.shangkang.core.bo.Model;
 
-public class StockCurrent extends Model {
+public class StockCurrent extends Model{
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2032714110157021965L;
+	private static final long	serialVersionUID	= 1L;
 	
-	private long id;
-	private Integer dealerId;
-	private String fdate;
-	private Integer userId;
-	private String brandCode;
-	private String modelMatCode;
-	private BigDecimal fQty;
-	private Integer createBy;
-	private String createTime;
-	private Integer updateBy;
-	private String updateTime;
-	private Integer isDelete;
-	
-	public long getId() {
+	/**
+	  *	
+	  */
+	private java.lang.Long id;
+
+	/**
+	  *	
+	  */
+	private java.lang.Integer dealerId;
+
+	/**
+	  *	
+	  */
+	private java.lang.String fdate;
+
+	/**
+	  *	
+	  */
+	private java.lang.Integer userId;
+
+	/**
+	  *	
+	  */
+	private java.lang.String brandCode;
+
+	/**
+	  *	
+	  */
+	private java.lang.String modelMatCode;
+
+	/**
+	  *	
+	  */
+	private java.math.BigDecimal fqty;
+
+	/**
+	  *	
+	  */
+	private java.lang.Integer createdBy;
+
+	/**
+	  *	
+	  */
+	private java.lang.String createdTime;
+
+	/**
+	  *	
+	  */
+	private java.lang.Integer updatedBy;
+
+	/**
+	  *	
+	  */
+	private java.lang.String updatedTime;
+
+	/**
+	  *	
+	  */
+	private java.lang.Integer isDelete;
+
+	/**
+	  *	
+	  */
+	public java.lang.Long getId() 
+	{
 		return id;
 	}
-	public void setId(long id) {
+	
+	/**
+	  *	
+	  */
+	public void setId(java.lang.Long id) 
+	{
 		this.id = id;
 	}
-	public Integer getDealerId() {
+	
+	/**
+	  *	
+	  */
+	public java.lang.Integer getDealerId() 
+	{
 		return dealerId;
 	}
-	public void setDealerId(Integer dealerId) {
+	
+	/**
+	  *	
+	  */
+	public void setDealerId(java.lang.Integer dealerId) 
+	{
 		this.dealerId = dealerId;
 	}
-	public String getFdate() {
+	
+	/**
+	  *	
+	  */
+	public java.lang.String getFdate() 
+	{
 		return fdate;
 	}
-	public void setFdate(String fdate) {
+	
+	/**
+	  *	
+	  */
+	public void setFdate(java.lang.String fdate) 
+	{
 		this.fdate = fdate;
 	}
-	public Integer getUserId() {
+	
+	/**
+	  *	
+	  */
+	public java.lang.Integer getUserId() 
+	{
 		return userId;
 	}
-	public void setUserId(Integer userId) {
+	
+	/**
+	  *	
+	  */
+	public void setUserId(java.lang.Integer userId) 
+	{
 		this.userId = userId;
 	}
-	public String getBrandCode() {
+	
+	/**
+	  *	
+	  */
+	public java.lang.String getBrandCode() 
+	{
 		return brandCode;
 	}
-	public void setBrandCode(String brandCode) {
+	
+	/**
+	  *	
+	  */
+	public void setBrandCode(java.lang.String brandCode) 
+	{
 		this.brandCode = brandCode;
 	}
-	public String getModelMatCode() {
+	
+	/**
+	  *	
+	  */
+	public java.lang.String getModelMatCode() 
+	{
 		return modelMatCode;
 	}
-	public void setModelMatCode(String modelMatCode) {
+	
+	/**
+	  *	
+	  */
+	public void setModelMatCode(java.lang.String modelMatCode) 
+	{
 		this.modelMatCode = modelMatCode;
 	}
-	public BigDecimal getfQty() {
-		return fQty;
+	
+	/**
+	  *	
+	  */
+	public java.math.BigDecimal getFqty() 
+	{
+		return fqty;
 	}
-	public void setfQty(BigDecimal fQty) {
-		this.fQty = fQty;
+	
+	/**
+	  *	
+	  */
+	public void setFqty(java.math.BigDecimal fqty) 
+	{
+		this.fqty = fqty;
 	}
-	public Integer getCreateBy() {
-		return createBy;
+	
+	/**
+	  *	
+	  */
+	public java.lang.Integer getCreatedBy() 
+	{
+		return createdBy;
 	}
-	public void setCreateBy(Integer createBy) {
-		this.createBy = createBy;
+	
+	/**
+	  *	
+	  */
+	public void setCreatedBy(java.lang.Integer createdBy) 
+	{
+		this.createdBy = createdBy;
 	}
-	public String getCreateTime() {
-		return createTime;
+	
+	/**
+	  *	
+	  */
+	public java.lang.String getCreatedTime() 
+	{
+		return createdTime;
 	}
-	public void setCreateTime(String createTime) {
-		this.createTime = createTime;
+	
+	/**
+	  *	
+	  */
+	public void setCreatedTime(java.lang.String createdTime) 
+	{
+		this.createdTime = createdTime;
 	}
-	public Integer getUpdateBy() {
-		return updateBy;
+	
+	/**
+	  *	
+	  */
+	public java.lang.Integer getUpdatedBy() 
+	{
+		return updatedBy;
 	}
-	public void setUpdateBy(Integer updateBy) {
-		this.updateBy = updateBy;
+	
+	/**
+	  *	
+	  */
+	public void setUpdatedBy(java.lang.Integer updatedBy) 
+	{
+		this.updatedBy = updatedBy;
 	}
-	public String getUpdateTime() {
-		return updateTime;
+	
+	/**
+	  *	
+	  */
+	public java.lang.String getUpdatedTime() 
+	{
+		return updatedTime;
 	}
-	public void setUpdateTime(String updateTime) {
-		this.updateTime = updateTime;
+	
+	/**
+	  *	
+	  */
+	public void setUpdatedTime(java.lang.String updatedTime) 
+	{
+		this.updatedTime = updatedTime;
 	}
-	public Integer getIsDelete() {
+	
+	/**
+	  *	
+	  */
+	public java.lang.Integer getIsDelete() 
+	{
 		return isDelete;
 	}
-	public void setIsDelete(Integer isDelete) {
+	
+	/**
+	  *	
+	  */
+	public void setIsDelete(java.lang.Integer isDelete) 
+	{
 		this.isDelete = isDelete;
 	}
 	
-	@Override
-	public String toString() {
-		return "TCurrentStock [id=" + id + ", dealerId=" + dealerId + ", fdate=" + fdate + ", userId=" + userId
-				+ ", brandCode=" + brandCode + ", modelMatCode=" + modelMatCode + ", fQty=" + fQty + ", createBy="
-				+ createBy + ", createTime=" + createTime + ", updateBy=" + updateBy + ", updateTime=" + updateTime
-				+ ", isDelete=" + isDelete + "]";
+	public String toString()
+	{
+		return "StockCurrent [" + 
+					"id=" + id + 
+					", dealerId=" + dealerId + 
+					", fdate=" + fdate + 
+					", userId=" + userId + 
+					", brandCode=" + brandCode + 
+					", modelMatCode=" + modelMatCode + 
+					", fqty=" + fqty + 
+					", createdBy=" + createdBy + 
+					", createdTime=" + createdTime + 
+					", updatedBy=" + updatedBy + 
+					", updatedTime=" + updatedTime + 
+					", isDelete=" + isDelete + 
+				"]";
 	}
 }
+

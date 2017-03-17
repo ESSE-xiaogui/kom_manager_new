@@ -634,4 +634,9 @@
 			AND m.IS_INACTIVE = 1
 			AND  v.ID in (SELECT MAX(ID) FROM T_VISIT WHERE VISTOR = #{visitor} AND COMPANY_ID = #{companyId})
 	</select>
+	
+	<select id="countMonthVisitShopByShopId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM T_VISIT WHERE SHOP_ID = #{shopId} AND DATE_FORMAT(VISIT_DATE, "%Y-%m") = DATE_FORMAT(SYSDATE(), "%Y-%m");
+	</select>
+	
 </mapper>

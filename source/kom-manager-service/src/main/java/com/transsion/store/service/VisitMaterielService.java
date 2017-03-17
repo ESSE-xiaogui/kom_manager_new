@@ -126,6 +126,16 @@ public class VisitMaterielService {
 	{
 		visitMaterielMapper.save(visitMateriel);
 	}
+	
+	/**
+	 * 批量保存更新
+	 * @param visitMateriels
+	 * @return
+	 * @throws ServiceException
+	 */
+	public int batchSaveOrUpdate(List<VisitMateriel> visitMateriels) throws ServiceException {
+		return visitMaterielMapper.batchSaveOrUpdate(visitMateriels);
+	}
 
 	/**
 	 * 更新记录

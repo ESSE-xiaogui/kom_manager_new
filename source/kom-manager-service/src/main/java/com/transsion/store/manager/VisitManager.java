@@ -14,12 +14,17 @@ import org.springframework.stereotype.Service;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Visit;
+import com.transsion.store.bo.VisitCompetitor;
 import com.transsion.store.bo.VisitFeedback;
+import com.transsion.store.bo.VisitMateriel;
+import com.transsion.store.bo.VisitModel;
 import com.transsion.store.bo.VisitModelSetting;
+import com.transsion.store.bo.VisitSale;
 import com.transsion.store.bo.VisitScore;
 import com.transsion.store.bo.VisitScoreItem;
 import com.transsion.store.bo.VisitStock;
 import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.VisitCompetitorDto;
 import com.transsion.store.dto.VisitCompetitorInfoDto;
 import com.transsion.store.dto.VisitDto;
 import com.transsion.store.dto.VisitFeedbackDto;
@@ -27,12 +32,15 @@ import com.transsion.store.dto.VisitHistoryDetailDto;
 import com.transsion.store.dto.VisitHistorySummaryDto;
 import com.transsion.store.dto.VisitInfoDto;
 import com.transsion.store.dto.VisitMaterielDetailDto;
+import com.transsion.store.dto.VisitMaterielDto;
 import com.transsion.store.dto.VisitModelDetailDto;
+import com.transsion.store.dto.VisitModelDto;
 import com.transsion.store.dto.VisitModelStockDto;
 import com.transsion.store.dto.VisitPlanParamDto;
 import com.transsion.store.dto.VisitRecordDto;
 import com.transsion.store.dto.VisitRecordInfoDto;
 import com.transsion.store.dto.VisitSaleDetailDto;
+import com.transsion.store.dto.VisitSaleDto;
 import com.transsion.store.dto.VisitScoreDto;
 import com.transsion.store.dto.VisitScoreInfoDto;
 import com.transsion.store.dto.VisitScoreItemDto;
@@ -48,9 +56,13 @@ import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.VisitMapper;
 import com.transsion.store.mapper.VisitPlanMapper;
 import com.transsion.store.mapper.VisitScoreSettingMapper;
+import com.transsion.store.service.VisitCompetitorService;
 import com.transsion.store.service.VisitFeedbackService;
+import com.transsion.store.service.VisitMaterielService;
+import com.transsion.store.service.VisitModelService;
 import com.transsion.store.service.VisitModelSettingService;
 import com.transsion.store.service.VisitPlanService;
+import com.transsion.store.service.VisitSaleService;
 import com.transsion.store.service.VisitScoreItemService;
 import com.transsion.store.service.VisitScoreService;
 import com.transsion.store.service.VisitService;
@@ -97,6 +109,14 @@ public class VisitManager {
 	
 	@Autowired
 	private VisitPlanMapper visitPlanMapper;
+	@Autowired
+	private VisitSaleService visitSaleService;
+	@Autowired
+	private VisitModelService visitModelService;
+	@Autowired
+	private VisitMaterielService visitMaterielService;
+	@Autowired
+	private VisitCompetitorService visitCompetitorService;
 	
 	public List<VisitInfoDto> queryPlanedVisitList(String token, String planDate) throws ServiceException {
 		if(UtilHelper.isEmpty(token)){
@@ -345,6 +365,96 @@ public class VisitManager {
 			visitFeedback.setUpdateBy(userContext.getUserCode());
 			visitFeedback.setUpdateTime(currentDate);
 			visitFeedbackService.save(visitFeedback);
+		}
+		
+		List<VisitSaleDto> visitSaleDtoList = new ArrayList<VisitSaleDto>();
+		if (visitSaleDtoList != null && visitSaleDtoList.size() > 0) {
+			
+			List<VisitSale> visitSales = new ArrayList<VisitSale>();
+			VisitSale visitSale = new VisitSale();
+			for (VisitSaleDto visitSaleDto : visitSaleDtoList) {
+				visitSale.setVisitId(visitId);
+				visitSale.setShopId(shopId);
+				visitSale.setBrandId(visitSaleDto.getBrandId());
+				visitSale.setModelId(visitSaleDto.getModelId());
+				visitSale.setRemark(visitSaleDto.getRemark());
+				visitSale.setSaleQty(visitSaleDto.getSaleQty());
+				visitSale.setCreateBy(userContext.getUserCode());
+				visitSale.setCreateTime(currentDate);
+				visitSale.setUpdateBy(userContext.getUserCode());
+				visitSale.setUpdateTime(currentDate);
+				
+				visitSales.add(visitSale);
+			}
+			
+			visitSaleService.batchSaveOrUpdate(visitSales);
+		}
+		
+		List<VisitModelDto> visitModelDtos = new ArrayList<VisitModelDto>();
+		if (visitModelDtos != null && visitModelDtos.size() > 0) {
+			
+			List<VisitModel> visitModels = new ArrayList<VisitModel>();
+			VisitModel visitModel = new VisitModel();
+			for (VisitModelDto visitModelDto : visitModelDtos) {
+				visitModel.setBrandId(visitModelDto.getBrandId());
+				visitModel.setModelId(visitModelDto.getModelId());
+				visitModel.setRemark(visitModelDto.getRemark());
+				visitModel.setShopId(shopId);
+				visitModel.setVisitId(visitId);
+				visitModel.setCreateBy(userContext.getUserCode());
+				visitModel.setCreateTime(currentDate);
+				visitModel.setUpdateBy(userContext.getUserCode());
+				visitModel.setUpdateTime(currentDate);
+				
+				visitModels.add(visitModel);
+			}
+			
+			visitModelService.batchSaveOrUpdate(visitModels);
+		}
+		
+		List<VisitMaterielDto> visitMaterielDtos = new ArrayList<VisitMaterielDto>();
+		if (visitMaterielDtos != null && visitMaterielDtos.size() > 0) {
+			
+			List<VisitMateriel> visitMateriels = new ArrayList<VisitMateriel>();
+			VisitMateriel visitMateriel = new VisitMateriel();
+			for (VisitMaterielDto visitMaterielDto : visitMaterielDtos) {
+				
+				visitMateriel.setMaterielQty(visitMaterielDto.getMaterielQty());
+				visitMateriel.setRemark(visitMaterielDto.getRemark());
+				visitMateriel.setMaterielId(visitMaterielDto.getMaterielId());
+				visitMateriel.setShopId(shopId);
+				visitMateriel.setVisitId(visitId);
+				visitMateriel.setCreateBy(userContext.getUserCode());
+				visitMateriel.setCreateTime(currentDate);
+				visitMateriel.setUpdateBy(userContext.getUserCode());
+				visitMateriel.setUpdateTime(currentDate);
+				
+				visitMateriels.add(visitMateriel);
+			}
+			
+			visitMaterielService.batchSaveOrUpdate(visitMateriels);
+		}
+		
+		List<VisitCompetitorDto> visitCompetitorDtos = new ArrayList<VisitCompetitorDto>();
+		if (visitModelDtos != null && visitModelDtos.size() > 0) {
+			List<VisitCompetitor> visitCompetitors = new ArrayList<VisitCompetitor>();
+			VisitCompetitor visitCompetitor = new VisitCompetitor();
+			for (VisitCompetitorDto visitCompetitorDto : visitCompetitorDtos) {
+				
+				visitCompetitor.setBrandName(visitCompetitorDto.getBrandName());
+				visitCompetitor.setRemark(visitCompetitorDto.getRemark());
+				visitCompetitor.setSaleQty(visitCompetitorDto.getSaleQty());
+				visitCompetitor.setVisitId(visitId);
+				visitCompetitor.setShopId(shopId);
+				visitCompetitor.setCreateBy(userContext.getUserCode());
+				visitCompetitor.setCreateTime(currentDate);
+				visitCompetitor.setUpdateBy(userContext.getUserCode());
+				visitCompetitor.setUpdateTime(currentDate);
+				
+				visitCompetitors.add(visitCompetitor);
+			}
+			
+			visitCompetitorService.batchSaveOrUpdate(visitCompetitors);
 		}
 		
 		visitPlanManager.updatePlanByVisit(visit);

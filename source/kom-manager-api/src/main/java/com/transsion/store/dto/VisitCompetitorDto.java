@@ -39,6 +39,10 @@ public class VisitCompetitorDto implements Serializable {
 	  *	
 	  */
 	private java.lang.Long brandId;
+	/**
+	 * 
+	 */
+	private java.lang.String brandName;
 
 	/**
 	  *	
@@ -90,6 +94,14 @@ public class VisitCompetitorDto implements Serializable {
 	  */
 	public void setBrandId(java.lang.Long brandId) {
 		this.brandId = brandId;
+	}
+
+	public java.lang.String getBrandName() {
+		return brandName;
+	}
+
+	public void setBrandName(java.lang.String brandName) {
+		this.brandName = brandName;
 	}
 
 	/**

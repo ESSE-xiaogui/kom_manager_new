@@ -43,6 +43,7 @@ import com.transsion.store.mapper.ShopMapper;
 import com.transsion.store.mapper.ShopMaterielMapper;
 import com.transsion.store.mapper.UserMapper;
 import com.transsion.store.mapper.UserShopMapper;
+import com.transsion.store.mapper.VisitMapper;
 import com.transsion.store.service.AttributeService;
 import com.transsion.store.service.ShopExtensionService;
 import com.transsion.store.service.ShopMaterielService;
@@ -94,6 +95,8 @@ public class ShopManager {
 	
 	@Autowired
 	private ShopMaterielMapper shopMaterielMapper;
+	@Autowired
+	private VisitMapper visitMapper;
  
 	/**
 	 * 用户已绑定的店铺
@@ -585,10 +588,10 @@ public class ShopManager {
 			shopDto.setStatus(3);
 		}
 		/**
-		 * 2、查询数据库中是否存在此店铺名称
+		 * 2、查询数据库中是否存在此店铺名称 shopName:店铺名+地址，所以只要根据shopName进行去重
 		 * */
 		ShopQueryDto sq = new ShopQueryDto();
-		sq.setUserId(userContext.getUser().getId());
+		// sq.setUserId(userContext.getUser().getId());
 		sq.setShopName(shopParamDto.getShopName());
 		int count = shopMapper.findShopExist(sq);
 		if(count>0){
@@ -783,6 +786,14 @@ public class ShopManager {
 						|| UtilHelper.isEmpty(userContext.getUser().getId())){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
-		return shopMapper.findShopByUserId(userContext.getUser().getId());
+		
+		List<ShopUserDto> shopUserDtos = shopMapper.findShopByUserId(userContext.getUser().getId());
+		if (shopUserDtos != null && shopUserDtos.size() > 0) {
+			for (ShopUserDto shopUserDto : shopUserDtos) {
+				shopUserDto.setMonthVisitCount(visitMapper.countMonthVisitShopByShopId(shopUserDto.getShopId()));
+			}
+		}
+		
+		return shopUserDtos;
 	}
 }

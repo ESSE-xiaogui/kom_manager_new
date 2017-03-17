@@ -77,4 +77,10 @@ public interface VisitMapper extends GenericIBatisMapper<Visit, java.lang.Long> 
 	//查询当前登录人巡店下最新一次的物料
 	public List<MaterialInfoDto> findLastDateMaterial(@Param("visitor")String visitor,@Param("companyId")Long companyId) throws DataAccessFailureException;
 
+	/**
+	 * 根据店铺ID获取本月访问次数
+	 * @return
+	 * @throws DataAccessFailureException
+	 */
+	public Integer countMonthVisitShopByShopId(@Param("shopId")Long shopId) throws DataAccessFailureException;
 }

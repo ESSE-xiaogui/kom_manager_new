@@ -21,7 +21,6 @@ import java.util.List;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Stock;
-import com.transsion.store.dto.SaleDto;
 import com.transsion.store.dto.StockDto;
 import com.transsion.store.dto.StockInfoDto;
 import com.transsion.store.dto.StockResponseDto;
@@ -135,11 +134,16 @@ public interface StockFacade {
 	
 	/**
 	 * 根据销量减库存
-	 * @param tshopSaleDto
-	 * @param token
+	 * @param saleDtoJson
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void updateCurStockBySale(SaleDto saleDto, String token) throws ServiceException;
-
+	public void updateCurStockBySale(String saleDtoJson) throws ServiceException;
+	
+	/**
+	 * 保存stock,stockItem
+	 * @param stockSpeDtoJson
+	 * @throws ServiceException
+	 */
+	public void saveStockSpeDto(String stockSpeDtoJson) throws ServiceException;
 }

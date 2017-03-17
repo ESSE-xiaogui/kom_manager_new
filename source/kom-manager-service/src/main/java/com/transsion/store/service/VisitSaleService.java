@@ -144,6 +144,16 @@ public class VisitSaleService {
 	{
 		return visitSaleMapper.update(visitSale);
 	}
+	
+	/**
+	 * 批量更新和保存
+	 * @param visitSales
+	 * @return
+	 * @throws ServiceException
+	 */
+	public int batchSaveOrUpdate(List<VisitSale> visitSales) throws ServiceException {
+		return visitSaleMapper.batchSaveOrUpdate(visitSales);
+	}
 
 	/**
 	 * 根据条件查询记录条数
