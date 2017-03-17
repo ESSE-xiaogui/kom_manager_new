@@ -705,7 +705,6 @@
 			,proCount.ID AS PROTOTYPECOUNTING_ID, proCount.COUNTING_TIME
 			</if>
 		</if>
-		
 		FROM T_PROTOTYPE pro
 		left join T_BRAND brand on pro.BRAND_ID = brand.ID
 		left join T_SHOP shop on pro.SHOP_ID = shop.ID
@@ -724,6 +723,7 @@
 		</if>
 		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
+    	ORDER BY pro.PUBLISH_TIME DESC
 	</select>
 	
 	<select id="listPaginationByPropertyDto" parameterType="PrototypeDto" resultMap="PrototypeDtoResultMapper">

@@ -451,4 +451,30 @@ public class PrototypeSettingManager {
 		
 		return effectiveMonth;
 	}
+	
+	/**
+	 * 根据主键删除
+	 * @param primaryKey
+	 * @return
+	 * @throws ServiceException
+	 */
+	public int deleteByPK(java.lang.Long primaryKey) throws ServiceException {
+		
+		// 删除子表
+		PrototypeSettingModel prototypeSettingModelExp = new PrototypeSettingModel();
+		prototypeSettingModelExp.setSettingId(primaryKey);
+		prototypeSettingModelMapper.deleteByProperty(prototypeSettingModelExp);
+		// 删除子表
+		PrototypeSettingRegion prototypeSettingRegionExp = new PrototypeSettingRegion();
+		prototypeSettingModelExp.setSettingId(primaryKey);
+		prototypeSettingRegionMapper.deleteByProperty(prototypeSettingRegionExp);
+		// 删除子表
+		PrototypeSettingTime prototypeSettingTimeExp = new PrototypeSettingTime();
+		prototypeSettingTimeExp.setSettingId(primaryKey);
+		prototypeSettingTimeMapper.deleteByProperty(prototypeSettingTimeExp);
+		
+		int rst = prototypeSettingMapper.deleteByPK(primaryKey);
+		
+		return rst;
+	}
 }

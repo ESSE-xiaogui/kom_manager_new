@@ -92,7 +92,7 @@ public class PrototypeSettingFacadeImpl implements PrototypeSettingFacade {
 	 */
 	public int deleteByPK(java.lang.Long primaryKey) throws ServiceException
 	{
-		return prototypeSettingService.deleteByPK(primaryKey);
+		return prototypeSettingManager.deleteByPK(primaryKey);
 	}
 	
 	/**

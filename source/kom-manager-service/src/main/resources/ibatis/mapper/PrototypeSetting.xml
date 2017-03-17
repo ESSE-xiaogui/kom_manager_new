@@ -122,7 +122,7 @@
 	<sql id="commonConditionByPrefix">
 		<if test="prototypeSettingDto!= null">
             <if test="prototypeSettingDto.countryId!= null and prototypeSettingDto.countryId!= ''">
-				AND T.regionId=#{prototypeSettingDto.countryId}
+				AND sregion.REGION_ID=#{prototypeSettingDto.countryId}
             </if>
             <if test="prototypeSettingDto.companyId!= null and prototypeSettingDto.companyId!= ''">
 				AND pro.COMPANY_ID=#{prototypeSettingDto.companyId}
@@ -139,20 +139,9 @@
             <if test="prototypeSettingDto.version!= null and prototypeSettingDto.version!= ''">
 				AND pro.VERSION=#{prototypeSettingDto.version}
             </if>
-            <!-- 
-            <if test="prototypeSetting.createBy!= null and prototypeSetting.createBy!= ''">
-				AND CREATE_BY=#{prototypeSetting.createBy}
+            <if test="prototypeSettingDto.modelName!= null and prototypeSettingDto.modelName!= ''">
+				AND model.MODEL_NAME LIKE CONCAT('%',#{prototypeSettingDto.modelName},'%')
             </if>
-            <if test="prototypeSetting.createDate!= null and prototypeSetting.createDate!= ''">
-				AND CREATE_DATE=str_to_date(#{prototypeSetting.createDate},'%Y-%m-%d %H:%i:%s')
-            </if>
-            <if test="prototypeSetting.updateBy!= null and prototypeSetting.updateBy!= ''">
-				AND UPDATE_BY=#{prototypeSetting.updateBy}
-            </if>
-            <if test="prototypeSetting.updateDate!= null and prototypeSetting.updateDate!= ''">
-				AND UPDATE_DATE=str_to_date(#{prototypeSetting.updateDate},'%Y-%m-%d %H:%i:%s')
-            </if>
-             -->
         </if>
     </sql>
 
@@ -303,11 +292,9 @@
 		pro.CREATE_DATE, pro.UPDATE_BY, pro.UPDATE_DATE, pro.VERSION, company.COMPANY_CODE
 		FROM T_PROTOTYPE_SETTING pro
 		LEFT JOIN T_COMPANY company ON company.ID = pro.COMPANY_ID
-		LEFT JOIN (
-			SELECT DISTINCT R.REGION_NAME, R.ID AS regionId, com.ID AS COMPANY_ID  FROM T_COMPANY com , T_SHOP s
-			LEFT JOIN T_REGION R ON s.COUNTRY = R.ID
-			WHERE s.COMPANY_ID = com.ID
-		) T  ON T.COMPANY_ID = pro.COMPANY_ID
+		LEFT JOIN T_PROTOTYPE_SETTING_REGION sregion ON sregion.SETTING_ID = pro.ID
+		LEFT JOIN T_PROTOTYPE_SETTING_MODEL smodel ON smodel.SETTING_ID = pro.ID
+		LEFT JOIN T_MODEL model ON model.ID = smodel.MODEL_ID
 		WHERE 1=1
     	<include refid="commonConditionByPrefix"/>
     	<include refid="orderSpeByClause" />
