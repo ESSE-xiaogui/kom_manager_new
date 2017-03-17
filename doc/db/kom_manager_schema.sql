@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-03-10 13:44:57
+Date: 2017-03-17 14:56:47
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -55,6 +55,24 @@ CREATE TABLE `T_AREA_REGION` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Table structure for T_AREA_SHOP
+-- ----------------------------
+DROP TABLE IF EXISTS `T_AREA_SHOP`;
+CREATE TABLE `T_AREA_SHOP` (
+  `AREA_SHOP_ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `COMPANY_ID` bigint(20) NOT NULL,
+  `AREA_ID` bigint(20) NOT NULL,
+  `SHOP_ID` bigint(20) NOT NULL,
+  `IS_INACTIVE` tinyint(1) DEFAULT '1' COMMENT '1:å¯ç”¨ 2ï¼šåœç”¨',
+  `REMARK` varchar(256) DEFAULT NULL,
+  `CREATED_BY` varchar(32) DEFAULT NULL COMMENT 'ç³»ç»Ÿä¿ç•™å­—æ®µï¼Œè®°å½•æ•°æ®åˆ›å»ºç”¨æˆ·ï¼Œç”¨äºŽå®¡è®¡ï¼Œæ— ä¸šåŠ¡å«ä¹‰',
+  `CREATED_TIME` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ç³»ç»Ÿä¿ç•™å­—æ®µï¼Œè®°å½•æ•°æ®åˆ›å»ºæ—¶é—´ï¼Œç”¨äºŽç³»ç»Ÿå®¡è®¡ï¼Œæ— å®žé™…ä¸šåŠ¡å«ä¹‰',
+  `UPDATED_BY` varchar(32) DEFAULT NULL COMMENT 'ç³»ç»Ÿä¿ç•™å­—æ®µï¼Œè®°å½•æ•°æ®æœ€åŽæ›´æ–°ç”¨æˆ·ï¼Œç”¨äºŽå®¡è®¡ï¼Œæ— ä¸šåŠ¡å«ä¹‰',
+  `UPDATED_TIME` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ç³»ç»Ÿä¿ç•™å­—æ®µï¼Œè®°å½•æ•°æ®æœ€åŽæ—¶é—´ï¼Œç”¨äºŽå®¡è®¡ï¼Œæ— ä¸šåŠ¡å«ä¹‰',
+  PRIMARY KEY (`AREA_SHOP_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Table structure for T_ATTRIBUTE
 -- ----------------------------
 DROP TABLE IF EXISTS `T_ATTRIBUTE`;
@@ -67,7 +85,7 @@ CREATE TABLE `T_ATTRIBUTE` (
   `NAME_CN` varchar(64) DEFAULT NULL,
   `REMARK` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_BRAND
@@ -87,7 +105,7 @@ CREATE TABLE `T_BRAND` (
   `UPDATED_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT '0' COMMENT '系统保留字段，表示当前数据版本，用于控制业务并发，无其它业务含义',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=1074 DEFAULT CHARSET=utf8 COMMENT='1）手机品牌的基础定义\r\n2）共享数据，COMPANY_ID = 0';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='1）手机品牌的基础定义\r\n2）共享数据，COMPANY_ID = 0';
 
 -- ----------------------------
 -- Table structure for T_COMPANY
@@ -106,7 +124,7 @@ CREATE TABLE `T_COMPANY` (
   `UPDATED_TIME` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `VERSION` decimal(8,0) DEFAULT '0',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_CONFIGURATION
@@ -118,7 +136,7 @@ CREATE TABLE `T_CONFIGURATION` (
   `VALUE` varchar(256) DEFAULT NULL,
   `REMARK` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_CURRENCY
@@ -142,7 +160,7 @@ CREATE TABLE `T_CURRENCY` (
   `UPDATED_TIME` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '系统保留字段，记录数据最后时间，用于审计，无业务含义',
   `VERSION` decimal(8,0) DEFAULT '1' COMMENT '系统保留字段，表示当前数据版本，用于控制业务并发，无其它业务含义',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=677 DEFAULT CHARSET=utf8 COMMENT='公司结算货币';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公司结算货币';
 
 -- ----------------------------
 -- Table structure for T_DUTY
@@ -162,7 +180,7 @@ CREATE TABLE `T_DUTY` (
   `VERSION` decimal(8,0) DEFAULT '0',
   PRIMARY KEY (`ID`),
   KEY `IDX_DUTY` (`ID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for T_EMPLOYEE
@@ -199,7 +217,7 @@ CREATE TABLE `T_EMPLOYEE` (
   `UPDATED_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT '0',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2748 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_FILE_TEMPLATE
@@ -217,7 +235,7 @@ CREATE TABLE `T_FILE_TEMPLATE` (
   `UPDATED_BY` varchar(32) DEFAULT NULL COMMENT '修改人',
   `UPDATED_TIME` timestamp NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_GOAL_MODEL
@@ -242,7 +260,7 @@ CREATE TABLE `T_GOAL_MODEL` (
   `UPDATE_TIME` datetime DEFAULT NULL COMMENT '更新时间',
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_GOAL_PROMOTER
@@ -266,7 +284,7 @@ CREATE TABLE `T_GOAL_PROMOTER` (
   `UPDATE_TIME` datetime DEFAULT NULL COMMENT '更新时间',
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_GOAL_SUPERVISOR
@@ -290,7 +308,7 @@ CREATE TABLE `T_GOAL_SUPERVISOR` (
   `UPDATE_TIME` datetime DEFAULT NULL COMMENT '更新时间',
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_IMEI_TAC
@@ -303,7 +321,7 @@ CREATE TABLE `T_IMEI_TAC` (
   `MODEL_MAT_CODE` varchar(32) DEFAULT NULL COMMENT '机型代码',
   PRIMARY KEY (`ID`),
   KEY `IDX_TImeiTac_TAC` (`TAC`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1437 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_JOB_CALENDARS
@@ -405,7 +423,7 @@ CREATE TABLE `T_JOB_RESULT` (
   `ID` bigint(20) NOT NULL AUTO_INCREMENT,
   `JOB_NAME` varchar(64) DEFAULT NULL,
   `JOB_GROUP` varchar(64) DEFAULT NULL,
-  `JOB_CONTEXT` varchar(512) DEFAULT NULL,
+  `JOB_CONTEXT` varchar(1024) DEFAULT NULL,
   `FIRE_TIME` varchar(20) DEFAULT NULL,
   `TAKE_TIME` bigint(13) DEFAULT NULL,
   `IS_FAILED` smallint(2) DEFAULT NULL,
@@ -413,7 +431,7 @@ CREATE TABLE `T_JOB_RESULT` (
   `DETAIL` text,
   `MESSAGE` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=35075 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_JOB_SCHEDULER_STATE
@@ -521,7 +539,7 @@ CREATE TABLE `T_MATERIEL` (
   `UPDATE_DATE` date DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_MODEL
@@ -547,7 +565,7 @@ CREATE TABLE `T_MODEL` (
   `UPDATED_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT '0' COMMENT '系统保留字段，表示当前数据版本，用于控制业务并发，无其它业务含义',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2957 DEFAULT CHARSET=utf8 COMMENT='1）定义组成整车可配置物料的特征之间的关系，即定义整车可配置物料的品牌、车系、排量、车型、配置、颜色、选配特征，以及这些';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='1）定义组成整车可配置物料的特征之间的关系，即定义整车可配置物料的品牌、车系、排量、车型、配置、颜色、选配特征，以及这些';
 
 -- ----------------------------
 -- Table structure for T_MODEL_PRICE
@@ -558,7 +576,7 @@ CREATE TABLE `T_MODEL_PRICE` (
   `TABLE_TYPE` varchar(100) NOT NULL,
   `PRICE_SCALE` varchar(100) NOT NULL COMMENT '价格档位',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for T_OPTION
@@ -580,7 +598,7 @@ CREATE TABLE `T_OPTION` (
   `UPDATE_DATE` datetime DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `IDX_OPTION_OBJID` (`OBJECT_ID`,`OPTION_CODE`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4910 DEFAULT CHARSET=utf8 COMMENT='用户选项指的是对该用户的特殊授权，这些权限不依赖于具体的功能模块，被授予的权限在用户拥有的全部功能模块内是有效的，比如：';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户选项指的是对该用户的特殊授权，这些权限不依赖于具体的功能模块，被授予的权限在用户拥有的全部功能模块内是有效的，比如：';
 
 -- ----------------------------
 -- Table structure for T_ORG_BIZ
@@ -593,7 +611,7 @@ CREATE TABLE `T_ORG_BIZ` (
   `CREATE_TIME` datetime DEFAULT NULL,
   `REMARK` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_ORGANIZATION
@@ -614,7 +632,7 @@ CREATE TABLE `T_ORGANIZATION` (
   `UPDATED_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT '0',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=352 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_PROTOTYPE
@@ -646,7 +664,7 @@ CREATE TABLE `T_PROTOTYPE` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_PROTOTYPE_COUNTING
@@ -670,7 +688,7 @@ CREATE TABLE `T_PROTOTYPE_COUNTING` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_PROTOTYPE_SETTING
@@ -688,7 +706,7 @@ CREATE TABLE `T_PROTOTYPE_SETTING` (
   `UPDATE_DATE` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_PROTOTYPE_SETTING_MODEL
@@ -704,7 +722,7 @@ CREATE TABLE `T_PROTOTYPE_SETTING_MODEL` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_PROTOTYPE_SETTING_REGION
@@ -720,7 +738,7 @@ CREATE TABLE `T_PROTOTYPE_SETTING_REGION` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_PROTOTYPE_SETTING_TIME
@@ -736,7 +754,7 @@ CREATE TABLE `T_PROTOTYPE_SETTING_TIME` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_REGION
@@ -760,7 +778,7 @@ CREATE TABLE `T_REGION` (
   PRIMARY KEY (`ID`),
   KEY `index2` (`PARENT_ID`,`COMPANY_ID`),
   KEY `index3` (`REGION_NAME`)
-) ENGINE=InnoDB AUTO_INCREMENT=328 DEFAULT CHARSET=utf8 COMMENT='国家、省市、城市、区县定义表，地域由车厂端统一定义并下发，经销商端不可自定义地域，只能选择是否使用某部分地域，此表的地域';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='国家、省市、城市、区县定义表，地域由车厂端统一定义并下发，经销商端不可自定义地域，只能选择是否使用某部分地域，此表的地域';
 
 -- ----------------------------
 -- Table structure for T_REGION_TYPE
@@ -774,7 +792,7 @@ CREATE TABLE `T_REGION_TYPE` (
   `CREATE_TIME` datetime DEFAULT NULL,
   `REMARK` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_REPORT_SALE_DAILY
@@ -787,6 +805,7 @@ CREATE TABLE `T_REPORT_SALE_DAILY` (
   `REGION_ID` bigint(20) DEFAULT NULL,
   `COUNTRY_ID` bigint(20) DEFAULT NULL,
   `CITY_ID` bigint(20) DEFAULT NULL,
+  `AREA_ID` bigint(20) DEFAULT NULL COMMENT '区域索引',
   `GRADE_ID` bigint(8) DEFAULT NULL,
   `SHOP_CODE` varchar(125) COLLATE utf8_bin DEFAULT NULL COMMENT '生成方式：国家简称加六位数的序号。',
   `USER_CODE` varchar(32) COLLATE utf8_bin DEFAULT NULL,
@@ -801,6 +820,8 @@ CREATE TABLE `T_REPORT_SALE_DAILY` (
   `REGION_NAME` varchar(64) COLLATE utf8_bin DEFAULT NULL,
   `COUNTRY_NAME` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '国家名',
   `CITY_NAME` varchar(64) COLLATE utf8_bin DEFAULT NULL,
+  `AREA_NAME` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '区域名称',
+  `TOTAL_SHOP` int(6) DEFAULT '0' COMMENT '总店铺数',
   `SALE_QTY` int(11) DEFAULT NULL,
   `STOCK_QTY` int(11) DEFAULT NULL,
   `CREATED_BY` varchar(50) COLLATE utf8_bin DEFAULT NULL,
@@ -808,7 +829,7 @@ CREATE TABLE `T_REPORT_SALE_DAILY` (
   `UPDATED_BY` varchar(50) COLLATE utf8_bin DEFAULT NULL,
   `UPDATE_TIME` datetime DEFAULT NULL,
   PRIMARY KEY (`REPORT_SALE_DAILY_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=1048561 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Table structure for T_REPORT_SALE_WEEK
@@ -821,6 +842,7 @@ CREATE TABLE `T_REPORT_SALE_WEEK` (
   `REGION_ID` bigint(20) DEFAULT NULL,
   `COUNTRY_ID` bigint(20) DEFAULT NULL,
   `CITY_ID` bigint(20) DEFAULT NULL,
+  `AREA_ID` bigint(20) DEFAULT NULL COMMENT '区域索引',
   `GRADE_ID` bigint(8) DEFAULT NULL,
   `USER_CODE` varchar(32) DEFAULT NULL,
   `SHOP_CODE` varchar(125) DEFAULT NULL COMMENT '生成方式：国家简称加六位数的序号。',
@@ -835,14 +857,48 @@ CREATE TABLE `T_REPORT_SALE_WEEK` (
   `REGION_NAME` varchar(64) DEFAULT NULL,
   `COUNTRY_NAME` varchar(64),
   `CITY_NAME` varchar(64),
+  `AREA_NAME` varchar(64) DEFAULT NULL COMMENT '区域名称',
+  `TOTAL_SHOP` int(6) DEFAULT '0' COMMENT '总店铺数',
   `SALE_QTY` int(11) DEFAULT NULL,
   `STOCK_QTY` int(11) DEFAULT NULL,
   `CREATED_BY` varchar(50) DEFAULT NULL,
   `CREATE_TIME` datetime DEFAULT NULL,
   `UPDATED_BY` varchar(50) DEFAULT NULL,
   `UPDATE_TIME` datetime DEFAULT NULL,
-  PRIMARY KEY (`REPORT_SALE_WEEK_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=458747 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`REPORT_SALE_WEEK_ID`),
+  KEY `IDX_SALE_WEEK_CITY` (`CITY_ID`,`COMPANY_ID`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for T_REPORT_SHOP_OTC_RATE
+-- ----------------------------
+DROP TABLE IF EXISTS `T_REPORT_SHOP_OTC_RATE`;
+CREATE TABLE `T_REPORT_SHOP_OTC_RATE` (
+  `REPORT_SOTC_RATE_ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `COMPANY_ID` bigint(20) DEFAULT NULL COMMENT '事业部ID',
+  `BRAND_CODE` varchar(64) DEFAULT NULL,
+  `MODEL_CODE` varchar(32) COMMENT '机型代码',
+  `USER_CODE` varchar(32) DEFAULT NULL,
+  `VISIT_DATE` varchar(6) DEFAULT NULL COMMENT '时间(YYYYMM)',
+  `VISIT_SHOP` int(6) DEFAULT '0' COMMENT '上柜店铺数',
+  `TOTAL_SHOP` int(6) DEFAULT NULL COMMENT '总店铺数',
+  `OTC_RATE` decimal(8,3) DEFAULT NULL COMMENT '上柜率',
+  `COUNTRY_ID` bigint(8) DEFAULT NULL COMMENT '保留字段 对应区域表的国家字段',
+  `CITY_ID` bigint(8) DEFAULT NULL COMMENT '保留字段 对应区域表的城市字段',
+  `REGION_ID` bigint(8) DEFAULT NULL,
+  `AREA_ID` bigint(20) DEFAULT NULL,
+  `COMPANY_NAME` varchar(128) DEFAULT NULL,
+  `AREA_NAME` varchar(64),
+  `COUNTRY_NAME` varchar(64),
+  `CITY_NAME` varchar(64),
+  `REGION_NAME` varchar(64),
+  `EMP_NAME` varchar(128),
+  `CREATED_BY` varchar(50) DEFAULT NULL,
+  `CREATE_TIME` datetime DEFAULT NULL,
+  `UPDATED_BY` varchar(50) DEFAULT NULL,
+  `UPDATE_TIME` datetime DEFAULT NULL,
+  PRIMARY KEY (`REPORT_SOTC_RATE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_ROLE_MENU
@@ -859,7 +915,7 @@ CREATE TABLE `T_ROLE_MENU` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ROLE_MENU_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3422 DEFAULT CHARSET=utf8 COMMENT='T_ROLE_MENU';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='T_ROLE_MENU';
 
 -- ----------------------------
 -- Table structure for T_ROLE_RESOURCE
@@ -876,7 +932,7 @@ CREATE TABLE `T_ROLE_RESOURCE` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ROLE_RES_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=925 DEFAULT CHARSET=utf8 COMMENT='角色资源关系表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色资源关系表';
 
 -- ----------------------------
 -- Table structure for T_SALE
@@ -910,7 +966,7 @@ CREATE TABLE `T_SALE` (
   KEY `index1` (`USER_CODE`),
   KEY `index5` (`SALE_DATE`),
   KEY `index6` (`CREATED_TIME`)
-) ENGINE=InnoDB AUTO_INCREMENT=529662 DEFAULT CHARSET=utf8 COMMENT='业务员上报门店每日销量，含竞品销量。\r\n业务员登录系统只能查看自己分管门店。\r\n';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='业务员上报门店每日销量，含竞品销量。\r\n业务员登录系统只能查看自己分管门店。\r\n';
 
 -- ----------------------------
 -- Table structure for T_SALE_GOAL
@@ -935,7 +991,7 @@ CREATE TABLE `T_SALE_GOAL` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `REMARK` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_SALE_ITEM
@@ -970,7 +1026,7 @@ CREATE TABLE `T_SALE_ITEM` (
   PRIMARY KEY (`ID`),
   KEY `IDX_TShopSaleitem_SALEID` (`SALE_ID`,`MODEL_CODE`) USING BTREE,
   KEY `IDX_TShopSaleitem_BILLNO` (`BILLNO`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2416672 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_SERIES
@@ -1046,8 +1102,9 @@ CREATE TABLE `T_SHOP` (
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `INDEX_SHOP_SHOPID` (`SHOP_ID`,`ID`) USING BTREE,
-  KEY `index3` (`REGION_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4490 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  KEY `index3` (`REGION_ID`),
+  KEY `INDEX_SHOP_CITY` (`CITY`,`COMPANY_ID`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Table structure for T_SHOP_BIZ
@@ -1070,14 +1127,14 @@ CREATE TABLE `T_SHOP_BIZ` (
   `UPDATE_DATE` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_SHOP_DAMAGE
 -- ----------------------------
 DROP TABLE IF EXISTS `T_SHOP_DAMAGE`;
 CREATE TABLE `T_SHOP_DAMAGE` (
-  `DAMAGE_ID` bigint(20) NOT NULL,
+  `DAMAGE_ID` bigint(20) NOT NULL AUTO_INCREMENT,
   `SHOP_ID` bigint(20) NOT NULL,
   `MATERIEL_ID` bigint(20) NOT NULL,
   `DAMAGE_TIME` datetime DEFAULT NULL,
@@ -1127,7 +1184,7 @@ CREATE TABLE `T_SHOP_EXTENSION` (
   `SALE_BRANDSP_QTY` bigint(20) DEFAULT NULL COMMENT '自有品牌销量',
   PRIMARY KEY (`ID`),
   KEY `INDEX_SHOPEXTENSION_SHOPID` (`SHOP_ID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4488 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_SHOP_GRADE
@@ -1146,8 +1203,9 @@ CREATE TABLE `T_SHOP_GRADE` (
   `CREATE_DATE` datetime DEFAULT NULL,
   `UPDATE_BY` varchar(32) DEFAULT NULL,
   `UPDATE_DATE` datetime DEFAULT NULL,
+  `SORT_INDEX` tinyint(3) DEFAULT '1' COMMENT '店铺等级排序:数字小的等级越高',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_SHOP_MATERIEL
@@ -1166,7 +1224,7 @@ CREATE TABLE `T_SHOP_MATERIEL` (
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `IDX_SHOPMATERIEL_SHOPID` (`SHOP_ID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_STOCK
@@ -1194,7 +1252,30 @@ CREATE TABLE `T_STOCK` (
   KEY `IDX_TShopstockMain_EMPID` (`USER_ID`,`STOCK_DATE`) USING BTREE,
   KEY `IDX_TShopstockMain_BILLNO` (`BILLNO`) USING BTREE,
   KEY `index4` (`CREATED_TIME`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='业务员上报门店每日库存，不含竞品，目前仅上报TECNO品牌库存。\r\n业务员登录系统只能查看自己分管门店。\r\n                                     -';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='业务员上报门店每日库存，不含竞品，目前仅上报TECNO品牌库存。\r\n业务员登录系统只能查看自己分管门店。\r\n                                     -';
+
+-- ----------------------------
+-- Table structure for T_STOCK_CURRENT
+-- ----------------------------
+DROP TABLE IF EXISTS `T_STOCK_CURRENT`;
+CREATE TABLE `T_STOCK_CURRENT` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `DEALER_ID` decimal(8,0) NOT NULL,
+  `FDATE` varchar(20) DEFAULT NULL,
+  `USER_ID` decimal(8,0) DEFAULT NULL,
+  `BRAND_CODE` varchar(10) DEFAULT NULL,
+  `MODEL_MAT_CODE` varchar(32) DEFAULT NULL,
+  `FQTY` decimal(8,2) DEFAULT NULL,
+  `CREATED_BY` decimal(8,0) DEFAULT NULL,
+  `CREATED_TIME` datetime DEFAULT NULL,
+  `UPDATED_BY` decimal(8,0) DEFAULT NULL,
+  `UPDATED_TIME` datetime DEFAULT NULL,
+  `IS_DELETE` decimal(1,0) DEFAULT '0',
+  PRIMARY KEY (`ID`),
+  KEY `IDX_TCurrentStock_DEALERID` (`DEALER_ID`) USING BTREE,
+  KEY `IDX_TCurrentStock_BRANDCODE` (`BRAND_CODE`) USING BTREE,
+  KEY `IDX_TCurrentStock_MODELMATCODE` (`MODEL_MAT_CODE`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_STOCK_ITEM
@@ -1220,7 +1301,7 @@ CREATE TABLE `T_STOCK_ITEM` (
   PRIMARY KEY (`ID`),
   KEY `IDX_TShopstockDetail_STOCKID` (`STOCK_ID`,`MODEL_CODE`) USING BTREE,
   KEY `IDX_TShopstockDetail_BILLNO` (`BILLNO`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_SYSTEM_MENU
@@ -1242,7 +1323,7 @@ CREATE TABLE `T_SYSTEM_MENU` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`MENU_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=utf8 COMMENT='T_SYSTEM_MENU';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='T_SYSTEM_MENU';
 
 -- ----------------------------
 -- Table structure for T_SYSTEM_RESOURCE
@@ -1263,7 +1344,7 @@ CREATE TABLE `T_SYSTEM_RESOURCE` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`RES_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8 COMMENT='系统资源表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统资源表';
 
 -- ----------------------------
 -- Table structure for T_SYSTEM_ROLE
@@ -1280,7 +1361,7 @@ CREATE TABLE `T_SYSTEM_ROLE` (
   `UPDATED_BY` varchar(20) DEFAULT NULL COMMENT '修改人',
   `UPDATE_TIME` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`ROLE_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8 COMMENT='系统角色';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统角色';
 
 -- ----------------------------
 -- Table structure for T_TAC
@@ -1293,7 +1374,7 @@ CREATE TABLE `T_TAC` (
   `BRAND_CODE` varchar(16) DEFAULT NULL,
   `MODEL_CODE` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=1438 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_TASK
@@ -1310,7 +1391,7 @@ CREATE TABLE `T_TASK` (
   `USER_NAME` varchar(100) NOT NULL COMMENT '记录当前导入用户',
   `REMARK` varchar(512) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=309 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_TASK_DETAIL
@@ -1324,7 +1405,7 @@ CREATE TABLE `T_TASK_DETAIL` (
   `CREATE_TIME` datetime DEFAULT NULL,
   `CONTEXT` text,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2883 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_USER
@@ -1356,7 +1437,7 @@ CREATE TABLE `T_USER` (
   KEY `IDX_USER_EMP_ID` (`EMP_ID`) USING BTREE,
   KEY `IDX_USER_USERID` (`USER_ID`,`ID`) USING BTREE,
   KEY `index4` (`USER_CODE`)
-) ENGINE=InnoDB AUTO_INCREMENT=33345 DEFAULT CHARSET=utf8 COMMENT='系统用户信息表：存放所有的系统用户，用户关联员工和组织，每个用户只能属于一个组织，同一个员工可以创建多个用户，业务数据中';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统用户信息表：存放所有的系统用户，用户关联员工和组织，每个用户只能属于一个组织，同一个员工可以创建多个用户，业务数据中';
 
 -- ----------------------------
 -- Table structure for T_USER_LOG
@@ -1390,7 +1471,7 @@ CREATE TABLE `T_USER_OPTION` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `IDX_USEROPTION` (`OPTION_ID`,`USER_ID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=71725 DEFAULT CHARSET=utf8 COMMENT='ç”¨æˆ·æ‹¥æŠ¤çš„ç”¨æˆ·é€‰é¡¹æŽˆæƒå­˜æ”¾äºŽæ­¤è¡¨ï¼Œæ¯æ¬¡æŽˆæƒæ“ä½œåªéœ€æ–°å¢žæˆ–åˆ é™¤ï¼Œä¸éœ€è¦ä¿®æ”¹';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ç”¨æˆ·æ‹¥æŠ¤çš„ç”¨æˆ·é€‰é¡¹æŽˆæƒå­˜æ”¾äºŽæ­¤è¡¨ï¼Œæ¯æ¬¡æŽˆæƒæ“ä½œåªéœ€æ–°å¢žæˆ–åˆ é™¤ï¼Œä¸éœ€è¦ä¿®æ”¹';
 
 -- ----------------------------
 -- Table structure for T_USER_ROLE
@@ -1413,7 +1494,7 @@ CREATE TABLE `T_USER_ROLE` (
   `UPDATE_BY` varchar(64) DEFAULT NULL,
   `UPDATE_TIME` datetime DEFAULT NULL,
   PRIMARY KEY (`USER_ROLE_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8 COMMENT='T_USER_ROLE';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='T_USER_ROLE';
 
 -- ----------------------------
 -- Table structure for T_USER_SHOP
@@ -1427,7 +1508,7 @@ CREATE TABLE `T_USER_SHOP` (
   `CREATE_TIME` datetime DEFAULT NULL,
   `REMARK` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=132844 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_VERSION
@@ -1441,7 +1522,7 @@ CREATE TABLE `T_VERSION` (
   `DOWNLOAD_FLAG` tinyint(1) NOT NULL COMMENT '是否强制下载:  1表示非强制 2表示强制下载',
   `DOWNLOAD_HINT` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_VISIT
@@ -1466,7 +1547,7 @@ CREATE TABLE `T_VISIT` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_VISIT_COMPETITOR
@@ -1485,7 +1566,7 @@ CREATE TABLE `T_VISIT_COMPETITOR` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_VISIT_FEEDBACK
@@ -1507,7 +1588,7 @@ CREATE TABLE `T_VISIT_FEEDBACK` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_VISIT_MATERIEL
@@ -1526,7 +1607,7 @@ CREATE TABLE `T_VISIT_MATERIEL` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_VISIT_MODEL
@@ -1544,8 +1625,9 @@ CREATE TABLE `T_VISIT_MODEL` (
   `UPDATE_BY` varchar(32) DEFAULT NULL,
   `UPDATE_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
+  `COUNTING_TIME` datetime DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_VISIT_MODEL_SETTING
@@ -1565,7 +1647,7 @@ CREATE TABLE `T_VISIT_MODEL_SETTING` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_VISIT_PLAN
@@ -1587,7 +1669,7 @@ CREATE TABLE `T_VISIT_PLAN` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=164 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_VISIT_SALE
@@ -1607,7 +1689,7 @@ CREATE TABLE `T_VISIT_SALE` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_VISIT_SCORE
@@ -1628,7 +1710,7 @@ CREATE TABLE `T_VISIT_SCORE` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_VISIT_SCORE_ITEM
@@ -1647,7 +1729,7 @@ CREATE TABLE `T_VISIT_SCORE_ITEM` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_VISIT_SCORE_SETTING
@@ -1666,7 +1748,7 @@ CREATE TABLE `T_VISIT_SCORE_SETTING` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for T_VISIT_STOCK
@@ -1690,55 +1772,4 @@ CREATE TABLE `T_VISIT_STOCK` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `VERSION` decimal(8,0) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- View structure for SALE_LIST_VIEW
--- ----------------------------
-DROP VIEW IF EXISTS `SALE_LIST_VIEW`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`kom`@`%` SQL SECURITY DEFINER VIEW `SALE_LIST_VIEW` AS select `i`.`ID` AS `ID`,`s`.`COMPANY_ID` AS `COMPANY_ID`,`s`.`BILLNO` AS `BILLNO`,`s`.`SALE_DATE` AS `SALE_DATE`,`c`.`ID` AS `COUNTRY`,`c`.`REGION_NAME` AS `COUNTRY_NAME`,`r`.`ID` AS `CITY`,`r`.`REGION_NAME` AS `CITY_NAME`,`p`.`ID` AS `SHOP_ID`,`p`.`SHOP_NAME` AS `SHOP_NAME`,`i`.`BRAND_CODE` AS `BRAND_CODE`,`i`.`MODEL_CODE` AS `MODEL_CODE`,`i`.`IMEI_NO` AS `IMEI_NO`,`i`.`IMEI_LIST` AS `IMEI_LIST`,`i`.`SALE_QTY` AS `SALE_QTY`,`i`.`SALE_PRICE` AS `SALE_PRICE`,`i`.`SALE_AMOUNT` AS `SALE_AMOUNT`,`s`.`CURRENCY_RATIO` AS `EXCHANGERATE`,`u`.`USER_CODE` AS `USER_CODE`,`s`.`CREATED_TIME` AS `CREATED_TIME` from (((((`T_SALE` `s` left join `T_SALE_ITEM` `i` on((`i`.`SALE_ID` = `s`.`ID`))) left join `T_SHOP` `p` on((`p`.`ID` = `s`.`SHOP_ID`))) left join `T_REGION` `r` on((`r`.`ID` = `p`.`REGION_ID`))) left join `T_REGION` `c` on((`c`.`ID` = `r`.`PARENT_ID`))) left join `T_USER` `u` on((`u`.`ID` = `s`.`USER_ID`))) where ((1 = 1) and (`i`.`ID` is not null)) ;
-
--- ----------------------------
--- View structure for VIEW_ORG
--- ----------------------------
-DROP VIEW IF EXISTS `VIEW_ORG`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`kom`@`%` SQL SECURITY DEFINER VIEW `VIEW_ORG` AS select `T_ORGANIZATION`.`ID` AS `ID`,`T_ORGANIZATION`.`ORG_ID` AS `ORG_ID` from `T_ORGANIZATION` ;
-
--- ----------------------------
--- View structure for VIEW_USERSHOP
--- ----------------------------
-DROP VIEW IF EXISTS `VIEW_USERSHOP`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`kom`@`%` SQL SECURITY DEFINER VIEW `VIEW_USERSHOP` AS select `u`.`ID` AS `uid`,`p`.`ID` AS `pid` from (((`T_SHOP` `p` join `T_OPTION` `o` on((`o`.`OBJECT_ID` = `p`.`SHOP_ID`))) join `T_USER_OPTION` `uo` on((`uo`.`OPTION_ID` = `o`.`OPTION_CODE`))) join `T_USER` `u` on((`u`.`USER_ID` = `uo`.`USER_ID`))) group by `u`.`ID`,`p`.`ID` ;
-
--- ----------------------------
--- Procedure structure for update_org_id
--- ----------------------------
-DROP PROCEDURE IF EXISTS `update_org_id`;
-DELIMITER ;;
-CREATE DEFINER=`kom`@`%` PROCEDURE `update_org_id`()
-BEGIN
-DECLARE finished INTEGER DEFAULT 0;
-DECLARE id BIGINT(20) DEFAULT 0;
-DECLARE orgid CHAR(12) DEFAULT "";
-DECLARE org_cur CURSOR FOR SELECT o.ID, o.ORG_ID FROM T_ORGANIZATION o ORDER BY o.ID;
-DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
-
-OPEN org_cur;
-
-update_org_id: LOOP
-FETCH org_cur INTO id, orgid;
-IF finished THEN
-LEAVE update_org_id;
-END IF;
-UPDATE T_EMPLOYEE SET ORG_ID = id WHERE ORG_ID = orgid;
-IF (MOD(id, 5000) = 0) THEN
-SELECT  "................";
-END IF;
-END LOOP update_org_id;
-
-CLOSE org_cur;
-SELECT  "last id " + id;
-
-END
-;;
-DELIMITER ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
