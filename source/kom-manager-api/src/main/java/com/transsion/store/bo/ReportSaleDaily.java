@@ -136,6 +136,11 @@ public class ReportSaleDaily extends Model{
 	private java.lang.String areaName;
 
 	/**
+	  *	总店铺数
+	  */
+	private java.lang.Integer totalShop;
+
+	/**
 	  *	
 	  */
 	private java.lang.Integer saleQty;
@@ -522,6 +527,22 @@ public class ReportSaleDaily extends Model{
 	}
 	
 	/**
+	  *	总店铺数
+	  */
+	public java.lang.Integer getTotalShop()
+	{
+		return totalShop;
+	}
+
+	/**
+	  *	总店铺数
+	  */
+	public void setTotalShop(java.lang.Integer totalShop)
+	{
+		this.totalShop = totalShop;
+	}
+
+	/**
 	  *	
 	  */
 	public java.lang.Integer getSaleQty() 
@@ -658,7 +679,8 @@ public class ReportSaleDaily extends Model{
 					", countryName=" + countryName + 
 					", cityName=" + cityName + 
 					", areaName=" + areaName + 
-					", saleQty=" + saleQty + 
+					", totalShop=" + totalShop +
+					", saleQty=" + saleQty +
 					", stockQty=" + stockQty + 
 					", createdBy=" + createdBy + 
 					", createTime=" + createTime + 

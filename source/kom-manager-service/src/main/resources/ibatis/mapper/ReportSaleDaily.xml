@@ -42,6 +42,7 @@
 		<result column="COUNTRY_NAME" property="countryName"/>
 		<result column="CITY_NAME" property="cityName"/>
 		<result column="AREA_NAME" property="areaName"/>
+		<result column="TOTAL_SHOP" property="totalShop"/>
 		<result column="SALE_QTY" property="saleQty"/>
 		<result column="STOCK_QTY" property="stockQty"/>
 		<result column="CREATED_BY" property="createdBy"/>
@@ -99,6 +100,7 @@
 		, COUNTRY_NAME
 		, CITY_NAME
 		, AREA_NAME
+		, TOTAL_SHOP
 		, SALE_QTY
 		, STOCK_QTY
 		, CREATED_BY
@@ -129,6 +131,7 @@
 		, COUNTRY_NAME
 		, CITY_NAME
 		, AREA_NAME
+		, TOTAL_SHOP
 		, SALE_QTY
 		, STOCK_QTY
 		, CREATED_BY
@@ -160,6 +163,7 @@
 		, COUNTRY_NAME
 		, CITY_NAME
 		, AREA_NAME
+		, TOTAL_SHOP
 		, SALE_QTY
 		, STOCK_QTY
 		, CREATED_BY
@@ -259,7 +263,10 @@
 		<if test="areaName!= null and areaName!= ''"> 
 			AND AREA_NAME = #{areaName}
 		</if>
-		<if test="saleQty!= null and saleQty!= ''"> 
+		<if test="totalShop!= null and totalShop!= ''">
+			AND TOTAL_SHOP = #{totalShop}
+		</if>
+		<if test="saleQty!= null and saleQty!= ''">
 			AND SALE_QTY = #{saleQty}
 		</if>
 		<if test="stockQty!= null and stockQty!= ''"> 
@@ -438,6 +445,9 @@
         	<when test="key == 'areaName'">
 				AREA_NAME ${value}
             </when>
+        	<when test="key == 'totalShop'">
+				TOTAL_SHOP ${value}
+            </when>
         	<when test="key == 'saleQty'">
 				SALE_QTY ${value}
             </when>
@@ -485,6 +495,7 @@
 			, #{countryName}
 			, #{cityName}
 			, #{areaName}
+			, #{totalShop}
 			, #{saleQty}
 			, #{stockQty}
 			, #{createdBy}
@@ -517,6 +528,7 @@
 			, COUNTRY_NAME = #{countryName}
 			, CITY_NAME = #{cityName}
 			, AREA_NAME = #{areaName}
+			, TOTAL_SHOP = #{totalShop}
 			, SALE_QTY = #{saleQty}
 			, STOCK_QTY = #{stockQty}
 			, CREATED_BY = #{createdBy}
@@ -552,6 +564,7 @@
 			, #{countryName}
 			, #{cityName}
 			, #{areaName}
+			, #{totalShop}
 			, #{saleQty}
 			, #{stockQty}
 			, #{createdBy}
@@ -581,6 +594,7 @@
 			, COUNTRY_NAME = VALUES(COUNTRY_NAME)
 			, CITY_NAME = VALUES(CITY_NAME)
 			, AREA_NAME = VALUES(AREA_NAME)
+			, TOTAL_SHOP = VALUES(TOTAL_SHOP)
 			, SALE_QTY = VALUES(SALE_QTY)
 			, STOCK_QTY = VALUES(STOCK_QTY)
 			, CREATED_BY = VALUES(CREATED_BY)
@@ -617,6 +631,7 @@
 			, #{item.countryName}
 			, #{item.cityName}
 			, #{item.areaName}
+			, #{item.totalShop}
 			, #{item.saleQty}
 			, #{item.stockQty}
 			, #{item.createdBy}
@@ -648,6 +663,7 @@
 		, COUNTRY_NAME = VALUES(COUNTRY_NAME)
 		, CITY_NAME = VALUES(CITY_NAME)
 		, AREA_NAME = VALUES(AREA_NAME)
+		, TOTAL_SHOP = VALUES(TOTAL_SHOP)
 		, SALE_QTY = VALUES(SALE_QTY)
 		, STOCK_QTY = VALUES(STOCK_QTY)
 		, CREATED_BY = VALUES(CREATED_BY)
