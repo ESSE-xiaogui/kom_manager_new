@@ -164,17 +164,16 @@ public class BrandManager {
 		if(UtilHelper.isEmpty(token)){
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
-		//UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
 		
 		List<Brand> list = new ArrayList<Brand>();
-		if(0==companyId){
+		if(userContext.isAdmin()){
 			Brand brand = new Brand();
 			brand.setBrandName("All");
 			brand.setId(0l);
 			list.add(brand);
-		}else{
-			list = brandMapper.queryBrandListByCompanyId(companyId);
 		}
+		list.addAll(brandMapper.queryBrandListByCompanyId(companyId));
 		return list;
 	}
 }
