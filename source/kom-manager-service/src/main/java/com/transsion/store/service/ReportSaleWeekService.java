@@ -168,14 +168,4 @@ public class ReportSaleWeekService {
 	{
 		return reportSaleWeekMapper.findByCount(reportSaleWeek);
 	}
-	
-	public Pagination<ReportSaleWeek> listPgSaleModelData(Pagination<ReportSaleWeek> pagination, ReportSaleWeek reportSaleWeek)
-			throws ServiceException
-	{
-		List<ReportSaleWeek> list = reportSaleWeekMapper.listPaginationSaleModelData(pagination, reportSaleWeek, pagination.getOrderBy());
-		
-		pagination.setResultList(list);
-		
-		return pagination;
-	}
 }

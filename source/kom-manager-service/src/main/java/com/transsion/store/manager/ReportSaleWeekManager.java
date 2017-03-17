@@ -332,28 +332,6 @@ public class ReportSaleWeekManager {
 		return ExcelUtils.exportExcel(title, headers, dataset);
 	}
 	
-	public byte[] getReportSaleModelListByExcel(ReportSaleWeek reportSaleWeek) throws ServiceException {
-		String[] headers = {"排名","事业部","品牌","区域名称","国家","城市","重点机型","销量"};
-		List<ReportSaleWeek> list = reportSaleWeekMapper.querySaleModelListByProperty(reportSaleWeek);
-		List<Object[]> dataset = new ArrayList<Object[]>();
-		int i = 1;
-		for(ReportSaleWeek report :list){
-			dataset.add(
-					new Object[]{
-							i++,
-							report.getCompanyName(),
-							report.getBrandCode(),
-							report.getAreaName(),
-							report.getCountryName(),
-							report.getCityName(),
-							report.getBrandCode(),
-							report.getSaleQty()
-				});
-		}
-		String title = "重点机型销量统计报表";
-		return ExcelUtils.exportExcel(title, headers, dataset);
-	}
-	
 	public Pagination<ReportSaleWeek4CityDto> listPaginationSRWeekDataByRange(Pagination<ReportSaleWeek4CityDto> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException {
 
 		Integer year;

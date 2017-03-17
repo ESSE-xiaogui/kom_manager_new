@@ -405,90 +405,8 @@ public class ReportSaleWeekController extends AbstractController{
 		return response.build();
 	}
 	
-	/**
-	 * 重点机型销量统计(分页查询)
-	 * @param requestModel
-	 * @return
-	 * @throws ServiceException
-	 */
 	@POST
-	@Path("/listPgSaleModelData")
-	@Consumes({MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_JSON})
-	public Pagination<ReportSaleWeek> listPgSaleModelData(RequestModel<ReportSaleWeek> requestModel) throws ServiceException
-	{
-		Pagination<ReportSaleWeek> pagination = new Pagination<ReportSaleWeek>();
-
-		pagination.setPaginationFlag(requestModel.isPaginationFlag());
-		pagination.setPageNo(requestModel.getPageNo());
-		pagination.setPageSize(requestModel.getPageSize());
-		pagination.setParams(requestModel.getParams());
-		pagination.setOrderBy(requestModel.getOrderBy());
-
-		return reportSaleWeekFacade.listPgSaleModelData(pagination, requestModel.getParams());
-	}
-	
-	/**
-	 * 重点机型销量统计(导出)
-	 * @param companyId
-	 * @param brandCode
-	 * @param week
-	 * @param modelCode
-	 * @param countryName
-	 * @param cityName
-	 * @param shopCode
-	 * @param gradeId
-	 * @param userCode
-	 * @param empName
-	 * @return
-	 * @throws ServiceException
-	 * @throws IOException
-	 */
-	@GET
-	@Path("/exportExcelBySaleModel") 
-	@Produces({MediaType.TEXT_PLAIN}) 
-	public Response getReportSaleModeListByExcel(
-			@QueryParam("companyId") String companyId,
-			@QueryParam("brandCode") String brandCode,
-			@QueryParam("week") String week,
-			@QueryParam("modelCode") String modelCode,
-			@QueryParam("countryName") String countryName,
-			@QueryParam("cityName")String cityName,
-			@QueryParam("shopCode")String shopCode,
-			@QueryParam("gradeId") String gradeId,
-			@QueryParam("userCode") String userCode,
-			@QueryParam("empName") String empName
-		) throws ServiceException,IOException {
-		ReportSaleWeek reportSaleWeek = new ReportSaleWeek();
-		if(!UtilHelper.isEmpty(companyId)){
-			reportSaleWeek.setCompanyId(Long.parseLong(companyId));
-		}
-		reportSaleWeek.setBrandCode(brandCode);
-		if(!UtilHelper.isEmpty(week)){
-			reportSaleWeek.setWeek(Integer.parseInt(week));
-		}
-		reportSaleWeek.setModelCode(modelCode);
-		reportSaleWeek.setCountryName(countryName);
-		reportSaleWeek.setCityName(cityName);
-		reportSaleWeek.setShopCode(shopCode);
-		if(!UtilHelper.isEmpty(gradeId)){
-			reportSaleWeek.setGradeId(Long.parseLong(gradeId));
-		}
-		reportSaleWeek.setUserCode(userCode);
-		reportSaleWeek.setEmpName(empName);
-		
-		byte[] bytes = reportSaleWeekFacade.getReportSaleModelListByExcel(reportSaleWeek);
-		InputStream inputStream = new ByteArrayInputStream(bytes);
-		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));
-		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"重点机型销量统计报表.xlsx";
-		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));   
-		//根据自己文件类型修改
-		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");  
-		return response.build();
-	}
-	
-	@POST
-	@Path("/listPg4City")
+	@Path("/listPgSRWeek")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public Pagination<ReportSaleWeek4CityDto> listPaginationSRWeekDataByRange(RequestModel<ReportSaleWeek4CityDto> requestModel) throws ServiceException {
@@ -537,7 +455,7 @@ public class ReportSaleWeekController extends AbstractController{
 		reportSaleWeek.setUserCode(userCode);
 		reportSaleWeek.setEmpName(empName);
 		
-		byte[] bytes = reportSaleWeekFacade.getReportSaleModelListByExcel(reportSaleWeek);
+		byte[] bytes = reportSaleWeekFacade.getReportSRWeekListByExcel(reportSaleWeek);
 		InputStream inputStream = new ByteArrayInputStream(bytes);
 		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));
 		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"重点机型销量统计报表.xlsx";

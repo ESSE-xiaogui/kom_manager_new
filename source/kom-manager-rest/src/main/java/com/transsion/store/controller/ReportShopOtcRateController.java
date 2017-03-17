@@ -205,6 +205,12 @@ public class ReportShopOtcRateController extends AbstractController{
         }
     }
 	
+	/**
+	 * ITEL 城市上柜率监控分页查询
+	 * @param requestModel
+	 * @return
+	 * @throws ServiceException
+	 */
 	@POST
 	@Path("/listPgReportShopOtcRateByCity")
 	@Consumes({MediaType.APPLICATION_JSON})
@@ -222,6 +228,20 @@ public class ReportShopOtcRateController extends AbstractController{
 		return reportShopOtcRateFacade.listPgReportShopOtcRateByCity(pagination, requestModel.getParams());
 	}
 	
+	/**
+	 * ITEL 城市上柜率监控(导出)
+	 * @param visitDate
+	 * @param modelCode
+	 * @param companyId
+	 * @param brandCode
+	 * @param countryId
+	 * @param regionId
+	 * @param cityId
+	 * @param regionType
+	 * @return
+	 * @throws ServiceException
+	 * @throws IOException
+	 */
 	@GET
 	@Path("/exportExcelByCity") 
 	@Produces({MediaType.TEXT_PLAIN}) 

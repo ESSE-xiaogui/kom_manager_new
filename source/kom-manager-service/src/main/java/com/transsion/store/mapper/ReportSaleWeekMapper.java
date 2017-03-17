@@ -19,12 +19,13 @@ package com.transsion.store.mapper;
 import java.util.List;
 import java.util.Map;
 
-import com.transsion.store.bo.ReportSaleWeek;
-import com.shangkang.core.mapper.GenericIBatisMapper;
+import org.apache.ibatis.annotations.Param;
+
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.DataAccessFailureException;
+import com.shangkang.core.mapper.GenericIBatisMapper;
+import com.transsion.store.bo.ReportSaleWeek;
 import com.transsion.store.dto.ReportSaleWeek4CityDto;
-import org.apache.ibatis.annotations.Param;
 
 public interface ReportSaleWeekMapper extends GenericIBatisMapper<ReportSaleWeek, java.lang.Long> {
 
@@ -41,9 +42,6 @@ public interface ReportSaleWeekMapper extends GenericIBatisMapper<ReportSaleWeek
     public List<ReportSaleWeek4CityDto> listPaginationModelWeekDataByRange(Pagination<ReportSaleWeek4CityDto> pagination, @Param("reportSaleWeek")ReportSaleWeek reportSaleWeek, @Param("dates")List<Integer> dates, @Param("start")Integer start, @Param("end")Integer end, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     
     public List<ReportSaleWeek4CityDto> queryListByModel(@Param("reportSaleWeek")ReportSaleWeek reportSaleWeek);
-    
-    public List<ReportSaleWeek> listPaginationSaleModelData(Pagination<ReportSaleWeek> pagination, @Param("reportSaleWeek")ReportSaleWeek reportSaleWeek, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
-    public List<ReportSaleWeek> querySaleModelListByProperty(@Param("reportSaleWeek")ReportSaleWeek reportSaleWeek);
     
     public List<ReportSaleWeek4CityDto> listPaginationSRWeekDataByRange(Pagination<ReportSaleWeek4CityDto> pagination, @Param("reportSaleWeek")ReportSaleWeek reportSaleWeek, @Param("dates")List<Integer> dates, @Param("start")Integer start, @Param("end")Integer end, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     public List<ReportSaleWeek> querySRWeekListByProperty(@Param("reportSaleWeek")ReportSaleWeek reportSaleWeek);
