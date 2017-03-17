@@ -24,10 +24,18 @@ import com.shangkang.core.dto.RequestModel;
 import com.transsion.store.facade.AreaFacade;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import org.apache.commons.io.IOUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
@@ -149,5 +157,46 @@ public class AreaController extends AbstractController{
 		 areaFacade.saveShopArea(shopAreaDto,this.getAuthorization());
 	}
 	
-	
+	/**
+	 * 门店销售区域关联导出Excel
+	 * @return
+	 * @throws ServiceException
+	 * @throws IOException
+	 */
+	@GET
+	@Path("/exportExcel") 
+	@Produces({MediaType.TEXT_PLAIN})  
+	public Response getAreaShopByExcel(@QueryParam("companyId") Long companyId) throws ServiceException,IOException {
+		
+		byte[] bytes = areaFacade.getAreaShopByExcel(companyId);       
+		InputStream inputStream = new ByteArrayInputStream(bytes);          
+		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));          
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"门店销售区域关联报表.xlsx";
+		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));         
+		//根据自己文件类型修改         
+		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");          
+		return response.build();      	
+	}
+	class BigFileOutputStream implements javax.ws.rs.core.StreamingOutput {
+        private InputStream inputStream;
+        public BigFileOutputStream(){}
+        public BigFileOutputStream(InputStream inputStream)
+        {
+            this.inputStream = inputStream;
+        }
+
+        @Override
+        public void write(OutputStream output) throws IOException,
+                WebApplicationException {
+            // TODO Auto-generated method stub
+            IOUtils.copy(inputStream, output);
+        }
+
+        public InputStream getInputStream() {
+            return inputStream;
+        }
+        public void setInputStream(InputStream inputStream) {
+            this.inputStream = inputStream;
+        }
+    }
 }

@@ -188,4 +188,8 @@ public class AreaFacadeImpl implements AreaFacade {
 	public void saveShopArea(ShopAreaDto shopAreaDto, String token) throws ServiceException {
 		areaManager.saveShopArea(shopAreaDto,token);
 	}
+
+	public byte[] getAreaShopByExcel(Long companyId) throws ServiceException {
+		return areaManager.getAreaShopByExcel(companyId);
+	}
 }

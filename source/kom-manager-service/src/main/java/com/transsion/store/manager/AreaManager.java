@@ -1,6 +1,7 @@
 package com.transsion.store.manager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,11 +15,13 @@ import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.Area;
 import com.transsion.store.bo.AreaRegion;
 import com.transsion.store.bo.AreaShop;
+import com.transsion.store.bo.Shop;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.AreaDto;
 import com.transsion.store.dto.AreaShopChildrenDto;
 import com.transsion.store.dto.AreaShopDto;
 import com.transsion.store.dto.ShopAreaDto;
+import com.transsion.store.dto.VisitStockDetailDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.AreaMapper;
 import com.transsion.store.mapper.AreaRegionMapper;
@@ -26,6 +29,7 @@ import com.transsion.store.mapper.AreaShopMapper;
 import com.transsion.store.mapper.ShopMapper;
 import com.transsion.store.mapper.SystemDateMapper;
 import com.transsion.store.utils.CacheUtils;
+import com.transsion.store.utils.ExcelUtils;
 
 @Service("areaManager")
 public class AreaManager {
@@ -124,8 +128,8 @@ public class AreaManager {
 			Long pid = areaDto.getAreaId();
 			List<AreaDto> list = areaMapper.findAreaList(null,pid);
 			if(!UtilHelper.isEmpty(list)){
-				List<AreaDto> children = getChildrenArea(list);
-				areaDto.setChildren(children);
+				areaDto.setChildren(list);
+				getChildrenArea(list);
 			}
 		}
 		return areaList;
@@ -253,5 +257,45 @@ public class AreaManager {
 			areaShop.setUpdatedTime(systemDateMapper.getCurrentDate());
 			areaShopMapper.save(areaShop);
 		}
-	}	
+	}
+
+
+	public byte[] getAreaShopByExcel(Long companyId) throws ServiceException{
+//		String[][] headers = {{},{},{},{"序号","门店名称","一级区域","二级区域","三级区域"},
+//		{"序号","门店名称","一级区域","二级区域","三级区域","四级区域"},
+//		{"序号","门店名称","一级区域","二级区域","三级区域","四级区域","五级区域"}};
+		String[] levelHeaders= {"一级区域","二级区域","三级区域","四级区域","五级区域"};				
+		Map<Long, AreaDto> areaMap = queryAreaMap(companyId, 0l);
+		List<AreaShop> areaShopList = areaShopMapper.list();
+		List<Object[]> dataset = new ArrayList<Object[]>();
+		int i=1;
+		int length = 0;
+		for(AreaShop areaShop:areaShopList){
+			Shop shop = shopMapper.getByPK(areaShop.getShopId());
+			List<AreaDto> areaDtoList = queryAreaPath(areaShop.getAreaId(), areaMap);
+			int size = areaDtoList.size();
+			if(size>length){
+				length = size;
+			}
+			Object[] objs = new Object[size+2];
+			objs[0] = i++;
+			objs[1] = shop.getShopName();
+			for(int j = 2;j<objs.length;j++){
+				objs[j] = areaDtoList.get(j-2).getAreaName();
+			}
+			dataset.add(objs);
+		}
+	
+		String title = "门店销售大区关联报表";
+		List<String> headerList = new ArrayList<String>();
+		headerList.add("序号");
+		headerList.add("门店名称");
+		for(int k=0; k< length; k++)
+		{
+			headerList.add(levelHeaders[k]);
+		}
+		String[] headers = (String[])headerList.toArray(new String[0]);
+		
+		return ExcelUtils.exportExcel(title, headers, dataset);
+	}
 }

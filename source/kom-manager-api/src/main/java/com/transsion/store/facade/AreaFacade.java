@@ -135,4 +135,6 @@ public interface AreaFacade {
 
 	public void saveShopArea(ShopAreaDto shopAreaDto, String token)throws ServiceException;
 
+	public byte[] getAreaShopByExcel(Long companyId)throws ServiceException;
+
 }

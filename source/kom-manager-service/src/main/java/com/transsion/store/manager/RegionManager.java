@@ -78,8 +78,8 @@ public class RegionManager {
 			Integer pid = region.getId().intValue();
 			List<RegionDto> list = regionService.findRegionsList(pid);
 			if(!UtilHelper.isEmpty(list)){
-				List<RegionDto> children = getChildrenRegion(list);
-				region.setChildren(children);
+				region.setChildren(list);
+				getChildrenRegion(list);
 			}
 		}
 		return regionList;
