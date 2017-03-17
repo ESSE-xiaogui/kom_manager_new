@@ -276,8 +276,8 @@ public class AreaManager {
 			Object[] objs = new Object[size+2];
 			objs[0] = i++;
 			objs[1] = shop.getShopName();
-			for(int j = 2;j<objs.length;j++){
-				objs[j] = areaDtoList.get(j-2).getAreaName();
+			for(int j = 0;j<size;j++){
+				objs[j+2] = areaDtoList.get(j).getAreaName();
 			}
 			dataset.add(objs);
 		}

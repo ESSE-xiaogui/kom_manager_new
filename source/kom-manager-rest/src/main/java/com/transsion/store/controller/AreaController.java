@@ -25,7 +25,6 @@ import com.transsion.store.facade.AreaFacade;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import org.apache.commons.io.IOUtils;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import javax.ws.rs.*;

@@ -374,6 +374,7 @@ public class ReportSaleWeekController extends AbstractController{
 			@QueryParam("brandCode") String brandCode,
 			@QueryParam("week") String week,
 			@QueryParam("year") String year,
+			@QueryParam("regionId") String regionId,
 			@QueryParam("areaId") String areaId
 		) throws ServiceException,IOException {
 		ReportSaleWeek reportSaleWeek = new ReportSaleWeek();
@@ -382,10 +383,16 @@ public class ReportSaleWeekController extends AbstractController{
 		}
 		reportSaleWeek.setBrandCode(brandCode);
 		if(!UtilHelper.isEmpty(year)){
-			reportSaleWeek.setWeek(Integer.parseInt(year));
+			reportSaleWeek.setYear(Integer.parseInt(year));
+		}
+		if(!UtilHelper.isEmpty(week)){
+			reportSaleWeek.setWeek(Integer.parseInt(week));
 		}
 		if(!UtilHelper.isEmpty(areaId)){
-			reportSaleWeek.setGradeId(Long.parseLong(areaId));
+			reportSaleWeek.setAreaId(Long.parseLong(areaId));
+		}
+		if(!UtilHelper.isEmpty(regionId)){
+			reportSaleWeek.setRegionId(Long.parseLong(regionId));
 		}
 		
 		byte[] bytes = reportSaleWeekFacade.getReportSaleWeekCityByExcel(reportSaleWeek);

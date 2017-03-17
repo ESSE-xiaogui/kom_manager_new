@@ -3,8 +3,10 @@ package com.transsion.store.manager;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import com.shangkang.core.bo.Pagination;
+import com.transsion.store.dto.AreaDto;
 import com.transsion.store.dto.ReportSaleWeek4CityDto;
 import com.transsion.store.utils.CalendarUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class ReportSaleWeekManager {
 	
 	@Autowired
 	private ReportSaleWeekMapper reportSaleWeekMapper;
+	
+	@Autowired
+	private AreaManager areaManager;
 	
 	public byte[] getReportSaleWeekListByExcel(ReportSaleWeek reportSaleWeek) throws ServiceException {
 		String[] headers = {"序号","事业部","品牌","周","大区","国家","区域","省份","城市","门店编码","门店名称","用户名", "员工姓名", "销量", "库存"};
@@ -259,28 +264,33 @@ public class ReportSaleWeekManager {
 
 		Integer start = getDate4YearWeek(year, week, 7);
 		Integer end = getDate4YearWeek(year, week, 0);
+						
+		Map<Long, AreaDto> areaMap = areaManager.queryAreaMap(reportSaleWeek.getCompanyId(), 0l);
 		
 		List<Integer> weeks = getWeeksBefore(week);
-
-		List<String> headerList = new ArrayList<String>();
-		headerList.add("序号");
-		headerList.add("事业部");
-		headerList.add("品牌");
-		headerList.add("区域名称");
-		headerList.add("国家");
-		headerList.add("城市");
-		
-		for(int i=0;i<weeks.size();i++){
-			headerList.add("Week"+weeks.get(i));
-		}
-		headerList.add("P8W Ave");
-		
-		String[] headers = (String[])headerList.toArray(new String[0]);
+		String[] levelHeaders= {"一级区域","二级区域","三级区域","四级区域","五级区域"};
 		
 		List<ReportSaleWeek4CityDto> list = reportSaleWeekMapper.listPaginationCityWeekDataByRange(null, reportSaleWeek, dates, start, end, null);
 		List<Object[]> dataset = new ArrayList<Object[]>();
 		int i = 1;
+		int length = 0;
 		for(ReportSaleWeek4CityDto reportSaleWeek4CityDto :list){
+			List<AreaDto> areaDtoList = areaManager.queryAreaPath(reportSaleWeek4CityDto.getAreaId(), areaMap);
+			int size = areaDtoList.size();
+			if(size>length){
+				length = size;
+			}
+			Object[] objs = new Object[size+15];
+			objs[0] = i++;
+			objs[1] = reportSaleWeek4CityDto.getCompanyName();
+			objs[2] = reportSaleWeek4CityDto.getBrandCode();
+			for(int j=0;j<size;j++){
+				objs[j+3] = areaDtoList.get(j).getAreaName();
+			}
+			int count = size+3;
+			objs[count] = reportSaleWeek4CityDto.getCountryName();
+			objs[++count] = reportSaleWeek4CityDto.getCityName();
+			objs[++count] = reportSaleWeek4CityDto.getTotalShop();
 			int qty1 = reportSaleWeek4CityDto.getSaleQty0();
 			int qty2 = reportSaleWeek4CityDto.getSaleQty1();
 			int qty3 = reportSaleWeek4CityDto.getSaleQty2();
@@ -290,25 +300,34 @@ public class ReportSaleWeekManager {
             int qty7 =reportSaleWeek4CityDto.getSaleQty6();
             int qty8 =reportSaleWeek4CityDto.getSaleQty7();
             double avg = (qty1+qty2+qty3+qty4+qty5+qty6+qty7+qty8)/8;
-			dataset.add(
-					new Object[]{
-							i++,
-							reportSaleWeek4CityDto.getCompanyName(),
-							reportSaleWeek4CityDto.getBrandCode(),
-							reportSaleWeek4CityDto.getAreaName(),
-							reportSaleWeek4CityDto.getCountryName(),
-							reportSaleWeek4CityDto.getCityName(),
-							qty1,
-							qty2,
-							qty3,
-							qty4,
-							qty5,
-							qty6,
-							qty7,
-							qty8,
-							avg
-				});
+            objs[++count] = qty1;
+            objs[++count] = qty2;
+            objs[++count] = qty3;
+            objs[++count] = qty4;
+            objs[++count] = qty5;
+            objs[++count] = qty6;
+            objs[++count] = qty7;
+            objs[++count] = qty8;
+            objs[++count] = avg;
+			dataset.add(objs);
 		}
+		
+		List<String> headerList = new ArrayList<String>();
+		headerList.add("序号");
+		headerList.add("事业部");
+		headerList.add("品牌");
+		for(int k=0; k< length; k++)
+		{
+			headerList.add(levelHeaders[k]);
+		}
+		headerList.add("国家");
+		headerList.add("城市");
+		headerList.add("门店总数");
+		for(int j=0;j<weeks.size();j++){
+			headerList.add("Week"+weeks.get(j));
+		}
+		headerList.add("P8W Ave");
+		String[] headers = (String[])headerList.toArray(new String[0]);
 		String title = "城市周销量报表";
 		return ExcelUtils.exportExcel(title, headers, dataset);
 	}

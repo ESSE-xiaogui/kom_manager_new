@@ -350,6 +350,9 @@
 			<if test="reportSaleWeek.regionId!= null and reportSaleWeek.regionId!= ''">
 				AND REGION_ID = #{reportSaleWeek.regionId}
 			</if>
+			<if test="reportSaleWeek.areaId!= null and reportSaleWeek.areaId!= ''">
+				AND AREA_ID = #{reportSaleWeek.areaId}
+            </if>
 			<if test="reportSaleWeek.countryId!= null and reportSaleWeek.countryId!= ''">
 				AND COUNTRY_ID = #{reportSaleWeek.countryId}
 			</if>
@@ -973,6 +976,7 @@
 		CITY_NAME,
 		COUNTRY_NAME,
 		REGION_NAME,
+		TOTAL_SHOP,
 		YEAR ,
 		]]>
 		<include refid="sumCityWeek"/>
@@ -991,6 +995,7 @@
 		rw.COUNTRY_NAME,
 		rw.REGION_NAME,
 		rw.brand_code,
+		rw.TOTAL_SHOP,
 		rw.year,
 		rw.week,
 		sum(rw.SALE_QTY) SALE_QTY
@@ -1007,6 +1012,7 @@
 		rw.COMPANY_NAME,
 		rw.CITY_NAME,
 		rw.COUNTRY_NAME,
+		rw.TOTAL_SHOP,
 		rw.REGION_NAME
 		) tp group by tp.year , tp.brand_code, tp.city_id,
 		tp.COMPANY_ID,
@@ -1015,6 +1021,7 @@
 		tp.AREA_ID,
     	tp.AREA_NAME,
 		tp.COMPANY_NAME,
+		tp.TOTAL_SHOP,
 		tp.CITY_NAME,
 		tp.COUNTRY_NAME,
 		tp.REGION_NAME
