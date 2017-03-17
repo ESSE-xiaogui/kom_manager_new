@@ -18,11 +18,10 @@ package com.transsion.store.facade;
 
 import java.util.List;
 
-import com.transsion.store.bo.ReportSaleWeek;
-import com.transsion.store.dto.ReportSaleWeek4CityDto;
-import com.transsion.store.dto.VisitStockDetailDto;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
+import com.transsion.store.bo.ReportSaleWeek;
+import com.transsion.store.dto.ReportSaleWeek4CityDto;
 
 public interface ReportSaleWeekFacade {
 
@@ -146,4 +145,9 @@ public interface ReportSaleWeekFacade {
 	 * @return
 	 */
 	List<Integer> getWeeksBefore(Integer week) throws ServiceException;
+	
+	Pagination<ReportSaleWeek4CityDto> listPaginationModelWeekDataByRange(Pagination<ReportSaleWeek4CityDto> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException;
+	
+	public byte[] getReportModelWeekListByExcel(ReportSaleWeek reportSaleWeek)throws ServiceException;
+	
 }

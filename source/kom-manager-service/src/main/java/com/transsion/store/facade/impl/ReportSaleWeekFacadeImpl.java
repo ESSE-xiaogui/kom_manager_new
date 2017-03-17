@@ -208,4 +208,14 @@ public class ReportSaleWeekFacadeImpl implements ReportSaleWeekFacade {
 	public List<Integer> getWeeksBefore(Integer week) throws ServiceException {
 		return reportSaleWeekManager.getWeeksBefore(week);
 	}
+	
+	@Override
+	public Pagination<ReportSaleWeek4CityDto> listPaginationModelWeekDataByRange(Pagination<ReportSaleWeek4CityDto> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException {
+		return reportSaleWeekManager.listPaginationModelWeekDataByRange(pagination, reportSaleWeek);
+	}
+
+	@Override
+	public byte[] getReportModelWeekListByExcel(ReportSaleWeek reportSaleWeek) throws ServiceException {
+		return reportSaleWeekManager.getReportModelWeekListByExcel(reportSaleWeek);
+	}
 }

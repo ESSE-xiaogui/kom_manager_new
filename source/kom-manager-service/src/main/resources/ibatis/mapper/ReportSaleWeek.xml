@@ -1077,4 +1077,35 @@
 		]]>
 		<include refid="orderByClause" />
 	</select>
+	
+	<select id="listPaginationModelWeekDataByRange" resultMap="ReportSaleWeek4CityDtoResultMapper">
+		<![CDATA[
+		select distinct 
+		BRAND_CODE,
+		MODEL_CODE,
+    	COMPANY_NAME,
+		YEAR ,
+		]]>
+		<include refid="sumCityWeek"/>
+		<![CDATA[
+		from
+		(
+		SELECT
+		rw.brand_code,
+		rw.MODEL_CODE,
+        rw.COMPANY_NAME,
+        rw.year,
+		rw.week,
+		sum(rw.SALE_QTY) SALE_QTY
+		FROM
+		T_REPORT_SALE_WEEK rw
+		where CONCAT(year, LPAD(week, 2, 0)) >= #{start} and CONCAT(year, LPAD(week, 2, 0)) <= #{end}]]>
+		<include refid="commonConditionByPrefix4CityWeek"/>
+		<![CDATA[
+		GROUP BY rw.year , rw.week , rw.brand_code , rw.MODEL_CODE, rw.COMPANY_NAME
+		) tp group by tp.year , tp.brand_code, tp.MODEL_CODE, tp.COMPANY_NAME
+		order by year desc
+		]]>
+		<include refid="orderByClause4CityWeek" />
+	</select>
 </mapper>

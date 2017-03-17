@@ -272,4 +272,70 @@ public class ReportSaleWeekController extends AbstractController{
 	public List<Integer> getWeeksBefore(@PathParam("week") Integer week) throws ServiceException {
 		return reportSaleWeekFacade.getWeeksBefore(week);
 	}
+	
+	/**
+	 * 获取销量城市周报表
+	 * @param requestModel
+	 * @return
+	 * @throws ServiceException
+	 */
+	@POST
+	@Path("/listPg4City")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public Pagination<ReportSaleWeek4CityDto> listPaginationModelWeekDataByRange(RequestModel<ReportSaleWeek4CityDto> requestModel) throws ServiceException {
+
+		Pagination<ReportSaleWeek4CityDto> pagination = new Pagination<ReportSaleWeek4CityDto>();
+
+		pagination.setPaginationFlag(requestModel.isPaginationFlag());
+		pagination.setPageNo(requestModel.getPageNo());
+		pagination.setPageSize(requestModel.getPageSize());
+		pagination.setParams(requestModel.getParams());
+		pagination.setOrderBy(requestModel.getOrderBy());
+
+		return reportSaleWeekFacade.listPaginationModelWeekDataByRange(pagination, requestModel.getParams());
+	}
+	
+	@GET
+	@Path("/exportExcelByModel") 
+	@Produces({MediaType.TEXT_PLAIN}) 
+	public Response getReportModelWeekListByExcel(
+			@QueryParam("companyId") String companyId,
+			@QueryParam("brandCode") String brandCode,
+			@QueryParam("week") String week,
+			@QueryParam("modelCode") String modelCode,
+			@QueryParam("countryName") String countryName,
+			@QueryParam("cityName")String cityName,
+			@QueryParam("shopCode")String shopCode,
+			@QueryParam("gradeId") String gradeId,
+			@QueryParam("userCode") String userCode,
+			@QueryParam("empName") String empName
+		) throws ServiceException,IOException {
+		ReportSaleWeek reportSaleWeek = new ReportSaleWeek();
+		if(!UtilHelper.isEmpty(companyId)){
+			reportSaleWeek.setCompanyId(Long.parseLong(companyId));
+		}
+		reportSaleWeek.setBrandCode(brandCode);
+		if(!UtilHelper.isEmpty(week)){
+			reportSaleWeek.setWeek(Integer.parseInt(week));
+		}
+		reportSaleWeek.setModelCode(modelCode);
+		reportSaleWeek.setCountryName(countryName);
+		reportSaleWeek.setCityName(cityName);
+		reportSaleWeek.setShopCode(shopCode);
+		if(!UtilHelper.isEmpty(gradeId)){
+			reportSaleWeek.setGradeId(Long.parseLong(gradeId));
+		}
+		reportSaleWeek.setUserCode(userCode);
+		reportSaleWeek.setEmpName(empName);
+		
+		byte[] bytes = reportSaleWeekFacade.getReportModelWeekListByExcel(reportSaleWeek);
+		InputStream inputStream = new ByteArrayInputStream(bytes);
+		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"销量库存周报报表.xlsx";
+		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));   
+		//根据自己文件类型修改
+		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");  
+		return response.build();
+	}
 }
