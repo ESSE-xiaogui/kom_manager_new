@@ -53,7 +53,7 @@ public class TestShopManager extends GenericTestCase{
 	    	shopDto.setTotalnum(50);
 	    	shopDto.setCurrentnum(60);
 	    	shopDto.setBrandsFirst("zgh");*/
-	    	shopDto.setShopName("zgh34523");
+	    	shopDto.setShopName("zgh34503");
 	    	shopDto.setCountry(92L);
 	    	shopDto.setCity(203L);
 	    	shopDto.setAddress("huaxialf1");

@@ -23,7 +23,7 @@ public class TestMaterielManager extends GenericTestCase{
 	    protected void setUp() throws Exception {
 	    	super.setUp();
 	    	materielManager = this.getBean("materielManager");
-	    	userContext = this.getUserContext("NG0238", "123456");
+	    	userContext = this.getUserContext("CM0110", "123456");
 	    }
 
 	    //查询物料和已绑定的物料
