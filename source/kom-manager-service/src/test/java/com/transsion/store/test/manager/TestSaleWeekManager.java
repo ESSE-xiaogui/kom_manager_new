@@ -34,10 +34,10 @@ public class TestSaleWeekManager extends GenericTestCase {
 
     @Test
     public void testListPage() throws ServiceException {
-        Pagination<ReportSaleWeek> pagination = new Pagination<>();
-        pagination.setPaginationFlag(true);
-        pagination.setPageNo(1);
-
+//        Pagination<ReportSaleWeek> pagination = new Pagination<>();
+//        pagination.setPaginationFlag(true);
+//        pagination.setPageNo(1);
+//
         ReportSaleWeek reportSaleWeek = new ReportSaleWeek();
 
 //        reportSaleWeekService.listPaginationByProperty(pagination, reportSaleWeek);
@@ -48,16 +48,22 @@ public class TestSaleWeekManager extends GenericTestCase {
         
 //        reportSaleWeekManager.getReportSaleModelListByExcel(reportSaleWeek);
         
-        reportSaleWeekManager.getReportSRWeekListByExcel(reportSaleWeek);
+//        reportSaleWeekManager.getReportSRWeekListByExcel(reportSaleWeek);
         
         
-//        Pagination<ReportSaleWeek4CityDto> pagination_ = new Pagination<>();
+        
+//        Pagination<ReportSaleWeek4CityDto> pagination_ = new Pagination<ReportSaleWeek4CityDto>();
 //        pagination_.setPaginationFlag(true);
 //        pagination_.setPageNo(1);
 //
 //        ReportSaleWeek4CityDto reportSaleWeek4CityDto = new ReportSaleWeek4CityDto();
 //        Pagination<ReportSaleWeek4CityDto> list = reportSaleWeekManager.listPaginationModelWeekDataByRange(pagination_, reportSaleWeek4CityDto);
 //        System.out.println(list.getResultList().size());
+        
+//        Pagination<ReportSaleWeek4CityDto> list = reportSaleWeekManager.listPaginationSaleModelByRange(pagination_, reportSaleWeek4CityDto);
+//        System.out.println(list.getResultList().size());
+        
+        reportSaleWeekManager.getReportSaleModelByExcel(reportSaleWeek);
     }
 
 //    @Test

@@ -45,4 +45,8 @@ public interface ReportSaleWeekMapper extends GenericIBatisMapper<ReportSaleWeek
     
     public List<ReportSaleWeek4CityDto> listPaginationSRWeekDataByRange(Pagination<ReportSaleWeek4CityDto> pagination, @Param("reportSaleWeek")ReportSaleWeek reportSaleWeek, @Param("dates")List<Integer> dates, @Param("start")Integer start, @Param("end")Integer end, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
     public List<ReportSaleWeek> querySRWeekListByProperty(@Param("reportSaleWeek")ReportSaleWeek reportSaleWeek);
+    
+   
+    // 重点机型销量走势(分页查询、导出)
+    public List<ReportSaleWeek4CityDto> listPaginationSaleModelByRange(Pagination<ReportSaleWeek4CityDto> pagination, @Param("reportSaleWeek")ReportSaleWeek reportSaleWeek, @Param("dates")List<Integer> dates, @Param("start")Integer start, @Param("end")Integer end, @Param("orderBy") Map<String, String> orderBy) throws DataAccessFailureException;
 }

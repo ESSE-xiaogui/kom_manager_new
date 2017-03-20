@@ -347,12 +347,22 @@
 			<if test="reportSaleWeek.shopId!= null and reportSaleWeek.shopId!= ''">
 				AND SHOP_ID = #{reportSaleWeek.shopId}
 			</if>
-			<if test="reportSaleWeek.regionId!= null and reportSaleWeek.regionId!= ''">
+			<!-- <if test="reportSaleWeek.regionId!= null and reportSaleWeek.regionId!= ''">
 				AND REGION_ID = #{reportSaleWeek.regionId}
-			</if>
+			</if> -->
 			<if test="reportSaleWeek.areaId!= null and reportSaleWeek.areaId!= ''">
 				AND AREA_ID = #{reportSaleWeek.areaId}
             </if>
+            <if test="reportSaleWeek.regionType!= null and reportSaleWeek.regionType!= '' and reportSaleWeek.regionType == 2">
+				<if test="reportSaleWeek.countryName!= null and reportSaleWeek.countryName!= ''">
+				AND COUNTRY_NAME = #{reportSaleWeek.regionName}
+			</if>
+	        </if>
+			<if test="reportSaleWeek.regionType!= null and reportSaleWeek.regionType!= '' and reportSaleWeek.regionType == 4">
+				<if test="reportSaleWeek.cityName!= null and reportSaleWeek.cityName!= ''">
+					AND CITY_NAME = #{reportSaleWeek.regionName}
+				</if>
+	        </if>
 			<if test="reportSaleWeek.countryId!= null and reportSaleWeek.countryId!= ''">
 				AND COUNTRY_ID = #{reportSaleWeek.countryId}
 			</if>
@@ -386,7 +396,7 @@
 			<if test="reportSaleWeek.empName!= null and reportSaleWeek.empName!= ''">
 				AND EMP_NAME = #{reportSaleWeek.empName}
 			</if>
-			<if test="reportSaleWeek.regionName!= null and reportSaleWeek.regionName!= ''">
+			<!-- <if test="reportSaleWeek.regionName!= null and reportSaleWeek.regionName!= ''">
 				AND REGION_NAME = #{reportSaleWeek.regionName}
 			</if>
 			<if test="reportSaleWeek.countryName!= null and reportSaleWeek.countryName!= ''">
@@ -394,7 +404,7 @@
 			</if>
 			<if test="reportSaleWeek.cityName!= null and reportSaleWeek.cityName!= ''">
 				AND CITY_NAME = #{reportSaleWeek.cityName}
-			</if>
+			</if> -->
 			<if test="reportSaleWeek.saleQty!= null and reportSaleWeek.saleQty!= ''">
 				AND SALE_QTY = #{reportSaleWeek.saleQty}
 			</if>
@@ -1201,6 +1211,37 @@
 		rw.CITY_NAME, rw.USER_CODE, rw.EMP_NAME, rw.TOTAL_SHOP
 		) tp group by tp.year , tp.brand_code, tp.MODEL_CODE, tp.COMPANY_NAME, tp.AREA_NAME, tp.COUNTRY_NAME, tp.CITY_NAME,
 		tp.USER_CODE, tp.EMP_NAME, tp.TOTAL_SHOP
+		order by year desc
+		]]>
+		<include refid="orderByClause4CityWeek" />
+	</select>
+	
+	<select id="listPaginationSaleModelByRange" resultMap="ReportSaleWeek4CityDtoResultMapper">
+		<![CDATA[
+		select distinct 
+		COMPANY_NAME,
+    	BRAND_CODE,
+		MODEL_CODE,
+		YEAR ,
+		]]>
+		<include refid="sumCityWeek"/>
+		<![CDATA[
+		from
+		(
+		SELECT
+		rw.COMPANY_NAME,
+		rw.BRAND_CODE,
+		rw.MODEL_CODE,
+        rw.year,
+		rw.week,
+		sum(rw.SALE_QTY) SALE_QTY
+		FROM
+		T_REPORT_SALE_WEEK rw
+		where CONCAT(year, LPAD(week, 2, 0)) >= #{start} and CONCAT(year, LPAD(week, 2, 0)) <= #{end}]]>
+		<include refid="commonConditionByPrefix4CityWeek"/>
+		<![CDATA[
+		GROUP BY rw.year , rw.week , rw.BRAND_CODE , rw.COMPANY_NAME, rw.MODEL_CODE
+		) tp group by tp.year , tp.BRAND_CODE ,  tp.COMPANY_NAME , tp.MODEL_CODE
 		order by year desc
 		]]>
 		<include refid="orderByClause4CityWeek" />

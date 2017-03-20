@@ -128,7 +128,7 @@ public interface ReportSaleWeekFacade {
      * @return
      * @throws ServiceException
      */
-    Pagination<ReportSaleWeek4CityDto> listPaginationCityWeekDataByRange(Pagination<ReportSaleWeek4CityDto> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException;
+    public Pagination<ReportSaleWeek4CityDto> listPaginationCityWeekDataByRange(Pagination<ReportSaleWeek4CityDto> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException;
 
     /**
      * 获取销量店铺周报表
@@ -137,22 +137,25 @@ public interface ReportSaleWeekFacade {
      * @return
      * @throws ServiceException
      */
-    Pagination<ReportSaleWeek> listPaginationShopWeekData(Pagination<ReportSaleWeek> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException;
+    public Pagination<ReportSaleWeek> listPaginationShopWeekData(Pagination<ReportSaleWeek> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException;
 
     /**
 	 * 根据输入周获取前8周列表
 	 * @param week
 	 * @return
 	 */
-	List<Integer> getWeeksBefore(Integer week) throws ServiceException;
+	public List<Integer> getWeeksBefore(Integer week) throws ServiceException;
 	
-	Pagination<ReportSaleWeek4CityDto> listPaginationModelWeekDataByRange(Pagination<ReportSaleWeek4CityDto> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException;
+	public Pagination<ReportSaleWeek4CityDto> listPaginationModelWeekDataByRange(Pagination<ReportSaleWeek4CityDto> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException;
 	
 	public byte[] getReportModelWeekListByExcel(ReportSaleWeek reportSaleWeek)throws ServiceException;
 
 	public byte[] getReportSaleWeekCityByExcel(ReportSaleWeek reportSaleWeek)throws ServiceException;
 	
-	Pagination<ReportSaleWeek4CityDto> listPaginationSRWeekDataByRange(Pagination<ReportSaleWeek4CityDto> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException;
+	public Pagination<ReportSaleWeek4CityDto> listPaginationSRWeekDataByRange(Pagination<ReportSaleWeek4CityDto> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException;
 	
 	public byte[] getReportSRWeekListByExcel(ReportSaleWeek reportSaleWeek)throws ServiceException;
+	
+	public Pagination<ReportSaleWeek4CityDto> listPaginationSaleModelByRange(Pagination<ReportSaleWeek4CityDto> pagination, ReportSaleWeek reportSaleWeek) throws ServiceException;
+	public byte[] getReportSaleModelListByExcel(ReportSaleWeek reportSaleWeek)throws ServiceException;
 }
