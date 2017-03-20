@@ -109,5 +109,12 @@ public interface VisitModelSettingFacade {
 	 * @author guihua.zhang on 2017-03-14
 	 * */
 	public List<VisitModelSettingListDto> findVisitModel(String token,Long cityId,String currentDate) throws ServiceException;
-
+	
+	/**
+	 * 根据品牌获取重点机型列表
+	 * @param brandCode
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<String> queryModelSettingListByBrandCode(String brandCode) throws ServiceException;
 }

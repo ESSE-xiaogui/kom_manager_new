@@ -267,6 +267,9 @@
         	<when test="key == 'brandId'">
 				BRAND_ID ${value}
             </when>
+            <when test="key == 'shopCode'">
+				SHOP_CODE ${value}
+            </when>
         	<when test="key == 'modelId'">
 				MODEL_ID ${value}
             </when>

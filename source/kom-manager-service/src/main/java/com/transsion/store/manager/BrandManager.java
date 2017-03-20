@@ -13,6 +13,7 @@ import com.transsion.store.bo.Brand;
 import com.transsion.store.bo.Model;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.BrandDto;
+import com.transsion.store.dto.BrandModelListDto;
 import com.transsion.store.exception.ExceptionDef;
 import com.transsion.store.mapper.BrandMapper;
 import com.transsion.store.mapper.ModelMapper;
@@ -175,5 +176,15 @@ public class BrandManager {
 		}
 		list.addAll(brandMapper.queryBrandListByCompanyId(companyId));
 		return list;
+	}
+
+	
+	public List<BrandModelListDto> queryBrandList(String token) throws ServiceException {
+		if(UtilHelper.isEmpty(token)){
+			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
+		}
+		UserContext userContext = (UserContext)CacheUtils.getSupporter().get(token);
+		String brandCode = userContext.getBrandCode();
+		return brandMapper.queryBrandList(brandCode);
 	}
 }

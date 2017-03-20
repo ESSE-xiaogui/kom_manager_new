@@ -173,6 +173,8 @@ public class ReportSaleWeek extends Model{
 	private java.lang.String startDate;
 	
 	private java.lang.String endDate;
+	
+	private java.lang.Integer regionType;
 
 	/**
 	  *	
@@ -653,6 +655,14 @@ public class ReportSaleWeek extends Model{
 	public void setEndDate(java.lang.String endDate) {
 		this.endDate = endDate;
 	}
+	
+	public java.lang.Integer getRegionType() {
+		return regionType;
+	}
+
+	public void setRegionType(java.lang.Integer regionType) {
+		this.regionType = regionType;
+	}
 
 	@Override
 	public String toString() {
@@ -664,7 +674,8 @@ public class ReportSaleWeek extends Model{
 				+ ", regionName=" + regionName + ", countryName=" + countryName + ", cityName=" + cityName
 				+ ", areaName=" + areaName + ", totalShop=" + totalShop + ", saleQty=" + saleQty + ", stockQty="
 				+ stockQty + ", createdBy=" + createdBy + ", createTime=" + createTime + ", updatedBy=" + updatedBy
-				+ ", updateTime=" + updateTime + ", startDate=" + startDate + ", endDate=" + endDate + "]";
+				+ ", updateTime=" + updateTime + ", startDate=" + startDate + ", endDate=" + endDate + ", regionType="
+				+ regionType + "]";
 	}
 }
 

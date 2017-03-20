@@ -40,4 +40,12 @@ public interface VisitModelSettingMapper extends GenericIBatisMapper<VisitModelS
     //itel 查询当前城市当前月设置的重点机型
     public List<VisitModelSettingListDto> findVisitModel(@Param("companyId")Long companyId,@Param("regionId")Long regionId,@Param("currentDate")String currentDate) 
     				throws DataAccessFailureException;
+    
+    /**
+     * 根据品牌获取重点机型列表
+     * @param brandCode
+     * @return
+     * @throws DataAccessFailureException
+     */
+    public List<String> queryModelSettingListByBrandCode(String brandCode) throws DataAccessFailureException;
 }

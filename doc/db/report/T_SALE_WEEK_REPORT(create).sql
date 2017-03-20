@@ -65,7 +65,7 @@ FROM
     FROM
         T_SALE s, T_SALE_ITEM i
     WHERE
-        s.billno = i.billno
+        s.ID = i.SALE_ID
     GROUP BY s.user_code , s.COMPANY_ID , s.shop_id , i.brand_code , i.model_code , YEAR(s.sale_date) , WEEK(s.sale_date)) sale
         LEFT JOIN
     (SELECT 
@@ -79,7 +79,7 @@ FROM
     FROM
         T_STOCK s, T_STOCK_ITEM i
     WHERE
-        s.billno = i.billno
+        s.ID = i.STOCK_ID
     GROUP BY s.user_code , s.shop_id , i.brand_code , i.model_code , YEAR(s.stock_date) , WEEK(s.stock_date)) stock ON sale.year = stock.year
         AND sale.week = stock.week
         AND sale.user_code = stock.user_code

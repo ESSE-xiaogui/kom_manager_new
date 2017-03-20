@@ -24,12 +24,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.transsion.store.dto.ReportSaleWeek4CityDto;
-import com.transsion.store.utils.CalendarUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,7 +46,9 @@ import com.shangkang.core.dto.RequestModel;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.ReportSaleWeek;
+import com.transsion.store.dto.ReportSaleWeek4CityDto;
 import com.transsion.store.facade.ReportSaleWeekFacade;
+import com.transsion.store.utils.CalendarUtils;
 
 @Controller
 @Path("reportSaleWeek")
@@ -405,6 +413,12 @@ public class ReportSaleWeekController extends AbstractController{
 		return response.build();
 	}
 	
+	/**
+	 * 门店总销量走势-按员工(分页查询)
+	 * @param requestModel
+	 * @return
+	 * @throws ServiceException
+	 */
 	@POST
 	@Path("/listPgSRWeek")
 	@Consumes({MediaType.APPLICATION_JSON})
@@ -418,10 +432,26 @@ public class ReportSaleWeekController extends AbstractController{
 		pagination.setPageSize(requestModel.getPageSize());
 		pagination.setParams(requestModel.getParams());
 		pagination.setOrderBy(requestModel.getOrderBy());
-
-		return reportSaleWeekFacade.listPaginationModelWeekDataByRange(pagination, requestModel.getParams());
+		
+		return reportSaleWeekFacade.listPaginationSRWeekDataByRange(pagination, requestModel.getParams());
 	}
 	
+	/**
+	 * 门店总销量走势-按员工(导出)
+	 * @param companyId
+	 * @param brandCode
+	 * @param week
+	 * @param modelCode
+	 * @param countryName
+	 * @param cityName
+	 * @param shopCode
+	 * @param gradeId
+	 * @param userCode
+	 * @param empName
+	 * @return
+	 * @throws ServiceException
+	 * @throws IOException
+	 */
 	@GET
 	@Path("/exportExcelBySRWeek") 
 	@Produces({MediaType.TEXT_PLAIN}) 
@@ -459,6 +489,88 @@ public class ReportSaleWeekController extends AbstractController{
 		InputStream inputStream = new ByteArrayInputStream(bytes);
 		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));
 		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"重点机型销量统计报表.xlsx";
+		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));   
+		//根据自己文件类型修改
+		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");  
+		return response.build();
+	}
+	
+	/**
+	 * 重点机型销量走势(分页查询)
+	 * @param requestModel
+	 * @return
+	 * @throws ServiceException
+	 */
+	@POST
+	@Path("/listPgSaleModel")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public Pagination<ReportSaleWeek4CityDto> listPaginationSaleModelByRange(RequestModel<ReportSaleWeek4CityDto> requestModel) throws ServiceException {
+
+		Pagination<ReportSaleWeek4CityDto> pagination = new Pagination<ReportSaleWeek4CityDto>();
+
+		pagination.setPaginationFlag(requestModel.isPaginationFlag());
+		pagination.setPageNo(requestModel.getPageNo());
+		pagination.setPageSize(requestModel.getPageSize());
+		pagination.setParams(requestModel.getParams());
+		pagination.setOrderBy(requestModel.getOrderBy());
+		
+		return reportSaleWeekFacade.listPaginationSaleModelByRange(pagination, requestModel.getParams());
+	}
+	
+	/**
+	 * 重点机型销量走势(导出)
+	 * @param companyId
+	 * @param brandCode
+	 * @param week
+	 * @param modelCode
+	 * @param countryName
+	 * @param cityName
+	 * @param shopCode
+	 * @param gradeId
+	 * @param userCode
+	 * @param empName
+	 * @return
+	 * @throws ServiceException
+	 * @throws IOException
+	 */
+	@GET
+	@Path("/exportExcelSaleModel") 
+	@Produces({MediaType.TEXT_PLAIN}) 
+	public Response getReportSaleModelListByExcel(
+			@QueryParam("companyId") String companyId,
+			@QueryParam("brandCode") String brandCode,
+			@QueryParam("areaId") String areaId,
+			@QueryParam("regionType") String regionType,
+			@QueryParam("regionId") String regionId,
+			@QueryParam("year") String year,
+			@QueryParam("week") String week
+		) throws ServiceException,IOException {
+		ReportSaleWeek reportSaleWeek = new ReportSaleWeek();
+		if(!UtilHelper.isEmpty(companyId)){
+			reportSaleWeek.setCompanyId(Long.parseLong(companyId));
+		}
+		reportSaleWeek.setBrandCode(brandCode);
+		if(!UtilHelper.isEmpty(areaId)){
+			reportSaleWeek.setAreaId(Long.parseLong(areaId));
+		}
+		if(!UtilHelper.isEmpty(regionType)){
+			reportSaleWeek.setRegionType(Integer.parseInt(regionType));
+		}
+		if(!UtilHelper.isEmpty(regionId)){
+			reportSaleWeek.setRegionId(Long.parseLong(regionId));
+		}
+		if(!UtilHelper.isEmpty(year)){
+			reportSaleWeek.setYear(Integer.parseInt(year));
+		}
+		if(!UtilHelper.isEmpty(week)){
+			reportSaleWeek.setWeek(Integer.parseInt(week));
+		}
+		
+		byte[] bytes = reportSaleWeekFacade.getReportSaleModelListByExcel(reportSaleWeek);
+		InputStream inputStream = new ByteArrayInputStream(bytes);
+		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"重点机型销量走势报表.xlsx";
 		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));   
 		//根据自己文件类型修改
 		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");  

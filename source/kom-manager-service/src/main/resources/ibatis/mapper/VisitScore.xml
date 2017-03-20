@@ -263,6 +263,9 @@
         	<when test="key == 'shopScore'">
 				SHOP_SCORE ${value}
             </when>
+            <when test="key == 'shopCode'">
+				SHOP_CODE ${value}
+            </when>
         	<when test="key == 'saleScore'">
 				SALE_SCORE ${value}
             </when>
