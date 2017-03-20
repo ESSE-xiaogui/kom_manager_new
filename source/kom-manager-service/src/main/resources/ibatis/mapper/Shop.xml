@@ -1052,7 +1052,7 @@
 		LEFT JOIN T_CURRENCY cc ON cc.REGION_ID = p.COUNTRY
 		LEFT JOIN T_USER_SHOP us ON us.SHOP_ID = p.ID
 		LEFT JOIN T_USER u ON u.ID = us.USER_ID
-		WHERE u.ID = 1 AND p.COMPANY_ID = 1
+		WHERE u.ID = #{userId} AND p.COMPANY_ID = #{companyId}
 		GROUP BY p.ID,p.SHOP_NAME,r.REGION_NAME,cc.WERKS		
 	</select>
 	<select id="findShopListByUser" parameterType="java.lang.Integer" resultMap="ShopLoginDtoDtoMapper">
