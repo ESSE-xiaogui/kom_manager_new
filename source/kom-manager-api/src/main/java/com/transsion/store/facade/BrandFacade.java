@@ -136,10 +136,11 @@ public interface BrandFacade {
 	
 	/**
      * 获取所有品牌机型
+	 * @param token 
      * @return
      * @throws ServiceException
      */
-    public List<BrandModelListDto> queryBrandList()throws ServiceException;
+    public List<BrandModelListDto> queryBrandList(String token)throws ServiceException;
     
     public List<Brand> queryBrandListByCompanyId(Long companyId, String token) throws ServiceException;
 }

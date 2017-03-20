@@ -196,8 +196,8 @@ public class BrandFacadeImpl implements BrandFacade {
 	 * @throws ServiceException
 	 */
 	@Override
-	public List<BrandModelListDto> queryBrandList() throws ServiceException {
-		return brandService.queryBrandList();
+	public List<BrandModelListDto> queryBrandList(String token) throws ServiceException {
+		return brandManager.queryBrandList(token);
 	}
 
 	@Override

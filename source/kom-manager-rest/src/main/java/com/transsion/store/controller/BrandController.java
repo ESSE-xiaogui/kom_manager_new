@@ -144,7 +144,7 @@ public class BrandController extends AbstractController{
 	@Path("/brandList")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public List<BrandModelListDto> queryBrandList() throws ServiceException {
-		return brandFacade.queryBrandList();
+		return brandFacade.queryBrandList(this.getAuthorization());
 	}
 	
 	@GET

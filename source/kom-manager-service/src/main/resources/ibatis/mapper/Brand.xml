@@ -358,11 +358,11 @@
 		SELECT count(1) AS totalcount FROM T_BRAND WHERE 1=1 
 		<include refid="commonCondition"/>
 	</select>
-	<select id="queryBrandList"  resultMap="BrandModelListDtoResultMapper">
+	<select id="queryBrandList"  parameterType="java.lang.String" resultMap="BrandModelListDtoResultMapper">
 		SELECT DISTINCT b.BRAND_CODE,b.BRAND_NAME,b.IS_SELF,m.SERIES_CODE, m.MODEL_CODE,m.MODEL_NAME FROM T_BRAND b		
 		LEFT JOIN T_MODEL m ON  m.BRAND_CODE = b.BRAND_CODE
 		WHERE b.IS_INACTIVE = 1 AND  m.IS_INACTIVE = 1
-		AND b.BRAND_CODE = 'TECNO' ORDER BY m.MODEL_CODE
+		AND b.BRAND_CODE = #{brandCode} ORDER BY m.MODEL_CODE
 	</select>
 	
 	<select id="queryBrandListByCompanyId" parameterType="java.lang.Long" resultMap="BrandResultMapper">
