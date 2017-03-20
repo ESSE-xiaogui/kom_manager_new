@@ -65,7 +65,7 @@ SELECT
     FROM
         T_SALE_ITEM t, T_SALE s
     WHERE
-        t.BILLNO = s.BILLNO
+        t.SALE_ID = s.ID
             AND s.user_code IS NOT NULL
     GROUP BY s.USER_CODE , s.sale_date , t.brand_code , t.model_code , s.COMPANY_ID , s.SHOP_ID
     ORDER BY s.sale_date DESC) sale
@@ -80,7 +80,7 @@ SELECT
     FROM
         T_STOCK s, T_STOCK_ITEM i
     WHERE
-        s.billno = i.billno
+        s.ID = i.STOCK_ID
     GROUP BY s.user_code , s.stock_date , s.shop_id , i.brand_code , i.model_code) stock ON sale.user_code = stock.user_code
         AND sale.sale_date = stock.STOCK_DATE
         AND sale.brand_code = stock.brand_code

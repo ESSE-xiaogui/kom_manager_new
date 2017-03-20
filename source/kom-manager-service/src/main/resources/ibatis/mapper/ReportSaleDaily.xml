@@ -753,7 +753,7 @@
 		FROM
 			T_SALE_ITEM t, T_SALE s
 		WHERE
-			t.BILLNO = s.BILLNO
+			t.SALE_ID = s.ID
 				AND s.CREATED_TIME > str_to_date(#{date},'%Y-%m-%d %H:%i:%s')
 		GROUP BY s.USER_CODE , s.sale_date , t.brand_code , t.model_code , s.COMPANY_ID , s.SHOP_ID
 		ORDER BY s.sale_date DESC) sale
@@ -768,7 +768,7 @@
 		FROM
 			T_STOCK s, T_STOCK_ITEM i
 		WHERE
-			s.billno = i.billno
+			s.ID = i.STOCK_ID
 			AND s.CREATED_TIME > str_to_date(#{date},'%Y-%m-%d %H:%i:%s')
 		GROUP BY s.user_code , s.stock_date , s.shop_id , i.brand_code , i.model_code) stock ON sale.user_code = stock.user_code
 			AND sale.sale_date = stock.STOCK_DATE
