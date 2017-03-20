@@ -60,11 +60,11 @@ public class VisitPlanManager {
 	/**
 	 * @author guihua.zhang on 2017-02-28 巡店计划上传接口
 	 */
-	public int savePlan(String token, List<VisitPlanDto> visitPlanDtoList) throws ServiceException {
+	public int savePlan(String token, List<VisitPlanDto> visitPlanDtos)  throws ServiceException {
 		if (UtilHelper.isEmpty(token)) {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
-		if (UtilHelper.isEmpty(visitPlanDtoList)) {
+		if (UtilHelper.isEmpty(visitPlanDtos)) {
 			throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 		}
 		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
@@ -73,7 +73,7 @@ public class VisitPlanManager {
 			throw new ServiceException(ExceptionDef.ERROR_USER_TOKEN_INVALID.getName());
 		}
 		//删除根据日期加用户名删除数据,再添加.
-		List<VisitPlan> visitPlans = new ArrayList<VisitPlan>();
+		/*List<VisitPlan> visitPlans = new ArrayList<VisitPlan>();
 		for(VisitPlanDto VisitPlanDto:visitPlanDtoList){
 			if(UtilHelper.isEmpty(VisitPlanDto.getPlanDate())){
 				throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
@@ -86,7 +86,6 @@ public class VisitPlanManager {
 		if(visitPlans.size()>0){
 			visitPlanMapper.deleteVisitPlans(visitPlans);
 		}
-		//app传入所有需要上传的计划日期和店铺id进行保存 注:不需要保存的计划app不要上传
 		List<VisitPlan> visitPlanList = new ArrayList<VisitPlan>();
 		for (VisitPlanDto visitPlanDto : visitPlanDtoList) {
 			VisitPlan visitPlan = new VisitPlan();
@@ -103,7 +102,43 @@ public class VisitPlanManager {
 			visitPlan.setCreateTime(systemDateService.getCurrentDate());
 			visitPlanList.add(visitPlan);
 		}
-		visitPlanMapper.saveVisitPlans(visitPlanList);
+		
+		visitPlanMapper.saveVisitPlans(visitPlanList);*/
+		
+		List<VisitPlan> visitPlans = new ArrayList<VisitPlan>();
+		
+		for (VisitPlanDto visitPlanDto : visitPlanDtos) {
+			
+			List<Long> shopIds = visitPlanDto.getShopIds();
+			// 根据日期计划删除原先数据库中的数据
+			VisitPlan visitPlanExp = new VisitPlan();
+			visitPlanExp.setPlanDate(visitPlanDto.getPlanDate());
+			visitPlanExp.setPlanner(userContext.getUserCode());
+			visitPlanMapper.deleteByProperty(visitPlanExp);
+			// 保存
+			if (shopIds.size() > 0) {
+				for (Long shopId : shopIds) {
+					VisitPlan visitPlan = new VisitPlan();
+					
+					visitPlan.setCompanyId(userContext.getCompanyId());
+					visitPlan.setPlanDate(visitPlanDto.getPlanDate());
+					visitPlan.setCompanyId(userContext.getCompanyId());
+					visitPlan.setStatus(undo);
+					visitPlan.setShopId(shopId);
+					if (UtilHelper.isEmpty(visitPlanDto.getPlanner())) {
+						visitPlan.setPlanner(userContext.getUserCode());
+					} else {
+						visitPlan.setPlanner(visitPlanDto.getPlanner());
+					}
+					visitPlan.setCreateBy(userContext.getUserCode());
+					visitPlan.setCreateTime(systemDateService.getCurrentDate());
+					visitPlans.add(visitPlan);
+				}
+			}
+		}
+
+		visitPlanMapper.batchSaveOrUpdate(visitPlans);
+		
 		int success = undo;
 		return success;
 	}

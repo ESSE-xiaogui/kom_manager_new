@@ -24,6 +24,7 @@ import com.transsion.store.mapper.ModelMapper;
 import com.transsion.store.mapper.PrototypeMapper;
 import com.transsion.store.service.SystemDateService;
 import com.transsion.store.utils.CacheUtils;
+import com.transsion.store.utils.ExcelUtils;
 
 @Service("/prototypeManager")
 public class PrototypeManager {
@@ -257,5 +258,31 @@ public class PrototypeManager {
 		}
 		
 		return prototypes;
+	}
+	
+	/**
+	 * 样机导出
+	 * @param prototypeDto
+	 * @return
+	 * @throws ServiceException
+	 */
+	public byte[] getPrototypeByExcel(PrototypeDto prototypeDto)throws ServiceException {
+		String[] headers = {"序号","事业部","品牌名称","国家","城市","门店编码","门店名称","IMEI号","样机机型", 
+		"上样用户","上样员工姓名","上样时间","下样用户","下样员工姓名","下样时间","下样原因","样机状态","样机状态","创建时间"};
+		
+		List<PrototypeDto> prototypeDtos = prototypeMapper.listByProperty(prototypeDto);
+		List<Object[]> dataset = new ArrayList<Object[]>();
+		int i=1;
+		for(PrototypeDto prototypeDtoTemp :prototypeDtos){
+			dataset.add(new Object[]{i++,prototypeDtoTemp.getCompanyCode(), prototypeDtoTemp.getBrandCode(),
+					prototypeDtoTemp.getCountryName(), prototypeDtoTemp.getCityName(),
+					prototypeDtoTemp.getShopCode(), prototypeDtoTemp.getShopName(), prototypeDtoTemp.getImeiNo(),
+					prototypeDtoTemp.getModelCode(), prototypeDtoTemp.getPublishBy(), 
+					prototypeDtoTemp.getPublishName(), prototypeDtoTemp.getPublishTime(),
+					prototypeDtoTemp.getUnpublishBy(), prototypeDtoTemp.getUnpublishName(),prototypeDtoTemp.getUnpublishTime(), 
+					prototypeDtoTemp.getUnpublishCause(), prototypeDtoTemp.getStatus() == 1 ? "上样" : "下样", prototypeDtoTemp.getCreateTime()});
+		}
+		String title = "样机汇总报表";
+		return ExcelUtils.exportExcel(title, headers, dataset);
 	}
 }

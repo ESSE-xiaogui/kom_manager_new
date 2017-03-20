@@ -17,6 +17,7 @@
 package com.transsion.store.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author guihua.zhang on 2017-02-28
@@ -47,16 +48,10 @@ public class VisitPlanDto implements Serializable {
 	private String planner;
 	
 	/**
-	  *	店铺Id
+	  *	要巡店的shopId列表
 	  * 必输字段
 	  */
-	private Long shopId;
-	
-	/**
-	 * 此店铺是否是删除 1删除
-	 * 如果此巡店计划店铺是删除不巡店 值必须为1 否则为空
-	 * */
-	private Integer isDelete;
+	private List<Long> shopIds;
 
 	/***
 	 * 巡店计划ID
@@ -106,42 +101,12 @@ public class VisitPlanDto implements Serializable {
 		this.planner = planner;
 	}
 
-	/**
-	  *	店铺Id
-	  * 必输字段
-	  */
-	public Long getShopId() {
-		return shopId;
+	public List<Long> getShopIds() {
+		return shopIds;
 	}
 
-	/**
-	  *	店铺Id
-	  * 必输字段
-	  */
-	public void setShopId(Long shopId) {
-		this.shopId = shopId;
-	}
-
-	/**
-	 * 此店铺是否是删除 1删除
-	 * 如果此巡店计划店铺是删除不巡店 值必须为1 否则为空
-	 * */
-	public Integer getIsDelete() {
-		return isDelete;
-	}
-
-	/**
-	 * 此店铺是否是删除 1删除
-	 * 如果此巡店计划店铺是删除不巡店 值必须为1 否则为空
-	 * */
-	public void setIsDelete(Integer isDelete) {
-		this.isDelete = isDelete;
-	}
-
-	@Override
-	public String toString() {
-		return "VisitPlanDto [id=" + id + ", planDate=" + planDate + ", planner=" + planner + ", shopId=" + shopId
-						+ ", isDelete=" + isDelete + "]";
+	public void setShopIds(List<Long> shopIds) {
+		this.shopIds = shopIds;
 	}
 
 }

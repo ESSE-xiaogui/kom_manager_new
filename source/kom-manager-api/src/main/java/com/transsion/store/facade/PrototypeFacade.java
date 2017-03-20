@@ -21,6 +21,7 @@ import java.util.List;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.Prototype;
+import com.transsion.store.dto.PrototypeCountingDto;
 import com.transsion.store.dto.PrototypeDto;
 
 public interface PrototypeFacade {
@@ -104,5 +105,13 @@ public interface PrototypeFacade {
 	 */
 	public Pagination<PrototypeDto> listPaginationByPropertyDto(Pagination<PrototypeDto> pagination, PrototypeDto prototypeDto, String token)
 			throws ServiceException;
+	
+	/**
+	 * prototype导出
+	 * @param prototypeDto
+	 * @return
+	 * @throws ServiceException
+	 */
+	public byte[] getPrototypeByExcel(PrototypeDto prototypeDto)throws ServiceException;
 
 }

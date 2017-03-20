@@ -166,4 +166,14 @@ public class PrototypeFacadeImpl implements PrototypeFacade {
 	{
 		return prototypeService.findByCount(prototype);
 	}
+	
+	/**
+	 * prototype导出
+	 * @param prototypeDto
+	 * @return
+	 * @throws ServiceException
+	 */
+	public byte[] getPrototypeByExcel(PrototypeDto prototypeDto)throws ServiceException {
+		return prototypeManager.getPrototypeByExcel(prototypeDto);
+	}
 }

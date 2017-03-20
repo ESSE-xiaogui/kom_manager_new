@@ -126,7 +126,7 @@ public interface VisitPlanFacade {
 	 * PlanList 页面
 	 * 巡店计划上传接口
 	 * */
-	public int savePlan(String token, List<VisitPlanDto> visitPlanDtoList) throws ServiceException;
+	public int savePlan(String token, List<VisitPlanDto> visitPlanDtos) throws ServiceException;
 
 	/**
 	 * Today's visiting 页面

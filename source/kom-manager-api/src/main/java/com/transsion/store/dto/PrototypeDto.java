@@ -44,8 +44,9 @@ public class PrototypeDto implements Serializable {
 	private String endUnpublishTime;	// 下架结束时间
 	private Long companyId;				// 事业部ID
 	private String companyCode;			// 事业部名称
-	
 	private Long prototypeCountingId;	// 盘点计划ID
+	private String createTime;			// 创建时间
+	private String statusView;			// 样机状态(中文)
 	
 	public Long getId() {
 		return id;
@@ -278,5 +279,17 @@ public class PrototypeDto implements Serializable {
 	}
 	public void setPrototypeCountingId(Long prototypeCountingId) {
 		this.prototypeCountingId = prototypeCountingId;
+	}
+	public String getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+	public String getStatusView() {
+		return statusView;
+	}
+	public void setStatusView(String statusView) {
+		this.statusView = statusView;
 	}
 }

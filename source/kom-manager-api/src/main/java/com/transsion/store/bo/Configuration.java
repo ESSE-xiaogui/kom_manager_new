@@ -13,6 +13,8 @@ public class Configuration extends Model {
 	private java.lang.String value;
 
 	private java.lang.String remark;
+	
+	private Integer status;			// 	1.启用，2.停用
 
 	public java.lang.Long getId() {
 		return id;
@@ -44,6 +46,13 @@ public class Configuration extends Model {
 
 	public void setRemark(java.lang.String remark) {
 		this.remark = remark;
+	}
+	
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	@Override

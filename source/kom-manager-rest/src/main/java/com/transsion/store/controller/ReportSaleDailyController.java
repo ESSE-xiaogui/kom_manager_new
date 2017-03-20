@@ -129,10 +129,32 @@ public class ReportSaleDailyController extends AbstractController{
 		reportSaleDailyFacade.update(reportSaleDaily);
 	}
 	
-	/*@GET
+	@GET
 	@Path("/exportExcel") 
 	@Produces({MediaType.TEXT_PLAIN})
-	public Response getReoprtSaleDailyByExcel(@QueryParam("reportSaleDailyDto") ReportSaleDailyDto reportSaleDailyDto) throws ServiceException,IOException {
+	public Response exportExcelByReportSaleDaily(@QueryParam("companyName") String companyName, @QueryParam("brandCode") String brandCode,
+			@QueryParam("saleDate") String saleDate,@QueryParam("week") String week,@QueryParam("countryName") String countryName,
+			@QueryParam("cityName") String cityName,@QueryParam("shopCode") String shopCode,@QueryParam("shopName") String shopName,
+			@QueryParam("gradeName") String gradeName,@QueryParam("userCode") String userCode,@QueryParam("empName") String empName,
+			@QueryParam("modelCode") String modelCode,@QueryParam("saleQty") String saleQty,@QueryParam("stockQty") String stockQty
+			) throws ServiceException,IOException {
+		
+		ReportSaleDailyDto reportSaleDailyDto = new ReportSaleDailyDto();
+
+		reportSaleDailyDto.setCompanyName(companyName);
+		reportSaleDailyDto.setBrandCode(brandCode);
+		reportSaleDailyDto.setSaleDate(saleDate);
+		reportSaleDailyDto.setWeek(Integer.valueOf(week));
+		reportSaleDailyDto.setCountryName(countryName);
+		reportSaleDailyDto.setCityName(cityName);
+		reportSaleDailyDto.setShopCode(shopCode);
+		reportSaleDailyDto.setShopName(shopName);
+		reportSaleDailyDto.setGradeName(gradeName);
+		reportSaleDailyDto.setUserCode(userCode);
+		reportSaleDailyDto.setEmpName(empName);
+		reportSaleDailyDto.setModelCode(modelCode);
+		reportSaleDailyDto.setSaleQty(Integer.valueOf(saleQty));
+		reportSaleDailyDto.setStockQty(Integer.valueOf(stockQty));
 		
 		byte[] bytes = reportSaleDailyFacade.getReportSaleDailyByExcel(reportSaleDailyDto);       
 		InputStream inputStream = new ByteArrayInputStream(bytes);          
@@ -142,7 +164,7 @@ public class ReportSaleDailyController extends AbstractController{
 		//根据自己文件类型修改         
 		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");          
 		return response.build();
-	}*/
+	}
 	
 	class BigFileOutputStream implements javax.ws.rs.core.StreamingOutput {
         private InputStream inputStream;

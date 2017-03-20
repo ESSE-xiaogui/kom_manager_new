@@ -16,6 +16,7 @@ import com.batch.task.msg.api.ProducerService;
 import com.batch.task.msg.api.TaskMessage;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
+import com.transsion.store.bo.Company;
 import com.transsion.store.bo.Sale;
 import com.transsion.store.bo.SaleItem;
 import com.transsion.store.bo.Stock;
@@ -28,6 +29,7 @@ import com.transsion.store.dto.StockInfoDto;
 import com.transsion.store.dto.StockResponseDto;
 import com.transsion.store.dto.StockSpeDto;
 import com.transsion.store.exception.ExceptionDef;
+import com.transsion.store.mapper.CompanyMapper;
 import com.transsion.store.mapper.CurrencyMapper;
 import com.transsion.store.mapper.StockCurrentMapper;
 import com.transsion.store.mapper.StockItemMapper;
@@ -68,6 +70,8 @@ public class StockManager {
 	private ProducerService producerService;
 	@Autowired
 	private ConfigurationService configurationService;
+	@Autowired
+	private CompanyMapper companyMapper;
 	
 	/**
 	 * 保存库存上报记录
@@ -351,7 +355,8 @@ public class StockManager {
 	 */
 	public void updateCurStockBySale(String saleDtoJson) throws ServiceException {
 		
-		/*1.根据sale得到对应的stock，stock减少，时间戳更新stockdate, 
+		/* 只在company为INFINIX的事业部下才做这个销库
+		 * 1.根据sale得到对应的stock，stock减少，时间戳更新stockdate, 
 		 * 2.根据 表T_SALE_ITEM: SHOP_ID, BRAND_CODE, MODEL_CODE查询stockcurrent记录
 		 * SHOP_IDT_STOCK_CURRENT 表：DEALER_ID， BRAND_CODE， MODEL_MAT_CODE获取
 		 * 更新T_STOCK_CURRENT表.发送库存消息
@@ -374,50 +379,56 @@ public class StockManager {
 				throw new ServiceException(ExceptionDef.ERROR_COMMON_PARAM_NULL.getName());
 			}
 			
-			Sale sale = saleDto.getSale();
-			List<SaleItem> saleItems = saleDto.getSaleItems();
-			
-			if (sale != null && saleItems != null) {
-				List<StockCurrent> stockCurrents = new ArrayList<StockCurrent>();
-				StockCurrent stockCurrentExp = new StockCurrent();
-				stockCurrentExp.setDealerId(sale.getShopId());
+			long compayId = userContext.getUser().getCompanyId();
+			Company company = companyMapper.getByPK(compayId);
+			// 只在company为INFINIX的事业部下才做这个销库
+			if (company != null && "INFINIX".equals(company.getCompanyCode())) {
 				
-				stockCurrents = stockCurrentMapper.listByProperty(stockCurrentExp);
+				Sale sale = saleDto.getSale();
+				List<SaleItem> saleItems = saleDto.getSaleItems();
 				
-				if (stockCurrents != null && stockCurrents.size() > 0) {
-					for (StockCurrent stockCurrent : stockCurrents) {
-						for (SaleItem saleItem :saleItems) {
-							// 销量品牌，机型与库存品牌，机型一致，则修改库存
-							if (stockCurrent.getBrandCode() != null && saleItem.getBrandCode() != null
-									&& stockCurrent.getModelMatCode() != null && saleItem.getModelCode() != null
-									&& stockCurrent.getBrandCode().equals(saleItem.getBrandCode()) 
-									&& stockCurrent.getModelMatCode().equals(saleItem.getModelCode())) {
-								stockCurrent.setFqty(stockCurrent.getFqty().subtract(saleItem.getSaleQty()));
+				if (sale != null && saleItems != null) {
+					List<StockCurrent> stockCurrents = new ArrayList<StockCurrent>();
+					StockCurrent stockCurrentExp = new StockCurrent();
+					stockCurrentExp.setDealerId(sale.getShopId());
+					
+					stockCurrents = stockCurrentMapper.listByProperty(stockCurrentExp);
+					
+					if (stockCurrents != null && stockCurrents.size() > 0) {
+						for (StockCurrent stockCurrent : stockCurrents) {
+							for (SaleItem saleItem :saleItems) {
+								// 销量品牌，机型与库存品牌，机型一致，则修改库存
+								if (stockCurrent.getBrandCode() != null && saleItem.getBrandCode() != null
+										&& stockCurrent.getModelMatCode() != null && saleItem.getModelCode() != null
+										&& stockCurrent.getBrandCode().equals(saleItem.getBrandCode()) 
+										&& stockCurrent.getModelMatCode().equals(saleItem.getModelCode())) {
+									stockCurrent.setFqty(stockCurrent.getFqty().subtract(saleItem.getSaleQty()));
+								}
 							}
+							stockCurrent.setUpdatedTime(systemDateService.getCurrentDate());
 						}
-						stockCurrent.setUpdatedTime(systemDateService.getCurrentDate());
+						
+						stockCurrentMapper.batchSaveOrUpdate(stockCurrents);
 					}
 					
-					stockCurrentMapper.batchSaveOrUpdate(stockCurrents);
+					// 发送MQ
+					long mqStartTime = System.currentTimeMillis();
+					StockSpeDto stockSpeDto = stockCurrTostockSpeDto(stockCurrents, token);
+					
+					String importTask = configurationService.getValueByName(SAVE_STOCK_URL);
+					
+					TaskMessage msg = new TaskMessage();
+					msg.setInvokerType(TaskInvokerInfo.Type.REST);
+					msg.setMethod(TaskInvokerInfo.RestMethod.POST.toString());
+					// DTO转成JSON
+					msg.setParams(JacksonUtil.toJSON(stockSpeDto));
+					msg.setBeanName(importTask);
+					msg.setName("saveStock");
+					msg.setKey("saveStock_" + System.currentTimeMillis());
+					producerService.sendMessage(msg);
+					long mqEndTime = System.currentTimeMillis();
+					logger.debug("send mq message time is:" + (mqEndTime - mqStartTime));
 				}
-				
-				// 发送MQ
-				long mqStartTime = System.currentTimeMillis();
-				StockSpeDto stockSpeDto = stockCurrTostockSpeDto(stockCurrents, token);
-				
-				String importTask = configurationService.getValueByName(SAVE_STOCK_URL);
-				
-				TaskMessage msg = new TaskMessage();
-				msg.setInvokerType(TaskInvokerInfo.Type.REST);
-				msg.setMethod(TaskInvokerInfo.RestMethod.POST.toString());
-				// DTO转成JSON
-				msg.setParams(JacksonUtil.toJSON(stockSpeDto));
-				msg.setBeanName(importTask);
-				msg.setName("saveStock");
-				msg.setKey("saveStock_" + System.currentTimeMillis());
-				producerService.sendMessage(msg);
-				long mqEndTime = System.currentTimeMillis();
-				logger.debug("send mq message time is:" + (mqEndTime - mqStartTime));
 			}
 		}
 	}

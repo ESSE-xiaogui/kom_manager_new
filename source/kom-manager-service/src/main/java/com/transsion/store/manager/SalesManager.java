@@ -18,7 +18,9 @@ import org.springframework.dao.DeadlockLoserDataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import com.batch.task.api.TaskInvokerInfo;
 import com.batch.task.msg.api.ProducerService;
+import com.batch.task.msg.api.TaskMessage;
 import com.shangkang.core.exception.ServiceException;
 import com.shangkang.tools.UtilHelper;
 import com.transsion.store.bo.ConstantUtil;
@@ -29,6 +31,7 @@ import com.transsion.store.bo.ShopBiz;
 import com.transsion.store.bo.ShopGrade;
 import com.transsion.store.context.UserContext;
 import com.transsion.store.dto.SaleDailyDto;
+import com.transsion.store.dto.SaleDto;
 import com.transsion.store.dto.SalesDto;
 import com.transsion.store.dto.SalesUploadDto;
 import com.transsion.store.dto.StatShopModelSaleDto;
@@ -44,6 +47,7 @@ import com.transsion.store.service.ConfigurationService;
 import com.transsion.store.service.SaleItemService;
 import com.transsion.store.utils.CacheUtils;
 import com.transsion.store.utils.ExcelUtils;
+import com.transsion.store.utils.JacksonUtil;
 import com.transsion.store.utils.PropertiesUtils;
 
 @Service("salesMannager")
@@ -612,27 +616,27 @@ public class SalesManager {
 			/*HashMap<String, Object> messages = new HashMap<String, Object>();
 			messages.put("method", "kom.insertShopSale");
 			messages.put("shopSaleItem", listTShopSaleitem);
-			messages.put("shopSales", tShopSales);
-			logger.info("salesSaveUpload  start message...");*/
+			messages.put("shopSales", tShopSales);*/
+			logger.info("salesSaveUpload  start message...");
 
-//			SaleDto saleDto = new SaleDto();
-//			saleDto.setSale(tShopSales);
-//			saleDto.setSaleItems(listTShopSaleitem);
-//			saleDto.setAuthorization(token);
-//			
-//			String importTask = configurationService.getValueByName(UPDATE_CURSTOCK_URL);
-//			
-//			TaskMessage msg = new TaskMessage();
-//			msg.setInvokerType(TaskInvokerInfo.Type.REST);
-//			msg.setMethod(TaskInvokerInfo.RestMethod.POST.toString());
-//			// DTO转成JSON
-//			msg.setParams(JacksonUtil.toJSON(saleDto));
-//			msg.setBeanName(importTask);
-//			msg.setName("saveSalesUpload");
-//			msg.setKey("saveSalesUpload_" + System.currentTimeMillis());
-//			producerService.sendMessage(msg);
-//			long mqEndTime = System.currentTimeMillis();
-//			logger.debug("send mq message time is:" + (mqEndTime - mqStartTime));
+			SaleDto saleDto = new SaleDto();
+			saleDto.setSale(tShopSales);
+			saleDto.setSaleItems(listTShopSaleitem);
+			saleDto.setAuthorization(token);
+			
+			String importTask = configurationService.getValueByName(UPDATE_CURSTOCK_URL);
+			
+			TaskMessage msg = new TaskMessage();
+			msg.setInvokerType(TaskInvokerInfo.Type.REST);
+			msg.setMethod(TaskInvokerInfo.RestMethod.POST.toString());
+			// DTO转成JSON
+			msg.setParams(JacksonUtil.toJSON(saleDto));
+			msg.setBeanName(importTask);
+			msg.setName("saveSalesUpload");
+			msg.setKey("saveSalesUpload_" + System.currentTimeMillis());
+			producerService.sendMessage(msg);
+			long mqEndTime = System.currentTimeMillis();
+			logger.debug("send mq message time is:" + (mqEndTime - mqStartTime));
 		}
 
 		for (String imei : processList) {

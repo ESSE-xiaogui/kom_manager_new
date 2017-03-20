@@ -16,27 +16,6 @@
  **/
 package com.transsion.store.controller;
 
-import com.rest.service.controller.AbstractController;
-import com.transsion.store.bo.VisitPlan;
-import com.transsion.store.dto.VisitPlanBriefSummaryDto;
-import com.transsion.store.dto.VisitPlanDetailInfoDto;
-import com.transsion.store.dto.VisitPlanDetailSummaryDto;
-import com.transsion.store.dto.VisitPlanDto;
-import com.transsion.store.dto.VisitPlanInfoDto;
-import com.shangkang.core.dto.RequestModel;
-import com.transsion.store.facade.VisitPlanFacade;
-import com.shangkang.core.bo.Pagination;
-import com.shangkang.core.exception.ServiceException;
-import com.shangkang.tools.UtilHelper;
-
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,6 +23,34 @@ import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import com.rest.service.controller.AbstractController;
+import com.shangkang.core.bo.Pagination;
+import com.shangkang.core.dto.RequestModel;
+import com.shangkang.core.exception.ServiceException;
+import com.shangkang.tools.UtilHelper;
+import com.transsion.store.bo.VisitPlan;
+import com.transsion.store.dto.VisitPlanBriefSummaryDto;
+import com.transsion.store.dto.VisitPlanDetailInfoDto;
+import com.transsion.store.dto.VisitPlanDetailSummaryDto;
+import com.transsion.store.dto.VisitPlanDto;
+import com.transsion.store.dto.VisitPlanInfoDto;
+import com.transsion.store.facade.VisitPlanFacade;
 
 @Controller
 @Path("visitPlan")
@@ -138,9 +145,9 @@ public class VisitPlanController extends AbstractController{
 	@Path("/savePlan")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public int savePlan(List<VisitPlanDto> visitPlanDtoList) throws ServiceException{
+	public int savePlan(List<VisitPlanDto> visitPlanDtos) throws ServiceException{
 		String token = this.getAuthorization();
-		return visitPlanFacade.savePlan(token, visitPlanDtoList);
+		return visitPlanFacade.savePlan(token, visitPlanDtos);
 	}
 	
 	/**

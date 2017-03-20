@@ -24,10 +24,13 @@ import org.springframework.stereotype.Component;
 import com.shangkang.core.bo.Pagination;
 import com.shangkang.core.exception.ServiceException;
 import com.transsion.store.bo.PrototypeSetting;
+import com.transsion.store.context.UserContext;
+import com.transsion.store.dto.PrototypeDto;
 import com.transsion.store.dto.PrototypeSettingDto;
 import com.transsion.store.facade.PrototypeSettingFacade;
 import com.transsion.store.manager.PrototypeSettingManager;
 import com.transsion.store.service.PrototypeSettingService;
+import com.transsion.store.utils.CacheUtils;
 
 @Component("prototypeSettingFacade")
 public class PrototypeSettingFacadeImpl implements PrototypeSettingFacade {
@@ -81,6 +84,19 @@ public class PrototypeSettingFacadeImpl implements PrototypeSettingFacade {
 	 */
 	public Pagination<PrototypeSettingDto> listPaginationByProperty(Pagination<PrototypeSettingDto> pagination, PrototypeSettingDto prototypeSettingDto, String token)
 			throws ServiceException {
+		
+		UserContext userContext = (UserContext) CacheUtils.getSupporter().get(token);
+		Long companyId = userContext.isAdmin()?null:userContext.getCompanyId();
+		
+		if (pagination.getParams() == null) {
+			
+			prototypeSettingDto = new PrototypeSettingDto();
+			
+			prototypeSettingDto.setCompanyId(companyId);
+			
+			pagination.setParams(prototypeSettingDto);
+		} 
+		
 		return prototypeSettingManager.listPaginationByProperty(pagination, prototypeSettingDto, token);
 	}
 

@@ -16,6 +16,11 @@
  **/
 package com.transsion.store.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -25,8 +30,11 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -133,4 +141,77 @@ public class PrototypeController extends AbstractController{
 		String token = this.getAuthorization();
 		prototypeFacade.update(prototypeDto, token);
 	}
+	
+	
+	/**
+	 * 样机导出Excel
+	 * @return
+	 * @throws ServiceException
+	 * @throws IOException
+	 */
+	@GET
+	@Path("/exportPrototypeExcel") 
+	@Produces({MediaType.TEXT_PLAIN})  
+	public Response exportPrototypeExcel(@QueryParam("companyCode") String companyCode,
+		@QueryParam("brandCode") String brandCode,@QueryParam("countryName") String countryName,
+		@QueryParam("cityName") String cityName,@QueryParam("shopCode") String shopCode, @QueryParam("shopName") String shopName,
+		@QueryParam("imeiNo")String imeiNo,@QueryParam("modelName") String modelName,
+		@QueryParam("publishBy") String publishBy,@QueryParam("publishName") String publishName,@QueryParam("publishTime") String publishTime,
+		@QueryParam("unpublishBy") String unpublishBy,@QueryParam("unpublishName") String unpublishName,@QueryParam("unpublishTime") String unpublishTime,
+		@QueryParam("unpublishCause") String unpublishCause,@QueryParam("status") String status,
+		@QueryParam("remark") String remark,@QueryParam("createTime") String createTime) throws ServiceException,IOException {
+		
+		PrototypeDto prototypeDto = new PrototypeDto();
+		prototypeDto.setCompanyCode(companyCode);
+		prototypeDto.setBrandCode(brandCode);
+		prototypeDto.setCountryName(countryName);
+		prototypeDto.setCityName(cityName);
+		prototypeDto.setShopCode(shopCode);
+		prototypeDto.setShopName(shopName);
+		prototypeDto.setImeiNo(imeiNo);
+		prototypeDto.setPublishBy(publishBy);
+		prototypeDto.setPublishName(publishName);
+		prototypeDto.setPublishTime(publishTime);
+		prototypeDto.setUnpublishBy(unpublishBy);
+		prototypeDto.setUnpublishName(unpublishName);
+		prototypeDto.setUnpublishTime(unpublishTime);
+		prototypeDto.setUnpublishCause(unpublishCause);
+		prototypeDto.setStatusView(status);
+		prototypeDto.setRemark(remark);
+		prototypeDto.setCreateTime(createTime);
+		
+		
+		byte[] bytes = prototypeFacade.getPrototypeByExcel(prototypeDto);       
+		InputStream inputStream = new ByteArrayInputStream(bytes);          
+		Response.ResponseBuilder response = Response.ok(new BigFileOutputStream(inputStream));          
+		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis())+"样机汇总报表.xlsx";
+		response.header("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));         
+		//根据自己文件类型修改         
+		response.header("ContentType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");          
+		return response.build();      	
+	}
+	class BigFileOutputStream implements javax.ws.rs.core.StreamingOutput {
+        private InputStream inputStream;
+        public BigFileOutputStream(){}
+        public BigFileOutputStream(InputStream inputStream)
+        {
+            this.inputStream = inputStream;
+        }
+
+        @Override
+        public void write(OutputStream output) throws IOException,
+                WebApplicationException {
+            // TODO Auto-generated method stub
+            IOUtils.copy(inputStream, output);
+        }
+
+        public InputStream getInputStream() {
+            return inputStream;
+        }
+        public void setInputStream(InputStream inputStream) {
+            this.inputStream = inputStream;
+        }
+    }
+	
+	
 }
