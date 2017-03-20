@@ -525,7 +525,7 @@ public class SalesManager {
 				saleItem.setLineId(0);
 				saleItem.setBrandCode(inputSaleItem.getBrandCode());
 //				saleItem.setModelMatCode(inputSaleItem.getModelMatCode());
-				saleItem.setModelCode(inputSaleItem.getModelCode());
+				saleItem.setModelCode(inputSaleItem.getModelMatCode());
 
 				List<String> imeiList = imeiListMap.get(inputImei);
 				StringBuilder sb = new StringBuilder();
@@ -583,6 +583,7 @@ public class SalesManager {
 			for (int i = 0; i < listTShopSaleitem.size(); i++) {
 				listTShopSaleitem.get(i).setSaleId(tShopSales.getId());
 				listTShopSaleitem.get(i).setLineId(lineId);
+				listTShopSaleitem.get(i).setShopId(dealerId);
 				lineId++;
 			}
 			/**
