@@ -149,6 +149,8 @@ public class SaleItem extends Model{
 	  *	备注-512
 	  */
 	private java.lang.String remark;
+	
+	private java.lang.String modelMatCode;
 
 	/**
 	  *	
@@ -550,35 +552,23 @@ public class SaleItem extends Model{
 		this.remark = remark;
 	}
 	
-	public String toString()
-	{
-		return "SaleItem [" + 
-					"id=" + id + 
-					", saleId=" + saleId + 
-					", billno=" + billno + 
-					", lineId=" + lineId + 
-					", shopId=" + shopId + 
-					", companyId=" + companyId + 
-					", brandCode=" + brandCode + 
-					", modelCode=" + modelCode + 
-					", imeiNo=" + imeiNo + 
-					", imeiList=" + imeiList + 
-					", saleQty=" + saleQty + 
-					", salePrice=" + salePrice + 
-					", saleAmount=" + saleAmount + 
-					", sellerId=" + sellerId + 
-					", invoiceNo=" + invoiceNo + 
-					", qrCode=" + qrCode + 
-					", productDate=" + productDate + 
-					", factoryCode=" + factoryCode + 
-					", userName=" + userName + 
-					", gender=" + gender + 
-					", phoneNo=" + phoneNo + 
-					", email=" + email + 
-					", homeAddress=" + homeAddress + 
-					", zipCode=" + zipCode + 
-					", remark=" + remark + 
-				"]";
+	public java.lang.String getModelMatCode() {
+		return modelMatCode;
+	}
+
+	public void setModelMatCode(java.lang.String modelMatCode) {
+		this.modelMatCode = modelMatCode;
+	}
+
+	@Override
+	public String toString() {
+		return "SaleItem [id=" + id + ", saleId=" + saleId + ", billno=" + billno + ", lineId=" + lineId + ", shopId="
+				+ shopId + ", companyId=" + companyId + ", brandCode=" + brandCode + ", modelCode=" + modelCode
+				+ ", imeiNo=" + imeiNo + ", imeiList=" + imeiList + ", saleQty=" + saleQty + ", salePrice=" + salePrice
+				+ ", saleAmount=" + saleAmount + ", sellerId=" + sellerId + ", invoiceNo=" + invoiceNo + ", qrCode="
+				+ qrCode + ", productDate=" + productDate + ", factoryCode=" + factoryCode + ", userName=" + userName
+				+ ", gender=" + gender + ", phoneNo=" + phoneNo + ", email=" + email + ", homeAddress=" + homeAddress
+				+ ", zipCode=" + zipCode + ", remark=" + remark + ", modelMatCode=" + modelMatCode + "]";
 	}
 }
 

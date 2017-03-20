@@ -44,5 +44,4 @@ public interface ModelMapper extends GenericIBatisMapper<Model, java.lang.Long> 
     public Model queryVisitModelByModelCode(@Param("model")Model model)throws DataAccessFailureException;
     
     public List<ModelInfoDto> findModelList(@Param("companyId")Long companyId) throws DataAccessFailureException;
-  
 }

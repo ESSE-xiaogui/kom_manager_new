@@ -127,4 +127,17 @@ public class VisitModelSettingController extends AbstractController{
 		String token=this.getAuthorization();
 		return visitModelSettingFacade.findVisitModel(token, cityId, currentDate);
 	}
+	
+	/**
+	 * 根据品牌获取重点机型列表
+	 * @param brandCode
+	 * @return
+	 * @throws ServiceException
+	 */
+	@GET
+	@Path("queryModelSettingListByBrandCode")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<String> queryModelSettingListByBrandCode(@QueryParam("brandCode")String brandCode) throws ServiceException {
+		return visitModelSettingFacade.queryModelSettingListByBrandCode(brandCode);
+	}
 }

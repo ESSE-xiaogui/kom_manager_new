@@ -159,4 +159,8 @@ public class VisitModelSettingService {
 	public List<String> queryModeCodeListByCompanyId(VisitModelSetting visitModelSetting) throws ServiceException {
 		return visitModelSettingMapper.queryModeCodeListByCompanyId(visitModelSetting);
 	}
+	
+	public List<String> queryModelSettingListByBrandCode(String brandCode) throws ServiceException {
+		return visitModelSettingMapper.queryModelSettingListByBrandCode(brandCode);
+	}
 }

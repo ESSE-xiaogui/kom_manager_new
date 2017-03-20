@@ -351,4 +351,11 @@
 			AND s.REGION_ID = #{regionId}
 			AND s.ACTION_DATE = #{currentDate}
 	</select>
+	
+	<select id="queryModelSettingListByBrandCode" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT m.MODEL_CODE FROM T_VISIT_MODEL_SETTING v 
+		LEFT JOIN T_MODEL m ON m.ID = v.MODEL_ID WHERE v.MODEL_ID IN (
+			SELECT ID FROM T_MODEL WHERE BRAND_CODE = #{brandCode}
+		) GROUP BY m.MODEL_CODE
+	</select>
 </mapper>

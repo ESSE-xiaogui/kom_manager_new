@@ -158,4 +158,9 @@ public class VisitModelSettingFacadeImpl implements VisitModelSettingFacade {
 	public List<VisitModelSettingListDto> findVisitModel(String token,Long cityId,String currentDate) throws ServiceException{
 		return visitModeSettingManager.findVisitModel(token, cityId, currentDate);
 	}
+
+	@Override
+	public List<String> queryModelSettingListByBrandCode(String brandCode) throws ServiceException {
+		return visitModelSettingService.queryModelSettingListByBrandCode(brandCode);
+	}
 }
